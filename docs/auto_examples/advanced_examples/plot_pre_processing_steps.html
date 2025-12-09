@@ -568,10 +568,10 @@ Here, we will use the BNCI2014_001 dataset and the LeftRightImagery paradigm.</p
 <p>The most efficient way to expose the pre-processing steps is to use the
 <cite>make_process_pipelines</cite> method. This method will return a list of pipelines that
 are applied to the raw data. The pipelines are defined in the paradigm object.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="http://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html#sklearn.pipeline.Pipeline" title="sklearn.pipeline.Pipeline" class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">process_pipeline</span></a> <span class="o">=</span> <a href="../../generated/moabb.paradigms.LeftRightImagery.html#moabb.paradigms.LeftRightImagery" title="moabb.paradigms.LeftRightImagery" class="sphx-glr-backref-module-moabb-paradigms sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">paradigm</span></a><span class="o">.</span><span class="n">make_process_pipelines</span><span class="p">(</span><a href="../../generated/moabb.datasets.BNCI2014_001.html#moabb.datasets.BNCI2014_001" title="moabb.datasets.BNCI2014_001" class="sphx-glr-backref-module-moabb-datasets sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dataset</span></a><span class="p">)</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">process_pipeline</span> <span class="o">=</span> <a href="../../generated/moabb.paradigms.LeftRightImagery.html#moabb.paradigms.LeftRightImagery" title="moabb.paradigms.LeftRightImagery" class="sphx-glr-backref-module-moabb-paradigms sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">paradigm</span></a><span class="o">.</span><span class="n">make_process_pipelines</span><span class="p">(</span><a href="../../generated/moabb.datasets.BNCI2014_001.html#moabb.datasets.BNCI2014_001" title="moabb.datasets.BNCI2014_001" class="sphx-glr-backref-module-moabb-datasets sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dataset</span></a><span class="p">)</span>
 
 <span class="c1"># On the not filterbank paradigm, we have only one branch of possible steps steps:</span>
-<a href="http://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html#sklearn.pipeline.Pipeline" title="sklearn.pipeline.Pipeline" class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">process_pipeline</span></a><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">process_pipeline</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 </pre></div>
 </div>
 <div class="output_subarea output_html rendered_html output_result">
@@ -1052,26 +1052,28 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
     height: 14px;
     cursor: pointer;
 }
-</style><body><div id="sk-container-id-2" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>Pipeline(steps=[(&lt;StepType.RAW: &#x27;raw&#x27;&gt;,
-                 SetRawAnnotations(event_id={&#x27;feet&#x27;: 3, &#x27;left_hand&#x27;: 1,
-                                             &#x27;right_hand&#x27;: 2, &#x27;tongue&#x27;: 4},
-                                   interval=[2, 6])),
-                (&lt;StepType.RAW: &#x27;raw&#x27;&gt;,
-                 NamedFunctionTransformer(display_name=&#x27;Band Pass Filter (8–32 Hz)&#x27;, func=operator.methodcaller(&#x27;filter&#x27;, l_freq=8, h_freq=32, method=&#x27;iir&#x27;, picks=&#x27;data&#x27;, verbose=False))),
-                (&lt;StepType.EPOCHS: &#x27;epochs&#x27;&gt;,
-                 Pipeli...
-                                                   RawToEpochs(baseline=None,
-                                                               event_id={&#x27;left_hand&#x27;: 1,
-                                                                         &#x27;right_hand&#x27;: 2},
-                                                               tmax=6,
-                                                               tmin=2.0))]))])),
-                (&lt;StepType.ARRAY: &#x27;array&#x27;&gt;,
-                 ForkPipelines(transformers=[(&#x27;X&#x27;,
-                                              Pipeline(steps=[(&#x27;get_data&#x27;,
-                                                               FunctionTransformer(func=operator.methodcaller(&#x27;get_data&#x27;))),
-                                                              (&#x27;scaling&#x27;,
-                                                               FunctionTransformer(func=operator.methodcaller(&#x27;__mul__&#x27;, 1000000.0)))])),
-                                             (&#x27;events&#x27;, EpochsToEvents())]))])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-4" type="checkbox" ><label for="sk-estimator-id-4" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>Pipeline</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.pipeline.Pipeline.html">?<span>Documentation for Pipeline</span></a><span class="sk-estimator-doc-link ">i<span>Not fitted</span></span></div></label><div class="sk-toggleable__content " data-param-prefix="">
+</style><body><div id="sk-container-id-2" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>FixedPipeline(steps=[(&lt;StepType.RAW: &#x27;raw&#x27;&gt;,
+                      SetRawAnnotations(event_id={&#x27;feet&#x27;: 3, &#x27;left_hand&#x27;: 1,
+                                                  &#x27;right_hand&#x27;: 2,
+                                                  &#x27;tongue&#x27;: 4},
+                                        interval=[2, 6])),
+                     (&lt;StepType.RAW: &#x27;raw&#x27;&gt;,
+                      NamedFunctionTransformer(display_name=&#x27;Band Pass Filter (8–32 Hz)&#x27;, func=operator.methodcaller(&#x27;filter&#x27;, l_freq=8, h_freq=32, method=&#x27;iir&#x27;, picks=&#x27;data&#x27;, verbose=False))),
+                     (&lt;StepType.EPOCHS: &#x27;epochs&#x27;&gt;,
+                      F...
+                                                                  RawToEpochs(baseline=None,
+                                                                              event_id={&#x27;left_hand&#x27;: 1,
+                                                                                        &#x27;right_hand&#x27;: 2},
+                                                                              tmax=6,
+                                                                              tmin=2.0))]))])),
+                     (&lt;StepType.ARRAY: &#x27;array&#x27;&gt;,
+                      ForkPipelines(transformers=[(&#x27;X&#x27;,
+                                                   FixedPipeline(steps=[(&#x27;get_data&#x27;,
+                                                                         FunctionTransformer(func=operator.methodcaller(&#x27;get_data&#x27;))),
+                                                                        (&#x27;scaling&#x27;,
+                                                                         FunctionTransformer(func=operator.methodcaller(&#x27;__mul__&#x27;, 1000000.0)))])),
+                                                  (&#x27;events&#x27;,
+                                                   EpochsToEvents())]))])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-4" type="checkbox" ><label for="sk-estimator-id-4" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>FixedPipeline</div></div><div><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
         <div class="estimator-table">
             <details>
                 <summary>Parameters</summary>
@@ -1121,7 +1123,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
                 </table>
             </details>
         </div>
-    </div></div></div><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-5" type="checkbox" ><label for="sk-estimator-id-5" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>StepType.RAW: SetRawAnnotations</div></div></label><div class="sk-toggleable__content " data-param-prefix="StepType.RAW__">
+    </div></div></div><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-5" type="checkbox" ><label for="sk-estimator-id-5" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>StepType.RAW: SetRawAnnotations</div></div></label><div class="sk-toggleable__content fitted" data-param-prefix="StepType.RAW__">
         <div class="estimator-table">
             <details>
                 <summary>Parameters</summary>
@@ -1151,7 +1153,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
                 </table>
             </details>
         </div>
-    </div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-serial"><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-6" type="checkbox" ><label for="sk-estimator-id-6" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>{&#x27;event_id&#x27;: {&#x27;left_hand&#x27;: 1, &#x27;right_hand&#x27;: 2, &#x27;feet&#x27;: 3, &#x27;tongue&#x27;: 4}, &#x27;interval&#x27;: [2, 6]}</div></div></label><div class="sk-toggleable__content " data-param-prefix="StepType.RAW__"><pre>{&#x27;event_id&#x27;: {&#x27;left_hand&#x27;: 1, &#x27;right_hand&#x27;: 2, &#x27;feet&#x27;: 3, &#x27;tongue&#x27;: 4}, &#x27;interval&#x27;: [2, 6]}</pre></div></div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-7" type="checkbox" ><label for="sk-estimator-id-7" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>Band Pass Filter (8–32 Hz)</div></div></label><div class="sk-toggleable__content " data-param-prefix="StepType.RAW__">
+    </div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-serial"><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-6" type="checkbox" ><label for="sk-estimator-id-6" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>{&#x27;event_id&#x27;: {&#x27;left_hand&#x27;: 1, &#x27;right_hand&#x27;: 2, &#x27;feet&#x27;: 3, &#x27;tongue&#x27;: 4}, &#x27;interval&#x27;: [2, 6]}</div></div></label><div class="sk-toggleable__content fitted" data-param-prefix="StepType.RAW__"><pre>{&#x27;event_id&#x27;: {&#x27;left_hand&#x27;: 1, &#x27;right_hand&#x27;: 2, &#x27;feet&#x27;: 3, &#x27;tongue&#x27;: 4}, &#x27;interval&#x27;: [2, 6]}</pre></div></div></div></div></div></div></div></div><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-7" type="checkbox" ><label for="sk-estimator-id-7" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>Band Pass Filter (8–32 Hz)</div></div></label><div class="sk-toggleable__content fitted" data-param-prefix="StepType.RAW__">
         <div class="estimator-table">
             <details>
                 <summary>Parameters</summary>
@@ -1191,7 +1193,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
                 </table>
             </details>
         </div>
-    </div></div></div><div class="sk-item"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-8" type="checkbox" ><label for="sk-estimator-id-8" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>StepType.EPOCHS: Pipeline</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.pipeline.Pipeline.html">?<span>Documentation for StepType.EPOCHS: Pipeline</span></a></div></label><div class="sk-toggleable__content " data-param-prefix="StepType.EPOCHS__">
+    </div></div></div><div class="sk-item"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-8" type="checkbox" ><label for="sk-estimator-id-8" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>StepType.EPOCHS: FixedPipeline</div></div></label><div class="sk-toggleable__content fitted" data-param-prefix="StepType.EPOCHS__">
         <div class="estimator-table">
             <details>
                 <summary>Parameters</summary>
@@ -1241,7 +1243,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
                 </table>
             </details>
         </div>
-    </div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-9" type="checkbox" ><label for="sk-estimator-id-9" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>epoching: Pipeline</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.pipeline.Pipeline.html">?<span>Documentation for epoching: Pipeline</span></a></div></label><div class="sk-toggleable__content " data-param-prefix="StepType.EPOCHS__epoching__">
+    </div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-9" type="checkbox" ><label for="sk-estimator-id-9" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>epoching: FixedPipeline</div></div></label><div class="sk-toggleable__content fitted" data-param-prefix="StepType.EPOCHS__epoching__">
         <div class="estimator-table">
             <details>
                 <summary>Parameters</summary>
@@ -1291,7 +1293,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
                 </table>
             </details>
         </div>
-    </div></div></div><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-10" type="checkbox" ><label for="sk-estimator-id-10" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>forkpipelines: ForkPipelines</div></div></label><div class="sk-toggleable__content " data-param-prefix="StepType.EPOCHS__epoching__forkpipelines__">
+    </div></div></div><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-10" type="checkbox" ><label for="sk-estimator-id-10" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>forkpipelines: ForkPipelines</div></div></label><div class="sk-toggleable__content fitted" data-param-prefix="StepType.EPOCHS__epoching__forkpipelines__">
         <div class="estimator-table">
             <details>
                 <summary>Parameters</summary>
@@ -1311,7 +1313,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
                 </table>
             </details>
         </div>
-    </div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><label>raw</label></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-serial"><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-11" type="checkbox" ><label for="sk-estimator-id-11" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>None</div></div></label><div class="sk-toggleable__content " data-param-prefix="StepType.EPOCHS__epoching__forkpipelines__raw__nonetype__"><pre>None</pre></div></div></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><label>events</label></div></div><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-serial"><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-12" type="checkbox" ><label for="sk-estimator-id-12" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>{&#x27;event_id&#x27;: {&#x27;left_hand&#x27;: 1, &#x27;right_hand&#x27;: 2}, &#x27;interval&#x27;: [2, 6]}</div></div></label><div class="sk-toggleable__content " data-param-prefix="StepType.EPOCHS__epoching__forkpipelines__events__"><pre>{&#x27;event_id&#x27;: {&#x27;left_hand&#x27;: 1, &#x27;right_hand&#x27;: 2}, &#x27;interval&#x27;: [2, 6]}</pre></div></div></div></div></div></div></div></div></div></div></div></div></div><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-13" type="checkbox" ><label for="sk-estimator-id-13" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>rawtoepochs: RawToEpochs</div></div></label><div class="sk-toggleable__content " data-param-prefix="StepType.EPOCHS__epoching__rawtoepochs__">
+    </div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><label>raw</label></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-serial"><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-11" type="checkbox" ><label for="sk-estimator-id-11" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>None</div></div></label><div class="sk-toggleable__content fitted" data-param-prefix="StepType.EPOCHS__epoching__forkpipelines__raw__nonetype__"><pre>None</pre></div></div></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><label>events</label></div></div><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-serial"><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-12" type="checkbox" ><label for="sk-estimator-id-12" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>{&#x27;event_id&#x27;: {&#x27;left_hand&#x27;: 1, &#x27;right_hand&#x27;: 2}, &#x27;interval&#x27;: [2, 6]}</div></div></label><div class="sk-toggleable__content fitted" data-param-prefix="StepType.EPOCHS__epoching__forkpipelines__events__"><pre>{&#x27;event_id&#x27;: {&#x27;left_hand&#x27;: 1, &#x27;right_hand&#x27;: 2}, &#x27;interval&#x27;: [2, 6]}</pre></div></div></div></div></div></div></div></div></div></div></div></div></div><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-13" type="checkbox" ><label for="sk-estimator-id-13" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>rawtoepochs: RawToEpochs</div></div></label><div class="sk-toggleable__content fitted" data-param-prefix="StepType.EPOCHS__epoching__rawtoepochs__">
         <div class="estimator-table">
             <details>
                 <summary>Parameters</summary>
@@ -1381,7 +1383,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
                 </table>
             </details>
         </div>
-    </div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-serial"><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-14" type="checkbox" ><label for="sk-estimator-id-14" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>{&#x27;baseline&#x27;: None, &#x27;channels&#x27;: None, &#x27;event_id&#x27;: {&#x27;left_hand&#x27;: 1, &#x27;right_hand&#x27;: 2}, &#x27;interpolate_missing_channels&#x27;: False, &#x27;tmax&#x27;: 6, &#x27;tmin&#x27;: 2.0}</div></div></label><div class="sk-toggleable__content " data-param-prefix="StepType.EPOCHS__epoching__rawtoepochs__"><pre>{&#x27;baseline&#x27;: None, &#x27;channels&#x27;: None, &#x27;event_id&#x27;: {&#x27;left_hand&#x27;: 1, &#x27;right_hand&#x27;: 2}, &#x27;interpolate_missing_channels&#x27;: False, &#x27;tmax&#x27;: 6, &#x27;tmin&#x27;: 2.0}</pre></div></div></div></div></div></div></div></div></div></div></div></div><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-15" type="checkbox" ><label for="sk-estimator-id-15" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>StepType.ARRAY: ForkPipelines</div></div></label><div class="sk-toggleable__content " data-param-prefix="StepType.ARRAY__">
+    </div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-serial"><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-14" type="checkbox" ><label for="sk-estimator-id-14" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>{&#x27;baseline&#x27;: None, &#x27;channels&#x27;: None, &#x27;event_id&#x27;: {&#x27;left_hand&#x27;: 1, &#x27;right_hand&#x27;: 2}, &#x27;interpolate_missing_channels&#x27;: False, &#x27;tmax&#x27;: 6, &#x27;tmin&#x27;: 2.0}</div></div></label><div class="sk-toggleable__content fitted" data-param-prefix="StepType.EPOCHS__epoching__rawtoepochs__"><pre>{&#x27;baseline&#x27;: None, &#x27;channels&#x27;: None, &#x27;event_id&#x27;: {&#x27;left_hand&#x27;: 1, &#x27;right_hand&#x27;: 2}, &#x27;interpolate_missing_channels&#x27;: False, &#x27;tmax&#x27;: 6, &#x27;tmin&#x27;: 2.0}</pre></div></div></div></div></div></div></div></div></div></div></div></div><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-15" type="checkbox" ><label for="sk-estimator-id-15" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>StepType.ARRAY: ForkPipelines</div></div></label><div class="sk-toggleable__content fitted" data-param-prefix="StepType.ARRAY__">
         <div class="estimator-table">
             <details>
                 <summary>Parameters</summary>
@@ -1401,7 +1403,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
                 </table>
             </details>
         </div>
-    </div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><label>X</label></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-serial"><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-16" type="checkbox" ><label for="sk-estimator-id-16" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>methodcaller(...)</div><div class="caption">FunctionTransformer</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.preprocessing.FunctionTransformer.html">?<span>Documentation for FunctionTransformer</span></a></div></label><div class="sk-toggleable__content " data-param-prefix="StepType.ARRAY__X__get_data__">
+    </div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><label>X</label></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-serial"><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-16" type="checkbox" ><label for="sk-estimator-id-16" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>methodcaller(...)</div><div class="caption">FunctionTransformer</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.preprocessing.FunctionTransformer.html">?<span>Documentation for FunctionTransformer</span></a></div></label><div class="sk-toggleable__content fitted" data-param-prefix="StepType.ARRAY__X__get_data__">
         <div class="estimator-table">
             <details>
                 <summary>Parameters</summary>
@@ -1491,7 +1493,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
                 </table>
             </details>
         </div>
-    </div></div></div><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-17" type="checkbox" ><label for="sk-estimator-id-17" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>methodcaller(...)</div><div class="caption">FunctionTransformer</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.preprocessing.FunctionTransformer.html">?<span>Documentation for FunctionTransformer</span></a></div></label><div class="sk-toggleable__content " data-param-prefix="StepType.ARRAY__X__scaling__">
+    </div></div></div><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-17" type="checkbox" ><label for="sk-estimator-id-17" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>methodcaller(...)</div><div class="caption">FunctionTransformer</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.preprocessing.FunctionTransformer.html">?<span>Documentation for FunctionTransformer</span></a></div></label><div class="sk-toggleable__content fitted" data-param-prefix="StepType.ARRAY__X__scaling__">
         <div class="estimator-table">
             <details>
                 <summary>Parameters</summary>
@@ -1581,7 +1583,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
                 </table>
             </details>
         </div>
-    </div></div></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><label>events</label></div></div><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-serial"><div class="sk-item"><div class="sk-estimator  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-18" type="checkbox" ><label for="sk-estimator-id-18" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>{}</div></div></label><div class="sk-toggleable__content " data-param-prefix="StepType.ARRAY__events__"><pre>{}</pre></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div><script>function copyToClipboard(text, element) {
+    </div></div></div></div></div></div></div></div><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><label>events</label></div></div><div class="sk-serial"><div class="sk-item sk-dashed-wrapped"><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-serial"><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-18" type="checkbox" ><label for="sk-estimator-id-18" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>{}</div></div></label><div class="sk-toggleable__content fitted" data-param-prefix="StepType.ARRAY__events__"><pre>{}</pre></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div><script>function copyToClipboard(text, element) {
     // Get the parameter prefix from the closest toggleable content
     const toggleableContent = element.closest('.sk-toggleable__content');
     const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
@@ -1634,130 +1636,137 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
 <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pre_procesing_filter_bank_steps</span></a> <span class="o">=</span> <a href="../../generated/moabb.paradigms.FilterBankLeftRightImagery.html#moabb.paradigms.FilterBankLeftRightImagery" title="moabb.paradigms.FilterBankLeftRightImagery" class="sphx-glr-backref-module-moabb-paradigms sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">paradigm_filterbank</span></a><span class="o">.</span><span class="n">make_process_pipelines</span><span class="p">(</span><a href="../../generated/moabb.datasets.BNCI2014_001.html#moabb.datasets.BNCI2014_001" title="moabb.datasets.BNCI2014_001" class="sphx-glr-backref-module-moabb-datasets sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dataset</span></a><span class="p">)</span>
 
 <span class="c1"># By default, we have six filter banks, and each filter bank has the same steps.</span>
-<span class="k">for</span> <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">i</span></a><span class="p">,</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html#sklearn.pipeline.Pipeline" title="sklearn.pipeline.Pipeline" class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">step</span></a> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pre_procesing_filter_bank_steps</span></a><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Filter bank </span><span class="si">{</span><a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">i</span></a><span class="si">}</span><span class="s2">: </span><span class="si">{</span><a href="http://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html#sklearn.pipeline.Pipeline" title="sklearn.pipeline.Pipeline" class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">step</span></a><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">for</span> <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">i</span></a><span class="p">,</span> <span class="n">step</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pre_procesing_filter_bank_steps</span></a><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Filter bank </span><span class="si">{</span><a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">i</span></a><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">step</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Filter bank 0: Pipeline(steps=[(&lt;StepType.RAW: &#39;raw&#39;&gt;,
-                 SetRawAnnotations(event_id={&#39;feet&#39;: 3, &#39;left_hand&#39;: 1,
-                                             &#39;right_hand&#39;: 2, &#39;tongue&#39;: 4},
-                                   interval=[2, 6])),
-                (&lt;StepType.RAW: &#39;raw&#39;&gt;,
-                 NamedFunctionTransformer(display_name=&#39;Band Pass Filter (8–12 Hz)&#39;, func=operator.methodcaller(&#39;filter&#39;, l_freq=8, h_freq=12, method=&#39;iir&#39;, picks=&#39;data&#39;, verbose=False))),
-                (&lt;StepType.EPOCHS: &#39;epochs&#39;&gt;,
-                 Pipeli...
-                                                   RawToEpochs(baseline=None,
-                                                               event_id={&#39;left_hand&#39;: 1,
-                                                                         &#39;right_hand&#39;: 2},
-                                                               tmax=6,
-                                                               tmin=2.0))]))])),
-                (&lt;StepType.ARRAY: &#39;array&#39;&gt;,
-                 ForkPipelines(transformers=[(&#39;X&#39;,
-                                              Pipeline(steps=[(&#39;get_data&#39;,
-                                                               FunctionTransformer(func=operator.methodcaller(&#39;get_data&#39;))),
-                                                              (&#39;scaling&#39;,
-                                                               FunctionTransformer(func=operator.methodcaller(&#39;__mul__&#39;, 1000000.0)))])),
-                                             (&#39;events&#39;, EpochsToEvents())]))])
-Filter bank 1: Pipeline(steps=[(&lt;StepType.RAW: &#39;raw&#39;&gt;,
-                 SetRawAnnotations(event_id={&#39;feet&#39;: 3, &#39;left_hand&#39;: 1,
-                                             &#39;right_hand&#39;: 2, &#39;tongue&#39;: 4},
-                                   interval=[2, 6])),
-                (&lt;StepType.RAW: &#39;raw&#39;&gt;,
-                 NamedFunctionTransformer(display_name=&#39;Band Pass Filter (12–16 Hz)&#39;, func=operator.methodcaller(&#39;filter&#39;, l_freq=12, h_freq=16, method=&#39;iir&#39;, picks=&#39;data&#39;, verbose=False))),
-                (&lt;StepType.EPOCHS: &#39;epochs&#39;&gt;,
-                 Pipe...
-                                                   RawToEpochs(baseline=None,
-                                                               event_id={&#39;left_hand&#39;: 1,
-                                                                         &#39;right_hand&#39;: 2},
-                                                               tmax=6,
-                                                               tmin=2.0))]))])),
-                (&lt;StepType.ARRAY: &#39;array&#39;&gt;,
-                 ForkPipelines(transformers=[(&#39;X&#39;,
-                                              Pipeline(steps=[(&#39;get_data&#39;,
-                                                               FunctionTransformer(func=operator.methodcaller(&#39;get_data&#39;))),
-                                                              (&#39;scaling&#39;,
-                                                               FunctionTransformer(func=operator.methodcaller(&#39;__mul__&#39;, 1000000.0)))])),
-                                             (&#39;events&#39;, EpochsToEvents())]))])
-Filter bank 2: Pipeline(steps=[(&lt;StepType.RAW: &#39;raw&#39;&gt;,
-                 SetRawAnnotations(event_id={&#39;feet&#39;: 3, &#39;left_hand&#39;: 1,
-                                             &#39;right_hand&#39;: 2, &#39;tongue&#39;: 4},
-                                   interval=[2, 6])),
-                (&lt;StepType.RAW: &#39;raw&#39;&gt;,
-                 NamedFunctionTransformer(display_name=&#39;Band Pass Filter (16–20 Hz)&#39;, func=operator.methodcaller(&#39;filter&#39;, l_freq=16, h_freq=20, method=&#39;iir&#39;, picks=&#39;data&#39;, verbose=False))),
-                (&lt;StepType.EPOCHS: &#39;epochs&#39;&gt;,
-                 Pipe...
-                                                   RawToEpochs(baseline=None,
-                                                               event_id={&#39;left_hand&#39;: 1,
-                                                                         &#39;right_hand&#39;: 2},
-                                                               tmax=6,
-                                                               tmin=2.0))]))])),
-                (&lt;StepType.ARRAY: &#39;array&#39;&gt;,
-                 ForkPipelines(transformers=[(&#39;X&#39;,
-                                              Pipeline(steps=[(&#39;get_data&#39;,
-                                                               FunctionTransformer(func=operator.methodcaller(&#39;get_data&#39;))),
-                                                              (&#39;scaling&#39;,
-                                                               FunctionTransformer(func=operator.methodcaller(&#39;__mul__&#39;, 1000000.0)))])),
-                                             (&#39;events&#39;, EpochsToEvents())]))])
-Filter bank 3: Pipeline(steps=[(&lt;StepType.RAW: &#39;raw&#39;&gt;,
-                 SetRawAnnotations(event_id={&#39;feet&#39;: 3, &#39;left_hand&#39;: 1,
-                                             &#39;right_hand&#39;: 2, &#39;tongue&#39;: 4},
-                                   interval=[2, 6])),
-                (&lt;StepType.RAW: &#39;raw&#39;&gt;,
-                 NamedFunctionTransformer(display_name=&#39;Band Pass Filter (20–24 Hz)&#39;, func=operator.methodcaller(&#39;filter&#39;, l_freq=20, h_freq=24, method=&#39;iir&#39;, picks=&#39;data&#39;, verbose=False))),
-                (&lt;StepType.EPOCHS: &#39;epochs&#39;&gt;,
-                 Pipe...
-                                                   RawToEpochs(baseline=None,
-                                                               event_id={&#39;left_hand&#39;: 1,
-                                                                         &#39;right_hand&#39;: 2},
-                                                               tmax=6,
-                                                               tmin=2.0))]))])),
-                (&lt;StepType.ARRAY: &#39;array&#39;&gt;,
-                 ForkPipelines(transformers=[(&#39;X&#39;,
-                                              Pipeline(steps=[(&#39;get_data&#39;,
-                                                               FunctionTransformer(func=operator.methodcaller(&#39;get_data&#39;))),
-                                                              (&#39;scaling&#39;,
-                                                               FunctionTransformer(func=operator.methodcaller(&#39;__mul__&#39;, 1000000.0)))])),
-                                             (&#39;events&#39;, EpochsToEvents())]))])
-Filter bank 4: Pipeline(steps=[(&lt;StepType.RAW: &#39;raw&#39;&gt;,
-                 SetRawAnnotations(event_id={&#39;feet&#39;: 3, &#39;left_hand&#39;: 1,
-                                             &#39;right_hand&#39;: 2, &#39;tongue&#39;: 4},
-                                   interval=[2, 6])),
-                (&lt;StepType.RAW: &#39;raw&#39;&gt;,
-                 NamedFunctionTransformer(display_name=&#39;Band Pass Filter (24–28 Hz)&#39;, func=operator.methodcaller(&#39;filter&#39;, l_freq=24, h_freq=28, method=&#39;iir&#39;, picks=&#39;data&#39;, verbose=False))),
-                (&lt;StepType.EPOCHS: &#39;epochs&#39;&gt;,
-                 Pipe...
-                                                   RawToEpochs(baseline=None,
-                                                               event_id={&#39;left_hand&#39;: 1,
-                                                                         &#39;right_hand&#39;: 2},
-                                                               tmax=6,
-                                                               tmin=2.0))]))])),
-                (&lt;StepType.ARRAY: &#39;array&#39;&gt;,
-                 ForkPipelines(transformers=[(&#39;X&#39;,
-                                              Pipeline(steps=[(&#39;get_data&#39;,
-                                                               FunctionTransformer(func=operator.methodcaller(&#39;get_data&#39;))),
-                                                              (&#39;scaling&#39;,
-                                                               FunctionTransformer(func=operator.methodcaller(&#39;__mul__&#39;, 1000000.0)))])),
-                                             (&#39;events&#39;, EpochsToEvents())]))])
-Filter bank 5: Pipeline(steps=[(&lt;StepType.RAW: &#39;raw&#39;&gt;,
-                 SetRawAnnotations(event_id={&#39;feet&#39;: 3, &#39;left_hand&#39;: 1,
-                                             &#39;right_hand&#39;: 2, &#39;tongue&#39;: 4},
-                                   interval=[2, 6])),
-                (&lt;StepType.RAW: &#39;raw&#39;&gt;,
-                 NamedFunctionTransformer(display_name=&#39;Band Pass Filter (28–32 Hz)&#39;, func=operator.methodcaller(&#39;filter&#39;, l_freq=28, h_freq=32, method=&#39;iir&#39;, picks=&#39;data&#39;, verbose=False))),
-                (&lt;StepType.EPOCHS: &#39;epochs&#39;&gt;,
-                 Pipe...
-                                                   RawToEpochs(baseline=None,
-                                                               event_id={&#39;left_hand&#39;: 1,
-                                                                         &#39;right_hand&#39;: 2},
-                                                               tmax=6,
-                                                               tmin=2.0))]))])),
-                (&lt;StepType.ARRAY: &#39;array&#39;&gt;,
-                 ForkPipelines(transformers=[(&#39;X&#39;,
-                                              Pipeline(steps=[(&#39;get_data&#39;,
-                                                               FunctionTransformer(func=operator.methodcaller(&#39;get_data&#39;))),
-                                                              (&#39;scaling&#39;,
-                                                               FunctionTransformer(func=operator.methodcaller(&#39;__mul__&#39;, 1000000.0)))])),
-                                             (&#39;events&#39;, EpochsToEvents())]))])
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Filter bank 0: FixedPipeline(steps=[(&lt;StepType.RAW: &#39;raw&#39;&gt;,
+                      SetRawAnnotations(event_id={&#39;feet&#39;: 3, &#39;left_hand&#39;: 1,
+                                                  &#39;right_hand&#39;: 2,
+                                                  &#39;tongue&#39;: 4},
+                                        interval=[2, 6])),
+                     (&lt;StepType.RAW: &#39;raw&#39;&gt;,
+                      NamedFunctionTransformer(display_name=&#39;Band Pass Filter (8–12 Hz)&#39;, func=operator.methodcaller(&#39;filter&#39;, l_freq=8, h_freq=12, method=&#39;iir&#39;, picks=&#39;data&#39;, verbose=False))),
+                     (&lt;StepType.EPOCHS: &#39;epochs&#39;&gt;,
+                      F...
+                                                                  RawToEpochs(baseline=None,
+                                                                              event_id={&#39;left_hand&#39;: 1,
+                                                                                        &#39;right_hand&#39;: 2},
+                                                                              tmax=6,
+                                                                              tmin=2.0))]))])),
+                     (&lt;StepType.ARRAY: &#39;array&#39;&gt;,
+                      ForkPipelines(transformers=[(&#39;X&#39;,
+                                                   FixedPipeline(steps=[(&#39;get_data&#39;,
+                                                                         FunctionTransformer(func=operator.methodcaller(&#39;get_data&#39;))),
+                                                                        (&#39;scaling&#39;,
+                                                                         FunctionTransformer(func=operator.methodcaller(&#39;__mul__&#39;, 1000000.0)))])),
+                                                  (&#39;events&#39;,
+                                                   EpochsToEvents())]))])
+Filter bank 1: FixedPipeline(steps=[(&lt;StepType.RAW: &#39;raw&#39;&gt;,
+                      SetRawAnnotations(event_id={&#39;feet&#39;: 3, &#39;left_hand&#39;: 1,
+                                                  &#39;right_hand&#39;: 2,
+                                                  &#39;tongue&#39;: 4},
+                                        interval=[2, 6])),
+                     (&lt;StepType.RAW: &#39;raw&#39;&gt;,
+                      NamedFunctionTransformer(display_name=&#39;Band Pass Filter (12–16 Hz)&#39;, func=operator.methodcaller(&#39;filter&#39;, l_freq=12, h_freq=16, method=&#39;iir&#39;, picks=&#39;data&#39;, verbose=False))),
+                     (&lt;StepType.EPOCHS: &#39;epochs&#39;&gt;...
+                                                                  RawToEpochs(baseline=None,
+                                                                              event_id={&#39;left_hand&#39;: 1,
+                                                                                        &#39;right_hand&#39;: 2},
+                                                                              tmax=6,
+                                                                              tmin=2.0))]))])),
+                     (&lt;StepType.ARRAY: &#39;array&#39;&gt;,
+                      ForkPipelines(transformers=[(&#39;X&#39;,
+                                                   FixedPipeline(steps=[(&#39;get_data&#39;,
+                                                                         FunctionTransformer(func=operator.methodcaller(&#39;get_data&#39;))),
+                                                                        (&#39;scaling&#39;,
+                                                                         FunctionTransformer(func=operator.methodcaller(&#39;__mul__&#39;, 1000000.0)))])),
+                                                  (&#39;events&#39;,
+                                                   EpochsToEvents())]))])
+Filter bank 2: FixedPipeline(steps=[(&lt;StepType.RAW: &#39;raw&#39;&gt;,
+                      SetRawAnnotations(event_id={&#39;feet&#39;: 3, &#39;left_hand&#39;: 1,
+                                                  &#39;right_hand&#39;: 2,
+                                                  &#39;tongue&#39;: 4},
+                                        interval=[2, 6])),
+                     (&lt;StepType.RAW: &#39;raw&#39;&gt;,
+                      NamedFunctionTransformer(display_name=&#39;Band Pass Filter (16–20 Hz)&#39;, func=operator.methodcaller(&#39;filter&#39;, l_freq=16, h_freq=20, method=&#39;iir&#39;, picks=&#39;data&#39;, verbose=False))),
+                     (&lt;StepType.EPOCHS: &#39;epochs&#39;&gt;...
+                                                                  RawToEpochs(baseline=None,
+                                                                              event_id={&#39;left_hand&#39;: 1,
+                                                                                        &#39;right_hand&#39;: 2},
+                                                                              tmax=6,
+                                                                              tmin=2.0))]))])),
+                     (&lt;StepType.ARRAY: &#39;array&#39;&gt;,
+                      ForkPipelines(transformers=[(&#39;X&#39;,
+                                                   FixedPipeline(steps=[(&#39;get_data&#39;,
+                                                                         FunctionTransformer(func=operator.methodcaller(&#39;get_data&#39;))),
+                                                                        (&#39;scaling&#39;,
+                                                                         FunctionTransformer(func=operator.methodcaller(&#39;__mul__&#39;, 1000000.0)))])),
+                                                  (&#39;events&#39;,
+                                                   EpochsToEvents())]))])
+Filter bank 3: FixedPipeline(steps=[(&lt;StepType.RAW: &#39;raw&#39;&gt;,
+                      SetRawAnnotations(event_id={&#39;feet&#39;: 3, &#39;left_hand&#39;: 1,
+                                                  &#39;right_hand&#39;: 2,
+                                                  &#39;tongue&#39;: 4},
+                                        interval=[2, 6])),
+                     (&lt;StepType.RAW: &#39;raw&#39;&gt;,
+                      NamedFunctionTransformer(display_name=&#39;Band Pass Filter (20–24 Hz)&#39;, func=operator.methodcaller(&#39;filter&#39;, l_freq=20, h_freq=24, method=&#39;iir&#39;, picks=&#39;data&#39;, verbose=False))),
+                     (&lt;StepType.EPOCHS: &#39;epochs&#39;&gt;...
+                                                                  RawToEpochs(baseline=None,
+                                                                              event_id={&#39;left_hand&#39;: 1,
+                                                                                        &#39;right_hand&#39;: 2},
+                                                                              tmax=6,
+                                                                              tmin=2.0))]))])),
+                     (&lt;StepType.ARRAY: &#39;array&#39;&gt;,
+                      ForkPipelines(transformers=[(&#39;X&#39;,
+                                                   FixedPipeline(steps=[(&#39;get_data&#39;,
+                                                                         FunctionTransformer(func=operator.methodcaller(&#39;get_data&#39;))),
+                                                                        (&#39;scaling&#39;,
+                                                                         FunctionTransformer(func=operator.methodcaller(&#39;__mul__&#39;, 1000000.0)))])),
+                                                  (&#39;events&#39;,
+                                                   EpochsToEvents())]))])
+Filter bank 4: FixedPipeline(steps=[(&lt;StepType.RAW: &#39;raw&#39;&gt;,
+                      SetRawAnnotations(event_id={&#39;feet&#39;: 3, &#39;left_hand&#39;: 1,
+                                                  &#39;right_hand&#39;: 2,
+                                                  &#39;tongue&#39;: 4},
+                                        interval=[2, 6])),
+                     (&lt;StepType.RAW: &#39;raw&#39;&gt;,
+                      NamedFunctionTransformer(display_name=&#39;Band Pass Filter (24–28 Hz)&#39;, func=operator.methodcaller(&#39;filter&#39;, l_freq=24, h_freq=28, method=&#39;iir&#39;, picks=&#39;data&#39;, verbose=False))),
+                     (&lt;StepType.EPOCHS: &#39;epochs&#39;&gt;...
+                                                                  RawToEpochs(baseline=None,
+                                                                              event_id={&#39;left_hand&#39;: 1,
+                                                                                        &#39;right_hand&#39;: 2},
+                                                                              tmax=6,
+                                                                              tmin=2.0))]))])),
+                     (&lt;StepType.ARRAY: &#39;array&#39;&gt;,
+                      ForkPipelines(transformers=[(&#39;X&#39;,
+                                                   FixedPipeline(steps=[(&#39;get_data&#39;,
+                                                                         FunctionTransformer(func=operator.methodcaller(&#39;get_data&#39;))),
+                                                                        (&#39;scaling&#39;,
+                                                                         FunctionTransformer(func=operator.methodcaller(&#39;__mul__&#39;, 1000000.0)))])),
+                                                  (&#39;events&#39;,
+                                                   EpochsToEvents())]))])
+Filter bank 5: FixedPipeline(steps=[(&lt;StepType.RAW: &#39;raw&#39;&gt;,
+                      SetRawAnnotations(event_id={&#39;feet&#39;: 3, &#39;left_hand&#39;: 1,
+                                                  &#39;right_hand&#39;: 2,
+                                                  &#39;tongue&#39;: 4},
+                                        interval=[2, 6])),
+                     (&lt;StepType.RAW: &#39;raw&#39;&gt;,
+                      NamedFunctionTransformer(display_name=&#39;Band Pass Filter (28–32 Hz)&#39;, func=operator.methodcaller(&#39;filter&#39;, l_freq=28, h_freq=32, method=&#39;iir&#39;, picks=&#39;data&#39;, verbose=False))),
+                     (&lt;StepType.EPOCHS: &#39;epochs&#39;&gt;...
+                                                                  RawToEpochs(baseline=None,
+                                                                              event_id={&#39;left_hand&#39;: 1,
+                                                                                        &#39;right_hand&#39;: 2},
+                                                                              tmax=6,
+                                                                              tmin=2.0))]))])),
+                     (&lt;StepType.ARRAY: &#39;array&#39;&gt;,
+                      ForkPipelines(transformers=[(&#39;X&#39;,
+                                                   FixedPipeline(steps=[(&#39;get_data&#39;,
+                                                                         FunctionTransformer(func=operator.methodcaller(&#39;get_data&#39;))),
+                                                                        (&#39;scaling&#39;,
+                                                                         FunctionTransformer(func=operator.methodcaller(&#39;__mul__&#39;, 1000000.0)))])),
+                                                  (&#39;events&#39;,
+                                                   EpochsToEvents())]))])
 </pre></div>
 </div>
 </section>
@@ -1787,9 +1796,9 @@ to the data without fitting it.</p>
     <span class="p">)</span>
 
 
-<a href="http://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html#sklearn.pipeline.Pipeline" title="sklearn.pipeline.Pipeline" class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">process_pipeline</span></a> <span class="o">=</span> <a href="../../generated/moabb.paradigms.LeftRightImagery.html#moabb.paradigms.LeftRightImagery" title="moabb.paradigms.LeftRightImagery" class="sphx-glr-backref-module-moabb-paradigms sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">paradigm</span></a><span class="o">.</span><span class="n">make_process_pipelines</span><span class="p">(</span><a href="../../generated/moabb.datasets.BNCI2014_001.html#moabb.datasets.BNCI2014_001" title="moabb.datasets.BNCI2014_001" class="sphx-glr-backref-module-moabb-datasets sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dataset</span></a><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">process_pipeline</span> <span class="o">=</span> <a href="../../generated/moabb.paradigms.LeftRightImagery.html#moabb.paradigms.LeftRightImagery" title="moabb.paradigms.LeftRightImagery" class="sphx-glr-backref-module-moabb-paradigms sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">paradigm</span></a><span class="o">.</span><span class="n">make_process_pipelines</span><span class="p">(</span><a href="../../generated/moabb.datasets.BNCI2014_001.html#moabb.datasets.BNCI2014_001" title="moabb.datasets.BNCI2014_001" class="sphx-glr-backref-module-moabb-datasets sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dataset</span></a><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 
-<a href="http://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html#sklearn.pipeline.Pipeline" title="sklearn.pipeline.Pipeline" class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">process_pipeline</span></a><span class="o">.</span><span class="n">steps</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="n">StepType</span><span class="o">.</span><span class="n">RAW</span><span class="p">,</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.FunctionTransformer.html#sklearn.preprocessing.FunctionTransformer" title="sklearn.preprocessing.FunctionTransformer" class="sphx-glr-backref-module-sklearn-preprocessing sphx-glr-backref-type-py-class"><span class="n">FunctionTransformer</span></a><span class="p">(</span><span class="n">minmax_raw</span><span class="p">)))</span>
+<span class="n">process_pipeline</span><span class="o">.</span><span class="n">steps</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="n">StepType</span><span class="o">.</span><span class="n">RAW</span><span class="p">,</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.FunctionTransformer.html#sklearn.preprocessing.FunctionTransformer" title="sklearn.preprocessing.FunctionTransformer" class="sphx-glr-backref-module-sklearn-preprocessing sphx-glr-backref-type-py-class"><span class="n">FunctionTransformer</span></a><span class="p">(</span><span class="n">minmax_raw</span><span class="p">)))</span>
 </pre></div>
 </div>
 <p>Now that you have defined some special pre-processing, you will need to run with
@@ -1804,7 +1813,7 @@ Here, we will use the <cite>DummyClassifier</cite> from sklearn to run the evalu
     <a href="../../generated/moabb.datasets.BNCI2014_001.html#moabb.datasets.BNCI2014_001" title="moabb.datasets.BNCI2014_001" class="sphx-glr-backref-module-moabb-datasets sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dataset</span></a><span class="o">=</span><a href="../../generated/moabb.datasets.BNCI2014_001.html#moabb.datasets.BNCI2014_001" title="moabb.datasets.BNCI2014_001" class="sphx-glr-backref-module-moabb-datasets sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dataset</span></a><span class="p">,</span>
     <span class="n">pipelines</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">classifier_pipeline</span></a><span class="p">,</span>
     <span class="n">param_grid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-    <a href="http://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html#sklearn.pipeline.Pipeline" title="sklearn.pipeline.Pipeline" class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">process_pipeline</span></a><span class="o">=</span><a href="http://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html#sklearn.pipeline.Pipeline" title="sklearn.pipeline.Pipeline" class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">process_pipeline</span></a><span class="p">,</span>
+    <span class="n">process_pipeline</span><span class="o">=</span><span class="n">process_pipeline</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="c1"># The evaluation function will return a generator object that contains the results</span>
 <span class="c1"># of the evaluation. You can use the `list` function to convert it to a list.</span>
@@ -1812,8 +1821,8 @@ Here, we will use the <cite>DummyClassifier</cite> from sklearn to run the evalu
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>BNCI2014-001-CrossSession:   0%|          | 0/1 [00:00&lt;?, ?it/s]
-BNCI2014-001-CrossSession: 100%|██████████| 1/1 [00:02&lt;00:00,  2.32s/it]
-BNCI2014-001-CrossSession: 100%|██████████| 1/1 [00:02&lt;00:00,  2.32s/it]
+BNCI2014-001-CrossSession: 100%|██████████| 1/1 [00:02&lt;00:00,  2.41s/it]
+BNCI2014-001-CrossSession: 100%|██████████| 1/1 [00:02&lt;00:00,  2.41s/it]
 </pre></div>
 </div>
 </section>
@@ -1835,8 +1844,8 @@ BNCI2014-001-CrossSession: 100%|██████████| 1/1 [00:02&lt;00
 <img src="../../_images/sphx_glr_plot_pre_processing_steps_001.png" srcset="../../_images/sphx_glr_plot_pre_processing_steps_001.png" alt="Results of the evaluation with custom pre-processing steps" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;Axes: title={&#39;center&#39;: &#39;Results of the evaluation with custom pre-processing steps&#39;}, xlabel=&#39;Pipeline&#39;, ylabel=&#39;Score&#39;&gt;
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 3.554 seconds)</p>
-<p><strong>Estimated memory usage:</strong>  658 MB</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 3.976 seconds)</p>
+<p><strong>Estimated memory usage:</strong>  572 MB</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-advanced-examples-plot-pre-processing-steps-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/5c253279cf67626fd4e913feb6c12336/plot_pre_processing_steps.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_pre_processing_steps.ipynb</span></code></a></p>
