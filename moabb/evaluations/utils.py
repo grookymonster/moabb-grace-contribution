@@ -45,19 +45,41 @@ def _ensure_fitted(estimator):
     Notes
     -----
     This function modifies the estimator in-place and returns it for
-    convenience. It adds a `_is_fitted` attribute that sklearn's
-    check_is_fitted will recognize.
+    convenience. sklearn's check_is_fitted looks for:
+    1. __sklearn_is_fitted__() method returning True
+    2. Or any attribute ending with '_' (like classes_, coef_, etc.)
+
+    We add a __sklearn_is_fitted__ method that returns True.
     """
-    # Add _is_fitted attribute that sklearn's check_is_fitted recognizes
-    # when __sklearn_is_fitted__ is not defined
-    if not hasattr(estimator, "_is_fitted"):
-        estimator._is_fitted = True
+
+    # Define a method that returns True to indicate fitted state
+    def _sklearn_is_fitted_true(self):
+        return True
+
+    # Add __sklearn_is_fitted__ method if not present or if it returns False
+    if not hasattr(estimator, "__sklearn_is_fitted__"):
+        import types
+
+        estimator.__sklearn_is_fitted__ = types.MethodType(
+            _sklearn_is_fitted_true, estimator
+        )
+    else:
+        # Check if existing method returns False (unfitted)
+        try:
+            if not estimator.__sklearn_is_fitted__():
+                import types
+
+                estimator.__sklearn_is_fitted__ = types.MethodType(
+                    _sklearn_is_fitted_true, estimator
+                )
+        except Exception:
+            pass
 
     # For Pipeline objects, also ensure all steps are marked
     if isinstance(estimator, Pipeline):
         for name, step in estimator.steps:
-            if step is not None and not hasattr(step, "_is_fitted"):
-                step._is_fitted = True
+            if step is not None:
+                _ensure_fitted(step)
 
     return estimator
 
