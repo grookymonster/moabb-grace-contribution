@@ -23,6 +23,45 @@ except ImportError:
     optuna_available = False
 
 
+def _ensure_fitted(estimator):
+    """Ensure an estimator is properly marked as fitted for sklearn 1.8+.
+
+    In sklearn 1.8+, Pipeline.predict() calls check_is_fitted(self) which
+    may fail for some estimators (especially deep learning wrappers) that
+    don't properly set fitted attributes. This function adds the necessary
+    attributes to ensure the estimator passes sklearn's fitted check.
+
+    Parameters
+    ----------
+    estimator : sklearn-compatible estimator
+        The fitted estimator to mark as fitted. This should be called
+        after fit() has been called on the estimator.
+
+    Returns
+    -------
+    estimator : sklearn-compatible estimator
+        The same estimator with fitted attributes set.
+
+    Notes
+    -----
+    This function modifies the estimator in-place and returns it for
+    convenience. It adds a `_is_fitted` attribute that sklearn's
+    check_is_fitted will recognize.
+    """
+    # Add _is_fitted attribute that sklearn's check_is_fitted recognizes
+    # when __sklearn_is_fitted__ is not defined
+    if not hasattr(estimator, "_is_fitted"):
+        estimator._is_fitted = True
+
+    # For Pipeline objects, also ensure all steps are marked
+    if isinstance(estimator, Pipeline):
+        for name, step in estimator.steps:
+            if step is not None and not hasattr(step, "_is_fitted"):
+                step._is_fitted = True
+
+    return estimator
+
+
 def _check_if_is_pytorch_model(model):
     """Check if the model is a skorch model.
 
