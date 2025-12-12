@@ -391,6 +391,46 @@ class BaseDataset(metaclass=MetaclassDataset):
         self.doi = doi
         self.unit_factor = unit_factor
 
+    def get_metadata_cache(
+        self,
+        paradigm_params: dict | None = None,
+        force_update: bool = False,
+    ):
+        """Get metadata cache for this dataset.
+
+        Returns cached metadata about the dataset structure (subjects, sessions,
+        runs, event counts) without loading the raw EEG data. This enables
+        efficient computation of cross-validation splits.
+
+        Parameters
+        ----------
+        paradigm_params : dict | None
+            Paradigm parameters for cache key computation. Different paradigm
+            configurations may result in different trial counts.
+        force_update : bool, default=False
+            If True, regenerate the cache even if it exists locally.
+
+        Returns
+        -------
+        MetadataCache
+            Cache containing dataset structure and metadata.
+
+        Notes
+        -----
+        The cache is stored locally and can also be fetched from a remote
+        repository if available. See :mod:`moabb.datasets.metadata_cache`
+        for more details.
+
+        .. versionadded:: 1.2.0
+        """
+        from moabb.datasets.metadata_cache import fetch_metadata_cache
+
+        return fetch_metadata_cache(
+            dataset=self,
+            paradigm_params=paradigm_params,
+            force_update=force_update,
+        )
+
     def _create_process_pipeline(self):
         return FixedPipeline(
             [

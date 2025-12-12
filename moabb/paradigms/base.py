@@ -127,6 +127,125 @@ class BaseProcessing(metaclass=abc.ABCMeta):
     def used_events(self, dataset):
         pass
 
+    def get_paradigm_params(self) -> dict:
+        """Get paradigm parameters for cache key computation.
+
+        Returns a dictionary of paradigm parameters that affect trial counts
+        and metadata structure. This is used for cache invalidation.
+
+        Returns
+        -------
+        dict
+            Dictionary of paradigm parameters.
+
+        Notes
+        -----
+        .. versionadded:: 1.2.0
+        """
+        return {
+            "filters": self.filters,
+            "tmin": self.tmin,
+            "tmax": self.tmax,
+            "baseline": self.baseline,
+            "channels": self.channels,
+            "resample": self.resample,
+        }
+
+    def get_metadata_lazy(
+        self,
+        dataset,
+        force_update: bool = False,
+    ) -> pd.DataFrame:
+        """Get metadata for a dataset without loading raw data.
+
+        This method returns a DataFrame with the structure needed for
+        cross-validation splitting, without actually loading and processing
+        the EEG data. It uses cached metadata when available.
+
+        Parameters
+        ----------
+        dataset : BaseDataset
+            The dataset to get metadata for.
+        force_update : bool, default=False
+            If True, regenerate cache even if it exists.
+
+        Returns
+        -------
+        pd.DataFrame
+            DataFrame with columns: subject, session, run, [n_trials].
+            Suitable for use with splitters.
+
+        Notes
+        -----
+        This is useful for determining cross-validation splits before
+        loading data, enabling more efficient parallelization.
+
+        For paradigms that create fixed-interval windows, the trial counts
+        are estimated from recording durations. For event-based paradigms,
+        trial counts come from events.tsv files when available.
+
+        .. versionadded:: 1.2.0
+        """
+        from moabb.datasets.metadata_cache import fetch_metadata_cache
+
+        # Get paradigm parameters for cache key
+        paradigm_params = self.get_paradigm_params()
+
+        # Fetch or generate cache
+        cache = fetch_metadata_cache(
+            dataset=dataset,
+            paradigm_params=paradigm_params,
+            force_update=force_update,
+        )
+
+        # Update trial counts if we have an estimator
+        if hasattr(self, "get_trial_count_estimator"):
+            estimator = self.get_trial_count_estimator()
+            cache.update_trial_counts(estimator)
+
+        return cache.to_metadata_df(expand_trials=True)
+
+    def get_metadata_cache(
+        self,
+        dataset,
+        force_update: bool = False,
+    ):
+        """Get the full metadata cache object for a dataset.
+
+        Similar to get_metadata_lazy but returns the MetadataCache object
+        instead of a DataFrame.
+
+        Parameters
+        ----------
+        dataset : BaseDataset
+            The dataset to get metadata for.
+        force_update : bool, default=False
+            If True, regenerate cache even if it exists.
+
+        Returns
+        -------
+        MetadataCache
+            Metadata cache containing dataset structure.
+
+        Notes
+        -----
+        .. versionadded:: 1.2.0
+        """
+        from moabb.datasets.metadata_cache import fetch_metadata_cache
+
+        paradigm_params = self.get_paradigm_params()
+        cache = fetch_metadata_cache(
+            dataset=dataset,
+            paradigm_params=paradigm_params,
+            force_update=force_update,
+        )
+
+        if hasattr(self, "get_trial_count_estimator"):
+            estimator = self.get_trial_count_estimator()
+            cache.update_trial_counts(estimator)
+
+        return cache
+
     def make_process_pipelines(
         self, dataset, return_epochs=False, return_raws=False, postprocess_pipeline=None
     ):

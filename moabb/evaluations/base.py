@@ -338,3 +338,122 @@ class BaseEvaluation(ABC):
         else:
             self.search = False
             return grid_clf
+
+    def get_evaluation_type(self) -> str:
+        """Get the evaluation type for this evaluator.
+
+        Returns
+        -------
+        str
+            One of "within_session", "cross_session", or "cross_subject".
+
+        Notes
+        -----
+        .. versionadded:: 1.2.0
+        """
+        class_name = self.__class__.__name__
+        if "WithinSession" in class_name:
+            return "within_session"
+        elif "CrossSession" in class_name:
+            return "cross_session"
+        elif "CrossSubject" in class_name:
+            return "cross_subject"
+        else:
+            raise ValueError(f"Unknown evaluation type for {class_name}")
+
+    def get_metadata_cache(self, dataset, force_update: bool = False):
+        """Get metadata cache for a dataset using this evaluation's paradigm.
+
+        Parameters
+        ----------
+        dataset : BaseDataset
+            The dataset to get cache for.
+        force_update : bool, default=False
+            If True, regenerate cache even if it exists.
+
+        Returns
+        -------
+        MetadataCache
+            Metadata cache for the dataset.
+
+        Notes
+        -----
+        .. versionadded:: 1.2.0
+        """
+        return self.paradigm.get_metadata_cache(dataset, force_update=force_update)
+
+    def get_n_splits_lazy(self, dataset) -> int:
+        """Get the number of cross-validation splits without loading data.
+
+        This method uses the metadata cache to compute the number of splits
+        that will be generated for the given dataset and evaluation type.
+
+        Parameters
+        ----------
+        dataset : BaseDataset
+            The dataset to compute splits for.
+
+        Returns
+        -------
+        int
+            Number of cross-validation splits.
+
+        Notes
+        -----
+        .. versionadded:: 1.2.0
+        """
+        from moabb.evaluations.splitters import UnifiedSplitter
+
+        cache = self.get_metadata_cache(dataset)
+        evaluation_type = self.get_evaluation_type()
+
+        # Get n_folds from instance if available (WithinSessionEvaluation)
+        n_folds = getattr(self, "n_folds", 5)
+        if hasattr(self, "cv") and hasattr(self.cv, "n_folds"):
+            n_folds = self.cv.n_folds
+
+        splitter = UnifiedSplitter(
+            evaluation_type=evaluation_type,
+            n_folds=n_folds,
+            shuffle=True,
+            random_state=self.random_state,
+        )
+        return splitter.get_n_splits_from_cache(cache)
+
+    def get_all_splits_info(self, dataset):
+        """Generate SplitInfo objects for all splits without loading data.
+
+        This method returns split information that can be used to determine
+        which subjects need to be loaded for each split, enabling efficient
+        parallel processing.
+
+        Parameters
+        ----------
+        dataset : BaseDataset
+            The dataset to generate splits for.
+
+        Yields
+        ------
+        SplitInfo
+            Information about each cross-validation split.
+
+        Notes
+        -----
+        .. versionadded:: 1.2.0
+        """
+        from moabb.evaluations.splitters import UnifiedSplitter
+
+        cache = self.get_metadata_cache(dataset)
+        evaluation_type = self.get_evaluation_type()
+
+        n_folds = getattr(self, "n_folds", 5)
+        if hasattr(self, "cv") and hasattr(self.cv, "n_folds"):
+            n_folds = self.cv.n_folds
+
+        splitter = UnifiedSplitter(
+            evaluation_type=evaluation_type,
+            n_folds=n_folds,
+            shuffle=True,
+            random_state=self.random_state,
+        )
+        yield from splitter.generate_splits_from_cache(cache)

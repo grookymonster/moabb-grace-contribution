@@ -117,6 +117,64 @@ class BaseFixedIntervalWindowsProcessing(BaseProcessing):
     def datasets(self):
         return utils.dataset_search(paradigm=None)
 
+    def estimate_n_trials(self, duration: float) -> int:
+        """Estimate the number of trials from recording duration.
+
+        This method calculates how many fixed-interval epochs will be created
+        from a recording of the given duration, based on the paradigm's
+        length, stride, and offset parameters.
+
+        Parameters
+        ----------
+        duration : float
+            Recording duration in seconds.
+
+        Returns
+        -------
+        int
+            Estimated number of epochs/trials.
+
+        Notes
+        -----
+        This is useful for lazy metadata computation, allowing split
+        determination without loading the raw data.
+
+        .. versionadded:: 1.2.0
+        """
+        effective_duration = duration - self.start_offset
+        if self.stop_offset is not None:
+            effective_duration -= self.stop_offset
+
+        if effective_duration < self.length:
+            return 0
+
+        n_trials = int((effective_duration - self.length) / self.stride) + 1
+        return max(0, n_trials)
+
+    def get_trial_count_estimator(self):
+        """Get a trial count estimator for this paradigm.
+
+        Returns an object that can estimate trial counts from recording
+        durations, useful for lazy metadata computation.
+
+        Returns
+        -------
+        FixedIntervalTrialEstimator
+            Estimator configured with this paradigm's parameters.
+
+        Notes
+        -----
+        .. versionadded:: 1.2.0
+        """
+        from moabb.datasets.metadata_cache import FixedIntervalTrialEstimator
+
+        return FixedIntervalTrialEstimator(
+            length=self.length,
+            stride=self.stride,
+            start_offset=self.start_offset,
+            stop_offset=self.stop_offset,
+        )
+
     def _get_events_pipeline(self, dataset):
         return RawToFixedIntervalEvents(
             length=self.length,
