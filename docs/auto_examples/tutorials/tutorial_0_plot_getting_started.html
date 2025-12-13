@@ -12,7 +12,7 @@
     <link rel="icon" sizes="144x144" href="../../_static/favicon-144.png" type="image/png">
     <link rel="mask-icon" href="../../_static/favicon_mask-icon.svg" color="#222832" type="image/svg+xml">
     <link rel="apple-touch-icon" sizes="500x500" href="../../_static/favicon-500.png" type="image/png">
-    <title>Tutorial 0: Getting Started &#8212; moabb 1.4.2-dev documentation</title>
+    <title>Tutorial 0: Getting Started &#8212; moabb 1.4.3-dev documentation</title>
   
   
   
@@ -41,7 +41,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="https://raw.githubusercontent.com/neurotechx/moabb/refs/heads/develop/docs/source/_static/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=d1415d89" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-2.0.4/b-3.0.2/b-html5-3.0.2/datatables.min.css" />
   
   <!-- So that users can add custom icons -->
@@ -52,7 +52,7 @@
 
     <script src="../../_static/jquery.js?v=5d32c60e"></script>
     <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-    <script src="../../_static/documentation_options.js?v=8342e341"></script>
+    <script src="../../_static/documentation_options.js?v=1c0077db"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -74,13 +74,17 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'auto_examples/tutorials/tutorial_0_plot_getting_started';</script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.datatables.net/v/dt/dt-2.0.4/b-3.0.2/b-html5-3.0.2/datatables.min.js"></script>
+    <link rel="canonical" href="https://neurotechx.github.io/moabb/auto_examples/tutorials/tutorial_0_plot_getting_started.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Tutorial 1: Simple Motor Imagery" href="tutorial_1_simple_example_motor_imagery.html" />
     <link rel="prev" title="Getting Started!" href="index.html" />
+    <link rel="canonical" href="https://neurotechx.github.io/moabb/auto_examples/tutorials/tutorial_0_plot_getting_started.html" />
+    
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="1.4.2" />
+  <meta name="docsearch:version" content="1.4.3" />
+
   </head>
   
   
@@ -117,8 +121,10 @@
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
-  <aside class="bd-header-announcement d-print-none d-none" aria-label="Announcement" data-pst-announcement-url="https://raw.githubusercontent.com/neurotechx/moabb/develop/docs/source/_templates/custom-template.html"></aside>
 </div>
+<aside class="bd-header-announcement" aria-label="Announcement">
+  <div class="bd-header-announcement__content"><strong>Using MOABB in academic work?</strong> <a class='moabb-announcement-cta' href='cite.html'>Cite MOABB</a> <span class='moabb-announcement-secondary'>DOI: <a href='https://doi.org/10.5281/zenodo.10034224'>10.5281/zenodo.10034224</a> · Explore <a href='paper_results.html'>benchmark results</a></span></div>
+</aside>
 
   
     <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
@@ -145,8 +151,8 @@
     
     
     
-    <img src="../../_static/moabb_light.svg" class="logo__image only-light" alt="moabb 1.4.2-dev documentation - Home"/>
-    <img src="../../_static/moabb_dark.svg" class="logo__image only-dark pst-js-only" alt="moabb 1.4.2-dev documentation - Home"/>
+    <img src="../../_static/moabb_light.svg" class="logo__image only-light" alt="moabb 1.4.3-dev documentation - Home"/>
+    <img src="../../_static/moabb_dark.svg" class="logo__image only-dark pst-js-only" alt="moabb 1.4.3-dev documentation - Home"/>
   
   
 </a></div>
@@ -245,6 +251,34 @@
   <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
   <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
 </button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="External Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/NeuroTechX/moabb" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/moabb/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+</ul></div>
       
     </div>
     
@@ -358,6 +392,34 @@
   <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
 </button></div>
         
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="External Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/NeuroTechX/moabb" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/moabb/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+</ul></div>
+        
       </div>
     
   </div>
@@ -414,7 +476,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_pre_processing_steps.html">Playing with the pre-processing steps</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_select_electrodes_resample.html">Select Electrodes and Resampling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_statistical_analysis.html">Statistical Analysis</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_use_an_X_y_dataset.html">Tutorial 6: Using X y data (epoched data) instead of continuous signal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_use_an_X_y_dataset.html">Using X y data (epoched data) instead of continuous signal</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../learning_curve/index.html">Evaluation with learning curve</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -481,11 +543,9 @@
 </div>
               
               
-              
-                
-<div id="searchbox"></div>
-                <article class="bd-article">
-                  
+<div>
+  
+  
   <div class="sphx-glr-download-link-note admonition note">
 <p class="admonition-title">Note</p>
 <p><a class="reference internal" href="#sphx-glr-download-auto-examples-tutorials-tutorial-0-plot-getting-started-py"><span class="std std-ref">Go to the end</span></a>
@@ -560,14 +620,14 @@ is the name of the pipeline and the value is the Pipeline object</p>
   set_config(key, temp_dir)
 /home/runner/work/moabb/moabb/moabb/datasets/romani_bf2025_erp.py:218: RuntimeWarning: Setting non-standard config type: &quot;RomaniBF2025ERP&quot;
   path_root = fetch_dataset(
-[&lt;moabb.datasets.bnci.BNCI2014_001 object at 0x7ffb2fd4e2f0&gt;, &lt;moabb.datasets.bnci.BNCI2014_004 object at 0x7ffb2fd4d7b0&gt;, &lt;moabb.datasets.beetl.Beetl2021_A object at 0x7ffb2fd4caf0&gt;, &lt;moabb.datasets.beetl.Beetl2021_B object at 0x7ffb2fd4cbe0&gt;, &lt;moabb.datasets.gigadb.Cho2017 object at 0x7ffb2fd4e470&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023 object at 0x7ffb2fd4df60&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023A object at 0x7ffb2f594b20&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023B object at 0x7ffb2fd4e7d0&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023C object at 0x7ffb2fd4cfa0&gt;, &lt;moabb.datasets.mpi_mi.GrosseWentrup2009 object at 0x7ffb3417e620&gt;, &lt;moabb.datasets.Lee2019.Lee2019_MI object at 0x7ffb2fd4cbb0&gt;, &lt;moabb.datasets.liu2024.Liu2024 object at 0x7ffb2fd4ddb0&gt;, &lt;moabb.datasets.physionet_mi.PhysionetMI object at 0x7ffb2fd4c7f0&gt;, &lt;moabb.datasets.schirrmeister2017.Schirrmeister2017 object at 0x7ffb2fd4e410&gt;, &lt;moabb.datasets.bbci_eeg_fnirs.Shin2017A object at 0x7ffb2fb01660&gt;, &lt;moabb.datasets.stieger2021.Stieger2021 object at 0x7ffb399b5210&gt;, &lt;moabb.datasets.Weibo2014.Weibo2014 object at 0x7ffb3b151d20&gt;, &lt;moabb.datasets.Zhou2016.Zhou2016 object at 0x7ffb6648e770&gt;]
+[&lt;moabb.datasets.bnci.BNCI2014_001 object at 0x7fa508282fb0&gt;, &lt;moabb.datasets.bnci.BNCI2014_004 object at 0x7fa508282ec0&gt;, &lt;moabb.datasets.beetl.Beetl2021_A object at 0x7fa508281600&gt;, &lt;moabb.datasets.beetl.Beetl2021_B object at 0x7fa508282fe0&gt;, &lt;moabb.datasets.gigadb.Cho2017 object at 0x7fa50906f940&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023 object at 0x7fa50906e7d0&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023A object at 0x7fa50906f0d0&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023B object at 0x7fa50906d870&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023C object at 0x7fa50906dab0&gt;, &lt;moabb.datasets.mpi_mi.GrosseWentrup2009 object at 0x7fa50873d060&gt;, &lt;moabb.datasets.Lee2019.Lee2019_MI object at 0x7fa50814dde0&gt;, &lt;moabb.datasets.liu2024.Liu2024 object at 0x7fa50814c520&gt;, &lt;moabb.datasets.physionet_mi.PhysionetMI object at 0x7fa508282b30&gt;, &lt;moabb.datasets.schirrmeister2017.Schirrmeister2017 object at 0x7fa5080d6cb0&gt;, &lt;moabb.datasets.bbci_eeg_fnirs.Shin2017A object at 0x7fa5080d61a0&gt;, &lt;moabb.datasets.stieger2021.Stieger2021 object at 0x7fa5080d48e0&gt;, &lt;moabb.datasets.Weibo2014.Weibo2014 object at 0x7fa5080d7280&gt;, &lt;moabb.datasets.Zhou2016.Zhou2016 object at 0x7fa5080d4b80&gt;]
 </pre></div>
 </div>
 <p>Or you can run a search through the available datasets:</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><a href="../../generated/moabb.datasets.utils.dataset_search.html#moabb.datasets.utils.dataset_search" title="moabb.datasets.utils.dataset_search" class="sphx-glr-backref-module-moabb-datasets-utils sphx-glr-backref-type-py-function"><span class="n">utils</span><span class="o">.</span><span class="n">dataset_search</span></a><span class="p">(</span><a href="../../generated/moabb.paradigms.LeftRightImagery.html#moabb.paradigms.LeftRightImagery" title="moabb.paradigms.LeftRightImagery" class="sphx-glr-backref-module-moabb-paradigms sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">paradigm</span></a><span class="o">=</span><span class="s2">&quot;imagery&quot;</span><span class="p">,</span> <span class="n">min_subjects</span><span class="o">=</span><span class="mi">6</span><span class="p">))</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[&lt;moabb.datasets.alex_mi.AlexMI object at 0x7ffb2fd4ceb0&gt;, &lt;moabb.datasets.bnci.BNCI2014_001 object at 0x7ffb2f6179d0&gt;, &lt;moabb.datasets.bnci.BNCI2014_002 object at 0x7ffb2f6156f0&gt;, &lt;moabb.datasets.bnci.BNCI2014_004 object at 0x7ffb2f614d00&gt;, &lt;moabb.datasets.bnci.BNCI2015_001 object at 0x7ffb2f658760&gt;, &lt;moabb.datasets.bnci.BNCI2015_004 object at 0x7ffb2f658040&gt;, &lt;moabb.datasets.gigadb.Cho2017 object at 0x7ffb2f65aa70&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023 object at 0x7ffb2f52fa90&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023A object at 0x7ffb2f65acb0&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023B object at 0x7ffb2f52e4d0&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023C object at 0x7ffb2f52dea0&gt;, &lt;moabb.datasets.fake.FakeDataset object at 0x7ffb2f52e680&gt;, &lt;moabb.datasets.mpi_mi.GrosseWentrup2009 object at 0x7ffb399b4a30&gt;, &lt;moabb.datasets.Lee2019.Lee2019_MI object at 0x7ffb399b4730&gt;, &lt;moabb.datasets.liu2024.Liu2024 object at 0x7ffb399b5480&gt;, &lt;moabb.datasets.upper_limb.Ofner2017 object at 0x7ffb2f52fbe0&gt;, &lt;moabb.datasets.physionet_mi.PhysionetMI object at 0x7ffb399b5210&gt;, &lt;moabb.datasets.schirrmeister2017.Schirrmeister2017 object at 0x7ffb2f596f80&gt;, &lt;moabb.datasets.bbci_eeg_fnirs.Shin2017A object at 0x7ffb399b5390&gt;, &lt;moabb.datasets.bbci_eeg_fnirs.Shin2017B object at 0x7ffb399b4340&gt;, &lt;moabb.datasets.stieger2021.Stieger2021 object at 0x7ffb399b57b0&gt;, &lt;moabb.datasets.Weibo2014.Weibo2014 object at 0x7ffb399b4df0&gt;]
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[&lt;moabb.datasets.alex_mi.AlexMI object at 0x7fa5080d69b0&gt;, &lt;moabb.datasets.bnci.BNCI2014_001 object at 0x7fa5080d63e0&gt;, &lt;moabb.datasets.bnci.BNCI2014_002 object at 0x7fa5080d4b80&gt;, &lt;moabb.datasets.bnci.BNCI2014_004 object at 0x7fa5080d6290&gt;, &lt;moabb.datasets.bnci.BNCI2015_001 object at 0x7fa5080d7df0&gt;, &lt;moabb.datasets.bnci.BNCI2015_004 object at 0x7fa5080d5840&gt;, &lt;moabb.datasets.gigadb.Cho2017 object at 0x7fa5080d7910&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023 object at 0x7fa5080d7b80&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023A object at 0x7fa5080d7a30&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023B object at 0x7fa5080d5030&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023C object at 0x7fa5080d7700&gt;, &lt;moabb.datasets.fake.FakeDataset object at 0x7fa5080d6470&gt;, &lt;moabb.datasets.mpi_mi.GrosseWentrup2009 object at 0x7fa5080d5a20&gt;, &lt;moabb.datasets.Lee2019.Lee2019_MI object at 0x7fa5080d6ce0&gt;, &lt;moabb.datasets.liu2024.Liu2024 object at 0x7fa5080d7160&gt;, &lt;moabb.datasets.upper_limb.Ofner2017 object at 0x7fa5080d4bb0&gt;, &lt;moabb.datasets.physionet_mi.PhysionetMI object at 0x7fa5080d6380&gt;, &lt;moabb.datasets.schirrmeister2017.Schirrmeister2017 object at 0x7fa5087c52a0&gt;, &lt;moabb.datasets.bbci_eeg_fnirs.Shin2017A object at 0x7fa5087c5660&gt;, &lt;moabb.datasets.bbci_eeg_fnirs.Shin2017B object at 0x7fa50847a4d0&gt;, &lt;moabb.datasets.stieger2021.Stieger2021 object at 0x7fa508479ff0&gt;, &lt;moabb.datasets.Weibo2014.Weibo2014 object at 0x7fa50847a8f0&gt;]
 </pre></div>
 </div>
 <p>Or you can simply make your own list (which we do here due to computational
@@ -605,22 +665,22 @@ subjects. This also is the correct place to specify multiple threads.</p>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/moabb/moabb/moabb/analysis/results.py:95: RuntimeWarning: Setting non-standard config type: &quot;MOABB_RESULTS&quot;
   set_config(&quot;MOABB_RESULTS&quot;, osp.join(osp.expanduser(&quot;~&quot;), &quot;mne_data&quot;))
 
-BNCI2014-001-CrossSession:   0%|          | 0/2 [00:00&lt;?, ?it/s]2025-12-12 21:31:09,173 INFO MainThread moabb.datasets.download MNE_DATA is not already configured. It will be set to default location in the home directory - /home/runner/mne_data
+BNCI2014-001-CrossSession:   0%|          | 0/2 [00:00&lt;?, ?it/s]2025-12-13 02:41:35,644 INFO MainThread moabb.datasets.download MNE_DATA is not already configured. It will be set to default location in the home directory - /home/runner/mne_data
 All datasets will be downloaded to this location, if anything is already downloaded, please move manually to this location
 /home/runner/work/moabb/moabb/moabb/datasets/download.py:60: RuntimeWarning: Setting non-standard config type: &quot;MNE_DATASETS_BNCI_PATH&quot;
   set_config(key, get_config(&quot;MNE_DATA&quot;))
 
-BNCI2014-001-CrossSession:  50%|█████     | 1/2 [00:03&lt;00:03,  3.38s/it]
-BNCI2014-001-CrossSession: 100%|██████████| 2/2 [00:06&lt;00:00,  3.05s/it]
-BNCI2014-001-CrossSession: 100%|██████████| 2/2 [00:06&lt;00:00,  3.10s/it]
-2025-12-12 21:31:15,119 INFO MainThread moabb.evaluations.base AM+LDA | BNCI2014-001 | 1 | 0train: Score 0.786
-2025-12-12 21:31:15,239 INFO MainThread moabb.evaluations.base AM+LDA | BNCI2014-001 | 1 | 1test: Score 0.802
-2025-12-12 21:31:15,357 INFO MainThread moabb.evaluations.base AM+SVM | BNCI2014-001 | 1 | 0train: Score 0.797
-2025-12-12 21:31:15,490 INFO MainThread moabb.evaluations.base AM+SVM | BNCI2014-001 | 1 | 1test: Score 0.774
-2025-12-12 21:31:15,621 INFO MainThread moabb.evaluations.base AM+LDA | BNCI2014-001 | 2 | 0train: Score 0.577
-2025-12-12 21:31:15,738 INFO MainThread moabb.evaluations.base AM+LDA | BNCI2014-001 | 2 | 1test: Score 0.499
-2025-12-12 21:31:15,857 INFO MainThread moabb.evaluations.base AM+SVM | BNCI2014-001 | 2 | 0train: Score 0.551
-2025-12-12 21:31:15,989 INFO MainThread moabb.evaluations.base AM+SVM | BNCI2014-001 | 2 | 1test: Score 0.471
+BNCI2014-001-CrossSession:  50%|█████     | 1/2 [00:03&lt;00:03,  3.44s/it]
+BNCI2014-001-CrossSession: 100%|██████████| 2/2 [00:06&lt;00:00,  3.09s/it]
+BNCI2014-001-CrossSession: 100%|██████████| 2/2 [00:06&lt;00:00,  3.14s/it]
+2025-12-13 02:41:41,679 INFO MainThread moabb.evaluations.base AM+LDA | BNCI2014-001 | 1 | 0train: Score 0.786
+2025-12-13 02:41:41,800 INFO MainThread moabb.evaluations.base AM+LDA | BNCI2014-001 | 1 | 1test: Score 0.802
+2025-12-13 02:41:41,918 INFO MainThread moabb.evaluations.base AM+SVM | BNCI2014-001 | 1 | 0train: Score 0.797
+2025-12-13 02:41:42,053 INFO MainThread moabb.evaluations.base AM+SVM | BNCI2014-001 | 1 | 1test: Score 0.774
+2025-12-13 02:41:42,186 INFO MainThread moabb.evaluations.base AM+LDA | BNCI2014-001 | 2 | 0train: Score 0.577
+2025-12-13 02:41:42,304 INFO MainThread moabb.evaluations.base AM+LDA | BNCI2014-001 | 2 | 1test: Score 0.499
+2025-12-13 02:41:42,424 INFO MainThread moabb.evaluations.base AM+SVM | BNCI2014-001 | 2 | 0train: Score 0.551
+2025-12-13 02:41:42,556 INFO MainThread moabb.evaluations.base AM+SVM | BNCI2014-001 | 2 | 1test: Score 0.471
 </pre></div>
 </div>
 <p>Results are returned as a pandas DataFrame, and from here you can do as you
@@ -629,17 +689,17 @@ want with them</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>      score      time  samples  ... n_sessions       dataset  pipeline
-0  0.786458  0.030554    144.0  ...          2  BNCI2014-001    AM+LDA
-1  0.801698  0.028183    144.0  ...          2  BNCI2014-001    AM+LDA
-2  0.576582  0.023197    144.0  ...          2  BNCI2014-001    AM+LDA
-3  0.498650  0.020524    144.0  ...          2  BNCI2014-001    AM+LDA
-4  0.797068  0.151189    144.0  ...          2  BNCI2014-001    AM+SVM
+0  0.786458  0.029874    144.0  ...          2  BNCI2014-001    AM+LDA
+1  0.801698  0.027634    144.0  ...          2  BNCI2014-001    AM+LDA
+2  0.576582  0.023582    144.0  ...          2  BNCI2014-001    AM+LDA
+3  0.498650  0.020296    144.0  ...          2  BNCI2014-001    AM+LDA
+4  0.797068  0.148175    144.0  ...          2  BNCI2014-001    AM+SVM
 
 [5 rows x 9 columns]
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 12.453 seconds)</p>
-<p><strong>Estimated memory usage:</strong>  802 MB</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 13.118 seconds)</p>
+<p><strong>Estimated memory usage:</strong>  797 MB</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-tutorials-tutorial-0-plot-getting-started-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/cc78b19f551dfa48627d09f644ea18ad/tutorial_0_plot_getting_started.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">tutorial_0_plot_getting_started.ipynb</span></code></a></p>
@@ -656,8 +716,8 @@ want with them</p>
 </section>
 
 
-                </article>
-              
+</div>
+
               
               
               
@@ -709,6 +769,67 @@ want with them</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation">Evaluation</a></li>
 </ul>
   </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+
+  <div class="sphx-glr-sidebar-component">
+    
+      
+        <div class="sphx-glr-sidebar-item sphx-glr-download-python-sidebar" title="tutorial_0_plot_getting_started.py">
+          <a download href="../../_downloads/bedec31080e1a17987a0db3e4794d1d4/tutorial_0_plot_getting_started.py">
+            <i class="fa-solid fa-download"></i>
+            Download source code
+          </a>
+        </div>
+      
+    
+      
+        <div class="sphx-glr-sidebar-item sphx-glr-download-jupyter-sidebar" title="tutorial_0_plot_getting_started.ipynb">
+          <a download href="../../_downloads/cc78b19f551dfa48627d09f644ea18ad/tutorial_0_plot_getting_started.ipynb">
+            <i class="fa-solid fa-download"></i>
+            Download Jupyter notebook
+          </a>
+        </div>
+      
+    
+      
+        <div class="sphx-glr-sidebar-item sphx-glr-download-zip-sidebar" title="tutorial_0_plot_getting_started.zip">
+          <a download href="../../_downloads/6948e3fd7354e9b9f2056b4e97b9268a/tutorial_0_plot_getting_started.zip">
+            <i class="fa-solid fa-download"></i>
+            Download zipped
+          </a>
+        </div>
+      
+    
+  </div>
+</div>
+
+  <div class="sidebar-secondary-item">
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+<div class="sd-card sd-shadow-sm sd-mb-3 moabb-colab-card">
+  <div class="sd-card-body moabb-colab-card-body">
+    <p class="sd-card-text sd-fs-5 sd-font-weight-bold sd-mb-0">Run this example</p>
+    <a class="sd-btn sd-btn-primary" href="https://colab.research.google.com/github/NeuroTechX/moabb/blob/gh-pages/docs/auto_examples/_notebooks/tutorials/tutorial_0_plot_getting_started.ipynb" target="_blank" rel="noopener">
+      <img class="moabb-colab-badge" alt="Open in Colab" src="https://colab.research.google.com/assets/colab-badge.svg">
+    </a>
+  </div>
+</div>
+</div>
 
 </div></div>
               

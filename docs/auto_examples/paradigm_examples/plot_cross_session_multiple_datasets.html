@@ -12,7 +12,7 @@
     <link rel="icon" sizes="144x144" href="../../_static/favicon-144.png" type="image/png">
     <link rel="mask-icon" href="../../_static/favicon_mask-icon.svg" color="#222832" type="image/svg+xml">
     <link rel="apple-touch-icon" sizes="500x500" href="../../_static/favicon-500.png" type="image/png">
-    <title>Cross-Session on Multiple Datasets &#8212; moabb 1.4.2-dev documentation</title>
+    <title>Cross-Session on Multiple Datasets &#8212; moabb 1.4.3-dev documentation</title>
   
   
   
@@ -41,7 +41,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="https://raw.githubusercontent.com/neurotechx/moabb/refs/heads/develop/docs/source/_static/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=d1415d89" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-2.0.4/b-3.0.2/b-html5-3.0.2/datatables.min.css" />
   
   <!-- So that users can add custom icons -->
@@ -52,7 +52,7 @@
 
     <script src="../../_static/jquery.js?v=5d32c60e"></script>
     <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-    <script src="../../_static/documentation_options.js?v=8342e341"></script>
+    <script src="../../_static/documentation_options.js?v=1c0077db"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -74,13 +74,17 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'auto_examples/paradigm_examples/plot_cross_session_multiple_datasets';</script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.datatables.net/v/dt/dt-2.0.4/b-3.0.2/b-html5-3.0.2/datatables.min.js"></script>
+    <link rel="canonical" href="https://neurotechx.github.io/moabb/auto_examples/paradigm_examples/plot_cross_session_multiple_datasets.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Cross-Subject SSVEP" href="plot_cross_subject_ssvep.html" />
     <link rel="prev" title="Cross-Session Motor Imagery" href="plot_cross_session_motor_imagery.html" />
+    <link rel="canonical" href="https://neurotechx.github.io/moabb/auto_examples/paradigm_examples/plot_cross_session_multiple_datasets.html" />
+    
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="1.4.2" />
+  <meta name="docsearch:version" content="1.4.3" />
+
   </head>
   
   
@@ -117,8 +121,10 @@
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
-  <aside class="bd-header-announcement d-print-none d-none" aria-label="Announcement" data-pst-announcement-url="https://raw.githubusercontent.com/neurotechx/moabb/develop/docs/source/_templates/custom-template.html"></aside>
 </div>
+<aside class="bd-header-announcement" aria-label="Announcement">
+  <div class="bd-header-announcement__content"><strong>Using MOABB in academic work?</strong> <a class='moabb-announcement-cta' href='cite.html'>Cite MOABB</a> <span class='moabb-announcement-secondary'>DOI: <a href='https://doi.org/10.5281/zenodo.10034224'>10.5281/zenodo.10034224</a> · Explore <a href='paper_results.html'>benchmark results</a></span></div>
+</aside>
 
   
     <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
@@ -145,8 +151,8 @@
     
     
     
-    <img src="../../_static/moabb_light.svg" class="logo__image only-light" alt="moabb 1.4.2-dev documentation - Home"/>
-    <img src="../../_static/moabb_dark.svg" class="logo__image only-dark pst-js-only" alt="moabb 1.4.2-dev documentation - Home"/>
+    <img src="../../_static/moabb_light.svg" class="logo__image only-light" alt="moabb 1.4.3-dev documentation - Home"/>
+    <img src="../../_static/moabb_dark.svg" class="logo__image only-dark pst-js-only" alt="moabb 1.4.3-dev documentation - Home"/>
   
   
 </a></div>
@@ -245,6 +251,34 @@
   <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
   <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
 </button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="External Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/NeuroTechX/moabb" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/moabb/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+</ul></div>
       
     </div>
     
@@ -358,6 +392,34 @@
   <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
 </button></div>
         
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="External Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/NeuroTechX/moabb" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://pypi.org/project/moabb/" title="PyPI" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-python fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">PyPI</span></a>
+        </li>
+</ul></div>
+        
       </div>
     
   </div>
@@ -414,7 +476,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_pre_processing_steps.html">Playing with the pre-processing steps</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_select_electrodes_resample.html">Select Electrodes and Resampling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_statistical_analysis.html">Statistical Analysis</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_use_an_X_y_dataset.html">Tutorial 6: Using X y data (epoched data) instead of continuous signal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_use_an_X_y_dataset.html">Using X y data (epoched data) instead of continuous signal</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../learning_curve/index.html">Evaluation with learning curve</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -481,11 +543,9 @@
 </div>
               
               
-              
-                
-<div id="searchbox"></div>
-                <article class="bd-article">
-                  
+<div>
+  
+  
   <div class="sphx-glr-download-link-note admonition note">
 <p class="admonition-title">Note</p>
 <p><a class="reference internal" href="#sphx-glr-download-auto-examples-paradigm-examples-plot-cross-session-multiple-datasets-py"><span class="std std-ref">Go to the end</span></a>
@@ -586,20 +646,20 @@ each subject / session of the dataset, and for each pipeline.</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Zhou2016-CrossSession:   0%|          | 0/2 [00:00&lt;?, ?it/s]
-Zhou2016-CrossSession:  50%|█████     | 1/2 [00:01&lt;00:01,  1.85s/it]
-Zhou2016-CrossSession: 100%|██████████| 2/2 [00:03&lt;00:00,  1.66s/it]
-Zhou2016-CrossSession: 100%|██████████| 2/2 [00:03&lt;00:00,  1.69s/it]
+Zhou2016-CrossSession:  50%|█████     | 1/2 [00:01&lt;00:01,  1.81s/it]
+Zhou2016-CrossSession: 100%|██████████| 2/2 [00:03&lt;00:00,  1.59s/it]
+Zhou2016-CrossSession: 100%|██████████| 2/2 [00:03&lt;00:00,  1.62s/it]
 
 BNCI2014-001-CrossSession:   0%|          | 0/2 [00:00&lt;?, ?it/s]
-BNCI2014-001-CrossSession:  50%|█████     | 1/2 [00:02&lt;00:02,  2.60s/it]
-BNCI2014-001-CrossSession: 100%|██████████| 2/2 [00:05&lt;00:00,  2.62s/it]
-BNCI2014-001-CrossSession: 100%|██████████| 2/2 [00:05&lt;00:00,  2.62s/it]
+BNCI2014-001-CrossSession:  50%|█████     | 1/2 [00:02&lt;00:02,  2.63s/it]
+BNCI2014-001-CrossSession: 100%|██████████| 2/2 [00:05&lt;00:00,  2.60s/it]
+BNCI2014-001-CrossSession: 100%|██████████| 2/2 [00:05&lt;00:00,  2.61s/it]
      score      time  samples subject  ... channels  n_sessions   dataset pipeline
-0  0.85113  0.258373    200.0       1  ...       14           3  Zhou2016  CSP+LDA
-1  0.93640  0.227373    219.0       1  ...       14           3  Zhou2016  CSP+LDA
-2  0.93960  0.294926    219.0       1  ...       14           3  Zhou2016  CSP+LDA
-3  0.90800  0.215021    190.0       2  ...       14           3  Zhou2016  CSP+LDA
-4  0.77037  0.226083    200.0       2  ...       14           3  Zhou2016  CSP+LDA
+0  0.85113  0.267527    200.0       1  ...       14           3  Zhou2016  CSP+LDA
+1  0.93640  0.260075    219.0       1  ...       14           3  Zhou2016  CSP+LDA
+2  0.93960  0.227387    219.0       1  ...       14           3  Zhou2016  CSP+LDA
+3  0.90800  0.201527    190.0       2  ...       14           3  Zhou2016  CSP+LDA
+4  0.77037  0.213757    200.0       2  ...       14           3  Zhou2016  CSP+LDA
 
 [5 rows x 9 columns]
 </pre></div>
@@ -620,8 +680,8 @@ BNCI2014-001-CrossSession: 100%|██████████| 2/2 [00:05&lt;00
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.show.html#matplotlib.pyplot.show" title="matplotlib.pyplot.show" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_cross_session_multiple_datasets_001.png" srcset="../../_images/sphx_glr_plot_cross_session_multiple_datasets_001.png" alt="dataset = Zhou2016, dataset = BNCI2014-001" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 11.394 seconds)</p>
-<p><strong>Estimated memory usage:</strong>  610 MB</p>
+<img src="../../_images/sphx_glr_plot_cross_session_multiple_datasets_001.png" srcset="../../_images/sphx_glr_plot_cross_session_multiple_datasets_001.png" alt="dataset = Zhou2016, dataset = BNCI2014-001" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 11.107 seconds)</p>
+<p><strong>Estimated memory usage:</strong>  558 MB</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-paradigm-examples-plot-cross-session-multiple-datasets-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/a236a554370961344b575283a1efbb02/plot_cross_session_multiple_datasets.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_cross_session_multiple_datasets.ipynb</span></code></a></p>
@@ -638,8 +698,8 @@ BNCI2014-001-CrossSession: 100%|██████████| 2/2 [00:05&lt;00
 </section>
 
 
-                </article>
-              
+</div>
+
               
               
               
@@ -692,6 +752,67 @@ BNCI2014-001-CrossSession: 100%|██████████| 2/2 [00:05&lt;00
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plot-results">Plot Results</a></li>
 </ul>
   </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+
+  <div class="sphx-glr-sidebar-component">
+    
+      
+        <div class="sphx-glr-sidebar-item sphx-glr-download-python-sidebar" title="plot_cross_session_multiple_datasets.py">
+          <a download href="../../_downloads/f8c72bede913a0c8274ead06c53b4c72/plot_cross_session_multiple_datasets.py">
+            <i class="fa-solid fa-download"></i>
+            Download source code
+          </a>
+        </div>
+      
+    
+      
+        <div class="sphx-glr-sidebar-item sphx-glr-download-jupyter-sidebar" title="plot_cross_session_multiple_datasets.ipynb">
+          <a download href="../../_downloads/a236a554370961344b575283a1efbb02/plot_cross_session_multiple_datasets.ipynb">
+            <i class="fa-solid fa-download"></i>
+            Download Jupyter notebook
+          </a>
+        </div>
+      
+    
+      
+        <div class="sphx-glr-sidebar-item sphx-glr-download-zip-sidebar" title="plot_cross_session_multiple_datasets.zip">
+          <a download href="../../_downloads/b934ffc9429b78b93099ef6660c44826/plot_cross_session_multiple_datasets.zip">
+            <i class="fa-solid fa-download"></i>
+            Download zipped
+          </a>
+        </div>
+      
+    
+  </div>
+</div>
+
+  <div class="sidebar-secondary-item">
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+<div class="sd-card sd-shadow-sm sd-mb-3 moabb-colab-card">
+  <div class="sd-card-body moabb-colab-card-body">
+    <p class="sd-card-text sd-fs-5 sd-font-weight-bold sd-mb-0">Run this example</p>
+    <a class="sd-btn sd-btn-primary" href="https://colab.research.google.com/github/NeuroTechX/moabb/blob/gh-pages/docs/auto_examples/_notebooks/paradigm_examples/plot_cross_session_multiple_datasets.ipynb" target="_blank" rel="noopener">
+      <img class="moabb-colab-badge" alt="Open in Colab" src="https://colab.research.google.com/assets/colab-badge.svg">
+    </a>
+  </div>
+</div>
+</div>
 
 </div></div>
               
