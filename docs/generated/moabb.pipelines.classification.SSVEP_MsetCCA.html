@@ -677,56 +677,210 @@
 <h1>moabb.pipelines.classification.SSVEP_MsetCCA<a class="headerlink" href="#moabb-pipelines-classification-ssvep-msetcca" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="moabb.pipelines.classification.SSVEP_MsetCCA">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.pipelines.classification.</span></span><span class="sig-name descname"><span class="pre">SSVEP_MsetCCA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">freqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_filters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/pipelines/classification.py#L556-L665"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.pipelines.classification.SSVEP_MsetCCA" title="Link to this definition">#</a></dt>
-<dd><p>Classifier based on MsetCCA for SSVEP.</p>
-<blockquote>
-<div><p>The MsetCCA method learns multiple linear transforms to extract
-SSVEP common features from multiple sets of EEG data. These are then used
-to compute the reference signal used in CCA <a class="reference internal" href="#r59288fba6272-1" id="id1">[1]</a>.</p>
-</div></blockquote>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.pipelines.classification.</span></span><span class="sig-name descname"><span class="pre">SSVEP_MsetCCA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_filters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/pipelines/classification.py#L752-L1054"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.pipelines.classification.SSVEP_MsetCCA" title="Link to this definition">#</a></dt>
+<dd><p>Multi-set Canonical Correlation Analysis (MsetCCA) for SSVEP detection <a class="reference internal" href="#r59288fba6272-1" id="id1">[1]</a>.</p>
+<p>MsetCCA learns optimal reference signals from training data rather than using
+predefined sinusoidal references as in standard CCA. It maximizes the correlation
+among canonical variates from multiple sets of EEG trials recorded at the same
+stimulus frequency, extracting common SSVEP features.</p>
+<p><strong>Mathematical Formulation</strong></p>
+<p>Given <span class="math">N_t</span> training trials <span class="math">\mathbf{X}_{n,h} \in \mathbb{R}^{N_c \times N_s}</span>
+for stimulus frequency <span class="math">f_n</span>, MsetCCA finds spatial filters
+<span class="math">\mathbf{w}_1, ..., \mathbf{w}_{N_t}</span> that maximize inter-trial correlation.</p>
+<p><strong>MAXVAR Objective Function</strong></p>
+<p>The optimization problem maximizes the sum of pairwise covariances across trials
+subject to a variance constraint:</p>
+<div class="math">
+<p><span class="math">\tilde{\mathbf{w}}_{n,1}, ..., \tilde{\mathbf{w}}_{n,N_t} =
+\arg\max_{\mathbf{w}_1, ..., \mathbf{w}_{N_t}}
+\sum_{h_1 \neq h_2}^{N_t} \mathbf{w}_{h_1}^T \mathbf{X}_{n,h_1}
+\mathbf{X}_{n,h_2}^T \mathbf{w}_{h_2}</span></p>
+</div><p>subject to:</p>
+<div class="math">
+<p><span class="math">\frac{1}{N_t} \sum_{h=1}^{N_t} \mathbf{w}_h^T \mathbf{X}_{n,h}
+\mathbf{X}_{n,h}^T \mathbf{w}_h = 1</span></p>
+</div><p><strong>Generalized Eigenvalue Problem</strong></p>
+<p>The optimization transforms into a generalized eigenvalue problem. Let
+<span class="math">\mathbf{Y}_n</span> be the concatenation of whitened trials stacked as
+<span class="math">[\mathbf{X}_{n,1}; \mathbf{X}_{n,2}; ...; \mathbf{X}_{n,N_t}]</span>:</p>
+<div class="math">
+<p><span class="math">(\mathbf{R}_n - \mathbf{S}_n) \mathbf{w} = \lambda \mathbf{S}_n \mathbf{w}</span></p>
+</div><p>where:</p>
+<ul class="simple">
+<li><p><span class="math">\mathbf{R}_n = \mathbf{Y}_n \mathbf{Y}_n^T</span> is the total covariance matrix</p></li>
+<li><p><span class="math">\mathbf{S}_n</span> is the block-diagonal matrix containing within-trial covariances</p></li>
+</ul>
+<p>The eigenvectors corresponding to the largest eigenvalues give the optimal
+spatial filters.</p>
+<p><strong>Whitening Preprocessing</strong></p>
+<p>Before solving the eigenvalue problem, each trial is whitened using:</p>
+<div class="math">
+<p><span class="math">\tilde{\mathbf{X}} = \mathbf{V} \mathbf{X}, \quad
+\mathbf{V} = \mathbf{\Lambda}^{-1/2} \mathbf{U}^T</span></p>
+</div><p>where <span class="math">\mathbf{U} \mathbf{\Lambda} \mathbf{U}^T</span> is the eigendecomposition
+of the covariance matrix of <span class="math">\mathbf{X}</span>.</p>
+<p><strong>Reference Signal (Template) Construction</strong></p>
+<p>For each stimulus frequency <span class="math">f_n</span>, the optimized reference signal is
+the <strong>average</strong> of spatially filtered training trials:</p>
+<div class="math">
+<p><span class="math">\mathbf{Y}_n^{\text{ref}} = \frac{1}{N_t} \sum_{h=1}^{N_t}
+\mathbf{W}_h^T \tilde{\mathbf{X}}_{n,h}</span></p>
+</div><p>where <span class="math">\mathbf{W}_h</span> contains the spatial filters for trial <span class="math">h</span>.</p>
+<p><strong>Classification Rule</strong></p>
+<p>For a test signal <span class="math">\mathbf{X}</span>, CCA is computed between the test data
+and each reference signal <span class="math">\mathbf{Y}_n^{\text{ref}}</span>:</p>
+<div class="math">
+<p><span class="math">\rho_n = \max_{\mathbf{w}_x, \mathbf{w}_y}
+\text{corr}(\mathbf{X}^T \mathbf{w}_x,
+(\mathbf{Y}_n^{\text{ref}})^T \mathbf{w}_y)</span></p>
+</div><p>The predicted class is: <span class="math">\hat{f} = \arg\max_n \rho_n</span></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>freqs</strong> (<em>dict with n_classes keys</em>) – Frequencies corresponding to the SSVEP stimulation frequencies.
-They are used to identify SSVEP classes presents in the data.</p></li>
-<li><p><strong>n_filters</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – Number of multisets spatial filters used per sample data.
-It corresponds to the number of eigen vectors taken the solution of the
-MAXVAR objective function as formulated in Eq.5 in <a class="reference internal" href="#r59288fba6272-1" id="id2">[1]</a>.</p></li>
+<li><p><strong>n_filters</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>default=1</em>) – Number of spatial filters (eigenvectors) to extract from the MAXVAR
+solution. Corresponds to the dimensionality of the learned reference signals.
+Higher values may capture more variance but risk overfitting.</p></li>
+<li><p><strong>n_jobs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>default=1</em>) – Number of parallel jobs for whitening computation.
+Use <code class="docutils literal notranslate"><span class="pre">-1</span></code> to use all available cores.</p></li>
 </ul>
 </dd>
 </dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="moabb.pipelines.classification.SSVEP_MsetCCA.classes_">
+<span class="sig-name descname"><span class="pre">classes_</span></span><a class="headerlink" href="#moabb.pipelines.classification.SSVEP_MsetCCA.classes_" title="Link to this definition">#</a></dt>
+<dd><p>Encoded class labels (0 to n_classes-1).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray of shape (n_classes,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="moabb.pipelines.classification.SSVEP_MsetCCA.freqs_">
+<span class="sig-name descname"><span class="pre">freqs_</span></span><a class="headerlink" href="#moabb.pipelines.classification.SSVEP_MsetCCA.freqs_" title="Link to this definition">#</a></dt>
+<dd><p>List of stimulus frequency labels from training data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)">list</a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="moabb.pipelines.classification.SSVEP_MsetCCA.one_hot_">
+<span class="sig-name descname"><span class="pre">one_hot_</span></span><a class="headerlink" href="#moabb.pipelines.classification.SSVEP_MsetCCA.one_hot_" title="Link to this definition">#</a></dt>
+<dd><p>Mapping from frequency strings to encoded class labels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="moabb.pipelines.classification.SSVEP_MsetCCA.le_">
+<span class="sig-name descname"><span class="pre">le_</span></span><a class="headerlink" href="#moabb.pipelines.classification.SSVEP_MsetCCA.le_" title="Link to this definition">#</a></dt>
+<dd><p>Fitted label encoder for frequency strings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>LabelEncoder</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="moabb.pipelines.classification.SSVEP_MsetCCA.Ym">
+<span class="sig-name descname"><span class="pre">Ym</span></span><a class="headerlink" href="#moabb.pipelines.classification.SSVEP_MsetCCA.Ym" title="Link to this definition">#</a></dt>
+<dd><p>Dictionary mapping encoded class labels to optimized reference signals
+<span class="math">\mathbf{Y}_n^{\text{ref}}</span> of shape <code class="docutils literal notranslate"><span class="pre">(n_filters,</span> <span class="pre">n_times)</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
 <p class="rubric">References</p>
 <div role="list" class="citation-list">
 <div class="citation" id="r59288fba6272-1" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
-<span class="backrefs">(<a role="doc-backlink" href="#id1">1</a>,<a role="doc-backlink" href="#id2">2</a>)</span>
-<p>Zhang, Y.U., Zhou, G., Jin, J., Wang, X. and Cichocki, A. (2014). Frequency
-recognition in SSVEP-based BCI using multiset canonical correlation analysis.
-International journal of neural systems, 24(04), p.1450013.
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Zhang, Y., Zhou, G., Jin, J., Wang, X., and Cichocki, A. (2014).
+Frequency recognition in SSVEP-based BCI using multiset canonical
+correlation analysis. International Journal of Neural Systems,
+24(04), 1450013.
 <a class="reference external" href="https://doi.org/10.1142/S0129065714500130">https://doi.org/10.1142/S0129065714500130</a></p>
 </div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="moabb.pipelines.classification.SSVEP_CCA.html#moabb.pipelines.classification.SSVEP_CCA" title="moabb.pipelines.classification.SSVEP_CCA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SSVEP_CCA</span></code></a></dt><dd><p>Standard CCA using sinusoidal references.</p>
+</dd>
+<dt><a class="reference internal" href="moabb.pipelines.classification.SSVEP_TRCA.html#moabb.pipelines.classification.SSVEP_TRCA" title="moabb.pipelines.classification.SSVEP_TRCA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SSVEP_TRCA</span></code></a></dt><dd><p>Task-related component analysis for SSVEP.</p>
+</dd>
+</dl>
 </div>
 <p class="rubric">Notes</p>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 0.5.0.</span></p>
 </div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.1.1: </span>Fixed label encoding to match paradigm output. Fixed template computation
+to use averaging instead of concatenation, matching the original algorithm.</p>
+</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="moabb.pipelines.classification.SSVEP_MsetCCA.fit">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/pipelines/classification.py#L594-L637"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.pipelines.classification.SSVEP_MsetCCA.fit" title="Link to this definition">#</a></dt>
-<dd><p>Compute the optimized reference signal at each stimulus
-frequency.</p>
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/pipelines/classification.py#L894-L990"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.pipelines.classification.SSVEP_MsetCCA.fit" title="Link to this definition">#</a></dt>
+<dd><p>Compute the optimized reference signal at each stimulus frequency.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>MNE Epochs</em>) – The training data as MNE Epochs object.</p></li>
+<li><p><strong>y</strong> (<em>np.ndarray</em><em> of </em><em>shape</em><em> (</em><em>n_trials</em><em>,</em><em>)</em>) – The target labels for each trial.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>self</strong> – Instance of classifier.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>SSVEP_MsetCCA object</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="moabb.pipelines.classification.SSVEP_MsetCCA.predict">
-<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/pipelines/classification.py#L639-L652"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.pipelines.classification.SSVEP_MsetCCA.predict" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/pipelines/classification.py#L992-L1023"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.pipelines.classification.SSVEP_MsetCCA.predict" title="Link to this definition">#</a></dt>
 <dd><p>Predict is made by taking the maximum correlation coefficient.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>MNE Epochs</em>) – The data to predict as MNE Epochs object.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>y</strong> – Predicted labels.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)">list</a> of <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)">int</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="moabb.pipelines.classification.SSVEP_MsetCCA.predict_proba">
-<span class="sig-name descname"><span class="pre">predict_proba</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/pipelines/classification.py#L654-L665"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.pipelines.classification.SSVEP_MsetCCA.predict_proba" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">predict_proba</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/pipelines/classification.py#L1025-L1054"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.pipelines.classification.SSVEP_MsetCCA.predict_proba" title="Link to this definition">#</a></dt>
 <dd><p>Probability could be computed from the correlation coefficient.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>MNE Epochs</em>) – The data to predict as MNE Epochs object.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>P</strong> – Probability of each class for each trial.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray of shape (n_trials, n_classes)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -851,6 +1005,11 @@ parameters and not others.</p>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#moabb.pipelines.classification.SSVEP_MsetCCA"><code class="docutils literal notranslate"><span class="pre">SSVEP_MsetCCA</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moabb.pipelines.classification.SSVEP_MsetCCA.classes_"><code class="docutils literal notranslate"><span class="pre">SSVEP_MsetCCA.classes_</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moabb.pipelines.classification.SSVEP_MsetCCA.freqs_"><code class="docutils literal notranslate"><span class="pre">SSVEP_MsetCCA.freqs_</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moabb.pipelines.classification.SSVEP_MsetCCA.one_hot_"><code class="docutils literal notranslate"><span class="pre">SSVEP_MsetCCA.one_hot_</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moabb.pipelines.classification.SSVEP_MsetCCA.le_"><code class="docutils literal notranslate"><span class="pre">SSVEP_MsetCCA.le_</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moabb.pipelines.classification.SSVEP_MsetCCA.Ym"><code class="docutils literal notranslate"><span class="pre">SSVEP_MsetCCA.Ym</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moabb.pipelines.classification.SSVEP_MsetCCA.fit"><code class="docutils literal notranslate"><span class="pre">SSVEP_MsetCCA.fit()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moabb.pipelines.classification.SSVEP_MsetCCA.predict"><code class="docutils literal notranslate"><span class="pre">SSVEP_MsetCCA.predict()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moabb.pipelines.classification.SSVEP_MsetCCA.predict_proba"><code class="docutils literal notranslate"><span class="pre">SSVEP_MsetCCA.predict_proba()</span></code></a></li>

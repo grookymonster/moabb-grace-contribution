@@ -677,45 +677,90 @@
 <h1>moabb.pipelines.classification.SSVEP_TRCA<a class="headerlink" href="#moabb-pipelines-classification-ssvep-trca" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="moabb.pipelines.classification.SSVEP_TRCA">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.pipelines.classification.</span></span><span class="sig-name descname"><span class="pre">SSVEP_TRCA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">freqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downsample</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_ensemble</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'original'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'scm'</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/pipelines/classification.py#L104-L533"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.pipelines.classification.SSVEP_TRCA" title="Link to this definition">#</a></dt>
-<dd><p>Classifier based on the Task-Related Component Analysis method <a class="reference internal" href="#rdaa19db1b521-1" id="id1">[1]</a> for
-SSVEP.</p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.pipelines.classification.</span></span><span class="sig-name descname"><span class="pre">SSVEP_TRCA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_fbands</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_ensemble</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'original'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimator</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'scm'</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/pipelines/classification.py#L211-L729"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.pipelines.classification.SSVEP_TRCA" title="Link to this definition">#</a></dt>
+<dd><p>Task-Related Component Analysis (TRCA) method for SSVEP detection <a class="reference internal" href="#rdaa19db1b521-1" id="id1">[1]</a>.</p>
+<p>TRCA is a data-driven spatial filtering approach that enhances SSVEP detection
+by maximizing the reproducibility of task-related EEG components across multiple
+trials. Unlike CCA which uses predefined sinusoidal references, TRCA learns
+optimal spatial filters directly from the training data.</p>
+<p><strong>Mathematical Formulation</strong></p>
+<p>Given <span class="math">N_t</span> training trials <span class="math">\mathbf{X}^{(h)} \in \mathbb{R}^{N_c \times N_s}</span>
+for a stimulus frequency, TRCA finds the optimal spatial filter <span class="math">\mathbf{w}</span> that
+maximizes the inter-trial covariance while constraining the variance:</p>
+<div class="math">
+<p><span class="math">\hat{\mathbf{w}} = \arg\max_{\mathbf{w}}
+\frac{\mathbf{w}^T \mathbf{S} \mathbf{w}}{\mathbf{w}^T \mathbf{Q} \mathbf{w}}</span></p>
+</div><p><strong>Inter-trial Covariance Matrix S</strong></p>
+<p>The matrix <span class="math">\mathbf{S}</span> captures the covariance between different trials:</p>
+<div class="math">
+<p><span class="math">S_{j_1, j_2} = \sum_{h_1=1}^{N_t} \sum_{h_2=1, h_2 \neq h_1}^{N_t}
+\text{Cov}(x_{j_1}^{(h_1)}(t), x_{j_2}^{(h_2)}(t))</span></p>
+</div><p>where <span class="math">x_j^{(h)}(t)</span> is the signal from channel <span class="math">j</span> in trial <span class="math">h</span>.</p>
+<p><strong>Variance Constraint Matrix Q</strong></p>
+<p>The matrix <span class="math">\mathbf{Q}</span> represents the pooled variance across all trials:</p>
+<div class="math">
+<p><span class="math">\mathbf{Q} = \sum_{h=1}^{N_t} \mathbf{X}^{(h)} (\mathbf{X}^{(h)})^T</span></p>
+</div><p><strong>Generalized Eigenvalue Problem</strong></p>
+<p>The optimization is solved as a generalized eigenvalue problem:</p>
+<div class="math">
+<p><span class="math">\mathbf{S} \mathbf{w} = \lambda \mathbf{Q} \mathbf{w}</span></p>
+</div><p>The eigenvector corresponding to the largest eigenvalue gives the optimal
+spatial filter <span class="math">\hat{\mathbf{w}}</span>.</p>
+<p><strong>Template Construction</strong></p>
+<p>For each stimulus frequency <span class="math">f_n</span>, the template is the average of
+spatially filtered training trials:</p>
+<div class="math">
+<p><span class="math">\bar{\mathbf{X}}_n = \frac{1}{N_t} \sum_{h=1}^{N_t} \mathbf{X}_n^{(h)}</span></p>
+</div><p><strong>Ensemble TRCA</strong></p>
+<p>The ensemble method combines spatial filters from all stimulus frequencies
+into a filter bank <span class="math">\mathbf{W} = [\mathbf{w}_1, \mathbf{w}_2, ..., \mathbf{w}_{N_f}]</span>
+for improved robustness.</p>
+<p><strong>Filter Bank Approach</strong></p>
+<p>To capture harmonic components, EEG signals are decomposed into <span class="math">N_m</span>
+sub-bands using a filter bank. The correlation coefficient for sub-band <span class="math">m</span> is:</p>
+<div class="math">
+<p><span class="math">r_n^{(m)} = \rho\left((\mathbf{X}^{(m)})^T \mathbf{W}^{(m)},
+(\bar{\mathbf{X}}_n^{(m)})^T \mathbf{W}^{(m)}\right)</span></p>
+</div><p><strong>Classification Rule</strong></p>
+<p>The final feature combines sub-band correlations with weights <span class="math">a^{(m)} = m^{-1.25} + 0.25</span>:</p>
+<div class="math">
+<p><span class="math">\rho_n = \sum_{m=1}^{N_m} a^{(m)} \cdot (r_n^{(m)})^2</span></p>
+</div><p>The predicted class is: <span class="math">\hat{\tau} = \arg\max_n \rho_n</span></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>sfreq</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a>) – Sampling frequency of the data to be analyzed.</p></li>
-<li><p><strong>freqs</strong> (<em>dict with n_classes keys</em>) – Frequencies corresponding to the SSVEP components. These are
-necessary to design the filterbank bands.</p></li>
-<li><p><strong>downsample</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>default=1</em>) – Factor by which downsample the data. A downsample value of N will result
-on a sampling frequency of (sfreq // N) by taking one sample every N of
-the original data. In the original TRCA paper <a class="reference internal" href="#rdaa19db1b521-1" id="id2">[1]</a> data are at 250Hz.</p></li>
-<li><p><strong>is_ensemble</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>default=False</em>) – If True, predict on new data using the Ensemble-TRCA method described
-in <a class="reference internal" href="#rdaa19db1b521-1" id="id3">[1]</a>.</p></li>
-<li><p><strong>method</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>default='original'</em>) – ‘original’ computes euclidean mean for S as in the original paper <a class="reference internal" href="#rdaa19db1b521-1" id="id4">[1]</a>.
-‘riemann’ variation computes geodesic mean instead. This geodesic
-mean is more robust to outlier but negatively impacted by ill-conditioned
-matrices (when only few samples are available for training for instance).
-If the geometric mean can’t be estimated, please consider trying ‘logeuclid’.
-It computes log-euclidean mean instead of the affine-invariant one and is more robust
-computationally.
-‘riemann’ and ‘logeuclid’ variations are useful when lots of noisy
-training data are available. With few training data ‘original’ is more
-appropriate.</p></li>
-<li><p><strong>estimator</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – For both methods, regularization to use for covariance matrices estimations.
-Consider ‘schaefer’, ‘lwf’, ‘oas’ or ‘scm’ for no regularization.
-In the original implementation from TRCA paper <a class="reference internal" href="#rdaa19db1b521-1" id="id5">[1]</a>, no regularization
-is used. So method=’original’ and regul=’scm’ is similar to original
-implementation.</p></li>
+<li><p><strong>n_fbands</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>default=5</em>) – Number of sub-bands <span class="math">N_m</span> for the filter bank decomposition.
+Each sub-band captures different harmonic components of the SSVEP.</p></li>
+<li><p><strong>is_ensemble</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>default=True</em>) – If True, use ensemble TRCA which combines spatial filters from all
+stimulus frequencies for improved robustness. If False, use only
+the class-specific spatial filter.</p></li>
+<li><p><strong>method</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>default='original'</em>) – <p>Method for computing the inter-trial covariance matrix <span class="math">\mathbf{S}</span>:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">'original'</span></code>: Euclidean mean as in the original paper <a class="reference internal" href="#rdaa19db1b521-1" id="id2">[1]</a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'riemann'</span></code>: Geodesic (Riemannian) mean, more robust to outliers
+but sensitive to ill-conditioned matrices.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'logeuclid'</span></code>: Log-Euclidean mean, a computationally stable
+alternative to the Riemannian mean.</p></li>
+</ul>
+</p></li>
+<li><p><strong>estimator</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>default='scm'</em>) – <p>Covariance estimator for regularization. Options include:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">'scm'</span></code>: Sample covariance matrix (no regularization, as in <a class="reference internal" href="#rdaa19db1b521-1" id="id3">[1]</a>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'lwf'</span></code>: Ledoit-Wolf shrinkage estimator.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'oas'</span></code>: Oracle Approximating Shrinkage estimator.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'schaefer'</span></code>: Schäfer-Strimmer shrinkage estimator.</p></li>
+</ul>
+</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="moabb.pipelines.classification.SSVEP_TRCA.fb_coefs">
 <span class="sig-name descname"><span class="pre">fb_coefs</span></span><a class="headerlink" href="#moabb.pipelines.classification.SSVEP_TRCA.fb_coefs" title="Link to this definition">#</a></dt>
-<dd><p>Alpha coefficients for the fusion of the filterbank sub-bands.</p>
+<dd><p>Sub-band weights <span class="math">a^{(m)} = m^{-1.25} + 0.25</span> for filter bank fusion.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)">list</a> of len (n_fbands)</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)">list</a> of <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)">float</a>, length n_fbands</p>
 </dd>
 </dl>
 </dd></dl>
@@ -723,7 +768,7 @@ implementation.</p></li>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="moabb.pipelines.classification.SSVEP_TRCA.classes_">
 <span class="sig-name descname"><span class="pre">classes_</span></span><a class="headerlink" href="#moabb.pipelines.classification.SSVEP_TRCA.classes_" title="Link to this definition">#</a></dt>
-<dd><p>Array with the class labels extracted at fit time.</p>
+<dd><p>Encoded class labels extracted at fit time.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>ndarray of shape (n_classes,)</p>
@@ -734,7 +779,7 @@ implementation.</p></li>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="moabb.pipelines.classification.SSVEP_TRCA.n_classes">
 <span class="sig-name descname"><span class="pre">n_classes</span></span><a class="headerlink" href="#moabb.pipelines.classification.SSVEP_TRCA.n_classes" title="Link to this definition">#</a></dt>
-<dd><p>Number of unique labels/classes.</p>
+<dd><p>Number of unique stimulus frequencies/classes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)">int</a></p>
@@ -745,12 +790,10 @@ implementation.</p></li>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="moabb.pipelines.classification.SSVEP_TRCA.templates_">
 <span class="sig-name descname"><span class="pre">templates_</span></span><a class="headerlink" href="#moabb.pipelines.classification.SSVEP_TRCA.templates_" title="Link to this definition">#</a></dt>
-<dd><p>Template data obtained by averaging all training trials for a given
-class. Each class templates is divided in n_fbands sub-bands extracted
-from the filterbank approach.</p>
+<dd><p>Average templates <span class="math">\bar{\mathbf{X}}_n^{(m)}</span> for each class and sub-band.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>ndarray of shape (n_classes, n_bands, n_channels, n_samples)</p>
+<dd class="field-odd"><p>ndarray of shape (n_classes, n_fbands, n_channels, n_samples)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -758,11 +801,43 @@ from the filterbank approach.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="moabb.pipelines.classification.SSVEP_TRCA.weights_">
 <span class="sig-name descname"><span class="pre">weights_</span></span><a class="headerlink" href="#moabb.pipelines.classification.SSVEP_TRCA.weights_" title="Link to this definition">#</a></dt>
-<dd><p>Weight coefficients for the different electrodes which are used
-as spatial filters for the data.</p>
+<dd><p>Spatial filter weights <span class="math">\mathbf{w}_n^{(m)}</span> for each sub-band and class.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>ndarray of shape (n_fbands, n_classes, n_channels)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="moabb.pipelines.classification.SSVEP_TRCA.freqs_">
+<span class="sig-name descname"><span class="pre">freqs_</span></span><a class="headerlink" href="#moabb.pipelines.classification.SSVEP_TRCA.freqs_" title="Link to this definition">#</a></dt>
+<dd><p>List of stimulus frequencies from training data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)">list</a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="moabb.pipelines.classification.SSVEP_TRCA.peaks_">
+<span class="sig-name descname"><span class="pre">peaks_</span></span><a class="headerlink" href="#moabb.pipelines.classification.SSVEP_TRCA.peaks_" title="Link to this definition">#</a></dt>
+<dd><p>Numeric frequency values for filter bank design.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray of shape (n_classes,)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="moabb.pipelines.classification.SSVEP_TRCA.sfreq_">
+<span class="sig-name descname"><span class="pre">sfreq_</span></span><a class="headerlink" href="#moabb.pipelines.classification.SSVEP_TRCA.sfreq_" title="Link to this definition">#</a></dt>
+<dd><p>Sampling frequency of the training data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -771,28 +846,41 @@ as spatial filters for the data.</p>
 <div role="list" class="citation-list">
 <div class="citation" id="rdaa19db1b521-1" role="doc-biblioentry">
 <span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
-<span class="backrefs">(<a role="doc-backlink" href="#id1">1</a>,<a role="doc-backlink" href="#id2">2</a>,<a role="doc-backlink" href="#id3">3</a>,<a role="doc-backlink" href="#id4">4</a>,<a role="doc-backlink" href="#id5">5</a>,<a role="doc-backlink" href="#id6">6</a>)</span>
-<p>M. Nakanishi, Y. Wang, X. Chen, Y. -T. Wang, X. Gao, and T.-P. Jung,
+<span class="backrefs">(<a role="doc-backlink" href="#id1">1</a>,<a role="doc-backlink" href="#id2">2</a>,<a role="doc-backlink" href="#id3">3</a>,<a role="doc-backlink" href="#id4">4</a>)</span>
+<p>M. Nakanishi, Y. Wang, X. Chen, Y.-T. Wang, X. Gao, and T.-P. Jung,
 “Enhancing detection of SSVEPs for a high-speed brain speller using
 task-related component analysis”,
-IEEE Trans. Biomed. Eng, 65(1):104-112, 2018.</p>
+IEEE Trans. Biomed. Eng, 65(1):104-112, 2018.
+<a class="reference external" href="https://doi.org/10.1109/TBME.2017.2694818">https://doi.org/10.1109/TBME.2017.2694818</a></p>
 </div>
 </div>
-<p>Code based on the Matlab implementation from authors of <a class="reference internal" href="#rdaa19db1b521-1" id="id6">[1]</a>
-(<a class="github reference external" href="https://github.com/mnakanishi/TRCA-SSVEP">mnakanishi/TRCA-SSVEP</a>).</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="moabb.pipelines.classification.SSVEP_CCA.html#moabb.pipelines.classification.SSVEP_CCA" title="moabb.pipelines.classification.SSVEP_CCA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SSVEP_CCA</span></code></a></dt><dd><p>CCA-based SSVEP classifier using sinusoidal references.</p>
+</dd>
+<dt><a class="reference internal" href="moabb.pipelines.classification.SSVEP_MsetCCA.html#moabb.pipelines.classification.SSVEP_MsetCCA" title="moabb.pipelines.classification.SSVEP_MsetCCA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SSVEP_MsetCCA</span></code></a></dt><dd><p>Multi-set CCA for learning optimal references from data.</p>
+</dd>
+</dl>
+</div>
 <p class="rubric">Notes</p>
+<p>Code based on the MATLAB implementation from the authors of <a class="reference internal" href="#rdaa19db1b521-1" id="id4">[1]</a>:
+<a class="github reference external" href="https://github.com/mnakanishi/TRCA-SSVEP">mnakanishi/TRCA-SSVEP</a></p>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 0.4.4.</span></p>
 </div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.1.1: </span>TRCA implementation works with MNE Epochs object, fix labels encoding issue.</p>
+</div>
 <dl class="py method">
 <dt class="sig sig-object py" id="moabb.pipelines.classification.SSVEP_TRCA.fit">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/pipelines/classification.py#L326-L373"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.pipelines.classification.SSVEP_TRCA.fit" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/pipelines/classification.py#L505-L561"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.pipelines.classification.SSVEP_TRCA.fit" title="Link to this definition">#</a></dt>
 <dd><p>Extract spatial filters and templates from the given calibration
 data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>X</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>n_trials</em><em>, </em><em>n_channels</em><em>, </em><em>n_samples</em><em>)</em>) – Training data. Trials are grouped by class, divided in n_fbands bands by
+<li><p><strong>X</strong> (<em>MNE Epochs</em>) – Training data. Trials are grouped by class, divided in n_fbands bands by
 the filterbank approach and then used to calculate weight vectors and
 templates for each class and band.</p></li>
 <li><p><strong>y</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>n_trials</em><em>,</em><em>)</em>) – Label vector in respect to X.</p></li>
@@ -809,14 +897,14 @@ templates for each class and band.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="moabb.pipelines.classification.SSVEP_TRCA.predict">
-<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/pipelines/classification.py#L375-L453"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.pipelines.classification.SSVEP_TRCA.predict" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/pipelines/classification.py#L563-L646"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.pipelines.classification.SSVEP_TRCA.predict" title="Link to this definition">#</a></dt>
 <dd><p>Make predictions on unseen data.</p>
 <p>The new data observation X will be filtered
 with weights previously extracted and compared to the templates to assess
 similarity with each of them and select a class based on the maximal value.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>X</strong> (<em>ndarray</em><em> of </em><em>shape</em><em> (</em><em>n_trials</em><em>, </em><em>n_channels</em><em>, </em><em>n_samples</em><em>)</em>) – Testing data. This will be divided in self.n_fbands using the filter- bank approach,
+<dd class="field-odd"><p><strong>X</strong> (<em>MNE Epochs</em>) – Testing data. This will be divided in self.n_fbands using the filterbank approach,
 then it will be transformed by the different spatial filters and compared to the
 previously fit templates according to the selected method for analysis (ensemble or
 not). Finally, correlation scores for all sub-bands of each class will be combined,
@@ -834,7 +922,7 @@ identified as the predicted class of the data.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="moabb.pipelines.classification.SSVEP_TRCA.predict_proba">
-<span class="sig-name descname"><span class="pre">predict_proba</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/pipelines/classification.py#L455-L533"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.pipelines.classification.SSVEP_TRCA.predict_proba" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">predict_proba</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/pipelines/classification.py#L648-L729"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.pipelines.classification.SSVEP_TRCA.predict_proba" title="Link to this definition">#</a></dt>
 <dd><p>Make predictions on unseen data with the associated probabilities.</p>
 <p>The new data observation X will be filtered
 with weights previously extracted and compared to the templates to assess
@@ -949,6 +1037,9 @@ parameters and not others.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moabb.pipelines.classification.SSVEP_TRCA.n_classes"><code class="docutils literal notranslate"><span class="pre">SSVEP_TRCA.n_classes</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moabb.pipelines.classification.SSVEP_TRCA.templates_"><code class="docutils literal notranslate"><span class="pre">SSVEP_TRCA.templates_</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moabb.pipelines.classification.SSVEP_TRCA.weights_"><code class="docutils literal notranslate"><span class="pre">SSVEP_TRCA.weights_</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moabb.pipelines.classification.SSVEP_TRCA.freqs_"><code class="docutils literal notranslate"><span class="pre">SSVEP_TRCA.freqs_</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moabb.pipelines.classification.SSVEP_TRCA.peaks_"><code class="docutils literal notranslate"><span class="pre">SSVEP_TRCA.peaks_</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moabb.pipelines.classification.SSVEP_TRCA.sfreq_"><code class="docutils literal notranslate"><span class="pre">SSVEP_TRCA.sfreq_</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moabb.pipelines.classification.SSVEP_TRCA.fit"><code class="docutils literal notranslate"><span class="pre">SSVEP_TRCA.fit()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moabb.pipelines.classification.SSVEP_TRCA.predict"><code class="docutils literal notranslate"><span class="pre">SSVEP_TRCA.predict()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moabb.pipelines.classification.SSVEP_TRCA.predict_proba"><code class="docutils literal notranslate"><span class="pre">SSVEP_TRCA.predict_proba()</span></code></a></li>

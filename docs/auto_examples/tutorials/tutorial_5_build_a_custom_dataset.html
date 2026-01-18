@@ -458,20 +458,20 @@
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../how_to_benchmark/index.html">Benchmarking and Pipeline Evaluation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../how_to_benchmark/example_codecarbon.html">Benchmarking with MOABB showing the CO2 footprint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_benchmark/noplot_example_codecarbon.html">Benchmarking with MOABB showing the CO2 footprint</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how_to_benchmark/plot_benchmark.html">Benchmarking with MOABB</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how_to_benchmark/plot_benchmark_grid_search.html">Benchmarking with MOABB with Grid Search</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how_to_benchmark/plot_within_session_splitter.html">Tutorial: Within-Session Splitting on Real MI Dataset</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../advanced_examples/index.html">Advanced examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../advanced_examples/noplot_mne_features_pipeline.html">Pipelines using the mne-features library</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_dataset_bubbles.html">Dataset bubble plot</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_dreyer_clf_scores_vs_subj_info.html">Examples of analysis of a Dreyer2023 A dataset.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_filterbank_csp_vs_csp.html">FilterBank CSP versus CSP</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_grid_search_withinsession.html">GridSearch within a session</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_hinss2021_classification.html">Hinss2021 classification example</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_mne_and_scikit_estimators.html">MNE Epochs-based pipelines</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_mne_features_pipeline.html">Pipelines using the mne-features library</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_phmd_ml_spectrum.html">Spectral analysis of the trials</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_pre_processing_steps.html">Playing with the pre-processing steps</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_select_electrodes_resample.html">Select Electrodes and Resampling</a></li>
@@ -664,23 +664,26 @@ The CompoundDataset can be used as a <cite>normal</cite> dataset.</p>
 <span class="nb">print</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>CustomDataset3-WithinSession:   0%|          | 0/4 [00:00&lt;?, ?it/s]
-CustomDataset3-WithinSession:  25%|██▌       | 1/4 [00:02&lt;00:08,  2.75s/it]
-CustomDataset3-WithinSession:  50%|█████     | 2/4 [00:05&lt;00:05,  2.65s/it]
-CustomDataset3-WithinSession:  75%|███████▌  | 3/4 [00:16&lt;00:06,  6.75s/it]
-CustomDataset3-WithinSession: 100%|██████████| 4/4 [00:41&lt;00:00, 13.71s/it]
-CustomDataset3-WithinSession: 100%|██████████| 4/4 [00:41&lt;00:00, 10.34s/it]
-      score      time  samples  ... n_sessions         dataset  pipeline
-0  0.670000  0.373306    120.0  ...          1  CustomDataset3       MDM
-1  0.552500  0.355539    120.0  ...          1  CustomDataset3       MDM
-2  0.642637  2.178831    768.0  ...          1  CustomDataset3       MDM
-3  0.506063  4.651771   1356.0  ...          1  CustomDataset3       MDM
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>CustomDataset3-WithinSession:   0%|          | 0/4 [00:00&lt;?, ?it/s]/home/runner/work/moabb/moabb/moabb/datasets/download.py:60: RuntimeWarning: Setting non-standard config type: &quot;MNE_DATASETS_VIRTUALREALITY_PATH&quot;
+  set_config(key, get_config(&quot;MNE_DATA&quot;))
 
-[4 rows x 9 columns]
+CustomDataset3-WithinSession:  25%|██▌       | 1/4 [00:08&lt;00:25,  8.53s/it]
+CustomDataset3-WithinSession:  50%|█████     | 2/4 [00:17&lt;00:16,  8.50s/it]/home/runner/work/moabb/moabb/moabb/datasets/download.py:60: RuntimeWarning: Setting non-standard config type: &quot;MNE_DATASETS_BRAININVADERS2014A_PATH&quot;
+  set_config(key, get_config(&quot;MNE_DATA&quot;))
+
+CustomDataset3-WithinSession:  75%|███████▌  | 3/4 [00:33&lt;00:12, 12.34s/it]
+CustomDataset3-WithinSession: 100%|██████████| 4/4 [01:02&lt;00:00, 18.84s/it]
+CustomDataset3-WithinSession: 100%|██████████| 4/4 [01:02&lt;00:00, 15.68s/it]
+      score      time  ...  pipeline                  codecarbon_task_name
+0  0.602500  0.057725  ...       MDM  11093742-90ed-483f-aef0-a4dfb8de4ef2
+1  0.582500  0.058060  ...       MDM  b06bc5c6-a328-4abe-b081-73a46f4500a2
+2  0.641699  0.375281  ...       MDM  e5b63c74-5e3a-4bd1-809c-8accf32d21c3
+3  0.589011  0.813736  ...       MDM  de34b465-b591-437d-86b3-29079b64d1c6
+
+[4 rows x 11 columns]
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 42.672 seconds)</p>
-<p><strong>Estimated memory usage:</strong>  586 MB</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (1 minutes 3.305 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-tutorials-tutorial-5-build-a-custom-dataset-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/275776a57e5f58879d57ccb28b4daf54/tutorial_5_build_a_custom_dataset.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">tutorial_5_build_a_custom_dataset.ipynb</span></code></a></p>

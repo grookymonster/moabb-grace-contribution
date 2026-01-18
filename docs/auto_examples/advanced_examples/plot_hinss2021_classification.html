@@ -458,20 +458,20 @@
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../how_to_benchmark/index.html">Benchmarking and Pipeline Evaluation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../how_to_benchmark/example_codecarbon.html">Benchmarking with MOABB showing the CO2 footprint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_benchmark/noplot_example_codecarbon.html">Benchmarking with MOABB showing the CO2 footprint</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how_to_benchmark/plot_benchmark.html">Benchmarking with MOABB</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how_to_benchmark/plot_benchmark_grid_search.html">Benchmarking with MOABB with Grid Search</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how_to_benchmark/plot_within_session_splitter.html">Tutorial: Within-Session Splitting on Real MI Dataset</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Advanced examples</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="noplot_mne_features_pipeline.html">Pipelines using the mne-features library</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_dataset_bubbles.html">Dataset bubble plot</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_dreyer_clf_scores_vs_subj_info.html">Examples of analysis of a Dreyer2023 A dataset.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_filterbank_csp_vs_csp.html">FilterBank CSP versus CSP</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_grid_search_withinsession.html">GridSearch within a session</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Hinss2021 classification example</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_mne_and_scikit_estimators.html">MNE Epochs-based pipelines</a></li>
-<li class="toctree-l2"><a class="reference internal" href="plot_mne_features_pipeline.html">Pipelines using the mne-features library</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_phmd_ml_spectrum.html">Spectral analysis of the trials</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_pre_processing_steps.html">Playing with the pre-processing steps</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_select_electrodes_resample.html">Select Electrodes and Resampling</a></li>
@@ -683,9 +683,9 @@ select electrodes based on the covariance information</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Hinss2021-CrossSession:   0%|          | 0/2 [00:00&lt;?, ?it/s]
-Hinss2021-CrossSession:  50%|█████     | 1/2 [00:09&lt;00:09,  9.83s/it]
-Hinss2021-CrossSession: 100%|██████████| 2/2 [00:19&lt;00:00,  9.88s/it]
-Hinss2021-CrossSession: 100%|██████████| 2/2 [00:19&lt;00:00,  9.87s/it]
+Hinss2021-CrossSession:  50%|█████     | 1/2 [00:20&lt;00:20, 20.79s/it]
+Hinss2021-CrossSession: 100%|██████████| 2/2 [00:40&lt;00:00, 20.28s/it]
+Hinss2021-CrossSession: 100%|██████████| 2/2 [00:40&lt;00:00, 20.35s/it]
 </pre></div>
 </div>
 <p>Here, with the ElSel+Cov+TS+LDA pipeline, we reduce the computation time
@@ -697,9 +697,9 @@ in approximately 8 times to the Cov+ElSel+TS+LDA pipeline.</p>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Averaging the session performance:
                      score      time
 pipeline
-Cov+ElSel+TS+LDA  0.770303  1.768224
-ElSel+Cov+TS+LDA  0.775472  0.347942
-Xdawn+Cov+TS+LDA  0.658810  0.327199
+Cov+ElSel+TS+LDA  0.770303  1.719216
+ElSel+Cov+TS+LDA  0.775472  0.315176
+Xdawn+Cov+TS+LDA  0.658810  0.149394
 </pre></div>
 </div>
 </section>
@@ -736,8 +736,7 @@ Xdawn+Cov+TS+LDA  0.658810  0.327199
 <li><p>Electrode selection strategy based on covariance matrices demonstrates less variability and typically yields better performance.</p></li>
 <li><p>However, this strategy is more time-consuming compared to the simpler electrode selection based on time epoch data.</p></li>
 </ul>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 23.185 seconds)</p>
-<p><strong>Estimated memory usage:</strong>  770 MB</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 43.049 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-advanced-examples-plot-hinss2021-classification-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/5abf5216139378fc86b18e340a1f77b5/plot_hinss2021_classification.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_hinss2021_classification.ipynb</span></code></a></p>

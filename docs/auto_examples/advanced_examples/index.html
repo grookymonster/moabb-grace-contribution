@@ -77,7 +77,7 @@
     <link rel="canonical" href="https://moabb.neurotechx.com/docs/auto_examples/advanced_examples/index.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Dataset bubble plot" href="plot_dataset_bubbles.html" />
+    <link rel="next" title="Pipelines using the mne-features library" href="noplot_mne_features_pipeline.html" />
     <link rel="prev" title="Tutorial: Within-Session Splitting on Real MI Dataset" href="../how_to_benchmark/plot_within_session_splitter.html" />
     <link rel="canonical" href="https://moabb.neurotechx.com/docs/auto_examples/advanced_examples/index.html" />
     
@@ -454,20 +454,20 @@
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../how_to_benchmark/index.html">Benchmarking and Pipeline Evaluation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../how_to_benchmark/example_codecarbon.html">Benchmarking with MOABB showing the CO2 footprint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_benchmark/noplot_example_codecarbon.html">Benchmarking with MOABB showing the CO2 footprint</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how_to_benchmark/plot_benchmark.html">Benchmarking with MOABB</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how_to_benchmark/plot_benchmark_grid_search.html">Benchmarking with MOABB with Grid Search</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how_to_benchmark/plot_within_session_splitter.html">Tutorial: Within-Session Splitting on Real MI Dataset</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Advanced examples</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="noplot_mne_features_pipeline.html">Pipelines using the mne-features library</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_dataset_bubbles.html">Dataset bubble plot</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_dreyer_clf_scores_vs_subj_info.html">Examples of analysis of a Dreyer2023 A dataset.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_filterbank_csp_vs_csp.html">FilterBank CSP versus CSP</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_grid_search_withinsession.html">GridSearch within a session</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_hinss2021_classification.html">Hinss2021 classification example</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_mne_and_scikit_estimators.html">MNE Epochs-based pipelines</a></li>
-<li class="toctree-l2"><a class="reference internal" href="plot_mne_features_pipeline.html">Pipelines using the mne-features library</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_phmd_ml_spectrum.html">Spectral analysis of the trials</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_pre_processing_steps.html">Playing with the pre-processing steps</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_select_electrodes_resample.html">Select Electrodes and Resampling</a></li>
@@ -551,7 +551,10 @@
 </ul>
 <div class="toctree-wrapper compound">
 </div>
-<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This tutorial shows how to use the moabb.analysis.plotting.dataset_bubble_plot function to visualize, at a glance, the number of subjects and sessions in each dataset and the number of trials per session."><img alt="" src="../../_images/sphx_glr_plot_dataset_bubbles_thumb.png" />
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This example shows how to evaluate a pipeline constructed using the mne-features library [1]_. This library provides sklearn compatible feature extractors for M/EEG data. These features can be used directly in your pipelines."><img alt="" src="../../_images/sphx_glr_noplot_mne_features_pipeline_thumb.png" />
+<p><a class="reference internal" href="noplot_mne_features_pipeline.html"><span class="doc">Pipelines using the mne-features library</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Pipelines using the mne-features library</div>
+</div><div class="sphx-glr-thumbcontainer" tooltip="This tutorial shows how to use the moabb.analysis.plotting.dataset_bubble_plot function to visualize, at a glance, the number of subjects and sessions in each dataset and the number of trials per session."><img alt="" src="../../_images/sphx_glr_plot_dataset_bubbles_thumb.png" />
 <p><a class="reference internal" href="plot_dataset_bubbles.html"><span class="doc">Dataset bubble plot</span></a></p>
   <div class="sphx-glr-thumbnail-title">Dataset bubble plot</div>
 </div><div class="sphx-glr-thumbcontainer" tooltip="This example shows how to plot Dreyer2023A Left-Right Imagery ROC AUC scores obtained with CSP+LDA pipeline versus demographic information of the examined subjects (gender and age) and experimenters (gender)."><img alt="" src="../../_images/sphx_glr_plot_dreyer_clf_scores_vs_subj_info_thumb.png" />
@@ -569,9 +572,6 @@
 </div><div class="sphx-glr-thumbcontainer" tooltip="This example shows how to use machine learning pipeline based on MNE Epochs instead of Numpy arrays. This is useful to make the most of the MNE code base and to embed EEG specific code inside sklearn pipelines."><img alt="" src="../../_images/sphx_glr_plot_mne_and_scikit_estimators_thumb.png" />
 <p><a class="reference internal" href="plot_mne_and_scikit_estimators.html"><span class="doc">MNE Epochs-based pipelines</span></a></p>
   <div class="sphx-glr-thumbnail-title">MNE Epochs-based pipelines</div>
-</div><div class="sphx-glr-thumbcontainer" tooltip="This example shows how to evaluate a pipeline constructed using the mne-features library [1]_. This library provides sklearn compatible feature extractors for M/EEG data. These features can be used directly in your pipelines."><img alt="" src="../../_images/sphx_glr_plot_mne_features_pipeline_thumb.png" />
-<p><a class="reference internal" href="plot_mne_features_pipeline.html"><span class="doc">Pipelines using the mne-features library</span></a></p>
-  <div class="sphx-glr-thumbnail-title">Pipelines using the mne-features library</div>
 </div><div class="sphx-glr-thumbcontainer" tooltip="This example demonstrates how to perform spectral analysis on epochs extracted from a specific subject within the moabb.datasets.Cattan2019_PHMD  dataset."><img alt="" src="../../_images/sphx_glr_plot_phmd_ml_spectrum_thumb.png" />
 <p><a class="reference internal" href="plot_phmd_ml_spectrum.html"><span class="doc">Spectral analysis of the trials</span></a></p>
   <div class="sphx-glr-thumbnail-title">Spectral analysis of the trials</div>
@@ -611,11 +611,11 @@
       </div>
     </a>
     <a class="right-next"
-       href="plot_dataset_bubbles.html"
+       href="noplot_mne_features_pipeline.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Dataset bubble plot</p>
+        <p class="prev-next-title">Pipelines using the mne-features library</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

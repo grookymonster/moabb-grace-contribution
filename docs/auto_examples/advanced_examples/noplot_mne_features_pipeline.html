@@ -71,15 +71,15 @@
                 gtag('js', new Date());
                 gtag('config', 'G-5WJBKDMSTE');
             </script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'auto_examples/advanced_examples/plot_mne_features_pipeline';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'auto_examples/advanced_examples/noplot_mne_features_pipeline';</script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.datatables.net/v/dt/dt-2.0.4/b-3.0.2/b-html5-3.0.2/datatables.min.js"></script>
-    <link rel="canonical" href="https://moabb.neurotechx.com/docs/auto_examples/advanced_examples/plot_mne_features_pipeline.html" />
+    <link rel="canonical" href="https://moabb.neurotechx.com/docs/auto_examples/advanced_examples/noplot_mne_features_pipeline.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Spectral analysis of the trials" href="plot_phmd_ml_spectrum.html" />
-    <link rel="prev" title="MNE Epochs-based pipelines" href="plot_mne_and_scikit_estimators.html" />
-    <link rel="canonical" href="https://moabb.neurotechx.com/docs/auto_examples/advanced_examples/plot_mne_features_pipeline.html" />
+    <link rel="next" title="Dataset bubble plot" href="plot_dataset_bubbles.html" />
+    <link rel="prev" title="Advanced examples" href="index.html" />
+    <link rel="canonical" href="https://moabb.neurotechx.com/docs/auto_examples/advanced_examples/noplot_mne_features_pipeline.html" />
     
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -458,20 +458,20 @@
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../how_to_benchmark/index.html">Benchmarking and Pipeline Evaluation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../how_to_benchmark/example_codecarbon.html">Benchmarking with MOABB showing the CO2 footprint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_benchmark/noplot_example_codecarbon.html">Benchmarking with MOABB showing the CO2 footprint</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how_to_benchmark/plot_benchmark.html">Benchmarking with MOABB</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how_to_benchmark/plot_benchmark_grid_search.html">Benchmarking with MOABB with Grid Search</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how_to_benchmark/plot_within_session_splitter.html">Tutorial: Within-Session Splitting on Real MI Dataset</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Advanced examples</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Pipelines using the mne-features library</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_dataset_bubbles.html">Dataset bubble plot</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_dreyer_clf_scores_vs_subj_info.html">Examples of analysis of a Dreyer2023 A dataset.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_filterbank_csp_vs_csp.html">FilterBank CSP versus CSP</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_grid_search_withinsession.html">GridSearch within a session</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_hinss2021_classification.html">Hinss2021 classification example</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_mne_and_scikit_estimators.html">MNE Epochs-based pipelines</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Pipelines using the mne-features library</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_phmd_ml_spectrum.html">Spectral analysis of the trials</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_pre_processing_steps.html">Playing with the pre-processing steps</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_select_electrodes_resample.html">Select Electrodes and Resampling</a></li>
@@ -548,11 +548,11 @@
   
   <div class="sphx-glr-download-link-note admonition note">
 <p class="admonition-title">Note</p>
-<p><a class="reference internal" href="#sphx-glr-download-auto-examples-advanced-examples-plot-mne-features-pipeline-py"><span class="std std-ref">Go to the end</span></a>
+<p><a class="reference internal" href="#sphx-glr-download-auto-examples-advanced-examples-noplot-mne-features-pipeline-py"><span class="std std-ref">Go to the end</span></a>
 to download the full example code.</p>
 </div>
 <section class="sphx-glr-example-title" id="pipelines-using-the-mne-features-library">
-<span id="sphx-glr-auto-examples-advanced-examples-plot-mne-features-pipeline-py"></span><h1>Pipelines using the mne-features library<a class="headerlink" href="#pipelines-using-the-mne-features-library" title="Link to this heading">#</a></h1>
+<span id="sphx-glr-auto-examples-advanced-examples-noplot-mne-features-pipeline-py"></span><h1>Pipelines using the mne-features library<a class="headerlink" href="#pipelines-using-the-mne-features-library" title="Link to this heading">#</a></h1>
 <p>This example shows how to evaluate a pipeline constructed using the
 mne-features library <a class="footnote-reference brackets" href="#id3" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>. This library provides sklearn compatible
 feature extractors for M/EEG data. These features
@@ -571,14 +571,14 @@ in <a class="reference external" href="https://mne.tools/mne-features/api.html">
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">mne</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mne_features.feature_extraction</span><span class="w"> </span><span class="kn">import</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html#sklearn.base.BaseEstimator" title="sklearn.base.BaseEstimator" class="sphx-glr-backref-module-sklearn-base sphx-glr-backref-type-py-class"><span class="n">FeatureExtractor</span></a>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.discriminant_analysis</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearDiscriminantAnalysis</span> <span class="k">as</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.discriminant_analysis.LinearDiscriminantAnalysis.html#sklearn.discriminant_analysis.LinearDiscriminantAnalysis" title="sklearn.discriminant_analysis.LinearDiscriminantAnalysis" class="sphx-glr-backref-module-sklearn-discriminant_analysis sphx-glr-backref-type-py-class"><span class="n">LDA</span></a>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mne_features.feature_extraction</span><span class="w"> </span><span class="kn">import</span> <span class="n">FeatureExtractor</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.discriminant_analysis</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearDiscriminantAnalysis</span> <span class="k">as</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.discriminant_analysis.LinearDiscriminantAnalysis.html#sklearn.discriminant_analysis.LinearDiscriminantAnalysis" title="sklearn.discriminant_analysis.LinearDiscriminantAnalysis" class="sphx-glr-backref-module-sklearn-discriminant_analysis sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">LDA</span></a>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.pipeline</span><span class="w"> </span><span class="kn">import</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.pipeline.make_pipeline.html#sklearn.pipeline.make_pipeline" title="sklearn.pipeline.make_pipeline" class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-function"><span class="n">make_pipeline</span></a>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">moabb</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">moabb.datasets</span><span class="w"> </span><span class="kn">import</span> <a href="../../generated/moabb.datasets.BNCI2014_001.html#moabb.datasets.BNCI2014_001" title="moabb.datasets.BNCI2014_001" class="sphx-glr-backref-module-moabb-datasets sphx-glr-backref-type-py-class"><span class="n">BNCI2014_001</span></a>
-<span class="kn">from</span><span class="w"> </span><span class="nn">moabb.evaluations</span><span class="w"> </span><span class="kn">import</span> <a href="../../generated/moabb.evaluations.WithinSessionEvaluation.html#moabb.evaluations.WithinSessionEvaluation" title="moabb.evaluations.WithinSessionEvaluation" class="sphx-glr-backref-module-moabb-evaluations sphx-glr-backref-type-py-class"><span class="n">WithinSessionEvaluation</span></a>
-<span class="kn">from</span><span class="w"> </span><span class="nn">moabb.paradigms</span><span class="w"> </span><span class="kn">import</span> <a href="../../generated/moabb.paradigms.LeftRightImagery.html#moabb.paradigms.LeftRightImagery" title="moabb.paradigms.LeftRightImagery" class="sphx-glr-backref-module-moabb-paradigms sphx-glr-backref-type-py-class"><span class="n">LeftRightImagery</span></a>
+<span class="kn">from</span><span class="w"> </span><span class="nn">moabb.datasets</span><span class="w"> </span><span class="kn">import</span> <a href="../../generated/moabb.datasets.BNCI2014_001.html#moabb.datasets.BNCI2014_001" title="moabb.datasets.BNCI2014_001" class="sphx-glr-backref-module-moabb-datasets sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">BNCI2014_001</span></a>
+<span class="kn">from</span><span class="w"> </span><span class="nn">moabb.evaluations</span><span class="w"> </span><span class="kn">import</span> <a href="../../generated/moabb.evaluations.WithinSessionEvaluation.html#moabb.evaluations.WithinSessionEvaluation" title="moabb.evaluations.WithinSessionEvaluation" class="sphx-glr-backref-module-moabb-evaluations sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">WithinSessionEvaluation</span></a>
+<span class="kn">from</span><span class="w"> </span><span class="nn">moabb.paradigms</span><span class="w"> </span><span class="kn">import</span> <a href="../../generated/moabb.paradigms.LeftRightImagery.html#moabb.paradigms.LeftRightImagery" title="moabb.paradigms.LeftRightImagery" class="sphx-glr-backref-module-moabb-paradigms sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">LeftRightImagery</span></a>
 
 
 <a href="https://mne.tools/stable/generated/mne.set_log_level.html#mne.set_log_level" title="mne.set_log_level" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">set_log_level</span></a><span class="p">(</span><span class="s2">&quot;CRITICAL&quot;</span><span class="p">)</span>
@@ -608,13 +608,13 @@ then normalizing, at mne-features, it is the number of samples minus 1.</p>
 Computed per channel (<code class="docutils literal notranslate"><span class="pre">c</span></code>). This is simply the difference between the
 maximum and minimum signal values found within that channel’s data vector <code class="docutils literal notranslate"><span class="pre">x</span></code>.
 Formula: <code class="docutils literal notranslate"><span class="pre">ptp_amp(c)</span> <span class="pre">=</span> <span class="pre">max(x)</span> <span class="pre">-</span> <span class="pre">min(x)</span></code></p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sfreq</span></a> <span class="o">=</span> <span class="mf">250.0</span>  <span class="c1"># sampling frequency used in the datasets below</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">sfreq</span> <span class="o">=</span> <span class="mf">250.0</span>  <span class="c1"># sampling frequency used in the datasets below</span>
 
-<span class="n">variance</span> <span class="o">=</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html#sklearn.base.BaseEstimator" title="sklearn.base.BaseEstimator" class="sphx-glr-backref-module-sklearn-base sphx-glr-backref-type-py-class"><span class="n">FeatureExtractor</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sfreq</span></a><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;variance&quot;</span><span class="p">])</span>
-<span class="n">ptp_amp</span> <span class="o">=</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html#sklearn.base.BaseEstimator" title="sklearn.base.BaseEstimator" class="sphx-glr-backref-module-sklearn-base sphx-glr-backref-type-py-class"><span class="n">FeatureExtractor</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sfreq</span></a><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;ptp_amp&quot;</span><span class="p">])</span>
+<span class="n">variance</span> <span class="o">=</span> <span class="n">FeatureExtractor</span><span class="p">(</span><span class="n">sfreq</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;variance&quot;</span><span class="p">])</span>
+<span class="n">ptp_amp</span> <span class="o">=</span> <span class="n">FeatureExtractor</span><span class="p">(</span><span class="n">sfreq</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;ptp_amp&quot;</span><span class="p">])</span>
 
 <span class="c1"># We can also extract several features by passing more than one feature.</span>
-<span class="n">both</span> <span class="o">=</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html#sklearn.base.BaseEstimator" title="sklearn.base.BaseEstimator" class="sphx-glr-backref-module-sklearn-base sphx-glr-backref-type-py-class"><span class="n">FeatureExtractor</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sfreq</span></a><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;ptp_amp&quot;</span><span class="p">,</span> <span class="s2">&quot;variance&quot;</span><span class="p">])</span>
+<span class="n">both</span> <span class="o">=</span> <span class="n">FeatureExtractor</span><span class="p">(</span><span class="n">sfreq</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;ptp_amp&quot;</span><span class="p">,</span> <span class="s2">&quot;variance&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
 </section>
@@ -625,29 +625,22 @@ can therefore be used directly in our pipelines. Here, these transformer
 steps perform feature extraction, reducing the dimensionality of the data.
 We train an LDA classifier to classify our data as left- or right hand
 based on the extracted signal.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pipelines</span></a> <span class="o">=</span> <span class="p">{}</span>
-<a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pipelines</span></a><span class="p">[</span><span class="s2">&quot;var+LDA&quot;</span><span class="p">]</span> <span class="o">=</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.pipeline.make_pipeline.html#sklearn.pipeline.make_pipeline" title="sklearn.pipeline.make_pipeline" class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-function"><span class="n">make_pipeline</span></a><span class="p">(</span><span class="n">variance</span><span class="p">,</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.discriminant_analysis.LinearDiscriminantAnalysis.html#sklearn.discriminant_analysis.LinearDiscriminantAnalysis" title="sklearn.discriminant_analysis.LinearDiscriminantAnalysis" class="sphx-glr-backref-module-sklearn-discriminant_analysis sphx-glr-backref-type-py-class"><span class="n">LDA</span></a><span class="p">())</span>
-<a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pipelines</span></a><span class="p">[</span><span class="s2">&quot;ptp_amp+LDA&quot;</span><span class="p">]</span> <span class="o">=</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.pipeline.make_pipeline.html#sklearn.pipeline.make_pipeline" title="sklearn.pipeline.make_pipeline" class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-function"><span class="n">make_pipeline</span></a><span class="p">(</span><span class="n">ptp_amp</span><span class="p">,</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.discriminant_analysis.LinearDiscriminantAnalysis.html#sklearn.discriminant_analysis.LinearDiscriminantAnalysis" title="sklearn.discriminant_analysis.LinearDiscriminantAnalysis" class="sphx-glr-backref-module-sklearn-discriminant_analysis sphx-glr-backref-type-py-class"><span class="n">LDA</span></a><span class="p">())</span>
-<a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pipelines</span></a><span class="p">[</span><span class="s2">&quot;var+ptp_amp+LDA&quot;</span><span class="p">]</span> <span class="o">=</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.pipeline.make_pipeline.html#sklearn.pipeline.make_pipeline" title="sklearn.pipeline.make_pipeline" class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-function"><span class="n">make_pipeline</span></a><span class="p">(</span><span class="n">both</span><span class="p">,</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.discriminant_analysis.LinearDiscriminantAnalysis.html#sklearn.discriminant_analysis.LinearDiscriminantAnalysis" title="sklearn.discriminant_analysis.LinearDiscriminantAnalysis" class="sphx-glr-backref-module-sklearn-discriminant_analysis sphx-glr-backref-type-py-class"><span class="n">LDA</span></a><span class="p">())</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">pipelines</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">pipelines</span><span class="p">[</span><span class="s2">&quot;var+LDA&quot;</span><span class="p">]</span> <span class="o">=</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.pipeline.make_pipeline.html#sklearn.pipeline.make_pipeline" title="sklearn.pipeline.make_pipeline" class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-function"><span class="n">make_pipeline</span></a><span class="p">(</span><span class="n">variance</span><span class="p">,</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.discriminant_analysis.LinearDiscriminantAnalysis.html#sklearn.discriminant_analysis.LinearDiscriminantAnalysis" title="sklearn.discriminant_analysis.LinearDiscriminantAnalysis" class="sphx-glr-backref-module-sklearn-discriminant_analysis sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">LDA</span></a><span class="p">())</span>
+<span class="n">pipelines</span><span class="p">[</span><span class="s2">&quot;ptp_amp+LDA&quot;</span><span class="p">]</span> <span class="o">=</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.pipeline.make_pipeline.html#sklearn.pipeline.make_pipeline" title="sklearn.pipeline.make_pipeline" class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-function"><span class="n">make_pipeline</span></a><span class="p">(</span><span class="n">ptp_amp</span><span class="p">,</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.discriminant_analysis.LinearDiscriminantAnalysis.html#sklearn.discriminant_analysis.LinearDiscriminantAnalysis" title="sklearn.discriminant_analysis.LinearDiscriminantAnalysis" class="sphx-glr-backref-module-sklearn-discriminant_analysis sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">LDA</span></a><span class="p">())</span>
+<span class="n">pipelines</span><span class="p">[</span><span class="s2">&quot;var+ptp_amp+LDA&quot;</span><span class="p">]</span> <span class="o">=</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.pipeline.make_pipeline.html#sklearn.pipeline.make_pipeline" title="sklearn.pipeline.make_pipeline" class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-function"><span class="n">make_pipeline</span></a><span class="p">(</span><span class="n">both</span><span class="p">,</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.discriminant_analysis.LinearDiscriminantAnalysis.html#sklearn.discriminant_analysis.LinearDiscriminantAnalysis" title="sklearn.discriminant_analysis.LinearDiscriminantAnalysis" class="sphx-glr-backref-module-sklearn-discriminant_analysis sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">LDA</span></a><span class="p">())</span>
 </pre></div>
 </div>
 <p>The rest is the same as in previous tutorials!</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">datasets</span></a> <span class="o">=</span> <span class="p">[</span><a href="../../generated/moabb.datasets.BNCI2014_001.html#moabb.datasets.BNCI2014_001" title="moabb.datasets.BNCI2014_001" class="sphx-glr-backref-module-moabb-datasets sphx-glr-backref-type-py-class"><span class="n">BNCI2014_001</span></a><span class="p">()]</span>
-<a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subj</span></a> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
-<span class="k">for</span> <a href="../../generated/moabb.datasets.BNCI2014_001.html#moabb.datasets.BNCI2014_001" title="moabb.datasets.BNCI2014_001" class="sphx-glr-backref-module-moabb-datasets sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">d</span></a> <span class="ow">in</span> <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">datasets</span></a><span class="p">:</span>
-    <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">d</span><span class="o">.</span><span class="n">subject_list</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subj</span></a>
-<a href="../../generated/moabb.paradigms.LeftRightImagery.html#moabb.paradigms.LeftRightImagery" title="moabb.paradigms.LeftRightImagery" class="sphx-glr-backref-module-moabb-paradigms sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">paradigm</span></a> <span class="o">=</span> <a href="../../generated/moabb.paradigms.LeftRightImagery.html#moabb.paradigms.LeftRightImagery" title="moabb.paradigms.LeftRightImagery" class="sphx-glr-backref-module-moabb-paradigms sphx-glr-backref-type-py-class"><span class="n">LeftRightImagery</span></a><span class="p">()</span>
-<a href="../../generated/moabb.evaluations.WithinSessionEvaluation.html#moabb.evaluations.WithinSessionEvaluation" title="moabb.evaluations.WithinSessionEvaluation" class="sphx-glr-backref-module-moabb-evaluations sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">evaluation</span></a> <span class="o">=</span> <a href="../../generated/moabb.evaluations.WithinSessionEvaluation.html#moabb.evaluations.WithinSessionEvaluation" title="moabb.evaluations.WithinSessionEvaluation" class="sphx-glr-backref-module-moabb-evaluations sphx-glr-backref-type-py-class"><span class="n">WithinSessionEvaluation</span></a><span class="p">(</span>
-    <a href="../../generated/moabb.paradigms.LeftRightImagery.html#moabb.paradigms.LeftRightImagery" title="moabb.paradigms.LeftRightImagery" class="sphx-glr-backref-module-moabb-paradigms sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">paradigm</span></a><span class="o">=</span><a href="../../generated/moabb.paradigms.LeftRightImagery.html#moabb.paradigms.LeftRightImagery" title="moabb.paradigms.LeftRightImagery" class="sphx-glr-backref-module-moabb-paradigms sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">paradigm</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">datasets</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">datasets</span></a><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">datasets</span> <span class="o">=</span> <span class="p">[</span><a href="../../generated/moabb.datasets.BNCI2014_001.html#moabb.datasets.BNCI2014_001" title="moabb.datasets.BNCI2014_001" class="sphx-glr-backref-module-moabb-datasets sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">BNCI2014_001</span></a><span class="p">()]</span>
+<span class="n">subj</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">datasets</span><span class="p">:</span>
+    <span class="n">d</span><span class="o">.</span><span class="n">subject_list</span> <span class="o">=</span> <span class="n">subj</span>
+<span class="n">paradigm</span> <span class="o">=</span> <a href="../../generated/moabb.paradigms.LeftRightImagery.html#moabb.paradigms.LeftRightImagery" title="moabb.paradigms.LeftRightImagery" class="sphx-glr-backref-module-moabb-paradigms sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">LeftRightImagery</span></a><span class="p">()</span>
+<span class="n">evaluation</span> <span class="o">=</span> <a href="../../generated/moabb.evaluations.WithinSessionEvaluation.html#moabb.evaluations.WithinSessionEvaluation" title="moabb.evaluations.WithinSessionEvaluation" class="sphx-glr-backref-module-moabb-evaluations sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">WithinSessionEvaluation</span></a><span class="p">(</span>
+    <span class="n">paradigm</span><span class="o">=</span><span class="n">paradigm</span><span class="p">,</span> <span class="n">datasets</span><span class="o">=</span><span class="n">datasets</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span>
 <span class="p">)</span>
-<span class="n">results</span> <span class="o">=</span> <a href="../../generated/moabb.evaluations.base.BaseEvaluation.html#moabb.evaluations.base.BaseEvaluation.process" title="moabb.evaluations.base.BaseEvaluation.process" class="sphx-glr-backref-module-moabb-evaluations-base sphx-glr-backref-type-py-method"><span class="n">evaluation</span><span class="o">.</span><span class="n">process</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pipelines</span></a><span class="p">)</span>
-</pre></div>
-</div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>BNCI2014-001-WithinSession:   0%|          | 0/3 [00:00&lt;?, ?it/s]
-BNCI2014-001-WithinSession:  33%|███▎      | 1/3 [00:04&lt;00:09,  4.88s/it]
-BNCI2014-001-WithinSession:  67%|██████▋   | 2/3 [00:09&lt;00:04,  4.87s/it]
-BNCI2014-001-WithinSession: 100%|██████████| 3/3 [00:14&lt;00:00,  4.86s/it]
-BNCI2014-001-WithinSession: 100%|██████████| 3/3 [00:14&lt;00:00,  4.86s/it]
+<span class="n">results</span> <span class="o">=</span> <span class="n">evaluation</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">pipelines</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -681,7 +674,7 @@ without adding a lot of new information, resulting in increased overfitting.</p>
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.show.html#matplotlib.pyplot.show" title="matplotlib.pyplot.show" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_mne_features_pipeline_001.png" srcset="../../_images/sphx_glr_plot_mne_features_pipeline_001.png" alt="dataset = BNCI2014-001" class = "sphx-glr-single-img"/></section>
+</section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
 <aside class="footnote-list brackets">
@@ -691,17 +684,15 @@ without adding a lot of new information, resulting in increased overfitting.</p>
 <p>Schiratti, J. B., Le Douget, J. E., Le Van Quyen, M., Essid, S., &amp; Gramfort, A. (2018, April). An ensemble learning approach to detect epileptic seizures from long intracranial EEG recordings. In 2018 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP) (pp. 856-860). IEEE.</p>
 </aside>
 </aside>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 24.077 seconds)</p>
-<p><strong>Estimated memory usage:</strong>  692 MB</p>
-<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-advanced-examples-plot-mne-features-pipeline-py">
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-advanced-examples-noplot-mne-features-pipeline-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
-<p><a class="reference download internal" download="" href="../../_downloads/fcbf500ae2327d770a03e3de74e4dfee/plot_mne_features_pipeline.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_mne_features_pipeline.ipynb</span></code></a></p>
+<p><a class="reference download internal" download="" href="../../_downloads/470a1c76b80dfd308183a73c81cb67cc/noplot_mne_features_pipeline.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">noplot_mne_features_pipeline.ipynb</span></code></a></p>
 </div>
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
-<p><a class="reference download internal" download="" href="../../_downloads/db42a91dc14874087ffb79726b482c07/plot_mne_features_pipeline.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_mne_features_pipeline.py</span></code></a></p>
+<p><a class="reference download internal" download="" href="../../_downloads/66d3d306a44a6838ff27016011015d07/noplot_mne_features_pipeline.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">noplot_mne_features_pipeline.py</span></code></a></p>
 </div>
 <div class="sphx-glr-download sphx-glr-download-zip docutils container">
-<p><a class="reference download internal" download="" href="../../_downloads/7acd583398580bb766c2a48434e72a5d/plot_mne_features_pipeline.zip"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">zipped:</span> <span class="pre">plot_mne_features_pipeline.zip</span></code></a></p>
+<p><a class="reference download internal" download="" href="../../_downloads/77efa46a428c218a00a890c4290e1b94/noplot_mne_features_pipeline.zip"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">zipped:</span> <span class="pre">noplot_mne_features_pipeline.zip</span></code></a></p>
 </div>
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
@@ -719,20 +710,20 @@ without adding a lot of new information, resulting in increased overfitting.</p>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="plot_mne_and_scikit_estimators.html"
+       href="index.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">MNE Epochs-based pipelines</p>
+        <p class="prev-next-title">Advanced examples</p>
       </div>
     </a>
     <a class="right-next"
-       href="plot_phmd_ml_spectrum.html"
+       href="plot_dataset_bubbles.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Spectral analysis of the trials</p>
+        <p class="prev-next-title">Dataset bubble plot</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -769,8 +760,8 @@ without adding a lot of new information, resulting in increased overfitting.</p>
   <div class="sphx-glr-sidebar-component">
     
       
-        <div class="sphx-glr-sidebar-item sphx-glr-download-python-sidebar" title="plot_mne_features_pipeline.py">
-          <a download href="../../_downloads/db42a91dc14874087ffb79726b482c07/plot_mne_features_pipeline.py">
+        <div class="sphx-glr-sidebar-item sphx-glr-download-python-sidebar" title="noplot_mne_features_pipeline.py">
+          <a download href="../../_downloads/66d3d306a44a6838ff27016011015d07/noplot_mne_features_pipeline.py">
             <i class="fa-solid fa-download"></i>
             Download source code
           </a>
@@ -778,8 +769,8 @@ without adding a lot of new information, resulting in increased overfitting.</p>
       
     
       
-        <div class="sphx-glr-sidebar-item sphx-glr-download-jupyter-sidebar" title="plot_mne_features_pipeline.ipynb">
-          <a download href="../../_downloads/fcbf500ae2327d770a03e3de74e4dfee/plot_mne_features_pipeline.ipynb">
+        <div class="sphx-glr-sidebar-item sphx-glr-download-jupyter-sidebar" title="noplot_mne_features_pipeline.ipynb">
+          <a download href="../../_downloads/470a1c76b80dfd308183a73c81cb67cc/noplot_mne_features_pipeline.ipynb">
             <i class="fa-solid fa-download"></i>
             Download Jupyter notebook
           </a>
@@ -787,8 +778,8 @@ without adding a lot of new information, resulting in increased overfitting.</p>
       
     
       
-        <div class="sphx-glr-sidebar-item sphx-glr-download-zip-sidebar" title="plot_mne_features_pipeline.zip">
-          <a download href="../../_downloads/7acd583398580bb766c2a48434e72a5d/plot_mne_features_pipeline.zip">
+        <div class="sphx-glr-sidebar-item sphx-glr-download-zip-sidebar" title="noplot_mne_features_pipeline.zip">
+          <a download href="../../_downloads/77efa46a428c218a00a890c4290e1b94/noplot_mne_features_pipeline.zip">
             <i class="fa-solid fa-download"></i>
             Download zipped
           </a>
@@ -817,7 +808,7 @@ without adding a lot of new information, resulting in increased overfitting.</p>
 <div class="sd-card sd-shadow-sm sd-mb-3 moabb-colab-card">
   <div class="sd-card-body moabb-colab-card-body">
     <p class="sd-card-text sd-fs-5 sd-font-weight-bold sd-mb-0">Run this example</p>
-    <a class="sd-btn sd-btn-primary" href="https://colab.research.google.com/github/NeuroTechX/moabb/blob/gh-pages/docs/auto_examples/_notebooks/advanced_examples/plot_mne_features_pipeline.ipynb" target="_blank" rel="noopener">
+    <a class="sd-btn sd-btn-primary" href="https://colab.research.google.com/github/NeuroTechX/moabb/blob/gh-pages/docs/auto_examples/_notebooks/advanced_examples/noplot_mne_features_pipeline.ipynb" target="_blank" rel="noopener">
       <img class="moabb-colab-badge" alt="Open in Colab" src="https://colab.research.google.com/assets/colab-badge.svg">
     </a>
   </div>

@@ -458,20 +458,20 @@
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../how_to_benchmark/index.html">Benchmarking and Pipeline Evaluation</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../how_to_benchmark/example_codecarbon.html">Benchmarking with MOABB showing the CO2 footprint</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../how_to_benchmark/noplot_example_codecarbon.html">Benchmarking with MOABB showing the CO2 footprint</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how_to_benchmark/plot_benchmark.html">Benchmarking with MOABB</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how_to_benchmark/plot_benchmark_grid_search.html">Benchmarking with MOABB with Grid Search</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../how_to_benchmark/plot_within_session_splitter.html">Tutorial: Within-Session Splitting on Real MI Dataset</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../advanced_examples/index.html">Advanced examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../advanced_examples/noplot_mne_features_pipeline.html">Pipelines using the mne-features library</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_dataset_bubbles.html">Dataset bubble plot</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_dreyer_clf_scores_vs_subj_info.html">Examples of analysis of a Dreyer2023 A dataset.</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_filterbank_csp_vs_csp.html">FilterBank CSP versus CSP</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_grid_search_withinsession.html">GridSearch within a session</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_hinss2021_classification.html">Hinss2021 classification example</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_mne_and_scikit_estimators.html">MNE Epochs-based pipelines</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_mne_features_pipeline.html">Pipelines using the mne-features library</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_phmd_ml_spectrum.html">Spectral analysis of the trials</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_pre_processing_steps.html">Playing with the pre-processing steps</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_select_electrodes_resample.html">Select Electrodes and Resampling</a></li>
@@ -605,7 +605,7 @@ frequency of 13Hz, 17Hz and 21Hz.</p>
 <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">freqs</span></a> <span class="o">=</span> <a href="../../generated/moabb.paradigms.SSVEP.html#moabb.paradigms.SSVEP" title="moabb.paradigms.SSVEP" class="sphx-glr-backref-module-moabb-paradigms sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">paradigm</span></a><span class="o">.</span><span class="n">used_events</span><span class="p">(</span><a href="../../generated/moabb.datasets.Kalunga2016.html#moabb.datasets.Kalunga2016" title="moabb.datasets.Kalunga2016" class="sphx-glr-backref-module-moabb-datasets sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dataset</span></a><span class="p">)</span>
 
 <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pipeline</span></a> <span class="o">=</span> <span class="p">{}</span>
-<a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pipeline</span></a><span class="p">[</span><span class="s2">&quot;CCA&quot;</span><span class="p">]</span> <span class="o">=</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.pipeline.make_pipeline.html#sklearn.pipeline.make_pipeline" title="sklearn.pipeline.make_pipeline" class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-function"><span class="n">make_pipeline</span></a><span class="p">(</span><a href="http://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html#sklearn.base.BaseEstimator" title="sklearn.base.BaseEstimator" class="sphx-glr-backref-module-sklearn-base sphx-glr-backref-type-py-class"><span class="n">SSVEP_CCA</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">interval</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">interval</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">freqs</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">freqs</span></a><span class="p">,</span> <span class="n">n_harmonics</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
+<a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pipeline</span></a><span class="p">[</span><span class="s2">&quot;CCA&quot;</span><span class="p">]</span> <span class="o">=</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.pipeline.make_pipeline.html#sklearn.pipeline.make_pipeline" title="sklearn.pipeline.make_pipeline" class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-function"><span class="n">make_pipeline</span></a><span class="p">(</span><a href="http://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html#sklearn.base.BaseEstimator" title="sklearn.base.BaseEstimator" class="sphx-glr-backref-module-sklearn-base sphx-glr-backref-type-py-class"><span class="n">SSVEP_CCA</span></a><span class="p">(</span><span class="n">n_harmonics</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
 </pre></div>
 </div>
 </section>
@@ -638,14 +638,14 @@ each subject and pipeline.</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Kalunga2016-WithinSession:   0%|          | 0/2 [00:00&lt;?, ?it/s]
-Kalunga2016-WithinSession:  50%|█████     | 1/2 [00:00&lt;00:00,  2.42it/s]
-Kalunga2016-WithinSession: 100%|██████████| 2/2 [00:00&lt;00:00,  2.51it/s]
-Kalunga2016-WithinSession: 100%|██████████| 2/2 [00:00&lt;00:00,  2.50it/s]
-      score      time  samples  ... n_sessions      dataset  pipeline
-0  0.771111  0.038742     48.0  ...          1  Kalunga2016       CCA
-1  0.917778  0.037490     48.0  ...          1  Kalunga2016       CCA
+Kalunga2016-WithinSession:  50%|█████     | 1/2 [00:06&lt;00:06,  6.65s/it]
+Kalunga2016-WithinSession: 100%|██████████| 2/2 [00:13&lt;00:00,  6.62s/it]
+Kalunga2016-WithinSession: 100%|██████████| 2/2 [00:13&lt;00:00,  6.62s/it]
+      score      time  ...  pipeline                  codecarbon_task_name
+0  0.333333  0.000521  ...       CCA  5eef137e-ee45-4cf5-aaf0-e3a37dad1a7b
+1  0.335556  0.000497  ...       CCA  df7eb142-fc24-4032-8d20-bed75413e5d1
 
-[2 rows x 9 columns]
+[2 rows x 11 columns]
 </pre></div>
 </div>
 </section>
@@ -666,8 +666,7 @@ Kalunga2016-WithinSession: 100%|██████████| 2/2 [00:00&lt;00
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.show.html#matplotlib.pyplot.show" title="matplotlib.pyplot.show" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_within_session_ssvep_002.png" srcset="../../_images/sphx_glr_plot_within_session_ssvep_002.png" alt="plot within session ssvep" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 2.998 seconds)</p>
-<p><strong>Estimated memory usage:</strong>  310 MB</p>
+<img src="../../_images/sphx_glr_plot_within_session_ssvep_002.png" srcset="../../_images/sphx_glr_plot_within_session_ssvep_002.png" alt="plot within session ssvep" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 13.724 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-paradigm-examples-plot-within-session-ssvep-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/ddb95468daccb0c135f3c3e8fc36749c/plot_within_session_ssvep.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_within_session_ssvep.ipynb</span></code></a></p>
