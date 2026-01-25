@@ -605,10 +605,6 @@ given run as follows:</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sessions</span></a> <span class="o">=</span> <a href="../../generated/moabb.datasets.base.BaseDataset.html#moabb.datasets.base.BaseDataset.get_data" title="moabb.datasets.base.BaseDataset.get_data" class="sphx-glr-backref-module-moabb-datasets-base sphx-glr-backref-type-py-method"><span class="n">dataset</span><span class="o">.</span><span class="n">get_data</span></a><span class="p">(</span><span class="n">subjects</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-01-19 00:16:02,972 INFO MainThread moabb.datasets.download MNE_DATA is not already configured. It will be set to default location in the home directory - /home/runner/mne_data
-All datasets will be downloaded to this location, if anything is already downloaded, please move manually to this location
-</pre></div>
-</div>
 <p>This returns a MNE Raw object that can be manipulated. This might be enough
 for some users, since the pre-processing and epoching steps can be easily
 done via MNE. However, to conduct an assessment of several classifiers on
@@ -644,7 +640,7 @@ paradigm (note that BNCI2014_001 is in it)</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><a href="../../generated/moabb.paradigms.LeftRightImagery.html#moabb.paradigms.LeftRightImagery" title="moabb.paradigms.LeftRightImagery" class="sphx-glr-backref-module-moabb-paradigms sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">paradigm</span></a><span class="o">.</span><span class="n">datasets</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[&lt;moabb.datasets.bnci.BNCI2014_001 object at 0x7fe47a757490&gt;, &lt;moabb.datasets.bnci.BNCI2014_004 object at 0x7fe47a757160&gt;, &lt;moabb.datasets.beetl.Beetl2021_A object at 0x7fe47a7e4a00&gt;, &lt;moabb.datasets.beetl.Beetl2021_B object at 0x7fe47a7574c0&gt;, &lt;moabb.datasets.gigadb.Cho2017 object at 0x7fe47a7e4ac0&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023 object at 0x7fe47a7e4a30&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023A object at 0x7fe47a7e4bb0&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023B object at 0x7fe47a7e49a0&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023C object at 0x7fe47a7e4820&gt;, &lt;moabb.datasets.mpi_mi.GrosseWentrup2009 object at 0x7fe47a7e4be0&gt;, &lt;moabb.datasets.Lee2019.Lee2019_MI object at 0x7fe47a7e47f0&gt;, &lt;moabb.datasets.liu2024.Liu2024 object at 0x7fe47a7e4880&gt;, &lt;moabb.datasets.physionet_mi.PhysionetMI object at 0x7fe47a7e46d0&gt;, &lt;moabb.datasets.schirrmeister2017.Schirrmeister2017 object at 0x7fe47a7e4970&gt;, &lt;moabb.datasets.bbci_eeg_fnirs.Shin2017A object at 0x7fe47a7e4cd0&gt;, &lt;moabb.datasets.stieger2021.Stieger2021 object at 0x7fe47a7e45e0&gt;, &lt;moabb.datasets.Weibo2014.Weibo2014 object at 0x7fe47a7e4910&gt;, &lt;moabb.datasets.Zhou2016.Zhou2016 object at 0x7fe47a7e4700&gt;]
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[&lt;moabb.datasets.bnci.BNCI2014_001 object at 0x7f5ecf74bbe0&gt;, &lt;moabb.datasets.bnci.BNCI2014_004 object at 0x7f5ecf749660&gt;, &lt;moabb.datasets.beetl.Beetl2021_A object at 0x7f5ecf748550&gt;, &lt;moabb.datasets.beetl.Beetl2021_B object at 0x7f5ecf748c10&gt;, &lt;moabb.datasets.gigadb.Cho2017 object at 0x7f5ecfb66a70&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023 object at 0x7f5ecfb67520&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023A object at 0x7f5ecfb67a90&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023B object at 0x7f5ecfb66da0&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023C object at 0x7f5ecfb66980&gt;, &lt;moabb.datasets.mpi_mi.GrosseWentrup2009 object at 0x7f5ecfb672b0&gt;, &lt;moabb.datasets.Lee2019.Lee2019_MI object at 0x7f5ecfb67730&gt;, &lt;moabb.datasets.liu2024.Liu2024 object at 0x7f5ecfb67b50&gt;, &lt;moabb.datasets.physionet_mi.PhysionetMI object at 0x7f5ecfb66d10&gt;, &lt;moabb.datasets.schirrmeister2017.Schirrmeister2017 object at 0x7f5ecfb669e0&gt;, &lt;moabb.datasets.bbci_eeg_fnirs.Shin2017A object at 0x7f5ecfb66890&gt;, &lt;moabb.datasets.stieger2021.Stieger2021 object at 0x7f5ecfb67250&gt;, &lt;moabb.datasets.Weibo2014.Weibo2014 object at 0x7f5ecfb66f50&gt;, &lt;moabb.datasets.Zhou2016.Zhou2016 object at 0x7f5ecfb66650&gt;]
 </pre></div>
 </div>
 <p>The data from a list of subjects could be preprocessed and return as a 3D
@@ -690,18 +686,11 @@ partition and the remaining one as testing partition.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">results</span> <span class="o">=</span> <a href="../../generated/moabb.evaluations.base.BaseEvaluation.html#moabb.evaluations.base.BaseEvaluation.process" title="moabb.evaluations.base.BaseEvaluation.process" class="sphx-glr-backref-module-moabb-evaluations-base sphx-glr-backref-type-py-method"><span class="n">evaluation</span><span class="o">.</span><span class="n">process</span></a><span class="p">({</span><span class="s2">&quot;csp+lda&quot;</span><span class="p">:</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html#sklearn.pipeline.Pipeline" title="sklearn.pipeline.Pipeline" class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pipeline</span></a><span class="p">})</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>BNCI2014-001-WithinSession:   0%|          | 0/3 [00:00&lt;?, ?it/s][codecarbon WARNING @ 00:16:10] Multiple instances of codecarbon are allowed to run at the same time.
-
-BNCI2014-001-WithinSession:  33%|███▎      | 1/3 [00:16&lt;00:33, 16.94s/it]
-BNCI2014-001-WithinSession:  67%|██████▋   | 2/3 [00:32&lt;00:16, 16.29s/it]
-BNCI2014-001-WithinSession: 100%|██████████| 3/3 [00:48&lt;00:00, 16.11s/it]
-BNCI2014-001-WithinSession: 100%|██████████| 3/3 [00:48&lt;00:00, 16.22s/it]
-2026-01-19 00:16:57,339 INFO MainThread moabb.evaluations.base csp+lda | BNCI2014-001 | 1 | 0train: Score 0.940
-2026-01-19 00:16:57,453 INFO MainThread moabb.evaluations.base csp+lda | BNCI2014-001 | 1 | 1test: Score 0.937
-2026-01-19 00:16:57,565 INFO MainThread moabb.evaluations.base csp+lda | BNCI2014-001 | 2 | 0train: Score 0.645
-2026-01-19 00:16:57,678 INFO MainThread moabb.evaluations.base csp+lda | BNCI2014-001 | 2 | 1test: Score 0.709
-2026-01-19 00:16:57,790 INFO MainThread moabb.evaluations.base csp+lda | BNCI2014-001 | 3 | 0train: Score 0.994
-2026-01-19 00:16:57,903 INFO MainThread moabb.evaluations.base csp+lda | BNCI2014-001 | 3 | 1test: Score 0.992
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>BNCI2014-001-WithinSession:   0%|          | 0/3 [00:00&lt;?, ?it/s]
+BNCI2014-001-WithinSession:  33%|███▎      | 1/3 [00:16&lt;00:32, 16.36s/it]
+BNCI2014-001-WithinSession:  67%|██████▋   | 2/3 [00:32&lt;00:16, 16.27s/it]
+BNCI2014-001-WithinSession: 100%|██████████| 3/3 [00:48&lt;00:00, 16.31s/it]
+BNCI2014-001-WithinSession: 100%|██████████| 3/3 [00:48&lt;00:00, 16.31s/it]
 </pre></div>
 </div>
 <p>The results are stored in locally, to avoid recomputing the results each time.
@@ -729,11 +718,8 @@ strings for its labeling. This is why we create the field ‘subj’.</p>
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.show.html#matplotlib.pyplot.show" title="matplotlib.pyplot.show" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_tutorial_1_simple_example_motor_imagery_001.png" srcset="../../_images/sphx_glr_tutorial_1_simple_example_motor_imagery_001.png" alt="tutorial 1 simple example motor imagery" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-01-19 00:16:58,149 INFO MainThread matplotlib.category Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
-2026-01-19 00:16:58,151 INFO MainThread matplotlib.category Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
-</pre></div>
-</div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 57.273 seconds)</p>
+<img src="../../_images/sphx_glr_tutorial_1_simple_example_motor_imagery_001.png" srcset="../../_images/sphx_glr_tutorial_1_simple_example_motor_imagery_001.png" alt="tutorial 1 simple example motor imagery" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 54.963 seconds)</p>
+<p><strong>Estimated memory usage:</strong>  1114 MB</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-tutorials-tutorial-1-simple-example-motor-imagery-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/b5e20655a202770c185990e75afbe3cd/tutorial_1_simple_example_motor_imagery.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">tutorial_1_simple_example_motor_imagery.ipynb</span></code></a></p>

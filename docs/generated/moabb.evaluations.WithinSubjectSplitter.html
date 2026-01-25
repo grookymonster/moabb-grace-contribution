@@ -12,7 +12,7 @@
     <link rel="icon" sizes="144x144" href="../_static/favicon-144.png" type="image/png">
     <link rel="mask-icon" href="../_static/favicon_mask-icon.svg" color="#222832" type="image/svg+xml">
     <link rel="apple-touch-icon" sizes="500x500" href="../_static/favicon-500.png" type="image/png">
-    <title>moabb.analysis.meta_analysis.find_significant_differences &#8212; moabb 1.4.3-dev documentation</title>
+    <title>moabb.evaluations.WithinSubjectSplitter &#8212; moabb 1.4.3-dev documentation</title>
   
   
   
@@ -71,15 +71,15 @@
                 gtag('js', new Date());
                 gtag('config', 'G-5WJBKDMSTE');
             </script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'generated/moabb.analysis.meta_analysis.find_significant_differences';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'generated/moabb.evaluations.WithinSubjectSplitter';</script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.datatables.net/v/dt/dt-2.0.4/b-3.0.2/b-html5-3.0.2/datatables.min.js"></script>
-    <link rel="canonical" href="https://moabb.neurotechx.com/docs/generated/moabb.analysis.meta_analysis.find_significant_differences.html" />
+    <link rel="canonical" href="https://moabb.neurotechx.com/docs/generated/moabb.evaluations.WithinSubjectSplitter.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="moabb.analysis.meta_analysis.compute_dataset_statistics" href="moabb.analysis.meta_analysis.compute_dataset_statistics.html" />
-    <link rel="prev" title="moabb.analysis.plotting.dataset_bubble_plot" href="moabb.analysis.plotting.dataset_bubble_plot.html" />
-    <link rel="canonical" href="https://moabb.neurotechx.com/docs/generated/moabb.analysis.meta_analysis.find_significant_differences.html" />
+    <link rel="next" title="moabb.evaluations.CrossSessionSplitter" href="moabb.evaluations.CrossSessionSplitter.html" />
+    <link rel="prev" title="moabb.evaluations.WithinSessionSplitter" href="moabb.evaluations.WithinSessionSplitter.html" />
+    <link rel="canonical" href="https://moabb.neurotechx.com/docs/generated/moabb.evaluations.WithinSubjectSplitter.html" />
     
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -574,9 +574,9 @@
 <li class="toctree-l1"><a class="reference internal" href="moabb.evaluations.CrossSessionEvaluation.html">moabb.evaluations.CrossSessionEvaluation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moabb.evaluations.CrossSubjectEvaluation.html">moabb.evaluations.CrossSubjectEvaluation</a></li>
 </ul>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="moabb.evaluations.WithinSessionSplitter.html">moabb.evaluations.WithinSessionSplitter</a></li>
-<li class="toctree-l1"><a class="reference internal" href="moabb.evaluations.WithinSubjectSplitter.html">moabb.evaluations.WithinSubjectSplitter</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">moabb.evaluations.WithinSubjectSplitter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moabb.evaluations.CrossSessionSplitter.html">moabb.evaluations.CrossSessionSplitter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moabb.evaluations.CrossSubjectSplitter.html">moabb.evaluations.CrossSubjectSplitter</a></li>
 </ul>
@@ -601,8 +601,8 @@
 <li class="toctree-l1"><a class="reference internal" href="moabb.analysis.plotting.meta_analysis_plot.html">moabb.analysis.plotting.meta_analysis_plot</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moabb.analysis.plotting.dataset_bubble_plot.html">moabb.analysis.plotting.dataset_bubble_plot</a></li>
 </ul>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">moabb.analysis.meta_analysis.find_significant_differences</a></li>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="moabb.analysis.meta_analysis.find_significant_differences.html">moabb.analysis.meta_analysis.find_significant_differences</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moabb.analysis.meta_analysis.compute_dataset_statistics.html">moabb.analysis.meta_analysis.compute_dataset_statistics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moabb.analysis.meta_analysis.combine_effects.html">moabb.analysis.meta_analysis.combine_effects</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moabb.analysis.meta_analysis.combine_pvalues.html">moabb.analysis.meta_analysis.combine_pvalues</a></li>
@@ -659,7 +659,7 @@
     
     <li class="breadcrumb-item"><a href="../api.html" class="nav-link">API and Main Concepts</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">moabb.analysis.meta_analysis.find_significant_differences</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">moabb.evaluations.WithinSubjectSplitter</span></li>
   </ul>
 </nav>
 </div>
@@ -674,31 +674,74 @@
 <div>
   
   
-  <section id="moabb-analysis-meta-analysis-find-significant-differences">
-<h1>moabb.analysis.meta_analysis.find_significant_differences<a class="headerlink" href="#moabb-analysis-meta-analysis-find-significant-differences" title="Link to this heading">#</a></h1>
-<dl class="py function">
-<dt class="sig sig-object py" id="moabb.analysis.meta_analysis.find_significant_differences">
-<span class="sig-prename descclassname"><span class="pre">moabb.analysis.meta_analysis.</span></span><span class="sig-name descname"><span class="pre">find_significant_differences</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">perm_cutoff</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/analysis/meta_analysis.py#L312-L354"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.analysis.meta_analysis.find_significant_differences" title="Link to this definition">#</a></dt>
-<dd><p>Compute differences between pipelines across datasets.</p>
-<p>Compute matrices of p-values and effects for all algorithms over all datasets via
-combined p-values and combined effects methods</p>
+  <section id="moabb-evaluations-withinsubjectsplitter">
+<h1>moabb.evaluations.WithinSubjectSplitter<a class="headerlink" href="#moabb-evaluations-withinsubjectsplitter" title="Link to this heading">#</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="moabb.evaluations.WithinSubjectSplitter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.evaluations.</span></span><span class="sig-name descname"><span class="pre">WithinSubjectSplitter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_folds:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state:</span> <span class="pre">int</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cv_class:</span> <span class="pre">type[~sklearn.model_selection._split.BaseCrossValidator]</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'sklearn.model_selection._split.StratifiedKFold'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**cv_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/evaluations/splitters.py#L115-L215"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.evaluations.WithinSubjectSplitter" title="Link to this definition">#</a></dt>
+<dd><p>Data splitter for within subject evaluation.</p>
+<p>Within-subject evaluation uses k-fold cross-validation to determine train
+and test sets for each subject across all their sessions. This splitter
+assumes that all data from all subjects is already known and loaded.</p>
+<p>Unlike WithinSessionSplitter which performs cross-validation within each session,
+this splitter performs cross-validation across all sessions within each subject.</p>
+<p>The inner cross-validation strategy can be changed by passing the
+<cite>cv_class</cite> and <cite>cv_kwargs</cite> arguments. By default, it uses StratifiedKFold.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>df</strong> (<em>DataFrame</em>) – Table of effect and p-values for each dataset and all pipelines, returned by
-compute_dataset_statistics</p></li>
-<li><p><strong>perm_cutoff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>default=20</em>) – threshold value  to stop using permutation tests, which can be very expensive
-computationally, using Wilcoxon rank-sum test instead</p></li>
+<li><p><strong>n_folds</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>default=5</em>) – Number of folds. Must be at least 2.</p></li>
+<li><p><strong>shuffle</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>default=True</em>) – Whether to shuffle each class’s samples before splitting into batches.
+Note that the samples within each split will not be shuffled.</p></li>
+<li><p><strong>random_state</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>RandomState instance</em><em> or </em><em>None</em><em>, </em><em>default=None</em>) – Controls the randomness of splits. Only used when <cite>shuffle</cite> is True.
+Pass an int for reproducible output across multiple function calls.</p></li>
+<li><p><strong>cv_class</strong> (<em>cross-validation class</em><em>, </em><em>default=StratifiedKFold</em>) – Inner cross-validation strategy for splitting within each subject.</p></li>
+<li><p><strong>cv_kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>) – Additional arguments to pass to the inner cross-validation strategy.</p></li>
 </ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p><strong>dfP</strong> (<em>DataFrame of shape (n_pipelines, n_pipelines)</em>) – p-values per algorithm pairs</p></li>
-<li><p><strong>dfT</strong> (<em>DataFrame of shape (n_pipelines, n_pipelines)</em>) – signed standardized mean differences</p></li>
-</ul>
-</p>
 </dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="moabb.evaluations.WithinSubjectSplitter.get_n_splits">
+<span class="sig-name descname"><span class="pre">get_n_splits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metadata</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/evaluations/splitters.py#L176-L195"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.evaluations.WithinSubjectSplitter.get_n_splits" title="Link to this definition">#</a></dt>
+<dd><p>Return the number of splits for the cross-validation.</p>
+<p>The number of splits is the number of subjects times the number of folds.</p>
+<p>We try to keep the same behaviour as the sklearn cross-validation classes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>metadata</strong> (<em>pd.DataFrame</em>) – The metadata containing the subject and session information.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>n_splits</strong> – The number of splits for the cross-validation</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="moabb.evaluations.WithinSubjectSplitter.split">
+<span class="sig-name descname"><span class="pre">split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/evaluations/splitters.py#L197-L215"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.evaluations.WithinSubjectSplitter.split" title="Link to this definition">#</a></dt>
+<dd><p>Generate indices to split data into training and test set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>array-like</em><em> of </em><em>shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – Training data, where <cite>n_samples</cite> is the number of samples
+and <cite>n_features</cite> is the number of features.</p></li>
+<li><p><strong>y</strong> (<em>array-like</em><em> of </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – The target variable for supervised learning problems.</p></li>
+<li><p><strong>groups</strong> (<em>array-like</em><em> of </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em><em>, </em><em>default=None</em>) – Group labels for the samples used while splitting the dataset into
+train/test set.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Yields<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>train</strong> (<em>ndarray</em>) – The training set indices for that split.</p></li>
+<li><p><strong>test</strong> (<em>ndarray</em>) – The testing set indices for that split.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <div style='clear:both'></div></section>
@@ -714,20 +757,20 @@ computationally, using Wilcoxon rank-sum test instead</p></li>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="moabb.analysis.plotting.dataset_bubble_plot.html"
+       href="moabb.evaluations.WithinSessionSplitter.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">moabb.analysis.plotting.dataset_bubble_plot</p>
+        <p class="prev-next-title">moabb.evaluations.WithinSessionSplitter</p>
       </div>
     </a>
     <a class="right-next"
-       href="moabb.analysis.meta_analysis.compute_dataset_statistics.html"
+       href="moabb.evaluations.CrossSessionSplitter.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">moabb.analysis.meta_analysis.compute_dataset_statistics</p>
+        <p class="prev-next-title">moabb.evaluations.CrossSessionSplitter</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -750,7 +793,11 @@ computationally, using Wilcoxon rank-sum test instead</p></li>
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#moabb.analysis.meta_analysis.find_significant_differences"><code class="docutils literal notranslate"><span class="pre">find_significant_differences()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#moabb.evaluations.WithinSubjectSplitter"><code class="docutils literal notranslate"><span class="pre">WithinSubjectSplitter</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moabb.evaluations.WithinSubjectSplitter.get_n_splits"><code class="docutils literal notranslate"><span class="pre">WithinSubjectSplitter.get_n_splits()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moabb.evaluations.WithinSubjectSplitter.split"><code class="docutils literal notranslate"><span class="pre">WithinSubjectSplitter.split()</span></code></a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

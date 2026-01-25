@@ -488,6 +488,8 @@
 <li><p>Introduce a new logo for the MOABB library (<a class="reference external" href="https://github.com/NeuroTechX/moabb/issues/858">#858</a> by <a class="reference external" href="https://github.com/PierreGtch">Pierre Guetschel</a> and community)</p></li>
 <li><p>Better verbosity control for initialization of the library (<a class="reference external" href="https://github.com/NeuroTechX/moabb/issues/850">#850</a> by <a class="reference external" href="https://github.com/bruAristimunha">Bruno Aristimunha</a>)</p></li>
 <li><p>Ability to join rows from the tables of MOABB predictive performance scores and detailed CodeCarbon compute profiling metrics by the column <cite>codecarbon_task_name</cite> in MOABB results and the column <cite>task_name</cite> in CodeCarbon results (<a class="reference external" href="https://github.com/NeuroTechX/moabb/issues/866">#866</a> by <a class="reference external" href="https://github.com/davisethan">Ethan Davis</a>).</p></li>
+<li><p>Adding two c-VEP datasets: <code class="xref py py-class docutils literal notranslate"><span class="pre">moabb.datasets.MartinezCagigal2023Checker</span></code> and <code class="xref py py-class docutils literal notranslate"><span class="pre">moabb.datasets.MartinezCagigal2023Pary</span></code> by <a class="reference external" href="https://github.com/vicmarcag">Victor Martinez-Cagigal</a></p></li>
+<li><p>Implement <a class="reference internal" href="generated/moabb.evaluations.WithinSubjectSplitter.html#moabb.evaluations.WithinSubjectSplitter" title="moabb.evaluations.WithinSubjectSplitter"><code class="xref py py-class docutils literal notranslate"><span class="pre">moabb.evaluations.WithinSubjectSplitter</span></code></a> for k-fold cross-validation within each subject across all sessions (by <a class="reference external" href="https://github.com/bruAristimunha">Bruno Aristimunha</a>)</p></li>
 </ul>
 </section>
 <section id="api-changes">
@@ -511,12 +513,14 @@
 <li><p>Correct <a class="reference internal" href="generated/moabb.pipelines.classification.SSVEP_CCA.html#moabb.pipelines.classification.SSVEP_CCA" title="moabb.pipelines.classification.SSVEP_CCA"><code class="xref py py-class docutils literal notranslate"><span class="pre">moabb.pipelines.classification.SSVEP_CCA</span></code></a>, <a class="reference internal" href="generated/moabb.pipelines.classification.SSVEP_TRCA.html#moabb.pipelines.classification.SSVEP_TRCA" title="moabb.pipelines.classification.SSVEP_TRCA"><code class="xref py py-class docutils literal notranslate"><span class="pre">moabb.pipelines.classification.SSVEP_TRCA</span></code></a> and <a class="reference internal" href="generated/moabb.pipelines.classification.SSVEP_MsetCCA.html#moabb.pipelines.classification.SSVEP_MsetCCA" title="moabb.pipelines.classification.SSVEP_MsetCCA"><code class="xref py py-class docutils literal notranslate"><span class="pre">moabb.pipelines.classification.SSVEP_MsetCCA</span></code></a> behavior (<a class="reference external" href="https://github.com/NeuroTechX/moabb/issues/625">#625</a> by <a class="reference external" href="https://github.com/sylvchev">Sylvain Chevallier</a>)</p></li>
 <li><p>Fix scikit-learn LogisticRegression elasticnet penalty parameter deprecation by re-adding <cite>penalty=’elasticnet’</cite> for ElasticNet configurations with <cite>0 &lt; l1_ratio &lt; 1</cite> (<a class="reference external" href="https://github.com/NeuroTechX/moabb/issues/869">#869</a> by <a class="reference external" href="https://github.com/bruAristimunha">Bruno Aristimunha</a>)</p></li>
 <li><p>Fixing option to pickle model (<a class="reference external" href="https://github.com/NeuroTechX/moabb/issues/870">#870</a> by <a class="reference external" href="https://github.com/davisethan">Ethan Davis</a>)</p></li>
+<li><p>Normalize Zenodo download paths and add a custom user-agent to improve download robustness (<a class="reference external" href="https://github.com/NeuroTechX/moabb/issues/946">#946</a> by <a class="reference external" href="https://github.com/bruAristimunha">Bruno Aristimunha</a>)</p></li>
+<li><p>Use the BNCI mirror host to avoid download timeouts (<a class="reference external" href="https://github.com/NeuroTechX/moabb/issues/946">#946</a> by <a class="reference external" href="https://github.com/bruAristimunha">Bruno Aristimunha</a>)</p></li>
 </ul>
 </section>
 <section id="code-health">
 <h3>Code health<a class="headerlink" href="#code-health" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p>None yet.</p></li>
+<li><p>Persist docs/test CI MNE dataset cache across runs to reduce cold-cache downloads (<a class="reference external" href="https://github.com/NeuroTechX/moabb/issues/946">#946</a> by <a class="reference external" href="https://github.com/bruAristimunha">Bruno Aristimunha</a>)</p></li>
 </ul>
 </section>
 </section>
