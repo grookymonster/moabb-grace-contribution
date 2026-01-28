@@ -489,6 +489,9 @@
 <li><p>Better verbosity control for initialization of the library (<a class="reference external" href="https://github.com/NeuroTechX/moabb/issues/850">#850</a> by <a class="reference external" href="https://github.com/bruAristimunha">Bruno Aristimunha</a>)</p></li>
 <li><p>Ability to join rows from the tables of MOABB predictive performance scores and detailed CodeCarbon compute profiling metrics by the column <cite>codecarbon_task_name</cite> in MOABB results and the column <cite>task_name</cite> in CodeCarbon results (<a class="reference external" href="https://github.com/NeuroTechX/moabb/issues/866">#866</a> by <a class="reference external" href="https://github.com/davisethan">Ethan Davis</a>).</p></li>
 <li><p>Adding two c-VEP datasets: <code class="xref py py-class docutils literal notranslate"><span class="pre">moabb.datasets.MartinezCagigal2023Checker</span></code> and <code class="xref py py-class docutils literal notranslate"><span class="pre">moabb.datasets.MartinezCagigal2023Pary</span></code> by <a class="reference external" href="https://github.com/vicmarcag">Victor Martinez-Cagigal</a></p></li>
+<li><p>Allow custom paradigms to have multiple scores for evaluations (<a class="reference external" href="https://github.com/NeuroTechX/moabb/issues/948">#948</a> by <a class="reference external" href="https://github.com/davisethan">Ethan Davis</a>)</p></li>
+<li><p>Ability to parameterize the scoring rule of paradigms (<a class="reference external" href="https://github.com/NeuroTechX/moabb/issues/948">#948</a> by <a class="reference external" href="https://github.com/davisethan">Ethan Davis</a>)</p></li>
+<li><p>Extend scoring configuration to accept lists of metric callables, scorer objects, and tuple kwargs (e.g., <cite>needs_proba</cite>/<cite>needs_threshold</cite>) for multi-metric evaluations (<a class="reference external" href="https://github.com/NeuroTechX/moabb/issues/948">#948</a> by <a class="reference external" href="https://github.com/davisethan">Ethan Davis</a> and <a class="reference external" href="https://github.com/bruAristimunha">Bruno Aristimunha</a>)</p></li>
 <li><p>Implement <a class="reference internal" href="generated/moabb.evaluations.WithinSubjectSplitter.html#moabb.evaluations.WithinSubjectSplitter" title="moabb.evaluations.WithinSubjectSplitter"><code class="xref py py-class docutils literal notranslate"><span class="pre">moabb.evaluations.WithinSubjectSplitter</span></code></a> for k-fold cross-validation within each subject across all sessions (by <a class="reference external" href="https://github.com/bruAristimunha">Bruno Aristimunha</a>)</p></li>
 </ul>
 </section>
@@ -521,6 +524,7 @@
 <h3>Code health<a class="headerlink" href="#code-health" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Persist docs/test CI MNE dataset cache across runs to reduce cold-cache downloads (<a class="reference external" href="https://github.com/NeuroTechX/moabb/issues/946">#946</a> by <a class="reference external" href="https://github.com/bruAristimunha">Bruno Aristimunha</a>)</p></li>
+<li><p>Refactor evaluation scoring into shared utility functions for future improvements (<a class="reference external" href="https://github.com/NeuroTechX/moabb/issues/948">#948</a> by <a class="reference external" href="https://github.com/bruAristimunha">Bruno Aristimunha</a>)</p></li>
 </ul>
 </section>
 </section>
