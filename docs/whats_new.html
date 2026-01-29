@@ -487,6 +487,7 @@
 <ul class="simple">
 <li><p>Introduce a new logo for the MOABB library (<a class="reference external" href="https://github.com/NeuroTechX/moabb/issues/858">#858</a> by <a class="reference external" href="https://github.com/PierreGtch">Pierre Guetschel</a> and community)</p></li>
 <li><p>Better verbosity control for initialization of the library (<a class="reference external" href="https://github.com/NeuroTechX/moabb/issues/850">#850</a> by <a class="reference external" href="https://github.com/bruAristimunha">Bruno Aristimunha</a>)</p></li>
+<li><p>Improved error messages for dataset compatibility checks in evaluations - now provides specific reasons when datasets are incompatible (e.g., “dataset has only 1 session(s), but CrossSessionEvaluation requires at least 2 sessions”) by <a class="reference external" href="https://github.com/bruAristimunha">Bruno Aristimunha</a></p></li>
 <li><p>Ability to join rows from the tables of MOABB predictive performance scores and detailed CodeCarbon compute profiling metrics by the column <cite>codecarbon_task_name</cite> in MOABB results and the column <cite>task_name</cite> in CodeCarbon results (<a class="reference external" href="https://github.com/NeuroTechX/moabb/issues/866">#866</a> by <a class="reference external" href="https://github.com/davisethan">Ethan Davis</a>).</p></li>
 <li><p>Adding two c-VEP datasets: <code class="xref py py-class docutils literal notranslate"><span class="pre">moabb.datasets.MartinezCagigal2023Checker</span></code> and <code class="xref py py-class docutils literal notranslate"><span class="pre">moabb.datasets.MartinezCagigal2023Pary</span></code> by <a class="reference external" href="https://github.com/vicmarcag">Victor Martinez-Cagigal</a></p></li>
 <li><p>Allow custom paradigms to have multiple scores for evaluations (<a class="reference external" href="https://github.com/NeuroTechX/moabb/issues/948">#948</a> by <a class="reference external" href="https://github.com/davisethan">Ethan Davis</a>)</p></li>
@@ -518,6 +519,7 @@
 <li><p>Fixing option to pickle model (<a class="reference external" href="https://github.com/NeuroTechX/moabb/issues/870">#870</a> by <a class="reference external" href="https://github.com/davisethan">Ethan Davis</a>)</p></li>
 <li><p>Normalize Zenodo download paths and add a custom user-agent to improve download robustness (<a class="reference external" href="https://github.com/NeuroTechX/moabb/issues/946">#946</a> by <a class="reference external" href="https://github.com/bruAristimunha">Bruno Aristimunha</a>)</p></li>
 <li><p>Use the BNCI mirror host to avoid download timeouts (<a class="reference external" href="https://github.com/NeuroTechX/moabb/issues/946">#946</a> by <a class="reference external" href="https://github.com/bruAristimunha">Bruno Aristimunha</a>)</p></li>
+<li><p>Fix copytree FileExistsError in BrainInvaders2013a download by adding dirs_exist_ok=True (by <a class="reference external" href="https://github.com/bruAristimunha">Bruno Aristimunha</a>)</p></li>
 </ul>
 </section>
 <section id="code-health">
