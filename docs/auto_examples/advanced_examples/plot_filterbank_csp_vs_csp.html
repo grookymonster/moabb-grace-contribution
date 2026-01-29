@@ -637,15 +637,19 @@ from 8 to 35 Hz.</p>
 <span class="n">results_fb</span> <span class="o">=</span> <a href="../../generated/moabb.evaluations.base.BaseEvaluation.html#moabb.evaluations.base.BaseEvaluation.process" title="moabb.evaluations.base.BaseEvaluation.process" class="sphx-glr-backref-module-moabb-evaluations-base sphx-glr-backref-type-py-method"><span class="n">evaluation</span><span class="o">.</span><span class="n">process</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pipelines_fb</span></a><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>BNCI2014-001-CrossSession:   0%|          | 0/2 [00:00&lt;?, ?it/s]
-BNCI2014-001-CrossSession:  50%|█████     | 1/2 [00:00&lt;00:00,  8.33it/s]
-BNCI2014-001-CrossSession: 100%|██████████| 2/2 [00:00&lt;00:00,  8.55it/s]
-BNCI2014-001-CrossSession: 100%|██████████| 2/2 [00:00&lt;00:00,  8.51it/s]
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>BNCI2014-001-CrossSession:   0%|          | 0/2 [00:00&lt;?, ?it/s]2026-01-29 23:43:51,989 INFO MainThread moabb.evaluations.evaluations Subject 1 already processed
 
-BNCI2014-001-CrossSession:   0%|          | 0/2 [00:00&lt;?, ?it/s]
-BNCI2014-001-CrossSession:  50%|█████     | 1/2 [00:05&lt;00:05,  5.95s/it]
-BNCI2014-001-CrossSession: 100%|██████████| 2/2 [00:11&lt;00:00,  5.85s/it]
-BNCI2014-001-CrossSession: 100%|██████████| 2/2 [00:11&lt;00:00,  5.86s/it]
+BNCI2014-001-CrossSession:  50%|█████     | 1/2 [00:00&lt;00:00,  4.78it/s]2026-01-29 23:43:52,202 INFO MainThread moabb.evaluations.evaluations Subject 2 already processed
+
+BNCI2014-001-CrossSession: 100%|██████████| 2/2 [00:00&lt;00:00,  4.73it/s]
+BNCI2014-001-CrossSession: 100%|██████████| 2/2 [00:00&lt;00:00,  4.73it/s]
+
+BNCI2014-001-CrossSession:   0%|          | 0/2 [00:00&lt;?, ?it/s]2026-01-29 23:43:52,573 INFO MainThread moabb.evaluations.evaluations Subject 1 already processed
+
+BNCI2014-001-CrossSession:  50%|█████     | 1/2 [00:00&lt;00:00,  6.01it/s]2026-01-29 23:43:52,739 INFO MainThread moabb.evaluations.evaluations Subject 2 already processed
+
+BNCI2014-001-CrossSession: 100%|██████████| 2/2 [00:00&lt;00:00,  6.01it/s]
+BNCI2014-001-CrossSession: 100%|██████████| 2/2 [00:00&lt;00:00,  6.01it/s]
 </pre></div>
 </div>
 <p>After processing the two, we simply concatenate the results.</p>
@@ -690,8 +694,19 @@ points are in its quadrant.</p>
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.show.html#matplotlib.pyplot.show" title="matplotlib.pyplot.show" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_filterbank_csp_vs_csp_001.png" srcset="../../_images/sphx_glr_plot_filterbank_csp_vs_csp_001.png" alt="plot filterbank csp vs csp" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 13.748 seconds)</p>
-<p><strong>Estimated memory usage:</strong>  669 MB</p>
+<img src="../../_images/sphx_glr_plot_filterbank_csp_vs_csp_001.png" srcset="../../_images/sphx_glr_plot_filterbank_csp_vs_csp_001.png" alt="plot filterbank csp vs csp" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/moabb/moabb/examples/advanced_examples/plot_filterbank_csp_vs_csp.py:114: FutureWarning:
+
+Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
+
+  sns.stripplot(
+/home/runner/work/moabb/moabb/examples/advanced_examples/plot_filterbank_csp_vs_csp.py:124: FutureWarning:
+
+Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
+
+  sns.pointplot(data=results, y=&quot;score&quot;, x=&quot;pipeline&quot;, ax=axes[0], palette=&quot;Set1&quot;)
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 3.715 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-advanced-examples-plot-filterbank-csp-vs-csp-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/cd325bfe64e15ce23db3b200e83ba9a2/plot_filterbank_csp_vs_csp.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_filterbank_csp_vs_csp.ipynb</span></code></a></p>

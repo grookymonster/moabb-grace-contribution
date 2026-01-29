@@ -658,6 +658,12 @@ automatically be run with a grid search.</p>
 <span class="n">result</span> <span class="o">=</span> <a href="../../generated/moabb.evaluations.base.BaseEvaluation.html#moabb.evaluations.base.BaseEvaluation.process" title="moabb.evaluations.base.BaseEvaluation.process" class="sphx-glr-backref-module-moabb-evaluations-base sphx-glr-backref-type-py-method"><span class="n">evaluation</span><span class="o">.</span><span class="n">process</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pipelines</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">param_grid</span></a><span class="p">)</span>
 </pre></div>
 </div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>BNCI2014-001-WithinSession:   0%|          | 0/1 [00:00&lt;?, ?it/s][codecarbon WARNING @ 23:43:55] Multiple instances of codecarbon are allowed to run at the same time.
+
+BNCI2014-001-WithinSession: 100%|██████████| 1/1 [00:49&lt;00:00, 49.37s/it]
+BNCI2014-001-WithinSession: 100%|██████████| 1/1 [00:49&lt;00:00, 49.37s/it]
+</pre></div>
+</div>
 </section>
 <section id="plot-results">
 <h2>Plot Results<a class="headerlink" href="#plot-results" title="Link to this heading">#</a></h2>
@@ -679,11 +685,21 @@ evaluation, leading to better accuracy results.</p>
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.set_ylabel.html#matplotlib.axes.Axes.set_ylabel" title="matplotlib.axes.Axes.set_ylabel" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-method"><span class="n">axes</span><span class="o">.</span><span class="n">set_ylabel</span></a><span class="p">(</span><span class="s2">&quot;ROC AUC&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_grid_search_withinsession_001.png" srcset="../../_images/sphx_glr_plot_grid_search_withinsession_001.png" alt="plot grid search withinsession" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Text(44.972222222222214, 0.5, &#39;ROC AUC&#39;)
+<img src="../../_images/sphx_glr_plot_grid_search_withinsession_001.png" srcset="../../_images/sphx_glr_plot_grid_search_withinsession_001.png" alt="plot grid search withinsession" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/moabb/moabb/examples/advanced_examples/plot_grid_search_withinsession.py:122: FutureWarning:
+
+Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
+
+  sns.stripplot(
+/home/runner/work/moabb/moabb/examples/advanced_examples/plot_grid_search_withinsession.py:132: FutureWarning:
+
+Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
+
+  sns.pointplot(data=result, y=&quot;score&quot;, x=&quot;pipeline&quot;, ax=axes, palette=&quot;Set1&quot;)
+
+Text(37.625, 0.5, &#39;ROC AUC&#39;)
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 41.326 seconds)</p>
-<p><strong>Estimated memory usage:</strong>  316 MB</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 52.416 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-advanced-examples-plot-grid-search-withinsession-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/c0d5130414c37580257e7e0b7de777e2/plot_grid_search_withinsession.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_grid_search_withinsession.ipynb</span></code></a></p>
