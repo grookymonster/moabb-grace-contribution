@@ -678,7 +678,7 @@
 <h1>moabb.datasets.BNCI2014_001<a class="headerlink" href="#moabb-datasets-bnci2014-001" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="moabb.datasets.BNCI2014_001">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">BNCI2014_001</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bnci.py#L953-L1005"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BNCI2014_001" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">BNCI2014_001</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bnci/bnci_2014.py#L203-L281"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BNCI2014_001" title="Link to this definition">#</a></dt>
 <dd><p>BNCI 2014-001 Motor Imagery dataset.</p>
 <p><strong>PapersWithCode leaderboard:</strong> <a class="reference external" href="https://paperswithcode.com/dataset/bnci2014-001-moabb-1">https://paperswithcode.com/dataset/bnci2014-001-moabb-1</a></p>
 <div class="admonition-dataset-summary admonition">
@@ -740,13 +740,13 @@ were used to record the EEG; the montage is shown in Figure 3 left.  All
 signals were recorded monopolarly with the left mastoid serving as
 reference and the right mastoid as ground. The signals were sampled with.
 250 Hz and bandpass-filtered between 0.5 Hz and 100 Hz. The sensitivity of
-the amplifier was set to 100 μV . An additional 50 Hz notch filter was
+the amplifier was set to 100 uV . An additional 50 Hz notch filter was
 enabled to suppress line noise</p>
 <p class="rubric">References</p>
 <div role="list" class="citation-list">
 <div class="citation" id="r55ebd47d0fe7-1" role="doc-biblioentry">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
-<p>Tangermann, M., Müller, K.R., Aertsen, A., Birbaumer, N., Braun, C.,
+<p>Tangermann, M., Muller, K.R., Aertsen, A., Birbaumer, N., Braun, C.,
 Brunner, C., Leeb, R., Mehring, C., Miller, K.J., Mueller-Putz, G.
 and Nolte, G., 2012. Review of the BCI competition IV.
 Frontiers in neuroscience, 6, p.55.</p>
@@ -756,6 +756,34 @@ Frontiers in neuroscience, 6, p.55.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p><code class="docutils literal notranslate"><span class="pre">BNCI2014_001</span></code> was previously named <code class="docutils literal notranslate"><span class="pre">BNCI2014001</span></code>. <code class="docutils literal notranslate"><span class="pre">BNCI2014001</span></code> will be removed in version 1.1.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 0.4.0.</span></p>
+</div>
+<p>This is one of the most widely used motor imagery datasets in BCI research,
+commonly referred to as “BCI Competition IV Dataset 2a”. It serves as a
+standard benchmark for 4-class motor imagery classification algorithms.</p>
+<p>The dataset is particularly useful for:</p>
+<ul class="simple">
+<li><p>Multi-class motor imagery classification (4 classes)</p></li>
+<li><p>Transfer learning studies (9 subjects, 2 sessions each)</p></li>
+<li><p>Cross-session variability analysis</p></li>
+</ul>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="moabb.datasets.BNCI2014_004.html#moabb.datasets.BNCI2014_004" title="moabb.datasets.BNCI2014_004"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BNCI2014_004</span></code></a></dt><dd><p>BCI Competition 2008 2-class motor imagery (Dataset B)</p>
+</dd>
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">BNCI2003_004</span></code></dt><dd><p>BCI Competition III 2-class motor imagery</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">moabb.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">BNCI2014_001</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dataset</span> <span class="o">=</span> <span class="n">BNCI2014_001</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dataset</span><span class="o">.</span><span class="n">subject_list</span>
+<span class="go">[1, 2, 3, 4, 5, 6, 7, 8, 9]</span>
+</pre></div>
 </div>
 </dd></dl>
 

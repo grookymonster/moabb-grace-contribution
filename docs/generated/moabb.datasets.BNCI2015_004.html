@@ -678,8 +678,8 @@
 <h1>moabb.datasets.BNCI2015_004<a class="headerlink" href="#moabb-datasets-bnci2015-004" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="moabb.datasets.BNCI2015_004">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">BNCI2015_004</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bnci.py#L1332-L1394"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BNCI2015_004" title="Link to this definition">#</a></dt>
-<dd><p>BNCI 2015-004 Motor Imagery dataset.</p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">BNCI2015_004</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bnci/bnci_2015.py#L515-L554"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BNCI2015_004" title="Link to this definition">#</a></dt>
+<dd><p>BNCI 2015-004 Mental tasks dataset.</p>
 <p><strong>PapersWithCode leaderboard:</strong> <a class="reference external" href="https://paperswithcode.com/dataset/bnci2015-004-moabb-1">https://paperswithcode.com/dataset/bnci2015-004-moabb-1</a></p>
 <div class="admonition-dataset-summary admonition">
 <p class="admonition-title">Dataset summary</p>
@@ -717,55 +717,27 @@
 </div>
 </div>
 <p>Dataset from <a class="reference internal" href="#r92adba70080b-1" id="id1">[1]</a>.</p>
-<p><strong>Dataset description</strong></p>
-<p>We provide EEG data recorded from nine users with disability (spinal cord
-injury and stroke) on two different days (sessions).  Users performed,
-follow- ing a cue-guided experimental paradigm, five distinct mental tasks
-(MT).  MTs include mental word association (condition WORD), mental
-subtraction (SUB), spatial navigation (NAV), right hand motor imagery
-(HAND) and
-feet motor imagery (FEET). Details on the experimental paradigm are
-summarized in Figure 1.  The session for a single subject consisted of 8
-runs resulting in 40 trials of each class for each day.  One single
-experimental run consisted of 25 cues, with 5 of each mental task.  Cues
-were presented in random order.</p>
-<p>EEG was recorded from 30 electrode channels placed on the scalp according
-to the international 10-20 system.  Electrode positions included channels
-AFz, F7, F3, Fz, F4, F8, FC3, FCz, FC4, T3, C3, Cz, C4, T4, CP3, CPz,CP4,
-P7, P5, P3, P1, Pz, P2, P4, P6, P8, PO3, PO4, O1, and O2.  Reference and
-ground were placed at the left and right mastoid, respectively.  The g.tec
-GAMMAsys system with g.LADYbird active electrodes and two g.USBamp
-biosignal
-amplifiers (Guger Technologies, Graz, Austria) was used for recording.  EEG
-was band pass filtered 0.5-100 Hz (notch filter at 50 Hz) and sampled at a
-rate of 256 Hz.</p>
-<p>The duration of a single imagery trials is 10 s.  At t = 0 s, a cross was
-presented in the middle of the screen.  Participants were asked to relax
-and
-fixate the cross to avoid eye movements.  At t = 3 s, a beep was sounded to
-get the participant’s attention.  The cue indicating the requested imagery
-task, one out of five graphical symbols, was presented from t = 3 s to t =
-4.25 s.  At t = 10 s, a second beep was sounded and the fixation-cross
-disappeared, which indicated the end of the trial.  A variable break
-(inter-trial-interval, ITI) lasting between 2.5 s and 3.5 s occurred
-before
-the start of the next trial.  Participants were asked to avoid movements
-during the imagery period, and to move and blink during the
-ITI. Experimental runs began and ended with a blank screen (duration 4 s)</p>
+<p><strong>Dataset Description</strong></p>
+<p>This dataset contains EEG data from 9 subjects performing five different
+mental tasks: mental multiplication, mental letter composing, mental
+rotation, mental counting, and a baseline task.</p>
 <p class="rubric">References</p>
 <div role="list" class="citation-list">
 <div class="citation" id="r92adba70080b-1" role="doc-biblioentry">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
-<p>Scherer R, Faller J, Friedrich EVC, Opisso E, Costa U, Kübler A, et
-al. (2015) Individually Adapted Imagery Improves Brain-Computer
-Interface Performance in End-Users with Disability. PLoS ONE 10(5).
-<a class="reference external" href="https://doi.org/10.1371/journal.pone.0123727">https://doi.org/10.1371/journal.pone.0123727</a></p>
+<p>Zhang, X., Yao, L., Zhang, Q., Kanhere, S., Sheng, M., &amp; Liu, Y.
+(2017). A survey on deep learning based brain computer interface:
+Recent advances and new frontiers. IEEE Transactions on Cognitive
+and Developmental Systems, 10(2), 145-163.</p>
 </div>
 </div>
 <p class="rubric">Notes</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p><code class="docutils literal notranslate"><span class="pre">BNCI2015_004</span></code> was previously named <code class="docutils literal notranslate"><span class="pre">BNCI2015004</span></code>. <code class="docutils literal notranslate"><span class="pre">BNCI2015004</span></code> will be removed in version 1.1.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 0.4.0.</span></p>
 </div>
 </dd></dl>
 

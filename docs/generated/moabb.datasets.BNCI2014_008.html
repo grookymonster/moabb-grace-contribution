@@ -678,8 +678,8 @@
 <h1>moabb.datasets.BNCI2014_008<a class="headerlink" href="#moabb-datasets-bnci2014-008" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="moabb.datasets.BNCI2014_008">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">BNCI2014_008</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bnci.py#L1135-L1194"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BNCI2014_008" title="Link to this definition">#</a></dt>
-<dd><p>BNCI 2014-008 P300 dataset.</p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">BNCI2014_008</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bnci/bnci_2014.py#L409-L455"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BNCI2014_008" title="Link to this definition">#</a></dt>
+<dd><p>BNCI 2014-008 P300 dataset (ALS patients).</p>
 <p><strong>PapersWithCode leaderboard:</strong> <a class="reference external" href="https://paperswithcode.com/dataset/bnci2014-008-moabb-1">https://paperswithcode.com/dataset/bnci2014-008-moabb-1</a></p>
 <div class="admonition-dataset-summary admonition">
 <p class="admonition-title">Dataset summary</p>
@@ -708,54 +708,40 @@
 </div>
 </div>
 <p>Dataset from <a class="reference internal" href="#re1b59a9063f6-1" id="id1">[1]</a>.</p>
-<p><strong>Dataset description</strong></p>
-<p>This dataset represents a complete record of P300 evoked potentials
-using a paradigm originally described by Farwell and Donchin <a class="reference internal" href="#re1b59a9063f6-2" id="id2">[2]</a>.
-In these sessions, 8 users with amyotrophic lateral sclerosis (ALSO)
-focused on one out of 36 different characters. The objective in this
-contest is to predict the correct character in each of the provided
-character selection epochs.</p>
-<p>We included in the study a total of eight volunteers, all naïve to BCI
-training. Scalp EEG signals were recorded (g.MOBILAB, g.tec, Austria)
-from eight channels according to 10–10 standard (Fz, Cz, Pz, Oz, P3, P4,
-PO7 and PO8) using active electrodes (g.Ladybird, g.tec, Austria).
-All channels were referenced to the right earlobe and grounded to the left
-mastoid. The EEG signal was digitized at 256 Hz and band-pass filtered
-between 0.1 and 30 Hz.</p>
-<p>Participants were required to copy spell seven predefined words of five
-characters each (runs), by controlling a P300 matrix speller. Rows and
-columns on the interface were randomly intensified for 125ms, with an
-inter stimulus interval (ISI) of 125ms, yielding a 250 ms lag between the
-appearance of two stimuli (stimulus onset asynchrony, SOA).</p>
-<p>In the first three runs (15 trials in total) EEG data was stored to
-perform a calibration of the BCI classifier. Thus no feedback was provided
-to the participant up to this point. A stepwise linear discriminant
-analysis (SWLDA) was applied to the data from the three calibration runs
-(i.e., runs 1–3) to determine the classifier weights (i.e., classifier
-coefficients). These weights were then applied during the subsequent four
-testing runs (i.e., runs 4–7) when participants were provided with
-feedback.</p>
+<p><strong>Dataset Description</strong></p>
+<p>This dataset contains EEG data from 8 ALS patients using a P300 speller
+system. The dataset includes target and non-target responses during a
+visual P300 paradigm.</p>
+<p><strong>Participants</strong></p>
+<ul class="simple">
+<li><p>8 participants with amyotrophic lateral sclerosis (ALS)</p></li>
+<li><p>Gender: 6 male, 2 female</p></li>
+<li><p>Age range: 25-60 years</p></li>
+</ul>
+<p><strong>Recording Details</strong></p>
+<ul class="simple">
+<li><p>Channels: 8 EEG channels</p></li>
+<li><p>Sampling rate: 256 Hz</p></li>
+<li><p>Reference: Linked mastoids</p></li>
+</ul>
 <p class="rubric">References</p>
 <div role="list" class="citation-list">
 <div class="citation" id="re1b59a9063f6-1" role="doc-biblioentry">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
-<p>A. Riccio, L. Simione, F. Schettini, A. Pizzimenti, M. Inghilleri,
-M. O. Belardinelli, D. Mattia, and F. Cincotti (2013). Attention
-and P300-based BCI performance in people with amyotrophic lateral
-sclerosis. Front. Hum. Neurosci., vol. 7:, pag. 732.</p>
-</div>
-<div class="citation" id="re1b59a9063f6-2" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
-<p>L. A. Farwell and E. Donchin, Talking off the top of your head:
-toward a mental prosthesis utilizing eventrelated
-brain potentials, Electroencephalogr. Clin. Neurophysiol.,
-vol. 70, n. 6, pagg. 510–523, 1988.</p>
+<p>Riccio, A., Simione, L., Schettini, F., Pizzimenti, A., Inghilleri,
+M., Belardinelli, M. O., &amp; Mattia, D. (2013). Attention and P300-based
+BCI performance in people with amyotrophic lateral sclerosis. Frontiers
+in human neuroscience, 7, 732.
+<a class="reference external" href="https://doi.org/10.3389/fnhum.2013.00732">https://doi.org/10.3389/fnhum.2013.00732</a></p>
 </div>
 </div>
 <p class="rubric">Notes</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p><code class="docutils literal notranslate"><span class="pre">BNCI2014_008</span></code> was previously named <code class="docutils literal notranslate"><span class="pre">BNCI2014008</span></code>. <code class="docutils literal notranslate"><span class="pre">BNCI2014008</span></code> will be removed in version 1.1.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 0.4.0.</span></p>
 </div>
 </dd></dl>
 

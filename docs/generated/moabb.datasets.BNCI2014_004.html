@@ -678,7 +678,7 @@
 <h1>moabb.datasets.BNCI2014_004<a class="headerlink" href="#moabb-datasets-bnci2014-004" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="moabb.datasets.BNCI2014_004">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">BNCI2014_004</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bnci.py#L1061-L1132"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BNCI2014_004" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">BNCI2014_004</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bnci/bnci_2014.py#L346-L406"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BNCI2014_004" title="Link to this definition">#</a></dt>
 <dd><p>BNCI 2014-004 Motor Imagery dataset.</p>
 <p><strong>PapersWithCode leaderboard:</strong> <a class="reference external" href="https://paperswithcode.com/dataset/bnci2014-004-moabb-1">https://paperswithcode.com/dataset/bnci2014-004-moabb-1</a></p>
 <div class="admonition-dataset-summary admonition">
@@ -716,62 +716,56 @@
 </table>
 </div>
 </div>
-<p>Dataset B from BCI Competition 2008.</p>
-<p><strong>Dataset description</strong></p>
-<p>This data set consists of EEG data from 9 subjects of a study published in
-<a class="reference internal" href="#ra513946bbff8-1" id="id1">[1]</a>. The subjects were right-handed, had normal or corrected-to-normal
-vision and were paid for participating in the experiments.
-All volunteers were sitting in an armchair, watching a flat screen monitor
-placed approximately 1 m away at eye level. For each subject 5 sessions
-are provided, whereby the first two sessions contain training data without
-feedback (screening), and the last three sessions were recorded with
-feedback.</p>
-<p>Three bipolar recordings (C3, Cz, and C4) were recorded with a sampling
-frequency of 250 Hz.They were bandpass- filtered between 0.5 Hz and 100 Hz,
-and a notch filter at 50 Hz was enabled.  The placement of the three
-bipolar recordings (large or small distances, more anterior or posterior)
-were slightly different for each subject (for more details see [1]).
-The electrode position Fz served as EEG ground. In addition to the EEG
-channels, the electrooculogram (EOG) was recorded with three monopolar
-electrodes.</p>
-<p>The cue-based screening paradigm consisted of two classes,
-namely the motor imagery (MI) of left hand (class 1) and right hand
-(class 2).
-Each subject participated in two screening sessions without feedback
-recorded on two different days within two weeks.
-Each session consisted of six runs with ten trials each and two classes of
-imagery.  This resulted in 20 trials per run and 120 trials per session.
-Data of 120 repetitions of each MI class were available for each person in
-total.  Prior to the first motor im- agery training the subject executed
-and imagined different movements for each body part and selected the one
-which they could imagine best (e. g., squeezing a ball or pulling a brake).</p>
-<p>Each trial started with a fixation cross and an additional short acoustic
-warning tone (1 kHz, 70 ms).  Some seconds later a visual cue was presented
-for 1.25 seconds.  Afterwards the subjects had to imagine the corresponding
-hand movement over a period of 4 seconds.  Each trial was followed by a
-short break of at least 1.5 seconds.  A randomized time of up to 1 second
-was added to the break to avoid adaptation</p>
-<p>For the three online feedback sessions four runs with smiley feedback
-were recorded, whereby each run consisted of twenty trials for each type of
-motor imagery.  At the beginning of each trial (second 0) the feedback (a
-gray smiley) was centered on the screen.  At second 2, a short warning beep
-(1 kHz, 70 ms) was given. The cue was presented from second 3 to 7.5. At
-second 7.5 the screen went blank and a random interval between 1.0 and 2.0
-seconds was added to the trial.</p>
+<p>BCI Competition IV Dataset 2b <a class="reference internal" href="#ra513946bbff8-1" id="id1">[1]</a>.</p>
+<p><strong>Dataset Description</strong></p>
+<p>This dataset consists of EEG data from 9 subjects. The cue-based BCI
+paradigm consisted of two different motor imagery tasks, namely the
+imagination of movement of the left hand (class 1) and the right hand
+(class 2). Two sessions on different days were recorded for each subject.
+Each session is comprised of 6 runs separated by short breaks. One run
+consists of 20 trials (10 for each of the two possible classes), yielding
+a total of 120 trials per session.</p>
+<p>The subjects were sitting in a comfortable chair in front of a computer
+screen. At the beginning of a trial (t = 0 s), a fixation cross appeared
+on the black screen. In addition, a short acoustic warning tone was
+presented. After two seconds (t = 2 s), a cue in the form of an arrow
+pointing either to the left or to the right appeared and stayed on the
+screen for 1.25 s. This prompted the subjects to perform the desired
+motor imagery task. No feedback was provided. The subjects were ask to
+carry out the motor imagery task until the fixation cross disappeared
+from the screen at t = 6 s.</p>
+<p>Three bipolar channels (C3, Cz, C4) and three EOG channels were recorded.
+The signals were sampled at 250 Hz and bandpass-filtered between 0.5 Hz
+and 100 Hz. The reference was the left mastoid and the ground was the right
+mastoid. The electrode montage is a reduced version of the 10-20 system.</p>
 <p class="rubric">References</p>
 <div role="list" class="citation-list">
 <div class="citation" id="ra513946bbff8-1" role="doc-biblioentry">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
-<p>R. Leeb, F. Lee, C. Keinrath, R. Scherer, H. Bischof,
-G. Pfurtscheller. Brain-computer communication: motivation, aim,
-and impact of exploring a virtual apartment. IEEE Transactions on
-Neural Systems and Rehabilitation Engineering 15, 473–482, 2007</p>
+<p>Tangermann, M., Muller, K.R., Aertsen, A., Birbaumer, N., Braun, C.,
+Brunner, C., Leeb, R., Mehring, C., Miller, K.J., Mueller-Putz, G.
+and Nolte, G., 2012. Review of the BCI competition IV.
+Frontiers in neuroscience, 6, p.55.</p>
 </div>
 </div>
 <p class="rubric">Notes</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p><code class="docutils literal notranslate"><span class="pre">BNCI2014_004</span></code> was previously named <code class="docutils literal notranslate"><span class="pre">BNCI2014004</span></code>. <code class="docutils literal notranslate"><span class="pre">BNCI2014004</span></code> will be removed in version 1.1.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 0.4.0.</span></p>
+</div>
+<p>This dataset is commonly referred to as “BCI Competition IV Dataset 2b”.
+It is widely used for binary motor imagery classification tasks.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><a class="reference internal" href="moabb.datasets.BNCI2014_001.html#moabb.datasets.BNCI2014_001" title="moabb.datasets.BNCI2014_001"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BNCI2014_001</span></code></a></dt><dd><p>4-class motor imagery (Dataset 2a)</p>
+</dd>
+<dt><a class="reference internal" href="moabb.datasets.BNCI2014_002.html#moabb.datasets.BNCI2014_002" title="moabb.datasets.BNCI2014_002"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BNCI2014_002</span></code></a></dt><dd><p>2-class motor imagery with Laplacian derivations</p>
+</dd>
+</dl>
 </div>
 </dd></dl>
 
