@@ -499,8 +499,8 @@ def _load_data_002_2025(
     validate_subject(subject, 2, "BNCI2025-002")
 
     # Subject IDs available on the BNCI server
-    # Note: Only 2 of the original 20 subjects' data is currently available
-    subject_ids = ["fe3", "fg4"]
+    # Note: 10 of the original 20 subjects' data is currently available
+    subject_ids = ["fe3", "fe4", "fe5", "fe6", "fe7", "fe8", "fg1", "fg2", "fg3", "fg4"]
 
     subj_id = subject_ids[subject - 1]
 
@@ -711,7 +711,7 @@ class BNCI2025_002(BNCIBaseDataset):
 
     **Participants**
 
-    - 2 subjects available (from original 20 able-bodied subjects)
+    - 10 subjects available (from original 20 able-bodied subjects)
     - Original study: 10 male, mean age 24 +/- 5 years, all right-handed
     - 4 had prior EEG experience
     - Location: Institute of Neural Engineering, Graz University of
@@ -779,7 +779,7 @@ class BNCI2025_002(BNCIBaseDataset):
 
     def __init__(self):
         super().__init__(
-            subjects=list(range(1, 3)),
+            subjects=list(range(1, 11)),
             sessions_per_subject=3,
             events=EVENT_ID_002,
             code="BNCI2025-002",

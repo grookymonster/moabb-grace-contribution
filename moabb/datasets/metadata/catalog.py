@@ -1116,7 +1116,7 @@ BNCI2025_002_METADATA = DatasetMetadata(
         line_freq=50.0,
     ),
     participants=ParticipantMetadata(
-        n_subjects=2,
+        n_subjects=10,
         health_status="healthy",
         gender={"male": 10, "female": 10},
         age_mean=24.0,
