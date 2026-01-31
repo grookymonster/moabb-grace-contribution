@@ -122,6 +122,8 @@ c-VEP Datasets
     CastillosBurstVEP100
     CastillosCVEP40
     CastillosCVEP100
+    MartinezCagigal2023Checker
+    MartinezCagigal2023Pary
 
 ----------------------
 Resting State Datasets
