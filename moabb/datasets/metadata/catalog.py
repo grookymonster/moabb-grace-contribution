@@ -126,15 +126,30 @@ BNCI2014_001_METADATA = DatasetMetadata(
     documentation=DocumentationMetadata(
         doi="10.3389/fnins.2012.00055",
         description="BCI Competition IV Dataset 2a - 4-class motor imagery",
+        readme=(
+            "This data set comprises electroencephalographic (EEG) data from 9 subjects. "
+            "The cue-based BCI paradigm consisted of four different motor imagery tasks, "
+            "namely the imagination of movement of the left hand (class 1), right hand "
+            "(class 2), both feet (class 3), and tongue (class 4). Two sessions on "
+            "different days were recorded for each subject. Each session comprised 6 runs "
+            "separated by short breaks. One run consists of 48 trials (12 for each of the "
+            "four possible classes), yielding a total of 288 trials per session. "
+            "Twenty-two Ag/AgCl electrodes (with inter-electrode distances of 3.5 cm) were "
+            "used to record the EEG. All signals were recorded monopolarly with the left "
+            "mastoid serving as reference and the right mastoid as ground. The signals "
+            "were sampled with 250 Hz and bandpass filtered between 0.5 and 100 Hz. "
+            "An additional 50 Hz notch filter was enabled to suppress line noise. "
+            "In addition to the 22 EEG channels, 3 monopolar EOG channels were recorded "
+            "for artifact processing."
+        ),
         investigators=[
-            "M. Tangermann",
-            "K.R. Müller",
             "C. Brunner",
             "R. Leeb",
             "G.R. Müller-Putz",
             "G. Pfurtscheller",
             "A. Schlögl",
         ],
+        senior_author="G. Pfurtscheller",
         institution="Graz University of Technology",
         country="AT",
         repository="BNCI Horizon 2020",
@@ -353,7 +368,9 @@ CHO2017_METADATA = DatasetMetadata(
         sampling_rate=512.0,
         n_channels=69,
         channel_types={"eeg": 64, "emg": 4, "stim": 1},
-        hardware="BrainAmp",
+        hardware="BioSemi ActiveTwo",
+        sensor_type="Ag/AgCl active",
+        software="BCI2000 system 3.0.2",
         montage="standard_1005",
         line_freq=60.0,
     ),
@@ -363,6 +380,7 @@ CHO2017_METADATA = DatasetMetadata(
         gender={"female": 19, "male": 33},
         age_mean=24.8,
         age_std=3.86,
+        handedness={"right": 50, "ambidextrous": 2},
     ),
     experiment=ExperimentMetadata(
         paradigm="imagery",
@@ -374,23 +392,35 @@ CHO2017_METADATA = DatasetMetadata(
     documentation=DocumentationMetadata(
         doi="10.1093/gigascience/gix034",
         description="Motor imagery BCI EEG dataset with EMG from GigaScience",
+        readme=(
+            "EEG dataset recorded during motor imagery BCI experiments from 52 subjects. "
+            "Participants performed kinesthetic motor imagery of left and right hand movements "
+            "using a Biosemi ActiveTwo system with 64 EEG channels plus 4 EMG channels. "
+            "The dataset includes 100-120 trials per class per subject across 5-6 runs. "
+            "Additional data includes questionnaire responses, 3D electrode locations, "
+            "and 1-minute resting state recordings. Suitable for motor imagery classification "
+            "and cross-subject transfer learning research."
+        ),
         investigators=["H. Cho", "M. Ahn", "S. Ahn", "M. Kwon", "S.C. Jun"],
+        senior_author="S.C. Jun",
+        contact_info="scjun@gist.ac.kr",
         institution="Gwangju Institute of Science and Technology",
         country="KR",
         repository="GigaDB",
         data_url="http://dx.doi.org/10.5524/100295",
         license="CC0",
         publication_year=2017,
+        funding="GIST Research Institute (GRI), IITP Korea government (No. 2017-0-00451)",
     ),
     sessions_per_subject=1,
-    runs_per_session=1,
+    runs_per_session=5,
 )
 
 LEE2019_MI_METADATA = DatasetMetadata(
     acquisition=AcquisitionMetadata(
         sampling_rate=1000.0,
         n_channels=62,
-        channel_types={"eeg": 62},
+        channel_types={"eeg": 62, "emg": 4},
         sensor_type="Ag/AgCl wet",
         hardware="BrainAmp (Brain Products)",
         reference="nasion",
@@ -401,16 +431,29 @@ LEE2019_MI_METADATA = DatasetMetadata(
     participants=ParticipantMetadata(
         n_subjects=54,
         health_status="healthy",
+        gender={"female": 25, "male": 29},
+        age_min=24,
+        age_max=35,
     ),
     experiment=ExperimentMetadata(
         paradigm="imagery",
         task_type="left_right_hand",
         n_classes=2,
+        trials_per_class={"left_hand": 100, "right_hand": 100},
         trial_duration=4.0,
     ),
     documentation=DocumentationMetadata(
         doi="10.1093/gigascience/giz002",
         description="OpenBMI Motor Imagery dataset - investigation into BCI illiteracy",
+        readme=(
+            "EEG dataset for three BCI paradigms (MI, ERP, SSVEP) from 54 healthy subjects "
+            "over two sessions on different days. The motor imagery component includes "
+            "binary-class left/right hand grasping imagery tasks with 100 trials per class "
+            "per session. Additional data includes questionnaires on psychological/physiological "
+            "conditions, resting state recordings, artifact data (eye blinks, movements), and EMG "
+            "from both arms. Accompanied by the OpenBMI toolbox for data analysis and visualization. "
+            "Suitable for BCI illiteracy research, cross-session transfer, and multi-paradigm studies."
+        ),
         investigators=[
             "M.H. Lee",
             "O.Y. Kwon",
@@ -421,12 +464,15 @@ LEE2019_MI_METADATA = DatasetMetadata(
             "S. Fazli",
             "S.W. Lee",
         ],
+        senior_author="S.W. Lee",
+        contact_info="sw.lee@korea.ac.kr",
         institution="Korea University",
         country="KR",
         repository="GigaDB",
-        data_url="http://deepbci.korea.ac.kr/opensource/opendb/",
-        license="CC0",
+        data_url="http://dx.doi.org/10.5524/100542",
+        license="CC BY 4.0",
         publication_year=2019,
+        funding="MSIT Korea SW Starlab (IITP-2015-1107), Korea government (2017-0-00451)",
     ),
     sessions_per_subject=2,
     runs_per_session=1,
@@ -823,31 +869,62 @@ OFNER2017_METADATA = DatasetMetadata(
         sampling_rate=512.0,
         n_channels=61,
         channel_types={"eeg": 61},
+        hardware="g.tec medical engineering (4x g.USBamp)",
+        sensor_type="active",
+        reference="right mastoid",
+        ground="AFz",
+        filters={"highpass": 0.01, "lowpass": 200.0, "notch": 50.0},
         montage="standard_1005",
         line_freq=50.0,
     ),
     participants=ParticipantMetadata(
-        n_subjects=45,
+        n_subjects=15,
         health_status="healthy",
+        gender={"female": 9, "male": 6},
+        age_mean=27.0,
+        age_std=5.0,
+        age_min=22,
+        age_max=40,
+        handedness={"right": 14, "left": 1},
     ),
     experiment=ExperimentMetadata(
         paradigm="imagery",
         task_type="upper_limb_movements",
         n_classes=7,
+        trials_per_class={
+            "elbow_flexion": 60,
+            "elbow_extension": 60,
+            "forearm_supination": 60,
+            "forearm_pronation": 60,
+            "hand_open": 60,
+            "hand_close": 60,
+            "rest": 60,
+        },
         trial_duration=3.0,
     ),
     documentation=DocumentationMetadata(
         doi="10.1371/journal.pone.0182578",
         description="Upper limb movements decoded from low-frequency EEG time-domain",
+        readme=(
+            "EEG dataset from 15 healthy subjects performing 6 upper limb movement types "
+            "(elbow flexion/extension, forearm supination/pronation, hand open/close) plus rest. "
+            "Two sessions on different days: movement execution (ME) and motor imagery (MI). "
+            "Subjects used an exoskeleton with anti-gravity support (Hocoma). "
+            "Data recorded with 61 active EEG electrodes at 512 Hz. "
+            "Suitable for motor imagery BCI research and movement decoding from MRCPs."
+        ),
         investigators=["P. Ofner", "A. Schwarz", "J. Pereira", "G.R. Müller-Putz"],
-        institution="Graz University of Technology, BCI-Lab",
+        senior_author="G.R. Müller-Putz",
+        contact_info="gernot.mueller@tugraz.at",
+        institution="Graz University of Technology, Institute of Neural Engineering, BCI-Lab",
         country="AT",
         repository="Zenodo",
         data_url="https://zenodo.org/record/834976",
         license="CC BY 4.0",
         publication_year=2017,
+        funding="EU H2020-643955 MoreGrasp, ERC Consolidator Grant ERC-681231 Feel Your Reach",
     ),
-    sessions_per_subject=1,
+    sessions_per_subject=2,
     runs_per_session=10,
 )
 
@@ -2122,44 +2199,6 @@ LEE2019_ERP_METADATA = DatasetMetadata(
     runs_per_session=2,
 )
 
-DEMONSP300_METADATA = DatasetMetadata(
-    acquisition=AcquisitionMetadata(
-        sampling_rate=500.0,
-        n_channels=10,
-        channel_types={"eeg": 8, "misc": 1, "stim": 1},
-        sensors=["Cz", "P3", "Pz", "P4", "PO3", "PO4", "O1", "O2"],
-        hardware="NVX-52 encephalograph (MCS, Zelenograd, Russia)",
-        montage="standard_1020",
-        line_freq=50.0,
-    ),
-    participants=ParticipantMetadata(
-        n_subjects=60,
-        health_status="healthy",
-        gender={"male": 23, "female": 37},
-        age_mean=28.0,
-        age_min=19.0,
-        age_max=45.0,
-    ),
-    experiment=ExperimentMetadata(
-        paradigm="p300",
-        task_type="vr_speller",
-        n_classes=2,
-        trial_duration=1.0,
-    ),
-    documentation=DocumentationMetadata(
-        description="Visual P300 BCI dataset recorded in VR game Raccoons versus Demons",
-        doi="10.48550/arXiv.2005.02251",
-        investigators=["V. Goncharenko", "R. Grigoryan", "A. Samokhina"],
-        institution="Neiry",
-        country="RU",
-        repository="GIN",
-        data_url="https://gin.g-node.org/v-goncharenko/neiry-demons",
-        license="CC BY 4.0",
-        publication_year=2020,
-    ),
-    sessions_per_subject=1,
-    runs_per_session=1,
-)
 
 ERPCORE2021_N170_METADATA = DatasetMetadata(
     acquisition=AcquisitionMetadata(
@@ -3427,7 +3466,6 @@ DATASET_METADATA_CATALOG = {
     "BNCI2016_002": BNCI2016_002_METADATA,
     "BNCI2020_002": BNCI2020_002_METADATA,
     "Cattan2019_VR": CATTAN2019_VR_METADATA,
-    "DemonsP300": DEMONSP300_METADATA,
     "EPFLP300": EPFLP300_METADATA,
     "ErpCore2021_ERN": ERPCORE2021_ERN_METADATA,
     "ErpCore2021_LRP": ERPCORE2021_LRP_METADATA,

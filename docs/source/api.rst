@@ -91,7 +91,6 @@ ERP/P300 Datasets
     BNCI2015_013
     BNCI2016_002
     BNCI2020_002
-    DemonsP300
     EPFLP300
     Huebner2017
     Huebner2018

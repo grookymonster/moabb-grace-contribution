@@ -87,7 +87,6 @@ from .martinezcagigal2023_checker_cvep import MartinezCagigal2023Checker
 from .martinezcagigal2023_pary_cvep import MartinezCagigal2023Pary
 from .mpi_mi import MunichMI  # noqa: F401
 from .mpi_mi import GrosseWentrup2009
-from .neiry import DemonsP300
 from .phmd_ml import HeadMountedDisplay  # noqa: F401
 from .phmd_ml import Cattan2019_PHMD
 from .physionet_mi import PhysionetMI
