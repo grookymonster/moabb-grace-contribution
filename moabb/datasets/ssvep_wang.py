@@ -89,9 +89,9 @@ class Wang2016(BaseDataset):
 
     References
     ----------
-    .. [1] Y. Wang, X. Chen, X. Gao and S. Gao, 2017, "A Benchmark Dataset for
-           SSVEP-Based Brain–Computer Interfaces," in IEEE Transactions on Neural
-           Systems and Rehabilitation Engineering, vol. 25, no. 10, pp. 1746-1752,
+    .. [1] Wang, Y., Chen, X., Gao, X., & Gao, S. (2016). A benchmark dataset for
+           SSVEP-based brain–computer interfaces. IEEE Transactions on Neural
+           Systems and Rehabilitation Engineering, 25(10), 1746-1752.
            doi: 10.1109/TNSRE.2016.2627556.
     """
 
