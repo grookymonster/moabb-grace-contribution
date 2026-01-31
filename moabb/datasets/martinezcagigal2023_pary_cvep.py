@@ -1,5 +1,5 @@
+import logging
 import tempfile
-import traceback
 import zipfile
 from datetime import timezone
 from glob import glob
@@ -62,6 +62,7 @@ EVENTS = {
     "9.0": 109,
     "10.0": 110,
 }
+log = logging.getLogger(__name__)
 
 
 class MartinezCagigal2023Pary(BaseDataset):
@@ -196,14 +197,14 @@ class MartinezCagigal2023Pary(BaseDataset):
                 train_paths = glob(f"{tempdir}/{user}/*{base}_train*")
                 for j, train_path in enumerate(train_paths):
                     try:
-                        print(f"> Loading {user}, base {base}, train {j + 1}")
+                        log.info(f"Loading {user}, base {base}, train {j + 1}")
                         sessions[session_name][f"{j + 1}train"] = (
                             self._convert_to_mne_format(train_path)
                         )
                     except Exception:
-                        print(
-                            f"[EXCEPTION] Cannot convert signal {train_path}."
-                            f" More information: {traceback.format_exc()}"
+                        log.error(
+                            f"Cannot convert signal {train_path}.",
+                            exc_info=True,
                         )
                 n = len(train_paths)
 
@@ -218,14 +219,14 @@ class MartinezCagigal2023Pary(BaseDataset):
                 assert len(test_paths) == len(true_labels)
                 for j, test_path in enumerate(test_paths):
                     try:
-                        print(f"> Loading {user}, base {base}, test {j+n+1}")
+                        log.info(f"Loading {user}, base {base}, test {j + n + 1}")
                         sessions[session_name][f"{j + n + 1}test"] = (
                             self._convert_to_mne_format(test_path, true_labels[j])
                         )
                     except Exception:
-                        print(
-                            f"[EXCEPTION] Cannot convert signal {test_path}."
-                            f" More information: {traceback.format_exc()}"
+                        log.error(
+                            f"Cannot convert signal {test_path}.",
+                            exc_info=True,
                         )
 
         return sessions
