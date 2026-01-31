@@ -496,7 +496,7 @@ def _load_data_002_2025(
     sessions : dict
         Dictionary containing sessions with raw data for each run.
     """
-    validate_subject(subject, 2, "BNCI2025-002")
+    validate_subject(subject, 10, "BNCI2025-002")
 
     # Subject IDs available on the BNCI server
     # Note: 10 of the original 20 subjects' data is currently available
