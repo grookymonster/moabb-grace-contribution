@@ -260,13 +260,14 @@ class MAMEM1(BaseMAMEM):
 
     References
     ----------
-    .. [1] MAMEM Steady State Visually Evoked Potential EEG Database
+    .. [1] Oikonomou, V. P., Liaros, G., Georgiadis, K., Chatzilari, E., Adam, K.,
+           Nikolopoulos, S., & Kompatsiaris, I. (2016). Comparative evaluation of
+           state-of-the-art algorithms for SSVEP-based BCIs. arXiv preprint
+           arXiv:1602.00904. https://arxiv.org/abs/1602.00904
+    .. [2] MAMEM Steady State Visually Evoked Potential EEG Database
            `<https://archive.physionet.org/physiobank/database/mssvepdb/>`_
-    .. [2] V.P. Oikonomou et al, 2016, Comparative evaluation of state-of-the-art
-           algorithms for SSVEP-based BCIs. arXiv.
-           `<http://arxiv.org/abs/1602.00904>`-
     .. [3] S. Nikolopoulos, 2016, DataAcquisitionDetails.pdf
-           `<https://figshare.com/articles/dataset/MAMEM_EEG_SSVEP_Dataset_I_256_channels_11_subjects_5_frequencies_/2068677?file=3793738>`_  # noqa: E501
+           `<https://figshare.com/articles/dataset/MAMEM_EEG_SSVEP_Dataset_I_256_channels_11_subjects_5_frequencies_/2068677?file=3793738>`_
     """
 
     def __init__(self):
@@ -348,10 +349,14 @@ class MAMEM2(BaseMAMEM):
 
     References
     ----------
-    .. [1] MAMEM Steady State Visually Evoked Potential EEG Database
+    .. [1] Oikonomou, V. P., Liaros, G., Georgiadis, K., Chatzilari, E., Adam, K.,
+           Nikolopoulos, S., & Kompatsiaris, I. (2016). Comparative evaluation of
+           state-of-the-art algorithms for SSVEP-based BCIs. arXiv preprint
+           arXiv:1602.00904. https://arxiv.org/abs/1602.00904
+    .. [2] MAMEM Steady State Visually Evoked Potential EEG Database
            `<https://archive.physionet.org/physiobank/database/mssvepdb/>`_
-    .. [2] S. Nikolopoulos, 2016, DataAcquisitionDetails.pdf
-           `<https://figshare.com/articles/dataset/MAMEM_EEG_SSVEP_Dataset_II_256_channels_11_subjects_5_frequencies_presented_simultaneously_/3153409?file=4911931>`_  # noqa: E501
+    .. [3] S. Nikolopoulos, 2016, DataAcquisitionDetails.pdf
+           `<https://figshare.com/articles/dataset/MAMEM_EEG_SSVEP_Dataset_II_256_channels_11_subjects_5_frequencies_presented_simultaneously_/3153409?file=4911931>`_
     """
 
     def __init__(self):
@@ -441,10 +446,14 @@ class MAMEM3(BaseMAMEM):
 
     References
     ----------
-    .. [1] MAMEM Steady State Visually Evoked Potential EEG Database
+    .. [1] Oikonomou, V. P., Liaros, G., Georgiadis, K., Chatzilari, E., Adam, K.,
+           Nikolopoulos, S., & Kompatsiaris, I. (2016). Comparative evaluation of
+           state-of-the-art algorithms for SSVEP-based BCIs. arXiv preprint
+           arXiv:1602.00904. https://arxiv.org/abs/1602.00904
+    .. [2] MAMEM Steady State Visually Evoked Potential EEG Database
            `<https://archive.physionet.org/physiobank/database/mssvepdb/>`_
-    .. [2] S. Nikolopoulos, 2016, DataAcquisitionDetails.pdf
-           `<https://figshare.com/articles/dataset/MAMEM_EEG_SSVEP_Dataset_III_14_channels_11_subjects_5_frequencies_presented_simultaneously_/3413851>`_  # noqa: E501
+    .. [3] S. Nikolopoulos, 2016, DataAcquisitionDetails.pdf
+           `<https://figshare.com/articles/dataset/MAMEM_EEG_SSVEP_Dataset_III_14_channels_11_subjects_5_frequencies_presented_simultaneously_/3413851>`_
     """
 
     def __init__(self):
