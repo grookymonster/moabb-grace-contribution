@@ -126,24 +126,24 @@ class MartinezCagigal2023Pary(BaseDataset):
     ----------
     .. [1] Martínez-Cagigal, V., Santamaría-Vázquez, E., Pérez-Velasco, S.,
        Marcos-Martínez, D., Moreno-Calderón, S., & Hornero, R. (2023).
-       Non-binary m-sequences for more comfortable brain–computer interfaces
+       Non-binary m-sequences for more comfortable brain-computer interfaces
        based on c-VEPs. *Expert Systems with Applications, 232*, 120815.
        https://doi.org/10.1016/j.eswa.2023.120815
 
     .. [2] Martínez-Cagigal, V., Thielen, J., Santamaría-Vázquez, E.,
        Pérez-Velasco, S., Desain, P., & Hornero, R. (2021).
-       Brain–computer interfaces based on code-modulated visual evoked
+       Brain-computer interfaces based on code-modulated visual evoked
        potentials (c-VEP): A literature review. *Journal of Neural Engineering,
        18*(6), 061002. https://doi.org/10.1088/1741-2552/ac38cf
 
     .. [3] Martínez-Cagigal, V. (2025). Dataset: Non-binary m-sequences for
-       more comfortable brain–computer interfaces based on c-VEPs.
+       more comfortable brain-computer interfaces based on c-VEPs.
        https://doi.org/10.35376/10324/70945
 
     .. [4] Santamaría-Vázquez, E., Martínez-Cagigal, V., Marcos-Martínez, D.,
        Rodríguez-González, V., Pérez-Velasco, S., Moreno-Calderón, S., &
        Hornero, R. (2023). MEDUSA©: A novel Python-based software ecosystem to
-       accelerate brain–computer interface and cognitive neuroscience research.
+       accelerate brain-computer interface and cognitive neuroscience research.
        *Computer Methods and Programs in Biomedicine, 230*, 107357.
        https://doi.org/10.1016/j.cmpb.2023.107357
 
