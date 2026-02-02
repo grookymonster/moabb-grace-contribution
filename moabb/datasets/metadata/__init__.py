@@ -1,6 +1,7 @@
 """Metadata schema module for MOABB datasets.
 
 This module provides standardized dataclasses for documenting dataset metadata.
+Metadata is distributed across individual dataset files as class attributes.
 
 Core Classes
 ------------
@@ -30,21 +31,37 @@ ChannelCount
 SamplingRateCount
     Sampling rate distribution entry
 
+New Classes (from RALPH extraction)
+-----------------------------------
+AuxiliaryChannelsMetadata
+    EOG, EMG, and other physiological channel information
+FilterDetails
+    Filter configuration details (highpass, lowpass, notch, etc.)
+PreprocessingMetadata
+    Preprocessing and artifact handling details
+FrequencyBands
+    Frequency band definitions for analysis
+SignalProcessingMetadata
+    Feature extraction and classification methods
+CrossValidationMetadata
+    Cross-validation methodology details
+PerformanceMetadata
+    Reported performance metrics
+BCIApplicationMetadata
+    BCI application context and environment
+ParadigmSpecificMetadata
+    Paradigm-specific parameters (SSVEP frequencies, c-VEP codes, etc.)
+DataStructureMetadata
+    Data organization and trial structure
+
 Functions
 ---------
-get_dataset_metadata
-    Retrieve pre-defined metadata for a specific MOABB dataset
 validate_country_code
     Validate ISO 3166-1 alpha-2 country codes
 validate_metadata_against_dataset
     Validate metadata matches actual dataset structure
 get_dataset_description
     Extract description from dataset class docstring
-
-Constants
----------
-DATASET_METADATA_CATALOG
-    Dictionary mapping dataset names to their DatasetMetadata instances
 
 Example
 -------
@@ -62,24 +79,32 @@ Example
 ...     experiment=ExperimentMetadata(paradigm="imagery"),
 ... )
 
->>> # Get pre-defined metadata for a dataset
->>> from moabb.datasets.metadata import get_dataset_metadata
->>> bnci_metadata = get_dataset_metadata("BNCI2014_001")
->>> print(bnci_metadata.participants.n_subjects)
+>>> # Access metadata from a dataset class
+>>> from moabb.datasets import BNCI2014_001
+>>> print(BNCI2014_001.METADATA.participants.n_subjects)
 9
 """
 
-from .catalog import DATASET_METADATA_CATALOG, get_dataset_metadata
-from .schema import (
+from .schema import (  # Core MOABB classes; Additional classes; New classes from RALPH extraction; Validation functions
     AcquisitionMetadata,
+    AuxiliaryChannelsMetadata,
+    BCIApplicationMetadata,
     ChannelCount,
+    CrossValidationMetadata,
     DatasetMetadata,
+    DataStructureMetadata,
     Demographics,
     DocumentationMetadata,
     ExperimentMetadata,
     ExternalLinks,
+    FilterDetails,
+    FrequencyBands,
+    ParadigmSpecificMetadata,
     ParticipantMetadata,
+    PerformanceMetadata,
+    PreprocessingMetadata,
     SamplingRateCount,
+    SignalProcessingMetadata,
     Tags,
     Timestamps,
     get_dataset_description,
@@ -102,9 +127,17 @@ __all__ = [
     "Tags",
     "ChannelCount",
     "SamplingRateCount",
-    # Catalog
-    "DATASET_METADATA_CATALOG",
-    "get_dataset_metadata",
+    # New classes from RALPH extraction
+    "AuxiliaryChannelsMetadata",
+    "FilterDetails",
+    "PreprocessingMetadata",
+    "FrequencyBands",
+    "SignalProcessingMetadata",
+    "CrossValidationMetadata",
+    "PerformanceMetadata",
+    "BCIApplicationMetadata",
+    "ParadigmSpecificMetadata",
+    "DataStructureMetadata",
     # Validation functions
     "validate_country_code",
     "validate_metadata_against_dataset",
