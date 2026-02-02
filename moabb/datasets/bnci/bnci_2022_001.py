@@ -6,6 +6,15 @@ import numpy as np
 from mne.utils import verbose
 from scipy.io import loadmat
 
+from moabb.datasets.metadata.schema import (
+    AcquisitionMetadata,
+    DatasetMetadata,
+    DocumentationMetadata,
+    ExperimentMetadata,
+    ParticipantMetadata,
+    Tags,
+)
+
 from .base import BNCIBaseDataset
 from .utils import (
     BNCI_URL,
@@ -400,6 +409,50 @@ class BNCI2022_001(BNCIBaseDataset):
     >>> dataset.subject_list
     [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=256.0,
+            n_channels=67,
+            channel_types={"eeg": 64, "eog": 3},
+            hardware="Biosemi ActiveTwo",
+            montage="biosemi64",
+            line_freq=50.0,
+            reference="car",
+            sensor_type="active",
+            software="EEGLAB",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=13,
+            health_status="healthy",
+            gender={"female": 8, "male": 5},
+            age_mean=22.6,
+            age_std=1.04,
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="imagery",
+            task_type="cognitive_workload",
+            n_classes=4,
+            trial_duration=90.0,
+            tasks=["right_hand"],
+            feedback_type="none",
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.1109/THMS.2020.3038339",
+            description="EEG correlates of difficulty level in simulated drone piloting",
+            investigators=["P.-K. Jao", "R. Chavarriaga", "J. d. R. Millán"],
+            institution="EPFL",
+            country="CH",
+            repository="BNCI Horizon 2020",
+            data_url="http://bnci-horizon-2020.eu/database/data-sets/001-2022/",
+            license="CC BY 4.0",
+            publication_year=2021,
+        ),
+        sessions_per_subject=1,
+        runs_per_session=1,
+        tags=Tags(pathology=["healthy"], modality=["motor"], type=["bci"]),
+        data_processed=True,
+    )
 
     def __init__(self):
         super().__init__(

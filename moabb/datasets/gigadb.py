@@ -8,6 +8,15 @@ from mne.channels import make_standard_montage
 from mne.io import RawArray
 from scipy.io import loadmat
 
+from moabb.datasets.metadata.schema import (
+    AcquisitionMetadata,
+    DatasetMetadata,
+    DocumentationMetadata,
+    ExperimentMetadata,
+    ParticipantMetadata,
+    Tags,
+)
+
 from . import download as dl
 from .base import BaseDataset
 
@@ -54,6 +63,63 @@ class Cho2017(BaseDataset):
            EEG datasets for motor imagery brain computer interface.
            GigaScience. https://doi.org/10.1093/gigascience/gix034
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=512.0,
+            n_channels=69,
+            channel_types={"eeg": 64, "emg": 4, "stim": 1},
+            hardware="BioSemi ActiveTwo",
+            sensor_type="Ag/AgCl active",
+            software="BCI2000 system 3.0.2",
+            montage="standard_1005",
+            line_freq=60.0,
+            reference="Car",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=52,
+            health_status="healthy",
+            gender={"female": 19, "male": 33},
+            age_mean=24.8,
+            age_std=3.86,
+            handedness={"right": 50, "ambidextrous": 2},
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="imagery",
+            task_type="left_right_hand",
+            n_classes=2,
+            trials_per_class={"left_hand": 100, "right_hand": 100},
+            trial_duration=3.0,
+            tasks=["rest", "left_hand", "right_hand"],
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.1093/gigascience/gix034",
+            description="Motor imagery BCI EEG dataset with EMG from GigaScience",
+            readme=(
+                "EEG dataset recorded during motor imagery BCI experiments from 52 subjects. "
+                "Participants performed kinesthetic motor imagery of left and right hand movements "
+                "using a Biosemi ActiveTwo system with 64 EEG channels plus 4 EMG channels. "
+                "The dataset includes 100-120 trials per class per subject across 5-6 runs. "
+                "Additional data includes questionnaire responses, 3D electrode locations, "
+                "and 1-minute resting state recordings. Suitable for motor imagery classification "
+                "and cross-subject transfer learning research."
+            ),
+            investigators=["H. Cho", "M. Ahn", "S. Ahn", "M. Kwon", "S.C. Jun"],
+            senior_author="S.C. Jun",
+            contact_info="scjun@gist.ac.kr",
+            institution="Gwangju Institute of Science and Technology",
+            country="KR",
+            repository="GigaDB",
+            data_url="http://dx.doi.org/10.5524/100295",
+            license="CC0",
+            publication_year=2017,
+            funding="GIST Research Institute (GRI), IITP Korea government (No. 2017-0-00451)",
+        ),
+        sessions_per_subject=1,
+        runs_per_session=5,
+        tags=Tags(pathology=["healthy"], modality=["motor"], type=["bci"]),
+        data_processed=False,
+    )
 
     def __init__(self):
         super().__init__(

@@ -16,6 +16,15 @@ import numpy as np
 from mne.utils import verbose
 from scipy.io import loadmat
 
+from moabb.datasets.metadata.schema import (
+    AcquisitionMetadata,
+    DatasetMetadata,
+    DocumentationMetadata,
+    ExperimentMetadata,
+    ParticipantMetadata,
+    Tags,
+)
+
 from .base import BNCIBaseDataset
 from .utils import (
     BNCI_URL,
@@ -284,6 +293,52 @@ class BNCI2024_001(BNCIBaseDataset):
     characters can be classified from non-invasive EEG and that decoding
     movement kinematics prior to classification improves performance.
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=500.0,  # Fixed: was incorrectly 512.0
+            n_channels=65,
+            channel_types={"eeg": 60, "eog": 4, "stim": 1},
+            montage="standard_1005",
+            line_freq=50.0,
+            ground="FPz",
+            reference="electrode was positioned on the right mastoid of the participant",
+            hardware="BrainVision",
+            filters="49-51 Hz notch filter (Butterworth, 2nd order), 0.4 Hz high-pass (Butterworth, 2nd order)",
+            sensor_type="active electrodes",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=20,
+            health_status="healthy",
+            clinical_population="spinal_cord_injury",
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="imagery",
+            task_type="handwritten_character_imagery",
+            n_classes=10,
+            trial_duration=4.0,
+            tasks=["right_hand"],
+            feedback_type="visual",
+            study_design="move their hand to a comfortable position in the middle of the monitored area.",
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.1016/j.compbiomed.2024.109132",
+            description="Handwritten character classification from EEG",
+            investigators=["Crell, M.R.", "Müller-Putz, G.R."],
+            institution="Graz University of Technology",
+            country="AT",
+            repository="BNCI Horizon 2020",
+            data_url="http://bnci-horizon-2020.eu/database/data-sets/001-2024/",
+            license="CC BY 4.0",
+            publication_year=2024,
+            funding=["grant agreement agreement", "European Union"],
+        ),
+        sessions_per_subject=1,
+        runs_per_session=1,
+        tags=Tags(pathology=["healthy"], modality=["motor"], type=["bci"]),
+        data_processed=False,
+        file_format="MAT",
+    )
 
     def __init__(self):
         super().__init__(

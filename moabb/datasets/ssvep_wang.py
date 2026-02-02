@@ -8,6 +8,15 @@ from mne.channels import make_standard_montage
 from mne.io import RawArray
 from scipy.io import loadmat
 
+from moabb.datasets.metadata.schema import (
+    AcquisitionMetadata,
+    DatasetMetadata,
+    DocumentationMetadata,
+    ExperimentMetadata,
+    ParticipantMetadata,
+    Tags,
+)
+
 from . import download as dl
 from .base import BaseDataset
 
@@ -94,6 +103,49 @@ class Wang2016(BaseDataset):
            Systems and Rehabilitation Engineering, 25(10), 1746-1752.
            doi: 10.1109/TNSRE.2016.2627556.
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=250.0,
+            n_channels=64,
+            channel_types={"eeg": 64},
+            hardware="Synamps2 (Neuroscan)",
+            reference="vertex",
+            ground="between Fz and FPz",
+            filters="0.15-200 Hz bandpass, 50 Hz notch",
+            montage="standard_1020",
+            line_freq=50.0,
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=34,
+            health_status="healthy",
+            age_mean=22.0,
+            age_min=17.0,
+            age_max=34.0,
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="ssvep",
+            task_type="40_frequency_benchmark",
+            n_classes=40,
+            trial_duration=5.0,
+            tasks=["rest"],
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.1109/TNSRE.2016.2627556",
+            description="SSVEP Benchmark Dataset - 40 frequencies JFPM coding",
+            investigators=["Y. Wang", "X. Chen", "X. Gao", "S. Gao"],
+            institution="Tsinghua University",
+            country="CN",
+            repository="Tsinghua BCI Lab",
+            data_url="http://bci.med.tsinghua.edu.cn/download.html",
+            publication_year=2016,
+            license="Public Domain",
+        ),
+        sessions_per_subject=1,
+        runs_per_session=6,
+        tags=Tags(pathology=["healthy"], modality=["visual"], type=["bci"]),
+        data_processed=True,
+    )
 
     # fmt: off
     _events = {

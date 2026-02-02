@@ -9,6 +9,14 @@ import numpy as np
 
 from moabb.datasets import download as dl
 from moabb.datasets.base import BaseDataset
+from moabb.datasets.metadata.schema import (
+    AcquisitionMetadata,
+    DatasetMetadata,
+    DocumentationMetadata,
+    ExperimentMetadata,
+    ParticipantMetadata,
+    Tags,
+)
 
 
 logger = logging.getLogger(__name__)
@@ -161,6 +169,52 @@ class Huebner2017(_BaseVisualMatrixSpellerDataset):
     .. versionadded:: 0.4.5
     """
 
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=1000.0,
+            n_channels=31,
+            channel_types={"eeg": 31},
+            montage="standard_1005",
+            line_freq=50.0,
+            reference="against the nose",
+            hardware="BrainAmp",
+            software="OpenViBE",
+            sensor_type="Ag/AgCl",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=13,
+            health_status="healthy",
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="p300",
+            task_type="visual_matrix_speller",
+            n_classes=2,
+            trial_duration=1.0,
+            tasks=["rest"],
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.1371/journal.pone.0175856",
+            description="Visual Matrix Speller LLP dataset 2017",
+            investigators=[
+                "D. Huebner",
+                "T. Verhoeven",
+                "K.R. Müller",
+                "P.J. Kindermans",
+            ],
+            institution="Albert-Ludwigs-University Freiburg",
+            country="DE",
+            repository="Zenodo",
+            data_url="https://zenodo.org/records/5831826",
+            publication_year=2017,
+            license="CC BY 4.0",
+            funding=["grant INST INST", "European Union", "grant agreement agreement"],
+        ),
+        sessions_per_subject=1,
+        runs_per_session=1,
+        tags=Tags(pathology=["healthy"], modality=["visual"], type=["bci"]),
+        data_processed=False,
+    )
+
     def __init__(self, interval=None, raw_slice_offset=None, use_blocks_as_sessions=True):
         llp_speller_paper_doi = "10.1371/journal.pone.0175856"
         super().__init__(
@@ -210,6 +264,60 @@ class Huebner2018(_BaseVisualMatrixSpellerDataset):
 
     .. versionadded:: 0.4.5
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=1000.0,
+            n_channels=31,
+            channel_types={"eeg": 31},
+            montage="standard_1005",
+            line_freq=50.0,
+            filters="0.1-70 Hz bandpass",
+            ground="AFz",
+            reference="car",
+            hardware="BrainAmp",
+            sensor_type="Ag/AgCl",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=12,
+            health_status="healthy",
+            gender={"female": 8, "male": 4},
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="p300",
+            task_type="visual_matrix_speller",
+            n_classes=2,
+            trial_duration=1.0,
+            tasks=["rest"],
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.1109/MCI.2018.2807039",
+            description="Visual Matrix Speller LLP dataset 2018",
+            investigators=[
+                "D. Huebner",
+                "T. Verhoeven",
+                "K.R. Müller",
+                "P.J. Kindermans",
+            ],
+            institution="Albert-Ludwigs-University Freiburg",
+            country="DE",
+            repository="Zenodo",
+            data_url="https://zenodo.org/records/5831879",
+            publication_year=2018,
+            license="CC BY 4.0",
+            funding=[
+                "DFG SPP",
+                "grant INST INST",
+                "BMBF No",
+                "European Union",
+                "grant number EXC EXC",
+            ],
+        ),
+        sessions_per_subject=1,
+        runs_per_session=1,
+        tags=Tags(pathology=["healthy"], modality=["visual"], type=["bci"]),
+        data_processed=True,
+    )
 
     def __init__(self, interval=None, raw_slice_offset=None, use_blocks_as_sessions=True):
         mix_speller_paper_doi = "10.1109/MCI.2018.2807039"

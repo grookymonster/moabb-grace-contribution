@@ -9,6 +9,14 @@ from scipy.io import loadmat
 
 from moabb.datasets import download as dl
 from moabb.datasets.base import BaseDataset
+from moabb.datasets.metadata.schema import (
+    AcquisitionMetadata,
+    DatasetMetadata,
+    DocumentationMetadata,
+    ExperimentMetadata,
+    ParticipantMetadata,
+    Tags,
+)
 
 
 ALPHAWAVES_URL = "https://zenodo.org/record/2348892/files/"
@@ -72,6 +80,72 @@ class Rodrigues2017(BaseDataset):
     .. versionadded:: 1.1.0
 
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=512.0,
+            n_channels=16,
+            channel_types={"eeg": 16},
+            sensors=[
+                "Fp1",
+                "Fp2",
+                "Fc5",
+                "Fz",
+                "Fc6",
+                "T7",
+                "Cz",
+                "T8",
+                "P7",
+                "P3",
+                "Pz",
+                "P4",
+                "P8",
+                "O1",
+                "Oz",
+                "O2",
+            ],
+            montage="standard_1005",
+            line_freq=50.0,
+            filters="none",
+            reference="was placed on the right earlobe",
+            hardware="g.tec",
+            sensor_type="wet electrodes",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=20,
+            health_status="healthy",
+            gender={"female": 7, "male": 13},
+            age_mean=25.8,
+            age_std=5.27,
+            age_min=19,
+            age_max=44,
+            clinical_population="spinal_cord_injury",
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="rstate",
+            task_type="eyes_open_closed",
+            n_classes=2,
+            trial_duration=10.0,
+            tasks=["rest"],
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.5281/zenodo.2348892",
+            description="Alpha Waves - Resting state EEG dataset for BCI",
+            investigators=["Cattan, G.", "Rodrigues, P.L.C.", "Congedo, M."],
+            institution="GIPSA-lab",
+            country="FR",
+            repository="Zenodo",
+            data_url="https://zenodo.org/record/2348892",
+            license="CC BY 4.0",
+            publication_year=2018,
+        ),
+        sessions_per_subject=1,
+        runs_per_session=1,
+        tags=Tags(
+            pathology=["healthy"], modality=["resting state"], type=["resting-state"]
+        ),
+        data_processed=False,
+    )
 
     def __init__(self):
         subject_list = list(range(1, 6 + 1)) + list(range(8, 20 + 1))

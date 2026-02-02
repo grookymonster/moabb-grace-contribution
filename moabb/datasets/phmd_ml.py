@@ -4,6 +4,14 @@ import mne
 import numpy as np
 from scipy.io import loadmat
 
+from moabb.datasets.metadata.schema import (
+    AcquisitionMetadata,
+    DatasetMetadata,
+    DocumentationMetadata,
+    ExperimentMetadata,
+    ParticipantMetadata,
+    Tags,
+)
 from moabb.utils import depreciated_alias
 
 from . import download as dl
@@ -52,6 +60,46 @@ class Cattan2019_PHMD(BaseDataset):
         ‘Passive Head-Mounted Display Music-Listening EEG dataset’,
         Gipsa-Lab ; IHMTEK, Research Report 2, Mar. 2019. doi: 10.5281/zenodo.2617084.
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=512.0,
+            n_channels=17,
+            channel_types={"eeg": 16, "stim": 1},
+            montage="standard_1005",
+            line_freq=50.0,
+            filters="no digital filter",
+            reference="was placed on the right earlobe",
+            hardware="g.tec",
+            sensor_type="wet electrodes",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=12,
+            health_status="healthy",
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="rstate",
+            task_type="eyes_open_closed",
+            n_classes=2,
+            trial_duration=60.0,
+            study_design="focus on the marker and to listen to the music that was diffused during the experiment (Bach Invention from one to ten on harpsichord).",
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.5281/zenodo.2617084",
+            description="Passive Head-Mounted Display resting state EEG dataset",
+            investigators=["G. Cattan", "P.L.C. Rodrigues", "M. Congedo"],
+            institution="GIPSA-lab",
+            country="FR",
+            repository="Zenodo",
+            data_url="https://zenodo.org/record/2617085",
+            license="CC BY 4.0",
+            publication_year=2019,
+        ),
+        sessions_per_subject=1,
+        runs_per_session=1,
+        tags=Tags(pathology=["healthy"], modality=["auditory"], type=["perception"]),
+        data_processed=False,
+    )
 
     def __init__(self):
         super().__init__(

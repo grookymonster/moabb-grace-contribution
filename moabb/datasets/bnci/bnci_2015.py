@@ -7,6 +7,14 @@ from mne.io import RawArray
 from mne.utils import verbose
 from scipy.io import loadmat
 
+from moabb.datasets.metadata.schema import (
+    AcquisitionMetadata,
+    DatasetMetadata,
+    DocumentationMetadata,
+    ExperimentMetadata,
+    ParticipantMetadata,
+    Tags,
+)
 from moabb.utils import depreciated_alias
 
 from .base import (
@@ -464,6 +472,72 @@ class BNCI2015_001(MNEBNCI):
     .. versionadded:: 0.4.0
     """
 
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=512.0,
+            n_channels=14,
+            channel_types={"eeg": 13, "stim": 1},
+            sensors=[
+                "FC3",
+                "FCz",
+                "FC4",
+                "C5",
+                "C3",
+                "C1",
+                "Cz",
+                "C2",
+                "C4",
+                "C6",
+                "CP3",
+                "CPz",
+                "CP4",
+            ],
+            montage="standard_1005",
+            line_freq=50.0,
+            filters="50 Hz notch",
+            reference="period",
+            hardware="g.tec",
+            sensor_type="active electrode",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=12,
+            health_status="healthy",
+            handedness={"right": "all"},
+            clinical_population="ALS",
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="imagery",
+            task_type="right_hand_feet",
+            n_classes=2,
+            trial_duration=5.0,
+            tasks=["rest", "feet", "right_hand"],
+            feedback_type="visual",
+            study_design="to relax and to perform sustained, kinesthetic movement imagery ([5]) during the complete activity period of the presented trials (see Figure 1).",
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.1109/tnsre.2012.2189584",
+            description="BNCI 2015-001 Motor imagery dataset",
+            investigators=[
+                "J. Faller",
+                "R. Scherer",
+                "U. Costa",
+                "E. Opisso",
+                "J. Medina",
+                "G.R. Müller-Putz",
+            ],
+            institution="Graz University of Technology",
+            country="AT",
+            repository="BNCI Horizon 2020",
+            data_url="http://bnci-horizon-2020.eu/database/data-sets/001-2015/",
+            license="CC BY 4.0",
+            publication_year=2014,
+        ),
+        sessions_per_subject=3,
+        runs_per_session=1,
+        tags=Tags(pathology=["healthy"], modality=["motor"], type=["bci"]),
+        data_processed=True,
+    )
+
     def __init__(self):
         super().__init__(
             subjects=list(range(1, 13)),
@@ -500,6 +574,50 @@ class BNCI2015_003(MNEBNCI):
     .. versionadded:: 0.4.0
     """
 
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=256.0,
+            n_channels=10,
+            channel_types={"eeg": 8, "stim": 2},
+            sensors=["Fz", "Cz", "P3", "Pz", "P4", "PO7", "Oz", "PO8"],
+            montage="standard_1005",
+            line_freq=50.0,
+            filters="0.1-250 Hz bandpass (hardware analog), 40 Hz lowpass (online processing)",
+            reference="the nose",
+            hardware="BrainAmp",
+            sensor_type="Ag/AgCl",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=10,
+            health_status="healthy",
+            age_mean=34.1,
+            age_std=11.4,
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="p300",
+            task_type="speller",
+            n_classes=2,
+            trial_duration=0.8,
+            tasks=["rest"],
+            feedback_type="visual",
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.1016/j.neulet.2009.06.045",
+            description="BNCI 2015-003 P300 Speller Dataset",
+            investigators=["Schreuder, M.", "Rost, T.", "Tangermann, M."],
+            institution="Graz University of Technology",
+            country="AT",
+            repository="BNCI Horizon 2020",
+            data_url="http://bnci-horizon-2020.eu/database/data-sets/003-2015/",
+            license="CC BY 4.0",
+            publication_year=2009,
+        ),
+        sessions_per_subject=1,
+        runs_per_session=2,
+        tags=Tags(pathology=["healthy"], modality=["auditory"], type=["bci"]),
+        data_processed=True,
+    )
+
     def __init__(self):
         super().__init__(
             subjects=list(range(1, 11)),
@@ -535,6 +653,57 @@ class BNCI2015_004(MNEBNCI):
     -----
     .. versionadded:: 0.4.0
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=256.0,
+            n_channels=31,
+            channel_types={"eeg": 30, "stim": 1},
+            montage="standard_1005",
+            line_freq=50.0,
+            filters="0.5-100 Hz bandpass",
+            reference="left mastoid",
+            hardware="g.tec",
+            sensor_type="active electrodes",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=9,
+            health_status="healthy",
+            age_mean=38.5,
+            age_min=20.0,
+            age_max=57.0,
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="imagery",
+            task_type="5_class_mental_tasks",
+            n_classes=5,
+            trial_duration=7.0,
+            tasks=["feet", "right_hand"],
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.1109/TCDS.2017.2688350",
+            description="5-class mental tasks for users with disability",
+            investigators=[
+                "X. Zhang",
+                "L. Yao",
+                "Q. Zhang",
+                "S. Kanhere",
+                "M. Sheng",
+                "Y. Liu",
+            ],
+            institution="Graz University of Technology",
+            country="AT",
+            repository="BNCI Horizon 2020",
+            data_url="http://bnci-horizon-2020.eu/database/data-sets/004-2015/",
+            license="CC BY 4.0",
+            publication_year=2017,
+        ),
+        sessions_per_subject=2,
+        runs_per_session=1,
+        tags=Tags(pathology=["stroke"], modality=["motor"], type=["bci"]),
+        data_processed=True,
+        file_format="MAT",
+    )
 
     def __init__(self):
         super().__init__(
@@ -576,6 +745,57 @@ class BNCI2015_006(MNEBNCI):
     -----
     .. versionadded:: 1.2.0
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=200.0,  # Fixed: was incorrectly 100.0
+            n_channels=65,
+            channel_types={"eeg": 64, "stim": 1},
+            montage="standard_1005",
+            line_freq=50.0,
+            reference="list",
+            hardware="Emotiv EPOC",
+            filters="0.016-250 Hz bandpass",
+            sensor_type="active electrode",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=11,
+            health_status="healthy",
+            clinical_population="DOC",
+            age_mean=35.5,
+            age_min=21.0,
+            age_max=50.0,
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="p300",
+            task_type="music_auditory_attention",
+            n_classes=2,
+            trial_duration=1.0,
+            tasks=["rest"],
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.1088/1741-2560/11/2/026009",
+            description="Music BCI - Auditory attention detection with ERP",
+            investigators=[
+                "Treder, M.S.",
+                "Purwins, H.",
+                "Miklody, D.",
+                "Sturm, I.",
+                "Blankertz, B.",
+            ],
+            institution="Technische Universität Berlin",
+            country="DE",
+            repository="BNCI Horizon 2020",
+            data_url="http://bnci-horizon-2020.eu/database/data-sets/006-2015/",
+            license="CC BY 4.0",
+            publication_year=2014,
+            funding=["Grant Nos s"],
+        ),
+        sessions_per_subject=1,
+        runs_per_session=1,
+        tags=Tags(pathology=["healthy"], modality=["auditory"], type=["bci"]),
+        data_processed=True,
+    )
 
     def __init__(self):
         super().__init__(
@@ -693,6 +913,47 @@ class BNCI2015_007(MNEBNCI):
     BNCI2015_010 : RSVP visual speller (gaze-independent visual paradigm)
     """
 
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=100.0,
+            n_channels=65,
+            channel_types={"eeg": 63, "stim": 2},
+            montage="standard_1005",
+            line_freq=50.0,
+            reference="nose",
+            hardware="BrainProducts actiCap",
+            sensor_type="active",
+            filters="0.016-250 Hz bandpass",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=16,
+            health_status="healthy",
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="p300",
+            task_type="motion_vep_speller",
+            n_classes=2,
+            trial_duration=0.7,  # Fixed: was incorrectly 1.0
+            tasks=["rest"],
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.1088/1741-2560/9/4/045006",
+            description="Motion VEP Speller - mVEP based BCI speller",
+            investigators=["Treder, M.S.", "Blankertz, B."],
+            institution="Technische Universität Berlin",
+            country="DE",
+            repository="BNCI Horizon 2020",
+            data_url="http://bnci-horizon-2020.eu/database/data-sets/007-2015/",
+            license="CC BY 4.0",
+            publication_year=2012,
+            funding=["DFG grant", "grant no MU MU", "grant nos s", "BMBF grant"],
+        ),
+        sessions_per_subject=1,
+        runs_per_session=1,
+        tags=Tags(pathology=["healthy"], modality=["visual"], type=["bci"]),
+        data_processed=False,
+    )
+
     def __init__(self):
         super().__init__(
             subjects=list(range(1, 17)),
@@ -778,6 +1039,54 @@ class BNCI2015_008(MNEBNCI):
     .. versionadded:: 1.2.0
     """
 
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=250.0,
+            n_channels=65,
+            channel_types={"eeg": 63, "stim": 2},
+            montage="standard_1005",
+            line_freq=50.0,
+            reference="list",
+            hardware="Emotiv EPOC",
+            filters="0.016-250 Hz bandpass",
+            sensor_type="active electrode",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=13,
+            health_status="healthy",
+            age_mean=30.5,
+            age_min=16.0,
+            age_max=45.0,
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="p300",
+            task_type="center_speller",
+            n_classes=2,
+            trial_duration=0.8,
+            tasks=["rest"],
+            feedback_type="none",
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.1088/1741-2560/8/6/066003",
+            description="Center Speller P300 - gaze-independent BCI speller",
+            investigators=[
+                "Treder, M.S.",
+                "Schmidt, N.M.",
+                "Blankertz, B.",
+            ],
+            institution="Berlin Institute of Technology",
+            country="DE",
+            repository="BNCI Horizon 2020",
+            data_url="http://bnci-horizon-2020.eu/database/data-sets/008-2015/",
+            license="CC BY 4.0",
+            publication_year=2011,
+        ),
+        sessions_per_subject=2,
+        runs_per_session=1,
+        tags=Tags(pathology=["healthy"], modality=["visual"], type=["bci"]),
+        data_processed=True,
+    )
+
     def __init__(self):
         super().__init__(
             subjects=list(range(1, 14)),
@@ -860,6 +1169,55 @@ class BNCI2015_009(MNEBNCI):
     .. versionadded:: 1.2.0
     """
 
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=250.0,  # Fixed: was incorrectly 1000.0
+            n_channels=64,
+            channel_types={"eeg": 60, "eog": 2, "stim": 2},
+            montage="standard_1005",
+            line_freq=50.0,
+            filters="0.1-250 Hz bandpass",
+            reference="purposes",
+            hardware="Brain Products",
+            sensor_type="Ag/AgCl",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=21,
+            health_status="healthy",
+            age_mean=29.5,
+            age_min=25.0,
+            age_max=34.0,
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="p300",
+            task_type="amuse_auditory_spatial",
+            n_classes=2,
+            trial_duration=1.0,
+            tasks=["rest"],
+            feedback_type="visual",
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.1371/journal.pone.0009813",
+            description="AMUSE - Auditory Multi-class Spatial ERP BCI",
+            investigators=[
+                "Höhne, J.",
+                "Schreuder, M.",
+                "Blankertz, B.",
+                "Tangermann, M.",
+            ],
+            institution="Berlin Institute of Technology",
+            country="DE",
+            repository="BNCI Horizon 2020",
+            data_url="http://bnci-horizon-2020.eu/database/data-sets/009-2015/",
+            license="CC BY 4.0",
+            publication_year=2010,
+        ),
+        sessions_per_subject=1,
+        runs_per_session=1,
+        tags=Tags(pathology=["healthy"], modality=["auditory"], type=["bci"]),
+        data_processed=False,
+    )
+
     def __init__(self):
         super().__init__(
             subjects=list(range(1, 22)),
@@ -900,6 +1258,46 @@ class BNCI2015_010(MNEBNCI):
     -----
     .. versionadded:: 1.2.0
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=200.0,  # Fixed: was incorrectly 1000.0
+            n_channels=65,
+            channel_types={"eeg": 63, "stim": 2},
+            montage="standard_1005",
+            line_freq=50.0,
+            ground="forehead",
+            reference="the left mastoid",
+            hardware="BrainAmp",
+            sensor_type="active electrode",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=12,
+            health_status="healthy",
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="p300",
+            task_type="rsvp",
+            n_classes=2,
+            trial_duration=0.8,
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.1016/j.clinph.2012.12.050",
+            description="RSVP - Rapid Serial Visual Presentation BCI",
+            investigators=["Acqualagna, L.", "Blankertz, B."],
+            institution="Technische Universität Berlin",
+            country="DE",
+            repository="BNCI Horizon 2020",
+            data_url="http://bnci-horizon-2020.eu/database/data-sets/010-2015/",
+            license="CC BY 4.0",
+            publication_year=2013,
+            funding=["Grant No. MU MU", "Grant Nos s", "DFG Grant", "BMBF Grant"],
+        ),
+        sessions_per_subject=1,
+        runs_per_session=1,
+        tags=Tags(pathology=["healthy"], modality=["visual"], type=["bci"]),
+        data_processed=False,
+    )
 
     def __init__(self):
         super().__init__(
@@ -944,6 +1342,52 @@ class BNCI2015_012(MNEBNCI):
     .. versionadded:: 1.2.0
     """
 
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=250.0,  # Fixed: was incorrectly 1000.0
+            n_channels=65,
+            channel_types={"eeg": 63, "stim": 2},
+            montage="standard_1005",
+            line_freq=50.0,
+            filters="0.1-250 Hz bandpass",
+            reference="the nose",
+            hardware="Brain Products",
+            sensor_type="Ag/AgCl",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=10,  # Fixed: was incorrectly 12
+            health_status="healthy",
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="p300",
+            task_type="pass2d_auditory_speller",
+            n_classes=2,
+            trial_duration=1.0,
+            tasks=["rest"],
+            feedback_type="visual",
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.3389/fnins.2011.00099",
+            description="PASS2D - Auditory Spatial Speller BCI",
+            investigators=[
+                "Höhne, J.",
+                "Schreuder, M.",
+                "Blankertz, B.",
+                "Tangermann, M.",
+            ],
+            institution="Technische Universität Berlin",
+            country="DE",
+            repository="BNCI Horizon 2020",
+            data_url="http://bnci-horizon-2020.eu/database/data-sets/012-2015/",
+            license="CC BY 4.0",
+            publication_year=2011,
+        ),
+        sessions_per_subject=1,
+        runs_per_session=1,
+        tags=Tags(pathology=["healthy"], modality=["auditory"], type=["bci"]),
+        data_processed=True,
+    )
+
     def __init__(self):
         super().__init__(
             subjects=list(range(1, 11)),
@@ -983,6 +1427,51 @@ class BNCI2015_013(MNEBNCI):
     -----
     .. versionadded:: 1.2.0
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=512.0,
+            n_channels=65,
+            channel_types={"eeg": 64, "stim": 1},
+            montage="standard_1005",
+            line_freq=50.0,
+            filters="DC (no highpass filter)",
+            reference="car",
+            hardware="Biosemi ActiveTwo",
+            sensor_type="active",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=6,
+            health_status="healthy",
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="p300",
+            task_type="error_related_potentials",
+            n_classes=2,
+            trial_duration=1.0,
+            tasks=["rest"],
+            feedback_type="visual",
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.1109/TNSRE.2010.2053387",
+            description="Error-Related Potentials (ErrP) for BCI error detection",
+            investigators=[
+                "Chavarriaga, R.",
+                "Millán, J.d.R.",
+            ],
+            institution="EPFL",
+            country="CH",
+            repository="BNCI Horizon 2020",
+            data_url="http://bnci-horizon-2020.eu/database/data-sets/013-2015/",
+            license="CC BY 4.0",
+            publication_year=2010,
+        ),
+        sessions_per_subject=2,
+        runs_per_session=1,
+        tags=Tags(pathology=["healthy"], modality=["visual"], type=["bci"]),
+        data_processed=False,
+        file_format="MAT",
+    )
 
     def __init__(self):
         super().__init__(

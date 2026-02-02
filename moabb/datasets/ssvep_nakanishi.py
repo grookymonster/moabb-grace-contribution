@@ -8,6 +8,15 @@ from mne.channels import make_standard_montage
 from mne.io import RawArray
 from scipy.io import loadmat
 
+from moabb.datasets.metadata.schema import (
+    AcquisitionMetadata,
+    DatasetMetadata,
+    DocumentationMetadata,
+    ExperimentMetadata,
+    ParticipantMetadata,
+    Tags,
+)
+
 from . import download as dl
 from .base import BaseDataset
 
@@ -33,6 +42,47 @@ class Nakanishi2015(BaseDataset):
            e140703, 2015.
            `<http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0140703>`_
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=256.0,
+            n_channels=8,
+            channel_types={"eeg": 8},
+            sensors=["PO7", "PO3", "POz", "PO4", "PO8", "O1", "Oz", "O2"],
+            montage="standard_1005",
+            line_freq=60.0,
+            reference="signals",
+            hardware="Biosemi ActiveTwo",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=9,
+            health_status="healthy",
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="ssvep",
+            task_type="12_frequency_jfpm",
+            n_classes=12,
+            trial_duration=4.15,
+            tasks=["rest"],
+            study_design="Steady-State Visual Evoked Potential",
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.1371/journal.pone.0140703",
+            description="12-class JFPM SSVEP dataset comparing CCA-based methods",
+            investigators=["M. Nakanishi", "Y. Wang", "Y.T. Wang", "T.P. Jung"],
+            institution="UCSD / Swartz Center for Computational Neuroscience",
+            country="US",
+            repository="GitHub",
+            data_url="https://github.com/mnakanishi/12JFPM_SSVEP",
+            publication_year=2015,
+            license="Public Domain",
+            funding=["Grant Award Award"],
+        ),
+        sessions_per_subject=1,
+        runs_per_session=15,
+        tags=Tags(pathology=["healthy"], modality=["visual"], type=["bci"]),
+        data_processed=False,
+    )
 
     def __init__(self):
         super().__init__(

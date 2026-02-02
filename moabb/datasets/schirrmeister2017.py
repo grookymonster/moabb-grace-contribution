@@ -7,6 +7,14 @@ from mne.channels import make_standard_montage
 
 from moabb.datasets import download as dl
 from moabb.datasets.base import BaseDataset
+from moabb.datasets.metadata.schema import (
+    AcquisitionMetadata,
+    DatasetMetadata,
+    DocumentationMetadata,
+    ExperimentMetadata,
+    ParticipantMetadata,
+    Tags,
+)
 
 
 log = logging.getLogger(__name__)
@@ -55,6 +63,58 @@ class Schirrmeister2017(BaseDataset):
            neural networks for EEG decoding and visualization." Human brain mapping 38.11
            (2017): 5391-5420.
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=500.0,
+            n_channels=128,
+            channel_types={"eeg": 128},
+            montage="standard_1005",
+            line_freq=50.0,
+            hardware="Emotiv EPOC",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=14,
+            health_status="healthy",
+            gender={"female": 6, "male": 8},
+            age_mean=27.2,
+            age_std=3.6,
+            handedness={"right": 12, "left": 2},
+            clinical_population="ALS",
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="imagery",
+            task_type="4_class_motor_execution",
+            n_classes=4,
+            trial_duration=4.0,
+            tasks=["feet", "rest"],
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.1002/hbm.23730",
+            description="High-Gamma Dataset for deep learning motor imagery/execution",
+            investigators=[
+                "R.T. Schirrmeister",
+                "J.T. Springenberg",
+                "L.D.J. Fiederer",
+                "M. Glasstetter",
+                "K. Eggensperger",
+                "M. Tangermann",
+                "F. Hutter",
+                "W. Burgard",
+                "T. Ball",
+            ],
+            institution="University of Freiburg",
+            country="DE",
+            repository="GIN",
+            data_url="https://gin.g-node.org/robintibor/high-gamma-dataset",
+            publication_year=2017,
+            license="CC BY-SA 4.0",
+        ),
+        sessions_per_subject=1,
+        runs_per_session=2,
+        tags=Tags(pathology=["healthy"], modality=["motor"], type=["bci"]),
+        data_processed=True,
+    )
 
     def __init__(self):
         super().__init__(

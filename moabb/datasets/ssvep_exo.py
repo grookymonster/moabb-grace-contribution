@@ -2,6 +2,14 @@
 
 from mne.io import Raw
 
+from moabb.datasets.metadata.schema import (
+    AcquisitionMetadata,
+    DatasetMetadata,
+    DocumentationMetadata,
+    ExperimentMetadata,
+    ParticipantMetadata,
+    Tags,
+)
 from moabb.utils import depreciated_alias
 
 from . import download as dl
@@ -58,6 +66,46 @@ class Kalunga2016(BaseDataset):
            arXiv report: https://arxiv.org/abs/1501.03227
 
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=256.0,
+            n_channels=9,
+            channel_types={"eeg": 8, "stim": 1},
+            sensors=["Oz", "O1", "O2", "POz", "PO3", "PO4", "PO7", "PO8"],
+            hardware="g.Mobilab+",
+            montage="standard_1020",
+            line_freq=50.0,
+            reference="signals",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=12,
+            health_status="healthy",
+            age_mean=24.0,
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="ssvep",
+            task_type="4_frequency_exoskeleton",
+            n_classes=4,
+            trial_duration=2.0,
+            tasks=["feet", "tongue", "rest"],
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.1016/j.neucom.2016.01.007",
+            description="SSVEP Exoskeleton dataset using Riemannian geometry",
+            investigators=["E.K. Kalunga", "S. Chevallier", "Q. Barthelemy"],
+            institution="University of Versailles",
+            country="FR",
+            repository="Zenodo",
+            data_url="https://zenodo.org/record/2392979",
+            license="CC BY 4.0",
+            publication_year=2016,
+        ),
+        sessions_per_subject=1,
+        runs_per_session=2,
+        tags=Tags(pathology=["healthy"], modality=["visual"], type=["bci"]),
+        data_processed=True,
+    )
 
     def __init__(self):
         super().__init__(

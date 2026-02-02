@@ -14,6 +14,14 @@ from mne.channels import make_dig_montage
 
 from moabb.datasets import download as dl
 from moabb.datasets.base import BaseDataset
+from moabb.datasets.metadata.schema import (
+    AcquisitionMetadata,
+    DatasetMetadata,
+    DocumentationMetadata,
+    ExperimentMetadata,
+    ParticipantMetadata,
+    Tags,
+)
 from moabb.datasets.utils import stim_channels_with_selected_ids
 
 
@@ -72,6 +80,52 @@ class Liu2024(BaseDataset):
     .. versionadded:: 1.1.1
 
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=500.0,
+            n_channels=31,
+            channel_types={"eeg": 29, "eog": 2},
+            hardware="ZhenTec NT1 wireless multichannel EEG acquisition system",
+            sensor_type="Ag/AgCl semi-dry electrodes",
+            reference="CPz",
+            ground="FPz",
+            montage="standard_1010",
+            line_freq=50.0,
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=50,
+            health_status="patients",
+            clinical_population="acute stroke",
+            gender={"male": 39, "female": 11},
+            age_mean=56.70,
+            age_std=10.57,
+            age_min=31.0,
+            age_max=77.0,
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="imagery",
+            task_type="left_right_hand",
+            n_classes=2,
+            trial_duration=4.0,
+            tasks=["rest"],
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.1038/s41597-023-02787-8",
+            description="Motor imagery EEG dataset from acute stroke patients",
+            investigators=["H. Liu", "X. Lv", "P. Wei", "H. Wang"],
+            institution="Xuanwu Hospital of Capital Medical University",
+            country="CN",
+            repository="Figshare",
+            data_url="https://figshare.com/articles/dataset/MI-BCI_EEG_data/21679035",
+            license="CC BY 4.0",
+            publication_year=2024,
+        ),
+        sessions_per_subject=1,
+        runs_per_session=1,
+        tags=Tags(pathology=["stroke"], modality=["motor"], type=["bci"]),
+        data_processed=True,
+    )
 
     def __init__(self, break_events=False, instr_events=False):
         self.break_events = break_events

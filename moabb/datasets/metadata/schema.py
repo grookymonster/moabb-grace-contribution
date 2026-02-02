@@ -362,6 +362,8 @@ class ExperimentMetadata:
         Study design description (EEGDash field).
     study_domain : str, optional
         Research domain (EEGDash field).
+    feedback_type : str, optional
+        Type of feedback provided during the experiment (e.g., "visual", "auditory", "none").
     """
 
     paradigm: str
@@ -374,6 +376,7 @@ class ExperimentMetadata:
     tasks: Optional[List[str]] = None
     study_design: Optional[str] = None
     study_domain: Optional[str] = None
+    feedback_type: Optional[str] = None
 
 
 @dataclass
@@ -453,6 +456,9 @@ class DatasetMetadata:
 
     # Processing status
     data_processed: bool = False
+
+    # File format
+    file_format: Optional[str] = None
 
     # Nested objects
     external_links: Optional[ExternalLinks] = None

@@ -5,6 +5,14 @@ from scipy.io import loadmat
 
 from moabb.datasets import download as dl
 from moabb.datasets.base import BaseDataset
+from moabb.datasets.metadata.schema import (
+    AcquisitionMetadata,
+    DatasetMetadata,
+    DocumentationMetadata,
+    ExperimentMetadata,
+    ParticipantMetadata,
+    Tags,
+)
 from moabb.datasets.utils import add_stim_channel_epoch, add_stim_channel_trial
 
 
@@ -119,6 +127,52 @@ class Thielen2021(BaseDataset):
     .. versionadded:: 0.6.0
 
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=512.0,
+            n_channels=8,
+            channel_types={"eeg": 8},
+            sensors=["Fpz", "T7", "O1", "POz", "Oz", "Iz", "O2", "T8"],
+            montage="custom",
+            line_freq=50.0,
+            reference="CAR",
+            hardware="Biosemi ActiveTwo",
+            sensor_type="sintered Ag/AgCl active electrodes",
+            filters="high-pass 2 Hz, low-pass 30 Hz (offline)",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=30,
+            health_status="healthy",
+            age_mean=40.5,
+            age_min=19.0,
+            age_max=62.0,
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="cvep",
+            task_type="visual_speller",
+            n_classes=20,
+            trial_duration=31.5,
+            tasks=["visual_speller"],
+            feedback_type="none",
+            study_design="Passive c-VEP speller with 4x5 grid, modulated Gold codes at 60 Hz",
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.34973/9txv-z787",
+            description="Zero-training c-VEP brain-computer interface dataset",
+            investigators=["J. Thielen", "P. Marsman", "J. Farquhar", "P. Desain"],
+            institution="Radboud University",
+            country="NL",
+            repository="Radboud Data Repository",
+            data_url="https://public.data.ru.nl/dcc/DSC_2018.00122_448_v3",
+            license="CC BY 4.0",
+            publication_year=2021,
+        ),
+        sessions_per_subject=1,
+        runs_per_session=5,
+        tags=Tags(pathology=["healthy"], modality=["visual"], type=["bci"]),
+        data_processed=False,
+    )
 
     def __init__(self):
         super().__init__(

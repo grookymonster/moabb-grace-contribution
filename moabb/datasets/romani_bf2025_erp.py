@@ -11,6 +11,14 @@ from mne.datasets import fetch_dataset
 from mne_bids import BIDSPath, get_entity_vals, read_raw_bids
 
 from moabb.datasets.base import BaseDataset
+from moabb.datasets.metadata.schema import (
+    AcquisitionMetadata,
+    DatasetMetadata,
+    DocumentationMetadata,
+    ExperimentMetadata,
+    ParticipantMetadata,
+    Tags,
+)
 
 
 BRAINFORM_URL = "https://zenodo.org/records/17225966/files/BIDS.zip"
@@ -114,6 +122,50 @@ class RomaniBF2025ERP(BaseDataset):
 
 
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=250.0,
+            n_channels=8,
+            channel_types={"eeg": 8},
+            sensors=["Fz", "C3", "Cz", "C4", "Pz", "PO7", "Oz", "PO8"],
+            hardware="g.tec Unicorn with conductive gel",
+            reference="right mastoid",
+            ground="left mastoid",
+            montage="standard_1005",
+            line_freq=50.0,
+            filters="50 Hz and 60 Hz notch (2nd-order), 0.5-15 Hz bandpass (6th-order)",
+            software="OpenViBE",
+            sensor_type="wet (conductive gel)",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=22,
+            health_status="healthy",
+            clinical_population="ALS",
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="p300",
+            task_type="brainform_erp",
+            n_classes=2,
+            trial_duration=1.0,
+            tasks=["rest"],
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.48550/arXiv.2510.10169",
+            description="BrainForm ERP dataset - serious game-based BCI training",
+            investigators=["M. Romani", "D. Zanoni", "E. Farella", "L. Turchet"],
+            institution="University of Trento",
+            country="IT",
+            repository="Zenodo",
+            data_url="https://zenodo.org/records/17225966",
+            license="CC BY 4.0",
+            publication_year=2025,
+        ),
+        sessions_per_subject=18,
+        runs_per_session=1,
+        tags=Tags(pathology=["healthy"], modality=["visual"], type=["bci"]),
+        data_processed=False,
+    )
 
     def __init__(
         self,

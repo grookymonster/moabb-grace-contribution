@@ -7,6 +7,14 @@ import numpy as np
 
 from moabb.datasets import download as dl
 from moabb.datasets.base import BaseDataset
+from moabb.datasets.metadata.schema import (
+    AcquisitionMetadata,
+    DatasetMetadata,
+    DocumentationMetadata,
+    ExperimentMetadata,
+    ParticipantMetadata,
+    Tags,
+)
 
 
 URL = "https://zenodo.org/record/5055046/files/"
@@ -46,6 +54,47 @@ class Hinss2021(BaseDataset):
             Interface Applications: Lacks and Perspectives.
             IEEE Neural Engineering Conference.
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=500.0,
+            n_channels=62,
+            channel_types={"eeg": 62},
+            sensor_type="active Ag-AgCl electrodes",
+            montage="standard_1005",
+            line_freq=50.0,
+            reference="car",
+            hardware="Brain Products",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=15,
+            health_status="healthy",
+            gender={"female": 6, "male": 9},
+            age_mean=25.0,
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="rstate",
+            task_type="cognitive_workload",
+            n_classes=4,
+            trial_duration=2.0,
+            tasks=["rest"],
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.5281/zenodo.5055046",
+            description="Neuroergonomic dataset for mental state monitoring",
+            investigators=["M. Hinss", "B. Somon", "F. Dehais", "R.N. Roy"],
+            institution="ISAE-SUPAERO",
+            country="FR",
+            repository="Zenodo",
+            data_url="https://zenodo.org/records/5055046",
+            license="CC BY 4.0",
+            publication_year=2021,
+        ),
+        sessions_per_subject=2,
+        runs_per_session=1,
+        tags=Tags(pathology=["healthy"], modality=["visual"], type=["bci"]),
+        data_processed=False,
+    )
 
     def __init__(self):
         super().__init__(

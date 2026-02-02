@@ -11,6 +11,14 @@ from mne.utils import verbose
 from scipy.io import loadmat
 
 from moabb.datasets import download as dl
+from moabb.datasets.metadata.schema import (
+    AcquisitionMetadata,
+    DatasetMetadata,
+    DocumentationMetadata,
+    ExperimentMetadata,
+    ParticipantMetadata,
+    Tags,
+)
 
 from .base import BNCIBaseDataset
 from .utils import (
@@ -247,6 +255,52 @@ class BNCI2025_001(BNCIBaseDataset):
     The data is compatible with the MOABB motor imagery paradigm for
     processing purposes, though the underlying task is movement execution.
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=500.0,
+            n_channels=71,
+            channel_types={"eeg": 67, "eog": 4},
+            hardware="BrainAmp (Brain Products GmbH)",
+            reference="common average",
+            montage="standard_1005",
+            filters="0.3-100 Hz bandpass, 50 Hz notch",
+            line_freq=50.0,
+            ground="was",
+            software="EEGLAB",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=20,
+            health_status="healthy",
+            gender={"male": 12, "female": 8},
+            age_mean=26.1,
+            age_std=4.1,
+            handedness={"right": 17, "left": 3},
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="imagery",
+            task_type="motor_kinematics_reaching",
+            n_classes=16,
+            trial_duration=4.0,
+            tasks=["rest"],
+            study_design="follow the dot while it moved with their eyes and then fixate their gaze on the dot.",
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.1088/1741-2552/ada0ea",
+            description="Simultaneous encoding of speed, distance, and direction in discrete reaching",
+            investigators=["N. Srisrisawang", "G. R. Müller-Putz"],
+            institution="Graz University of Technology",
+            country="AT",
+            repository="BNCI Horizon 2020",
+            data_url="http://bnci-horizon-2020.eu/database/data-sets/001-2025/",
+            license="CC BY 4.0",
+            publication_year=2024,
+        ),
+        sessions_per_subject=1,
+        runs_per_session=1,
+        tags=Tags(pathology=["healthy"], modality=["motor"], type=["motor"]),
+        data_processed=False,
+    )
 
     def __init__(self):
         super().__init__(
@@ -776,6 +830,60 @@ class BNCI2025_002(BNCIBaseDataset):
     BNCI2014_001 : 4-class motor imagery dataset
     BNCI2014_004 : 2-class motor imagery dataset
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=200.0,
+            n_channels=64,
+            channel_types={"eeg": 60, "eog": 4},
+            hardware="actiCAP system (Brain Products GmbH)",
+            reference="common average",
+            montage="standard_1005",
+            line_freq=50.0,
+            filters="25 Hz anti-aliasing, 50 Hz notch",
+            ground="Fpz",
+            sensor_type="active (actiCAP)",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=10,
+            health_status="healthy",
+            gender={"male": 10, "female": 10},
+            age_mean=24.0,
+            age_std=5.0,
+            handedness={"right": 20},
+            clinical_population="spinal_cord_injury",
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="imagery",
+            task_type="continuous_2d_trajectory_decoding",
+            n_classes=3,
+            trial_duration=8.0,
+            tasks=["right_arm", "feet", "rest"],
+            feedback_type="visual",
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.1088/1741-2552/ac689f",
+            description="Continuous 2D trajectory decoding from attempted movement",
+            investigators=[
+                "R. J. Kobler",
+                "I. Almeida",
+                "A. I. Sburlea",
+                "G. R. Müller-Putz",
+            ],
+            institution="Graz University of Technology",
+            country="AT",
+            repository="BNCI Horizon 2020",
+            data_url="http://bnci-horizon-2020.eu/database/data-sets/002-2025/",
+            license="CC BY 4.0",
+            publication_year=2022,
+            funding=["European Research Council"],
+        ),
+        sessions_per_subject=3,
+        runs_per_session=3,
+        tags=Tags(pathology=["other"], modality=["motor"], type=["bci"]),
+        data_processed=True,
+        file_format="MAT",
+    )
 
     def __init__(self):
         super().__init__(

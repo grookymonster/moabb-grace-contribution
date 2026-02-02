@@ -3,6 +3,14 @@
 from mne.utils import verbose
 from scipy.io import loadmat
 
+from moabb.datasets.metadata.schema import (
+    AcquisitionMetadata,
+    DatasetMetadata,
+    DocumentationMetadata,
+    ExperimentMetadata,
+    ParticipantMetadata,
+    Tags,
+)
 from moabb.utils import depreciated_alias
 
 from .base import (
@@ -269,6 +277,104 @@ class BNCI2014_001(MNEBNCI):
     [1, 2, 3, 4, 5, 6, 7, 8, 9]
     """
 
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=250.0,
+            n_channels=22,
+            channel_types={"eeg": 22, "eog": 3, "stim": 1},
+            sensors=[
+                "Fz",
+                "FC3",
+                "FC1",
+                "FCz",
+                "FC2",
+                "FC4",
+                "C5",
+                "C3",
+                "C1",
+                "Cz",
+                "C2",
+                "C4",
+                "C6",
+                "CP3",
+                "CP1",
+                "CPz",
+                "CP2",
+                "CP4",
+                "P1",
+                "Pz",
+                "P2",
+                "POz",
+            ],
+            sensor_type="Ag/AgCl wet",
+            reference="left mastoid",
+            ground="right mastoid",
+            filters="0.5-100 Hz bandpass, 50 Hz notch",
+            line_freq=50.0,
+            montage="standard_1005",
+            hardware="BrainAmp",
+            software="BCI2000",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=9,
+            health_status="healthy",
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="imagery",
+            task_type="4_class_limbs_tongue",
+            n_classes=4,
+            trials_per_class={
+                "left_hand": 72,
+                "right_hand": 72,
+                "feet": 72,
+                "tongue": 72,
+            },
+            trial_duration=4.0,
+            tasks=["tongue", "feet", "left_hand", "right_hand"],
+            feedback_type="none",
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.3389/fnins.2012.00055",
+            description="BCI Competition IV Dataset 2a - 4-class motor imagery",
+            readme=(
+                "This data set comprises electroencephalographic (EEG) data from 9 subjects. "
+                "The cue-based BCI paradigm consisted of four different motor imagery tasks, "
+                "namely the imagination of movement of the left hand (class 1), right hand "
+                "(class 2), both feet (class 3), and tongue (class 4). Two sessions on "
+                "different days were recorded for each subject. Each session comprised 6 runs "
+                "separated by short breaks. One run consists of 48 trials (12 for each of the "
+                "four possible classes), yielding a total of 288 trials per session. "
+                "Twenty-two Ag/AgCl electrodes (with inter-electrode distances of 3.5 cm) were "
+                "used to record the EEG. All signals were recorded monopolarly with the left "
+                "mastoid serving as reference and the right mastoid as ground. The signals "
+                "were sampled with 250 Hz and bandpass filtered between 0.5 and 100 Hz. "
+                "An additional 50 Hz notch filter was enabled to suppress line noise. "
+                "In addition to the 22 EEG channels, 3 monopolar EOG channels were recorded "
+                "for artifact processing."
+            ),
+            investigators=[
+                "C. Brunner",
+                "R. Leeb",
+                "G.R. Müller-Putz",
+                "G. Pfurtscheller",
+                "A. Schlögl",
+            ],
+            senior_author="G. Pfurtscheller",
+            institution="Graz University of Technology",
+            country="AT",
+            repository="BNCI Horizon 2020",
+            data_url="http://bnci-horizon-2020.eu/database/data-sets/001-2014/",
+            license="CC BY 4.0",
+            publication_year=2012,
+            funding=["Grant R31- R31-"],
+        ),
+        sessions_per_subject=2,
+        runs_per_session=6,
+        tags=Tags(pathology=["healthy"], modality=["motor"], type=["bci"]),
+        data_processed=True,
+        file_format="MAT",
+    )
+
     def __init__(self):
         super().__init__(
             subjects=list(range(1, 10)),
@@ -330,6 +436,54 @@ class BNCI2014_002(MNEBNCI):
     BNCI2014_001 : 4-class motor imagery (BCI Competition IV Dataset 2a)
     BNCI2014_004 : 2-class motor imagery (Dataset B)
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=512.0,
+            n_channels=16,
+            channel_types={"eeg": 15, "stim": 1},
+            montage="standard_1005",
+            line_freq=50.0,
+            reference="electrode was mounted on the left mastoid",
+            hardware="g.tec",
+            sensor_type="Ag/AgCl",
+            filters="50 Hz notch",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=14,
+            health_status="healthy",
+            clinical_population="spinal_cord_injury",
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="imagery",
+            task_type="right_hand_feet",
+            n_classes=2,
+            trials_per_class={"right_hand": 80, "feet": 80},
+            trial_duration=5.0,
+            tasks=["rest", "feet", "right_hand"],
+            feedback_type="none",
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.3389/fnins.2012.00055",
+            description="Motor imagery dataset - right hand and feet kinesthetic MI",
+            investigators=[
+                "Steyrl, D.",
+                "Scherer, R.",
+                "Faller, J.",
+                "Müller-Putz, G.R.",
+            ],
+            institution="Graz University of Technology",
+            country="AT",
+            repository="BNCI Horizon 2020",
+            data_url="http://bnci-horizon-2020.eu/database/data-sets/002-2014/",
+            license="CC BY 4.0",
+            publication_year=2012,
+        ),
+        sessions_per_subject=1,
+        runs_per_session=8,
+        tags=Tags(pathology=["healthy"], modality=["motor"], type=["bci"]),
+        data_processed=False,
+    )
 
     def __init__(self):
         super().__init__(
@@ -394,6 +548,53 @@ class BNCI2014_004(MNEBNCI):
     BNCI2014_002 : 2-class motor imagery with Laplacian derivations
     """
 
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=250.0,
+            n_channels=7,
+            channel_types={"eeg": 3, "eog": 3, "stim": 1},
+            sensors=["C3", "Cz", "C4"],
+            filters="0.5-100 Hz bandpass, 50 Hz notch",
+            montage="standard_1005",
+            line_freq=50.0,
+            reference="electrode was placed at the left",
+            hardware="g.tec 16-channel biosignal amplifier (Guger Technologies OEG)",
+            sensor_type="Ag/AgCl",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=9,
+            health_status="healthy",
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="imagery",
+            task_type="left_right_hand",
+            n_classes=2,
+            trial_duration=4.5,
+            tasks=["rest", "left_hand", "right_hand"],
+            feedback_type="none",
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.1109/TNSRE.2007.906956",
+            description="BCI Competition IV Dataset 2b - 2-class motor imagery with EOG artifacts",
+            investigators=[
+                "R. Leeb",
+                "C. Brunner",
+                "G.R. Müller-Putz",
+                "G. Pfurtscheller",
+            ],
+            institution="Graz University of Technology",
+            country="AT",
+            repository="BNCI Horizon 2020",
+            data_url="http://bnci-horizon-2020.eu/database/data-sets/004-2014/",
+            license="CC BY 4.0",
+            publication_year=2007,
+        ),
+        sessions_per_subject=5,
+        runs_per_session=1,
+        tags=Tags(pathology=["healthy"], modality=["motor"], type=["bci"]),
+        data_processed=True,
+    )
+
     def __init__(self):
         super().__init__(
             subjects=list(range(1, 10)),
@@ -443,6 +644,61 @@ class BNCI2014_008(MNEBNCI):
     .. versionadded:: 0.4.0
     """
 
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=256.0,
+            n_channels=10,
+            channel_types={"eeg": 8, "stim": 2},
+            reference="linked mastoids",
+            montage="standard_1005",
+            line_freq=50.0,
+            filters="0.1-30 Hz bandpass",
+            ground="left mastoid",
+            hardware="Emotiv EPOC",
+            software="BCI2000",
+            sensor_type="active electrodes",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=8,
+            health_status="patients",
+            clinical_population="ALS",
+            gender={"male": 6, "female": 2},
+            age_min=25.0,
+            age_max=60.0,
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="p300",
+            task_type="speller",
+            n_classes=2,
+            trial_duration=1.0,
+            tasks=["rest"],
+            feedback_type="none",
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.3389/fnhum.2013.00732",
+            description="P300 speller for ALS patients",
+            investigators=[
+                "A. Riccio",
+                "L. Simione",
+                "F. Schettini",
+                "A. Pizzimenti",
+                "M. Inghilleri",
+                "M.O. Belardinelli",
+                "D. Mattia",
+            ],
+            institution="Fondazione Santa Lucia",
+            country="IT",
+            repository="BNCI Horizon 2020",
+            data_url="http://bnci-horizon-2020.eu/database/data-sets/008-2014/",
+            license="CC BY 4.0",
+            publication_year=2013,
+        ),
+        sessions_per_subject=1,
+        runs_per_session=1,
+        tags=Tags(pathology=["other"], modality=["visual"], type=["bci"]),
+        data_processed=True,
+    )
+
     def __init__(self):
         super().__init__(
             subjects=list(range(1, 9)),
@@ -489,6 +745,57 @@ class BNCI2014_009(MNEBNCI):
     -----
     .. versionadded:: 0.4.0
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=256.0,
+            n_channels=18,
+            channel_types={"eeg": 16, "stim": 2},
+            reference="linked mastoids",
+            montage="standard_1005",
+            line_freq=50.0,
+            filters="0.1-20 Hz bandpass",
+            ground="right mastoid",
+            hardware="g.tec",
+            software="BCI2000",
+            sensor_type="Ag/AgCl",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=10,
+            health_status="healthy",
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="p300",
+            task_type="speller",
+            n_classes=2,
+            trial_duration=0.8,
+            tasks=["rest"],
+            feedback_type="none",
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.1088/1741-2560/11/3/035008",
+            description="P300 grid speller dataset",
+            investigators=[
+                "A. Riccio",
+                "L. Simione",
+                "F. Schettini",
+                "A. Pizzimenti",
+                "M. Inghilleri",
+                "M.O. Belardinelli",
+                "D. Mattia",
+            ],
+            institution="Fondazione Santa Lucia",
+            country="IT",
+            repository="BNCI Horizon 2020",
+            data_url="http://bnci-horizon-2020.eu/database/data-sets/009-2014/",
+            license="CC BY 4.0",
+            publication_year=2013,
+        ),
+        sessions_per_subject=3,
+        runs_per_session=1,
+        tags=Tags(pathology=["healthy"], modality=["visual"], type=["bci"]),
+        data_processed=True,
+    )
 
     def __init__(self):
         super().__init__(

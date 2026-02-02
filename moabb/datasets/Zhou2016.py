@@ -11,6 +11,15 @@ from zipfile import ZipFile
 import requests
 from mne.utils import _open_lock
 
+from moabb.datasets.metadata.schema import (
+    AcquisitionMetadata,
+    DatasetMetadata,
+    DocumentationMetadata,
+    ExperimentMetadata,
+    ParticipantMetadata,
+    Tags,
+)
+
 from .base import BaseBIDSDataset
 from .bids_interface import get_bids_root
 from .download import download_if_missing, get_dataset_path, get_user_agent
@@ -52,6 +61,46 @@ class Zhou2016(BaseBIDSDataset):
            Brain-Computer Interface. PLoS ONE 11(9).
            https://doi.org/10.1371/journal.pone.0162657
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=250.0,
+            n_channels=14,
+            channel_types={"eeg": 14},
+            montage="standard_1005",
+            line_freq=50.0,
+            filters="50 Hz notch",
+            ground="mastoid",
+            reference="and the Fig 1",
+            hardware="BCI2000",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=4,
+            health_status="healthy",
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="imagery",
+            task_type="3_class",
+            n_classes=3,
+            trial_duration=5.0,
+            tasks=["rest", "feet", "left_hand", "right_hand"],
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.1371/journal.pone.0162657",
+            description="Motor imagery dataset - 3 class",
+            investigators=["B. Zhou", "X. Wu", "Z. Lv", "L. Zhang", "X. Guo"],
+            institution="Anhui University",
+            country="CN",
+            repository="Zenodo",
+            data_url="https://zenodo.org/record/16534752",
+            license="Public Domain",
+            publication_year=2016,
+        ),
+        sessions_per_subject=3,
+        runs_per_session=2,
+        tags=Tags(pathology=["healthy"], modality=["motor"], type=["bci"]),
+        data_processed=True,
+    )
 
     def __init__(self):
         """Initialize the BIDS dataset."""

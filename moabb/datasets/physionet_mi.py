@@ -6,6 +6,14 @@ from mne.io import read_raw_edf
 
 from moabb.datasets.base import BaseDataset
 from moabb.datasets.download import data_dl, get_dataset_path
+from moabb.datasets.metadata.schema import (
+    AcquisitionMetadata,
+    DatasetMetadata,
+    DocumentationMetadata,
+    ExperimentMetadata,
+    ParticipantMetadata,
+    Tags,
+)
 from moabb.datasets.utils import stim_channels_with_selected_ids
 
 
@@ -67,6 +75,53 @@ class PhysionetMI(BaseDataset):
            resource for complex physiologic signals Circulation 2000 Volume
            101 Issue 23 pp. E215–E220.
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=160.0,
+            n_channels=65,
+            channel_types={"eeg": 64, "stim": 1},
+            hardware="BCI2000",
+            montage="standard_1005",
+            line_freq=60.0,
+            reference="both mastoids",
+            software="BCI2000",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=109,
+            health_status="healthy",
+            clinical_population="ALS",
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="imagery",
+            task_type="4_class_hands_feet",
+            n_classes=4,
+            trial_duration=3.0,
+            tasks=["rest"],
+            feedback_type="visual",
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.13026/C28G6P",
+            description="PhysioNet EEG Motor Movement/Imagery Dataset",
+            investigators=[
+                "G. Schalk",
+                "D.J. McFarland",
+                "T. Hinterberger",
+                "N. Birbaumer",
+                "J.R. Wolpaw",
+            ],
+            institution="Wadsworth Center, New York State Department of Health",
+            country="US",
+            repository="PhysioNet",
+            data_url="https://physionet.org/content/eegmmidb/1.0.0/",
+            license="Open Data Commons Attribution License v1.0",
+            publication_year=2009,
+        ),
+        sessions_per_subject=1,
+        runs_per_session=14,
+        tags=Tags(pathology=["healthy"], modality=["motor"], type=["bci"]),
+        data_processed=False,
+    )
 
     def __init__(self, imagined=True, executed=False):
         super().__init__(

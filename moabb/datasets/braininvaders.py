@@ -14,6 +14,14 @@ from scipy.io import loadmat
 
 from moabb.datasets import download as dl
 from moabb.datasets.base import BaseDataset
+from moabb.datasets.metadata.schema import (
+    AcquisitionMetadata,
+    DatasetMetadata,
+    DocumentationMetadata,
+    ExperimentMetadata,
+    ParticipantMetadata,
+    Tags,
+)
 from moabb.datasets.utils import block_rep
 from moabb.utils import depreciated_alias
 
@@ -447,6 +455,64 @@ class BI2012(BaseDataset):
            arXiv preprint arXiv:1905.05182.
     """
 
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=128.0,
+            n_channels=17,
+            channel_types={"eeg": 16, "stim": 1},
+            sensors=[
+                "Fp1",
+                "Fp2",
+                "F5",
+                "AFz",
+                "F6",
+                "T7",
+                "Cz",
+                "T8",
+                "P7",
+                "P3",
+                "Pz",
+                "P4",
+                "P8",
+                "O1",
+                "Oz",
+                "O2",
+            ],
+            montage="standard_1020",
+            line_freq=50.0,
+            ground="was",
+            reference="is used",
+            hardware="Emotiv EPOC",
+            sensor_type="wet electrodes",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=25,
+            health_status="healthy",
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="p300",
+            task_type="brain_invaders",
+            n_classes=2,
+            trial_duration=1.0,
+            study_design="limit eye blinks, head movements and face muscular contractions, which disrupt the EEG signal.",
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.5281/zenodo.2649006",
+            description="Brain Invaders P300 dataset 2012 - experimental validation",
+            investigators=["Van Veen, G.", "Barachant, A.", "Congedo, M."],
+            institution="GIPSA-lab, University of Grenoble Alpes",
+            country="FR",
+            repository="Zenodo",
+            data_url="https://zenodo.org/record/2649069",
+            license="CC BY 4.0",
+            publication_year=2019,
+        ),
+        sessions_per_subject=1,
+        runs_per_session=2,
+        tags=Tags(pathology=["healthy"], modality=["visual"], type=["bci"]),
+        data_processed=False,
+    )
+
     def __init__(self, Training=True, Online=False):
         super().__init__(
             subjects=list(range(1, 26)),
@@ -539,6 +605,63 @@ class BI2013a(BaseDataset):
            OpenViBE platform. Proc. IBCI Conf., Graz, Austria, 280-283.
     """
 
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=512.0,
+            n_channels=16,
+            channel_types={"eeg": 16},
+            sensors=[
+                "Fp1",
+                "Fp2",
+                "F5",
+                "AFz",
+                "F6",
+                "T7",
+                "Cz",
+                "T8",
+                "P7",
+                "P3",
+                "Pz",
+                "P4",
+                "P8",
+                "O1",
+                "Oz",
+                "O2",
+            ],
+            hardware="Nexus (TMSi)",
+            sensor_type="Ag/AgCl wet",
+            reference="left ear-lobe",
+            montage="standard_1020",
+            line_freq=50.0,
+            filters="no digital filter applied",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=24,
+            health_status="healthy",
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="p300",
+            task_type="brain_invaders_adaptive",
+            n_classes=2,
+            trial_duration=1.0,
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.5281/zenodo.1494163",
+            description="Brain Invaders adaptive vs non-adaptive P300 BCI",
+            investigators=["Vaineau, E.", "Barachant, A.", "Congedo, M."],
+            institution="GIPSA-lab, CNRS, Grenoble-INP",
+            country="FR",
+            repository="Zenodo",
+            data_url="https://zenodo.org/record/2669187",
+            license="CC BY 4.0",
+            publication_year=2018,
+        ),
+        sessions_per_subject=1,
+        runs_per_session=1,
+        tags=Tags(pathology=["healthy"], modality=["visual"], type=["bci"]),
+        data_processed=False,
+    )
+
     def __init__(self, NonAdaptive=True, Adaptive=False, Training=True, Online=False):
         super().__init__(
             subjects=list(range(1, 25)),
@@ -596,6 +719,66 @@ class BI2014a(BaseDataset):
            https://hal.archives-ouvertes.fr/hal-02171575
     """
 
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=512.0,
+            n_channels=17,
+            channel_types={"eeg": 16, "stim": 1},
+            sensors=[
+                "Fp1",
+                "Fp2",
+                "F3",
+                "AFz",
+                "F4",
+                "T7",
+                "Cz",
+                "T8",
+                "P7",
+                "P3",
+                "Pz",
+                "P4",
+                "P8",
+                "O1",
+                "Oz",
+                "O2",
+            ],
+            sensor_type="active dry",
+            montage="standard_1020",
+            line_freq=50.0,
+            filters="no digital filter applied",
+            reference="electrode on the right earlobe",
+            hardware="g.tec",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=64,
+            health_status="healthy",
+            clinical_population="spinal_cord_injury",
+            gender={"male": 49, "female": 22},
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="p300",
+            task_type="brain_invaders_calibration_less",
+            n_classes=2,
+            trial_duration=1.0,
+            tasks=["rest"],
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.5281/zenodo.3266222",
+            description="Brain Invaders calibration-less P300 BCI with dry electrodes",
+            investigators=["Korczowski, L.", "Ostaschenko, E.", "Congedo, M."],
+            institution="GIPSA-lab",
+            country="FR",
+            repository="Zenodo",
+            data_url="https://zenodo.org/record/3266222",
+            license="CC BY 4.0",
+            publication_year=2019,
+        ),
+        sessions_per_subject=1,
+        runs_per_session=1,
+        tags=Tags(pathology=["healthy"], modality=["visual"], type=["bci"]),
+        data_processed=False,
+    )
+
     def __init__(self):
         super().__init__(
             subjects=list(range(1, 65)),
@@ -648,6 +831,47 @@ class BI2014b(BaseDataset):
            Multi-User P300-Based Brain-Computer Interface Dataset (BI2014b).
            https://hal.archives-ouvertes.fr/hal-02173958
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=512.0,
+            n_channels=33,
+            channel_types={"eeg": 32, "stim": 1},
+            sensor_type="active wet",
+            montage="standard_1020",
+            line_freq=50.0,
+            reference="electrode was placed on the right earlobe",
+            hardware="g.tec",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=38,
+            health_status="healthy",
+            clinical_population="spinal_cord_injury",
+            gender={"male": 24, "female": 14},
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="p300",
+            task_type="brain_invaders_multi_user",
+            n_classes=2,
+            trial_duration=1.0,
+            tasks=["rest"],
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.5281/zenodo.3267301",
+            description="Brain Invaders Solo vs Collaboration multi-user P300 BCI",
+            investigators=["Korczowski, L.", "Ostaschenko, E.", "Congedo, M."],
+            institution="GIPSA-lab",
+            country="FR",
+            repository="Zenodo",
+            data_url="https://zenodo.org/record/3267301",
+            license="CC BY 4.0",
+            publication_year=2019,
+        ),
+        sessions_per_subject=1,
+        runs_per_session=1,
+        tags=Tags(pathology=["healthy"], modality=["visual"], type=["bci"]),
+        data_processed=False,
+    )
 
     def __init__(self):
         super().__init__(
@@ -702,6 +926,47 @@ class BI2015a(BaseDataset):
            BCI with modulation of flash duration Dataset (BI2015a)
            https://hal.archives-ouvertes.fr/hal-02172347
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=512.0,
+            n_channels=33,
+            channel_types={"eeg": 32, "stim": 1},
+            sensor_type="active wet",
+            montage="standard_1020",
+            line_freq=50.0,
+            reference="electrode was placed on the right earlobe",
+            hardware="g.tec",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=43,
+            health_status="healthy",
+            clinical_population="spinal_cord_injury",
+            gender={"male": 36, "female": 14},
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="p300",
+            task_type="brain_invaders_flash_duration",
+            n_classes=2,
+            trial_duration=1.0,
+            tasks=["rest"],
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.5281/zenodo.3266929",
+            description="Brain Invaders with modulation of flash duration",
+            investigators=["Korczowski, L.", "Cederhout, M.", "Congedo, M."],
+            institution="GIPSA-lab",
+            country="FR",
+            repository="Zenodo",
+            data_url="https://zenodo.org/record/3266929",
+            license="CC BY 4.0",
+            publication_year=2019,
+        ),
+        sessions_per_subject=3,
+        runs_per_session=1,
+        tags=Tags(pathology=["healthy"], modality=["visual"], type=["bci"]),
+        data_processed=False,
+    )
 
     def __init__(self):
         super().__init__(
@@ -759,6 +1024,47 @@ class BI2015b(BaseDataset):
            Multi-User P300-based Brain-Computer Interface Dataset (BI2015b)
            https://hal.archives-ouvertes.fr/hal-02172347
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=512.0,
+            n_channels=33,
+            channel_types={"eeg": 32, "stim": 1},
+            sensor_type="active wet",
+            montage="standard_1020",
+            line_freq=50.0,
+            reference="electrode was placed on the right earlobe",
+            hardware="g.tec",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=44,
+            health_status="healthy",
+            clinical_population="spinal_cord_injury",
+            gender={"male": 36, "female": 14},
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="p300",
+            task_type="brain_invaders_cooperation_competition",
+            n_classes=2,
+            trial_duration=1.0,
+            tasks=["rest"],
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.5281/zenodo.3267307",
+            description="Brain Invaders Cooperative vs Competitive multi-user P300",
+            investigators=["Korczowski, L.", "Cederhout, M.", "Congedo, M."],
+            institution="GIPSA-lab",
+            country="FR",
+            repository="Zenodo",
+            data_url="https://zenodo.org/record/3267307",
+            license="CC BY 4.0",
+            publication_year=2019,
+        ),
+        sessions_per_subject=1,
+        runs_per_session=4,
+        tags=Tags(pathology=["healthy"], modality=["visual"], type=["bci"]),
+        data_processed=False,
+    )
 
     def __init__(self):
         super().__init__(
@@ -822,6 +1128,48 @@ class Cattan2019_VR(BaseDataset):
 
     .. versionadded:: 0.5.0
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=512.0,
+            n_channels=17,
+            channel_types={"eeg": 16, "stim": 1},
+            montage="standard_1005",
+            line_freq=50.0,
+            reference="right earlobe",
+            hardware="g.tec g.USBamp",
+            sensor_type="wet electrodes",
+            filters="no digital filter",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=21,
+            health_status="healthy",
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="p300",
+            task_type="p300_speller",
+            n_classes=2,
+            trial_duration=1.0,
+            tasks=["target_vs_nontarget"],
+            feedback_type="none",
+            study_design="P300-based BCI comparing PC display vs VR headset conditions",
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.5281/zenodo.2605204",
+            description="EEG-based BCI experiment comparing P300 in Virtual Reality vs PC display",
+            investigators=["G. Cattan", "A. Andreev", "P.L.C. Rodrigues", "M. Congedo"],
+            institution="GIPSA-lab",
+            country="FR",
+            repository="Zenodo",
+            data_url="https://zenodo.org/record/2605205",
+            license="CC BY 4.0",
+            publication_year=2019,
+        ),
+        sessions_per_subject=1,
+        runs_per_session=2,
+        tags=Tags(pathology=["healthy"], modality=["visual"], type=["bci"]),
+        data_processed=False,
+    )
 
     def __init__(self, virtual_reality=False, screen_display=True):
         self.n_repetitions = 5

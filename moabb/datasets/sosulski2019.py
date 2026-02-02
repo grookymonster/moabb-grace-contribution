@@ -7,6 +7,14 @@ import mne
 
 from moabb.datasets import download as dl
 from moabb.datasets.base import BaseDataset
+from moabb.datasets.metadata.schema import (
+    AcquisitionMetadata,
+    DatasetMetadata,
+    DocumentationMetadata,
+    ExperimentMetadata,
+    ParticipantMetadata,
+    Tags,
+)
 from moabb.datasets.utils import stim_channels_with_selected_ids
 
 
@@ -72,6 +80,47 @@ class Sosulski2019(BaseDataset):
 
     .. versionadded:: 0.4.5
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=1000.0,
+            n_channels=32,
+            channel_types={"eeg": 31, "eog": 1},
+            montage="standard_1005",
+            line_freq=50.0,
+            filters="1.5-40 Hz bandpass (fourth order inverse Chebyshev, two-pass)",
+            reference="electrode was placed on the nose",
+            hardware="BrainAmp",
+            sensor_type="Ag/AgCl",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=13,
+            health_status="healthy",
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="p300",
+            task_type="auditory_oddball_soa",
+            n_classes=2,
+            trial_duration=1.0,
+            tasks=["rest"],
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.6094/UNIFR/154576",
+            description="Auditory Oddball with SOA variations",
+            investigators=["Sosulski, J.", "Tangermann, M."],
+            institution="University of Freiburg",
+            country="DE",
+            repository="FreiDok",
+            data_url="https://freidok.uni-freiburg.de/data/154576",
+            publication_year=2019,
+            license="CC BY 4.0",
+            funding=["DFG project", "grant number EXC EXC", "grant number TA TA"],
+        ),
+        sessions_per_subject=1,
+        runs_per_session=1,
+        tags=Tags(pathology=["healthy"], modality=["auditory"], type=["bci"]),
+        data_processed=True,
+    )
 
     def __init__(
         self,

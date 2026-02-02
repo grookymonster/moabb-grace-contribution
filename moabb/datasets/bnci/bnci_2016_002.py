@@ -6,6 +6,15 @@ import h5py
 from mne import Annotations
 from mne.utils import verbose
 
+from moabb.datasets.metadata.schema import (
+    AcquisitionMetadata,
+    DatasetMetadata,
+    DocumentationMetadata,
+    ExperimentMetadata,
+    ParticipantMetadata,
+    Tags,
+)
+
 from .base import BNCIBaseDataset
 from .utils import bnci_data_path, convert_units, make_raw
 
@@ -310,6 +319,55 @@ class BNCI2016_002(BNCIBaseDataset):
     License: Creative Commons Attribution Non-Commercial No Derivatives
     (CC BY-NC-ND 4.0)
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=200.0,
+            n_channels=69,
+            channel_types={"eeg": 59, "eog": 2, "emg": 1, "misc": 7},
+            montage="standard_1005",
+            line_freq=50.0,
+            filters="0.1-250 Hz bandpass",
+            reference="car",
+            hardware="BrainAmp",
+            sensor_type="Ag/AgCl",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=15,
+            health_status="healthy",
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="p300",
+            task_type="emergency_braking",
+            n_classes=2,
+            trial_duration=1.0,
+            tasks=["rest", "feet"],
+            study_design="to drive a virtual racing car using the steering wheel and gas/brake pedals (automatic clutch), and to tightly follow a computer-controlled lead vehicle at a driving speed of 100 km h-1.",
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.1088/1741-2560/8/5/056001",
+            description="Emergency braking during simulated driving - ERP detection",
+            investigators=[
+                "Haufe, S.",
+                "Treder, M.S.",
+                "Gugler, M.F.",
+                "Sagebaum, M.",
+                "Curio, G.",
+                "Blankertz, B.",
+            ],
+            institution="TU Berlin / Charité University Medicine Berlin",
+            country="DE",
+            repository="BNCI Horizon 2020",
+            data_url="http://bnci-horizon-2020.eu/database/data-sets/002-2016/",
+            license="CC BY 4.0",
+            publication_year=2011,
+            funding=["DFG grant", "grant no MU MU", "grant nos s", "BMBF grant"],
+        ),
+        sessions_per_subject=1,
+        runs_per_session=1,
+        tags=Tags(pathology=["healthy"], modality=["visual"], type=["bci"]),
+        data_processed=True,
+    )
 
     def __init__(self):
         super().__init__(

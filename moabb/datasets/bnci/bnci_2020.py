@@ -7,6 +7,15 @@ from mne import Annotations
 from mne.utils import verbose
 from scipy.io import loadmat
 
+from moabb.datasets.metadata.schema import (
+    AcquisitionMetadata,
+    DatasetMetadata,
+    DocumentationMetadata,
+    ExperimentMetadata,
+    ParticipantMetadata,
+    Tags,
+)
+
 from .base import BNCIBaseDataset
 from .utils import (
     BNCI_URL,
@@ -250,6 +259,50 @@ class BNCI2020_001(BNCIBaseDataset):
     This dataset is valuable for comparing electrode technologies in naturalistic
     movement paradigms. Data is available under CC BY 4.0 license.
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=256.0,
+            n_channels=64,
+            channel_types={"eeg": 58, "eog": 6},
+            montage="standard_1005",
+            line_freq=50.0,
+            hardware="g.tec",
+            sensor_type="Gel-based electrodes",
+            filters="0.01-100.0 Hz bandpass, 50 Hz notch",
+            reference="we used the right earlobe",
+            software="EEGLAB",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=45,  # Fixed: was incorrectly 15
+            health_status="healthy",
+            gender={"male": 10, "female": 5},
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="imagery",
+            task_type="reach_and_grasp",
+            n_classes=3,
+            trial_duration=5.0,
+            tasks=["rest", "right_hand"],
+            study_design="perform reach-and-grasp actions using their right hand towards the objects placed on the table.",
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.3389/fnins.2020.00849",
+            description="Reach-and-grasp electrode comparison (gel, water, dry)",
+            investigators=["A. Schwarz", "J. Pereira", "G.R. Müller-Putz"],
+            institution="Graz University of Technology",
+            country="AT",
+            repository="BNCI Horizon 2020",
+            data_url="http://bnci-horizon-2020.eu/database/data-sets/001-2020/",
+            license="CC BY 4.0",
+            publication_year=2020,
+        ),
+        sessions_per_subject=1,
+        runs_per_session=4,
+        tags=Tags(pathology=["healthy"], modality=["motor"], type=["motor"]),
+        data_processed=False,
+        file_format="MAT",
+    )
 
     def __init__(self):
         super().__init__(
@@ -562,6 +615,56 @@ class BNCI2020_002(BNCIBaseDataset):
     >>> dataset.subject_list
     [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=250.0,
+            n_channels=33,
+            channel_types={"eeg": 29, "eog": 2, "stim": 2},
+            montage="standard_1005",
+            line_freq=50.0,
+            filters="0.1 Hz highpass",
+            reference="against the right mastoid as well as the horizontal",
+            hardware="BrainAmp",
+            sensor_type="Ag/AgCl",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=18,
+            health_status="healthy",
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="p300",
+            task_type="covert_spatial_attention",
+            n_classes=2,
+            trial_duration=16.0,  # Fixed: was incorrectly 1.0
+            tasks=["rest", "feet"],
+            feedback_type="none",
+            study_design='associate the green cross with the word "yes" and the red cross with the word "no" while responding to questions and statements, which were shown on the screen before the stimulus sequence present...',
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.3389/fnins.2020.591777",
+            description="Attention Shift - Covert Spatial Attention BCI",
+            investigators=[
+                "Reichert, C.",
+                "Tellez Ceja, I.F.",
+                "Sweeney-Reed, C.M.",
+                "Heinze, H.J.",
+                "Hinrichs, H.",
+                "Dürschmid, S.",
+            ],
+            institution="Otto von Guericke University Magdeburg",
+            country="DE",
+            repository="BNCI Horizon 2020",
+            data_url="http://bnci-horizon-2020.eu/database/data-sets/002-2020/",
+            license="CC BY 4.0",
+            publication_year=2020,
+            funding=["grant number number"],
+        ),
+        sessions_per_subject=1,
+        runs_per_session=1,
+        tags=Tags(pathology=["healthy"], modality=["visual"], type=["bci"]),
+        data_processed=True,
+    )
 
     def __init__(self):
         super().__init__(

@@ -10,6 +10,14 @@ from scipy.io import loadmat
 
 from moabb.datasets import download as dl
 from moabb.datasets.base import BaseDataset
+from moabb.datasets.metadata.schema import (
+    AcquisitionMetadata,
+    DatasetMetadata,
+    DocumentationMetadata,
+    ExperimentMetadata,
+    ParticipantMetadata,
+    Tags,
+)
 
 
 Lee2019_URL = "https://s3.ap-northeast-1.wasabisys.com/gigadb-datasets/live/pub/10.5524/100001_101000/100542/"
@@ -275,6 +283,75 @@ class Lee2019_MI(Lee2019):
            https://doi.org/10.1093/gigascience/giz002
     """
 
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=1000.0,
+            n_channels=62,
+            channel_types={"eeg": 62, "emg": 4},
+            sensor_type="Ag/AgCl wet",
+            hardware="BrainAmp (Brain Products)",
+            reference="nasion",
+            ground="AFz",
+            montage="standard_1005",
+            line_freq=60.0,
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=54,
+            health_status="healthy",
+            gender={"female": 25, "male": 29},
+            age_min=24,
+            age_max=35,
+            handedness={"right": 4},
+            age_mean=29.5,
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="imagery",
+            task_type="left_right_hand",
+            n_classes=2,
+            trials_per_class={"left_hand": 100, "right_hand": 100},
+            trial_duration=4.0,
+            tasks=["left_hand", "rest"],
+            feedback_type="visual",
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.1093/gigascience/giz002",
+            description="OpenBMI Motor Imagery dataset - investigation into BCI illiteracy",
+            readme=(
+                "EEG dataset for three BCI paradigms (MI, ERP, SSVEP) from 54 healthy subjects "
+                "over two sessions on different days. The motor imagery component includes "
+                "binary-class left/right hand grasping imagery tasks with 100 trials per class "
+                "per session. Additional data includes questionnaires on psychological/physiological "
+                "conditions, resting state recordings, artifact data (eye blinks, movements), and EMG "
+                "from both arms. Accompanied by the OpenBMI toolbox for data analysis and visualization. "
+                "Suitable for BCI illiteracy research, cross-session transfer, and multi-paradigm studies."
+            ),
+            investigators=[
+                "M.H. Lee",
+                "O.Y. Kwon",
+                "Y.J. Kim",
+                "H.K. Kim",
+                "Y.E. Lee",
+                "J. Williamson",
+                "S. Fazli",
+                "S.W. Lee",
+            ],
+            senior_author="S.W. Lee",
+            contact_info="sw.lee@korea.ac.kr",
+            institution="Korea University",
+            country="KR",
+            repository="GigaDB",
+            data_url="http://dx.doi.org/10.5524/100542",
+            license="CC BY 4.0",
+            publication_year=2019,
+            funding="MSIT Korea SW Starlab (IITP-2015-1107), Korea government (2017-0-00451)",
+        ),
+        sessions_per_subject=2,
+        runs_per_session=1,
+        tags=Tags(pathology=["healthy"], modality=["multisensory"], type=["bci"]),
+        data_processed=False,
+        file_format="MAT",
+    )
+
     __init__ = partialmethod(Lee2019.__init__, "MI")
 
 
@@ -356,6 +433,52 @@ class Lee2019_ERP(Lee2019):
            https://doi.org/10.1093/gigascience/giz002
     """
 
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=1000.0,
+            n_channels=62,
+            channel_types={"eeg": 62},
+            sensor_type="Ag/AgCl wet",
+            hardware="BrainAmp (Brain Products)",
+            reference="nasion",
+            ground="AFz",
+            montage="standard_1005",
+            line_freq=60.0,
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=54,
+            health_status="healthy",
+            handedness={"right": 4},
+            age_mean=29.5,
+            age_min=24.0,
+            age_max=35.0,
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="p300",
+            task_type="row_col_speller",
+            n_classes=2,
+            trial_duration=1.0,
+            tasks=["rest", "left_hand"],
+            feedback_type="visual",
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.1093/gigascience/giz002",
+            description="OpenBMI ERP dataset - investigation into BCI illiteracy",
+            investigators=["M.H. Lee", "S.W. Lee"],
+            institution="Korea University",
+            country="KR",
+            repository="GigaDB",
+            data_url="https://gigadb.org/dataset/100542",
+            license="CC BY 4.0",
+            publication_year=2019,
+        ),
+        sessions_per_subject=2,
+        runs_per_session=2,
+        tags=Tags(pathology=["healthy"], modality=["multisensory"], type=["bci"]),
+        data_processed=False,
+        file_format="MAT",
+    )
+
     __init__ = partialmethod(Lee2019.__init__, "ERP")
 
 
@@ -417,5 +540,51 @@ class Lee2019_SSVEP(Lee2019):
            illiteracy. GigaScience, 8(5), 1–16.
            https://doi.org/10.1093/gigascience/giz002
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=1000.0,
+            n_channels=62,
+            channel_types={"eeg": 62},
+            sensor_type="Ag/AgCl wet",
+            hardware="BrainAmp (Brain Products)",
+            reference="nasion",
+            ground="AFz",
+            montage="standard_1005",
+            line_freq=60.0,
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=54,
+            health_status="healthy",
+            handedness={"right": 4},
+            age_mean=29.5,
+            age_min=24.0,
+            age_max=35.0,
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="ssvep",
+            task_type="4_frequency",
+            n_classes=4,
+            trial_duration=4.0,
+            tasks=["rest", "left_hand"],
+            feedback_type="visual",
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.1093/gigascience/giz002",
+            description="OpenBMI SSVEP dataset - investigation into BCI illiteracy",
+            investigators=["M.H. Lee", "S.W. Lee"],
+            institution="Korea University",
+            country="KR",
+            repository="GigaDB",
+            data_url="https://gigadb.org/dataset/100542",
+            license="CC0",
+            publication_year=2019,
+        ),
+        sessions_per_subject=2,
+        runs_per_session=1,
+        tags=Tags(pathology=["healthy"], modality=["multisensory"], type=["bci"]),
+        data_processed=False,
+        file_format="MAT",
+    )
 
     __init__ = partialmethod(Lee2019.__init__, "SSVEP")

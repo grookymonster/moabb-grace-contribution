@@ -10,6 +10,15 @@ from mne.channels import make_standard_montage
 from mne.io import RawArray
 from scipy.io import loadmat
 
+from moabb.datasets.metadata.schema import (
+    AcquisitionMetadata,
+    DatasetMetadata,
+    DocumentationMetadata,
+    ExperimentMetadata,
+    ParticipantMetadata,
+    Tags,
+)
+
 from .base import BaseDataset
 from .download import (
     fs_get_file_hash,
@@ -270,6 +279,48 @@ class MAMEM1(BaseMAMEM):
            `<https://figshare.com/articles/dataset/MAMEM_EEG_SSVEP_Dataset_I_256_channels_11_subjects_5_frequencies_/2068677?file=3793738>`_
     """
 
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=250.0,
+            n_channels=257,
+            channel_types={"eeg": 256, "stim": 1},
+            hardware="EGI 300 Geodesic EEG System (GES 300)",
+            sensor_type="HydroCel Geodesic Sensor Net",
+            montage="GSN-HydroCel-256",
+            line_freq=50.0,
+            filters="22.0-48.0 Hz bandpass",
+            ground="color",
+            reference="CAR",
+            software="Bci2000",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=11,
+            health_status="healthy",
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="ssvep",
+            task_type="5_frequency_isolated",
+            n_classes=5,
+            trial_duration=3.0,
+            tasks=["rest"],
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.6084/m9.figshare.2068677.v5",
+            description="MAMEM SSVEP Dataset I - 5 frequencies presented in isolation",
+            investigators=["Nikolopoulos, S.", "Lazarou, I.", "Kompatsiaris, I."],
+            institution="CERTH-ITI",
+            country="GR",
+            repository="Figshare/Zenodo",
+            data_url="https://zenodo.org/records/1295936",
+            license="CC BY 4.0",
+            publication_year=2016,
+        ),
+        sessions_per_subject=1,
+        runs_per_session=1,
+        tags=Tags(pathology=["healthy"], modality=["visual"], type=["bci"]),
+        data_processed=False,
+    )
+
     def __init__(self):
         super().__init__(
             events={"6.66": 1, "7.50": 2, "8.57": 3, "10.00": 4, "12.00": 5},
@@ -358,6 +409,48 @@ class MAMEM2(BaseMAMEM):
     .. [3] S. Nikolopoulos, 2016, DataAcquisitionDetails.pdf
            `<https://figshare.com/articles/dataset/MAMEM_EEG_SSVEP_Dataset_II_256_channels_11_subjects_5_frequencies_presented_simultaneously_/3153409?file=4911931>`_
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=250.0,
+            n_channels=257,
+            channel_types={"eeg": 256, "stim": 1},
+            hardware="EGI 300 Geodesic EEG System (GES 300)",
+            sensor_type="HydroCel Geodesic Sensor Net",
+            montage="GSN-HydroCel-256",
+            line_freq=50.0,
+            filters="22.0-48.0 Hz bandpass",
+            ground="color",
+            reference="CAR",
+            software="Bci2000",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=11,
+            health_status="healthy",
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="ssvep",
+            task_type="5_frequency_simultaneous",
+            n_classes=5,
+            trial_duration=3.0,
+            tasks=["rest"],
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.6084/m9.figshare.3153409",
+            description="MAMEM SSVEP Dataset II - 5 frequencies presented simultaneously",
+            investigators=["Nikolopoulos, S.", "Lazarou, I.", "Kompatsiaris, I."],
+            institution="CERTH-ITI",
+            country="GR",
+            repository="Figshare",
+            data_url="https://figshare.com/articles/dataset/MAMEM_EEG_SSVEP_Dataset_II/3153409",
+            license="CC BY 4.0",
+            publication_year=2021,
+        ),
+        sessions_per_subject=1,
+        runs_per_session=1,
+        tags=Tags(pathology=["healthy"], modality=["visual"], type=["bci"]),
+        data_processed=False,
+    )
 
     def __init__(self):
         super().__init__(
@@ -455,6 +548,47 @@ class MAMEM3(BaseMAMEM):
     .. [3] S. Nikolopoulos, 2016, DataAcquisitionDetails.pdf
            `<https://figshare.com/articles/dataset/MAMEM_EEG_SSVEP_Dataset_III_14_channels_11_subjects_5_frequencies_presented_simultaneously_/3413851>`_
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=128.0,
+            n_channels=15,
+            channel_types={"eeg": 14, "stim": 1},
+            hardware="Emotiv EPOC",
+            montage="standard_1020",
+            line_freq=50.0,
+            filters="22.0-48.0 Hz bandpass",
+            ground="color",
+            reference="CAR",
+            software="Bci2000",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=11,
+            health_status="healthy",
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="ssvep",
+            task_type="5_frequency_consumer_grade",
+            n_classes=5,
+            trial_duration=3.0,
+            tasks=["rest"],
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.6084/m9.figshare.3413851",
+            description="MAMEM SSVEP Dataset III - consumer-grade EEG (Emotiv EPOC)",
+            investigators=["Nikolopoulos, S.", "Lazarou, I.", "Kompatsiaris, I."],
+            institution="CERTH-ITI",
+            country="GR",
+            repository="Figshare",
+            data_url="https://figshare.com/articles/dataset/MAMEM_EEG_SSVEP_Dataset_III/3413851",
+            license="CC BY 4.0",
+            publication_year=2021,
+        ),
+        sessions_per_subject=1,
+        runs_per_session=1,
+        tags=Tags(pathology=["healthy"], modality=["visual"], type=["bci"]),
+        data_processed=False,
+    )
 
     def __init__(self):
         super().__init__(

@@ -11,6 +11,14 @@ from scipy.io import loadmat
 
 from moabb.datasets import download as dl
 from moabb.datasets.base import BaseDataset
+from moabb.datasets.metadata.schema import (
+    AcquisitionMetadata,
+    DatasetMetadata,
+    DocumentationMetadata,
+    ExperimentMetadata,
+    ParticipantMetadata,
+    Tags,
+)
 
 
 logger = logging.getLogger(__name__)
@@ -64,6 +72,46 @@ class EPFLP300(BaseDataset):
            subjects. Journal of Neuroscience Methods .
            https://doi.org/10.1016/j.jneumeth.2007.03.005
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=2048.0,
+            n_channels=35,
+            channel_types={"eeg": 32, "misc": 2, "stim": 1},
+            hardware="Biosemi ActiveTwo",
+            montage="standard_1005",
+            line_freq=50.0,
+            reference="Car",
+            sensor_type="active",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=8,
+            health_status="patients",
+            clinical_population="disabled",
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="p300",
+            task_type="speller",
+            n_classes=2,
+            trial_duration=1.0,
+            tasks=["rest", "left_hand"],
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.1016/j.jneumeth.2007.03.005",
+            description="EPFL P300 BCI dataset for disabled users",
+            investigators=["Hoffmann, U.", "Vesin, J.M.", "Ebrahimi, T.", "Diserens, K."],
+            institution="EPFL",
+            country="CH",
+            repository="BNCI Horizon 2020",
+            data_url="http://bnci-horizon-2020.eu/database/data-sets",
+            license="CC BY 4.0",
+            publication_year=2008,
+        ),
+        sessions_per_subject=4,
+        runs_per_session=1,
+        tags=Tags(pathology=["other"], modality=["visual"], type=["bci"]),
+        data_processed=False,
+    )
 
     def __init__(self):
         super().__init__(

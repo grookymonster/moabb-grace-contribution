@@ -2,6 +2,15 @@
 
 from mne.utils import verbose
 
+from moabb.datasets.metadata.schema import (
+    AcquisitionMetadata,
+    DatasetMetadata,
+    DocumentationMetadata,
+    ExperimentMetadata,
+    ParticipantMetadata,
+    Tags,
+)
+
 from .base import MNEBNCI, _convert_bbci2003, _finalize_raw, data_path
 from .utils import validate_subject
 
@@ -101,6 +110,49 @@ class BNCI2003_004(MNEBNCI):
     BNCI2014_001 : BCI Competition IV 4-class motor imagery dataset
     BNCI2014_004 : BCI Competition 2008 2-class motor imagery dataset
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=100.0,
+            n_channels=118,
+            channel_types={"eeg": 118},
+            montage="standard_1005",
+            line_freq=50.0,
+            filters="0.05-200 Hz bandpass",
+            reference="car",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=5,
+            health_status="healthy",
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="imagery",
+            task_type="right_hand_feet",
+            n_classes=2,
+            trial_duration=3.5,
+            tasks=["rest", "feet", "left_hand", "right_hand"],
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.1109/TBME.2004.827088",
+            description="BCI Competition III Dataset IVa - 2-class motor imagery",
+            investigators=[
+                "G. Dornhege",
+                "B. Blankertz",
+                "G. Curio",
+                "K.R. Müller",
+            ],
+            institution="Berlin Institute of Technology",
+            country="DE",
+            repository="BNCI Horizon 2020",
+            data_url="http://bnci-horizon-2020.eu/database/data-sets/004-2003/",
+            license="CC BY 4.0",
+            publication_year=2004,
+        ),
+        sessions_per_subject=1,
+        runs_per_session=1,
+        tags=Tags(pathology=["healthy"], modality=["motor"], type=["bci"]),
+        data_processed=True,
+    )
 
     def __init__(self):
         super().__init__(

@@ -5,6 +5,14 @@ import numpy as np
 
 from moabb.datasets import download as dl
 from moabb.datasets.base import BaseDataset
+from moabb.datasets.metadata.schema import (
+    AcquisitionMetadata,
+    DatasetMetadata,
+    DocumentationMetadata,
+    ExperimentMetadata,
+    ParticipantMetadata,
+    Tags,
+)
 from moabb.datasets.utils import stim_channels_with_selected_ids
 from moabb.utils import depreciated_alias
 
@@ -55,6 +63,45 @@ class GrosseWentrup2009(BaseDataset):
            brain–computer interfaces." IEEE Transactions on Biomedical
            Engineering 56.4 (2009): 1209-1219.
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=500.0,
+            n_channels=128,
+            channel_types={"eeg": 128},
+            montage="standard_1005",
+            line_freq=50.0,
+            filters="temporal analog high-pass filter with 10 s time constant",
+            reference="offline",
+            hardware="BrainAmp",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=10,
+            health_status="healthy",
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="imagery",
+            task_type="left_right_hand",
+            n_classes=2,
+            trial_duration=7.0,
+            tasks=["rest", "feet", "left_hand", "right_hand"],
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.1109/TBME.2008.2009768",
+            description="Beamforming in Noninvasive Brain-Computer Interfaces",
+            investigators=["M. Grosse-Wentrup", "C. Liefhold", "K. Gramann", "M. Buss"],
+            institution="Max Planck Institute for Biological Cybernetics",
+            country="DE",
+            repository="Zenodo",
+            data_url="https://zenodo.org/records/1217449",
+            license="CC BY 4.0",
+            publication_year=2009,
+        ),
+        sessions_per_subject=1,
+        runs_per_session=1,
+        tags=Tags(pathology=["healthy"], modality=["motor"], type=["bci"]),
+        data_processed=True,
+    )
 
     def __init__(self):
         self.events_id = dict(right_hand=2, left_hand=1)

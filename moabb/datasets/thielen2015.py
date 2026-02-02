@@ -4,6 +4,14 @@ from scipy.io import loadmat
 
 from moabb.datasets import download as dl
 from moabb.datasets.base import BaseDataset
+from moabb.datasets.metadata.schema import (
+    AcquisitionMetadata,
+    DatasetMetadata,
+    DocumentationMetadata,
+    ExperimentMetadata,
+    ParticipantMetadata,
+    Tags,
+)
 from moabb.datasets.utils import add_stim_channel_epoch, add_stim_channel_trial
 
 
@@ -75,6 +83,48 @@ class Thielen2015(BaseDataset):
     .. versionadded:: 1.0.0
 
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=2048.0,
+            n_channels=67,
+            channel_types={"eeg": 64, "stim": 3},
+            hardware="Biosemi ActiveTwo",
+            montage="standard_1010",
+            line_freq=50.0,
+            filters="5-48 Hz and 52-100 Hz bandpass (two pass-bands)",
+            ground="can",
+            reference="car",
+            sensor_type="active electrodes",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=12,
+            health_status="healthy",
+            clinical_population="ALS",
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="cvep",
+            task_type="36_class_gold_codes",
+            n_classes=36,
+            trial_duration=4.2,
+            tasks=["rest"],
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.1038/s41598-017-15373-x",
+            description="cVEP dataset with Gold codes and spatiotemporal beamformer",
+            investigators=["Wittevrongel, B.", "Van Wolputte, E.", "Van Hulle, M.M."],
+            institution="KU Leuven",
+            country="BE",
+            repository="Radboud Data Repository",
+            data_url="https://public.data.ru.nl/dcc/DSC_2018.00047_553_v3",
+            license="CC BY 4.0",
+            publication_year=2017,
+        ),
+        sessions_per_subject=1,
+        runs_per_session=1,
+        tags=Tags(pathology=["healthy"], modality=["visual"], type=["bci"]),
+        data_processed=True,
+    )
 
     def __init__(self):
         super().__init__(

@@ -12,6 +12,15 @@ import numpy as np
 from pooch import Unzip, retrieve
 from scipy.io import loadmat
 
+from moabb.datasets.metadata.schema import (
+    AcquisitionMetadata,
+    DatasetMetadata,
+    DocumentationMetadata,
+    ExperimentMetadata,
+    ParticipantMetadata,
+    Tags,
+)
+
 from .base import BaseDataset
 from .download import get_dataset_path
 
@@ -97,6 +106,51 @@ class Weibo2014(BaseDataset):
            cognitive process during simple and compound limb motor imagery."
            PloS one 9.12 (2014). https://doi.org/10.1371/journal.pone.0114853
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=200.0,
+            n_channels=65,
+            channel_types={"eeg": 60, "misc": 2, "eog": 2, "stim": 1},
+            hardware="Neuroscan SynAmps2",
+            montage="standard_1005",
+            line_freq=50.0,
+            filters="0.5-100 Hz bandpass, 50 Hz notch",
+            ground="prefrontal lobe",
+            reference="nose",
+            sensor_type="Ag/AgCl",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=10,
+            health_status="healthy",
+            gender={"female": 3, "male": 7},
+            handedness={"right": 10},
+            age_mean=23.0,
+            age_std=25.0,
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="imagery",
+            task_type="7_class_simple_compound_limb_MI",
+            n_classes=7,
+            trial_duration=4.0,
+            tasks=["rest", "feet", "left_hand", "right_hand"],
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.1371/journal.pone.0114853",
+            description="Simple and compound limb motor imagery EEG patterns",
+            investigators=["W. Yi", "S. Qiu", "H. Qi", "L. Zhang", "B. Wan", "D. Ming"],
+            institution="Tianjin University",
+            country="CN",
+            repository="Harvard Dataverse",
+            data_url="https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/27306",
+            license="CC BY 4.0",
+            publication_year=2014,
+        ),
+        sessions_per_subject=1,
+        runs_per_session=1,
+        tags=Tags(pathology=["healthy"], modality=["motor"], type=["motor"]),
+        data_processed=True,
+    )
 
     def __init__(self):
         super().__init__(

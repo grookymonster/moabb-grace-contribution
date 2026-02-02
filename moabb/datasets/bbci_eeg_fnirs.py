@@ -13,6 +13,14 @@ from pooch.downloaders import choose_downloader
 from scipy.io import loadmat
 
 from moabb.datasets.download import get_dataset_path
+from moabb.datasets.metadata.schema import (
+    AcquisitionMetadata,
+    DatasetMetadata,
+    DocumentationMetadata,
+    ExperimentMetadata,
+    ParticipantMetadata,
+    Tags,
+)
 
 from .base import BaseDataset
 
@@ -290,6 +298,55 @@ class Shin2017A(BaseShin2017):
            `<https://www.gnu.org/licenses/gpl-3.0.txt>`_
     """
 
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=200.0,
+            n_channels=30,
+            channel_types={"eeg": 30},
+            montage="standard_1005",
+            line_freq=50.0,
+            reference="1000 Hz sampling rate",
+            hardware="BrainAmp",
+            sensor_type="active electrodes",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=29,
+            health_status="healthy",
+            clinical_population="spinal_cord_injury",
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="imagery",
+            task_type="left_right_hand",
+            n_classes=2,
+            trial_duration=10.0,
+            tasks=["rest", "left_hand", "right_hand"],
+            feedback_type="visual",
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.1109/TNSRE.2016.2628057",
+            description="EEG/fNIRS hybrid motor imagery dataset - Modality A (EEG only)",
+            investigators=[
+                "Shin, Jaeyoung",
+                "von Lühmann, Alexander",
+                "Blankertz, Benjamin",
+                "Kim, Do-Won",
+                "Jeong, Jichai",
+                "Hwang, Han-Jeong",
+                "Müller, Klaus-Robert",
+            ],
+            institution="Korea University / TU Berlin",
+            country="KR",
+            repository="TU Berlin",
+            data_url="http://doc.ml.tu-berlin.de/hBCI",
+            license="GNU GPLv3",
+            publication_year=2017,
+        ),
+        sessions_per_subject=3,
+        runs_per_session=1,
+        tags=Tags(pathology=["healthy"], modality=["motor"], type=["bci"]),
+        data_processed=False,
+    )
+
     def __init__(self, accept=False):
         super().__init__(
             suffix="A",
@@ -396,6 +453,55 @@ class Shin2017B(BaseShin2017):
     .. [2] GNU General Public License, Version 3
            `<https://www.gnu.org/licenses/gpl-3.0.txt>`_
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=200.0,
+            n_channels=32,
+            channel_types={"eeg": 30, "eog": 2},
+            montage="standard_1005",
+            line_freq=50.0,
+            reference="1000 Hz sampling rate",
+            hardware="BrainAmp",
+            sensor_type="active electrodes",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=29,
+            health_status="healthy",
+            clinical_population="spinal_cord_injury",
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="imagery",
+            task_type="mental_arithmetic",
+            n_classes=2,
+            trial_duration=10.0,
+            tasks=["rest", "left_hand", "right_hand"],
+            feedback_type="visual",
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.1109/TNSRE.2016.2628057",
+            description="EEG/fNIRS hybrid mental arithmetic dataset - Modality B (EEG only)",
+            investigators=[
+                "Shin, Jaeyoung",
+                "von Lühmann, Alexander",
+                "Blankertz, Benjamin",
+                "Kim, Do-Won",
+                "Jeong, Jichai",
+                "Hwang, Han-Jeong",
+                "Müller, Klaus-Robert",
+            ],
+            institution="Korea University / TU Berlin",
+            country="KR",
+            repository="TU Berlin",
+            data_url="http://doc.ml.tu-berlin.de/hBCI",
+            license="GNU GPLv3",
+            publication_year=2017,
+        ),
+        sessions_per_subject=3,
+        runs_per_session=1,
+        tags=Tags(pathology=["healthy"], modality=["motor"], type=["bci"]),
+        data_processed=False,
+    )
 
     def __init__(self, accept=False):
         super().__init__(

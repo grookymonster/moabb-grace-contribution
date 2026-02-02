@@ -12,6 +12,14 @@ import pooch
 from scipy.io import loadmat
 
 import moabb.datasets.download as dl
+from moabb.datasets.metadata.schema import (
+    AcquisitionMetadata,
+    DatasetMetadata,
+    DocumentationMetadata,
+    ExperimentMetadata,
+    ParticipantMetadata,
+    Tags,
+)
 
 from .base import BaseDataset
 from .download import get_dataset_path
@@ -119,6 +127,49 @@ class Stieger2021(BaseDataset):
     -----
     .. versionadded:: 1.1.0
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=1000.0,
+            n_channels=64,
+            channel_types={"eeg": 64},
+            montage="standard_1005",
+            line_freq=60.0,
+            filters="60 Hz notch",
+            reference="target presentation",
+            hardware="Neuroscan SynAmps",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=62,
+            health_status="healthy",
+            handedness={"right": 62},
+            clinical_population="spinal_cord_injury",
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="imagery",
+            task_type="continuous_cursor_control",
+            n_classes=4,
+            trial_duration=3.0,
+            tasks=["tongue", "rest", "left_hand", "right_hand"],
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.1038/s41597-021-00883-1",
+            description="Large-scale continuous sensorimotor rhythm BCI learning dataset",
+            investigators=["J.R. Stieger", "S.A. Engel", "B. He"],
+            institution="Carnegie Mellon University",
+            country="US",
+            repository="Figshare",
+            data_url="https://doi.org/10.6084/m9.figshare.13123148",
+            publication_year=2021,
+            license="CC BY 4.0",
+            funding=["NIH under"],
+        ),
+        sessions_per_subject=11,
+        runs_per_session=1,
+        tags=Tags(pathology=["healthy"], modality=["motor"], type=["bci"]),
+        data_processed=True,
+        file_format="MAT",
+    )
 
     def __init__(self, interval=[0, 3], sessions=None, fix_bads=True):
         super().__init__(

@@ -10,6 +10,14 @@ from mne.io import read_raw_gdf
 
 from moabb.datasets import download as dl
 from moabb.datasets.base import BaseDataset
+from moabb.datasets.metadata.schema import (
+    AcquisitionMetadata,
+    DatasetMetadata,
+    DocumentationMetadata,
+    ExperimentMetadata,
+    ParticipantMetadata,
+    Tags,
+)
 
 
 BNCI_URL_001_2019 = "http://bnci-horizon-2020.eu/database/data-sets/001-2019/"
@@ -68,6 +76,62 @@ class BNCI2019_001(BaseDataset):
     -----
     .. versionadded:: 1.2.0
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=256.0,
+            n_channels=64,
+            channel_types={"eeg": 61, "eog": 3},
+            montage="standard_1005",
+            line_freq=50.0,
+            reference="left earlobe",
+            ground="AFF2h",
+            hardware="g.tec g.USBamp",
+            software="EEGLAB 14.1.1",
+            sensor_type="active electrode",
+            filters="0.01-100 Hz bandpass, 50 Hz notch",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=10,
+            health_status="patients",
+            clinical_population="spinal cord injury",
+            age_mean=49.8,
+            age_std=17.6,
+            age_min=20.0,
+            age_max=78.0,
+            gender={"male": 9, "female": 1},
+            handedness={"right": 10},
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="imagery",
+            task_type="attempted_movements",
+            n_classes=5,
+            trial_duration=3.0,
+            tasks=[
+                "supination",
+                "pronation",
+                "hand_open",
+                "palmar_grasp",
+                "lateral_grasp",
+            ],
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.1038/s41598-019-43594-9",
+            description="Motor imagery dataset for spinal cord injury patients",
+            investigators=["P. Ofner", "A. Schwarz", "J. Pereira", "G.R. Müller-Putz"],
+            institution="Graz University of Technology",
+            country="AT",
+            repository="BNCI Horizon 2020",
+            data_url="http://bnci-horizon-2020.eu/database/data-sets/001-2019/",
+            license="CC BY 4.0",
+            publication_year=2019,
+        ),
+        sessions_per_subject=1,
+        runs_per_session=9,
+        tags=Tags(pathology=["spinal_cord_injury"], modality=["motor"], type=["bci"]),
+        data_processed=True,
+        file_format="GDF",
+    )
 
     _EVENTS = {
         "supination": 776,

@@ -3,6 +3,14 @@ from mne.channels import make_standard_montage
 from mne.io import read_raw_gdf
 
 from moabb.datasets.base import BaseDataset
+from moabb.datasets.metadata.schema import (
+    AcquisitionMetadata,
+    DatasetMetadata,
+    DocumentationMetadata,
+    ExperimentMetadata,
+    ParticipantMetadata,
+    Tags,
+)
 from moabb.datasets.utils import stim_channels_with_selected_ids
 
 from . import download as dl
@@ -55,6 +63,74 @@ class Ofner2017(BaseDataset):
            low-frequency EEG. PloS one, 12(8), p.e0182578.
            https://doi.org/10.1371/journal.pone.0182578
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=512.0,
+            n_channels=61,
+            channel_types={"eeg": 61},
+            hardware="g.tec medical engineering (4x g.USBamp)",
+            sensor_type="active",
+            reference="right mastoid",
+            ground="AFz",
+            filters={"highpass": 0.01, "lowpass": 200.0, "notch": 50.0},
+            montage="standard_1005",
+            line_freq=50.0,
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=15,
+            health_status="healthy",
+            gender={"female": 9, "male": 6},
+            age_mean=27.0,
+            age_std=5.0,
+            age_min=22,
+            age_max=40,
+            handedness={"right": 14, "left": 1},
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="imagery",
+            task_type="upper_limb_movements",
+            n_classes=7,
+            trials_per_class={
+                "elbow_flexion": 60,
+                "elbow_extension": 60,
+                "forearm_supination": 60,
+                "forearm_pronation": 60,
+                "hand_open": 60,
+                "hand_close": 60,
+                "rest": 60,
+            },
+            trial_duration=3.0,
+            tasks=["right_hand", "feet", "right_arm", "left_hand", "rest"],
+            study_design="avoid any movement and to stay in the starting position.",
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.1371/journal.pone.0182578",
+            description="Upper limb movements decoded from low-frequency EEG time-domain",
+            readme=(
+                "EEG dataset from 15 healthy subjects performing 6 upper limb movement types "
+                "(elbow flexion/extension, forearm supination/pronation, hand open/close) plus rest. "
+                "Two sessions on different days: movement execution (ME) and motor imagery (MI). "
+                "Subjects used an exoskeleton with anti-gravity support (Hocoma). "
+                "Data recorded with 61 active EEG electrodes at 512 Hz. "
+                "Suitable for motor imagery BCI research and movement decoding from MRCPs."
+            ),
+            investigators=["P. Ofner", "A. Schwarz", "J. Pereira", "G.R. Müller-Putz"],
+            senior_author="G.R. Müller-Putz",
+            contact_info="gernot.mueller@tugraz.at",
+            institution="Graz University of Technology, Institute of Neural Engineering, BCI-Lab",
+            country="AT",
+            repository="Zenodo",
+            data_url="https://zenodo.org/record/834976",
+            license="CC BY 4.0",
+            publication_year=2017,
+            funding="EU H2020-643955 MoreGrasp, ERC Consolidator Grant ERC-681231 Feel Your Reach",
+        ),
+        sessions_per_subject=2,
+        runs_per_session=10,
+        tags=Tags(pathology=["healthy"], modality=["motor"], type=["bci"]),
+        data_processed=True,
+    )
 
     def __init__(self, imagined=True, executed=False):
         self.imagined = imagined

@@ -13,6 +13,14 @@ from mne_bids import BIDSPath, get_entity_vals, read_raw_bids
 from tqdm import tqdm
 
 from moabb.datasets import download as dl
+from moabb.datasets.metadata.schema import (
+    AcquisitionMetadata,
+    DatasetMetadata,
+    DocumentationMetadata,
+    ExperimentMetadata,
+    ParticipantMetadata,
+    Tags,
+)
 
 from .base import BaseDataset
 
@@ -565,6 +573,97 @@ class Dreyer2023(_Dreyer2023Base):
         When should MI-BCI feature optimization include prior knowledge, and which one?.
         Brain-Computer Interfaces, 9(2), 115-128.
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=512.0,
+            n_channels=27,
+            channel_types={"eeg": 27, "eog": 3, "emg": 2},
+            sensors=[
+                "Fz",
+                "FCz",
+                "Cz",
+                "CPz",
+                "Pz",
+                "C1",
+                "C3",
+                "C5",
+                "C2",
+                "C4",
+                "C6",
+                "EOG1",
+                "EOG2",
+                "EOG3",
+                "EMGg",
+                "EMGd",
+                "F4",
+                "FC2",
+                "FC4",
+                "FC6",
+                "CP2",
+                "CP4",
+                "CP6",
+                "P4",
+                "F3",
+                "FC1",
+                "FC3",
+                "FC5",
+                "CP1",
+                "CP3",
+                "CP5",
+                "P3",
+            ],
+            hardware="g.USBAmp (g.tec)",
+            reference="left earlobe",
+            software="OpenViBE 2.1.0/2.2.0",
+            montage="standard_1020",
+            line_freq=50.0,
+            sensor_type="active electrodes",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=87,
+            health_status="healthy",
+            age_mean=29.0,
+            age_std=9.3,
+            age_min=19.0,
+            age_max=59.0,
+            gender={"female": 5, "male": 5},
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="imagery",
+            task_type="left_right_hand",
+            n_classes=2,
+            trials_per_class={"left_hand": 120, "right_hand": 120},
+            trial_duration=5.0,
+            tasks=["rest", "feet", "left_hand", "right_hand"],
+            feedback_type="visual",
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.1038/s41597-023-02445-z",
+            description="Large EEG database with user profiles for MI BCI research",
+            investigators=[
+                "P. Dreyer",
+                "A. Roc",
+                "L. Pillette",
+                "S. Rimbert",
+                "F. Lotte",
+            ],
+            institution="Inria Bordeaux",
+            country="FR",
+            repository="Zenodo",
+            data_url="https://doi.org/10.5281/zenodo.8089820",
+            license="CC BY 4.0",
+            publication_year=2023,
+            funding=[
+                "grant ANR-15-CE23-0013-01 ANR-15-CE23-0013-01",
+                "grant ERC-2016- ERC-2016-",
+            ],
+        ),
+        sessions_per_subject=1,
+        runs_per_session=6,
+        tags=Tags(pathology=["healthy"], modality=["motor"], type=["bci"]),
+        data_processed=True,
+    )
 
     def __init__(self):
         super().__init__(subjects=list(range(1, 88)))
