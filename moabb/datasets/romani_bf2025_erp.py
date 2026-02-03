@@ -13,10 +13,16 @@ from mne_bids import BIDSPath, get_entity_vals, read_raw_bids
 from moabb.datasets.base import BaseDataset
 from moabb.datasets.metadata.schema import (
     AcquisitionMetadata,
+    BCIApplicationMetadata,
     DatasetMetadata,
+    DataStructureMetadata,
     DocumentationMetadata,
     ExperimentMetadata,
+    FilterDetails,
+    ParadigmSpecificMetadata,
     ParticipantMetadata,
+    PreprocessingMetadata,
+    SignalProcessingMetadata,
     Tags,
 )
 
@@ -92,8 +98,41 @@ class RomaniBF2025ERP(BaseDataset):
     Expected output:
     Sessions for subject 2: ['0grain', '1cb', '2cbExtra']
 
-    Notes
-    -----
+
+    .. admonition:: Participants
+
+        - **Population**: ALS
+        - **BCI experience**: naive
+
+
+    .. admonition:: Equipment
+
+        - **Amplifier**: g.tec
+        - **Montage**: 10-20
+
+
+    .. admonition:: Experimental Protocol
+
+        minimize movement during recording to reduce motion artifacts.
+
+
+    .. admonition:: Data Access
+
+        - **Repository**: GitHub
+        - **DOI**: 10.1371/journal.pone.0111070
+        - **URL**: https://github.com/BRomans/BrainForm
+
+
+
+    .. admonition:: Preprocessing
+
+        - **Data state**: raw EEG data collected and publicly available
+        - **Bandpass filter**: 0.5-15 Hz
+        - **Notch filter**: [50, 60] Hz
+        - **Steps**: notch filtering, bandpass filtering, segmentation
+
+
+    Notes -----
     - EEG signals were recorded using a g.tec Unicorn with a sampling rate of 250 Hz and conductive gel applied.
 
     - Data were collected in Trento, Italy, where the power line frequency is 50 Hz.
@@ -112,6 +151,7 @@ class RomaniBF2025ERP(BaseDataset):
     11: 'P12', 12: 'P13', 13: 'P14', 14: 'P16', 15: 'P17', 16: 'P19', 17: 'P20', 18: 'P21', 19: 'P22', 20: 'P23',
     21: 'P24'}
 
+
     References
     ----------
 
@@ -128,43 +168,80 @@ class RomaniBF2025ERP(BaseDataset):
             sampling_rate=250.0,
             n_channels=8,
             channel_types={"eeg": 8},
-            sensors=["Fz", "C3", "Cz", "C4", "Pz", "PO7", "Oz", "PO8"],
-            hardware="g.tec Unicorn with conductive gel",
-            reference="right mastoid",
-            ground="left mastoid",
-            montage="standard_1005",
-            line_freq=50.0,
-            filters="50 Hz and 60 Hz notch (2nd-order), 0.5-15 Hz bandpass (6th-order)",
+            montage="10-20",
+            hardware="g.tec",
+            sensor_type="conductive gel electrodes",
+            reference="mastoid",
+            ground="mastoid",
             software="OpenViBE",
-            sensor_type="wet (conductive gel)",
+            sensors=["Fz", "C3", "Cz", "C4", "Pz", "PO7", "Oz", "PO8"],
+            line_freq=50.0,
         ),
         participants=ParticipantMetadata(
             n_subjects=22,
             health_status="healthy",
-            clinical_population="ALS",
+            gender={"female": 10, "male": 12},
+            age_mean=21.87,
+            bci_experience="naive",
         ),
         experiment=ExperimentMetadata(
             paradigm="p300",
-            task_type="brainform_erp",
-            n_classes=2,
-            trial_duration=1.0,
-            tasks=["rest"],
+            n_classes=1,
+            class_labels=["rest"],
+            trial_duration=0.9,
+            study_design="minimize move-\nment during recording to reduce motion artifacts.",
+            feedback_type="real-time visual feedback (green outline on spelled symbol), calibration feedback color-coded (red <80%, yellow 80-90%, green >90%)",
+            stimulus_type="flickering",
+            stimulus_modalities=["visual", "multisensory"],
+            primary_modality="multisensory",
+            synchronicity="asynchronous",
+            mode="online",
         ),
         documentation=DocumentationMetadata(
-            doi="10.48550/arXiv.2510.10169",
-            description="BrainForm ERP dataset - serious game-based BCI training",
-            investigators=["M. Romani", "D. Zanoni", "E. Farella", "L. Turchet"],
-            institution="University of Trento",
-            country="IT",
-            repository="Zenodo",
-            data_url="https://zenodo.org/records/17225966",
-            license="CC BY 4.0",
-            publication_year=2025,
+            doi="10.1371/journal.pone.0111070",
+            repository="GitHub",
+            data_url="https://github.com/BRomans/BrainForm",
         ),
-        sessions_per_subject=18,
-        runs_per_session=1,
-        tags=Tags(pathology=["healthy"], modality=["visual"], type=["bci"]),
-        data_processed=False,
+        tags=Tags(
+            pathology=["Healthy"],
+            modality=["Motor"],
+            type=["Motor"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            data_state="raw EEG data available in public dataset",
+            preprocessing_applied=True,
+            preprocessing_steps=["notch filter", "bandpass filter", "segmentation"],
+            filter_details=FilterDetails(
+                highpass_hz=0.5,
+                lowpass_hz=15,
+                bandpass=[0.5, 15],
+                notch_hz=[50, 60],
+                filter_order="2nd-order for notch, 6th-order for bandpass",
+            ),
+            artifact_methods=["ICA"],
+        ),
+        signal_processing=SignalProcessingMetadata(
+            classifiers=["LDA"],
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=[
+                "speller",
+                "wheelchair/navigation",
+                "prosthetic",
+                "gaming",
+                "vr_ar",
+                "communication",
+            ],
+            environment="home",
+        ),
+        paradigm_specific=ParadigmSpecificMetadata(
+            detected_paradigm="motor_imagery",
+        ),
+        data_structure=DataStructureMetadata(
+            n_trials=60,
+            trials_context="total",
+        ),
+        data_processed=True,
     )
 
     def __init__(

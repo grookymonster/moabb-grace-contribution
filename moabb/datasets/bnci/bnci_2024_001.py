@@ -18,10 +18,19 @@ from scipy.io import loadmat
 
 from moabb.datasets.metadata.schema import (
     AcquisitionMetadata,
+    AuxiliaryChannelsMetadata,
+    BCIApplicationMetadata,
+    CrossValidationMetadata,
     DatasetMetadata,
+    DataStructureMetadata,
     DocumentationMetadata,
     ExperimentMetadata,
+    FilterDetails,
+    FrequencyBands,
     ParticipantMetadata,
+    PerformanceMetadata,
+    PreprocessingMetadata,
+    SignalProcessingMetadata,
     Tags,
 )
 
@@ -276,6 +285,18 @@ class BNCI2024_001(BNCIBaseDataset):
     - letter_t (9): Letter 't'
     - letter_v (10): Letter 'v'
 
+
+    .. admonition:: Preprocessing
+
+        - **Bandpass filter**: 0.3-70.0 Hz
+        - **Notch filter**: [50] Hz
+
+    .. admonition:: Data Access
+
+        - **Repository**: GitHub
+        - **DOI**: 10.1016/j.neuroimage.2020.117000
+        - **URL**: https://github.com/rkobler/ey
+
     References
     ----------
     .. [1] Crell, M. R., & Muller-Putz, G. R. (2024). Handwritten character
@@ -283,8 +304,7 @@ class BNCI2024_001(BNCIBaseDataset):
            Computers in Biology and Medicine, 182, 109132.
            https://doi.org/10.1016/j.compbiomed.2024.109132
 
-    Notes
-    -----
+    Notes -----
     .. versionadded:: 1.3.0
 
     This dataset is notable for exploring non-invasive EEG-based handwritten
@@ -296,48 +316,166 @@ class BNCI2024_001(BNCIBaseDataset):
 
     METADATA = DatasetMetadata(
         acquisition=AcquisitionMetadata(
-            sampling_rate=500.0,  # Fixed: was incorrectly 512.0
-            n_channels=65,
-            channel_types={"eeg": 60, "eog": 4, "stim": 1},
-            montage="standard_1005",
-            line_freq=50.0,
-            ground="FPz",
-            reference="electrode was positioned on the right mastoid of the participant",
+            sampling_rate=500.0,
+            n_channels=64,
+            channel_types={"eeg": 58},
+            montage="eogl1 eogl2 eogl3 eogr1 af7 af3 afz af4 af8 f7 f5 f3 f1 fz f2 f4 f6 f8 ft7 fc5 fc3 fc1 fcz fc2 fc4 fc6 ft8 t7 c5 c3 c1 cz c2 c4 c6 t8 tp7 cp5 cp3 cp1 cpz cp2 cp4 cp6 tp8 p7 p5 p3 p1 pz p2 p4 p6 p8 ppo1h ppo2h po7 po3 poz po4 po8 o1 oz o2",
             hardware="BrainVision",
-            filters="49-51 Hz notch filter (Butterworth, 2nd order), 0.4 Hz high-pass (Butterworth, 2nd order)",
             sensor_type="active electrodes",
+            reference="right mastoid",
+            software="EEGLAB",
+            filters="50 Hz notch",
+            sensors=[
+                "Fp1",
+                "Fpz",
+                "Fp2",
+                "AF7",
+                "AF3",
+                "AFz",
+                "AF4",
+                "AF8",
+                "F7",
+                "F5",
+                "F3",
+                "F1",
+                "Fz",
+                "F2",
+                "F4",
+                "F6",
+                "F8",
+                "FT7",
+                "FC5",
+                "FC3",
+                "FC1",
+                "FCz",
+                "FC2",
+                "FC4",
+                "FC6",
+                "FT8",
+                "T7",
+                "C5",
+                "C3",
+                "C1",
+                "Cz",
+                "C2",
+                "C4",
+                "C6",
+                "T8",
+                "TP7",
+                "CP5",
+                "CP3",
+                "CP1",
+                "CPz",
+                "CP2",
+                "CP4",
+                "CP6",
+                "TP8",
+                "P7",
+                "P5",
+                "P3",
+                "P1",
+                "Pz",
+                "P2",
+                "P4",
+                "P6",
+                "P8",
+                "PO7",
+                "PO3",
+                "POz",
+                "PO4",
+                "PO8",
+                "O1",
+                "Oz",
+                "O2",
+                "Iz",
+            ],
+            line_freq=50.0,
+            auxiliary_channels=AuxiliaryChannelsMetadata(
+                has_eog=True,
+                eog_type=["horizontal", "vertical"],
+            ),
         ),
         participants=ParticipantMetadata(
-            n_subjects=20,
+            n_subjects=69,
             health_status="healthy",
-            clinical_population="spinal_cord_injury",
+            gender={"male": 11, "female": 11},
+            age_mean=27.5,
+            handedness="right",
         ),
         experiment=ExperimentMetadata(
             paradigm="imagery",
-            task_type="handwritten_character_imagery",
-            n_classes=10,
-            trial_duration=4.0,
-            tasks=["right_hand"],
+            n_classes=1,
+            class_labels=["rest"],
+            trial_duration=8,
+            study_design="Participants performed four conditions: REST (fixate gaze on center stimulus), HORZ (track stimulus moving horizontally), VERT (track stimulus moving vertically), and BLINK (perform voluntary blinks w...",
             feedback_type="visual",
-            study_design="move their hand to a comfortable position in the middle of the monitored area.",
+            stimulus_type="avatar",
+            stimulus_modalities=["visual"],
+            primary_modality="visual",
+            mode="both",
+            has_training_test_split=True,
         ),
         documentation=DocumentationMetadata(
             doi="10.1016/j.compbiomed.2024.109132",
-            description="Handwritten character classification from EEG",
-            investigators=["Crell, M.R.", "Müller-Putz, G.R."],
-            institution="Graz University of Technology",
-            country="AT",
-            repository="BNCI Horizon 2020",
-            data_url="http://bnci-horizon-2020.eu/database/data-sets/001-2024/",
-            license="CC BY 4.0",
-            publication_year=2024,
+            repository="GitHub",
+            data_url="https://github.com/rkobler/eyeartifactcorrection",
             funding=["grant agreement agreement", "European Union"],
+            readme="Conflicting metadata across sources:\\n- data_structure.n_trials: main=40; paper=27 (kept paper)\\n- data_structure.n_trials: paper=27; description=60 (kept description)\\n- data_structure.trials_context: paper=per_run; description=per_class (kept description)\\n- experimental_design.stimulus_type: main=cursor_feedback; paper=avatar (kept paper)\\n- experimental_design.paradigm_type: main=handwriting; paper=eye artifact calibration (kept paper)\\n- experimental_design.task_description: main=Writing different letters (a,d,e,f,j,n,o,s,t,v) using the index finger of the right hand; paper=Participants performed four conditions: REST (fixate gaze on center stimulus), HORZ (track stimulus moving horizontally)... (kept paper)\\n- experimental_design.trial_structure: main=fade-in phase (2s) -> letter display (0.5s) -> fade-out phase (2s) -> writing phase (4s); paper=1-s preparation period, 10-s task period, short break (kept paper)\\n- experimental_design.feedback_type: main=visual feedback during training only; paper=visual stimulus (kept paper)\\n- experimental_design.task_description: paper=Participants performed four conditions: REST (fixate gaze on center stimulus), HORZ (track stimulus moving horizontally)...; description=move their hand to a comfortable position in the middle of the  monitored area. (kept description)\\n- experimental_design.paradigm_type: paper=eye artifact calibration; description=handwriting/motor imagery (kept description)\\n- ... and 38 more conflicts",
         ),
-        sessions_per_subject=1,
-        runs_per_session=1,
-        tags=Tags(pathology=["healthy"], modality=["motor"], type=["bci"]),
-        data_processed=False,
+        tags=Tags(
+            pathology=["Healthy"],
+            modality=["Other"],
+            type=["Other"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            data_state="raw",
+            preprocessing_applied=False,
+            preprocessing_steps=[
+                "resampling",
+                "notch filtering",
+                "high-pass filtering",
+                "bad channel interpolation",
+                "EOG derivative computation",
+                "low-pass filtering of EOG",
+                "epoching",
+                "visual artifact rejection",
+            ],
+            filter_details=FilterDetails(
+                highpass_hz=0.4,
+                lowpass_hz=5,
+                bandpass={"low_cutoff_hz": 0.3, "high_cutoff_hz": 70.0},
+                notch_hz=[49, 51],
+                filter_type="Butterworth",
+                filter_order=2,
+            ),
+            artifact_methods=["ICA"],
+            re_reference="car",
+            downsampled_to_hz=128,
+        ),
+        signal_processing=SignalProcessingMetadata(
+            classifiers=["Logistic Regression"],
+            feature_extraction=["PSD", "Covariance/Riemannian", "ICA"],
+            frequency_bands=FrequencyBands(
+                analyzed_range=[20.0, 90.0],
+            ),
+        ),
+        cross_validation=CrossValidationMetadata(
+            cv_method="5-fold",
+            cv_folds=5,
+            evaluation_type=["cross_session"],
+        ),
+        performance=PerformanceMetadata(
+            accuracy_percent=94.1,
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=["robotic_arm", "vr_ar", "neurofeedback"],
+        ),
+        data_structure=DataStructureMetadata(
+            n_trials=60,
+            trials_context="per_class",
+        ),
         file_format="MAT",
+        data_processed=False,
     )
 
     def __init__(self):

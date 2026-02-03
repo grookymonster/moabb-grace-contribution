@@ -88,7 +88,7 @@ def get_dataset_path(sign, path):
                 "MNE_DATA is not already configured. It will be set to "
                 "default location in the home directory - "
                 + str(path_def)
-                + "\nAll datasets will be downloaded to this location, if anything is "
+                + " All datasets will be downloaded to this location, if anything is "
                 "already downloaded, please move manually to this location"
             )
             if not path_def.is_dir():
@@ -246,7 +246,7 @@ def fs_issue_request(method, url, headers, data=None, binary=False):
             response_data = response.content
     except HTTPError as error:
         logger.error("Caught an HTTPError: {}".format(error))
-        logger.error("Body:\n{}".format(response.text))
+        logger.error("Body: {}".format(response.text))
         raise
 
     return response_data

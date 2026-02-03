@@ -15,10 +15,19 @@ from tqdm import tqdm
 from moabb.datasets import download as dl
 from moabb.datasets.metadata.schema import (
     AcquisitionMetadata,
+    AuxiliaryChannelsMetadata,
+    BCIApplicationMetadata,
+    CrossValidationMetadata,
     DatasetMetadata,
+    DataStructureMetadata,
     DocumentationMetadata,
     ExperimentMetadata,
+    FilterDetails,
+    FrequencyBands,
+    ParadigmSpecificMetadata,
     ParticipantMetadata,
+    PreprocessingMetadata,
+    SignalProcessingMetadata,
     Tags,
 )
 
@@ -304,6 +313,39 @@ class Dreyer2023A(_Dreyer2023Base):
 
     * Subject 59 contains only 4 runs
 
+
+    .. admonition:: Participants
+
+        - **Population**: epilepsy
+        - **Age**: 18.0 (range: 19-59) years
+        - **Gender**: female: 3, male: 3
+        - **BCI experience**: naive
+
+    .. admonition:: Equipment
+
+        - **Amplifier**: g.tec
+        - **Electrodes**: active electrodes
+        - **Montage**: 10-20
+        - **Reference**: the left earlobe
+
+    .. admonition:: Experimental Protocol
+
+        MI
+        - **Feedback**: visual
+
+    .. admonition:: Data Access
+
+        - **Repository**: Zenodo
+        - **DOI**: 10.1038/s41597-023-02445-z
+        - **URL**: https://doi.org/10.5281/zenodo.808982032
+
+
+    .. admonition:: Preprocessing
+
+        - **Data state**: raw signals recorded without any hardware filters
+        - **Bandpass filter**: participant-specific discriminant frequency band (5-35 Hz range)
+        - **Steps**: subject-specific frequency band selection, Butterworth bandpass filtering, Common Spatial Pattern (CSP) spatial filtering, band power computation, log transformation
+
     References
     ----------
 
@@ -314,6 +356,131 @@ class Dreyer2023A(_Dreyer2023Base):
         When should MI-BCI feature optimization include prior knowledge, and which one?.
         Brain-Computer Interfaces, 9(2), 115-128.
     """
+
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=256,
+            n_channels=5,
+            channel_types={"eeg": 5},
+            montage="10-20",
+            hardware="g.tec",
+            sensor_type="active electrodes",
+            reference="left earlobe",
+            software="OpenViBE 2.1.0",
+            filters="none (raw signals recorded without hardware filters)",
+            sensors=[
+                "Fz",
+                "FCz",
+                "Cz",
+                "CPz",
+                "Pz",
+                "C1",
+                "C3",
+                "C5",
+                "C2",
+                "C4",
+                "C6",
+                "F4",
+                "FC2",
+                "FC4",
+                "FC6",
+                "CP2",
+                "CP4",
+                "CP6",
+                "P4",
+                "F3",
+                "FC1",
+                "FC3",
+                "FC5",
+                "CP1",
+                "CP3",
+                "CP5",
+                "P3",
+            ],
+            auxiliary_channels=AuxiliaryChannelsMetadata(
+                has_eog=True,
+                eog_channels=3,
+                eog_type=["horizontal", "vertical"],
+                has_emg=True,
+                emg_channels=2,
+                other_physiological=["gsr"],
+            ),
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=7,
+            health_status="healthy",
+            gender={"female": 3, "male": 3},
+            age_mean=39.0,
+            age_min=19,
+            age_max=59,
+            bci_experience="naive",
+        ),
+        experiment=ExperimentMetadata(
+            paradigm="imagery",
+            n_classes=3,
+            class_labels=["right_hand", "left_hand", "feet"],
+            trial_duration=6.0,
+            study_design="MI",
+            feedback_type="visual",
+            stimulus_type="cursor_feedback",
+            stimulus_modalities=["visual"],
+            primary_modality="visual",
+            mode="both",
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.1016/j.ijhcs.2021.102603",
+            repository="Zenodo",
+            data_url="https://doi.org/10.5281/zenodo.808982032",
+            funding=[
+                "European \nResearch Council",
+                "grant ERC-2016- ERC-2016-",
+                "grant ANR-15-CE23-0013-01 ANR-15-CE23-0013-01",
+            ],
+            readme="Conflicting metadata across sources:\\n- data_structure.n_runs: main=4; main=6 (kept main)\\n- experimental_design.trial_structure: main=green cross (t=0s), acoustic signal (t=2s), red arrow cue (t=3s for 1.25s), visual feedback (t=4.25s for 3.75s), inter-t...; main=green cross (t=0s), acoustic signal (t=2s), red arrow cue (t=3s for 1.25s), visual feedback (t=4.25s for 3.75s), black s... (kept main)\\n- experimental_design.trial_structure: main=green cross (t=0s), acoustic signal (t=2s), red arrow cue (t=3s for 1.25s), visual feedback (t=4.25s for 3.75s), black s...; main=green cross (t=0s), acoustic signal (t=2s), red arrow cue (t=3s for 1.25s), visual feedback (t=4.25s for 3.75s), black s... (kept main)\\n- paradigm_specific.detected_paradigm: main=motor_imagery; main=mi (kept main)\\n- participants.age_mean: main=18.0; main=39.0 (kept main)\\n- participants.gender.female: main=3; main=5 (kept main)\\n- participants.gender.male: main=3; main=5 (kept main)\\n- preprocessing.preprocessing_literal: main=Specifically, we followed the recommendation outlined in29 and used channels C3 and C4  as our sensorimotor channels aft...; main=Here we used channels C3 & C4 after  spatial filtering with a Laplacian filter as sensorimotor channels, as  recommended... (kept main)\\n- preprocessing_claude.notes: main=Raw signals were recorded without any hardware filters. Frequency band selection (5-35 Hz range) and fifth-order Butterw...; main=Raw signals recorded without any hardware filters. Online processing used participant-specific discriminant frequency ba... (kept main)\\n- preprocessing_claude.notes: main=Raw signals recorded without any hardware filters. Online processing used participant-specific discriminant frequency ba...; main=Raw signals were recorded without any hardware filters. The database shares all recorded trials and channels including n... (kept main)\\n- ... and 3 more conflicts",
+        ),
+        tags=Tags(
+            pathology=["Healthy"],
+            modality=["Motor"],
+            type=["Motor"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            data_state="raw",
+            preprocessing_applied=False,
+            filter_details=FilterDetails(
+                filter_type="Butterworth",
+            ),
+            artifact_methods=["ICA"],
+            re_reference="car",
+        ),
+        signal_processing=SignalProcessingMetadata(
+            classifiers=["LDA"],
+            feature_extraction=["CSP", "Bandpower"],
+            frequency_bands=FrequencyBands(
+                alpha=[8, 13],
+            ),
+        ),
+        cross_validation=CrossValidationMetadata(
+            evaluation_type=["cross_subject"],
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=[
+                "prosthetic",
+                "gaming",
+                "vr_ar",
+                "communication",
+                "neurofeedback",
+            ],
+        ),
+        paradigm_specific=ParadigmSpecificMetadata(
+            detected_paradigm="mi",
+        ),
+        data_structure=DataStructureMetadata(
+            n_trials=800,
+            trials_context="total",
+        ),
+        file_format="GDF",
+        data_processed=False,
+    )
 
     def __init__(self):
         super().__init__(subjects=list(range(1, 61)), sub_id="A")

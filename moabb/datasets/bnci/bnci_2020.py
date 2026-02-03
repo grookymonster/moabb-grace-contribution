@@ -9,10 +9,20 @@ from scipy.io import loadmat
 
 from moabb.datasets.metadata.schema import (
     AcquisitionMetadata,
+    AuxiliaryChannelsMetadata,
+    BCIApplicationMetadata,
+    CrossValidationMetadata,
     DatasetMetadata,
+    DataStructureMetadata,
     DocumentationMetadata,
     ExperimentMetadata,
+    FilterDetails,
+    FrequencyBands,
+    ParadigmSpecificMetadata,
     ParticipantMetadata,
+    PerformanceMetadata,
+    PreprocessingMetadata,
+    SignalProcessingMetadata,
     Tags,
 )
 
@@ -245,6 +255,23 @@ class BNCI2020_001(BNCIBaseDataset):
     - Water-based: 62.3% (9.2% STD)
     - Dry electrodes: 56.4% (8.0% STD)
 
+
+    .. admonition:: Equipment
+
+        - **Amplifier**: g.tec
+        - **Electrodes**: active electrodes
+        - **Reference**: Car
+
+    .. admonition:: Preprocessing
+
+        - **Notch filter**: [50] Hz
+
+    .. admonition:: Data Access
+
+        - **Repository**: BNCI Horizon 2020
+        - **DOI**: 10.3389/fnins.2020.00849
+        - **URL**: https://bnci-horizon-2020.eu/database/data-sets
+
     References
     ----------
     .. [1] Schwarz, A., Escolano, C., Montesano, L., & Muller-Putz, G. R. (2020).
@@ -252,8 +279,7 @@ class BNCI2020_001(BNCIBaseDataset):
            Water and Dry EEG Systems. Frontiers in Neuroscience, 14, 849.
            https://doi.org/10.3389/fnins.2020.00849
 
-    Notes
-    -----
+    Notes -----
     .. versionadded:: 1.3.0
 
     This dataset is valuable for comparing electrode technologies in naturalistic
@@ -263,45 +289,167 @@ class BNCI2020_001(BNCIBaseDataset):
     METADATA = DatasetMetadata(
         acquisition=AcquisitionMetadata(
             sampling_rate=256.0,
-            n_channels=64,
-            channel_types={"eeg": 58, "eog": 6},
-            montage="standard_1005",
-            line_freq=50.0,
+            n_channels=58,
+            channel_types={"eeg": 58},
+            montage="10-20",
             hardware="g.tec",
             sensor_type="Gel-based electrodes",
-            filters="0.01-100.0 Hz bandpass, 50 Hz notch",
-            reference="we used the right earlobe",
+            reference="Car",
+            ground="left earlobe",
             software="EEGLAB",
+            filters="0.01-100.0 Hz bandpass, 50 Hz notch",
+            sensors=[
+                "Fp1",
+                "Fpz",
+                "Fp2",
+                "AF7",
+                "AF3",
+                "AFz",
+                "AF4",
+                "AF8",
+                "F7",
+                "F5",
+                "F3",
+                "F1",
+                "Fz",
+                "F2",
+                "F4",
+                "F6",
+                "F8",
+                "FT7",
+                "FC5",
+                "FC3",
+                "FC1",
+                "FCz",
+                "FC2",
+                "FC4",
+                "FC6",
+                "FT8",
+                "T7",
+                "C5",
+                "C3",
+                "C1",
+                "Cz",
+                "C2",
+                "C4",
+                "C6",
+                "T8",
+                "TP7",
+                "CP5",
+                "CP3",
+                "CP1",
+                "CPz",
+                "CP2",
+                "CP4",
+                "CP6",
+                "TP8",
+                "P7",
+                "P5",
+                "P3",
+                "P1",
+                "Pz",
+                "P2",
+                "P4",
+                "P6",
+                "P8",
+                "PO7",
+                "PO3",
+                "POz",
+                "PO4",
+                "PO8",
+            ],
+            line_freq=50.0,
+            auxiliary_channels=AuxiliaryChannelsMetadata(
+                has_eog=True,
+                eog_type=["horizontal", "vertical"],
+            ),
         ),
         participants=ParticipantMetadata(
-            n_subjects=45,  # Fixed: was incorrectly 15
+            n_subjects=45,
             health_status="healthy",
             gender={"male": 10, "female": 5},
+            handedness="right-handed",
         ),
         experiment=ExperimentMetadata(
             paradigm="imagery",
-            task_type="reach_and_grasp",
-            n_classes=3,
+            n_classes=2,
+            class_labels=["right_hand", "feet"],
             trial_duration=5.0,
-            tasks=["rest", "right_hand"],
-            study_design="perform reach-and-grasp actions using their right hand towards the objects placed on the table.",
+            feedback_type="visual (screen showing number of completed grasps)",
+            stimulus_type="avatar",
+            stimulus_modalities=["visual"],
+            primary_modality="visual",
+            mode="both",
+            has_training_test_split=True,
         ),
         documentation=DocumentationMetadata(
-            doi="10.3389/fnins.2020.00849",
-            description="Reach-and-grasp electrode comparison (gel, water, dry)",
-            investigators=["A. Schwarz", "J. Pereira", "G.R. Müller-Putz"],
-            institution="Graz University of Technology",
-            country="AT",
+            doi="10.1038/s41598-018-36326-y",
             repository="BNCI Horizon 2020",
-            data_url="http://bnci-horizon-2020.eu/database/data-sets/001-2020/",
-            license="CC BY 4.0",
-            publication_year=2020,
+            data_url="https://bnci-horizon-2020.eu/database/data-sets",
+            readme='Conflicting metadata across sources:\\n- experimental_design.trial_structure: main=Gaze at object for 2s, perform reach-and-grasp, hold object for 1-2s, return hand to base position, inter-trial interval...; description=Gaze on object for 2 seconds, self-initiated reach-and-grasp, hold object for 1-2 seconds (kept description)\\n- participants.n_subjects: main=45; description=15 (kept description)\\n- preprocessing.preprocessing_details.artifact_methods: main=["trial rejection", "amplitude threshold", "ICA"]; description=["ICA"] (kept description)\\n- preprocessing.claude_preprocessing_applied: main=True; description=False (kept description)\\n- preprocessing.data_state: main=preprocessed with artifact rejection; description=raw (kept description)\\n- preprocessing_claude.preprocessing_applied: main=True; description=False (kept description)\\n- preprocessing_claude.data_state: main=preprocessed with artifact rejection; description=raw (kept description)\\n- preprocessing_claude.notes: main=ICA not applied to dry electrode recordings due to low channel count (n=11). For classification, data was resampled to 1...; description=Data stored in .mat format with EEG and EOG signals (kept description)\\n- recording_setup.electrode_type: main=active electrodes; description=Gel-based electrodes (kept description)',
         ),
-        sessions_per_subject=1,
-        runs_per_session=4,
-        tags=Tags(pathology=["healthy"], modality=["motor"], type=["motor"]),
-        data_processed=False,
+        tags=Tags(
+            pathology=["Healthy"],
+            modality=["Visual"],
+            type=["Perception"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            data_state="raw",
+            preprocessing_applied=False,
+            preprocessing_steps=[
+                "zero-phase 4th order Butterworth bandpass filter (0.3-60 Hz)",
+                "extended infomax ICA for eye artifact removal (gel and water-based only)",
+                "artifact rejection by amplitude threshold (>125 µV)",
+                "artifact rejection by abnormal joint probability (4 SD threshold)",
+                "artifact rejection by abnormal kurtosis (4 SD threshold)",
+            ],
+            filter_details=FilterDetails(
+                highpass_hz=0.3,
+                lowpass_hz=60,
+                bandpass=[0.3, 60],
+                notch_hz=[50],
+                filter_type="Butterworth",
+                filter_order=8,
+            ),
+            artifact_methods=["ICA"],
+            re_reference="Car",
+        ),
+        signal_processing=SignalProcessingMetadata(
+            classifiers=["Random Forest", "Shrinkage LDA"],
+            feature_extraction=["CSP", "ERD", "ERS", "PSD", "Time-Frequency", "ICA"],
+            frequency_bands=FrequencyBands(
+                alpha=[8.0, 12.0],
+                analyzed_range=[2.0, 40.0],
+            ),
+        ),
+        cross_validation=CrossValidationMetadata(
+            cv_method="bootstrap",
+            evaluation_type=["cross_subject"],
+        ),
+        performance=PerformanceMetadata(
+            accuracy_percent=61.1,
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=[
+                "speller",
+                "wheelchair/navigation",
+                "prosthetic",
+                "robotic_arm",
+                "smart_home",
+                "vr_ar",
+                "communication",
+            ],
+            environment="laboratory",
+        ),
+        paradigm_specific=ParadigmSpecificMetadata(
+            detected_paradigm="p300",
+        ),
+        data_structure=DataStructureMetadata(
+            n_trials=80,
+            trials_context="per_class",
+        ),
         file_format="MAT",
+        data_processed=False,
     )
 
     def __init__(self):
@@ -586,6 +734,15 @@ class BNCI2020_002(BNCIBaseDataset):
         - bciexp.intention: subject's intended response (yes/no)
         - subject: demographic information
 
+
+    .. admonition:: Preprocessing
+
+        - **Bandpass filter**: 1.0-12.5 Hz
+
+    .. admonition:: Data Access
+
+        - **DOI**: 10.3389/fnins.2020.591777
+
     References
     ----------
     .. [1] Reichert, C., Tellez-Ceja, I. F., Schwenker, F., Rusnac, A.-L.,
@@ -594,8 +751,7 @@ class BNCI2020_002(BNCIBaseDataset):
            Based on Covert Spatial Attention Shifts. Frontiers in Neuroscience,
            14, 591777. https://doi.org/10.3389/fnins.2020.591777
 
-    Notes
-    -----
+    Notes -----
     .. versionadded:: 1.3.0
 
     This dataset uses a covert spatial attention paradigm with N2pc ERP
@@ -619,50 +775,123 @@ class BNCI2020_002(BNCIBaseDataset):
     METADATA = DatasetMetadata(
         acquisition=AcquisitionMetadata(
             sampling_rate=250.0,
-            n_channels=33,
-            channel_types={"eeg": 29, "eog": 2, "stim": 2},
-            montage="standard_1005",
-            line_freq=50.0,
-            filters="0.1 Hz highpass",
-            reference="against the right mastoid as well as the horizontal",
+            n_channels=30,
+            channel_types={"eeg": 29},
+            montage="10-20",
             hardware="BrainAmp",
             sensor_type="Ag/AgCl",
+            reference="right mastoid",
+            filters={"highpass_hz": 0.1, "notch_hz": None},
+            sensors=[
+                "Fp1",
+                "Fp2",
+                "F7",
+                "F3",
+                "Fz",
+                "F4",
+                "F8",
+                "FC5",
+                "FC1",
+                "FC2",
+                "FC6",
+                "T7",
+                "C3",
+                "Cz",
+                "C4",
+                "T8",
+                "CP5",
+                "CP1",
+                "CP2",
+                "CP6",
+                "P7",
+                "P3",
+                "Pz",
+                "P4",
+                "P8",
+                "PO9",
+                "O1",
+                "Oz",
+                "O2",
+                "PO10",
+            ],
+            line_freq=50.0,
+            auxiliary_channels=AuxiliaryChannelsMetadata(
+                has_eog=True,
+                eog_type=["horizontal", "vertical"],
+                other_physiological=["gsr", "ppg"],
+            ),
         ),
         participants=ParticipantMetadata(
             n_subjects=18,
             health_status="healthy",
+            gender={"female": 10, "male": 8},
+            age_mean=27,
         ),
         experiment=ExperimentMetadata(
             paradigm="p300",
-            task_type="covert_spatial_attention",
             n_classes=2,
-            trial_duration=16.0,  # Fixed: was incorrectly 1.0
-            tasks=["rest", "feet"],
-            feedback_type="none",
-            study_design='associate the green cross with the word "yes" and the red cross with the word "no" while responding to questions and statements, which were shown on the screen before the stimulus sequence present...',
+            class_labels=["rest", "feet"],
+            trial_duration=0.75,
+            study_design='associate the green cross with the word "yes" and the red cross with the word "no" \nwhile responding to questions and statements, which were shown on the screen before the \nstimulus sequence presentat...',
+            feedback_type="visual (yes/no decoded answer)",
+            stimulus_type="rsvp",
+            stimulus_modalities=["visual"],
+            primary_modality="visual",
+            mode="online",
         ),
         documentation=DocumentationMetadata(
             doi="10.3389/fnins.2020.591777",
-            description="Attention Shift - Covert Spatial Attention BCI",
-            investigators=[
-                "Reichert, C.",
-                "Tellez Ceja, I.F.",
-                "Sweeney-Reed, C.M.",
-                "Heinze, H.J.",
-                "Hinrichs, H.",
-                "Dürschmid, S.",
-            ],
-            institution="Otto von Guericke University Magdeburg",
-            country="DE",
-            repository="BNCI Horizon 2020",
-            data_url="http://bnci-horizon-2020.eu/database/data-sets/002-2020/",
-            license="CC BY 4.0",
-            publication_year=2020,
             funding=["grant number number"],
+            readme='Conflicting metadata across sources:\\n- data_structure.n_runs: paper=7; description=6-7 (P01 performed fewer runs) (kept description)\\n- experimental_design.mode: paper=both; description=online (kept description)\\n- experimental_design.task_description: paper=Participants responded to yes/no questions by covertly shifting attention to green (yes) or red (no) colored symbols pre...; description=associate the green cross with the word "yes" and the red cross with the word "no"  while responding to questions and st... (kept description)\\n- experimental_design.modalities: paper=["visual", "auditory", "tactile"]; description=["visual"] (kept description)\\n- experimental_design.primary_modality: paper=multisensory; description=visual (kept description)\\n- experimental_design.stimulus_type: paper=rsvp; description=avatar (kept description)\\n- experimental_design.paradigm_type: paper=p300; description=covert spatial attention BCI (kept description)\\n- experimental_design.trial_structure: paper=Question presentation -> button press to start -> stimulus sequence (10 stimuli) -> BCI feedback -> participant confirma...; description=sequence of 10 visual stimuli per trial with simultaneous presentation of green and red crosses in opposite hemifields (kept description)\\n- preprocessing.preprocessing_literal: paper=Processing of EEG Data In order to prevent hemispheric diﬀerences induced by a unilateral reference electrode, we re-ref...; description=The data  are not segmented but involve the whole recording. • bciexp  - srate:  sampling rate  - data:   data recorded ... (kept description)\\n- preprocessing.preprocessing_details.artifact_methods: paper=["EOG correction", "ICA"]; description=["ICA"] (kept description)\\n- ... and 10 more conflicts',
         ),
-        sessions_per_subject=1,
-        runs_per_session=1,
-        tags=Tags(pathology=["healthy"], modality=["visual"], type=["bci"]),
+        tags=Tags(
+            pathology=["Healthy"],
+            modality=["Visual"],
+            type=["Perception"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            data_state="segmented into trials",
+            preprocessing_applied=True,
+            preprocessing_steps=["highpass filtering"],
+            filter_details=FilterDetails(
+                highpass_hz=0.1,
+                lowpass_hz=12.5,
+                bandpass={"low_cutoff_hz": 1.0, "high_cutoff_hz": 12.5},
+                filter_type="Butterworth",
+                filter_order=4,
+            ),
+            artifact_methods=["ICA"],
+            re_reference="Car",
+            downsampled_to_hz=50,
+        ),
+        signal_processing=SignalProcessingMetadata(
+            classifiers=["CCA"],
+            frequency_bands=FrequencyBands(
+                alpha=[8, 13],
+            ),
+        ),
+        cross_validation=CrossValidationMetadata(
+            cv_method="leave-one-out",
+        ),
+        performance=PerformanceMetadata(
+            accuracy_percent=88.6,
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=[
+                "speller",
+                "wheelchair/navigation",
+                "prosthetic",
+                "vr_ar",
+                "communication",
+            ],
+        ),
+        paradigm_specific=ParadigmSpecificMetadata(
+            detected_paradigm="p300",
+        ),
+        data_structure=DataStructureMetadata(
+            n_trials=24,
+            trials_context="per_run",
+        ),
         data_processed=True,
     )
 

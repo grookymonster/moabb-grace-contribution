@@ -224,8 +224,7 @@ def add_stim_channel_trial(raw, onsets, labels, offset=200, ch_name="stim_trial"
     mne.Raw
         The raw object with the added stimulus channel.
 
-    Notes
-    -----
+    Notes -----
     .. versionadded:: 1.1.0
     """
     stim_chan = np.zeros((1, len(raw)))
@@ -279,8 +278,7 @@ def add_stim_channel_epoch(
     mne.Raw
         The raw object with the added stimulus channel.
 
-    Notes
-    -----
+    Notes -----
     .. versionadded:: 1.1.0
     """
     if presentation_rate is None:
@@ -394,8 +392,7 @@ class _BubbleChart:
         bubble_spacing : float, default: 0
             Minimal spacing between bubbles after collapsing.
 
-        Notes
-        -----
+        Notes -----
         If "area" is sorted, the results might look weird.
         """
         area = np.asarray(area)

@@ -13,10 +13,19 @@ from moabb.datasets import download as dl
 from moabb.datasets.base import BaseDataset
 from moabb.datasets.metadata.schema import (
     AcquisitionMetadata,
+    AuxiliaryChannelsMetadata,
+    BCIApplicationMetadata,
     DatasetMetadata,
+    DataStructureMetadata,
     DocumentationMetadata,
     ExperimentMetadata,
+    FilterDetails,
+    FrequencyBands,
+    ParadigmSpecificMetadata,
     ParticipantMetadata,
+    PerformanceMetadata,
+    PreprocessingMetadata,
+    SignalProcessingMetadata,
     Tags,
 )
 
@@ -64,6 +73,31 @@ class EPFLP300(BaseDataset):
     810 trials, and the whole data for one subject consisted on average of 3240
     trials.
 
+
+    .. admonition:: Participants
+
+        - **Population**: healthy
+
+    .. admonition:: Equipment
+
+        - **Amplifier**: Biosemi ActiveTwo
+        - **Reference**: Car
+
+    .. admonition:: Experimental Protocol
+
+        P300
+
+    .. admonition:: Data Access
+
+        - **DOI**: 10.1016/j.jneumeth.2007.03.005
+
+
+    .. admonition:: Preprocessing
+
+        - **Data state**: preprocessed
+        - **Bandpass filter**: 1.0-12.0 Hz
+        - **Steps**: Referencing to average of two mastoid electrodes, Bandpass filtering (1.0-12.0 Hz), Downsampling from 2048 Hz to 32 Hz, Single trial extraction (1000 ms duration from stimulus onset), Windsorizing (10th and 90th percentile clipping)...
+
     References
     ----------
 
@@ -76,41 +110,129 @@ class EPFLP300(BaseDataset):
     METADATA = DatasetMetadata(
         acquisition=AcquisitionMetadata(
             sampling_rate=2048.0,
-            n_channels=35,
-            channel_types={"eeg": 32, "misc": 2, "stim": 1},
+            n_channels=32,
+            channel_types={"eeg": 32},
+            montage="10-20",
             hardware="Biosemi ActiveTwo",
-            montage="standard_1005",
-            line_freq=50.0,
-            reference="Car",
             sensor_type="active",
+            reference="Car",
+            software="MATLAB",
+            sensors=[
+                "Fp1",
+                "Fp2",
+                "F7",
+                "F3",
+                "Fz",
+                "F4",
+                "F8",
+                "FC5",
+                "FC1",
+                "FC2",
+                "FC6",
+                "T7",
+                "C3",
+                "Cz",
+                "C4",
+                "T8",
+                "CP5",
+                "CP1",
+                "CP2",
+                "CP6",
+                "P7",
+                "P3",
+                "Pz",
+                "P4",
+                "P8",
+                "PO9",
+                "O1",
+                "Oz",
+                "O2",
+                "PO10",
+                "AF7",
+                "AF8",
+            ],
+            line_freq=50.0,
+            auxiliary_channels=AuxiliaryChannelsMetadata(
+                has_eog=True,
+                eog_type=["horizontal"],
+                other_physiological=["respiration"],
+            ),
         ),
         participants=ParticipantMetadata(
             n_subjects=8,
-            health_status="patients",
-            clinical_population="disabled",
+            health_status="healthy",
+            gender={"male": 8, "female": 1},
         ),
         experiment=ExperimentMetadata(
             paradigm="p300",
-            task_type="speller",
             n_classes=2,
+            class_labels=["left_hand", "rest"],
             trial_duration=1.0,
-            tasks=["rest", "left_hand"],
+            study_design="Subjects counted silently how often a prescribed image (one of six: television, telephone, lamp, door, window, radio) was flashed while images were flashed in random sequences",
+            feedback_type="visual (target image flashed 5 times at end of run)",
+            stimulus_type="rc_speller",
+            stimulus_modalities=["multisensory"],
+            primary_modality="multisensory",
+            mode="both",
         ),
         documentation=DocumentationMetadata(
             doi="10.1016/j.jneumeth.2007.03.005",
-            description="EPFL P300 BCI dataset for disabled users",
-            investigators=["Hoffmann, U.", "Vesin, J.M.", "Ebrahimi, T.", "Diserens, K."],
-            institution="EPFL",
-            country="CH",
-            repository="BNCI Horizon 2020",
-            data_url="http://bnci-horizon-2020.eu/database/data-sets",
-            license="CC BY 4.0",
-            publication_year=2008,
         ),
-        sessions_per_subject=4,
-        runs_per_session=1,
-        tags=Tags(pathology=["other"], modality=["visual"], type=["bci"]),
-        data_processed=False,
+        tags=Tags(
+            pathology=["Healthy"],
+            modality=["Visual"],
+            type=["Perception"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            data_state="preprocessed",
+            preprocessing_applied=True,
+            preprocessing_steps=[
+                "referencing",
+                "bandpass filtering",
+                "downsampling",
+                "single trial extraction",
+                "windsorizing",
+                "scaling",
+            ],
+            filter_details=FilterDetails(
+                highpass_hz=1.0,
+                lowpass_hz=12.0,
+                bandpass=[1.0, 12.0],
+                filter_type="Butterworth",
+                filter_order=6,
+            ),
+            artifact_methods=["ICA"],
+            re_reference="Car",
+        ),
+        signal_processing=SignalProcessingMetadata(
+            classifiers=["LDA", "SVM", "Neural Network"],
+            feature_extraction=["Wavelet", "ICA"],
+            frequency_bands=FrequencyBands(
+                analyzed_range=[1.0, 2.0],
+            ),
+        ),
+        performance=PerformanceMetadata(
+            accuracy_percent=100.0,
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=[
+                "speller",
+                "wheelchair/navigation",
+                "cursor_control",
+                "prosthetic",
+                "vr_ar",
+                "communication",
+            ],
+        ),
+        paradigm_specific=ParadigmSpecificMetadata(
+            detected_paradigm="p300",
+        ),
+        data_structure=DataStructureMetadata(
+            n_trials=405,
+            n_blocks=5,
+            trials_context="per_class",
+        ),
+        data_processed=True,
     )
 
     def __init__(self):

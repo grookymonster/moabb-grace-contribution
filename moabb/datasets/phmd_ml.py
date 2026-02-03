@@ -6,10 +6,12 @@ from scipy.io import loadmat
 
 from moabb.datasets.metadata.schema import (
     AcquisitionMetadata,
+    BCIApplicationMetadata,
     DatasetMetadata,
     DocumentationMetadata,
     ExperimentMetadata,
     ParticipantMetadata,
+    PreprocessingMetadata,
     Tags,
 )
 from moabb.utils import depreciated_alias
@@ -48,10 +50,43 @@ class Cattan2019_PHMD(BaseDataset):
     **ID of the dataset**
     PHMDML.EEG.2017-GIPSA
 
-    Notes
-    -----
+
+    .. admonition:: Participants
+
+        - **Population**: healthy
+
+
+    .. admonition:: Equipment
+
+        - **Amplifier**: g.tec
+        - **Electrodes**: wet electrodes
+        - **Montage**: 10-10
+        - **Reference**: the right earlobe
+
+
+    .. admonition:: Experimental Protocol
+
+        focus on the marker and to listen to the music that was diffused during
+        the experiment (Bach Invention from one to ten on harpsichord).
+
+
+    .. admonition:: Data Access
+
+        - **Repository**: Zenodo
+        - **DOI**: 10.5281/zenodo.2617084
+        - **URL**: https://doi.org/10.5281/zenodo.2617084
+
+
+
+    .. admonition:: Preprocessing
+
+        - **Data state**: raw, unfiltered
+
+
+    Notes -----
 
     .. versionadded:: 1.0.0
+
 
     References
     ----------
@@ -64,40 +99,66 @@ class Cattan2019_PHMD(BaseDataset):
     METADATA = DatasetMetadata(
         acquisition=AcquisitionMetadata(
             sampling_rate=512.0,
-            n_channels=17,
-            channel_types={"eeg": 16, "stim": 1},
-            montage="standard_1005",
-            line_freq=50.0,
-            filters="no digital filter",
-            reference="was placed on the right earlobe",
+            n_channels=16,
+            channel_types={"eeg": 16},
+            montage="10-10",
             hardware="g.tec",
             sensor_type="wet electrodes",
+            reference="right earlobe",
+            software="OpenVibe",
+            filters="no digital filter",
+            sensors=[
+                "FC5",
+                "FC3",
+                "FC1",
+                "FCz",
+                "FC2",
+                "FC4",
+                "FC6",
+                "C3",
+                "C1",
+                "Cz",
+                "C2",
+                "C4",
+                "CP3",
+                "CPz",
+                "CP4",
+                "Pz",
+            ],
+            line_freq=50.0,
         ),
         participants=ParticipantMetadata(
             n_subjects=12,
-            health_status="healthy",
+            gender={"male": 9, "female": 3},
+            age_mean=26.25,
         ),
         experiment=ExperimentMetadata(
             paradigm="rstate",
-            task_type="eyes_open_closed",
-            n_classes=2,
-            trial_duration=60.0,
-            study_design="focus on the marker and to listen to the music that was diffused during the experiment (Bach Invention from one to ten on harpsichord).",
+            trial_duration=60,
+            study_design="focus on the marker and to listen to the music that was diffused during \nthe experiment (Bach Invention from one to ten on harpsichord).",
+            stimulus_type="avatar",
+            mode="online",
         ),
         documentation=DocumentationMetadata(
             doi="10.5281/zenodo.2617084",
-            description="Passive Head-Mounted Display resting state EEG dataset",
-            investigators=["G. Cattan", "P.L.C. Rodrigues", "M. Congedo"],
-            institution="GIPSA-lab",
-            country="FR",
             repository="Zenodo",
-            data_url="https://zenodo.org/record/2617085",
-            license="CC BY 4.0",
-            publication_year=2019,
+            data_url="https://doi.org/10.5281/zenodo.2617084",
         ),
-        sessions_per_subject=1,
-        runs_per_session=1,
-        tags=Tags(pathology=["healthy"], modality=["auditory"], type=["perception"]),
+        tags=Tags(
+            pathology=["Healthy"],
+            modality=["Other"],
+            type=["Other"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            data_state="raw, unfiltered",
+            preprocessing_applied=False,
+            artifact_methods=["ICA"],
+            re_reference="car",
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=["vr_ar"],
+            environment="outdoor",
+        ),
         data_processed=False,
     )
 

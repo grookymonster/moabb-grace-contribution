@@ -6,10 +6,19 @@ from moabb.datasets import download as dl
 from moabb.datasets.base import BaseDataset
 from moabb.datasets.metadata.schema import (
     AcquisitionMetadata,
+    AuxiliaryChannelsMetadata,
+    BCIApplicationMetadata,
+    CrossValidationMetadata,
     DatasetMetadata,
+    DataStructureMetadata,
     DocumentationMetadata,
     ExperimentMetadata,
+    FilterDetails,
+    ParadigmSpecificMetadata,
     ParticipantMetadata,
+    PerformanceMetadata,
+    PreprocessingMetadata,
+    SignalProcessingMetadata,
     Tags,
 )
 from moabb.datasets.utils import add_stim_channel_epoch, add_stim_channel_trial
@@ -66,6 +75,32 @@ class Thielen2015(BaseDataset):
     different noise-code set, and is therefore also ignored in this dataset. In total, this dataset should contain 108
     trials of 4.2 seconds each, with 3 repetitions for each of the 36 codes.
 
+
+    .. admonition:: Equipment
+
+        - **Amplifier**: Biosemi ActiveTwo
+        - **Electrodes**: active electrodes
+        - **Montage**: 10-20
+        - **Reference**: car
+
+    .. admonition:: Data Access
+
+        - **Repository**: GitHub
+        - **DOI**: 10.1371/journal.pone.0133797
+        - **URL**: https://github.com/thijor/
+
+
+    .. admonition:: Experimental Protocol
+
+        6x6 matrix speller using Gold codes for visual stimulation; participants focused on target symbols while cells flashed according to specific bit-sequences
+        - **Feedback**: visual colour feedback (cell coloured blue for classifier output, green/red edge colouring for certainty)
+
+    .. admonition:: Preprocessing
+
+        - **Data state**: preprocessed data available at DANS; raw EEG stored at Donders Center for Cognition
+        - **Bandpass filter**: 5-48 Hz-52-100 Hz Hz
+        - **Steps**: downsampling from 2048 Hz to 360 Hz, linear de-trending, common average referencing, spectral filtering
+
     References
     ----------
 
@@ -77,8 +112,7 @@ class Thielen2015(BaseDataset):
            re(con)volution in brain-computer interfacing. PLOS ONE, 10(7), e0133797.
            DOI: https://doi.org/10.1371/journal.pone.0133797
 
-    Notes
-    -----
+    Notes -----
 
     .. versionadded:: 1.0.0
 
@@ -86,43 +120,151 @@ class Thielen2015(BaseDataset):
 
     METADATA = DatasetMetadata(
         acquisition=AcquisitionMetadata(
-            sampling_rate=2048.0,
-            n_channels=67,
-            channel_types={"eeg": 64, "stim": 3},
+            sampling_rate=250.0,
+            n_channels=64,
+            channel_types={"eeg": 64},
+            montage="10-20",
             hardware="Biosemi ActiveTwo",
-            montage="standard_1010",
-            line_freq=50.0,
-            filters="5-48 Hz and 52-100 Hz bandpass (two pass-bands)",
-            ground="can",
-            reference="car",
             sensor_type="active electrodes",
+            reference="Car",
+            sensors=[
+                "Fp1",
+                "Fpz",
+                "Fp2",
+                "AF7",
+                "AF3",
+                "AFz",
+                "AF4",
+                "AF8",
+                "F7",
+                "F5",
+                "F3",
+                "F1",
+                "Fz",
+                "F2",
+                "F4",
+                "F6",
+                "F8",
+                "FT7",
+                "FC5",
+                "FC3",
+                "FC1",
+                "FCz",
+                "FC2",
+                "FC4",
+                "FC6",
+                "FT8",
+                "T7",
+                "C5",
+                "C3",
+                "C1",
+                "Cz",
+                "C2",
+                "C4",
+                "C6",
+                "T8",
+                "TP7",
+                "CP5",
+                "CP3",
+                "CP1",
+                "CPz",
+                "CP2",
+                "CP4",
+                "CP6",
+                "TP8",
+                "P7",
+                "P5",
+                "P3",
+                "P1",
+                "Pz",
+                "P2",
+                "P4",
+                "P6",
+                "P8",
+                "PO7",
+                "PO3",
+                "POz",
+                "PO4",
+                "PO8",
+                "O1",
+                "Oz",
+                "O2",
+                "Iz",
+            ],
+            line_freq=50.0,
+            auxiliary_channels=AuxiliaryChannelsMetadata(
+                other_physiological=["ppg"],
+            ),
         ),
         participants=ParticipantMetadata(
             n_subjects=12,
-            health_status="healthy",
-            clinical_population="ALS",
+            health_status="ALS",
+            gender={"male": 4, "female": 8},
+            age_mean=24.0,
         ),
         experiment=ExperimentMetadata(
             paradigm="cvep",
-            task_type="36_class_gold_codes",
-            n_classes=36,
-            trial_duration=4.2,
-            tasks=["rest"],
+            n_classes=1,
+            class_labels=["rest"],
+            trial_duration=28.0,
+            study_design="6x6 matrix speller BCI using modulated Gold codes for visual stimulation; participants focused on target symbols while cells flashed according to pseudo-random bit-sequences",
+            feedback_type="visual colour feedback (cell coloured blue for classifier output, green/red edge colouring for certainty)",
+            stimulus_type="rc_speller",
+            stimulus_modalities=["visual"],
+            primary_modality="visual",
+            synchronicity="asynchronous",
+            mode="both",
+            has_training_test_split=True,
         ),
         documentation=DocumentationMetadata(
-            doi="10.1038/s41598-017-15373-x",
-            description="cVEP dataset with Gold codes and spatiotemporal beamformer",
-            investigators=["Wittevrongel, B.", "Van Wolputte, E.", "Van Hulle, M.M."],
-            institution="KU Leuven",
-            country="BE",
-            repository="Radboud Data Repository",
-            data_url="https://public.data.ru.nl/dcc/DSC_2018.00047_553_v3",
-            license="CC BY 4.0",
-            publication_year=2017,
+            doi="10.1371/journal.pone.0133797",
+            repository="GitHub",
+            data_url="https://github.com/thijor/",
         ),
-        sessions_per_subject=1,
-        runs_per_session=1,
-        tags=Tags(pathology=["healthy"], modality=["visual"], type=["bci"]),
+        tags=Tags(
+            pathology=["Healthy"],
+            modality=["Visual"],
+            type=["Perception"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            data_state="preprocessed",
+            preprocessing_applied=True,
+            preprocessing_steps=[
+                "downsampling from 2048 Hz to 360 Hz",
+                "linear de-trending",
+                "common average referencing",
+                "spectral filtering",
+            ],
+            filter_details=FilterDetails(
+                highpass_hz=5,
+                lowpass_hz=100,
+                bandpass=["5-48 Hz", "52-100 Hz"],
+            ),
+            artifact_methods=["ICA"],
+            re_reference="car",
+        ),
+        signal_processing=SignalProcessingMetadata(
+            classifiers=["SVM", "CCA"],
+            feature_extraction=["Wavelet"],
+        ),
+        cross_validation=CrossValidationMetadata(
+            cv_method="10-fold",
+            cv_folds=10,
+        ),
+        performance=PerformanceMetadata(
+            accuracy_percent=86.0,
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=["speller", "prosthetic", "gaming", "vr_ar", "communication"],
+            environment="outdoor",
+        ),
+        paradigm_specific=ParadigmSpecificMetadata(
+            detected_paradigm="ssvep",
+        ),
+        data_structure=DataStructureMetadata(
+            n_trials=36,
+            trials_context="total",
+        ),
         data_processed=True,
     )
 

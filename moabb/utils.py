@@ -194,14 +194,14 @@ aliases_list = []  # list of tuples containing (old name, new name, expire versi
 
 
 def update_docstring_list(doc, section, msg):
-    header = rf"{section}[ ]*\n[ ]*[\-]+[ ]*\n"
+    header = rf"{section}[ ]* [ ]*[\-]+[ ]* "
     if section not in doc:
-        doc = doc + f"\n\n    {section}\n    {'-' * len(section)}\n"
+        doc = doc + f"      {section}     {'-' * len(section)} "
     if re.search(rf"[ ]*{header}", doc) is None:
         raise ValueError(
             f"Incorrect formatting of section {section!r} in docstring {doc!r}"
         )
-    doc = re.sub(rf"([ ]*)({header})", rf"\g<1>\g<2>\n\g<1>{msg}\n", doc)
+    doc = re.sub(rf"([ ]*)({header})", rf"\g<1>\g<2> \g<1>{msg} ", doc)
     return doc
 
 
@@ -216,9 +216,9 @@ def depreciated_alias(name, expire_version):
             f"{name} will be removed in version {expire_version}."
         )
         note_msg = (
-            ".. note::\n\n"
+            ".. note::  "
             f"        ``{func.__name__}`` was previously named ``{name}``. "
-            f"``{name}`` will be removed in version {expire_version}.\n"
+            f"``{name}`` will be removed in version {expire_version}. "
         )
 
         namespace = sys._getframe(1).f_globals  # Caller's globals.
@@ -276,7 +276,7 @@ def _open_lock_hdf5(path, *args, **kwargs):
         except TimeoutError:
             warn(
                 "Could not acquire lock file after 5 seconds, consider deleting it "
-                f"if you know the corresponding file is usable:\n{lock_path}"
+                f"if you know the corresponding file is usable: {lock_path}"
             )
             lock_context = contextlib.nullcontext()
 

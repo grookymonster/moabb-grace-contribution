@@ -57,9 +57,9 @@ def analyze(results, out_path, name="analysis", plot=False):
     # TODO: no good cross-platform way of recording CPU info?
     with _open_lock(os.path.join(analysis_path, "info.txt"), "a") as f:
         dt = datetime.now()
-        f.write("Date: {:%Y-%m-%d}\n Time: {:%H:%M}\n".format(dt, dt))
-        f.write("System: {}\n".format(platform.system()))
-        f.write("CPU: {}\n".format(platform.processor()))
+        f.write("Date: {:%Y-%m-%d}  Time: {:%H:%M} ".format(dt, dt))
+        f.write("System: {} ".format(platform.system()))
+        f.write("CPU: {} ".format(platform.processor()))
 
     results.to_csv(os.path.join(analysis_path, "data.csv"))
 

@@ -123,8 +123,7 @@ class BIDSInterfaceBase(abc.ABC):
     verbose : str
         The verbosity level.
 
-    Notes
-    -----
+    Notes -----
 
     .. versionadded:: 1.0.0
 

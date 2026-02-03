@@ -15,10 +15,20 @@ from scipy.io import loadmat
 from moabb.datasets.download import get_dataset_path
 from moabb.datasets.metadata.schema import (
     AcquisitionMetadata,
+    AuxiliaryChannelsMetadata,
+    BCIApplicationMetadata,
+    CrossValidationMetadata,
     DatasetMetadata,
+    DataStructureMetadata,
     DocumentationMetadata,
     ExperimentMetadata,
+    FilterDetails,
+    FrequencyBands,
+    ParadigmSpecificMetadata,
     ParticipantMetadata,
+    PerformanceMetadata,
+    PreprocessingMetadata,
+    SignalProcessingMetadata,
     Tags,
 )
 
@@ -286,6 +296,33 @@ class Shin2017A(BaseShin2017):
     subsequent blocks randomly consisting of one of two conditions: Either
     first left and then right hand motor imagery or vice versa.
 
+
+    .. admonition:: Participants
+
+        - **Population**: healthy
+
+
+
+
+    .. admonition:: Equipment
+
+        - **Amplifier**: BrainAmp
+        - **Electrodes**: active electrodes
+        - **Montage**: 10-5
+        - **Reference**: 1000 Hz sampling rate
+
+    .. admonition:: Data Access
+
+        - **Repository**: GitHub
+        - **URL**: https://github.com/bbci/bbci_public/
+
+
+    .. admonition:: Preprocessing
+
+        - **Data state**: raw data available for download
+        - **Bandpass filter**: 0.5-50 Hz
+        - **Steps**: common average reference, bandpass filtering (0.5-50 Hz), ICA-based EOG rejection, downsampling to 200 Hz
+
     References
     ----------
 
@@ -300,51 +337,138 @@ class Shin2017A(BaseShin2017):
 
     METADATA = DatasetMetadata(
         acquisition=AcquisitionMetadata(
-            sampling_rate=200.0,
+            sampling_rate=1000.0,
             n_channels=30,
             channel_types={"eeg": 30},
-            montage="standard_1005",
-            line_freq=50.0,
-            reference="1000 Hz sampling rate",
+            montage="10-5",
             hardware="BrainAmp",
             sensor_type="active electrodes",
+            reference="Car",
+            software="EEGLAB",
+            sensors=[
+                "Fp1",
+                "Fp2",
+                "F7",
+                "F3",
+                "Fz",
+                "F4",
+                "F8",
+                "FC5",
+                "FC1",
+                "FC2",
+                "FC6",
+                "T7",
+                "C3",
+                "Cz",
+                "C4",
+                "T8",
+                "CP5",
+                "CP1",
+                "CP2",
+                "CP6",
+                "P7",
+                "P3",
+                "Pz",
+                "P4",
+                "P8",
+                "PO9",
+                "O1",
+                "Oz",
+                "O2",
+                "PO10",
+            ],
+            line_freq=50.0,
+            auxiliary_channels=AuxiliaryChannelsMetadata(
+                has_eog=True,
+                eog_channels=4,
+                eog_type=["horizontal", "vertical"],
+                other_physiological=["ecg", "respiration", "gsr"],
+            ),
         ),
         participants=ParticipantMetadata(
             n_subjects=29,
-            health_status="healthy",
-            clinical_population="spinal_cord_injury",
+            health_status="paralysis",
+            gender={"male": 14, "female": 15},
+            age_mean=28.5,
+            handedness={"right": 29, "left": 1},
+            bci_experience="naive to MI experiment",
         ),
         experiment=ExperimentMetadata(
             paradigm="imagery",
-            task_type="left_right_hand",
-            n_classes=2,
+            n_classes=3,
+            class_labels=["right_hand", "rest", "subtraction"],
             trial_duration=10.0,
-            tasks=["rest", "left_hand", "right_hand"],
+            study_design="Dataset A: left vs right hand motor imagery (kinesthetic imagery of opening and closing hands); Dataset B: mental arithmetic (serial subtraction) vs baseline/rest",
             feedback_type="visual",
+            stimulus_type="avatar",
+            stimulus_modalities=["visual", "multisensory"],
+            primary_modality="multisensory",
+            synchronicity="asynchronous",
+            mode="online",
         ),
         documentation=DocumentationMetadata(
-            doi="10.1109/TNSRE.2016.2628057",
-            description="EEG/fNIRS hybrid motor imagery dataset - Modality A (EEG only)",
-            investigators=[
-                "Shin, Jaeyoung",
-                "von Lühmann, Alexander",
-                "Blankertz, Benjamin",
-                "Kim, Do-Won",
-                "Jeong, Jichai",
-                "Hwang, Han-Jeong",
-                "Müller, Klaus-Robert",
-            ],
-            institution="Korea University / TU Berlin",
-            country="KR",
-            repository="TU Berlin",
-            data_url="http://doc.ml.tu-berlin.de/hBCI",
-            license="GNU GPLv3",
-            publication_year=2017,
+            repository="GitHub",
+            data_url="https://github.com/bbci/bbci_public/",
         ),
-        sessions_per_subject=3,
-        runs_per_session=1,
-        tags=Tags(pathology=["healthy"], modality=["motor"], type=["bci"]),
-        data_processed=False,
+        tags=Tags(
+            pathology=["Healthy"],
+            modality=["Visual"],
+            type=["Perception"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            data_state="raw data available",
+            preprocessing_applied=True,
+            preprocessing_steps=[
+                "common average reference",
+                "bandpass filtering (0.5-50 Hz)",
+                "ICA-based EOG rejection",
+                "downsampling to 200 Hz",
+            ],
+            filter_details=FilterDetails(
+                highpass_hz=0.5,
+                lowpass_hz=50,
+                bandpass=[0.5, 50],
+                filter_type="Butterworth",
+                filter_order=4,
+            ),
+            artifact_methods=["EOG correction", "ICA"],
+            re_reference="car",
+            downsampled_to_hz=200,
+        ),
+        signal_processing=SignalProcessingMetadata(
+            classifiers=["LDA", "SVM", "Shrinkage LDA"],
+            feature_extraction=["CSP", "Bandpower", "Wavelet", "Time-Frequency", "ICA"],
+            frequency_bands=FrequencyBands(
+                mu=[8, 12],
+                analyzed_range=[8.0, 25.0],
+            ),
+        ),
+        cross_validation=CrossValidationMetadata(
+            cv_method="5-fold",
+            cv_folds=5,
+            evaluation_type=["cross_subject"],
+        ),
+        performance=PerformanceMetadata(
+            accuracy_percent=75.0,
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=[
+                "speller",
+                "wheelchair/navigation",
+                "gaming",
+                "vr_ar",
+                "communication",
+                "neurofeedback",
+            ],
+        ),
+        paradigm_specific=ParadigmSpecificMetadata(
+            detected_paradigm="p300",
+            n_repetitions=20,
+        ),
+        data_structure=DataStructureMetadata(
+            n_trials={"per_session": 20, "per_condition_total": 30},
+        ),
+        data_processed=True,
     )
 
     def __init__(self, accept=False):
@@ -443,6 +567,30 @@ class Shin2017B(BaseShin2017):
     1 s on the screen. The fixation cross was displayed again during the rest
     period. MA and baseline trials were randomized in the same way as MI.
 
+
+    .. admonition:: Participants
+
+        - **Population**: spinal_cord_injury
+
+    .. admonition:: Equipment
+
+        - **Amplifier**: BrainAmp
+        - **Electrodes**: active electrodes
+        - **Montage**: 10-5
+        - **Reference**: 1000 Hz sampling rate
+
+    .. admonition:: Data Access
+
+        - **Repository**: GitHub
+        - **URL**: https://github.com/bbci/bbci_public/
+
+
+    .. admonition:: Preprocessing
+
+        - **Data state**: raw data available, preprocessed analysis also provided
+        - **Bandpass filter**: 0.5-50 Hz
+        - **Steps**: re-referencing to common average reference, bandpass filtering (0.5-50 Hz), ICA-based EOG rejection using EEGLAB, downsampling to 200 Hz
+
     References
     ----------
     .. [1] Shin, J., von Lühmann, A., Blankertz, B., Kim, D.W., Jeong, J.,
@@ -456,51 +604,138 @@ class Shin2017B(BaseShin2017):
 
     METADATA = DatasetMetadata(
         acquisition=AcquisitionMetadata(
-            sampling_rate=200.0,
-            n_channels=32,
-            channel_types={"eeg": 30, "eog": 2},
-            montage="standard_1005",
-            line_freq=50.0,
-            reference="1000 Hz sampling rate",
+            sampling_rate=1000.0,
+            n_channels=30,
+            channel_types={"eeg": 30},
+            montage="10-5",
             hardware="BrainAmp",
             sensor_type="active electrodes",
+            reference="Car",
+            software="EEGLAB",
+            sensors=[
+                "Fp1",
+                "Fp2",
+                "F7",
+                "F3",
+                "Fz",
+                "F4",
+                "F8",
+                "FC5",
+                "FC1",
+                "FC2",
+                "FC6",
+                "T7",
+                "C3",
+                "Cz",
+                "C4",
+                "T8",
+                "CP5",
+                "CP1",
+                "CP2",
+                "CP6",
+                "P7",
+                "P3",
+                "Pz",
+                "P4",
+                "P8",
+                "PO9",
+                "O1",
+                "Oz",
+                "O2",
+                "PO10",
+            ],
+            line_freq=50.0,
+            auxiliary_channels=AuxiliaryChannelsMetadata(
+                has_eog=True,
+                eog_channels=4,
+                eog_type=["horizontal", "vertical"],
+                other_physiological=["ecg", "respiration", "gsr"],
+            ),
         ),
         participants=ParticipantMetadata(
             n_subjects=29,
-            health_status="healthy",
-            clinical_population="spinal_cord_injury",
+            health_status="paralysis",
+            gender={"male": 14, "female": 15},
+            age_mean=28.5,
+            handedness={"right": 29, "left": 1},
+            bci_experience="naive to MI experiment",
         ),
         experiment=ExperimentMetadata(
             paradigm="imagery",
-            task_type="mental_arithmetic",
             n_classes=2,
+            class_labels=["right_hand", "left_hand"],
             trial_duration=10.0,
-            tasks=["rest", "left_hand", "right_hand"],
+            study_design="Left vs right hand motor imagery (kinesthetic, imagining opening and closing hands); Mental arithmetic vs resting state (repeated subtraction)",
             feedback_type="visual",
+            stimulus_type="avatar",
+            stimulus_modalities=["visual", "multisensory"],
+            primary_modality="multisensory",
+            synchronicity="asynchronous",
+            mode="online",
         ),
         documentation=DocumentationMetadata(
-            doi="10.1109/TNSRE.2016.2628057",
-            description="EEG/fNIRS hybrid mental arithmetic dataset - Modality B (EEG only)",
-            investigators=[
-                "Shin, Jaeyoung",
-                "von Lühmann, Alexander",
-                "Blankertz, Benjamin",
-                "Kim, Do-Won",
-                "Jeong, Jichai",
-                "Hwang, Han-Jeong",
-                "Müller, Klaus-Robert",
-            ],
-            institution="Korea University / TU Berlin",
-            country="KR",
-            repository="TU Berlin",
-            data_url="http://doc.ml.tu-berlin.de/hBCI",
-            license="GNU GPLv3",
-            publication_year=2017,
+            repository="GitHub",
+            data_url="https://github.com/bbci/bbci_public/",
         ),
-        sessions_per_subject=3,
-        runs_per_session=1,
-        tags=Tags(pathology=["healthy"], modality=["motor"], type=["bci"]),
-        data_processed=False,
+        tags=Tags(
+            pathology=["Healthy"],
+            modality=["Visual"],
+            type=["Perception"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            data_state="raw data available",
+            preprocessing_applied=True,
+            preprocessing_steps=[
+                "re-referencing (common average reference)",
+                "bandpass filtering",
+                "ICA-based EOG rejection",
+                "downsampling",
+            ],
+            filter_details=FilterDetails(
+                highpass_hz=0.5,
+                lowpass_hz=50,
+                bandpass=[0.5, 50],
+                filter_type="Butterworth",
+                filter_order=4,
+            ),
+            artifact_methods=["EOG correction", "ICA"],
+            re_reference="car",
+            downsampled_to_hz=200,
+        ),
+        signal_processing=SignalProcessingMetadata(
+            classifiers=["LDA", "SVM", "Shrinkage LDA"],
+            feature_extraction=["CSP", "Bandpower", "Wavelet", "Time-Frequency", "ICA"],
+            frequency_bands=FrequencyBands(
+                mu=[8, 12],
+                analyzed_range=[8.0, 25.0],
+            ),
+        ),
+        cross_validation=CrossValidationMetadata(
+            cv_method="5-fold",
+            cv_folds=5,
+            evaluation_type=["cross_subject"],
+        ),
+        performance=PerformanceMetadata(
+            accuracy_percent=75.0,
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=[
+                "speller",
+                "wheelchair/navigation",
+                "gaming",
+                "vr_ar",
+                "communication",
+                "neurofeedback",
+            ],
+        ),
+        paradigm_specific=ParadigmSpecificMetadata(
+            detected_paradigm="p300",
+            n_repetitions=20,
+        ),
+        data_structure=DataStructureMetadata(
+            n_trials=60,
+        ),
+        data_processed=True,
     )
 
     def __init__(self, accept=False):

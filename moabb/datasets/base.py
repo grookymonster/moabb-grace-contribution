@@ -103,8 +103,7 @@ class CacheConfig:
     verbose:
         Verbosity level. See mne.verbose.
 
-    Notes
-    -----
+    Notes -----
 
     .. versionadded:: 1.0.0
 
@@ -283,12 +282,12 @@ def format_row(row: pd.Series, horizontal: bool = True):
     rows.insert(0, sep_row)
     rows.append(sep_row)
     # join the columns and rows into one string:
-    rows_str = "\n".join([f"{tab_prefix}{' '.join(row)}" for row in rows])
+    rows_str = " ".join([f"{tab_prefix}{' '.join(row)}" for row in rows])
     # add the header:
-    out = f"    .. admonition:: Dataset summary\n\n{rows_str}"
+    out = f"    .. admonition:: Dataset summary  {rows_str}"
     # add the PapersWithCode link if it exists:
     if pwc_link is not None:
-        out = f"    **{pwc_key}:** {pwc_link}\n\n" + out
+        out = f"    **{pwc_key}:** {pwc_link}  " + out
     return out, row
 
 
@@ -298,12 +297,12 @@ class MetaclassDataset(abc.ABCMeta):
         try:
             row = _summary_table.loc[name]
             row_str, row = format_row(row, horizontal=False)
-            doc_list = doc.split("\n\n")
+            doc_list = doc.split("  ")
             if len(doc_list) >= 2:
                 doc_list = [doc_list[0], row_str] + doc_list[1:]
             else:
                 doc_list.append(row_str)
-            attrs["__doc__"] = "\n\n".join(doc_list)
+            attrs["__doc__"] = "  ".join(doc_list)
             attrs["_summary_table"] = row.to_dict()
         except KeyError:
             log.debug(
@@ -711,10 +710,10 @@ class BaseDataset(metaclass=MetaclassDataset):
                     except Exception:
                         log.warning(
                             f"Failed to save {interface.__repr__()} "
-                            f"to BIDS format:\n"
-                            f"{' Pipeline: '.center(50, '#')}\n"
-                            f"{interface.process_pipeline.__repr__()}\n"
-                            f"{' Exception: '.center(50, '#')}\n"
+                            f"to BIDS format: "
+                            f"{' Pipeline: '.center(50, '#')} "
+                            f"{interface.process_pipeline.__repr__()} "
+                            f"{' Exception: '.center(50, '#')} "
                             f"{''.join(traceback.format_exc())}{'#' * 50}"
                         )
                         interface.erase()  # remove partial cache

@@ -12,10 +12,18 @@ from scipy.io import loadmat
 
 from moabb.datasets.metadata.schema import (
     AcquisitionMetadata,
+    AuxiliaryChannelsMetadata,
+    BCIApplicationMetadata,
+    CrossValidationMetadata,
     DatasetMetadata,
     DocumentationMetadata,
     ExperimentMetadata,
+    FilterDetails,
+    ParadigmSpecificMetadata,
     ParticipantMetadata,
+    PerformanceMetadata,
+    PreprocessingMetadata,
+    SignalProcessingMetadata,
     Tags,
 )
 
@@ -267,6 +275,32 @@ class MAMEM1(BaseMAMEM):
     mimic the stimulation frequency and still be small enough for making a
     selection in the context
 
+
+    .. admonition:: Participants
+
+        - **Population**: healthy
+
+    .. admonition:: Equipment
+
+        - **Amplifier**: EGI
+        - **Montage**: 10-20
+        - **Reference**: CAR
+
+    .. admonition:: Preprocessing
+
+        - **Bandpass filter**: 5.0-48.0 Hz
+
+    .. admonition:: Data Access
+
+        - **Repository**: GitHub
+        - **DOI**: 10.6084/m9.figshare.2068677.v1
+        - **URL**: https://github.com/MAMEM/ssvep-eeg-processing-toolbox
+
+
+    .. admonition:: Experimental Protocol
+
+        Subjects focus attention on visual stimuli flickering at different frequencies to select commands
+
     References
     ----------
     .. [1] Oikonomou, V. P., Liaros, G., Georgiadis, K., Chatzilari, E., Adam, K.,
@@ -282,16 +316,22 @@ class MAMEM1(BaseMAMEM):
     METADATA = DatasetMetadata(
         acquisition=AcquisitionMetadata(
             sampling_rate=250.0,
-            n_channels=257,
-            channel_types={"eeg": 256, "stim": 1},
-            hardware="EGI 300 Geodesic EEG System (GES 300)",
-            sensor_type="HydroCel Geodesic Sensor Net",
-            montage="GSN-HydroCel-256",
-            line_freq=50.0,
-            filters="22.0-48.0 Hz bandpass",
-            ground="color",
-            reference="CAR",
+            n_channels=256,
+            channel_types={"eeg": 256},
+            montage="10-20",
+            hardware="EGI",
+            sensor_type="scalp electrodes",
+            reference="Car",
             software="Bci2000",
+            filters="22.0-48.0 Hz bandpass",
+            sensors=["O1", "O2", "Oz"],
+            line_freq=50.0,
+            auxiliary_channels=AuxiliaryChannelsMetadata(
+                has_eog=True,
+                eog_type=["vertical"],
+                has_emg=True,
+                other_physiological=["ecg", "gsr", "ppg"],
+            ),
         ),
         participants=ParticipantMetadata(
             n_subjects=11,
@@ -299,26 +339,69 @@ class MAMEM1(BaseMAMEM):
         ),
         experiment=ExperimentMetadata(
             paradigm="ssvep",
-            task_type="5_frequency_isolated",
-            n_classes=5,
-            trial_duration=3.0,
-            tasks=["rest"],
+            n_classes=1,
+            class_labels=["rest"],
+            study_design="Subjects focus attention on visual stimuli flickering at different frequencies to select commands",
+            stimulus_type="cursor_feedback",
+            stimulus_modalities=["visual"],
+            primary_modality="visual",
+            mode="offline",
         ),
         documentation=DocumentationMetadata(
-            doi="10.6084/m9.figshare.2068677.v5",
-            description="MAMEM SSVEP Dataset I - 5 frequencies presented in isolation",
-            investigators=["Nikolopoulos, S.", "Lazarou, I.", "Kompatsiaris, I."],
-            institution="CERTH-ITI",
-            country="GR",
-            repository="Figshare/Zenodo",
-            data_url="https://zenodo.org/records/1295936",
-            license="CC BY 4.0",
-            publication_year=2016,
+            doi="10.6084/m9.figshare.2068677.v1",
+            repository="GitHub",
+            data_url="https://github.com/MAMEM/ssvep-eeg-processing-toolbox",
         ),
-        sessions_per_subject=1,
-        runs_per_session=1,
-        tags=Tags(pathology=["healthy"], modality=["visual"], type=["bci"]),
-        data_processed=False,
+        tags=Tags(
+            pathology=["Healthy"],
+            modality=["Visual"],
+            type=["Perception"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            preprocessing_applied=True,
+            preprocessing_steps=[
+                "bandpass filtering",
+                "notch filtering",
+                "artifact removal (AMUSE, ICA)",
+            ],
+            filter_details=FilterDetails(
+                highpass_hz=5,
+                lowpass_hz=48,
+                bandpass={"low_cutoff_hz": 5.0, "high_cutoff_hz": 48.0},
+                notch_hz=50,
+                filter_type="Chebyshev",
+            ),
+            artifact_methods=["ICA"],
+            re_reference="CAR",
+        ),
+        signal_processing=SignalProcessingMetadata(
+            classifiers=["LDA", "SVM", "Random Forest", "kNN", "Naive Bayes", "CCA"],
+            feature_extraction=[
+                "CSP",
+                "ERD",
+                "ERS",
+                "PSD",
+                "Wavelet",
+                "Covariance/Riemannian",
+                "AR",
+                "ICA",
+            ],
+        ),
+        cross_validation=CrossValidationMetadata(
+            cv_method="bootstrap",
+            evaluation_type=["within_subject", "cross_subject"],
+        ),
+        performance=PerformanceMetadata(
+            accuracy_percent=74.42,
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=["vr_ar"],
+            environment="outdoor",
+        ),
+        paradigm_specific=ParadigmSpecificMetadata(
+            detected_paradigm="ssvep",
+        ),
+        data_processed=True,
     )
 
     def __init__(self):
@@ -398,6 +481,32 @@ class MAMEM2(BaseMAMEM):
     interference, in matters of artifacts, on the recorded signal is expected
     to be high.
 
+
+    .. admonition:: Participants
+
+        - **Population**: healthy
+
+    .. admonition:: Equipment
+
+        - **Amplifier**: EGI
+        - **Montage**: 10-20
+        - **Reference**: CAR
+
+    .. admonition:: Preprocessing
+
+        - **Bandpass filter**: 5.0-48.0 Hz
+
+    .. admonition:: Data Access
+
+        - **Repository**: GitHub
+        - **DOI**: 10.6084/m9.figshare.2068677.v1
+        - **URL**: https://github.com/MAMEM/ssvep-eeg-processing-toolbox
+
+
+    .. admonition:: Experimental Protocol
+
+        Subjects focus attention on visual stimuli (colored lights flickering at different frequencies) to select commands
+
     References
     ----------
     .. [1] Oikonomou, V. P., Liaros, G., Georgiadis, K., Chatzilari, E., Adam, K.,
@@ -413,16 +522,22 @@ class MAMEM2(BaseMAMEM):
     METADATA = DatasetMetadata(
         acquisition=AcquisitionMetadata(
             sampling_rate=250.0,
-            n_channels=257,
-            channel_types={"eeg": 256, "stim": 1},
-            hardware="EGI 300 Geodesic EEG System (GES 300)",
-            sensor_type="HydroCel Geodesic Sensor Net",
-            montage="GSN-HydroCel-256",
-            line_freq=50.0,
-            filters="22.0-48.0 Hz bandpass",
-            ground="color",
-            reference="CAR",
+            n_channels=256,
+            channel_types={"eeg": 256},
+            montage="10-20",
+            hardware="EGI",
+            sensor_type="scalp electrodes",
+            reference="Car",
             software="Bci2000",
+            filters="22.0-48.0 Hz bandpass",
+            sensors=["O1", "O2", "Oz"],
+            line_freq=50.0,
+            auxiliary_channels=AuxiliaryChannelsMetadata(
+                has_eog=True,
+                eog_type=["vertical"],
+                has_emg=True,
+                other_physiological=["ecg", "gsr", "ppg"],
+            ),
         ),
         participants=ParticipantMetadata(
             n_subjects=11,
@@ -430,26 +545,70 @@ class MAMEM2(BaseMAMEM):
         ),
         experiment=ExperimentMetadata(
             paradigm="ssvep",
-            task_type="5_frequency_simultaneous",
-            n_classes=5,
-            trial_duration=3.0,
-            tasks=["rest"],
+            n_classes=1,
+            class_labels=["rest"],
+            study_design="Subjects focus attention on visual stimuli (colored lights flickering at different frequencies) to select commands",
+            stimulus_type="cursor_feedback",
+            stimulus_modalities=["visual"],
+            primary_modality="visual",
+            mode="offline",
         ),
         documentation=DocumentationMetadata(
-            doi="10.6084/m9.figshare.3153409",
-            description="MAMEM SSVEP Dataset II - 5 frequencies presented simultaneously",
-            investigators=["Nikolopoulos, S.", "Lazarou, I.", "Kompatsiaris, I."],
-            institution="CERTH-ITI",
-            country="GR",
-            repository="Figshare",
-            data_url="https://figshare.com/articles/dataset/MAMEM_EEG_SSVEP_Dataset_II/3153409",
-            license="CC BY 4.0",
-            publication_year=2021,
+            doi="10.6084/m9.figshare.2068677.v1",
+            repository="GitHub",
+            data_url="https://github.com/MAMEM/ssvep-eeg-processing-toolbox",
         ),
-        sessions_per_subject=1,
-        runs_per_session=1,
-        tags=Tags(pathology=["healthy"], modality=["visual"], type=["bci"]),
-        data_processed=False,
+        tags=Tags(
+            pathology=["Healthy"],
+            modality=["Visual"],
+            type=["Perception"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            data_state="comparative study - multiple preprocessing approaches evaluated",
+            preprocessing_applied=True,
+            preprocessing_steps=[
+                "bandpass filtering",
+                "notch filtering (50Hz line frequency)",
+                "artifact removal (AMUSE or ICA)",
+            ],
+            filter_details=FilterDetails(
+                highpass_hz=5,
+                lowpass_hz=48,
+                bandpass={"low_cutoff_hz": 5.0, "high_cutoff_hz": 48.0},
+                notch_hz=50,
+                filter_type="Chebyshev",
+            ),
+            artifact_methods=["ICA"],
+            re_reference="CAR",
+        ),
+        signal_processing=SignalProcessingMetadata(
+            classifiers=["LDA", "SVM", "Random Forest", "kNN", "Naive Bayes", "CCA"],
+            feature_extraction=[
+                "CSP",
+                "ERD",
+                "ERS",
+                "PSD",
+                "Wavelet",
+                "Covariance/Riemannian",
+                "AR",
+                "ICA",
+            ],
+        ),
+        cross_validation=CrossValidationMetadata(
+            cv_method="bootstrap",
+            evaluation_type=["within_subject", "cross_subject"],
+        ),
+        performance=PerformanceMetadata(
+            accuracy_percent=74.42,
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=["vr_ar"],
+            environment="outdoor",
+        ),
+        paradigm_specific=ParadigmSpecificMetadata(
+            detected_paradigm="ssvep",
+        ),
+        data_processed=True,
     )
 
     def __init__(self):
@@ -537,6 +696,32 @@ class MAMEM3(BaseMAMEM):
     interference, in matters of artifacts, on the recorded signal is expected
     to be high.
 
+
+    .. admonition:: Participants
+
+        - **Population**: healthy
+
+    .. admonition:: Equipment
+
+        - **Amplifier**: EGI
+        - **Montage**: 10-20
+        - **Reference**: CAR
+
+    .. admonition:: Preprocessing
+
+        - **Bandpass filter**: 5.0-48.0 Hz
+
+    .. admonition:: Data Access
+
+        - **Repository**: GitHub
+        - **DOI**: 10.6084/m9.figshare.2068677.v1
+        - **URL**: https://github.com/MAMEM/ssvep-eeg-processing-toolbox
+
+
+    .. admonition:: Experimental Protocol
+
+        User focuses attention on visual stimuli flickering at different frequencies to select commands
+
     References
     ----------
     .. [1] Oikonomou, V. P., Liaros, G., Georgiadis, K., Chatzilari, E., Adam, K.,
@@ -551,16 +736,22 @@ class MAMEM3(BaseMAMEM):
 
     METADATA = DatasetMetadata(
         acquisition=AcquisitionMetadata(
-            sampling_rate=128.0,
-            n_channels=15,
-            channel_types={"eeg": 14, "stim": 1},
-            hardware="Emotiv EPOC",
-            montage="standard_1020",
-            line_freq=50.0,
-            filters="22.0-48.0 Hz bandpass",
-            ground="color",
-            reference="CAR",
+            sampling_rate=250.0,
+            n_channels=256,
+            channel_types={"eeg": 256},
+            montage="10-20",
+            hardware="EGI",
+            sensor_type="scalp electrodes",
+            reference="Car",
             software="Bci2000",
+            filters="22.0-48.0 Hz bandpass",
+            line_freq=50.0,
+            auxiliary_channels=AuxiliaryChannelsMetadata(
+                has_eog=True,
+                eog_type=["vertical"],
+                has_emg=True,
+                other_physiological=["ecg", "gsr", "ppg"],
+            ),
         ),
         participants=ParticipantMetadata(
             n_subjects=11,
@@ -568,26 +759,70 @@ class MAMEM3(BaseMAMEM):
         ),
         experiment=ExperimentMetadata(
             paradigm="ssvep",
-            task_type="5_frequency_consumer_grade",
-            n_classes=5,
-            trial_duration=3.0,
-            tasks=["rest"],
+            n_classes=1,
+            class_labels=["rest"],
+            study_design="User focuses attention on visual stimuli flickering at different frequencies to select commands",
+            stimulus_type="cursor_feedback",
+            stimulus_modalities=["visual"],
+            primary_modality="visual",
+            mode="offline",
         ),
         documentation=DocumentationMetadata(
-            doi="10.6084/m9.figshare.3413851",
-            description="MAMEM SSVEP Dataset III - consumer-grade EEG (Emotiv EPOC)",
-            investigators=["Nikolopoulos, S.", "Lazarou, I.", "Kompatsiaris, I."],
-            institution="CERTH-ITI",
-            country="GR",
-            repository="Figshare",
-            data_url="https://figshare.com/articles/dataset/MAMEM_EEG_SSVEP_Dataset_III/3413851",
-            license="CC BY 4.0",
-            publication_year=2021,
+            doi="10.6084/m9.figshare.2068677.v1",
+            repository="GitHub",
+            data_url="https://github.com/MAMEM/ssvep-eeg-processing-toolbox",
         ),
-        sessions_per_subject=1,
-        runs_per_session=1,
-        tags=Tags(pathology=["healthy"], modality=["visual"], type=["bci"]),
-        data_processed=False,
+        tags=Tags(
+            pathology=["Healthy"],
+            modality=["Visual"],
+            type=["Perception"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            data_state="raw EEG provided in dataset",
+            preprocessing_applied=True,
+            preprocessing_steps=[
+                "bandpass filtering",
+                "notch filter (50Hz line frequency)",
+                "artifact removal (AMUSE or ICA)",
+            ],
+            filter_details=FilterDetails(
+                highpass_hz=5,
+                lowpass_hz=48,
+                bandpass={"low_cutoff_hz": 5.0, "high_cutoff_hz": 48.0},
+                notch_hz=50,
+                filter_type="Chebyshev",
+            ),
+            artifact_methods=["ICA"],
+            re_reference="CAR",
+        ),
+        signal_processing=SignalProcessingMetadata(
+            classifiers=["LDA", "SVM", "Random Forest", "kNN", "Naive Bayes", "CCA"],
+            feature_extraction=[
+                "CSP",
+                "ERD",
+                "ERS",
+                "PSD",
+                "Wavelet",
+                "Covariance/Riemannian",
+                "AR",
+                "ICA",
+            ],
+        ),
+        cross_validation=CrossValidationMetadata(
+            cv_method="bootstrap",
+            evaluation_type=["within_subject", "cross_subject"],
+        ),
+        performance=PerformanceMetadata(
+            accuracy_percent=74.42,
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=["vr_ar"],
+            environment="outdoor",
+        ),
+        paradigm_specific=ParadigmSpecificMetadata(
+            detected_paradigm="ssvep",
+        ),
+        data_processed=True,
     )
 
     def __init__(self):

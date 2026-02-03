@@ -8,10 +8,14 @@ from moabb.datasets.base import BaseDataset
 from moabb.datasets.download import data_dl, get_dataset_path
 from moabb.datasets.metadata.schema import (
     AcquisitionMetadata,
+    AuxiliaryChannelsMetadata,
+    BCIApplicationMetadata,
     DatasetMetadata,
-    DocumentationMetadata,
     ExperimentMetadata,
+    ParadigmSpecificMetadata,
     ParticipantMetadata,
+    PreprocessingMetadata,
+    SignalProcessingMetadata,
     Tags,
 )
 from moabb.datasets.utils import stim_channels_with_selected_ids
@@ -64,6 +68,27 @@ class PhysionetMI(BaseDataset):
     references
     ----------
 
+
+    .. admonition:: Participants
+
+        - **Population**: ALS
+
+    .. admonition:: Equipment
+
+        - **Amplifier**: Brain Products
+        - **Reference**: both mastoids
+
+
+    .. admonition:: Experimental Protocol
+
+        Multiple paradigms: (1) Mu/beta rhythm cursor control - user controls vertical cursor movement using sensorimotor rhythm amplitude; (2) SCP cursor control - user controls slow cortical potentials to move cursor to targets; (3) P300 spelling - user focuses attention on characters in 6x6 matrix while ...
+        - **Feedback**: visual
+
+    .. admonition:: Preprocessing
+
+        - **Data state**: raw with online processing capabilities
+        - **Steps**: calibration (linear transformation to microvolts), spatial filtering, temporal filtering
+
     .. [1] Schalk, G., McFarland, D.J., Hinterberger, T., Birbaumer, N. and
            Wolpaw, J.R., 2004. BCI2000: a general-purpose brain-computer
            interface (BCI) system. IEEE Transactions on biomedical engineering,
@@ -79,48 +104,83 @@ class PhysionetMI(BaseDataset):
     METADATA = DatasetMetadata(
         acquisition=AcquisitionMetadata(
             sampling_rate=160.0,
-            n_channels=65,
-            channel_types={"eeg": 64, "stim": 1},
-            hardware="BCI2000",
-            montage="standard_1005",
-            line_freq=60.0,
-            reference="both mastoids",
+            n_channels=16,
+            channel_types={"eeg": 16},
+            hardware="Brain Products",
+            reference="mastoid",
             software="BCI2000",
+            sensors=[
+                "FC5",
+                "FC3",
+                "FC1",
+                "FCz",
+                "FC2",
+                "FC4",
+                "FC6",
+                "C3",
+                "C1",
+                "Cz",
+                "C2",
+                "C4",
+                "CP3",
+                "CPz",
+                "CP4",
+                "Pz",
+            ],
+            line_freq=60.0,
+            auxiliary_channels=AuxiliaryChannelsMetadata(
+                has_emg=True,
+                other_physiological=["ppg"],
+            ),
         ),
         participants=ParticipantMetadata(
             n_subjects=109,
-            health_status="healthy",
-            clinical_population="ALS",
+            health_status="paralysis",
         ),
         experiment=ExperimentMetadata(
             paradigm="imagery",
-            task_type="4_class_hands_feet",
-            n_classes=4,
-            trial_duration=3.0,
-            tasks=["rest"],
+            n_classes=1,
+            class_labels=["rest"],
+            study_design="Multiple BCI paradigms implemented: (1) mu/beta rhythm cursor control where users control vertical cursor movement via sensorimotor rhythm amplitude, (2) SCP cursor control where users control slow co...",
             feedback_type="visual",
+            stimulus_type="oddball",
+            stimulus_modalities=["visual", "auditory"],
+            primary_modality="multisensory",
+            mode="both",
         ),
-        documentation=DocumentationMetadata(
-            doi="10.13026/C28G6P",
-            description="PhysioNet EEG Motor Movement/Imagery Dataset",
-            investigators=[
-                "G. Schalk",
-                "D.J. McFarland",
-                "T. Hinterberger",
-                "N. Birbaumer",
-                "J.R. Wolpaw",
+        tags=Tags(
+            pathology=["Healthy"],
+            modality=["Motor"],
+            type=["Motor"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            data_state="raw EEG stored with all event markers for offline reconstruction",
+            preprocessing_applied=True,
+            preprocessing_steps=[
+                "calibration (linear transformation to microvolts)",
+                "spatial filtering",
+                "temporal filtering",
             ],
-            institution="Wadsworth Center, New York State Department of Health",
-            country="US",
-            repository="PhysioNet",
-            data_url="https://physionet.org/content/eegmmidb/1.0.0/",
-            license="Open Data Commons Attribution License v1.0",
-            publication_year=2009,
+            artifact_methods=["ICA"],
+            re_reference="car",
         ),
-        sessions_per_subject=1,
-        runs_per_session=14,
-        tags=Tags(pathology=["healthy"], modality=["motor"], type=["bci"]),
-        data_processed=False,
+        signal_processing=SignalProcessingMetadata(
+            feature_extraction=["CSP", "ERD", "ERS", "AR"],
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=[
+                "speller",
+                "wheelchair/navigation",
+                "cursor_control",
+                "prosthetic",
+                "vr_ar",
+                "communication",
+            ],
+        ),
+        paradigm_specific=ParadigmSpecificMetadata(
+            detected_paradigm="motor_imagery",
+        ),
+        data_processed=True,
     )
 
     def __init__(self, imagined=True, executed=False):

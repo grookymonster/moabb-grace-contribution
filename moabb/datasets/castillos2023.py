@@ -61,7 +61,7 @@ class BaseCastillos2023(BaseDataset):
             else:
                 code = raw.annotations.description[idx].split("_")[0]
                 lab = raw.annotations.description[idx].split("_")[1]
-                code = code.replace("\n", "")
+                code = code.replace(" ", "")
                 code = code.replace("[", "")
                 code = code.replace("]", "")
                 code = code.replace(" ", "")
@@ -325,8 +325,7 @@ class CastillosBurstVEP100(BaseCastillos2023):
            2023,120446,ISSN 1053-8119
            DOI: https://doi.org/10.1016/j.neuroimage.2023.120446
 
-    Notes
-    -----
+    Notes -----
 
     .. versionadded:: 1.1.0
 
@@ -381,8 +380,7 @@ class CastillosBurstVEP40(BaseCastillos2023):
            2023,120446,ISSN 1053-8119
            DOI: https://doi.org/10.1016/j.neuroimage.2023.120446
 
-    Notes
-    -----
+    Notes -----
 
     .. versionadded:: 1.1.0
 
@@ -436,8 +434,7 @@ class CastillosCVEP100(BaseCastillos2023):
            2023,120446,ISSN 1053-8119
            DOI: https://doi.org/10.1016/j.neuroimage.2023.120446
 
-    Notes
-    -----
+    Notes -----
 
     .. versionadded:: 1.1.0
 
@@ -492,8 +489,7 @@ class CastillosCVEP40(BaseCastillos2023):
            2023,120446,ISSN 1053-8119
            DOI: https://doi.org/10.1016/j.neuroimage.2023.120446
 
-    Notes
-    -----
+    Notes -----
 
     .. versionadded:: 1.1.0
 

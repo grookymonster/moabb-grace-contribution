@@ -8,10 +8,18 @@ from mne.utils import verbose
 
 from moabb.datasets.metadata.schema import (
     AcquisitionMetadata,
+    AuxiliaryChannelsMetadata,
+    BCIApplicationMetadata,
+    CrossValidationMetadata,
     DatasetMetadata,
+    DataStructureMetadata,
     DocumentationMetadata,
     ExperimentMetadata,
+    FrequencyBands,
+    ParadigmSpecificMetadata,
     ParticipantMetadata,
+    PreprocessingMetadata,
+    SignalProcessingMetadata,
     Tags,
 )
 
@@ -292,6 +300,17 @@ class BNCI2016_002(BNCIBaseDataset):
     2. Mental evaluation of the sensory information
     3. Motor preparation
 
+
+    .. admonition:: Data Access
+
+        - **DOI**: 10.1088/1741-2560/8/5/056001
+
+
+    .. admonition:: Preprocessing
+
+        - **Data state**: preprocessed
+        - **Steps**: lowpass filtering (EEG), bandpass filtering (EMG), notch filtering (EMG), rectification (EMG), resampling to 200 Hz...
+
     References
     ----------
     .. [1] Haufe, S., Treder, M. S., Gugler, M. F., Sagebaum, M., Curio, G., &
@@ -299,8 +318,7 @@ class BNCI2016_002(BNCIBaseDataset):
            brakings during simulated driving. Journal of Neural Engineering,
            8(5), 056001. https://doi.org/10.1088/1741-2560/8/5/056001
 
-    Notes
-    -----
+    Notes -----
     .. versionadded:: 1.3.0
 
     This dataset is valuable for research on:
@@ -323,49 +341,151 @@ class BNCI2016_002(BNCIBaseDataset):
     METADATA = DatasetMetadata(
         acquisition=AcquisitionMetadata(
             sampling_rate=200.0,
-            n_channels=69,
-            channel_types={"eeg": 59, "eog": 2, "emg": 1, "misc": 7},
-            montage="standard_1005",
-            line_freq=50.0,
-            filters="0.1-250 Hz bandpass",
-            reference="car",
+            n_channels=64,
+            channel_types={"eeg": 64},
+            montage="10-20",
             hardware="BrainAmp",
             sensor_type="Ag/AgCl",
+            reference="Car",
+            software="Matlab",
+            filters={"highpass_hz": 0.1, "lowpass_hz": 250},
+            impedance_threshold_kohm={"eeg": 20, "emg": 50},
+            sensors=[
+                "Fp1",
+                "Fpz",
+                "Fp2",
+                "AF7",
+                "AF3",
+                "AFz",
+                "AF4",
+                "AF8",
+                "F7",
+                "F5",
+                "F3",
+                "F1",
+                "Fz",
+                "F2",
+                "F4",
+                "F6",
+                "F8",
+                "FT7",
+                "FC5",
+                "FC3",
+                "FC1",
+                "FCz",
+                "FC2",
+                "FC4",
+                "FC6",
+                "FT8",
+                "T7",
+                "C5",
+                "C3",
+                "C1",
+                "Cz",
+                "C2",
+                "C4",
+                "C6",
+                "T8",
+                "TP7",
+                "CP5",
+                "CP3",
+                "CP1",
+                "CPz",
+                "CP2",
+                "CP4",
+                "CP6",
+                "TP8",
+                "P7",
+                "P5",
+                "P3",
+                "P1",
+                "Pz",
+                "P2",
+                "P4",
+                "P6",
+                "P8",
+                "PO7",
+                "PO3",
+                "POz",
+                "PO4",
+                "PO8",
+                "O1",
+                "Oz",
+                "O2",
+                "Iz",
+            ],
+            line_freq=50.0,
+            auxiliary_channels=AuxiliaryChannelsMetadata(
+                has_emg=True,
+                emg_channels=2,
+                other_physiological=["gsr"],
+            ),
         ),
         participants=ParticipantMetadata(
-            n_subjects=15,
+            n_subjects=18,
             health_status="healthy",
+            gender={"male": 14, "female": 4},
+            age_mean=30.6,
+            handedness="right-handed",
+            bci_experience="naive",
         ),
         experiment=ExperimentMetadata(
             paradigm="p300",
-            task_type="emergency_braking",
             n_classes=2,
-            trial_duration=1.0,
-            tasks=["rest", "feet"],
-            study_design="to drive a virtual racing car using the steering wheel and gas/brake pedals (automatic clutch), and to tightly follow a computer-controlled lead vehicle at a driving speed of 100 km h-1.",
+            class_labels=["rest", "feet"],
+            trial_duration=5.0,
+            study_design="to drive a virtual racing car\nusing the steering wheel and gas/brake pedals (automatic\nclutch), and to tightly follow a computer-controlled lead\nvehicle at a driving speed of 100 km h-1.",
+            feedback_type="visual (colored circle indicating distance: green <20m, yellow otherwise; brakelight flashing)",
+            stimulus_type="oddball",
+            stimulus_modalities=["visual", "multisensory"],
+            primary_modality="multisensory",
+            synchronicity="synchronous",
+            mode="online",
+            has_training_test_split=True,
         ),
         documentation=DocumentationMetadata(
             doi="10.1088/1741-2560/8/5/056001",
-            description="Emergency braking during simulated driving - ERP detection",
-            investigators=[
-                "Haufe, S.",
-                "Treder, M.S.",
-                "Gugler, M.F.",
-                "Sagebaum, M.",
-                "Curio, G.",
-                "Blankertz, B.",
-            ],
-            institution="TU Berlin / Charité University Medicine Berlin",
-            country="DE",
-            repository="BNCI Horizon 2020",
-            data_url="http://bnci-horizon-2020.eu/database/data-sets/002-2016/",
-            license="CC BY 4.0",
-            publication_year=2011,
-            funding=["DFG grant", "grant no MU MU", "grant nos s", "BMBF grant"],
+            funding=["DFG grant", "grant nos s", "BMBF grant", "grant no MU MU"],
         ),
-        sessions_per_subject=1,
-        runs_per_session=1,
-        tags=Tags(pathology=["healthy"], modality=["visual"], type=["bci"]),
+        tags=Tags(
+            pathology=["Other"],
+            modality=["Visual"],
+            type=["Clinical/Intervention"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            data_state="preprocessed",
+            preprocessing_applied=True,
+            preprocessing_steps=[
+                "lowpass filtering",
+                "bandpass filtering",
+                "notch filtering",
+                "rectification",
+                "downsampling/upsampling",
+                "baseline correction",
+            ],
+            artifact_methods=["ICA"],
+            re_reference="car",
+        ),
+        signal_processing=SignalProcessingMetadata(
+            classifiers=["LDA", "Shrinkage LDA"],
+            feature_extraction=["Bandpower", "Covariance/Riemannian", "ICA"],
+            frequency_bands=FrequencyBands(
+                theta=[4, 8],
+            ),
+        ),
+        cross_validation=CrossValidationMetadata(
+            evaluation_type=["cross_subject"],
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=["vr_ar", "communication"],
+            environment="laboratory",
+        ),
+        paradigm_specific=ParadigmSpecificMetadata(
+            detected_paradigm="p300",
+        ),
+        data_structure=DataStructureMetadata(
+            n_trials=225,
+        ),
         data_processed=True,
     )
 

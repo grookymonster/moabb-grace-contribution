@@ -233,7 +233,7 @@ class SSVEP_TRCA(BaseEstimator, ClassifierMixin):
 
     .. math::
 
-        S_{j_1, j_2} = \\sum_{h_1=1}^{N_t} \\sum_{h_2=1, h_2 \\neq h_1}^{N_t}
+        S_{j_1, j_2} = \\sum_{h_1=1}^{N_t} \\sum_{h_2=1, h_2 \ eq h_1}^{N_t}
         \\text{Cov}(x_{j_1}^{(h_1)}(t), x_{j_2}^{(h_2)}(t))
 
     where :math:`x_j^{(h)}(t)` is the signal from channel :math:`j` in trial :math:`h`.
@@ -772,7 +772,7 @@ class SSVEP_MsetCCA(BaseEstimator, ClassifierMixin):
 
         \\tilde{\\mathbf{w}}_{n,1}, ..., \\tilde{\\mathbf{w}}_{n,N_t} =
         \\arg\\max_{\\mathbf{w}_1, ..., \\mathbf{w}_{N_t}}
-        \\sum_{h_1 \\neq h_2}^{N_t} \\mathbf{w}_{h_1}^T \\mathbf{X}_{n,h_1}
+        \\sum_{h_1 \ eq h_2}^{N_t} \\mathbf{w}_{h_1}^T \\mathbf{X}_{n,h_1}
         \\mathbf{X}_{n,h_2}^T \\mathbf{w}_{h_2}
 
     subject to:

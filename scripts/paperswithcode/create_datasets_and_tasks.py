@@ -12,7 +12,7 @@ def dataset_name(dataset):
 
 
 def dataset_full_name(dataset):
-    s = dataset.__doc__.split("\n\n")[0]
+    s = dataset.__doc__.split("  ")[0]
     s = re.sub(r" \[\d+\]_", "", s)
     s = re.sub(r"\s+", " ", s)
     return s

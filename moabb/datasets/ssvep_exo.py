@@ -4,10 +4,17 @@ from mne.io import Raw
 
 from moabb.datasets.metadata.schema import (
     AcquisitionMetadata,
+    BCIApplicationMetadata,
+    CrossValidationMetadata,
     DatasetMetadata,
+    DataStructureMetadata,
     DocumentationMetadata,
     ExperimentMetadata,
+    FilterDetails,
+    ParadigmSpecificMetadata,
     ParticipantMetadata,
+    PreprocessingMetadata,
+    SignalProcessingMetadata,
     Tags,
 )
 from moabb.utils import depreciated_alias
@@ -50,14 +57,45 @@ class Kalunga2016(BaseDataset):
     days, by the same operators, on the same hardware and in the same
     conditions.
 
-    Notes
-    -----
+
+    .. admonition:: Participants
+
+        - **Population**: healthy
+
+
+    .. admonition:: Equipment
+
+        - **Amplifier**: g.tec
+        - **Reference**: car
+
+
+    .. admonition:: Experimental Protocol
+
+        SSVEP
+
+
+    .. admonition:: Data Access
+
+        - **Repository**: GitHub
+        - **DOI**: 10.1016/j.neucom.2016.01.007
+        - **URL**: https://github.com/sylvchev/dataset-
+
+
+
+    .. admonition:: Preprocessing
+
+        - **Bandpass filter**: around stimulus frequencies (13 Hz, 17 Hz, 21 Hz)
+        - **Steps**: band-pass filtering around each stimulus frequency
+
+
+    Notes -----
     The events notation 17Hz and 21Hz were swapped after an investigation conducted
     by ponpopon at Github.
 
     The dataset includes recordings from 12 healthy subjects.
 
     .. versionadded:: 1.2.0
+
 
     References
     ----------
@@ -70,40 +108,79 @@ class Kalunga2016(BaseDataset):
     METADATA = DatasetMetadata(
         acquisition=AcquisitionMetadata(
             sampling_rate=256.0,
-            n_channels=9,
-            channel_types={"eeg": 8, "stim": 1},
+            n_channels=8,
+            channel_types={"eeg": 8},
+            montage="oz o1 o2 poz po3 po4 po7 po8",
+            hardware="g.tec",
+            reference="Car",
             sensors=["Oz", "O1", "O2", "POz", "PO3", "PO4", "PO7", "PO8"],
-            hardware="g.Mobilab+",
-            montage="standard_1020",
             line_freq=50.0,
-            reference="signals",
         ),
         participants=ParticipantMetadata(
             n_subjects=12,
-            health_status="healthy",
-            age_mean=24.0,
         ),
         experiment=ExperimentMetadata(
             paradigm="ssvep",
-            task_type="4_frequency_exoskeleton",
             n_classes=4,
-            trial_duration=2.0,
-            tasks=["feet", "tongue", "rest"],
+            class_labels=["13hz", "17hz", "21hz", "rest"],
+            trial_duration=31.0,
+            study_design="SSVEP",
+            stimulus_type="flickering",
+            stimulus_modalities=["visual"],
+            primary_modality="visual",
+            synchronicity="asynchronous",
+            mode="both",
         ),
         documentation=DocumentationMetadata(
             doi="10.1016/j.neucom.2016.01.007",
-            description="SSVEP Exoskeleton dataset using Riemannian geometry",
-            investigators=["E.K. Kalunga", "S. Chevallier", "Q. Barthelemy"],
-            institution="University of Versailles",
-            country="FR",
-            repository="Zenodo",
-            data_url="https://zenodo.org/record/2392979",
-            license="CC BY 4.0",
-            publication_year=2016,
+            repository="GitHub",
+            data_url="https://github.com/sylvchev/dataset-",
         ),
-        sessions_per_subject=1,
-        runs_per_session=2,
-        tags=Tags(pathology=["healthy"], modality=["visual"], type=["bci"]),
+        tags=Tags(
+            pathology=["Healthy"],
+            modality=["Visual"],
+            type=["Perception"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            preprocessing_applied=True,
+            preprocessing_steps=["band-pass filtering around each stimulus frequency"],
+            filter_details=FilterDetails(
+                bandpass="around stimulus frequencies (13 Hz, 17 Hz, 21 Hz)",
+                filter_type="Butterworth",
+                filter_order=8,
+            ),
+            artifact_methods=["ICA"],
+            re_reference="car",
+        ),
+        signal_processing=SignalProcessingMetadata(
+            classifiers=["LDA", "SVM", "Neural Network", "Riemannian", "CCA"],
+            feature_extraction=[
+                "CSP",
+                "ERD",
+                "ERS",
+                "PSD",
+                "Covariance/Riemannian",
+                "Time-Frequency",
+                "Tangent Space",
+            ],
+        ),
+        cross_validation=CrossValidationMetadata(
+            cv_method="bootstrap",
+            evaluation_type=["cross_subject", "cross_session"],
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=["prosthetic", "vr_ar", "communication"],
+            environment="laboratory",
+        ),
+        paradigm_specific=ParadigmSpecificMetadata(
+            detected_paradigm="ssvep",
+            n_targets=2,
+            stimulus_frequencies_hz=[13.0, 17.0],
+        ),
+        data_structure=DataStructureMetadata(
+            n_trials="32 trials per session (8 per visual stimulus, 8 for resting class)",
+            trials_context="per session",
+        ),
         data_processed=True,
     )
 

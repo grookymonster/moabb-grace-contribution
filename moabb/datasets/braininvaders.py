@@ -16,10 +16,17 @@ from moabb.datasets import download as dl
 from moabb.datasets.base import BaseDataset
 from moabb.datasets.metadata.schema import (
     AcquisitionMetadata,
+    AuxiliaryChannelsMetadata,
+    BCIApplicationMetadata,
+    CrossValidationMetadata,
     DatasetMetadata,
+    DataStructureMetadata,
     DocumentationMetadata,
     ExperimentMetadata,
+    ParadigmSpecificMetadata,
     ParticipantMetadata,
+    PreprocessingMetadata,
+    SignalProcessingMetadata,
     Tags,
 )
 from moabb.datasets.utils import block_rep
@@ -442,10 +449,43 @@ class BI2012(BaseDataset):
 
     :ID of the dataset: BI.EEG.2012-GIPSA
 
-    Notes
-    -----
+
+    .. admonition:: Participants
+
+        - **Population**: healthy
+
+
+    .. admonition:: Equipment
+
+        - **Amplifier**: NeXus (MindMedia/TMSi)
+        - **Electrodes**: wet electrodes
+        - **Montage**: 10-20
+        - **Reference**: car
+
+
+    .. admonition:: Experimental Protocol
+
+        limit eye blinks, head movements and
+        face muscular contractions, which disrupt the EEG signal.
+
+
+    .. admonition:: Data Access
+
+        - **Repository**: Zenodo
+        - **DOI**: 10.5281/zenodo.2649006
+        - **URL**: https://doi.org/10.5281/zenodo.2649006
+
+
+
+    .. admonition:: Preprocessing
+
+        - **Data state**: raw EEG with software tagging (note: tagging introduces jitter and latency)
+
+
+    Notes -----
 
     .. versionadded:: 0.4.6
+
 
     References
     ----------
@@ -458,58 +498,84 @@ class BI2012(BaseDataset):
     METADATA = DatasetMetadata(
         acquisition=AcquisitionMetadata(
             sampling_rate=128.0,
-            n_channels=17,
-            channel_types={"eeg": 16, "stim": 1},
-            sensors=[
-                "Fp1",
-                "Fp2",
-                "F5",
-                "AFz",
-                "F6",
-                "T7",
-                "Cz",
-                "T8",
-                "P7",
-                "P3",
-                "Pz",
-                "P4",
-                "P8",
-                "O1",
-                "Oz",
-                "O2",
-            ],
-            montage="standard_1020",
-            line_freq=50.0,
-            ground="was",
-            reference="is used",
-            hardware="Emotiv EPOC",
+            n_channels=16,
+            channel_types={"eeg": 16},
+            montage="10-20",
+            hardware="NeXus (MindMedia/TMSi)",
             sensor_type="wet electrodes",
+            reference="Car",
+            software="OpenVibe",
+            sensors=[
+                "FC5",
+                "FC3",
+                "FC1",
+                "FCz",
+                "FC2",
+                "FC4",
+                "FC6",
+                "C3",
+                "C1",
+                "Cz",
+                "C2",
+                "C4",
+                "CP3",
+                "CPz",
+                "CP4",
+                "Pz",
+            ],
+            line_freq=50.0,
+            auxiliary_channels=AuxiliaryChannelsMetadata(
+                has_eog=True,
+            ),
         ),
         participants=ParticipantMetadata(
-            n_subjects=25,
-            health_status="healthy",
+            n_subjects=26,
+            gender={"male": 19, "female": 7},
+            age_mean=24.4,
+            bci_experience="half played games occasionally (around 4.5 hours a week)",
         ),
         experiment=ExperimentMetadata(
             paradigm="p300",
-            task_type="brain_invaders",
-            n_classes=2,
-            trial_duration=1.0,
-            study_design="limit eye blinks, head movements and face muscular contractions, which disrupt the EEG signal.",
+            study_design="limit eye blinks, head movements and \nface muscular contractions, which disrupt the EEG signal.",
+            feedback_type="visual (game interface)",
+            stimulus_modalities=["visual"],
+            primary_modality="visual",
+            mode="online",
         ),
         documentation=DocumentationMetadata(
             doi="10.5281/zenodo.2649006",
-            description="Brain Invaders P300 dataset 2012 - experimental validation",
-            investigators=["Van Veen, G.", "Barachant, A.", "Congedo, M."],
-            institution="GIPSA-lab, University of Grenoble Alpes",
-            country="FR",
             repository="Zenodo",
-            data_url="https://zenodo.org/record/2649069",
-            license="CC BY 4.0",
-            publication_year=2019,
+            data_url="https://doi.org/10.5281/zenodo.2649006",
         ),
-        sessions_per_subject=1,
-        runs_per_session=2,
-        tags=Tags(pathology=["healthy"], modality=["visual"], type=["bci"]),
+        tags=Tags(
+            pathology=["Healthy"],
+            modality=["Visual"],
+            type=["Perception"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            data_state="raw EEG with software tagging (note: tagging introduces jitter and latency)",
+            preprocessing_applied=False,
+            artifact_methods=["ICA"],
+            re_reference="car",
+        ),
+        signal_processing=SignalProcessingMetadata(
+            classifiers=["xDAWN", "Riemannian"],
+            feature_extraction=["Covariance/Riemannian", "xDAWN"],
+        ),
+        cross_validation=CrossValidationMetadata(
+            evaluation_type=["cross_session"],
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=["gaming", "vr_ar"],
+        ),
+        paradigm_specific=ParadigmSpecificMetadata(
+            detected_paradigm="p300",
+            n_repetitions=12,
+        ),
+        data_structure=DataStructureMetadata(
+            n_trials=128,
+            trials_context="per_class",
+        ),
         data_processed=False,
     )
 
@@ -587,6 +653,34 @@ class BI2013a(BaseDataset):
     :Scientific Supervisor:  Dr. Marco Congedo
     :Technical Supervisor: Anton Andreev
 
+
+    .. admonition:: Participants
+
+        - **Population**: healthy
+
+    .. admonition:: Equipment
+
+        - **Amplifier**: g.tec
+        - **Electrodes**: Silver/Silver
+        Chloride
+        - **Montage**: 10-20
+        - **Reference**: the left earlobe
+
+    .. admonition:: Experimental Protocol
+
+        P300
+
+    .. admonition:: Data Access
+
+        - **Repository**: Zenodo
+        - **DOI**: 10.5281/zenodo.1494163
+        - **URL**: https://doi.org/10.5281/zenodo.1494163
+
+
+    .. admonition:: Preprocessing
+
+        - **Data state**: raw, unfiltered
+
     References
     ----------
 
@@ -610,55 +704,83 @@ class BI2013a(BaseDataset):
             sampling_rate=512.0,
             n_channels=16,
             channel_types={"eeg": 16},
-            sensors=[
-                "Fp1",
-                "Fp2",
-                "F5",
-                "AFz",
-                "F6",
-                "T7",
-                "Cz",
-                "T8",
-                "P7",
-                "P3",
-                "Pz",
-                "P4",
-                "P8",
-                "O1",
-                "Oz",
-                "O2",
-            ],
-            hardware="Nexus (TMSi)",
-            sensor_type="Ag/AgCl wet",
-            reference="left ear-lobe",
-            montage="standard_1020",
-            line_freq=50.0,
+            montage="10-20",
+            hardware="g.tec",
+            sensor_type="Silver/Silver Chloride",
+            reference="left earlobe",
+            software="OpenVibe",
             filters="no digital filter applied",
+            sensors=[
+                "FC5",
+                "FC3",
+                "FC1",
+                "FCz",
+                "FC2",
+                "FC4",
+                "FC6",
+                "C3",
+                "C1",
+                "Cz",
+                "C2",
+                "C4",
+                "CP3",
+                "CPz",
+                "CP4",
+                "Pz",
+            ],
+            line_freq=50.0,
+            auxiliary_channels=AuxiliaryChannelsMetadata(
+                has_eog=True,
+            ),
         ),
         participants=ParticipantMetadata(
             n_subjects=24,
-            health_status="healthy",
+            health_status="healthy volunteers with no history of neural pathology, trauma with loss of consciousness, diabetes, cardiac pathology, immunodeficiency, or sensorial/motor handicaps",
+            gender={"female": 12, "male": 12},
+            age_mean=25.96,
         ),
         experiment=ExperimentMetadata(
             paradigm="p300",
-            task_type="brain_invaders_adaptive",
-            n_classes=2,
-            trial_duration=1.0,
+            study_design="Visual P300 BCI experiment using Brain Invaders video game interface with 36 symbols distributed in 12 groups. Subjects attended to target symbols while groups of symbols flashed.",
+            feedback_type="online visual feedback via Brain Invaders video game",
+            stimulus_type="avatar",
+            stimulus_modalities=["visual"],
+            primary_modality="visual",
+            mode="online",
         ),
         documentation=DocumentationMetadata(
             doi="10.5281/zenodo.1494163",
-            description="Brain Invaders adaptive vs non-adaptive P300 BCI",
-            investigators=["Vaineau, E.", "Barachant, A.", "Congedo, M."],
-            institution="GIPSA-lab, CNRS, Grenoble-INP",
-            country="FR",
             repository="Zenodo",
-            data_url="https://zenodo.org/record/2669187",
-            license="CC BY 4.0",
-            publication_year=2018,
+            data_url="https://doi.org/10.5281/zenodo.1494163",
         ),
-        sessions_per_subject=1,
-        runs_per_session=1,
-        tags=Tags(pathology=["healthy"], modality=["visual"], type=["bci"]),
+        tags=Tags(
+            pathology=["Healthy"],
+            modality=["Visual"],
+            type=["Perception"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            data_state="raw, unfiltered",
+            preprocessing_applied=False,
+            artifact_methods=["ICA"],
+            re_reference="car",
+        ),
+        signal_processing=SignalProcessingMetadata(
+            classifiers=["MDM", "xDAWN", "Riemannian"],
+            feature_extraction=["Covariance/Riemannian", "xDAWN"],
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=["gaming", "smart_home", "vr_ar"],
+        ),
+        paradigm_specific=ParadigmSpecificMetadata(
+            detected_paradigm="p300",
+            n_repetitions=12,
+        ),
+        data_structure=DataStructureMetadata(
+            n_trials={
+                "training_phase": {"target_flashes": 80, "non_target_flashes": 400},
+                "online_phase": "variable (performance dependent)",
+            },
+        ),
         data_processed=False,
     )
 
@@ -705,10 +827,43 @@ class BI2014a(BaseDataset):
                         M. Sc. Violette Gautheret
     :Scientific Supervisor: Ph.D. Marco Congedo
 
-    Notes
-    -----
+
+    .. admonition:: Participants
+
+        - **Population**: spinal_cord_injury
+        - **Gender**: male: 49, female: 22
+
+
+    .. admonition:: Equipment
+
+        - **Amplifier**: g.tec
+        - **Electrodes**: dry electrodes
+        - **Montage**: 10-10
+        - **Reference**: the right earlobe
+
+
+    .. admonition:: Experimental Protocol
+
+        P300
+
+
+    .. admonition:: Data Access
+
+        - **Repository**: Zenodo
+        - **DOI**: 10.5281/zenodo.3266223
+        - **URL**: https://doi.org/10.5281/zenodo.3266223
+
+
+
+    .. admonition:: Preprocessing
+
+        - **Data state**: raw (no digital filter applied)
+
+
+    Notes -----
 
     .. versionadded:: 0.4.6
+
 
     References
     ----------
@@ -722,60 +877,81 @@ class BI2014a(BaseDataset):
     METADATA = DatasetMetadata(
         acquisition=AcquisitionMetadata(
             sampling_rate=512.0,
-            n_channels=17,
-            channel_types={"eeg": 16, "stim": 1},
-            sensors=[
-                "Fp1",
-                "Fp2",
-                "F3",
-                "AFz",
-                "F4",
-                "T7",
-                "Cz",
-                "T8",
-                "P7",
-                "P3",
-                "Pz",
-                "P4",
-                "P8",
-                "O1",
-                "Oz",
-                "O2",
-            ],
-            sensor_type="active dry",
-            montage="standard_1020",
-            line_freq=50.0,
-            filters="no digital filter applied",
-            reference="electrode on the right earlobe",
+            n_channels=16,
+            channel_types={"eeg": 16},
+            montage="10-10",
             hardware="g.tec",
+            sensor_type="dry electrodes",
+            reference="right earlobe",
+            software="OpenVibe",
+            sensors=[
+                "FC5",
+                "FC3",
+                "FC1",
+                "FCz",
+                "FC2",
+                "FC4",
+                "FC6",
+                "C3",
+                "C1",
+                "Cz",
+                "C2",
+                "C4",
+                "CP3",
+                "CPz",
+                "CP4",
+                "Pz",
+            ],
+            line_freq=50.0,
+            auxiliary_channels=AuxiliaryChannelsMetadata(
+                has_eog=True,
+            ),
         ),
         participants=ParticipantMetadata(
-            n_subjects=64,
-            health_status="healthy",
-            clinical_population="spinal_cord_injury",
+            n_subjects=71,
             gender={"male": 49, "female": 22},
+            age_mean=23.55,
+            bci_experience={"naive": 57, "experienced": 14},
         ),
         experiment=ExperimentMetadata(
             paradigm="p300",
-            task_type="brain_invaders_calibration_less",
-            n_classes=2,
-            trial_duration=1.0,
-            tasks=["rest"],
+            n_classes=1,
+            class_labels=["rest"],
+            trial_duration=5.0,
+            study_design="Visual P300 BCI videogame (Brain Invaders) with 36 symbols (1 Target, 35 Non-Target) flashed pseudo-randomly",
+            feedback_type="real-time visual feedback via game interface",
+            stimulus_type="oddball",
+            stimulus_modalities=["visual", "auditory"],
+            primary_modality="multisensory",
+            mode="online",
         ),
         documentation=DocumentationMetadata(
-            doi="10.5281/zenodo.3266222",
-            description="Brain Invaders calibration-less P300 BCI with dry electrodes",
-            investigators=["Korczowski, L.", "Ostaschenko, E.", "Congedo, M."],
-            institution="GIPSA-lab",
-            country="FR",
+            doi="10.5281/zenodo.3266223",
             repository="Zenodo",
-            data_url="https://zenodo.org/record/3266222",
-            license="CC BY 4.0",
-            publication_year=2019,
+            data_url="https://doi.org/10.5281/zenodo.3266223",
         ),
-        sessions_per_subject=1,
-        runs_per_session=1,
-        tags=Tags(pathology=["healthy"], modality=["visual"], type=["bci"]),
+        tags=Tags(
+            pathology=["Healthy"],
+            modality=["Visual"],
+            type=["Perception"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            data_state="raw (no digital filter applied)",
+            preprocessing_applied=False,
+            artifact_methods=["ICA"],
+            re_reference="Car",
+        ),
+        signal_processing=SignalProcessingMetadata(
+            classifiers=["MDM", "Riemannian"],
+            feature_extraction=["Covariance/Riemannian"],
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=["gaming", "vr_ar"],
+        ),
+        paradigm_specific=ParadigmSpecificMetadata(
+            detected_paradigm="p300",
+            n_repetitions=12,
+        ),
         data_processed=False,
     )
 
@@ -818,10 +994,43 @@ class BI2014b(BaseDataset):
                         M. Sc. Violette Gautheret
     :Scientific Supervisor: Ph.D. Marco Congedo
 
-    Notes
-    -----
+
+    .. admonition:: Participants
+
+        - **Population**: spinal_cord_injury
+        - **Gender**: male: 24, female: 14
+
+
+    .. admonition:: Equipment
+
+        - **Amplifier**: g.tec
+        - **Electrodes**: Silver/Silver Chloride
+        - **Montage**: 10-10
+        - **Reference**: the right earlobe
+
+
+    .. admonition:: Experimental Protocol
+
+        P300
+
+
+    .. admonition:: Data Access
+
+        - **Repository**: Zenodo
+        - **DOI**: 10.5281/zenodo.3267301
+        - **URL**: https://doi.org/10.5281/zenodo.3267301
+
+
+
+    .. admonition:: Preprocessing
+
+        - **Data state**: no digital filter applied
+
+
+    Notes -----
 
     .. versionadded:: 0.4.6
+
 
     References
     ----------
@@ -835,41 +1044,97 @@ class BI2014b(BaseDataset):
     METADATA = DatasetMetadata(
         acquisition=AcquisitionMetadata(
             sampling_rate=512.0,
-            n_channels=33,
-            channel_types={"eeg": 32, "stim": 1},
-            sensor_type="active wet",
-            montage="standard_1020",
-            line_freq=50.0,
-            reference="electrode was placed on the right earlobe",
+            n_channels=32,
+            channel_types={"eeg": 32},
+            montage="10-10",
             hardware="g.tec",
+            sensor_type="Silver/Silver Chloride",
+            reference="right earlobe",
+            software="OpenVibe",
+            sensors=[
+                "Fp1",
+                "Fp2",
+                "F7",
+                "F3",
+                "Fz",
+                "F4",
+                "F8",
+                "FC5",
+                "FC1",
+                "FC2",
+                "FC6",
+                "T7",
+                "C3",
+                "Cz",
+                "C4",
+                "T8",
+                "CP5",
+                "CP1",
+                "CP2",
+                "CP6",
+                "P7",
+                "P3",
+                "Pz",
+                "P4",
+                "P8",
+                "PO9",
+                "O1",
+                "Oz",
+                "O2",
+                "PO10",
+                "AF7",
+                "AF8",
+            ],
+            line_freq=50.0,
+            auxiliary_channels=AuxiliaryChannelsMetadata(
+                has_eog=True,
+            ),
         ),
         participants=ParticipantMetadata(
             n_subjects=38,
-            health_status="healthy",
-            clinical_population="spinal_cord_injury",
             gender={"male": 24, "female": 14},
+            age_mean=24.1,
+            bci_experience="not naïve users - selected based on performance in preliminary Brain Invaders session",
         ),
         experiment=ExperimentMetadata(
             paradigm="p300",
-            task_type="brain_invaders_multi_user",
-            n_classes=2,
-            trial_duration=1.0,
-            tasks=["rest"],
+            n_classes=1,
+            class_labels=["rest"],
+            trial_duration=5.0,
+            study_design="Brain Invaders multi-user BCI game - destroy target alien symbol among 36 symbols (1 target, 35 non-target) using P300 responses",
+            feedback_type="real-time adaptive Riemannian classifier feedback",
+            stimulus_type="oddball",
+            stimulus_modalities=["visual", "auditory"],
+            primary_modality="multisensory",
+            mode="online",
         ),
         documentation=DocumentationMetadata(
             doi="10.5281/zenodo.3267301",
-            description="Brain Invaders Solo vs Collaboration multi-user P300 BCI",
-            investigators=["Korczowski, L.", "Ostaschenko, E.", "Congedo, M."],
-            institution="GIPSA-lab",
-            country="FR",
             repository="Zenodo",
-            data_url="https://zenodo.org/record/3267301",
-            license="CC BY 4.0",
-            publication_year=2019,
+            data_url="https://doi.org/10.5281/zenodo.3267301",
         ),
-        sessions_per_subject=1,
-        runs_per_session=1,
-        tags=Tags(pathology=["healthy"], modality=["visual"], type=["bci"]),
+        tags=Tags(
+            pathology=["Healthy"],
+            modality=["Visual"],
+            type=["Perception"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            data_state="no digital filter applied",
+            preprocessing_applied=False,
+            artifact_methods=["ICA"],
+            re_reference="Car",
+        ),
+        signal_processing=SignalProcessingMetadata(
+            classifiers=["MDM", "Riemannian"],
+            feature_extraction=["Covariance/Riemannian"],
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=["gaming", "vr_ar"],
+        ),
+        paradigm_specific=ParadigmSpecificMetadata(
+            detected_paradigm="p300",
+            n_repetitions=12,
+        ),
         data_processed=False,
     )
 
@@ -913,10 +1178,43 @@ class BI2015a(BaseDataset):
                         M. Sc. Violette Gautheret
     :Scientific Supervisor: Ph.D. Marco Congedo
 
-    Notes
-    -----
+
+    .. admonition:: Participants
+
+        - **Population**: spinal_cord_injury
+        - **Gender**: male: 36, female: 14
+
+
+    .. admonition:: Equipment
+
+        - **Amplifier**: g.tec
+        - **Electrodes**: Silver/Silver Chloride
+        - **Montage**: 10-10
+        - **Reference**: the right earlobe
+
+
+    .. admonition:: Experimental Protocol
+
+        P300
+
+
+    .. admonition:: Data Access
+
+        - **Repository**: Zenodo
+        - **DOI**: 10.5281/zenodo.3266930
+        - **URL**: https://doi.org/10.5281/zenodo.3266930
+
+
+
+    .. admonition:: Preprocessing
+
+        - **Data state**: no digital filter applied
+
+
+    Notes -----
 
     .. versionadded:: 0.4.6
+
 
     References
     ----------
@@ -930,41 +1228,94 @@ class BI2015a(BaseDataset):
     METADATA = DatasetMetadata(
         acquisition=AcquisitionMetadata(
             sampling_rate=512.0,
-            n_channels=33,
-            channel_types={"eeg": 32, "stim": 1},
-            sensor_type="active wet",
-            montage="standard_1020",
-            line_freq=50.0,
-            reference="electrode was placed on the right earlobe",
+            n_channels=32,
+            channel_types={"eeg": 32},
+            montage="10-10",
             hardware="g.tec",
+            sensor_type="Silver/Silver Chloride",
+            reference="right earlobe",
+            software="OpenVibe",
+            sensors=[
+                "Fp1",
+                "Fp2",
+                "F7",
+                "F3",
+                "Fz",
+                "F4",
+                "F8",
+                "FC5",
+                "FC1",
+                "FC2",
+                "FC6",
+                "T7",
+                "C3",
+                "Cz",
+                "C4",
+                "T8",
+                "CP5",
+                "CP1",
+                "CP2",
+                "CP6",
+                "P7",
+                "P3",
+                "Pz",
+                "P4",
+                "P8",
+                "PO9",
+                "O1",
+                "Oz",
+                "O2",
+                "PO10",
+                "AF7",
+                "AF8",
+            ],
+            line_freq=50.0,
+            auxiliary_channels=AuxiliaryChannelsMetadata(
+                has_eog=True,
+            ),
         ),
         participants=ParticipantMetadata(
-            n_subjects=43,
-            health_status="healthy",
-            clinical_population="spinal_cord_injury",
+            n_subjects=50,
             gender={"male": 36, "female": 14},
+            age_mean=23.7,
         ),
         experiment=ExperimentMetadata(
             paradigm="p300",
-            task_type="brain_invaders_flash_duration",
-            n_classes=2,
-            trial_duration=1.0,
-            tasks=["rest"],
+            n_classes=1,
+            class_labels=["rest"],
+            study_design="Visual P300 Brain-Computer Interface videogame (Brain Invaders) with 36 symbols (1 Target, 35 Non-Target) flashed pseudo-randomly",
+            feedback_type="visual (real-time adaptive Riemannian MDM classifier)",
+            stimulus_type="oddball",
+            stimulus_modalities=["visual", "auditory"],
+            primary_modality="multisensory",
+            mode="online",
         ),
         documentation=DocumentationMetadata(
-            doi="10.5281/zenodo.3266929",
-            description="Brain Invaders with modulation of flash duration",
-            investigators=["Korczowski, L.", "Cederhout, M.", "Congedo, M."],
-            institution="GIPSA-lab",
-            country="FR",
+            doi="10.5281/zenodo.3266930",
             repository="Zenodo",
-            data_url="https://zenodo.org/record/3266929",
-            license="CC BY 4.0",
-            publication_year=2019,
+            data_url="https://doi.org/10.5281/zenodo.3266930",
         ),
-        sessions_per_subject=3,
-        runs_per_session=1,
-        tags=Tags(pathology=["healthy"], modality=["visual"], type=["bci"]),
+        tags=Tags(
+            pathology=["Healthy"],
+            modality=["Visual"],
+            type=["Perception"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            data_state="no digital filter applied",
+            preprocessing_applied=False,
+            artifact_methods=["ICA"],
+        ),
+        signal_processing=SignalProcessingMetadata(
+            classifiers=["MDM", "Riemannian"],
+            feature_extraction=["Covariance/Riemannian"],
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=["gaming", "vr_ar"],
+        ),
+        paradigm_specific=ParadigmSpecificMetadata(
+            detected_paradigm="p300",
+            n_repetitions=12,
+        ),
         data_processed=False,
     )
 
@@ -1011,10 +1362,43 @@ class BI2015b(BaseDataset):
                         M. Sc. Violette Gautheret
     :Scientific Supervisor: Ph.D. Marco Congedo
 
-    Notes
-    -----
+
+    .. admonition:: Participants
+
+        - **Population**: spinal_cord_injury
+        - **Gender**: male: 36, female: 14
+
+
+    .. admonition:: Equipment
+
+        - **Amplifier**: g.tec
+        - **Electrodes**: Silver/Silver Chloride
+        - **Montage**: 10-10
+        - **Reference**: the right earlobe
+
+
+    .. admonition:: Experimental Protocol
+
+        P300
+
+
+    .. admonition:: Data Access
+
+        - **Repository**: Zenodo
+        - **DOI**: 10.5281/zenodo.3266930
+        - **URL**: https://doi.org/10.5281/zenodo.3266930
+
+
+
+    .. admonition:: Preprocessing
+
+        - **Data state**: raw (no digital filter applied)
+
+
+    Notes -----
 
     .. versionadded:: 0.4.6
+
 
     References
     ----------
@@ -1028,41 +1412,94 @@ class BI2015b(BaseDataset):
     METADATA = DatasetMetadata(
         acquisition=AcquisitionMetadata(
             sampling_rate=512.0,
-            n_channels=33,
-            channel_types={"eeg": 32, "stim": 1},
-            sensor_type="active wet",
-            montage="standard_1020",
-            line_freq=50.0,
-            reference="electrode was placed on the right earlobe",
+            n_channels=32,
+            channel_types={"eeg": 32},
+            montage="10-10",
             hardware="g.tec",
+            sensor_type="Silver/Silver Chloride",
+            reference="right earlobe",
+            software="OpenVibe",
+            sensors=[
+                "Fp1",
+                "Fp2",
+                "F7",
+                "F3",
+                "Fz",
+                "F4",
+                "F8",
+                "FC5",
+                "FC1",
+                "FC2",
+                "FC6",
+                "T7",
+                "C3",
+                "Cz",
+                "C4",
+                "T8",
+                "CP5",
+                "CP1",
+                "CP2",
+                "CP6",
+                "P7",
+                "P3",
+                "Pz",
+                "P4",
+                "P8",
+                "PO9",
+                "O1",
+                "Oz",
+                "O2",
+                "PO10",
+                "AF7",
+                "AF8",
+            ],
+            line_freq=50.0,
+            auxiliary_channels=AuxiliaryChannelsMetadata(
+                has_eog=True,
+            ),
         ),
         participants=ParticipantMetadata(
-            n_subjects=44,
-            health_status="healthy",
-            clinical_population="spinal_cord_injury",
+            n_subjects=50,
             gender={"male": 36, "female": 14},
+            age_mean=23.7,
         ),
         experiment=ExperimentMetadata(
             paradigm="p300",
-            task_type="brain_invaders_cooperation_competition",
-            n_classes=2,
-            trial_duration=1.0,
-            tasks=["rest"],
+            n_classes=1,
+            class_labels=["rest"],
+            study_design="Visual P300 BCI videogame (Brain Invaders) with 36 symbols grid (1 Target, 35 Non-Target) flashed pseudo-randomly",
+            feedback_type="real-time visual feedback via game interface",
+            stimulus_type="oddball",
+            stimulus_modalities=["visual", "auditory"],
+            primary_modality="multisensory",
+            mode="online",
         ),
         documentation=DocumentationMetadata(
-            doi="10.5281/zenodo.3267307",
-            description="Brain Invaders Cooperative vs Competitive multi-user P300",
-            investigators=["Korczowski, L.", "Cederhout, M.", "Congedo, M."],
-            institution="GIPSA-lab",
-            country="FR",
+            doi="10.5281/zenodo.3266930",
             repository="Zenodo",
-            data_url="https://zenodo.org/record/3267307",
-            license="CC BY 4.0",
-            publication_year=2019,
+            data_url="https://doi.org/10.5281/zenodo.3266930",
         ),
-        sessions_per_subject=1,
-        runs_per_session=4,
-        tags=Tags(pathology=["healthy"], modality=["visual"], type=["bci"]),
+        tags=Tags(
+            pathology=["Healthy"],
+            modality=["Visual"],
+            type=["Perception"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            data_state="raw (no digital filter applied)",
+            preprocessing_applied=False,
+            artifact_methods=["ICA"],
+        ),
+        signal_processing=SignalProcessingMetadata(
+            classifiers=["MDM", "Riemannian"],
+            feature_extraction=["Covariance/Riemannian"],
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=["gaming", "vr_ar"],
+        ),
+        paradigm_specific=ParadigmSpecificMetadata(
+            detected_paradigm="p300",
+            n_repetitions=12,
+        ),
         data_processed=False,
     )
 
@@ -1115,9 +1552,41 @@ class Cattan2019_VR(BaseDataset):
     screen_display: bool (default True)
         if True, return runs corresponding to P300 experiment on personal computer.
 
-    Notes
-    -----
+
+    .. admonition:: Participants
+
+        - **Population**: spinal_cord_injury
+
+
+    .. admonition:: Equipment
+
+        - **Amplifier**: g.tec
+        - **Electrodes**: wet electrodes
+        - **Montage**: 10-10
+        - **Reference**: the right earlobe
+
+
+    .. admonition:: Experimental Protocol
+
+        P300
+
+
+    .. admonition:: Data Access
+
+        - **Repository**: Zenodo
+        - **DOI**: 10.5281/zenodo.2605204
+        - **URL**: https://doi.org/10.5281/zenodo.2605204
+
+
+
+    .. admonition:: Preprocessing
+
+        - **Data state**: raw (no digital filter applied during acquisition)
+
+
+    Notes -----
     .. versionadded:: 0.5.0
+
 
     References
     ----------
@@ -1132,42 +1601,78 @@ class Cattan2019_VR(BaseDataset):
     METADATA = DatasetMetadata(
         acquisition=AcquisitionMetadata(
             sampling_rate=512.0,
-            n_channels=17,
-            channel_types={"eeg": 16, "stim": 1},
-            montage="standard_1005",
-            line_freq=50.0,
-            reference="right earlobe",
-            hardware="g.tec g.USBamp",
+            n_channels=16,
+            channel_types={"eeg": 16},
+            montage="10-10",
+            hardware="g.tec",
             sensor_type="wet electrodes",
-            filters="no digital filter",
+            reference="right earlobe",
+            software="OpenVibe",
+            filters="no digital filter applied",
+            sensors=[
+                "FC5",
+                "FC3",
+                "FC1",
+                "FCz",
+                "FC2",
+                "FC4",
+                "FC6",
+                "C3",
+                "C1",
+                "Cz",
+                "C2",
+                "C4",
+                "CP3",
+                "CPz",
+                "CP4",
+                "Pz",
+            ],
+            line_freq=50.0,
         ),
         participants=ParticipantMetadata(
             n_subjects=21,
-            health_status="healthy",
+            gender={"male": 14, "female": 7},
+            age_mean=26.38,
         ),
         experiment=ExperimentMetadata(
             paradigm="p300",
-            task_type="p300_speller",
-            n_classes=2,
-            trial_duration=1.0,
-            tasks=["target_vs_nontarget"],
-            feedback_type="none",
-            study_design="P300-based BCI comparing PC display vs VR headset conditions",
+            n_classes=1,
+            class_labels=["rest"],
+            trial_duration=5.0,
+            study_design="Visual P300 experiment with 6x6 matrix of white flashing crosses. Subject focuses on red-squared target while groups of 6 symbols flash.",
+            feedback_type="random feedback (70% probability of correct)",
+            stimulus_modalities=["visual"],
+            primary_modality="visual",
         ),
         documentation=DocumentationMetadata(
             doi="10.5281/zenodo.2605204",
-            description="EEG-based BCI experiment comparing P300 in Virtual Reality vs PC display",
-            investigators=["G. Cattan", "A. Andreev", "P.L.C. Rodrigues", "M. Congedo"],
-            institution="GIPSA-lab",
-            country="FR",
             repository="Zenodo",
-            data_url="https://zenodo.org/record/2605205",
-            license="CC BY 4.0",
-            publication_year=2019,
+            data_url="https://doi.org/10.5281/zenodo.2605204",
         ),
-        sessions_per_subject=1,
-        runs_per_session=2,
-        tags=Tags(pathology=["healthy"], modality=["visual"], type=["bci"]),
+        tags=Tags(
+            pathology=["Healthy"],
+            modality=["Visual"],
+            type=["Perception"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            data_state="raw (no digital filter applied during acquisition)",
+            preprocessing_applied=False,
+            artifact_methods=["ICA"],
+            re_reference="car",
+        ),
+        cross_validation=CrossValidationMetadata(
+            evaluation_type=["cross_subject"],
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=["gaming", "vr_ar", "communication"],
+        ),
+        paradigm_specific=ParadigmSpecificMetadata(
+            detected_paradigm="p300",
+            n_repetitions=12,
+        ),
+        data_structure=DataStructureMetadata(
+            n_blocks=12,
+        ),
         data_processed=False,
     )
 

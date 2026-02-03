@@ -4,10 +4,16 @@ from mne.io import Raw
 
 from moabb.datasets.metadata.schema import (
     AcquisitionMetadata,
+    AuxiliaryChannelsMetadata,
+    BCIApplicationMetadata,
+    CrossValidationMetadata,
     DatasetMetadata,
-    DocumentationMetadata,
     ExperimentMetadata,
+    FrequencyBands,
+    ParadigmSpecificMetadata,
     ParticipantMetadata,
+    PreprocessingMetadata,
+    SignalProcessingMetadata,
     Tags,
 )
 
@@ -38,6 +44,24 @@ class AlexMI(BaseDataset):
 
     references
     ----------
+
+    .. admonition:: Participants
+
+        - **Population**: spinal_cord_injury
+
+    .. admonition:: Equipment
+
+        - **Reference**: car
+
+    .. admonition:: Experimental Protocol
+
+        P300
+
+
+    .. admonition:: Preprocessing
+
+        - **Steps**: spatial filtering, Common Spatial Pattern (CSP), frequency filtering
+
     .. [1] Barachant, A., 2012. Commande robuste d'un effecteur par une
            interface cerveau machine EEG asynchrone (Doctoral dissertation,
            Université de Grenoble).
@@ -46,63 +70,99 @@ class AlexMI(BaseDataset):
 
     METADATA = DatasetMetadata(
         acquisition=AcquisitionMetadata(
-            sampling_rate=512.0,
-            n_channels=17,
-            channel_types={"eeg": 16, "stim": 1},
-            sensors=[
-                "Fpz",
-                "F7",
-                "F3",
-                "Fz",
-                "F4",
-                "F8",
-                "T7",
-                "C3",
-                "Cz",
-                "C4",
-                "T8",
-                "P7",
-                "P3",
-                "Pz",
-                "P4",
-                "P8",
-            ],
-            hardware="g.tec g.USBamp",
-            sensor_type="wet",
-            montage="standard_1020",
-            line_freq=50.0,
-            filters="0.1-100 Hz bandpass, 50 Hz notch",
-            ground="AFz",
-            reference="car",
+            sampling_rate=250.0,
+            n_channels=22,
+            channel_types={"eeg": 22},
+            reference="Car",
             software="OpenViBE.",
+            sensors=[
+                "Fz",
+                "FC3",
+                "FC1",
+                "FCz",
+                "FC2",
+                "FC4",
+                "C5",
+                "C3",
+                "C1",
+                "Cz",
+                "C2",
+                "C4",
+                "C6",
+                "CP3",
+                "CP1",
+                "CPz",
+                "CP2",
+                "CP4",
+                "P1",
+                "Pz",
+                "P2",
+                "POz",
+            ],
+            line_freq=50.0,
+            auxiliary_channels=AuxiliaryChannelsMetadata(
+                other_physiological=["gsr", "ppg"],
+            ),
         ),
         participants=ParticipantMetadata(
             n_subjects=8,
-            health_status="healthy",
-            clinical_population="spinal_cord_injury",
         ),
         experiment=ExperimentMetadata(
             paradigm="imagery",
-            task_type="right_hand_feet_rest",
-            n_classes=3,
-            trial_duration=3.0,
-            tasks=["rest"],
+            n_classes=1,
+            class_labels=["rest"],
+            study_design="Brain-switch based on motor imagery for asynchronous BCI control of an effector",
+            feedback_type="visual (primarily), auditory, haptic (rare cases)",
+            stimulus_type="avatar",
+            stimulus_modalities=["visual"],
+            primary_modality="visual",
         ),
-        documentation=DocumentationMetadata(
-            doi="10.5281/zenodo.806023",
-            description="Motor imagery dataset from A. Barachant PhD dissertation",
-            investigators=["Barachant, A."],
-            institution="University of Grenoble",
-            country="FR",
-            repository="Zenodo",
-            data_url="https://zenodo.org/record/806023",
-            license="CC BY 4.0",
-            publication_year=2012,
+        tags=Tags(
+            pathology=["Other"],
+            modality=["Visual"],
+            type=["Clinical/Intervention"],
         ),
-        sessions_per_subject=1,
-        runs_per_session=1,
-        tags=Tags(pathology=["healthy"], modality=["motor"], type=["bci"]),
-        data_processed=False,
+        preprocessing=PreprocessingMetadata(
+            artifact_methods=["ICA"],
+            re_reference="car",
+        ),
+        signal_processing=SignalProcessingMetadata(
+            classifiers=[
+                "LDA",
+                "SVM",
+                "MDM",
+                "xDAWN",
+                "Riemannian",
+                "kNN",
+                "Naive Bayes",
+            ],
+            feature_extraction=[
+                "CSP",
+                "FBCSP",
+                "ERD",
+                "ERS",
+                "PSD",
+                "Covariance/Riemannian",
+                "AR",
+                "ICA",
+                "xDAWN",
+            ],
+            frequency_bands=FrequencyBands(
+                alpha=[8.0, 12.0],
+                mu=[8, 12],
+            ),
+        ),
+        cross_validation=CrossValidationMetadata(
+            cv_method="30-fold",
+            cv_folds=30,
+            evaluation_type=["cross_session"],
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=["vr_ar", "communication"],
+        ),
+        paradigm_specific=ParadigmSpecificMetadata(
+            detected_paradigm="p300",
+        ),
     )
 
     def __init__(self):

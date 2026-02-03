@@ -921,12 +921,12 @@ def get_dataset_description(dataset_class) -> Optional[str]:
         # Parse first paragraph as abstract
         doc = dataset_class.__doc__.strip()
         # Split on double newlines to get paragraphs
-        paragraphs = doc.split("\n\n")
+        paragraphs = doc.split("  ")
         if paragraphs:
             # Clean up the first paragraph
             first_para = paragraphs[0].strip()
             # Remove any leading indentation from subsequent lines
-            lines = first_para.split("\n")
+            lines = first_para.split(" ")
             cleaned_lines = [lines[0]] + [line.strip() for line in lines[1:]]
             return " ".join(cleaned_lines)
     return None

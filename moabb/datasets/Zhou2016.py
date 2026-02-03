@@ -13,10 +13,20 @@ from mne.utils import _open_lock
 
 from moabb.datasets.metadata.schema import (
     AcquisitionMetadata,
+    AuxiliaryChannelsMetadata,
+    BCIApplicationMetadata,
+    CrossValidationMetadata,
     DatasetMetadata,
+    DataStructureMetadata,
     DocumentationMetadata,
     ExperimentMetadata,
+    FilterDetails,
+    FrequencyBands,
+    ParadigmSpecificMetadata,
     ParticipantMetadata,
+    PerformanceMetadata,
+    PreprocessingMetadata,
+    SignalProcessingMetadata,
     Tags,
 )
 
@@ -53,6 +63,30 @@ class Zhou2016(BaseBIDSDataset):
     tasks of the left hand, right hand or foot movement respectively according
     to the cue direction, and try to relax during the black screen.
 
+
+    .. admonition:: Participants
+
+        - **Population**: healthy
+
+    .. admonition:: Equipment
+
+        - **Amplifier**: BCI2000
+        - **Montage**: 10-20
+        - **Reference**: car
+
+    .. admonition:: Experimental Protocol
+
+        Motor Imagery
+
+    .. admonition:: Preprocessing
+
+        - **Bandpass filter**: 0.1-100.0 Hz
+        - **Notch filter**: [50] Hz
+
+    .. admonition:: Data Access
+
+        - **DOI**: 10.1371/journal.pone.0162657
+
     References
     ----------
 
@@ -65,40 +99,110 @@ class Zhou2016(BaseBIDSDataset):
     METADATA = DatasetMetadata(
         acquisition=AcquisitionMetadata(
             sampling_rate=250.0,
-            n_channels=14,
-            channel_types={"eeg": 14},
-            montage="standard_1005",
-            line_freq=50.0,
-            filters="50 Hz notch",
-            ground="mastoid",
-            reference="and the Fig 1",
+            n_channels=9,
+            channel_types={"eeg": 9},
+            montage="10-20",
             hardware="BCI2000",
+            reference="Car",
+            ground="mastoid",
+            software="BCI2000",
+            filters="50 Hz notch",
+            sensors=[
+                "FP1",
+                "FP2",
+                "FC3",
+                "FCz",
+                "FC4",
+                "C3",
+                "Cz",
+                "C4",
+                "CP3",
+                "CPz",
+                "CP4",
+                "O1",
+                "Oz",
+                "O2",
+            ],
+            line_freq=50.0,
+            auxiliary_channels=AuxiliaryChannelsMetadata(
+                has_eog=True,
+                eog_type=["horizontal"],
+                has_emg=True,
+                other_physiological=["ecg", "gsr"],
+            ),
         ),
         participants=ParticipantMetadata(
             n_subjects=4,
             health_status="healthy",
+            gender={"male": 1, "female": 3},
+            bci_experience="prior experience in the experimental paradigm",
         ),
         experiment=ExperimentMetadata(
             paradigm="imagery",
-            task_type="3_class",
             n_classes=3,
-            trial_duration=5.0,
-            tasks=["rest", "feet", "left_hand", "right_hand"],
+            class_labels=["right_hand", "left_hand", "feet"],
+            trial_duration=9.0,
+            study_design="Three-class motor imagery (left hand, right hand, foot movement imagination) according to cue direction",
+            feedback_type="visual cue (red arrow)",
+            stimulus_type="avatar",
+            stimulus_modalities=["visual"],
+            primary_modality="visual",
+            mode="online",
         ),
         documentation=DocumentationMetadata(
             doi="10.1371/journal.pone.0162657",
-            description="Motor imagery dataset - 3 class",
-            investigators=["B. Zhou", "X. Wu", "Z. Lv", "L. Zhang", "X. Guo"],
-            institution="Anhui University",
-            country="CN",
-            repository="Zenodo",
-            data_url="https://zenodo.org/record/16534752",
-            license="Public Domain",
-            publication_year=2016,
         ),
-        sessions_per_subject=3,
-        runs_per_session=2,
-        tags=Tags(pathology=["healthy"], modality=["motor"], type=["bci"]),
+        tags=Tags(
+            pathology=["Healthy"],
+            modality=["Motor"],
+            type=["Motor"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            data_state="raw EEG available",
+            preprocessing_applied=True,
+            preprocessing_steps=["bandpass filtering"],
+            filter_details=FilterDetails(
+                highpass_hz=8,
+                lowpass_hz=30,
+                bandpass={"low_cutoff_hz": 0.1, "high_cutoff_hz": 100.0},
+                notch_hz=[50],
+                filter_type="zero-phase",
+            ),
+            artifact_methods=["trial rejection", "ICA"],
+            re_reference="car",
+        ),
+        signal_processing=SignalProcessingMetadata(
+            classifiers=["LDA"],
+            feature_extraction=[
+                "CSP",
+                "Bandpower",
+                "ERD",
+                "ERS",
+                "Covariance/Riemannian",
+                "Time-Frequency",
+                "ICA",
+            ],
+            frequency_bands=FrequencyBands(
+                analyzed_range=[8.0, 30.0],
+            ),
+        ),
+        cross_validation=CrossValidationMetadata(
+            evaluation_type=["cross_session"],
+        ),
+        performance=PerformanceMetadata(
+            accuracy_percent=80.6,
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=["vr_ar", "communication"],
+            environment="outdoor",
+        ),
+        paradigm_specific=ParadigmSpecificMetadata(
+            detected_paradigm="motor_imagery",
+        ),
+        data_structure=DataStructureMetadata(
+            n_trials=25,
+            trials_context="per_class",
+        ),
         data_processed=True,
     )
 

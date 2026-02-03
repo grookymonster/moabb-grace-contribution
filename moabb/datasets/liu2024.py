@@ -16,10 +16,20 @@ from moabb.datasets import download as dl
 from moabb.datasets.base import BaseDataset
 from moabb.datasets.metadata.schema import (
     AcquisitionMetadata,
+    AuxiliaryChannelsMetadata,
+    BCIApplicationMetadata,
+    CrossValidationMetadata,
     DatasetMetadata,
+    DataStructureMetadata,
     DocumentationMetadata,
     ExperimentMetadata,
+    FilterDetails,
+    FrequencyBands,
+    ParadigmSpecificMetadata,
     ParticipantMetadata,
+    PerformanceMetadata,
+    PreprocessingMetadata,
+    SignalProcessingMetadata,
     Tags,
 )
 from moabb.datasets.utils import stim_channels_with_selected_ids
@@ -62,6 +72,35 @@ class Liu2024(BaseDataset):
     0.4 μVrms, and the resolution was 24 bits. The acquisition impedance was less than or equal to 20 kΩ. The sampling frequency
     was 500 Hz.
 
+
+    .. admonition:: Participants
+
+        - **Population**: healthy
+        - **Age**: 56.7 years
+
+    .. admonition:: Equipment
+
+        - **Amplifier**: Emotiv EPOC
+        - **Electrodes**: Ag/AgCl
+        - **Montage**: 10-10
+        - **Reference**: car
+
+    .. admonition:: Data Access
+
+        - **DOI**: 10.1038/s41597-023-02787-8
+
+
+    .. admonition:: Experimental Protocol
+
+        Hand-grip motor imagery of left or right hand grasping a spherical object, guided by video of gripping motion
+        - **Feedback**: video of gripping motion played during MI
+
+    .. admonition:: Preprocessing
+
+        - **Data state**: raw (.mat) and preprocessed (.edf) available
+        - **Bandpass filter**: 0.5-40 Hz
+        - **Steps**: baseline removal with mean removal method, time-domain bandpass filtering 0.5-40 Hz, segmentation into trials by marker
+
     References
     ----------
 
@@ -72,8 +111,7 @@ class Liu2024(BaseDataset):
        for brain computer interface in acute stroke patients. Sci Data 11, 131
        (2024). DOI: https://doi.org/10.1038/s41597-023-02787-8
 
-    Notes
-    -----
+    Notes -----
     To add the break and instruction events, set the `break_events` and
     `instr_events` parameters to True while instantiating the class.
 
@@ -84,46 +122,134 @@ class Liu2024(BaseDataset):
     METADATA = DatasetMetadata(
         acquisition=AcquisitionMetadata(
             sampling_rate=500.0,
-            n_channels=31,
-            channel_types={"eeg": 29, "eog": 2},
+            n_channels=30,
+            channel_types={"eeg": 30},
+            montage="10-10",
             hardware="ZhenTec NT1 wireless multichannel EEG acquisition system",
-            sensor_type="Ag/AgCl semi-dry electrodes",
-            reference="CPz",
-            ground="FPz",
-            montage="standard_1010",
+            sensor_type="Ag/AgCl",
+            reference="Car",
+            software="EEGLAB",
+            impedance_threshold_kohm=20,
+            sensors=[
+                "Fp1",
+                "Fp2",
+                "F7",
+                "F3",
+                "Fz",
+                "F4",
+                "F8",
+                "FC5",
+                "FC1",
+                "FC2",
+                "FC6",
+                "T7",
+                "C3",
+                "Cz",
+                "C4",
+                "T8",
+                "CP5",
+                "CP1",
+                "CP2",
+                "CP6",
+                "P7",
+                "P3",
+                "Pz",
+                "P4",
+                "P8",
+                "PO9",
+                "O1",
+                "Oz",
+                "O2",
+                "PO10",
+            ],
             line_freq=50.0,
+            auxiliary_channels=AuxiliaryChannelsMetadata(
+                has_eog=True,
+                eog_channels=2,
+                eog_type=["horizontal", "vertical"],
+                other_physiological=["gsr"],
+            ),
         ),
         participants=ParticipantMetadata(
             n_subjects=50,
-            health_status="patients",
-            clinical_population="acute stroke",
+            health_status="healthy",
             gender={"male": 39, "female": 11},
-            age_mean=56.70,
-            age_std=10.57,
-            age_min=31.0,
-            age_max=77.0,
+            age_mean=56.7,
         ),
         experiment=ExperimentMetadata(
             paradigm="imagery",
-            task_type="left_right_hand",
-            n_classes=2,
-            trial_duration=4.0,
-            tasks=["rest"],
+            n_classes=1,
+            class_labels=["rest"],
+            trial_duration=8,
+            study_design="Imagining grasping a spherical object with left or right hand while watching a video of gripping motion",
+            feedback_type="video of gripping motion played during MI",
+            stimulus_type="avatar",
+            mode="online",
         ),
         documentation=DocumentationMetadata(
             doi="10.1038/s41597-023-02787-8",
-            description="Motor imagery EEG dataset from acute stroke patients",
-            investigators=["H. Liu", "X. Lv", "P. Wei", "H. Wang"],
-            institution="Xuanwu Hospital of Capital Medical University",
-            country="CN",
-            repository="Figshare",
-            data_url="https://figshare.com/articles/dataset/MI-BCI_EEG_data/21679035",
-            license="CC BY 4.0",
-            publication_year=2024,
         ),
-        sessions_per_subject=1,
-        runs_per_session=1,
-        tags=Tags(pathology=["stroke"], modality=["motor"], type=["bci"]),
+        tags=Tags(
+            pathology=["Healthy"],
+            modality=["Motor"],
+            type=["Motor"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            data_state="both raw and preprocessed data available",
+            preprocessing_applied=True,
+            preprocessing_steps=["baseline removal", "bandpass filtering"],
+            filter_details=FilterDetails(
+                highpass_hz=0.5,
+                lowpass_hz=40,
+                bandpass=[0.5, 40],
+                filter_type="Butterworth",
+            ),
+            artifact_methods=["ICA"],
+            re_reference="car",
+        ),
+        signal_processing=SignalProcessingMetadata(
+            classifiers=[
+                "LDA",
+                "SVM",
+                "CNN",
+                "Neural Network",
+                "MDM",
+                "EEGNet",
+                "Riemannian",
+            ],
+            feature_extraction=[
+                "CSP",
+                "FBCSP",
+                "ERD",
+                "ERS",
+                "Wavelet",
+                "Covariance/Riemannian",
+                "Time-Frequency",
+                "Tangent Space",
+            ],
+            frequency_bands=FrequencyBands(
+                alpha=[8.0, 15.0],
+                analyzed_range=[0.5, 40.0],
+            ),
+        ),
+        cross_validation=CrossValidationMetadata(
+            cv_method="10-fold",
+            cv_folds=10,
+            evaluation_type=["transfer_learning"],
+        ),
+        performance=PerformanceMetadata(
+            accuracy_percent=72.21,
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=["prosthetic", "smart_home", "vr_ar", "communication"],
+            environment="outdoor",
+        ),
+        paradigm_specific=ParadigmSpecificMetadata(
+            detected_paradigm="mi",
+        ),
+        data_structure=DataStructureMetadata(
+            n_trials=40,
+        ),
         data_processed=True,
     )
 
@@ -211,8 +337,7 @@ class Liu2024(BaseDataset):
         np.ndarray
             Array of encoded event types.
 
-        Notes
-        -----
+        Notes -----
         The 'trial_type' variable can take the following values:
          - 1 : Left hand
          - 2 : Right hand

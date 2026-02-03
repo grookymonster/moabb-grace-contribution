@@ -10,10 +10,18 @@ from scipy.io import loadmat
 
 from moabb.datasets.metadata.schema import (
     AcquisitionMetadata,
+    AuxiliaryChannelsMetadata,
+    BCIApplicationMetadata,
+    CrossValidationMetadata,
     DatasetMetadata,
+    DataStructureMetadata,
     DocumentationMetadata,
     ExperimentMetadata,
+    FilterDetails,
+    ParadigmSpecificMetadata,
     ParticipantMetadata,
+    PreprocessingMetadata,
+    SignalProcessingMetadata,
     Tags,
 )
 
@@ -36,6 +44,28 @@ class Nakanishi2015(BaseDataset):
 
     references
     ----------
+
+    .. admonition:: Participants
+
+        - **Population**: healthy
+
+    .. admonition:: Equipment
+
+        - **Amplifier**: Biosemi ActiveTwo
+        - **Reference**: the CMS
+
+    .. admonition:: Experimental Protocol
+
+        Steady-State Visual Evoked Potential
+
+    .. admonition:: Preprocessing
+
+        - **Bandpass filter**: 6.0-80.0 Hz
+
+    .. admonition:: Data Access
+
+        - **DOI**: 10.1371/journal.pone.0140703
+
     .. [1] Masaki Nakanishi, Yijun Wang, Yu-Te Wang and Tzyy-Ping Jung,
            "A Comparison Study of Canonical Correlation Analysis Based Methods for
            Detecting Steady-State Visual Evoked Potentials," PLoS One, vol.10, no.10,
@@ -45,43 +75,68 @@ class Nakanishi2015(BaseDataset):
 
     METADATA = DatasetMetadata(
         acquisition=AcquisitionMetadata(
-            sampling_rate=256.0,
+            sampling_rate=2048.0,
             n_channels=8,
             channel_types={"eeg": 8},
-            sensors=["PO7", "PO3", "POz", "PO4", "PO8", "O1", "Oz", "O2"],
-            montage="standard_1005",
-            line_freq=60.0,
-            reference="signals",
             hardware="Biosemi ActiveTwo",
+            reference="cms",
+            software="MATLAB",
+            sensors=["PO7", "PO3", "POz", "PO4", "PO8", "O1", "Oz", "O2"],
+            line_freq=60.0,
+            auxiliary_channels=AuxiliaryChannelsMetadata(
+                other_physiological=["ppg"],
+            ),
         ),
         participants=ParticipantMetadata(
-            n_subjects=9,
+            n_subjects=10,
             health_status="healthy",
         ),
         experiment=ExperimentMetadata(
             paradigm="ssvep",
-            task_type="12_frequency_jfpm",
-            n_classes=12,
-            trial_duration=4.15,
-            tasks=["rest"],
-            study_design="Steady-State Visual Evoked Potential",
+            n_classes=1,
+            class_labels=["rest"],
+            trial_duration=7.0,
+            study_design="12-class SSVEP target identification task",
+            stimulus_type="flickering",
+            stimulus_modalities=["visual"],
+            primary_modality="visual",
+            synchronicity="asynchronous",
+            mode="both",
         ),
         documentation=DocumentationMetadata(
             doi="10.1371/journal.pone.0140703",
-            description="12-class JFPM SSVEP dataset comparing CCA-based methods",
-            investigators=["M. Nakanishi", "Y. Wang", "Y.T. Wang", "T.P. Jung"],
-            institution="UCSD / Swartz Center for Computational Neuroscience",
-            country="US",
-            repository="GitHub",
-            data_url="https://github.com/mnakanishi/12JFPM_SSVEP",
-            publication_year=2015,
-            license="Public Domain",
-            funding=["Grant Award Award"],
+            funding=["NIH\nGrant", "Grant Award Award"],
         ),
-        sessions_per_subject=1,
-        runs_per_session=15,
-        tags=Tags(pathology=["healthy"], modality=["visual"], type=["bci"]),
-        data_processed=False,
+        tags=Tags(
+            pathology=["Healthy"],
+            modality=["Visual"],
+            type=["Perception"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            filter_details=FilterDetails(
+                bandpass={"low_cutoff_hz": 6.0, "high_cutoff_hz": 80.0},
+                filter_type="IIR",
+            ),
+            artifact_methods=["ICA"],
+            downsampled_to_hz=256,
+        ),
+        signal_processing=SignalProcessingMetadata(
+            classifiers=["CCA"],
+            feature_extraction=["CSP"],
+        ),
+        cross_validation=CrossValidationMetadata(
+            cv_method="leave-one-out",
+            evaluation_type=["cross_subject"],
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=["vr_ar", "communication"],
+        ),
+        paradigm_specific=ParadigmSpecificMetadata(
+            detected_paradigm="ssvep",
+        ),
+        data_structure=DataStructureMetadata(
+            n_trials=14,
+        ),
     )
 
     def __init__(self):

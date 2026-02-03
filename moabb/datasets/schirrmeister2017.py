@@ -9,10 +9,18 @@ from moabb.datasets import download as dl
 from moabb.datasets.base import BaseDataset
 from moabb.datasets.metadata.schema import (
     AcquisitionMetadata,
+    BCIApplicationMetadata,
+    CrossValidationMetadata,
     DatasetMetadata,
+    DataStructureMetadata,
     DocumentationMetadata,
     ExperimentMetadata,
+    FilterDetails,
+    FrequencyBands,
     ParticipantMetadata,
+    PerformanceMetadata,
+    PreprocessingMetadata,
+    SignalProcessingMetadata,
     Tags,
 )
 
@@ -56,6 +64,31 @@ class Schirrmeister2017(BaseDataset):
     2004).  The experiment was approved by the ethical committee of the University
     of Freiburg.
 
+
+    .. admonition:: Participants
+
+        - **Population**: ALS
+
+    .. admonition:: Equipment
+
+        - **Amplifier**: Emotiv EPOC
+
+    .. admonition:: Data Access
+
+        - **Repository**: GitHub
+        - **DOI**: 10.1002/hbm.23730
+        - **URL**: https://github.com/robintibor/braindecode/
+
+
+    .. admonition:: Experimental Protocol
+
+        Imagined or executed movements including hand (left), hand (right), feet, and rest conditions
+
+    .. admonition:: Preprocessing
+
+        - **Data state**: preprocessed signals of recorded electrodes
+        - **Bandpass filter**: multiple frequency bands (filter bank approach)
+
     References
     ----------
 
@@ -66,53 +99,91 @@ class Schirrmeister2017(BaseDataset):
 
     METADATA = DatasetMetadata(
         acquisition=AcquisitionMetadata(
-            sampling_rate=500.0,
-            n_channels=128,
-            channel_types={"eeg": 128},
-            montage="standard_1005",
-            line_freq=50.0,
+            sampling_rate=250.0,
+            n_channels=22,
+            channel_types={"eeg": 22},
             hardware="Emotiv EPOC",
+            reference="Car",
+            sensors=[
+                "Fz",
+                "FC3",
+                "FC1",
+                "FCz",
+                "FC2",
+                "FC4",
+                "C5",
+                "C3",
+                "C1",
+                "Cz",
+                "C2",
+                "C4",
+                "C6",
+                "CP3",
+                "CP1",
+                "CPz",
+                "CP2",
+                "CP4",
+                "P1",
+                "Pz",
+                "P2",
+                "POz",
+            ],
+            line_freq=50.0,
         ),
         participants=ParticipantMetadata(
             n_subjects=14,
-            health_status="healthy",
             gender={"female": 6, "male": 8},
-            age_mean=27.2,
-            age_std=3.6,
-            handedness={"right": 12, "left": 2},
-            clinical_population="ALS",
         ),
         experiment=ExperimentMetadata(
             paradigm="imagery",
-            task_type="4_class_motor_execution",
-            n_classes=4,
-            trial_duration=4.0,
-            tasks=["feet", "rest"],
+            n_classes=2,
+            class_labels=["feet", "rest"],
+            study_design="Imagined or executed movements including hand (left), hand (right), feet, and rest conditions",
+            stimulus_type="avatar",
+            mode="both",
         ),
         documentation=DocumentationMetadata(
             doi="10.1002/hbm.23730",
-            description="High-Gamma Dataset for deep learning motor imagery/execution",
-            investigators=[
-                "R.T. Schirrmeister",
-                "J.T. Springenberg",
-                "L.D.J. Fiederer",
-                "M. Glasstetter",
-                "K. Eggensperger",
-                "M. Tangermann",
-                "F. Hutter",
-                "W. Burgard",
-                "T. Ball",
-            ],
-            institution="University of Freiburg",
-            country="DE",
-            repository="GIN",
-            data_url="https://gin.g-node.org/robintibor/high-gamma-dataset",
-            publication_year=2017,
-            license="CC BY-SA 4.0",
+            repository="GitHub",
+            data_url="https://github.com/robintibor/braindecode/",
         ),
-        sessions_per_subject=1,
-        runs_per_session=2,
-        tags=Tags(pathology=["healthy"], modality=["motor"], type=["bci"]),
+        tags=Tags(
+            pathology=["Healthy"],
+            modality=["Other"],
+            type=["Other"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            data_state="preprocessed signals of recorded electrodes",
+            preprocessing_applied=True,
+            filter_details=FilterDetails(
+                bandpass="multiple frequency bands (filter bank approach)",
+                filter_type="Butterworth",
+            ),
+            artifact_methods=["ICA"],
+            re_reference="car",
+        ),
+        signal_processing=SignalProcessingMetadata(
+            classifiers=["CNN", "RNN", "Neural Network", "EEGNet", "xDAWN"],
+            feature_extraction=["CSP", "FBCSP", "Bandpower", "ERD", "xDAWN"],
+            frequency_bands=FrequencyBands(
+                alpha=[7.0, 13.0],
+                analyzed_range=[20.0, 30.0],
+            ),
+        ),
+        cross_validation=CrossValidationMetadata(
+            cv_method="holdout",
+            evaluation_type=["within_subject", "cross_subject", "transfer_learning"],
+        ),
+        performance=PerformanceMetadata(
+            accuracy_percent=67.8,
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=["gaming", "vr_ar"],
+            environment="outdoor",
+        ),
+        data_structure=DataStructureMetadata(
+            n_trials={"BCI_competition_IV_2a": 288, "High_Gamma_Dataset": 880},
+        ),
         data_processed=True,
     )
 

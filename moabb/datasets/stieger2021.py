@@ -14,10 +14,19 @@ from scipy.io import loadmat
 import moabb.datasets.download as dl
 from moabb.datasets.metadata.schema import (
     AcquisitionMetadata,
+    AuxiliaryChannelsMetadata,
+    BCIApplicationMetadata,
+    CrossValidationMetadata,
     DatasetMetadata,
+    DataStructureMetadata,
     DocumentationMetadata,
     ExperimentMetadata,
+    FilterDetails,
+    FrequencyBands,
+    ParadigmSpecificMetadata,
     ParticipantMetadata,
+    PreprocessingMetadata,
+    SignalProcessingMetadata,
     Tags,
 )
 
@@ -115,6 +124,30 @@ class Stieger2021(BaseDataset):
     the normalized control signals were used to update the position of
     the cursor every 40 ms.
 
+
+    .. admonition:: Equipment
+
+        - **Amplifier**: Neuroscan SynAmps
+        - **Montage**: 10-10
+        - **Reference**: target presentation
+
+    .. admonition:: Preprocessing
+
+        - **Bandpass filter**: 8.0-30.0 Hz
+        - **Notch filter**: [60] Hz
+
+    .. admonition:: Data Access
+
+        - **Repository**: GitHub
+        - **DOI**: 10.1038/s41597-021-00883-1
+        - **URL**: https://github.com/bfinl/BCI_Data_Paper
+
+
+    .. admonition:: Experimental Protocol
+
+        Cursor control using motor imagery: left/right hand imagery for horizontal movement, both hands for up, rest for down. 2D cursor control to reach targets.
+        - **Feedback**: continuous online visual feedback (cursor movement)
+
     References
     ----------
 
@@ -123,8 +156,7 @@ class Stieger2021(BaseDataset):
            learning in a large population. Scientific Data, 8(1), 98.
            https://doi.org/10.1038/s41597-021-00883-1
 
-    Notes
-    -----
+    Notes -----
     .. versionadded:: 1.1.0
     """
 
@@ -133,41 +165,147 @@ class Stieger2021(BaseDataset):
             sampling_rate=1000.0,
             n_channels=64,
             channel_types={"eeg": 64},
-            montage="standard_1005",
-            line_freq=60.0,
-            filters="60 Hz notch",
-            reference="target presentation",
+            montage="10-10",
             hardware="Neuroscan SynAmps",
+            sensor_type="Neuroscan Quik-Cap",
+            reference="Car",
+            software="BCI2000",
+            filters="60 Hz notch",
+            sensors=[
+                "Fp1",
+                "Fpz",
+                "Fp2",
+                "AF7",
+                "AF3",
+                "AFz",
+                "AF4",
+                "AF8",
+                "F7",
+                "F5",
+                "F3",
+                "F1",
+                "Fz",
+                "F2",
+                "F4",
+                "F6",
+                "F8",
+                "FT7",
+                "FC5",
+                "FC3",
+                "FC1",
+                "FCz",
+                "FC2",
+                "FC4",
+                "FC6",
+                "FT8",
+                "T7",
+                "C5",
+                "C3",
+                "C1",
+                "Cz",
+                "C2",
+                "C4",
+                "C6",
+                "T8",
+                "TP7",
+                "CP5",
+                "CP3",
+                "CP1",
+                "CPz",
+                "CP2",
+                "CP4",
+                "CP6",
+                "TP8",
+                "P7",
+                "P5",
+                "P3",
+                "P1",
+                "Pz",
+                "P2",
+                "P4",
+                "P6",
+                "P8",
+                "PO7",
+                "PO3",
+                "POz",
+                "PO4",
+                "PO8",
+                "O1",
+                "Oz",
+                "O2",
+                "Iz",
+            ],
+            line_freq=60.0,
+            auxiliary_channels=AuxiliaryChannelsMetadata(
+                other_physiological=["gsr"],
+            ),
         ),
         participants=ParticipantMetadata(
-            n_subjects=62,
-            health_status="healthy",
-            handedness={"right": 62},
-            clinical_population="spinal_cord_injury",
+            n_subjects=76,
+            health_status="locked_in_syndrome",
+            gender={"male": 13, "female": 49},
         ),
         experiment=ExperimentMetadata(
             paradigm="imagery",
-            task_type="continuous_cursor_control",
-            n_classes=4,
-            trial_duration=3.0,
-            tasks=["tongue", "rest", "left_hand", "right_hand"],
+            n_classes=3,
+            class_labels=["right_hand", "left_hand", "tongue"],
+            feedback_type="continuous online visual feedback (cursor movement)",
+            stimulus_type="cursor_feedback",
+            stimulus_modalities=["visual", "tactile"],
+            primary_modality="multisensory",
+            mode="both",
+            has_training_test_split=True,
         ),
         documentation=DocumentationMetadata(
             doi="10.1038/s41597-021-00883-1",
-            description="Large-scale continuous sensorimotor rhythm BCI learning dataset",
-            investigators=["J.R. Stieger", "S.A. Engel", "B. He"],
-            institution="Carnegie Mellon University",
-            country="US",
-            repository="Figshare",
-            data_url="https://doi.org/10.6084/m9.figshare.13123148",
-            publication_year=2021,
-            license="CC BY 4.0",
+            repository="GitHub",
+            data_url="https://github.com/bfinl/BCI_Data_Paper",
             funding=["NIH under"],
         ),
-        sessions_per_subject=11,
-        runs_per_session=1,
-        tags=Tags(pathology=["healthy"], modality=["motor"], type=["bci"]),
-        data_processed=True,
+        tags=Tags(
+            pathology=["Healthy"],
+            modality=["Visual"],
+            type=["Perception"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            filter_details=FilterDetails(
+                bandpass={"low_cutoff_hz": 8.0, "high_cutoff_hz": 30.0},
+                notch_hz=[60],
+            ),
+            artifact_methods=["EMG removal", "ICA"],
+            re_reference="Car",
+        ),
+        signal_processing=SignalProcessingMetadata(
+            classifiers=["CNN", "RNN", "Neural Network", "EEGNet"],
+            feature_extraction=["ERD", "ERS", "Time-Frequency", "AR"],
+            frequency_bands=FrequencyBands(
+                alpha=[8, 13],
+                mu=[8, 12],
+            ),
+        ),
+        cross_validation=CrossValidationMetadata(
+            evaluation_type=["cross_session"],
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=[
+                "wheelchair/navigation",
+                "cursor_control",
+                "prosthetic",
+                "robotic_arm",
+                "drone",
+                "vr_ar",
+                "communication",
+                "neurofeedback",
+            ],
+        ),
+        paradigm_specific=ParadigmSpecificMetadata(
+            detected_paradigm="p300",
+        ),
+        data_structure=DataStructureMetadata(
+            n_trials=450,
+            n_blocks=2,
+            trials_context="total",
+        ),
         file_format="MAT",
     )
 

@@ -9,10 +9,20 @@ from moabb.datasets import download as dl
 from moabb.datasets.base import BaseDataset
 from moabb.datasets.metadata.schema import (
     AcquisitionMetadata,
+    AuxiliaryChannelsMetadata,
+    BCIApplicationMetadata,
+    CrossValidationMetadata,
     DatasetMetadata,
+    DataStructureMetadata,
     DocumentationMetadata,
     ExperimentMetadata,
+    FilterDetails,
+    FrequencyBands,
+    ParadigmSpecificMetadata,
     ParticipantMetadata,
+    PerformanceMetadata,
+    PreprocessingMetadata,
+    SignalProcessingMetadata,
     Tags,
 )
 
@@ -41,10 +51,43 @@ class Hinss2021(BaseDataset):
     (i.e., easy, medium, and difficult). The task assignments
     were randomized. For more details, please check [Hinss2021]_.
 
-    Notes
-    -----
+
+    .. admonition:: Participants
+
+        - **Population**: healthy
+        - **Gender**: female: 11, male: 18
+
+
+    .. admonition:: Equipment
+
+        - **Amplifier**: Brain Products
+        - **Montage**: 10-20
+        - **Reference**: car
+
+
+    .. admonition:: Data Access
+
+        - **Repository**: Zenodo
+        - **DOI**: 10.1038/s41597-022-01898-y
+        - **URL**: https://doi.org/10.5281/zenodo.6874128
+
+
+
+    .. admonition:: Experimental Protocol
+
+        Four cognitive tasks: Psychomotor Vigilance Task (PVT) for vigilance/fatigue, N-Back task (0-back, 1-back, 2-back) for working memory/mental workload, MATB-II for task-switching and mental workload in realistic environment, and Flanker task for decision-making and conflict evaluation
+        - **Feedback**: trial-based feedback (Flanker task provides correct/incorrect/miss feedback)
+
+
+    .. admonition:: Preprocessing
+
+        - **Data state**: raw (no filtering applied during acquisition)
+
+
+    Notes -----
 
     .. versionadded:: 1.0.1
+
 
     References
     ----------
@@ -58,41 +101,148 @@ class Hinss2021(BaseDataset):
     METADATA = DatasetMetadata(
         acquisition=AcquisitionMetadata(
             sampling_rate=500.0,
-            n_channels=62,
-            channel_types={"eeg": 62},
-            sensor_type="active Ag-AgCl electrodes",
-            montage="standard_1005",
-            line_freq=50.0,
-            reference="car",
+            n_channels=64,
+            channel_types={"eeg": 64},
+            montage="10-20",
             hardware="Brain Products",
+            sensor_type="active Ag-AgCl",
+            reference="Car",
+            software="EEGlab",
+            filters="none",
+            impedance_threshold_kohm=25,
+            sensors=[
+                "Fp1",
+                "Fpz",
+                "Fp2",
+                "AF7",
+                "AF3",
+                "AFz",
+                "AF4",
+                "AF8",
+                "F7",
+                "F5",
+                "F3",
+                "F1",
+                "Fz",
+                "F2",
+                "F4",
+                "F6",
+                "F8",
+                "FT7",
+                "FC5",
+                "FC3",
+                "FC1",
+                "FCz",
+                "FC2",
+                "FC4",
+                "FC6",
+                "FT8",
+                "T7",
+                "C5",
+                "C3",
+                "C1",
+                "Cz",
+                "C2",
+                "C4",
+                "C6",
+                "T8",
+                "TP7",
+                "CP5",
+                "CP3",
+                "CP1",
+                "CPz",
+                "CP2",
+                "CP4",
+                "CP6",
+                "TP8",
+                "P7",
+                "P5",
+                "P3",
+                "P1",
+                "Pz",
+                "P2",
+                "P4",
+                "P6",
+                "P8",
+                "PO7",
+                "PO3",
+                "POz",
+                "PO4",
+                "PO8",
+                "O1",
+                "Oz",
+                "O2",
+                "Iz",
+            ],
+            line_freq=50.0,
+            auxiliary_channels=AuxiliaryChannelsMetadata(
+                other_physiological=["ecg", "gsr"],
+            ),
         ),
         participants=ParticipantMetadata(
-            n_subjects=15,
-            health_status="healthy",
+            n_subjects=29,
             gender={"female": 6, "male": 9},
-            age_mean=25.0,
+            age_mean=23.9,
+            handedness={"left": 2, "right": 27},
         ),
         experiment=ExperimentMetadata(
             paradigm="rstate",
-            task_type="cognitive_workload",
-            n_classes=4,
-            trial_duration=2.0,
-            tasks=["rest"],
+            n_classes=1,
+            class_labels=["rest"],
+            study_design="Four cognitive tasks: N-Back (working memory/mental workload), MATB-II (multi-tasking/workload), PVT (vigilance), Flanker (decision-making/conflict)",
+            feedback_type="trial-based feedback (Flanker task provides correct/incorrect/miss feedback)",
+            stimulus_type="avatar",
+            has_training_test_split=True,
         ),
         documentation=DocumentationMetadata(
-            doi="10.5281/zenodo.5055046",
-            description="Neuroergonomic dataset for mental state monitoring",
-            investigators=["M. Hinss", "B. Somon", "F. Dehais", "R.N. Roy"],
-            institution="ISAE-SUPAERO",
-            country="FR",
+            doi="10.1038/s41597-022-01898-y",
             repository="Zenodo",
-            data_url="https://zenodo.org/records/5055046",
-            license="CC BY 4.0",
-            publication_year=2021,
+            data_url="https://doi.org/10.5281/zenodo.6874128",
         ),
-        sessions_per_subject=2,
-        runs_per_session=1,
-        tags=Tags(pathology=["healthy"], modality=["visual"], type=["bci"]),
+        tags=Tags(
+            pathology=["Healthy"],
+            modality=["Visual"],
+            type=["Perception"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            data_state="raw",
+            preprocessing_applied=False,
+            filter_details=FilterDetails(
+                highpass_hz=1.0,
+                filter_type="FIR",
+            ),
+            artifact_methods=["ICA"],
+            re_reference="car",
+            downsampled_to_hz=250,
+        ),
+        signal_processing=SignalProcessingMetadata(
+            classifiers=["MDM", "Riemannian"],
+            feature_extraction=["Bandpower", "Covariance/Riemannian", "ICA"],
+            frequency_bands=FrequencyBands(
+                alpha=[8.0, 13.0],
+                theta=[4.0, 8.0],
+            ),
+        ),
+        cross_validation=CrossValidationMetadata(
+            cv_method="5-fold",
+            cv_folds=5,
+            evaluation_type=["cross_subject", "cross_session", "transfer_learning"],
+        ),
+        performance=PerformanceMetadata(
+            accuracy_percent=70.67,
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=["vr_ar", "communication"],
+            environment="outdoor",
+        ),
+        paradigm_specific=ParadigmSpecificMetadata(
+            detected_paradigm="p300",
+        ),
+        data_structure=DataStructureMetadata(
+            n_trials=90,
+            n_blocks=2,
+            trials_context="total",
+        ),
         data_processed=False,
     )
 

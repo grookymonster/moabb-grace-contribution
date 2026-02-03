@@ -9,10 +9,17 @@ from moabb.datasets import download as dl
 from moabb.datasets.base import BaseDataset
 from moabb.datasets.metadata.schema import (
     AcquisitionMetadata,
+    AuxiliaryChannelsMetadata,
+    BCIApplicationMetadata,
+    CrossValidationMetadata,
     DatasetMetadata,
     DocumentationMetadata,
     ExperimentMetadata,
+    FilterDetails,
+    ParadigmSpecificMetadata,
     ParticipantMetadata,
+    PreprocessingMetadata,
+    SignalProcessingMetadata,
     Tags,
 )
 from moabb.datasets.utils import stim_channels_with_selected_ids
@@ -62,6 +69,29 @@ class Sosulski2019(BaseDataset):
        to achieve the functionality to handle different conditions in MOABB. As a result, the statistical testing
        features of MOABB cannot be used for this dataset.
 
+
+    .. admonition:: Participants
+
+        - **Population**: healthy
+
+    .. admonition:: Equipment
+
+        - **Amplifier**: BrainAmp
+        - **Electrodes**: Ag/AgCl
+        - **Montage**: 10-10
+        - **Reference**: the nose
+
+    .. admonition:: Experimental Protocol
+
+        oddball
+
+
+    .. admonition:: Preprocessing
+
+        - **Data state**: epoched and baseline corrected
+        - **Bandpass filter**: 1.5-40 Hz
+        - **Steps**: two-pass bandpass filtering, epoching, baseline correction
+
     References
     ----------
 
@@ -75,8 +105,7 @@ class Sosulski2019(BaseDataset):
     .. [3] Sosulski, J., Hübner, D., Klein, A., Tangermann, M.:  Online Optimization of Stimulation Speed in
            an Auditory Brain-Computer Interface under Time Constraints. arXiv preprint. 2021.
 
-    Notes
-    -----
+    Notes -----
 
     .. versionadded:: 0.4.5
     """
@@ -84,41 +113,116 @@ class Sosulski2019(BaseDataset):
     METADATA = DatasetMetadata(
         acquisition=AcquisitionMetadata(
             sampling_rate=1000.0,
-            n_channels=32,
-            channel_types={"eeg": 31, "eog": 1},
-            montage="standard_1005",
-            line_freq=50.0,
-            filters="1.5-40 Hz bandpass (fourth order inverse Chebyshev, two-pass)",
-            reference="electrode was placed on the nose",
+            n_channels=31,
+            channel_types={"eeg": 31},
+            montage="10-10",
             hardware="BrainAmp",
             sensor_type="Ag/AgCl",
+            reference="nose",
+            software="Python",
+            sensors=[
+                "Fp1",
+                "Fp2",
+                "F7",
+                "F3",
+                "Fz",
+                "F4",
+                "F8",
+                "FC5",
+                "FC1",
+                "FC2",
+                "FC6",
+                "T7",
+                "C3",
+                "Cz",
+                "C4",
+                "T8",
+                "CP5",
+                "CP1",
+                "CP2",
+                "CP6",
+                "P7",
+                "P3",
+                "Pz",
+                "P4",
+                "P8",
+                "PO9",
+                "O1",
+                "Oz",
+                "O2",
+                "PO10",
+                "AF7",
+            ],
+            line_freq=50.0,
+            auxiliary_channels=AuxiliaryChannelsMetadata(
+                other_physiological=["gsr"],
+            ),
         ),
         participants=ParticipantMetadata(
             n_subjects=13,
             health_status="healthy",
+            gender={"male": 5, "female": 8},
+            age_mean=22.7,
         ),
         experiment=ExperimentMetadata(
             paradigm="p300",
-            task_type="auditory_oddball_soa",
-            n_classes=2,
-            trial_duration=1.0,
-            tasks=["rest"],
+            n_classes=1,
+            class_labels=["rest"],
+            trial_duration=5.0,
+            study_design="Subjects focused attention on target tones (1000 Hz) and ignored non-target tones (500 Hz) presented via speaker at 65 cm distance",
+            stimulus_type="oddball",
+            stimulus_modalities=["visual", "auditory"],
+            primary_modality="multisensory",
+            synchronicity="synchronous",
+            mode="both",
         ),
         documentation=DocumentationMetadata(
-            doi="10.6094/UNIFR/154576",
-            description="Auditory Oddball with SOA variations",
-            investigators=["Sosulski, J.", "Tangermann, M."],
-            institution="University of Freiburg",
-            country="DE",
-            repository="FreiDok",
-            data_url="https://freidok.uni-freiburg.de/data/154576",
-            publication_year=2019,
-            license="CC BY 4.0",
-            funding=["DFG project", "grant number EXC EXC", "grant number TA TA"],
+            funding=[
+                "grant number EXC EXC",
+                "grant number\nINST INST",
+                "grant number TA TA",
+                "DFG project",
+            ],
         ),
-        sessions_per_subject=1,
-        runs_per_session=1,
-        tags=Tags(pathology=["healthy"], modality=["auditory"], type=["bci"]),
+        tags=Tags(
+            pathology=["Healthy"],
+            modality=["Visual"],
+            type=["Perception"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            data_state="epoched",
+            preprocessing_applied=True,
+            preprocessing_steps=["bandpass filtering", "epoching", "baseline correction"],
+            filter_details=FilterDetails(
+                highpass_hz=1.5,
+                lowpass_hz=40,
+                bandpass=[1.5, 40],
+                filter_type="Chebyshev",
+                filter_order=4,
+            ),
+            artifact_methods=["ICA"],
+            re_reference="Car",
+        ),
+        signal_processing=SignalProcessingMetadata(
+            classifiers=["LDA", "Shrinkage LDA"],
+            feature_extraction=["Bandpower", "Covariance/Riemannian"],
+        ),
+        cross_validation=CrossValidationMetadata(
+            evaluation_type=["cross_subject"],
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=[
+                "speller",
+                "wheelchair/navigation",
+                "prosthetic",
+                "gaming",
+                "vr_ar",
+                "communication",
+            ],
+        ),
+        paradigm_specific=ParadigmSpecificMetadata(
+            detected_paradigm="p300",
+        ),
         data_processed=True,
     )
 

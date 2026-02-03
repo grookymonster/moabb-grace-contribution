@@ -5,10 +5,17 @@ from mne.io import read_raw_gdf
 from moabb.datasets.base import BaseDataset
 from moabb.datasets.metadata.schema import (
     AcquisitionMetadata,
+    AuxiliaryChannelsMetadata,
+    BCIApplicationMetadata,
     DatasetMetadata,
+    DataStructureMetadata,
     DocumentationMetadata,
     ExperimentMetadata,
+    FilterDetails,
+    ParadigmSpecificMetadata,
     ParticipantMetadata,
+    PreprocessingMetadata,
+    SignalProcessingMetadata,
     Tags,
 )
 from moabb.datasets.utils import stim_channels_with_selected_ids
@@ -56,6 +63,32 @@ class Ofner2017(BaseDataset):
     movement classes and a rest class and recorded 60 trials per class in a
     session.
 
+
+    .. admonition:: Participants
+
+        - **Population**: healthy
+
+    .. admonition:: Equipment
+
+        - **Amplifier**: g.tec
+        - **Electrodes**: active electrodes
+        - **Reference**: the right mastoid
+
+    .. admonition:: Experimental Protocol
+
+        avoid any movement and to stay in the starting position.
+
+    .. admonition:: Preprocessing
+
+        - **Bandpass filter**: 0.01-200.0 Hz
+        - **Notch filter**: [50] Hz
+
+    .. admonition:: Data Access
+
+        - **Repository**: BNCI Horizon 2020
+        - **DOI**: 10.1371/journal.pone.0182578
+        - **URL**: https://bnci-horizon-2020.eu/database/data-sets
+
     References
     ----------
     .. [1] Ofner, P., Schwarz, A., Pereira, J. and Müller-Putz, G.R., 2017.
@@ -69,67 +102,132 @@ class Ofner2017(BaseDataset):
             sampling_rate=512.0,
             n_channels=61,
             channel_types={"eeg": 61},
-            hardware="g.tec medical engineering (4x g.USBamp)",
-            sensor_type="active",
+            hardware="g.tec",
+            sensor_type="active electrodes",
             reference="right mastoid",
-            ground="AFz",
-            filters={"highpass": 0.01, "lowpass": 200.0, "notch": 50.0},
-            montage="standard_1005",
+            software="EEGLAB",
+            filters="0.3-3.0 Hz bandpass, 50 Hz notch",
+            sensors=[
+                "Fp1",
+                "Fpz",
+                "Fp2",
+                "AF7",
+                "AF3",
+                "AFz",
+                "AF4",
+                "AF8",
+                "F7",
+                "F5",
+                "F3",
+                "F1",
+                "Fz",
+                "F2",
+                "F4",
+                "F6",
+                "F8",
+                "FT7",
+                "FC5",
+                "FC3",
+                "FC1",
+                "FCz",
+                "FC2",
+                "FC4",
+                "FC6",
+                "FT8",
+                "T7",
+                "C5",
+                "C3",
+                "C1",
+                "Cz",
+                "C2",
+                "C4",
+                "C6",
+                "T8",
+                "TP7",
+                "CP5",
+                "CP3",
+                "CP1",
+                "CPz",
+                "CP2",
+                "CP4",
+                "CP6",
+                "TP8",
+                "P7",
+                "P5",
+                "P3",
+                "P1",
+                "Pz",
+                "P2",
+                "P4",
+                "P6",
+                "P8",
+                "PO7",
+                "PO3",
+                "POz",
+                "PO4",
+                "PO8",
+                "O1",
+                "Oz",
+                "O2",
+            ],
             line_freq=50.0,
+            auxiliary_channels=AuxiliaryChannelsMetadata(
+                has_emg=True,
+                other_physiological=["gsr", "ppg"],
+            ),
         ),
         participants=ParticipantMetadata(
-            n_subjects=15,
+            n_subjects=152,
             health_status="healthy",
             gender={"female": 9, "male": 6},
-            age_mean=27.0,
-            age_std=5.0,
-            age_min=22,
-            age_max=40,
-            handedness={"right": 14, "left": 1},
         ),
         experiment=ExperimentMetadata(
             paradigm="imagery",
-            task_type="upper_limb_movements",
-            n_classes=7,
-            trials_per_class={
-                "elbow_flexion": 60,
-                "elbow_extension": 60,
-                "forearm_supination": 60,
-                "forearm_pronation": 60,
-                "hand_open": 60,
-                "hand_close": 60,
-                "rest": 60,
-            },
-            trial_duration=3.0,
-            tasks=["right_hand", "feet", "right_arm", "left_hand", "rest"],
+            n_classes=4,
+            class_labels=["right_hand", "right_arm", "left_hand", "feet"],
+            trial_duration=17.0,
             study_design="avoid any movement and to stay in the starting position.",
+            feedback_type="visual cues on computer screen",
+            stimulus_type="avatar",
+            synchronicity="asynchronous",
+            mode="both",
         ),
         documentation=DocumentationMetadata(
             doi="10.1371/journal.pone.0182578",
-            description="Upper limb movements decoded from low-frequency EEG time-domain",
-            readme=(
-                "EEG dataset from 15 healthy subjects performing 6 upper limb movement types "
-                "(elbow flexion/extension, forearm supination/pronation, hand open/close) plus rest. "
-                "Two sessions on different days: movement execution (ME) and motor imagery (MI). "
-                "Subjects used an exoskeleton with anti-gravity support (Hocoma). "
-                "Data recorded with 61 active EEG electrodes at 512 Hz. "
-                "Suitable for motor imagery BCI research and movement decoding from MRCPs."
-            ),
-            investigators=["P. Ofner", "A. Schwarz", "J. Pereira", "G.R. Müller-Putz"],
-            senior_author="G.R. Müller-Putz",
-            contact_info="gernot.mueller@tugraz.at",
-            institution="Graz University of Technology, Institute of Neural Engineering, BCI-Lab",
-            country="AT",
-            repository="Zenodo",
-            data_url="https://zenodo.org/record/834976",
-            license="CC BY 4.0",
-            publication_year=2017,
-            funding="EU H2020-643955 MoreGrasp, ERC Consolidator Grant ERC-681231 Feel Your Reach",
+            repository="BNCI Horizon 2020",
+            data_url="https://bnci-horizon-2020.eu/database/data-sets",
+            funding=["Grant ERC- ERC-"],
         ),
-        sessions_per_subject=2,
-        runs_per_session=10,
-        tags=Tags(pathology=["healthy"], modality=["motor"], type=["bci"]),
-        data_processed=True,
+        tags=Tags(
+            pathology=["Healthy"],
+            modality=["Motor"],
+            type=["Motor"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            filter_details=FilterDetails(
+                bandpass={"low_cutoff_hz": 0.01, "high_cutoff_hz": 200.0},
+                notch_hz=[50],
+                filter_type="Butterworth",
+                filter_order=4,
+            ),
+            artifact_methods=["ICA"],
+            re_reference="common average reference",
+        ),
+        signal_processing=SignalProcessingMetadata(
+            classifiers=["LDA", "Shrinkage LDA"],
+            feature_extraction=["ERD", "Covariance/Riemannian", "ICA"],
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=["prosthetic", "robotic_arm", "vr_ar"],
+            environment="outdoor",
+        ),
+        paradigm_specific=ParadigmSpecificMetadata(
+            detected_paradigm="motor_imagery",
+        ),
+        data_structure=DataStructureMetadata(
+            n_trials=42,
+            trials_context="per_run",
+        ),
     )
 
     def __init__(self, imagined=True, executed=False):

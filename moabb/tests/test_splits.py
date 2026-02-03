@@ -303,7 +303,7 @@ def test_cross_session_is_shuffling_and_order(data):
     for i, ((train_ns, test_ns), (train_s, test_s)) in enumerate(
         zip(splits_no_shuffle, splits_shuffle)
     ):
-        print(f"\nFold {i}:")
+        print(f" Fold {i}:")
 
         # Get session ordering for non-shuffled and shuffled
         train_ns_sessions = metadata.iloc[train_ns]["session"].unique()

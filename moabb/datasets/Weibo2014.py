@@ -14,10 +14,18 @@ from scipy.io import loadmat
 
 from moabb.datasets.metadata.schema import (
     AcquisitionMetadata,
+    BCIApplicationMetadata,
+    CrossValidationMetadata,
     DatasetMetadata,
+    DataStructureMetadata,
     DocumentationMetadata,
     ExperimentMetadata,
+    FilterDetails,
+    FrequencyBands,
+    ParadigmSpecificMetadata,
     ParticipantMetadata,
+    PreprocessingMetadata,
+    SignalProcessingMetadata,
     Tags,
 )
 
@@ -100,6 +108,32 @@ class Weibo2014(BaseDataset):
     section consisting of 80 trials for rest state. The sequence of six MI
     tasks was randomized. Intersection break was about 5 to 10 minutes.
 
+
+    .. admonition:: Participants
+
+        - **Population**: healthy
+        - **Age**: 23.0 years
+        - **BCI experience**: naive
+
+    .. admonition:: Equipment
+
+        - **Amplifier**: Neuroscan
+        - **Reference**: nose
+
+    .. admonition:: Preprocessing
+
+        - **Bandpass filter**: 0.5-50.0 Hz
+
+    .. admonition:: Data Access
+
+        - **DOI**: 10.1371/journal.pone.0114853
+
+
+    .. admonition:: Experimental Protocol
+
+        Simple limb motor imagery (left hand, right hand, feet) and compound limb motor imagery (both hands, left hand combined with right foot, right hand combined with left foot) plus rest state
+        - **Feedback**: visual cues (character indication)
+
     References
     ----------
     .. [1] Yi, Weibo, et al. "Evaluation of EEG oscillatory patterns and
@@ -109,46 +143,100 @@ class Weibo2014(BaseDataset):
 
     METADATA = DatasetMetadata(
         acquisition=AcquisitionMetadata(
-            sampling_rate=200.0,
-            n_channels=65,
-            channel_types={"eeg": 60, "misc": 2, "eog": 2, "stim": 1},
-            hardware="Neuroscan SynAmps2",
-            montage="standard_1005",
-            line_freq=50.0,
-            filters="0.5-100 Hz bandpass, 50 Hz notch",
-            ground="prefrontal lobe",
-            reference="nose",
+            sampling_rate=1000.0,
+            n_channels=21,
+            channel_types={"eeg": 21},
+            montage="10-20",
+            hardware="Neuroscan",
             sensor_type="Ag/AgCl",
+            reference="nose",
+            software="EEGLAB",
+            filters={"bandpass": [0.5, 100], "notch_hz": 50},
+            sensors=[
+                "Fp1",
+                "Fp2",
+                "F7",
+                "F3",
+                "Fz",
+                "F4",
+                "F8",
+                "T7",
+                "C3",
+                "Cz",
+                "C4",
+                "T8",
+                "P7",
+                "P3",
+                "Pz",
+                "P4",
+                "P8",
+                "O1",
+                "O2",
+                "A1",
+                "A2",
+            ],
+            line_freq=50.0,
         ),
         participants=ParticipantMetadata(
             n_subjects=10,
             health_status="healthy",
             gender={"female": 3, "male": 7},
-            handedness={"right": 10},
             age_mean=23.0,
-            age_std=25.0,
+            handedness="right-handed",
+            bci_experience="naive",
         ),
         experiment=ExperimentMetadata(
             paradigm="imagery",
-            task_type="7_class_simple_compound_limb_MI",
-            n_classes=7,
-            trial_duration=4.0,
-            tasks=["rest", "feet", "left_hand", "right_hand"],
+            n_classes=3,
+            class_labels=["right_hand", "left_hand", "feet"],
+            trial_duration=19.0,
+            study_design="Simple limb motor imagery (left hand, right hand, feet) and compound limb motor imagery (both hands, left hand combined with right foot, right hand combined with left foot)",
+            feedback_type="visual cues (character indication)",
+            stimulus_type="avatar",
+            stimulus_modalities=["visual"],
+            primary_modality="visual",
         ),
         documentation=DocumentationMetadata(
             doi="10.1371/journal.pone.0114853",
-            description="Simple and compound limb motor imagery EEG patterns",
-            investigators=["W. Yi", "S. Qiu", "H. Qi", "L. Zhang", "B. Wan", "D. Ming"],
-            institution="Tianjin University",
-            country="CN",
-            repository="Harvard Dataverse",
-            data_url="https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/27306",
-            license="CC BY 4.0",
-            publication_year=2014,
         ),
-        sessions_per_subject=1,
-        runs_per_session=1,
-        tags=Tags(pathology=["healthy"], modality=["motor"], type=["motor"]),
+        tags=Tags(
+            pathology=["Healthy"],
+            modality=["Motor"],
+            type=["Motor"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            data_state="preprocessed",
+            preprocessing_applied=True,
+            preprocessing_steps=["bandpass filtering", "downsampling"],
+            filter_details=FilterDetails(
+                highpass_hz=0.5,
+                lowpass_hz=50,
+                bandpass={"low_cutoff_hz": 0.5, "high_cutoff_hz": 50.0},
+            ),
+            artifact_methods=["ICA"],
+            re_reference="Car",
+        ),
+        signal_processing=SignalProcessingMetadata(
+            classifiers=["Random Forest", "Neural Network"],
+            feature_extraction=["Bandpower", "ERD", "ERS", "Time-Frequency", "AR"],
+            frequency_bands=FrequencyBands(
+                alpha=[8, 13],
+                theta=[4.0, 5.0],
+            ),
+        ),
+        cross_validation=CrossValidationMetadata(
+            cv_method="bootstrap",
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=["vr_ar", "communication"],
+            environment="outdoor",
+        ),
+        paradigm_specific=ParadigmSpecificMetadata(
+            detected_paradigm="mi",
+        ),
+        data_structure=DataStructureMetadata(
+            n_trials=560,
+        ),
         data_processed=True,
     )
 

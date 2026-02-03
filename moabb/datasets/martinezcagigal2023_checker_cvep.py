@@ -118,8 +118,7 @@ class MartinezCagigal2023Checker(BaseDataset):
        Computer Methods and Programs in Biomedicine, 230, 107357.
        https://doi.org/10.1016/j.cmpb.2023.107357
 
-    Notes
-    -----
+    Notes -----
     Although the dataset was recorded in a single session, each condition is
     stored as a separate session to match the MOABB structure. Within each
     session, three runs are available (two for training, one for testing).

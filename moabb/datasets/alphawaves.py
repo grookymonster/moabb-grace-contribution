@@ -11,10 +11,16 @@ from moabb.datasets import download as dl
 from moabb.datasets.base import BaseDataset
 from moabb.datasets.metadata.schema import (
     AcquisitionMetadata,
+    BCIApplicationMetadata,
     DatasetMetadata,
+    DataStructureMetadata,
     DocumentationMetadata,
     ExperimentMetadata,
+    FrequencyBands,
+    ParadigmSpecificMetadata,
     ParticipantMetadata,
+    PreprocessingMetadata,
+    SignalProcessingMetadata,
     Tags,
 )
 
@@ -63,6 +69,29 @@ class Rodrigues2017(BaseDataset):
 
     We supply an online and open-source example working with Python [2]_.
 
+
+    .. admonition:: Equipment
+
+        - **Amplifier**: g.tec
+        - **Electrodes**: wet electrodes
+        - **Montage**: 10-10
+        - **Reference**: the right earlobe
+
+    .. admonition:: Data Access
+
+        - **Repository**: Zenodo
+        - **DOI**: 10.5281/zenodo.2348891
+        - **URL**: https://doi.org/10.5281/zenodo.2348891
+
+
+    .. admonition:: Experimental Protocol
+
+        Subjects alternated between keeping eyes closed and eyes open during recording blocks
+
+    .. admonition:: Preprocessing
+
+        - **Data state**: raw, no digital filter applied during acquisition
+
     References
     ----------
 
@@ -74,8 +103,7 @@ class Rodrigues2017(BaseDataset):
            Grenoble: GIPSA-lab; 2018. Available from:
            https://github.com/plcrodrigues/Alpha-Waves-Dataset
 
-    Notes
-    -----
+    Notes -----
 
     .. versionadded:: 1.1.0
 
@@ -86,63 +114,75 @@ class Rodrigues2017(BaseDataset):
             sampling_rate=512.0,
             n_channels=16,
             channel_types={"eeg": 16},
-            sensors=[
-                "Fp1",
-                "Fp2",
-                "Fc5",
-                "Fz",
-                "Fc6",
-                "T7",
-                "Cz",
-                "T8",
-                "P7",
-                "P3",
-                "Pz",
-                "P4",
-                "P8",
-                "O1",
-                "Oz",
-                "O2",
-            ],
-            montage="standard_1005",
-            line_freq=50.0,
-            filters="none",
-            reference="was placed on the right earlobe",
+            montage="10-10",
             hardware="g.tec",
             sensor_type="wet electrodes",
+            reference="right earlobe",
+            software="OpenVibe",
+            filters="no digital filter",
+            sensors=[
+                "FC5",
+                "FC3",
+                "FC1",
+                "FCz",
+                "FC2",
+                "FC4",
+                "FC6",
+                "C3",
+                "C1",
+                "Cz",
+                "C2",
+                "C4",
+                "CP3",
+                "CPz",
+                "CP4",
+                "Pz",
+            ],
+            line_freq=50.0,
         ),
         participants=ParticipantMetadata(
             n_subjects=20,
             health_status="healthy",
             gender={"female": 7, "male": 13},
             age_mean=25.8,
-            age_std=5.27,
-            age_min=19,
-            age_max=44,
-            clinical_population="spinal_cord_injury",
         ),
         experiment=ExperimentMetadata(
             paradigm="rstate",
-            task_type="eyes_open_closed",
-            n_classes=2,
-            trial_duration=10.0,
-            tasks=["rest"],
+            n_classes=1,
+            class_labels=["rest"],
+            trial_duration=10,
+            study_design="Subjects alternated between keeping eyes closed (condition 1) and eyes open (condition 2) while EEG was recorded",
         ),
         documentation=DocumentationMetadata(
-            doi="10.5281/zenodo.2348892",
-            description="Alpha Waves - Resting state EEG dataset for BCI",
-            investigators=["Cattan, G.", "Rodrigues, P.L.C.", "Congedo, M."],
-            institution="GIPSA-lab",
-            country="FR",
+            doi="10.5281/zenodo.2348891",
             repository="Zenodo",
-            data_url="https://zenodo.org/record/2348892",
-            license="CC BY 4.0",
-            publication_year=2018,
+            data_url="https://doi.org/10.5281/zenodo.2348891",
         ),
-        sessions_per_subject=1,
-        runs_per_session=1,
         tags=Tags(
-            pathology=["healthy"], modality=["resting state"], type=["resting-state"]
+            pathology=["Healthy"],
+            modality=["Resting State"],
+            type=["Resting-state"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            data_state="raw",
+            preprocessing_applied=False,
+            artifact_methods=["ICA"],
+            re_reference="car",
+        ),
+        signal_processing=SignalProcessingMetadata(
+            feature_extraction=["ERS"],
+            frequency_bands=FrequencyBands(
+                alpha=[8, 13],
+            ),
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=["vr_ar", "communication"],
+        ),
+        paradigm_specific=ParadigmSpecificMetadata(
+            detected_paradigm="resting_state",
+        ),
+        data_structure=DataStructureMetadata(
+            n_trials=10,
         ),
         data_processed=False,
     )

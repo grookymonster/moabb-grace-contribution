@@ -12,10 +12,19 @@ from moabb.datasets import download as dl
 from moabb.datasets.base import BaseDataset
 from moabb.datasets.metadata.schema import (
     AcquisitionMetadata,
+    AuxiliaryChannelsMetadata,
+    BCIApplicationMetadata,
+    CrossValidationMetadata,
     DatasetMetadata,
+    DataStructureMetadata,
     DocumentationMetadata,
     ExperimentMetadata,
+    FilterDetails,
+    ParadigmSpecificMetadata,
     ParticipantMetadata,
+    PerformanceMetadata,
+    PreprocessingMetadata,
+    SignalProcessingMetadata,
     Tags,
 )
 
@@ -65,6 +74,30 @@ class BNCI2019_001(BaseDataset):
     - palmar_grasp (925): Palmar (power) grasp
     - lateral_grasp (926): Lateral (key) grasp
 
+
+    .. admonition:: Equipment
+
+        - **Amplifier**: g.tec
+        - **Electrodes**: active electrode
+        - **Montage**: 10-5
+        - **Reference**: the left earlobe
+
+    .. admonition:: Experimental Protocol
+
+        move their eyes and to blink, and 3 runs each comprising one trial in which participants were
+        instructed to rest (i.
+
+    .. admonition:: Preprocessing
+
+        - **Bandpass filter**: 0.01-100.0 Hz
+        - **Notch filter**: [50] Hz
+
+    .. admonition:: Data Access
+
+        - **Repository**: Zenodo
+        - **DOI**: 10.1038/s41598-019-43594-9
+        - **URL**: https://doi.org/10.5281/zenodo.2222268
+
     References
     ----------
     .. [1] Ofner, P. et al. (2019). Attempted arm and hand movements can be
@@ -72,65 +105,168 @@ class BNCI2019_001(BaseDataset):
            Scientific Reports, 9(1), 7134.
            https://doi.org/10.1038/s41598-019-43594-9
 
-    Notes
-    -----
+    Notes -----
     .. versionadded:: 1.2.0
     """
 
     METADATA = DatasetMetadata(
         acquisition=AcquisitionMetadata(
             sampling_rate=256.0,
-            n_channels=64,
-            channel_types={"eeg": 61, "eog": 3},
-            montage="standard_1005",
-            line_freq=50.0,
-            reference="left earlobe",
-            ground="AFF2h",
-            hardware="g.tec g.USBamp",
-            software="EEGLAB 14.1.1",
+            n_channels=61,
+            channel_types={"eeg": 61},
+            montage="10-5",
+            hardware="g.tec",
             sensor_type="active electrode",
-            filters="0.01-100 Hz bandpass, 50 Hz notch",
+            reference="left earlobe",
+            software="EEGlab2.",
+            filters="50 Hz notch",
+            sensors=[
+                "Fp1",
+                "Fpz",
+                "Fp2",
+                "AF7",
+                "AF3",
+                "AFz",
+                "AF4",
+                "AF8",
+                "F7",
+                "F5",
+                "F3",
+                "F1",
+                "Fz",
+                "F2",
+                "F4",
+                "F6",
+                "F8",
+                "FT7",
+                "FC5",
+                "FC3",
+                "FC1",
+                "FCz",
+                "FC2",
+                "FC4",
+                "FC6",
+                "FT8",
+                "T7",
+                "C5",
+                "C3",
+                "C1",
+                "Cz",
+                "C2",
+                "C4",
+                "C6",
+                "T8",
+                "TP7",
+                "CP5",
+                "CP3",
+                "CP1",
+                "CPz",
+                "CP2",
+                "CP4",
+                "CP6",
+                "TP8",
+                "P7",
+                "P5",
+                "P3",
+                "P1",
+                "Pz",
+                "P2",
+                "P4",
+                "P6",
+                "P8",
+                "PO7",
+                "PO3",
+                "POz",
+                "PO4",
+                "PO8",
+                "O1",
+                "Oz",
+                "O2",
+            ],
+            line_freq=50.0,
+            auxiliary_channels=AuxiliaryChannelsMetadata(
+                has_eog=True,
+                eog_channels=3,
+                has_emg=True,
+            ),
         ),
         participants=ParticipantMetadata(
             n_subjects=10,
-            health_status="patients",
-            clinical_population="spinal cord injury",
-            age_mean=49.8,
-            age_std=17.6,
-            age_min=20.0,
-            age_max=78.0,
+            health_status="spinal cord injury",
             gender={"male": 9, "female": 1},
-            handedness={"right": 10},
+            handedness="right-handed (all participants originally)",
         ),
         experiment=ExperimentMetadata(
             paradigm="imagery",
-            task_type="attempted_movements",
-            n_classes=5,
-            trial_duration=3.0,
-            tasks=[
-                "supination",
-                "pronation",
-                "hand_open",
-                "palmar_grasp",
-                "lateral_grasp",
-            ],
+            n_classes=2,
+            class_labels=["right_hand", "left_hand"],
+            trial_duration=5,
+            study_design="motor imagery",
+            feedback_type="visual feedback (online paradigm only - movement icon displayed when movement attempt detected)",
+            stimulus_type="avatar",
+            stimulus_modalities=["visual"],
+            primary_modality="visual",
+            synchronicity="synchronous",
+            mode="both",
+            has_training_test_split=True,
         ),
         documentation=DocumentationMetadata(
             doi="10.1038/s41598-019-43594-9",
-            description="Motor imagery dataset for spinal cord injury patients",
-            investigators=["P. Ofner", "A. Schwarz", "J. Pereira", "G.R. Müller-Putz"],
-            institution="Graz University of Technology",
-            country="AT",
-            repository="BNCI Horizon 2020",
-            data_url="http://bnci-horizon-2020.eu/database/data-sets/001-2019/",
-            license="CC BY 4.0",
-            publication_year=2019,
+            repository="Zenodo",
+            data_url="https://doi.org/10.5281/zenodo.2222268",
+            readme='Conflicting metadata across sources:\\n- experimental_design.task_description: main=Attempted arm and hand movements: pronation, supination, palmar grasp, lateral grasp, hand open; description=move their eyes and to blink, and 3 runs each comprising one trial in which participants were  instructed to rest (i. (kept description)\\n- experimental_design.trial_structure: main=fixation cross and beep at trial start, class cue displayed 2s after trial start for 3s, break of 1-3s between trials; description=fixation cross + beep at trial start, class cue at 2s, movement attempt upon cue, trial ends at 5s, inter-trial interval... (kept description)\\n- experimental_design.feedback_type: main=visual (online proof-of-concept only); description=visual (online paradigm only - movement icon displayed upon detection) (kept description)\\n- participants.health_status: main=healthy; description=spinal cord injury (kept description)\\n- preprocessing.preprocessing_literal: main=Each of the participants sat in front of a computer screen with an arm resting on a pillow on their  lap or on a table a...; description=Offline Paradigm  Each of the participants sat in front of a computer screen with an arm resting on a pillow on their la... (kept description)\\n- preprocessing.filter_details.filter_type: main=Butterworth; description=Chebyshev (kept description)\\n- preprocessing.filter_details.highpass_hz: main=0.3; description=0.01 (kept description)\\n- preprocessing.filter_details.lowpass_hz: main=3; description=100 (kept description)\\n- preprocessing.data_state: main=preprocessed; description=raw (GDF format) (kept description)\\n- preprocessing.claude_steps: main=["visual inspection and removal of noisy channels", "removal of channel AFz", "ICA for stationary artifact removal", "tr...; description=["bandpass filter", "notch filter"] (kept description)\\n- ... and 10 more conflicts',
         ),
-        sessions_per_subject=1,
-        runs_per_session=9,
-        tags=Tags(pathology=["spinal_cord_injury"], modality=["motor"], type=["bci"]),
-        data_processed=True,
+        tags=Tags(
+            pathology=["Healthy"],
+            modality=["Motor"],
+            type=["Motor"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            data_state="raw (GDF format)",
+            preprocessing_applied=True,
+            preprocessing_steps=["bandpass filter", "notch filter"],
+            filter_details=FilterDetails(
+                highpass_hz=0.01,
+                lowpass_hz=100,
+                bandpass={"low_cutoff_hz": 0.01, "high_cutoff_hz": 100.0},
+                notch_hz=[50],
+                filter_type="Chebyshev",
+                filter_order=8,
+            ),
+            artifact_methods=["ICA"],
+            re_reference="car",
+        ),
+        signal_processing=SignalProcessingMetadata(
+            classifiers=["LDA", "RNN", "Shrinkage LDA"],
+            feature_extraction=["Bandpower", "ICA"],
+        ),
+        cross_validation=CrossValidationMetadata(
+            cv_method="10-fold",
+            cv_folds=10,
+            evaluation_type=["cross_subject"],
+        ),
+        performance=PerformanceMetadata(
+            accuracy_percent=83.3,
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=[
+                "wheelchair/navigation",
+                "prosthetic",
+                "robotic_arm",
+                "vr_ar",
+                "communication",
+            ],
+            environment="outdoor",
+        ),
+        paradigm_specific=ParadigmSpecificMetadata(
+            detected_paradigm="motor_imagery",
+        ),
+        data_structure=DataStructureMetadata(
+            n_trials=40,
+            trials_context="per_run",
+        ),
         file_format="GDF",
+        data_processed=True,
     )
 
     _EVENTS = {

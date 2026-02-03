@@ -8,10 +8,17 @@ from scipy.io import loadmat
 
 from moabb.datasets.metadata.schema import (
     AcquisitionMetadata,
+    AuxiliaryChannelsMetadata,
+    BCIApplicationMetadata,
+    CrossValidationMetadata,
     DatasetMetadata,
     DocumentationMetadata,
     ExperimentMetadata,
+    FilterDetails,
+    FrequencyBands,
     ParticipantMetadata,
+    PreprocessingMetadata,
+    SignalProcessingMetadata,
     Tags,
 )
 
@@ -70,8 +77,7 @@ def _load_data_001_2022(
     sessions : dict
         Dictionary containing sessions with raw data for each run.
 
-    Notes
-    -----
+    Notes -----
     The dataset provides two types of recordings per subject:
     - Baseline: 1-minute eye close/open recording
     - Task (wpsize): Drone piloting task with varying difficulty levels
@@ -377,6 +383,18 @@ class BNCI2022_001(BNCIBaseDataset):
         - Baseline: eye close/open recording
         - Task (wpsize): main piloting task with difficulty variations
 
+
+    .. admonition:: Data Access
+
+        - **DOI**: 10.1109/THMS.2020.3038339
+
+
+    .. admonition:: Preprocessing
+
+        - **Data state**: processed
+        - **Bandpass filter**: 1-40 Hz
+        - **Steps**: downsampling to 256 Hz, bandpass filtering 1-40 Hz (14th order Butterworth), SPHARA spatial low-pass filter (20th order), peripheral electrode removal (25 channels retained), common-average re-referencing...
+
     References
     ----------
     .. [1] Jao, P.-K., Chavarriaga, R., & Millan, J. d. R. (2021). EEG Correlates
@@ -384,8 +402,7 @@ class BNCI2022_001(BNCIBaseDataset):
            Mapping Tasks. IEEE Transactions on Human-Machine Systems, 51(2), 99-108.
            https://doi.org/10.1109/THMS.2020.3038339
 
-    Notes
-    -----
+    Notes -----
     .. versionadded:: 1.3.0
 
     This dataset is designed for cognitive workload assessment and difficulty
@@ -413,44 +430,140 @@ class BNCI2022_001(BNCIBaseDataset):
     METADATA = DatasetMetadata(
         acquisition=AcquisitionMetadata(
             sampling_rate=256.0,
-            n_channels=67,
-            channel_types={"eeg": 64, "eog": 3},
+            n_channels=64,
+            channel_types={"eeg": 64},
+            montage="10-10",
             hardware="Biosemi ActiveTwo",
-            montage="biosemi64",
-            line_freq=50.0,
-            reference="car",
             sensor_type="active",
+            reference="Car",
             software="EEGLAB",
+            sensors=[
+                "Fp1",
+                "Fpz",
+                "Fp2",
+                "AF7",
+                "AF3",
+                "AFz",
+                "AF4",
+                "AF8",
+                "F7",
+                "F5",
+                "F3",
+                "F1",
+                "Fz",
+                "F2",
+                "F4",
+                "F6",
+                "F8",
+                "FT7",
+                "FC5",
+                "FC3",
+                "FC1",
+                "FCz",
+                "FC2",
+                "FC4",
+                "FC6",
+                "FT8",
+                "T7",
+                "C5",
+                "C3",
+                "C1",
+                "Cz",
+                "C2",
+                "C4",
+                "C6",
+                "T8",
+                "TP7",
+                "CP5",
+                "CP3",
+                "CP1",
+                "CPz",
+                "CP2",
+                "CP4",
+                "CP6",
+                "TP8",
+                "P7",
+                "P5",
+                "P3",
+                "P1",
+                "Pz",
+                "P2",
+                "P4",
+                "P6",
+                "P8",
+                "PO7",
+                "PO3",
+                "POz",
+                "PO4",
+                "PO8",
+                "O1",
+                "Oz",
+                "O2",
+                "Iz",
+            ],
+            line_freq=50.0,
+            auxiliary_channels=AuxiliaryChannelsMetadata(
+                has_eog=True,
+                eog_channels=3,
+                eog_type=["horizontal", "vertical"],
+                other_physiological=["ppg"],
+            ),
         ),
         participants=ParticipantMetadata(
             n_subjects=13,
-            health_status="healthy",
+            health_status="normal or corrected-to-normal vision, no history of motor or neurological disease (one subject with history of vasovagal syncope)",
             gender={"female": 8, "male": 5},
             age_mean=22.6,
-            age_std=1.04,
+            handedness="12 right-handed, 1 left-handed",
         ),
         experiment=ExperimentMetadata(
             paradigm="imagery",
-            task_type="cognitive_workload",
-            n_classes=4,
-            trial_duration=90.0,
-            tasks=["right_hand"],
+            n_classes=3,
+            class_labels=["right_hand", "left_hand", "feet"],
+            trial_duration=90,
+            study_design="Subjects piloted a simulated drone through circular waypoints using a flight joystick, controlling roll and pitch while the drone maintained constant velocity",
             feedback_type="none",
+            stimulus_type="avatar",
+            mode="both",
         ),
         documentation=DocumentationMetadata(
-            doi="10.1109/THMS.2020.3038339",
-            description="EEG correlates of difficulty level in simulated drone piloting",
-            investigators=["P.-K. Jao", "R. Chavarriaga", "J. d. R. Millán"],
-            institution="EPFL",
-            country="CH",
-            repository="BNCI Horizon 2020",
-            data_url="http://bnci-horizon-2020.eu/database/data-sets/001-2022/",
-            license="CC BY 4.0",
-            publication_year=2021,
+            doi="10.1109/TAFFC.2021.3059688",
+            readme='Conflicting metadata across sources:\\n- data_structure.n_sessions: main=3; description=1 (kept description)\\n- experimental_design.paradigm_type: main=visuomotor task; description=cognitive workload / difficulty level (kept description)\\n- experimental_design.task_description: main=Subjects piloted a simulated drone through a series of circular waypoints of different sizes, controlling roll and pitch...; description=Subjects piloted a simulated drone through circular waypoints using a flight joystick, controlling roll and pitch while ... (kept description)\\n- experimental_design.trial_structure: main=Waypoints arranged requiring pitch or roll every other two waypoints, with decision points every four waypoints; description=32 trajectories with 32 waypoints each, 16 difficulty levels (waypoint sizes) normalized to subject skill, levels decrea... (kept description)\\n- preprocessing.preprocessing_literal: main=1 Signal Pre-Processing EEG and EOG signals were downsampled to 256 Hz and casually band-passed between 1 and 40 Hz by a...; description=This public dataset only contains the first session (offline) data downsampled from 2,048 Hz to 256 Hz. Each file has da... (kept description)\\n- preprocessing.data_state: main=processed; description=downsampled raw (kept description)\\n- preprocessing.claude_steps: main=["downsampling to 256 Hz", "bandpass filtering 1-40 Hz", "SPHARA spatial low-pass filter", "common average re-referencin...; description=["downsampling from 2048 Hz to 256 Hz"] (kept description)\\n- preprocessing.filter_details.filter_type: main=Butterworth; description=FIR (kept description)\\n- preprocessing_claude.preprocessing_stage: main=offline; description=minimal (kept description)\\n- preprocessing_claude.preprocessing_steps: main=["downsampling to 256 Hz", "bandpass filtering 1-40 Hz", "SPHARA spatial low-pass filter", "common average re-referencin...; description=["downsampling from 2048 Hz to 256 Hz"] (kept description)\\n- ... and 4 more conflicts',
         ),
-        sessions_per_subject=1,
-        runs_per_session=1,
-        tags=Tags(pathology=["healthy"], modality=["motor"], type=["bci"]),
+        tags=Tags(
+            pathology=["Other"],
+            modality=["Other"],
+            type=["Clinical/Intervention"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            data_state="downsampled raw",
+            preprocessing_applied=True,
+            preprocessing_steps=["downsampling from 2048 Hz to 256 Hz"],
+            filter_details=FilterDetails(
+                highpass_hz=1,
+                lowpass_hz=40,
+                bandpass=[1, 40],
+                filter_type="FIR",
+                filter_order=14,
+            ),
+            artifact_methods=["ICA"],
+            re_reference="car",
+            downsampled_to_hz=256,
+        ),
+        signal_processing=SignalProcessingMetadata(
+            classifiers=["LDA"],
+            feature_extraction=["ERS", "PSD", "ICA"],
+            frequency_bands=FrequencyBands(
+                analyzed_range=[2.0, 28.0],
+            ),
+        ),
+        cross_validation=CrossValidationMetadata(
+            evaluation_type=["cross_subject", "cross_session"],
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=["drone", "gaming", "vr_ar", "communication"],
+            environment="outdoor",
+        ),
         data_processed=True,
     )
 

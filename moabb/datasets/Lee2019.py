@@ -12,10 +12,20 @@ from moabb.datasets import download as dl
 from moabb.datasets.base import BaseDataset
 from moabb.datasets.metadata.schema import (
     AcquisitionMetadata,
+    AuxiliaryChannelsMetadata,
+    BCIApplicationMetadata,
+    CrossValidationMetadata,
     DatasetMetadata,
+    DataStructureMetadata,
     DocumentationMetadata,
     ExperimentMetadata,
+    FilterDetails,
+    FrequencyBands,
+    ParadigmSpecificMetadata,
     ParticipantMetadata,
+    PerformanceMetadata,
+    PreprocessingMetadata,
+    SignalProcessingMetadata,
     Tags,
 )
 
@@ -274,6 +284,36 @@ class Lee2019_MI(Lee2019):
     sessions: list of int (default [1,2])
         the list of the sessions to load (2 available).
 
+
+    .. admonition:: Participants
+
+        - **Population**: healthy
+        - **Age**: 29.5 (range: 24-35) years
+        - **Handedness**: {'right': 4}
+        - **BCI experience**: experienced
+
+    .. admonition:: Equipment
+
+        - **Amplifier**: BrainAmp
+        - **Electrodes**: Ag/AgCl
+        - **Montage**: 10-20
+
+    .. admonition:: Preprocessing
+
+        - **Bandpass filter**: 0.5-40.0 Hz
+
+    .. admonition:: Data Access
+
+        - **DOI**: 10.1093/gigascience/giz002
+
+
+    .. admonition:: Experimental Protocol
+
+        - **MI**: binary-class motor imagery of left or right hand grasping
+        - **ERP**: 36-symbol row-column speller with random-set presentation and face stimuli
+        - **SSVEP**: four target frequencies (5.45, 6.67, 8.57, 12 Hz) in four directions
+        - **Feedback**: visual
+
     References
     ----------
     .. [1] Lee, M. H., Kwon, O. Y., Kim, Y. J., Kim, H. K., Lee, Y. E.,
@@ -287,69 +327,174 @@ class Lee2019_MI(Lee2019):
         acquisition=AcquisitionMetadata(
             sampling_rate=1000.0,
             n_channels=62,
-            channel_types={"eeg": 62, "emg": 4},
-            sensor_type="Ag/AgCl wet",
-            hardware="BrainAmp (Brain Products)",
-            reference="nasion",
-            ground="AFz",
-            montage="standard_1005",
+            channel_types={"eeg": 62},
+            montage="10-20",
+            hardware="BrainAmp",
+            sensor_type="Ag/AgCl",
+            reference="nose",
+            impedance_threshold_kohm=10,
+            sensors=[
+                "Fp1",
+                "Fpz",
+                "Fp2",
+                "AF7",
+                "AF3",
+                "AFz",
+                "AF4",
+                "AF8",
+                "F7",
+                "F5",
+                "F3",
+                "F1",
+                "Fz",
+                "F2",
+                "F4",
+                "F6",
+                "F8",
+                "FT7",
+                "FC5",
+                "FC3",
+                "FC1",
+                "FCz",
+                "FC2",
+                "FC4",
+                "FC6",
+                "FT8",
+                "T7",
+                "C5",
+                "C3",
+                "C1",
+                "Cz",
+                "C2",
+                "C4",
+                "C6",
+                "T8",
+                "TP7",
+                "CP5",
+                "CP3",
+                "CP1",
+                "CPz",
+                "CP2",
+                "CP4",
+                "CP6",
+                "TP8",
+                "P7",
+                "P5",
+                "P3",
+                "P1",
+                "Pz",
+                "P2",
+                "P4",
+                "P6",
+                "P8",
+                "PO7",
+                "PO3",
+                "POz",
+                "PO4",
+                "PO8",
+                "O1",
+                "Oz",
+                "O2",
+                "Iz",
+            ],
             line_freq=60.0,
+            auxiliary_channels=AuxiliaryChannelsMetadata(
+                has_eog=True,
+                eog_type=["horizontal", "vertical"],
+                has_emg=True,
+                emg_channels=4,
+                other_physiological=["gsr"],
+            ),
         ),
         participants=ParticipantMetadata(
             n_subjects=54,
             health_status="healthy",
             gender={"female": 25, "male": 29},
+            age_mean=29.5,
             age_min=24,
             age_max=35,
             handedness={"right": 4},
-            age_mean=29.5,
+            bci_experience="experienced",
         ),
         experiment=ExperimentMetadata(
             paradigm="imagery",
-            task_type="left_right_hand",
             n_classes=2,
-            trials_per_class={"left_hand": 100, "right_hand": 100},
-            trial_duration=4.0,
-            tasks=["left_hand", "rest"],
+            class_labels=["left_hand", "rest"],
+            trial_duration=21.0,
+            study_design="Three BCI paradigms: binary-class MI (left/right hand imagery), 36-symbol ERP speller (row-column with face stimuli), four-target SSVEP (5.45, 6.67, 8.57, 12 Hz)",
             feedback_type="visual",
+            stimulus_type="rc_speller",
+            stimulus_modalities=["visual", "multisensory"],
+            primary_modality="multisensory",
+            mode="both",
+            has_training_test_split=True,
         ),
         documentation=DocumentationMetadata(
             doi="10.1093/gigascience/giz002",
-            description="OpenBMI Motor Imagery dataset - investigation into BCI illiteracy",
-            readme=(
-                "EEG dataset for three BCI paradigms (MI, ERP, SSVEP) from 54 healthy subjects "
-                "over two sessions on different days. The motor imagery component includes "
-                "binary-class left/right hand grasping imagery tasks with 100 trials per class "
-                "per session. Additional data includes questionnaires on psychological/physiological "
-                "conditions, resting state recordings, artifact data (eye blinks, movements), and EMG "
-                "from both arms. Accompanied by the OpenBMI toolbox for data analysis and visualization. "
-                "Suitable for BCI illiteracy research, cross-session transfer, and multi-paradigm studies."
-            ),
-            investigators=[
-                "M.H. Lee",
-                "O.Y. Kwon",
-                "Y.J. Kim",
-                "H.K. Kim",
-                "Y.E. Lee",
-                "J. Williamson",
-                "S. Fazli",
-                "S.W. Lee",
-            ],
-            senior_author="S.W. Lee",
-            contact_info="sw.lee@korea.ac.kr",
-            institution="Korea University",
-            country="KR",
-            repository="GigaDB",
-            data_url="http://dx.doi.org/10.5524/100542",
-            license="CC BY 4.0",
-            publication_year=2019,
-            funding="MSIT Korea SW Starlab (IITP-2015-1107), Korea government (2017-0-00451)",
         ),
-        sessions_per_subject=2,
-        runs_per_session=1,
-        tags=Tags(pathology=["healthy"], modality=["multisensory"], type=["bci"]),
-        data_processed=False,
+        tags=Tags(
+            pathology=["Healthy"],
+            modality=["Visual"],
+            type=["Perception"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            data_state="raw EEG available",
+            preprocessing_applied=True,
+            preprocessing_steps=[
+                "downsampling",
+                "bandpass filtering",
+                "segmentation",
+                "baseline correction (ERP only)",
+            ],
+            filter_details=FilterDetails(
+                bandpass={"low_cutoff_hz": 0.5, "high_cutoff_hz": 40.0},
+                filter_type="Butterworth",
+                filter_order=5,
+            ),
+            artifact_methods=["ICA"],
+            re_reference="car",
+            downsampled_to_hz=100,
+            epoch_window=[-200.0, 800.0],
+        ),
+        signal_processing=SignalProcessingMetadata(
+            classifiers=["LDA", "CNN", "Neural Network", "CCA"],
+            feature_extraction=[
+                "CSP",
+                "FBCSP",
+                "Bandpower",
+                "ERD",
+                "ERS",
+                "PSD",
+                "Time-Frequency",
+            ],
+            frequency_bands=FrequencyBands(
+                alpha=[8.0, 12.0],
+                mu=[8, 12],
+                theta=[4, 8],
+                analyzed_range=[1.0, 25.0],
+            ),
+        ),
+        cross_validation=CrossValidationMetadata(
+            cv_method="10-fold",
+            cv_folds=10,
+            evaluation_type=["cross_subject"],
+        ),
+        performance=PerformanceMetadata(
+            accuracy_percent=67.4,
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=["speller", "vr_ar", "communication"],
+        ),
+        paradigm_specific=ParadigmSpecificMetadata(
+            detected_paradigm="ssvep",
+            n_targets=4,
+            stimulus_frequencies_hz=[5.45, 6.67, 8.57, 12.0],
+        ),
+        data_structure=DataStructureMetadata(
+            n_trials={"MI": 200, "ERP": {"training": 1980, "test": 2160}, "SSVEP": 200},
+        ),
         file_format="MAT",
+        data_processed=True,
     )
 
     __init__ = partialmethod(Lee2019.__init__, "MI")
@@ -424,6 +569,36 @@ class Lee2019_ERP(Lee2019):
     sessions: list of int (default [1,2])
         the list of the sessions to load (2 available).
 
+
+    .. admonition:: Participants
+
+        - **Population**: healthy
+        - **Age**: 29.5 (range: 24-35) years
+        - **Handedness**: {'right': 4}
+        - **BCI experience**: experienced
+
+    .. admonition:: Equipment
+
+        - **Amplifier**: BrainAmp
+        - **Electrodes**: Ag/AgCl
+        - **Montage**: 10-20
+
+    .. admonition:: Preprocessing
+
+        - **Bandpass filter**: 0.5-40.0 Hz
+
+    .. admonition:: Data Access
+
+        - **DOI**: 10.1093/gigascience/giz002
+
+
+    .. admonition:: Experimental Protocol
+
+        - **MI**: binary-class motor imagery of left/right hand grasping
+        - **ERP**: 36 symbol row-column speller with random-set presentation and face stimuli
+        - **SSVEP**: four target frequencies (5.45, 6.67, 8.57, 12 Hz) in four directions
+        - **Feedback**: visual
+
     References
     ----------
     .. [1] Lee, M. H., Kwon, O. Y., Kim, Y. J., Kim, H. K., Lee, Y. E.,
@@ -438,45 +613,177 @@ class Lee2019_ERP(Lee2019):
             sampling_rate=1000.0,
             n_channels=62,
             channel_types={"eeg": 62},
-            sensor_type="Ag/AgCl wet",
-            hardware="BrainAmp (Brain Products)",
-            reference="nasion",
-            ground="AFz",
-            montage="standard_1005",
+            montage="10-20",
+            hardware="BrainAmp",
+            sensor_type="Ag/AgCl",
+            reference="nose",
+            impedance_threshold_kohm=10,
+            sensors=[
+                "Fp1",
+                "Fpz",
+                "Fp2",
+                "AF7",
+                "AF3",
+                "AFz",
+                "AF4",
+                "AF8",
+                "F7",
+                "F5",
+                "F3",
+                "F1",
+                "Fz",
+                "F2",
+                "F4",
+                "F6",
+                "F8",
+                "FT7",
+                "FC5",
+                "FC3",
+                "FC1",
+                "FCz",
+                "FC2",
+                "FC4",
+                "FC6",
+                "FT8",
+                "T7",
+                "C5",
+                "C3",
+                "C1",
+                "Cz",
+                "C2",
+                "C4",
+                "C6",
+                "T8",
+                "TP7",
+                "CP5",
+                "CP3",
+                "CP1",
+                "CPz",
+                "CP2",
+                "CP4",
+                "CP6",
+                "TP8",
+                "P7",
+                "P5",
+                "P3",
+                "P1",
+                "Pz",
+                "P2",
+                "P4",
+                "P6",
+                "P8",
+                "PO7",
+                "PO3",
+                "POz",
+                "PO4",
+                "PO8",
+                "O1",
+                "Oz",
+                "O2",
+                "Iz",
+            ],
             line_freq=60.0,
+            auxiliary_channels=AuxiliaryChannelsMetadata(
+                has_eog=True,
+                eog_type=["horizontal", "vertical"],
+                has_emg=True,
+                emg_channels=4,
+                other_physiological=["gsr"],
+            ),
         ),
         participants=ParticipantMetadata(
             n_subjects=54,
             health_status="healthy",
-            handedness={"right": 4},
+            gender={"female": 25, "male": 29},
             age_mean=29.5,
-            age_min=24.0,
-            age_max=35.0,
+            age_min=24,
+            age_max=35,
+            handedness={"right": 4},
+            bci_experience="experienced",
         ),
         experiment=ExperimentMetadata(
             paradigm="p300",
-            task_type="row_col_speller",
             n_classes=2,
-            trial_duration=1.0,
-            tasks=["rest", "left_hand"],
+            class_labels=["left_hand", "rest"],
+            trial_duration=21.0,
+            study_design="MI: binary-class left/right hand motor imagery; ERP: 36-symbol row-column speller with random-set presentation and face stimuli; SSVEP: four target frequencies (5.45, 6.67, 8.57, 12 Hz) in four direct...",
             feedback_type="visual",
+            stimulus_type="rc_speller",
+            stimulus_modalities=["visual", "multisensory"],
+            primary_modality="multisensory",
+            mode="both",
+            has_training_test_split=True,
         ),
         documentation=DocumentationMetadata(
             doi="10.1093/gigascience/giz002",
-            description="OpenBMI ERP dataset - investigation into BCI illiteracy",
-            investigators=["M.H. Lee", "S.W. Lee"],
-            institution="Korea University",
-            country="KR",
-            repository="GigaDB",
-            data_url="https://gigadb.org/dataset/100542",
-            license="CC BY 4.0",
-            publication_year=2019,
         ),
-        sessions_per_subject=2,
-        runs_per_session=2,
-        tags=Tags(pathology=["healthy"], modality=["multisensory"], type=["bci"]),
-        data_processed=False,
+        tags=Tags(
+            pathology=["Healthy"],
+            modality=["Visual"],
+            type=["Perception"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            data_state="raw EEG data provided, preprocessing applied for analysis",
+            preprocessing_applied=True,
+            preprocessing_steps=[
+                "downsampling",
+                "bandpass filtering",
+                "segmentation",
+                "baseline correction (ERP only)",
+            ],
+            filter_details=FilterDetails(
+                bandpass={"low_cutoff_hz": 0.5, "high_cutoff_hz": 40.0},
+                filter_type="Butterworth",
+                filter_order=5,
+            ),
+            artifact_methods=["ICA"],
+            re_reference="car",
+            downsampled_to_hz=100,
+            epoch_window=[-200.0, 800.0],
+        ),
+        signal_processing=SignalProcessingMetadata(
+            classifiers=["LDA", "CNN", "Neural Network", "CCA"],
+            feature_extraction=[
+                "CSP",
+                "FBCSP",
+                "Bandpower",
+                "ERD",
+                "ERS",
+                "PSD",
+                "Time-Frequency",
+            ],
+            frequency_bands=FrequencyBands(
+                alpha=[8.0, 12.0],
+                mu=[8, 12],
+                theta=[4, 8],
+                analyzed_range=[1.0, 25.0],
+            ),
+        ),
+        cross_validation=CrossValidationMetadata(
+            cv_method="10-fold",
+            cv_folds=10,
+            evaluation_type=["cross_subject"],
+        ),
+        performance=PerformanceMetadata(
+            accuracy_percent=67.4,
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=["speller", "vr_ar", "communication"],
+        ),
+        paradigm_specific=ParadigmSpecificMetadata(
+            detected_paradigm="ssvep",
+            n_targets=4,
+            stimulus_frequencies_hz=[5.45, 6.67, 8.57, 12.0],
+        ),
+        data_structure=DataStructureMetadata(
+            n_trials={
+                "MI": "200 per session (100 training + 100 test)",
+                "ERP": "4140 per session (1980 training + 2160 test)",
+                "SSVEP": "200 per session (100 training + 100 test)",
+            },
+        ),
         file_format="MAT",
+        data_processed=True,
     )
 
     __init__ = partialmethod(Lee2019.__init__, "ERP")
@@ -532,6 +839,36 @@ class Lee2019_SSVEP(Lee2019):
     sessions: list of int (default [1,2])
         the list of the sessions to load (2 available).
 
+
+    .. admonition:: Participants
+
+        - **Population**: healthy
+        - **Age**: 29.5 (range: 24-35) years
+        - **Handedness**: {'right': 4}
+        - **BCI experience**: experienced
+
+    .. admonition:: Equipment
+
+        - **Amplifier**: BrainAmp
+        - **Electrodes**: Ag/AgCl
+        - **Montage**: 10-20
+
+    .. admonition:: Preprocessing
+
+        - **Bandpass filter**: 0.5-40.0 Hz
+
+    .. admonition:: Data Access
+
+        - **DOI**: 10.1093/gigascience/giz002
+
+
+    .. admonition:: Experimental Protocol
+
+        - **MI**: binary-class motor imagery (left/right hand grasping)
+        - **ERP**: 36-symbol row-column speller with face stimuli
+        - **SSVEP**: four target frequencies (5.45, 6.67, 8.57, 12 Hz) in four directions
+        - **Feedback**: visual
+
     References
     ----------
     .. [1] Lee, M. H., Kwon, O. Y., Kim, Y. J., Kim, H. K., Lee, Y. E.,
@@ -546,45 +883,173 @@ class Lee2019_SSVEP(Lee2019):
             sampling_rate=1000.0,
             n_channels=62,
             channel_types={"eeg": 62},
-            sensor_type="Ag/AgCl wet",
-            hardware="BrainAmp (Brain Products)",
-            reference="nasion",
-            ground="AFz",
-            montage="standard_1005",
+            montage="10-20",
+            hardware="BrainAmp",
+            sensor_type="Ag/AgCl",
+            reference="nose",
+            impedance_threshold_kohm=10,
+            sensors=[
+                "Fp1",
+                "Fpz",
+                "Fp2",
+                "AF7",
+                "AF3",
+                "AFz",
+                "AF4",
+                "AF8",
+                "F7",
+                "F5",
+                "F3",
+                "F1",
+                "Fz",
+                "F2",
+                "F4",
+                "F6",
+                "F8",
+                "FT7",
+                "FC5",
+                "FC3",
+                "FC1",
+                "FCz",
+                "FC2",
+                "FC4",
+                "FC6",
+                "FT8",
+                "T7",
+                "C5",
+                "C3",
+                "C1",
+                "Cz",
+                "C2",
+                "C4",
+                "C6",
+                "T8",
+                "TP7",
+                "CP5",
+                "CP3",
+                "CP1",
+                "CPz",
+                "CP2",
+                "CP4",
+                "CP6",
+                "TP8",
+                "P7",
+                "P5",
+                "P3",
+                "P1",
+                "Pz",
+                "P2",
+                "P4",
+                "P6",
+                "P8",
+                "PO7",
+                "PO3",
+                "POz",
+                "PO4",
+                "PO8",
+                "O1",
+                "Oz",
+                "O2",
+                "Iz",
+            ],
             line_freq=60.0,
+            auxiliary_channels=AuxiliaryChannelsMetadata(
+                has_eog=True,
+                eog_type=["horizontal", "vertical"],
+                has_emg=True,
+                emg_channels=4,
+                other_physiological=["gsr"],
+            ),
         ),
         participants=ParticipantMetadata(
             n_subjects=54,
             health_status="healthy",
-            handedness={"right": 4},
+            gender={"female": 25, "male": 29},
             age_mean=29.5,
-            age_min=24.0,
-            age_max=35.0,
+            age_min=24,
+            age_max=35,
+            handedness={"right": 4},
+            bci_experience="experienced",
         ),
         experiment=ExperimentMetadata(
             paradigm="ssvep",
-            task_type="4_frequency",
-            n_classes=4,
-            trial_duration=4.0,
-            tasks=["rest", "left_hand"],
+            n_classes=1,
+            class_labels=["12hz"],
+            trial_duration=21.0,
+            study_design="Three BCI paradigms: binary-class MI (left/right hand imagery), 36-symbol ERP speller (row-column paradigm with face stimuli), and four-target SSVEP (5.45, 6.67, 8.57, 12 Hz)",
             feedback_type="visual",
+            stimulus_type="rc_speller",
+            stimulus_modalities=["visual", "multisensory"],
+            primary_modality="multisensory",
+            mode="both",
+            has_training_test_split=True,
         ),
         documentation=DocumentationMetadata(
             doi="10.1093/gigascience/giz002",
-            description="OpenBMI SSVEP dataset - investigation into BCI illiteracy",
-            investigators=["M.H. Lee", "S.W. Lee"],
-            institution="Korea University",
-            country="KR",
-            repository="GigaDB",
-            data_url="https://gigadb.org/dataset/100542",
-            license="CC0",
-            publication_year=2019,
         ),
-        sessions_per_subject=2,
-        runs_per_session=1,
-        tags=Tags(pathology=["healthy"], modality=["multisensory"], type=["bci"]),
-        data_processed=False,
+        tags=Tags(
+            pathology=["Healthy"],
+            modality=["Visual"],
+            type=["Perception"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            data_state="raw EEG provided, preprocessing applied for analysis",
+            preprocessing_applied=True,
+            preprocessing_steps=[
+                "downsampling",
+                "bandpass filtering",
+                "segmentation",
+                "baseline correction",
+            ],
+            filter_details=FilterDetails(
+                bandpass={"low_cutoff_hz": 0.5, "high_cutoff_hz": 40.0},
+                filter_type="Butterworth",
+                filter_order=5,
+            ),
+            artifact_methods=["ICA"],
+            re_reference="car",
+            downsampled_to_hz=100,
+            epoch_window=[-200.0, 800.0],
+        ),
+        signal_processing=SignalProcessingMetadata(
+            classifiers=["LDA", "CNN", "Neural Network", "CCA"],
+            feature_extraction=[
+                "CSP",
+                "FBCSP",
+                "Bandpower",
+                "ERD",
+                "ERS",
+                "PSD",
+                "Time-Frequency",
+            ],
+            frequency_bands=FrequencyBands(
+                alpha=[8.0, 12.0],
+                mu=[8, 12],
+                theta=[4, 8],
+                analyzed_range=[1.0, 25.0],
+            ),
+        ),
+        cross_validation=CrossValidationMetadata(
+            cv_method="10-fold",
+            cv_folds=10,
+            evaluation_type=["cross_subject"],
+        ),
+        performance=PerformanceMetadata(
+            accuracy_percent=67.4,
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=["speller", "vr_ar", "communication"],
+        ),
+        paradigm_specific=ParadigmSpecificMetadata(
+            detected_paradigm="ssvep",
+            n_targets=4,
+            stimulus_frequencies_hz=[5.45, 6.67, 8.57, 12.0],
+        ),
+        data_structure=DataStructureMetadata(
+            n_trials={"MI": 200, "ERP_training": 1980, "ERP_test": 2160, "SSVEP": 200},
+        ),
         file_format="MAT",
+        data_processed=True,
     )
 
     __init__ = partialmethod(Lee2019.__init__, "SSVEP")

@@ -85,7 +85,7 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 title: 'Broken links detected in documentation',
-                body: `## Automated Link Check Report\n\nThe weekly link check has detected broken links.\n\n<details>\n<summary>Report</summary>\n\n${report}\n\n</details>`,
+                body: `## Automated Link Check Report  The weekly link check has detected broken links.  <details> <summary>Report</summary>  ${report}  </details>`,
                 labels: ['broken-links', 'documentation']
               });
             }

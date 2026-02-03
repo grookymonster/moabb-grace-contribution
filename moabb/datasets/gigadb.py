@@ -10,10 +10,20 @@ from scipy.io import loadmat
 
 from moabb.datasets.metadata.schema import (
     AcquisitionMetadata,
+    AuxiliaryChannelsMetadata,
+    BCIApplicationMetadata,
+    CrossValidationMetadata,
     DatasetMetadata,
+    DataStructureMetadata,
     DocumentationMetadata,
     ExperimentMetadata,
+    FilterDetails,
+    FrequencyBands,
+    ParadigmSpecificMetadata,
     ParticipantMetadata,
+    PerformanceMetadata,
+    PreprocessingMetadata,
+    SignalProcessingMetadata,
     Tags,
 )
 
@@ -56,6 +66,33 @@ class Cho2017(BaseDataset):
     Between each run, a maximum 4-minute break was given depending on
     the subject's demands.
 
+
+    .. admonition:: Participants
+
+        - **Population**: healthy
+
+    .. admonition:: Equipment
+
+        - **Amplifier**: Biosemi ActiveTwo
+        - **Electrodes**: active electrodes
+        - **Montage**: 10-10
+        - **Reference**: Car
+
+    .. admonition:: Experimental Protocol
+
+        motor imagery
+
+    .. admonition:: Data Access
+
+        - **DOI**: 10.5524/100295
+
+
+    .. admonition:: Preprocessing
+
+        - **Data state**: raw with bad trial indices provided
+        - **Bandpass filter**: 8-30 Hz
+        - **Steps**: high-pass filtering above 0.5 Hz, common average reference, band-pass filtering 8-30 Hz, Laplacian filtering, bad trial detection...
+
     References
     ----------
 
@@ -67,58 +104,156 @@ class Cho2017(BaseDataset):
     METADATA = DatasetMetadata(
         acquisition=AcquisitionMetadata(
             sampling_rate=512.0,
-            n_channels=69,
-            channel_types={"eeg": 64, "emg": 4, "stim": 1},
-            hardware="BioSemi ActiveTwo",
-            sensor_type="Ag/AgCl active",
-            software="BCI2000 system 3.0.2",
-            montage="standard_1005",
-            line_freq=60.0,
+            n_channels=64,
+            channel_types={"eeg": 64},
+            montage="10-10",
+            hardware="Biosemi ActiveTwo",
+            sensor_type="active electrodes",
             reference="Car",
+            software="BCI2000",
+            sensors=[
+                "Fp1",
+                "Fpz",
+                "Fp2",
+                "AF7",
+                "AF3",
+                "AFz",
+                "AF4",
+                "AF8",
+                "F7",
+                "F5",
+                "F3",
+                "F1",
+                "Fz",
+                "F2",
+                "F4",
+                "F6",
+                "F8",
+                "FT7",
+                "FC5",
+                "FC3",
+                "FC1",
+                "FCz",
+                "FC2",
+                "FC4",
+                "FC6",
+                "FT8",
+                "T7",
+                "C5",
+                "C3",
+                "C1",
+                "Cz",
+                "C2",
+                "C4",
+                "C6",
+                "T8",
+                "TP7",
+                "CP5",
+                "CP3",
+                "CP1",
+                "CPz",
+                "CP2",
+                "CP4",
+                "CP6",
+                "TP8",
+                "P7",
+                "P5",
+                "P3",
+                "P1",
+                "Pz",
+                "P2",
+                "P4",
+                "P6",
+                "P8",
+                "PO7",
+                "PO3",
+                "POz",
+                "PO4",
+                "PO8",
+                "O1",
+                "Oz",
+                "O2",
+                "Iz",
+            ],
+            line_freq=60.0,
+            auxiliary_channels=AuxiliaryChannelsMetadata(
+                has_emg=True,
+                emg_channels=4,
+            ),
         ),
         participants=ParticipantMetadata(
             n_subjects=52,
             health_status="healthy",
             gender={"female": 19, "male": 33},
-            age_mean=24.8,
-            age_std=3.86,
-            handedness={"right": 50, "ambidextrous": 2},
+            bci_experience="collected via questionnaire (0 = no, number = how many times)",
         ),
         experiment=ExperimentMetadata(
             paradigm="imagery",
-            task_type="left_right_hand",
             n_classes=2,
-            trials_per_class={"left_hand": 100, "right_hand": 100},
-            trial_duration=3.0,
-            tasks=["rest", "left_hand", "right_hand"],
+            class_labels=["right_hand", "left_hand"],
+            trial_duration=25.0,
+            study_design="motor imagery",
+            stimulus_type="cursor_feedback",
+            stimulus_modalities=["visual"],
+            primary_modality="visual",
+            mode="online",
         ),
         documentation=DocumentationMetadata(
-            doi="10.1093/gigascience/gix034",
-            description="Motor imagery BCI EEG dataset with EMG from GigaScience",
-            readme=(
-                "EEG dataset recorded during motor imagery BCI experiments from 52 subjects. "
-                "Participants performed kinesthetic motor imagery of left and right hand movements "
-                "using a Biosemi ActiveTwo system with 64 EEG channels plus 4 EMG channels. "
-                "The dataset includes 100-120 trials per class per subject across 5-6 runs. "
-                "Additional data includes questionnaire responses, 3D electrode locations, "
-                "and 1-minute resting state recordings. Suitable for motor imagery classification "
-                "and cross-subject transfer learning research."
-            ),
-            investigators=["H. Cho", "M. Ahn", "S. Ahn", "M. Kwon", "S.C. Jun"],
-            senior_author="S.C. Jun",
-            contact_info="scjun@gist.ac.kr",
-            institution="Gwangju Institute of Science and Technology",
-            country="KR",
-            repository="GigaDB",
-            data_url="http://dx.doi.org/10.5524/100295",
-            license="CC0",
-            publication_year=2017,
-            funding="GIST Research Institute (GRI), IITP Korea government (No. 2017-0-00451)",
+            doi="10.5524/100295",
+            funding=["grant funded funded", "grant\nfunded funded"],
         ),
-        sessions_per_subject=1,
-        runs_per_session=5,
-        tags=Tags(pathology=["healthy"], modality=["motor"], type=["bci"]),
-        data_processed=False,
+        tags=Tags(
+            pathology=["Healthy"],
+            modality=["Motor"],
+            type=["Motor"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            data_state="raw with bad trial indices provided",
+            preprocessing_applied=True,
+            preprocessing_steps=[
+                "high-pass filtering above 0.5 Hz",
+                "common average reference",
+                "band-pass filtering (8-30 Hz for analysis, 8-14 Hz for ERD/ERS)",
+                "Laplacian filtering (for ERD/ERS)",
+                "Hilbert transform",
+                "bad trial rejection (amplitude > ±100 μV)",
+                "EMG correlation detection",
+            ],
+            filter_details=FilterDetails(
+                highpass_hz=0.5,
+                bandpass="8-30 Hz (SMR analysis), 8-14 Hz (mu rhythm ERD/ERS), 50-250 Hz (EMG)",
+                filter_type="Butterworth",
+                filter_order=4,
+            ),
+            artifact_methods=["EMG removal", "ICA"],
+            re_reference="Car",
+        ),
+        signal_processing=SignalProcessingMetadata(
+            classifiers=["LDA"],
+            feature_extraction=["CSP", "ERD", "ERS"],
+            frequency_bands=FrequencyBands(
+                alpha=[8.0, 14.0],
+                mu=[8, 12],
+                analyzed_range=[8.0, 30.0],
+            ),
+        ),
+        cross_validation=CrossValidationMetadata(
+            evaluation_type=["cross_subject"],
+        ),
+        performance=PerformanceMetadata(
+            accuracy_percent=60.42,
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=["smart_home", "vr_ar", "communication"],
+        ),
+        paradigm_specific=ParadigmSpecificMetadata(
+            detected_paradigm="motor_imagery",
+        ),
+        data_structure=DataStructureMetadata(
+            n_trials=10,
+            trials_context="per_class",
+        ),
+        data_processed=True,
     )
 
     def __init__(self):

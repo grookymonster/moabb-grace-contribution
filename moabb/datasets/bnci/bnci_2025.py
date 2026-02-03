@@ -13,10 +13,19 @@ from scipy.io import loadmat
 from moabb.datasets import download as dl
 from moabb.datasets.metadata.schema import (
     AcquisitionMetadata,
+    AuxiliaryChannelsMetadata,
+    BCIApplicationMetadata,
+    CrossValidationMetadata,
     DatasetMetadata,
+    DataStructureMetadata,
     DocumentationMetadata,
     ExperimentMetadata,
+    FilterDetails,
+    ParadigmSpecificMetadata,
     ParticipantMetadata,
+    PerformanceMetadata,
+    PreprocessingMetadata,
+    SignalProcessingMetadata,
     Tags,
 )
 
@@ -100,8 +109,7 @@ def _load_data_001_2025(
     sessions : dict
         Dictionary of sessions with raw data.
 
-    Notes
-    -----
+    Notes -----
     Dataset details:
     - 20 subjects (12 male, 8 female, mean age 26.1 +/- 4.1 years)
     - 60 EEG + 4 EOG channels = 64 total
@@ -236,6 +244,18 @@ class BNCI2025_001(BNCIBaseDataset):
     - left_slow_near (9), left_slow_far (10), left_fast_near (11), left_fast_far (12)
     - right_slow_near (13), right_slow_far (14), right_fast_near (15), right_fast_far (16)
 
+
+    .. admonition:: Preprocessing
+
+        - **Bandpass filter**: 0.3-80.0 Hz
+        - **Notch filter**: [50] Hz
+
+    .. admonition:: Data Access
+
+        - **Repository**: GitHub
+        - **DOI**: 10.1088/1741-2552/ada0ea
+        - **URL**: https://github.com/rkobler/eyeartifactcorrection
+
     References
     ----------
     .. [1] Srisrisawang, N., & Muller-Putz, G. R. (2024). Simultaneous encoding
@@ -243,8 +263,7 @@ class BNCI2025_001(BNCIBaseDataset):
            Journal of Neural Engineering, 21(6).
            https://doi.org/10.1088/1741-2552/ada0ea
 
-    Notes
-    -----
+    Notes -----
     .. versionadded:: 1.3.0
 
     This dataset is notable for its multi-parameter kinematic design,
@@ -259,47 +278,145 @@ class BNCI2025_001(BNCIBaseDataset):
     METADATA = DatasetMetadata(
         acquisition=AcquisitionMetadata(
             sampling_rate=500.0,
-            n_channels=71,
-            channel_types={"eeg": 67, "eog": 4},
-            hardware="BrainAmp (Brain Products GmbH)",
-            reference="common average",
-            montage="standard_1005",
-            filters="0.3-100 Hz bandpass, 50 Hz notch",
-            line_freq=50.0,
-            ground="was",
+            n_channels=60,
+            channel_types={"eeg": 60},
+            montage="af7 af3 afz af4 af8 f7 f5 f3 f1 fz f2 f4 f6 f8 ft7 fc5 fc3 fc1 fcz fc2 fc4 fc6 ft8 t7 c5 c3 c1 cz c2 c4 c6 t8 tp7 cp5 cp3 cp1 cpz cp2 cp4 cp6 tp8 p7 p5 p3 p1 pz p2 p4 p6 p8 ppo1h ppo2h po7 po3 poz po4 po8 o1 oz o2",
+            hardware="BrainAmp",
+            reference="right mastoid",
             software="EEGLAB",
+            filters="50 Hz notch",
+            sensors=[
+                "Fp1",
+                "Fpz",
+                "Fp2",
+                "AF7",
+                "AF3",
+                "AFz",
+                "AF4",
+                "AF8",
+                "F7",
+                "F5",
+                "F3",
+                "F1",
+                "Fz",
+                "F2",
+                "F4",
+                "F6",
+                "F8",
+                "FT7",
+                "FC5",
+                "FC3",
+                "FC1",
+                "FCz",
+                "FC2",
+                "FC4",
+                "FC6",
+                "FT8",
+                "T7",
+                "C5",
+                "C3",
+                "C1",
+                "Cz",
+                "C2",
+                "C4",
+                "C6",
+                "T8",
+                "TP7",
+                "CP5",
+                "CP3",
+                "CP1",
+                "CPz",
+                "CP2",
+                "CP4",
+                "CP6",
+                "TP8",
+                "P7",
+                "P5",
+                "P3",
+                "P1",
+                "Pz",
+                "P2",
+                "P4",
+                "P6",
+                "P8",
+                "PO7",
+                "PO3",
+                "POz",
+                "PO4",
+                "PO8",
+                "O1",
+                "Oz",
+            ],
+            line_freq=50.0,
+            auxiliary_channels=AuxiliaryChannelsMetadata(
+                has_eog=True,
+                eog_type=["horizontal", "vertical"],
+            ),
         ),
         participants=ParticipantMetadata(
             n_subjects=20,
-            health_status="healthy",
             gender={"male": 12, "female": 8},
             age_mean=26.1,
-            age_std=4.1,
             handedness={"right": 17, "left": 3},
         ),
         experiment=ExperimentMetadata(
             paradigm="imagery",
-            task_type="motor_kinematics_reaching",
-            n_classes=16,
-            trial_duration=4.0,
-            tasks=["rest"],
-            study_design="follow the dot while it moved with their eyes and then fixate their gaze on the dot.",
+            n_classes=2,
+            class_labels=["rest", "right_hand"],
+            trial_duration=5.0,
+            study_design="Discrete reaching movements in four directions (up, down, left, right) with varying speeds (quick/slow) and distances (near/far) following visual cue, self-paced execution",
+            feedback_type="visual (cue color: green for correct, red for incorrect direction)",
+            stimulus_type="avatar",
+            stimulus_modalities=["visual"],
+            primary_modality="visual",
+            mode="both",
         ),
         documentation=DocumentationMetadata(
             doi="10.1088/1741-2552/ada0ea",
-            description="Simultaneous encoding of speed, distance, and direction in discrete reaching",
-            investigators=["N. Srisrisawang", "G. R. Müller-Putz"],
-            institution="Graz University of Technology",
-            country="AT",
-            repository="BNCI Horizon 2020",
-            data_url="http://bnci-horizon-2020.eu/database/data-sets/001-2025/",
-            license="CC BY 4.0",
-            publication_year=2024,
+            repository="GitHub",
+            data_url="https://github.com/rkobler/eyeartifactcorrection",
+            readme='Conflicting metadata across sources:\\n- experimental_design.mode: main=online; description=both (kept description)\\n- experimental_design.task_description: main=Discrete reaching movements in four directions (up, down, left, right) with varying speeds (quick/slow) and distances (n...; description=follow the dot while it moved with their eyes and then fixate their gaze on the dot. (kept description)\\n- experimental_design.modalities: main=["visual", "multisensory"]; description=["visual"] (kept description)\\n- experimental_design.primary_modality: main=multisensory; description=visual (kept description)\\n- experimental_design.feedback_type: main=visual (cue color: green for correct, red for incorrect direction); description=visual (dot color change) (kept description)\\n- preprocessing.preprocessing_literal: main=The complicated processes of carrying out a hand reach are still far from fully understood. This could be done in severa...; description=The goal of this measurement was to use this part of the data to train the eye artifact  correction model that was appli... (kept description)\\n- preprocessing.data_state: main=preprocessed; description=raw with eye artifact correction model available (kept description)\\n- preprocessing.claude_steps: main=["low-pass filter at 100 Hz", "notch filter at 50 Hz", "downsampling to 200 Hz", "bad channel identification and interpo...; description=["eye artifact correction"] (kept description)\\n- preprocessing_claude.preprocessing_steps: main=["low-pass filter at 100 Hz", "notch filter at 50 Hz", "downsampling to 200 Hz", "bad channel identification and interpo...; description=["eye artifact correction"] (kept description)\\n- preprocessing_claude.data_state: main=preprocessed; description=raw with eye artifact correction model available (kept description)\\n- ... and 2 more conflicts',
         ),
-        sessions_per_subject=1,
-        runs_per_session=1,
-        tags=Tags(pathology=["healthy"], modality=["motor"], type=["motor"]),
-        data_processed=False,
+        tags=Tags(
+            pathology=["Healthy"],
+            modality=["Visual"],
+            type=["Perception"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            data_state="raw with eye artifact correction model available",
+            preprocessing_applied=True,
+            preprocessing_steps=["eye artifact correction"],
+            filter_details=FilterDetails(
+                highpass_hz=0.3,
+                lowpass_hz=100.0,
+                bandpass={"low_cutoff_hz": 0.3, "high_cutoff_hz": 80.0},
+                notch_hz=[50],
+                filter_type="Butterworth",
+                filter_order=2,
+            ),
+            artifact_methods=["ICA"],
+            re_reference="common average",
+            downsampled_to_hz=200,
+        ),
+        signal_processing=SignalProcessingMetadata(
+            classifiers=["LDA", "Shrinkage LDA"],
+            feature_extraction=["Bandpower", "Covariance/Riemannian", "ICA"],
+        ),
+        cross_validation=CrossValidationMetadata(
+            cv_method="stratified k-fold",
+            evaluation_type=["cross_session", "transfer_learning"],
+        ),
+        performance=PerformanceMetadata(
+            accuracy_percent=55.9,
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=["smart_home", "vr_ar"],
+        ),
+        data_structure=DataStructureMetadata(
+            n_trials=30,
+            trials_context="per_class",
+        ),
+        data_processed=True,
     )
 
     def __init__(self):
@@ -804,6 +921,20 @@ class BNCI2025_002(BNCIBaseDataset):
     - 3 perception levels per session (perc0, perc50, perc100)
     - Files named: {subject_id}_ses{session}_perc{level}.mat
 
+
+    .. admonition:: Data Access
+
+        - **Repository**: GitHub
+        - **DOI**: 10.1088/1741-2552/ac689f
+        - **URL**: https://github.com/sccn/labstreaminglayer
+
+
+    .. admonition:: Preprocessing
+
+        - **Data state**: preprocessed
+        - **Notch filter**: 50 Hz
+        - **Steps**: Anti-aliasing filter (25 Hz), Notch filter at 50 Hz (powerline noise removal), Downsampling to 100 Hz, Bad channel interpolation (4 nearest neighbors, inverse distance weighted), Eye artifact subtraction (SGEYESUB algorithm)...
+
     References
     ----------
     .. [1] Kobler, R. J., Almeida, I., Sburlea, A. I., & Muller-Putz, G. R.
@@ -812,8 +943,7 @@ class BNCI2025_002(BNCIBaseDataset):
            spinal cord injured participant. Journal of Neural Engineering,
            19(3), 036005. https://doi.org/10.1088/1741-2552/ac689f
 
-    Notes
-    -----
+    Notes -----
     .. versionadded:: 1.3.0
 
     This dataset is designed for continuous decoding research, specifically
@@ -834,55 +964,156 @@ class BNCI2025_002(BNCIBaseDataset):
     METADATA = DatasetMetadata(
         acquisition=AcquisitionMetadata(
             sampling_rate=200.0,
-            n_channels=64,
-            channel_types={"eeg": 60, "eog": 4},
-            hardware="actiCAP system (Brain Products GmbH)",
-            reference="common average",
-            montage="standard_1005",
+            n_channels=60,
+            channel_types={"eeg": 60},
+            montage="channels_fyrxyz",
+            hardware="BrainVision",
+            sensor_type="active electrodes (actiCAP)",
+            reference="Car",
+            software="EEGLAB",
+            sensors=[
+                "Fp1",
+                "Fpz",
+                "Fp2",
+                "AF7",
+                "AF3",
+                "AFz",
+                "AF4",
+                "AF8",
+                "F7",
+                "F5",
+                "F3",
+                "F1",
+                "Fz",
+                "F2",
+                "F4",
+                "F6",
+                "F8",
+                "FT7",
+                "FC5",
+                "FC3",
+                "FC1",
+                "FCz",
+                "FC2",
+                "FC4",
+                "FC6",
+                "FT8",
+                "T7",
+                "C5",
+                "C3",
+                "C1",
+                "Cz",
+                "C2",
+                "C4",
+                "C6",
+                "T8",
+                "TP7",
+                "CP5",
+                "CP3",
+                "CP1",
+                "CPz",
+                "CP2",
+                "CP4",
+                "CP6",
+                "TP8",
+                "P7",
+                "P5",
+                "P3",
+                "P1",
+                "Pz",
+                "P2",
+                "P4",
+                "P6",
+                "P8",
+                "PO7",
+                "PO3",
+                "POz",
+                "PO4",
+                "PO8",
+                "O1",
+                "Oz",
+            ],
             line_freq=50.0,
-            filters="25 Hz anti-aliasing, 50 Hz notch",
-            ground="Fpz",
-            sensor_type="active (actiCAP)",
+            auxiliary_channels=AuxiliaryChannelsMetadata(
+                has_eog=True,
+                eog_channels=4,
+                eog_type=["horizontal", "vertical"],
+                has_emg=True,
+                other_physiological=["gsr"],
+            ),
         ),
         participants=ParticipantMetadata(
-            n_subjects=10,
-            health_status="healthy",
+            n_subjects=30,
+            health_status="spinal_cord_injury",
             gender={"male": 10, "female": 10},
-            age_mean=24.0,
-            age_std=5.0,
-            handedness={"right": 20},
-            clinical_population="spinal_cord_injury",
+            age_mean=24,
+            handedness="right-handed (Edinburgh Handedness Inventory)",
+            bci_experience="naive BCI users in terms of motor decoding (4 had previous EEG experience)",
         ),
         experiment=ExperimentMetadata(
             paradigm="imagery",
-            task_type="continuous_2d_trajectory_decoding",
-            n_classes=3,
-            trial_duration=8.0,
-            tasks=["right_arm", "feet", "rest"],
-            feedback_type="visual",
+            n_classes=2,
+            class_labels=["right_arm", "feet"],
+            trial_duration=23.0,
+            study_design="Participants attempt movement while viewing trajectory feedback that is a mixture of decoded brain signals and predefined target trajectory",
+            feedback_type="none",
+            stimulus_type="avatar",
+            stimulus_modalities=["visual"],
+            primary_modality="visual",
+            mode="both",
+            has_training_test_split=True,
         ),
         documentation=DocumentationMetadata(
-            doi="10.1088/1741-2552/ac689f",
-            description="Continuous 2D trajectory decoding from attempted movement",
-            investigators=[
-                "R. J. Kobler",
-                "I. Almeida",
-                "A. I. Sburlea",
-                "G. R. Müller-Putz",
-            ],
-            institution="Graz University of Technology",
-            country="AT",
-            repository="BNCI Horizon 2020",
-            data_url="http://bnci-horizon-2020.eu/database/data-sets/002-2025/",
-            license="CC BY 4.0",
-            publication_year=2022,
+            doi="10.1088/1741-",
+            repository="GitHub",
+            data_url="https://github.com/sccn/labstreaminglayer",
             funding=["European Research Council"],
+            readme='Conflicting metadata across sources:\\n- experimental_design.task_description: main=track the snake with their gaze and simultaneously attempt movement of their strapped lower arm and hand as if wielding ...; description=Participants attempt movement while viewing trajectory feedback that is a mixture of decoded brain signals and predefine... (kept description)\\n- participants.health_status: main=healthy; description=spinal_cord_injury (kept description)\\n- preprocessing.data_state: main=processed; description=continuous signals with synchronized decoded control signals, paradigm targets, visual feedback trajectories, and error ... (kept description)\\n- preprocessing.claude_steps: main=["anti-aliasing filter (25 Hz)", "powerline noise removal (notch filter at 50 Hz)", "downsampling to 100 Hz", "bad chann...; description=["resampling and alignment to EEG timeline", "GND channel removal", "channel location assignment"] (kept description)\\n- preprocessing_claude.preprocessing_steps: main=["anti-aliasing filter (25 Hz)", "powerline noise removal (notch filter at 50 Hz)", "downsampling to 100 Hz", "bad chann...; description=["resampling and alignment to EEG timeline", "GND channel removal", "channel location assignment"] (kept description)\\n- preprocessing_claude.data_state: main=processed; description=continuous signals with synchronized decoded control signals, paradigm targets, visual feedback trajectories, and error ... (kept description)\\n- preprocessing_claude.notes: main=Anti-aliasing filter at 25 Hz applied before downsampling; description=Data stored as MATLAB .mat files with naming convention: <subject>_ses<session>_perc<percdec>.mat (kept description)\\n- recording_setup.amplifier: main=Brain Products; description=BrainVision (kept description)\\n- recording_setup.montage: main=10-10; description=channels_fyr.xyz (kept description)\\n- recording_setup.ground: main=Fpz; description=GND channel removed (kept description)',
         ),
-        sessions_per_subject=3,
-        runs_per_session=3,
-        tags=Tags(pathology=["other"], modality=["motor"], type=["bci"]),
-        data_processed=True,
+        tags=Tags(
+            pathology=["Healthy"],
+            modality=["Motor"],
+            type=["Motor"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            data_state="continuous signals with synchronized decoded control signals, paradigm targets, visual feedback trajectories, and error metrics",
+            preprocessing_applied=True,
+            preprocessing_steps=[
+                "resampling and alignment to EEG timeline",
+                "GND channel removal",
+                "channel location assignment",
+            ],
+            filter_details=FilterDetails(
+                highpass_hz=0.18,
+                lowpass_hz=3,
+                notch_hz=50,
+            ),
+            artifact_methods=["ICA"],
+            re_reference="common average",
+            downsampled_to_hz=20,
+        ),
+        signal_processing=SignalProcessingMetadata(
+            feature_extraction=["ERD", "ERS", "Covariance/Riemannian", "ICA"],
+        ),
+        cross_validation=CrossValidationMetadata(
+            evaluation_type=["cross_session", "transfer_learning"],
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=["prosthetic", "robotic_arm", "smart_home", "vr_ar"],
+            environment="outdoor",
+        ),
+        paradigm_specific=ParadigmSpecificMetadata(
+            detected_paradigm="motor_imagery",
+        ),
+        data_structure=DataStructureMetadata(
+            n_trials={
+                "eyeruns": 38,
+                "calibration_snakeruns": 48,
+                "50_percent_feedback_snakeruns": 36,
+            },
+        ),
         file_format="MAT",
+        data_processed=True,
     )
 
     def __init__(self):
