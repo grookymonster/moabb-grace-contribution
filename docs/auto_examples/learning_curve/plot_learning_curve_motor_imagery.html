@@ -580,6 +580,7 @@ to two classes (left- vs right-hand) and use AUC as metric.</p>
 <span class="kn">import</span><span class="w"> </span><span class="nn">moabb</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">moabb.datasets</span><span class="w"> </span><span class="kn">import</span> <a href="../../generated/moabb.datasets.BNCI2014_001.html#moabb.datasets.BNCI2014_001" title="moabb.datasets.BNCI2014_001" class="sphx-glr-backref-module-moabb-datasets sphx-glr-backref-type-py-class"><span class="n">BNCI2014_001</span></a>
 <span class="kn">from</span><span class="w"> </span><span class="nn">moabb.evaluations</span><span class="w"> </span><span class="kn">import</span> <a href="../../generated/moabb.evaluations.WithinSessionEvaluation.html#moabb.evaluations.WithinSessionEvaluation" title="moabb.evaluations.WithinSessionEvaluation" class="sphx-glr-backref-module-moabb-evaluations sphx-glr-backref-type-py-class"><span class="n">WithinSessionEvaluation</span></a>
+<span class="kn">from</span><span class="w"> </span><span class="nn">moabb.evaluations.splitters</span><span class="w"> </span><span class="kn">import</span> <span class="n">LearningCurveSplitter</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">moabb.paradigms</span><span class="w"> </span><span class="kn">import</span> <a href="../../generated/moabb.paradigms.LeftRightImagery.html#moabb.paradigms.LeftRightImagery" title="moabb.paradigms.LeftRightImagery" class="sphx-glr-backref-module-moabb-paradigms sphx-glr-backref-type-py-class"><span class="n">LeftRightImagery</span></a>
 
 
@@ -627,8 +628,8 @@ be overwritten if necessary.</p>
     <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">datasets</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">datasets</span></a><span class="p">,</span>
     <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;examples&quot;</span><span class="p">,</span>
     <a href="https://docs.python.org/3/library/functions.html#bool" title="builtins.bool" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">overwrite</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/functions.html#bool" title="builtins.bool" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">overwrite</span></a><span class="p">,</span>
-    <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data_size</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data_size</span></a><span class="p">,</span>
-    <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">n_perms</span></a><span class="o">=</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">n_perms</span></a><span class="p">,</span>
+    <span class="n">cv_class</span><span class="o">=</span><span class="n">LearningCurveSplitter</span><span class="p">,</span>
+    <span class="n">cv_kwargs</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data_size</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">data_size</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">n_perms</span></a><span class="o">=</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">n_perms</span></a><span class="p">),</span>
 <span class="p">)</span>
 
 <span class="n">results</span> <span class="o">=</span> <a href="../../generated/moabb.evaluations.base.BaseEvaluation.html#moabb.evaluations.base.BaseEvaluation.process" title="moabb.evaluations.base.BaseEvaluation.process" class="sphx-glr-backref-module-moabb-evaluations-base sphx-glr-backref-type-py-method"><span class="n">evaluation</span><span class="o">.</span><span class="n">process</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pipelines</span></a><span class="p">)</span>
@@ -637,14 +638,14 @@ be overwritten if necessary.</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>BNCI2014-001-WithinSession:   0%|          | 0/1 [00:00&lt;?, ?it/s]
-BNCI2014-001-WithinSession: 100%|██████████| 1/1 [02:31&lt;00:00, 151.93s/it]
-BNCI2014-001-WithinSession: 100%|██████████| 1/1 [02:31&lt;00:00, 151.93s/it]
+BNCI2014-001-WithinSession: 100%|██████████| 1/1 [02:38&lt;00:00, 158.61s/it]
+BNCI2014-001-WithinSession: 100%|██████████| 1/1 [02:38&lt;00:00, 158.61s/it]
       score      time  ...  pipeline                  codecarbon_task_name
-0  0.747619  0.171148  ...   CSP+LDA  a4601b72-e8f8-4015-b97c-09ff236340ac
-1  0.714286  0.046798  ...   CSP+LDA  9a4582b0-bbb7-42d9-836e-b7ae9c5a986e
-2  0.895238  0.099488  ...   CSP+LDA  cc99f7ca-2bf1-44a2-98cf-59f1974ace03
-3  0.928571  0.154657  ...   CSP+LDA  333fa62c-a8fa-4f29-9f77-24edb7d4ba0d
-4  0.909524  0.033590  ...   CSP+LDA  5ff4faec-f521-457f-9714-0d4856c3781d
+0  0.519048  0.141601  ...   CSP+LDA  00574d61-1590-41eb-855d-28ce809ee999
+1  0.757143  0.056112  ...   CSP+LDA  b0b92331-ca1c-4f9f-a511-704c07dd5bea
+2  0.900000  0.130616  ...   CSP+LDA  85cdd758-586d-456d-9dfa-fe0335277886
+3  0.923810  0.196765  ...   CSP+LDA  47e85620-46bf-46b6-9a75-8a42117237cf
+4  0.842857  0.136448  ...   CSP+LDA  fdbf4ed3-b954-4b58-a509-0d77f1284c9d
 
 [5 rows x 13 columns]
 </pre></div>
@@ -674,8 +675,8 @@ each pipeline</p>
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.show.html#matplotlib.pyplot.show" title="matplotlib.pyplot.show" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_learning_curve_motor_imagery_001.png" srcset="../../_images/sphx_glr_plot_learning_curve_motor_imagery_001.png" alt="Errorbar shows Mean-CI across permutations" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (2 minutes 50.030 seconds)</p>
-<p><strong>Estimated memory usage:</strong>  558 MB</p>
+<img src="../../_images/sphx_glr_plot_learning_curve_motor_imagery_001.png" srcset="../../_images/sphx_glr_plot_learning_curve_motor_imagery_001.png" alt="Errorbar shows Mean-CI across permutations" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (2 minutes 54.474 seconds)</p>
+<p><strong>Estimated memory usage:</strong>  591 MB</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-learning-curve-plot-learning-curve-motor-imagery-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/5b1f506cd53838de0dd70e569a36f198/plot_learning_curve_motor_imagery.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_learning_curve_motor_imagery.ipynb</span></code></a></p>

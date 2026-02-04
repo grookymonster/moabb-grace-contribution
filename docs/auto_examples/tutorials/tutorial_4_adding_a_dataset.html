@@ -665,7 +665,7 @@ have been downloaded</p></li>
         <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fs</span></a> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;fs&quot;</span><span class="p">]</span>
         <span class="n">ch_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ch&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">)]</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;stim&quot;</span><span class="p">]</span>
         <span class="n">ch_types</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;eeg&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">)]</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;stim&quot;</span><span class="p">]</span>
-        <span class="n">info</span> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.create_info.html#mne.create_info" title="mne.create_info" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">create_info</span></a><span class="p">(</span><span class="n">ch_names</span><span class="p">,</span> <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fs</span></a><span class="p">,</span> <span class="n">ch_types</span><span class="p">)</span>
+        <span class="n">info</span> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.create_info.html#mne.create_info" title="mne.create_info" class="sphx-glr-backref-module-mne sphx-glr-backref-type-py-function"><span class="n">mne</span><span class="o">.</span><span class="n">create_info</span></a><span class="p">(</span><span class="n">ch_names</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.squeeze.html#numpy.squeeze" title="numpy.squeeze" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">squeeze</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fs</span></a><span class="p">)),</span> <span class="n">ch_types</span><span class="p">)</span>
         <span class="n">raw</span> <span class="o">=</span> <a href="https://mne.tools/stable/generated/mne.io.RawArray.html#mne.io.RawArray" title="mne.io.RawArray" class="sphx-glr-backref-module-mne-io sphx-glr-backref-type-py-class"><span class="n">mne</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">RawArray</span></a><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">x</span></a><span class="p">,</span> <span class="n">info</span><span class="p">)</span>
 
         <span class="n">sessions</span> <span class="o">=</span> <span class="p">{}</span>
@@ -706,65 +706,65 @@ The rest of the code follows the steps described in the previous tutorials.</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|                                              | 0.00/2.77M [00:00&lt;?, ?B/s]
-  0%|▏                                    | 12.3k/2.77M [00:00&lt;00:51, 53.1kB/s]
-  2%|▋                                     | 46.1k/2.77M [00:00&lt;00:20, 132kB/s]
-  4%|█▌                                     | 111k/2.77M [00:00&lt;00:09, 267kB/s]
-  9%|███▌                                   | 249k/2.77M [00:00&lt;00:05, 502kB/s]
- 19%|███████▍                               | 526k/2.77M [00:00&lt;00:02, 945kB/s]
- 39%|██████████████▎                      | 1.07M/2.77M [00:00&lt;00:00, 1.77MB/s]
- 78%|████████████████████████████▉        | 2.16M/2.77M [00:01&lt;00:00, 3.43MB/s]
+  0%|▏                                    | 12.3k/2.77M [00:00&lt;00:36, 75.8kB/s]
+  1%|▌                                     | 39.9k/2.77M [00:00&lt;00:18, 148kB/s]
+  4%|█▌                                     | 110k/2.77M [00:00&lt;00:08, 312kB/s]
+  9%|███▍                                   | 244k/2.77M [00:00&lt;00:04, 581kB/s]
+ 19%|███████▎                              | 529k/2.77M [00:00&lt;00:01, 1.14MB/s]
+ 39%|██████████████▎                      | 1.07M/2.77M [00:00&lt;00:00, 2.12MB/s]
+ 68%|█████████████████████████▏           | 1.89M/2.77M [00:00&lt;00:00, 3.44MB/s]
   0%|                                              | 0.00/2.77M [00:00&lt;?, ?B/s]
-100%|█████████████████████████████████████| 2.77M/2.77M [00:00&lt;00:00, 10.0GB/s]
+100%|█████████████████████████████████████| 2.77M/2.77M [00:00&lt;00:00, 8.51GB/s]
 
 ExampleDataset-WithinSession:   0%|          | 0/3 [00:00&lt;?, ?it/s]
-ExampleDataset-WithinSession:  33%|███▎      | 1/3 [00:06&lt;00:12,  6.34s/it]
+ExampleDataset-WithinSession:  33%|███▎      | 1/3 [00:06&lt;00:12,  6.40s/it]
 
   0%|                                              | 0.00/2.77M [00:00&lt;?, ?B/s]
 
-  0%|▏                                    | 12.3k/2.77M [00:00&lt;00:38, 70.9kB/s]
+  0%|▏                                    | 11.3k/2.77M [00:00&lt;00:40, 68.7kB/s]
 
-  2%|▋                                     | 49.2k/2.77M [00:00&lt;00:16, 165kB/s]
+  1%|▍                                     | 33.8k/2.77M [00:00&lt;00:22, 122kB/s]
 
-  4%|█▋                                     | 118k/2.77M [00:00&lt;00:09, 289kB/s]
+  4%|█▋                                     | 116k/2.77M [00:00&lt;00:07, 335kB/s]
 
-  9%|███▌                                   | 250k/2.77M [00:00&lt;00:04, 510kB/s]
+  9%|███▌                                   | 251k/2.77M [00:00&lt;00:04, 594kB/s]
 
- 19%|███████▎                               | 518k/2.77M [00:00&lt;00:02, 948kB/s]
+ 19%|███████                               | 515k/2.77M [00:00&lt;00:02, 1.08MB/s]
 
- 39%|██████████████▎                      | 1.07M/2.77M [00:00&lt;00:00, 1.85MB/s]
+ 39%|██████████████▎                      | 1.07M/2.77M [00:00&lt;00:00, 2.11MB/s]
 
- 78%|█████████████████████████████        | 2.17M/2.77M [00:01&lt;00:00, 3.56MB/s]
-
-  0%|                                              | 0.00/2.77M [00:00&lt;?, ?B/s]
-100%|█████████████████████████████████████| 2.77M/2.77M [00:00&lt;00:00, 11.7GB/s]
-
-ExampleDataset-WithinSession:  67%|██████▋   | 2/3 [00:14&lt;00:07,  7.31s/it]
+ 78%|████████████████████████████▉        | 2.17M/2.77M [00:00&lt;00:00, 4.08MB/s]
 
   0%|                                              | 0.00/2.77M [00:00&lt;?, ?B/s]
+100%|█████████████████████████████████████| 2.77M/2.77M [00:00&lt;00:00, 11.3GB/s]
 
-  0%|▏                                    | 12.3k/2.77M [00:00&lt;00:41, 65.6kB/s]
-
-  1%|▌                                     | 39.9k/2.77M [00:00&lt;00:21, 126kB/s]
-
-  3%|█▎                                    | 95.2k/2.77M [00:00&lt;00:11, 226kB/s]
-
-  7%|██▊                                    | 202k/2.77M [00:00&lt;00:06, 401kB/s]
-
- 15%|█████▉                                 | 419k/2.77M [00:00&lt;00:03, 752kB/s]
-
- 31%|███████████▊                          | 855k/2.77M [00:00&lt;00:01, 1.44MB/s]
-
- 63%|███████████████████████▎             | 1.74M/2.77M [00:01&lt;00:00, 2.79MB/s]
+ExampleDataset-WithinSession:  67%|██████▋   | 2/3 [00:14&lt;00:07,  7.26s/it]
 
   0%|                                              | 0.00/2.77M [00:00&lt;?, ?B/s]
-100%|█████████████████████████████████████| 2.77M/2.77M [00:00&lt;00:00, 12.9GB/s]
 
-ExampleDataset-WithinSession: 100%|██████████| 3/3 [00:22&lt;00:00,  7.67s/it]
-ExampleDataset-WithinSession: 100%|██████████| 3/3 [00:22&lt;00:00,  7.48s/it]
+  0%|▏                                    | 12.3k/2.77M [00:00&lt;00:35, 78.1kB/s]
+
+  1%|▌                                     | 39.9k/2.77M [00:00&lt;00:18, 149kB/s]
+
+  4%|█▍                                     | 105k/2.77M [00:00&lt;00:08, 301kB/s]
+
+  9%|███▌                                   | 252k/2.77M [00:00&lt;00:04, 611kB/s]
+
+ 19%|███████                               | 518k/2.77M [00:00&lt;00:02, 1.11MB/s]
+
+ 38%|██████████████▏                      | 1.06M/2.77M [00:00&lt;00:00, 2.11MB/s]
+
+ 77%|████████████████████████████▌        | 2.14M/2.77M [00:00&lt;00:00, 4.07MB/s]
+
+  0%|                                              | 0.00/2.77M [00:00&lt;?, ?B/s]
+100%|█████████████████████████████████████| 2.77M/2.77M [00:00&lt;00:00, 9.68GB/s]
+
+ExampleDataset-WithinSession: 100%|██████████| 3/3 [00:22&lt;00:00,  7.52s/it]
+ExampleDataset-WithinSession: 100%|██████████| 3/3 [00:22&lt;00:00,  7.37s/it]
    score      time  ...  pipeline                  codecarbon_task_name
-0    1.0  0.003399  ...       MDM  10817290-c79b-4b3b-8ec9-26533b7039aa
-1    1.0  0.003392  ...       MDM  5a826903-dbb6-40fb-afc7-be40c25320f7
-2    1.0  0.003383  ...       MDM  13caaa3d-6115-4672-bd6a-aaaaab6f9053
+0    1.0  0.017442  ...       MDM  7ac767d1-6cb4-4ff8-ba6b-1f289e36bfef
+1    1.0  0.016912  ...       MDM  b2c63de7-3009-4973-ad89-c70fbf0a1d39
+2    1.0  0.016855  ...       MDM  2d788426-283d-4f33-b44d-0f8e7b56c833
 
 [3 rows x 11 columns]
 </pre></div>
@@ -776,8 +776,8 @@ ExampleDataset-WithinSession: 100%|██████████| 3/3 [00:22&lt
 your data on public server (like Zenodo or Figshare) and signal that you
 want to add your dataset to MOABB in the  <a class="reference external" href="https://github.com/NeuroTechX/moabb/issues/1">dedicated issue</a>.
 You could then follow the instructions on <a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/master/CONTRIBUTING.md">how to contribute</a></p>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 25.326 seconds)</p>
-<p><strong>Estimated memory usage:</strong>  321 MB</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 24.567 seconds)</p>
+<p><strong>Estimated memory usage:</strong>  317 MB</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-tutorials-tutorial-4-adding-a-dataset-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/46d014244b321e934a890e079a5f0042/tutorial_4_adding_a_dataset.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">tutorial_4_adding_a_dataset.ipynb</span></code></a></p>
