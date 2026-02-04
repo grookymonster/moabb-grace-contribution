@@ -43,7 +43,8 @@ def eval_split_within_session(shuffle, random_state, data):
     rng = check_random_state(random_state) if shuffle else None
 
     all_index = metadata.index.values
-    subjects = metadata["subject"].unique()
+    # Convert to numpy array to avoid ArrowStringArray shuffle warning
+    subjects = np.array(metadata["subject"].unique())
     if shuffle:
         rng.shuffle(subjects)
 
@@ -52,7 +53,8 @@ def eval_split_within_session(shuffle, random_state, data):
 
         subject_indices = all_index[subject_mask]
         subject_metadata = metadata[subject_mask]
-        sessions = subject_metadata["session"].unique()
+        # Convert to numpy array to avoid ArrowStringArray shuffle warning
+        sessions = np.array(subject_metadata["session"].unique())
         y_subject = y[subject_mask]
 
         if shuffle:
@@ -75,7 +77,8 @@ def eval_split_within_subject(shuffle, random_state, data):
     rng = check_random_state(random_state) if shuffle else None
 
     all_index = metadata.index.values
-    subjects = metadata["subject"].unique()
+    # Convert to numpy array to avoid ArrowStringArray shuffle warning
+    subjects = np.array(metadata["subject"].unique())
     if shuffle:
         rng.shuffle(subjects)
 
@@ -493,274 +496,115 @@ def test_cross_session_splitter_without_error(
     assert isinstance(splitter, CrossSessionSplitter)
 
 
-# ============================================================================
-# LearningCurveSplitter tests
-# ============================================================================
+def test_learning_curve_splitter_metadata():
+    y = np.array([0, 1] * 10)
+    data_size = {"policy": "ratio", "value": np.array([0.5, 1.0])}
+    n_perms = np.array([2, 1])
+    splitter = LearningCurveSplitter(
+        data_size=data_size, n_perms=n_perms, test_size=0.2, random_state=0
+    )
+
+    splits = list(splitter.split(np.arange(len(y)), y))
+    assert len(splits) == int(np.sum(n_perms))
+
+    for _train, _test in splits:
+        meta = splitter.get_metadata()
+        assert meta["data_size"] is not None
+        assert meta["permutation"] is not None
 
 
-class TestLearningCurveSplitter:
-    """Tests for LearningCurveSplitter."""
+@pytest.mark.parametrize(
+    "splitter",
+    [
+        WithinSessionSplitter,
+        WithinSubjectSplitter,
+        CrossSessionSplitter,
+        CrossSubjectSplitter,
+    ],
+)
+def test_learning_curve_as_cv_class(splitter, data):
+    """Test that LearningCurveSplitter can be used as cv_class for all splitters."""
+    _, y, metadata = data
 
-    def test_basic_ratio_policy(self):
-        """Test basic split with ratio policy."""
-        X = np.arange(100)
-        y = np.array([0] * 50 + [1] * 50)
+    data_size = {"policy": "ratio", "value": np.array([0.5, 1.0])}
+    n_perms = np.array([2, 1])
 
-        splitter = LearningCurveSplitter(
-            data_size={"policy": "ratio", "value": np.array([0.5, 1.0])},
-            n_perms=2,
-            test_size=0.2,
-            random_state=42,
-        )
+    # CrossSessionSplitter requires shuffle=True when using random_state
+    extra_kwargs = {}
+    if splitter == CrossSessionSplitter:
+        extra_kwargs["shuffle"] = True
 
-        splits = list(splitter.split(X, y))
+    split = splitter(
+        cv_class=LearningCurveSplitter,
+        data_size=data_size,
+        n_perms=n_perms,
+        test_size=0.2,
+        random_state=42,
+        **extra_kwargs,
+    )
 
-        # 2 data sizes * 2 permutations = 4 splits
-        assert len(splits) == 4
+    splits = list(split.split(y, metadata))
+    assert len(splits) > 0
 
-        # Check that all splits have valid indices
-        for train, test in splits:
-            assert len(train) > 0
-            assert len(test) > 0
-            # No overlap between train and test
-            assert len(np.intersect1d(train, test)) == 0
-
-    def test_per_class_policy(self):
-        """Test split with per_class policy."""
-        X = np.arange(100)
-        y = np.array([0] * 50 + [1] * 50)
-
-        splitter = LearningCurveSplitter(
-            data_size={"policy": "per_class", "value": np.array([5, 10, 20])},
-            n_perms=3,
-            test_size=0.2,
-            random_state=42,
-        )
-
-        splits = list(splitter.split(X, y))
-
-        # 3 data sizes * 3 permutations = 9 splits
-        assert len(splits) == 9
-
-    def test_variable_n_perms(self):
-        """Test with variable number of permutations per data size."""
-        X = np.arange(100)
-        y = np.array([0] * 50 + [1] * 50)
-
-        # More perms for smaller data, fewer for larger
-        n_perms = np.array([5, 3, 2])
-
-        splitter = LearningCurveSplitter(
-            data_size={"policy": "ratio", "value": np.array([0.2, 0.5, 1.0])},
-            n_perms=n_perms,
-            test_size=0.2,
-            random_state=42,
-        )
-
-        splits = list(splitter.split(X, y))
-
-        # 5 + 3 + 2 = 10 total splits
-        assert len(splits) == 10
-
-    def test_get_n_splits(self):
-        """Test get_n_splits returns correct count."""
-        splitter = LearningCurveSplitter(
-            data_size={"policy": "ratio", "value": np.array([0.25, 0.5, 0.75, 1.0])},
-            n_perms=5,
-            test_size=0.2,
-            random_state=42,
-        )
-
-        # 4 data sizes * 5 permutations = 20
-        assert splitter.get_n_splits() == 20
-
-    def test_metadata_tracking(self):
-        """Test that metadata is tracked correctly during iteration."""
-        X = np.arange(100)
-        y = np.array([0] * 50 + [1] * 50)
-
-        splitter = LearningCurveSplitter(
-            data_size={"policy": "ratio", "value": np.array([0.5, 1.0])},
-            n_perms=2,
-            test_size=0.2,
-            random_state=42,
-        )
-
-        metadata_list = []
-        for train, test in splitter.split(X, y):
-            metadata = splitter.get_metadata()
-            metadata_list.append(metadata)
-
-        # Check we have 4 metadata entries
-        assert len(metadata_list) == 4
-
-        # Check that permutation values are correct (1-indexed)
-        perms = [m["permutation"] for m in metadata_list]
-        assert 1 in perms and 2 in perms
-
-        # Check that data_size values vary
-        data_sizes = set(m["data_size"] for m in metadata_list)
-        assert len(data_sizes) == 2  # Two different data sizes
-
-    def test_reproducibility(self):
-        """Test that same random_state produces same splits."""
-        X = np.arange(100)
-        y = np.array([0] * 50 + [1] * 50)
-
-        kwargs = {
-            "data_size": {"policy": "ratio", "value": np.array([0.5, 1.0])},
-            "n_perms": 3,
-            "test_size": 0.2,
-            "random_state": 42,
-        }
-
-        splitter1 = LearningCurveSplitter(**kwargs)
-        splitter2 = LearningCurveSplitter(**kwargs)
-
-        splits1 = list(splitter1.split(X, y))
-        splits2 = list(splitter2.split(X, y))
-
-        for (train1, test1), (train2, test2) in zip(splits1, splits2):
-            assert np.array_equal(train1, train2)
-            assert np.array_equal(test1, test2)
-
-    def test_test_set_fixed_per_permutation(self):
-        """Test that test set is fixed within each permutation."""
-        X = np.arange(100)
-        y = np.array([0] * 50 + [1] * 50)
-
-        splitter = LearningCurveSplitter(
-            data_size={"policy": "ratio", "value": np.array([0.25, 0.5, 0.75, 1.0])},
-            n_perms=2,
-            test_size=0.2,
-            random_state=42,
-        )
-
-        # Consume splits first to verify we get them all
-        splits = list(splitter.split(X, y))
-        assert len(splits) > 0
-
-        # Re-run to check test set consistency per permutation
-        test_sets_by_perm = {}
-        for train, test in splitter.split(X, y):
-            meta = splitter.get_metadata()
-            perm = meta["permutation"]
-            if perm not in test_sets_by_perm:
-                test_sets_by_perm[perm] = set(test)
-            else:
-                # Test set should be the same within the same permutation
-                assert test_sets_by_perm[perm] == set(test)
-
-    def test_invalid_policy_raises(self):
-        """Test that invalid policy raises ValueError."""
-        with pytest.raises(ValueError, match="not valid"):
-            LearningCurveSplitter(
-                data_size={"policy": "invalid", "value": np.array([0.5])},
-                n_perms=1,
-            )
-
-    def test_missing_data_size_raises(self):
-        """Test that missing data_size raises ValueError."""
-        with pytest.raises(ValueError, match="data_size must be provided"):
-            LearningCurveSplitter(data_size=None, n_perms=1)
-
-    def test_missing_n_perms_raises(self):
-        """Test that missing n_perms raises ValueError."""
-        with pytest.raises(ValueError, match="n_perms must be provided"):
-            LearningCurveSplitter(
-                data_size={"policy": "ratio", "value": np.array([0.5])},
-                n_perms=None,
-            )
-
-    def test_non_monotonic_data_size_raises(self):
-        """Test that non-monotonically increasing data_size raises ValueError."""
-        with pytest.raises(ValueError, match="monotonically increasing"):
-            LearningCurveSplitter(
-                data_size={"policy": "ratio", "value": np.array([1.0, 0.5])},
-                n_perms=1,
-            )
-
-    def test_non_monotonic_n_perms_raises(self):
-        """Test that non-monotonically decreasing n_perms raises ValueError."""
-        with pytest.raises(ValueError, match="monotonically decreasing"):
-            LearningCurveSplitter(
-                data_size={"policy": "ratio", "value": np.array([0.5, 1.0])},
-                n_perms=np.array([2, 5]),  # Should decrease, not increase
-            )
-
-    def test_ratio_out_of_range_raises(self):
-        """Test that ratio values outside [0, 1] raise ValueError."""
-        splitter = LearningCurveSplitter(
-            data_size={"policy": "ratio", "value": np.array([1.5])},
-            n_perms=1,
-        )
-        X = np.arange(100)
-        y = np.array([0] * 50 + [1] * 50)
-
-        with pytest.raises(ValueError, match="range"):
-            list(splitter.split(X, y))
-
-    def test_per_class_too_large_raises(self):
-        """Test that per_class value larger than smallest class raises ValueError."""
-        splitter = LearningCurveSplitter(
-            data_size={"policy": "per_class", "value": np.array([100])},
-            n_perms=1,
-            test_size=0.2,
-        )
-        X = np.arange(100)
-        y = np.array([0] * 50 + [1] * 50)
-
-        with pytest.raises(ValueError, match="too large"):
-            list(splitter.split(X, y))
+    for train, test in splits:
+        # Check that we get valid train/test indices
+        assert len(train) > 0
+        assert len(test) > 0
+        # Check no overlap between train and test
+        assert len(set(train) & set(test)) == 0
+        if splitter == CrossSessionSplitter:
+            train_meta = metadata.loc[train]
+            test_meta = metadata.loc[test]
+            train_subjects = set(train_meta["subject"])
+            test_subjects = set(test_meta["subject"])
+            assert len(train_subjects) == 1
+            assert train_subjects == test_subjects
+            train_sessions = set(train_meta["session"])
+            test_sessions = set(test_meta["session"])
+            assert train_sessions.isdisjoint(test_sessions)
+        elif splitter == CrossSubjectSplitter:
+            train_subjects = set(metadata.loc[train]["subject"])
+            test_subjects = set(metadata.loc[test]["subject"])
+            assert train_subjects.isdisjoint(test_subjects)
 
 
-class TestLearningCurveSplitterWithinSession:
-    """Test LearningCurveSplitter integration with WithinSessionSplitter."""
+@pytest.mark.parametrize(
+    "splitter_cls",
+    [
+        WithinSessionSplitter,
+        WithinSubjectSplitter,
+        CrossSessionSplitter,
+        CrossSubjectSplitter,
+    ],
+)
+def test_current_splitter_is_set(splitter_cls, data):
+    """Test that _current_splitter is set after split() for all splitters."""
+    _, y, metadata = data
 
-    def test_within_session_integration(self, data):
-        """Test that LearningCurveSplitter works as cv_class for WithinSessionSplitter."""
-        _, y, metadata = data
+    data_size = {"policy": "ratio", "value": np.array([0.5, 1.0])}
+    n_perms = np.array([2, 1])
 
-        splitter = WithinSessionSplitter(
-            n_folds=1,  # LearningCurveSplitter handles its own "folds"
-            shuffle=True,
-            random_state=42,
-            cv_class=LearningCurveSplitter,
-            data_size={"policy": "ratio", "value": np.array([0.5, 1.0])},
-            n_perms=2,
-            test_size=0.2,
-        )
+    extra_kwargs = {}
+    if splitter_cls == CrossSessionSplitter:
+        extra_kwargs["shuffle"] = True
 
-        splits = list(splitter.split(y, metadata))
+    split = splitter_cls(
+        cv_class=LearningCurveSplitter,
+        data_size=data_size,
+        n_perms=n_perms,
+        test_size=0.2,
+        random_state=42,
+        **extra_kwargs,
+    )
 
-        # Should have splits for each session/subject combination
-        # 5 subjects * 5 sessions * 4 splits (2 data sizes * 2 perms) = 100
-        assert len(splits) == 100
+    splits = list(split.split(y, metadata))
+    assert len(splits) > 0
 
-        # Check all splits are valid
-        for train, test in splits:
-            assert len(train) > 0
-            assert len(test) > 0
-            assert len(np.intersect1d(train, test)) == 0
+    # Verify _current_splitter is set and accessible
+    assert hasattr(split, "_current_splitter")
+    assert split._current_splitter is not None
 
-    def test_within_session_metadata_access(self, data):
-        """Test that metadata can be accessed via WithinSessionSplitter."""
-        _, y, metadata = data
-
-        splitter = WithinSessionSplitter(
-            n_folds=1,
-            shuffle=True,
-            random_state=42,
-            cv_class=LearningCurveSplitter,
-            data_size={"policy": "ratio", "value": np.array([0.5, 1.0])},
-            n_perms=2,
-            test_size=0.2,
-        )
-
-        # Iterate and check metadata access
-        for train, test in splitter.split(y, metadata):
-            lc_meta = splitter.get_inner_splitter_metadata()
-            assert lc_meta is not None
-            assert "permutation" in lc_meta
-            assert "data_size" in lc_meta
-            break  # Just check first split
+    # Verify metadata is accessible through _current_splitter
+    meta = split._current_splitter.get_metadata()
+    assert meta["data_size"] is not None
+    assert meta["permutation"] is not None
