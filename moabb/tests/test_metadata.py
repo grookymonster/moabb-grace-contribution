@@ -615,8 +615,11 @@ class TestMetadataCatalog:
                 metadata.paradigm_specific
                 and metadata.paradigm_specific.detected_paradigm
             ):
-                assert metadata.paradigm_specific.detected_paradigm == expected_by_paradigm.get(
-                    metadata.experiment.paradigm, metadata.experiment.paradigm
+                assert (
+                    metadata.paradigm_specific.detected_paradigm
+                    == expected_by_paradigm.get(
+                        metadata.experiment.paradigm, metadata.experiment.paradigm
+                    )
                 ), (
                     f"{name}: detected_paradigm="
                     f"'{metadata.paradigm_specific.detected_paradigm}' "
@@ -735,6 +738,6 @@ class TestMetadataCatalog:
                 v = getattr(metadata, f.name)
                 if v is not None:
                     all_errors.extend(_check_type(v, f.type, f"{name}.{f.name}"))
-        assert all_errors == [], (
-            f"Found {len(all_errors)} type violations:\n" + "\n".join(all_errors[:20])
-        )
+        assert (
+            all_errors == []
+        ), f"Found {len(all_errors)} type violations:\n" + "\n".join(all_errors[:20])

@@ -114,6 +114,7 @@ _init_dataset()
 # Keep class-level METADATA authoritative by aligning it to dataset attributes.
 from moabb.datasets.metadata import canonicalize_dataset_class_catalog
 
+
 canonicalize_dataset_class_catalog(dict(dataset_dict))
 
 

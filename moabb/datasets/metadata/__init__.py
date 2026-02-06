@@ -344,7 +344,9 @@ def _merge_with_dataset(metadata: DatasetMetadata, dataset) -> DatasetMetadata:
     )
 
 
-def _apply_dataset_family_defaults(name: str, metadata: DatasetMetadata) -> DatasetMetadata:
+def _apply_dataset_family_defaults(
+    name: str, metadata: DatasetMetadata
+) -> DatasetMetadata:
     # ERP CORE defaults
     if name.startswith("ErpCore2021"):
         documentation = metadata.documentation or DocumentationMetadata()
