@@ -1,6 +1,6 @@
 Machine model: Mac16,5
 OS version: 24G325
-Boot arguments: 
+Boot arguments:
 Boot time: Sat Jan 17 11:44:10 2026
 
 
