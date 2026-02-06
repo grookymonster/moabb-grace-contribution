@@ -1,16 +1,14 @@
 """Smoke tests for Python compilation."""
 
-from pathlib import Path
 import py_compile
+from pathlib import Path
 
 import pytest
 
 
 _PACKAGE_ROOT = Path(__file__).resolve().parents[1]
 _PYTHON_FILES = sorted(
-    path
-    for path in _PACKAGE_ROOT.rglob("*.py")
-    if "__pycache__" not in path.parts
+    path for path in _PACKAGE_ROOT.rglob("*.py") if "__pycache__" not in path.parts
 )
 
 

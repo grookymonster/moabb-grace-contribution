@@ -325,7 +325,12 @@ class Test_Datasets:
                 return {}
 
             def data_path(
-                self, subject, path=None, force_update=False, update_path=None, verbose=None
+                self,
+                subject,
+                path=None,
+                force_update=False,
+                update_path=None,
+                verbose=None,
             ):
                 return []
 
@@ -376,7 +381,12 @@ class Test_Datasets:
                 return {}
 
             def data_path(
-                self, subject, path=None, force_update=False, update_path=None, verbose=None
+                self,
+                subject,
+                path=None,
+                force_update=False,
+                update_path=None,
+                verbose=None,
             ):
                 return []
 

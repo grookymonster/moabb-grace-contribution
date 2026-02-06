@@ -335,9 +335,7 @@ def _format_age(participants) -> str | None:
         return None
     age_text = _format_metadata_value(age_mean)
     if age_min is not None and age_max is not None:
-        age_text += (
-            f" (range: {_format_metadata_value(age_min)}-{_format_metadata_value(age_max)})"
-        )
+        age_text += f" (range: {_format_metadata_value(age_min)}-{_format_metadata_value(age_max)})"
     return f"{age_text} years"
 
 
@@ -384,7 +382,10 @@ def _metadata_doc_sections(metadata: Any, existing_doc: str) -> str:
                 "Participants",
                 [
                     ("Population", getattr(participants, "health_status", None)),
-                    ("Clinical population", getattr(participants, "clinical_population", None)),
+                    (
+                        "Clinical population",
+                        getattr(participants, "clinical_population", None),
+                    ),
                     ("Age", _format_age(participants)),
                     ("Handedness", getattr(participants, "handedness", None)),
                     ("BCI experience", getattr(participants, "bci_experience", None)),
@@ -435,11 +436,18 @@ def _metadata_doc_sections(metadata: Any, existing_doc: str) -> str:
             _metadata_admonition_block(
                 "Data Access",
                 [
-                    ("DOI", getattr(documentation, "doi", None) if documentation else None),
+                    (
+                        "DOI",
+                        getattr(documentation, "doi", None) if documentation else None,
+                    ),
                     ("Data URL", data_url),
                     (
                         "Repository",
-                        getattr(documentation, "repository", None) if documentation else None,
+                        (
+                            getattr(documentation, "repository", None)
+                            if documentation
+                            else None
+                        ),
                     ),
                 ],
                 existing_doc,
