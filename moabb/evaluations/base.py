@@ -1,5 +1,8 @@
 import logging
+import math
 from abc import ABC, abstractmethod
+from time import perf_counter
+from uuid import uuid4
 from warnings import warn
 
 import pandas as pd
@@ -11,8 +14,14 @@ from moabb.datasets.base import BaseDataset
 from moabb.evaluations.utils import (
     Emissions,
     _convert_sklearn_params_to_optuna,
+    _create_save_path,
     _create_scorer,
     _DictScorer,
+    _ensure_fitted,
+    _get_nchan,
+    _pipeline_requires_epochs,
+    _save_model_cv,
+    _score_and_update,
     check_search_available,
 )
 from moabb.paradigms.base import BaseParadigm
@@ -62,6 +71,11 @@ class BaseEvaluation(ABC):
     n_splits: int, default=None
         Number of splits for cross-validation. If None, the number of splits
         is equal to the number of subjects.
+    cv_class: type, default=None
+        Optional cross-validation class to override the evaluation's default
+        splitter behavior.
+    cv_kwargs: dict, default=None
+        Keyword arguments passed to cv_class when constructing the splitter.
     save_model: bool, default=False
         Save model after training, for each fold of cross-validation if needed
     cache_config: bool, default=None
@@ -109,6 +123,8 @@ class BaseEvaluation(ABC):
         return_raws=False,
         mne_labels=False,
         n_splits=None,
+        cv_class=None,
+        cv_kwargs=None,
         save_model=False,
         cache_config=None,
         optuna=False,
@@ -124,6 +140,8 @@ class BaseEvaluation(ABC):
         self.return_raws = return_raws
         self.mne_labels = mne_labels
         self.n_splits = n_splits
+        self.cv_class = cv_class
+        self.cv_kwargs = {} if cv_kwargs is None else cv_kwargs
         self.save_model = save_model
         self.cache_config = cache_config
         self.optuna = optuna
@@ -134,6 +152,11 @@ class BaseEvaluation(ABC):
         self.additional_columns = additional_columns
         if additional_columns is None:
             self.additional_columns = []
+
+        if self.cv_class is not None and hasattr(self.cv_class, "metadata_columns"):
+            for col in self.cv_class.metadata_columns:
+                if col not in self.additional_columns:
+                    self.additional_columns.append(col)
 
         if self.optuna and not optuna_available:
             raise ImportError("Optuna is not available. Please install it first.")
@@ -205,6 +228,185 @@ class BaseEvaluation(ABC):
             hdf5_path=self.hdf5_path,
             additional_columns=self.additional_columns,
         )
+
+    def _resolve_cv(self, default_class, default_kwargs=None):
+        """Resolve the cross-validation class and kwargs for a splitter."""
+        if self.cv_class is None:
+            cv_class = default_class
+            cv_kwargs = {} if default_kwargs is None else dict(default_kwargs)
+        else:
+            cv_class = self.cv_class
+            cv_kwargs = dict(self.cv_kwargs)
+        return cv_class, cv_kwargs
+
+    def _load_data(
+        self,
+        dataset,
+        run_pipes,
+        process_pipeline,
+        postprocess_pipeline,
+        subjects=None,
+    ):
+        """Load data for an evaluation, handling epoch requirements.
+
+        Parameters
+        ----------
+        dataset : BaseDataset
+            The dataset to load.
+        run_pipes : dict
+            Pipelines to run (used to check epoch requirements).
+        process_pipeline : Pipeline
+            The processing pipeline.
+        postprocess_pipeline : Pipeline | None
+            Optional post-processing pipeline.
+        subjects : list | None
+            List of subjects to load. If None, loads all subjects.
+
+        Returns
+        -------
+        X : array-like or Epochs
+            The loaded data.
+        y : array-like
+            The labels.
+        metadata : DataFrame
+            The metadata.
+        """
+        requires_epochs = any(
+            _pipeline_requires_epochs(clf) for clf in run_pipes.values()
+        )
+        return_epochs = True if requires_epochs else self.return_epochs
+        kwargs = dict(
+            dataset=dataset,
+            return_epochs=return_epochs,
+            return_raws=self.return_raws,
+            cache_config=self.cache_config,
+            postprocess_pipeline=postprocess_pipeline,
+            process_pipelines=None if requires_epochs else [process_pipeline],
+        )
+        if subjects is not None:
+            kwargs["subjects"] = subjects
+        return self.paradigm.get_data(**kwargs)
+
+    @staticmethod
+    def _get_nchan(X):
+        """Extract number of channels from data (Epochs or ndarray)."""
+        return _get_nchan(X)
+
+    def _build_scored_result(
+        self,
+        dataset,
+        subject,
+        session,
+        pipeline,
+        n_samples,
+        n_channels,
+        duration,
+        scorer,
+        model,
+        X_test,
+        y_test,
+        split_metadata=None,
+        **extra,
+    ):
+        """Build a result dict and score it in one place."""
+        metadata = {}
+        if split_metadata is None:
+            splitter = getattr(getattr(self, "cv", None), "_current_splitter", None)
+            if splitter is not None and hasattr(splitter, "get_metadata"):
+                split_metadata = splitter.get_metadata()
+        if split_metadata:
+            metadata.update(split_metadata)
+        metadata.update(extra)
+        res = self._build_result(
+            dataset,
+            subject,
+            session,
+            pipeline,
+            n_samples,
+            n_channels,
+            duration,
+            **metadata,
+        )
+        try:
+            return _score_and_update(res, scorer, model, X_test, y_test)
+        except ValueError as err:
+            if self.error_score == "raise":
+                raise err
+            res["score"] = self.error_score
+            return res
+
+    def _fit_cv(self, model, X_train, y_train, tracker=None):
+        """Fit a model for a CV fold with optional CodeCarbon tracking."""
+        task_name = None
+        emissions = math.nan
+        if tracker is not None:
+            task_name = str(uuid4())
+            tracker.start_task(task_name)
+        t_start = perf_counter()
+        model.fit(X_train, y_train)
+        duration = perf_counter() - t_start
+        if tracker is not None:
+            emissions_data = tracker.stop_task()
+            emissions = emissions_data.emissions if emissions_data else math.nan
+        _ensure_fitted(model)
+        return duration, emissions, task_name
+
+    def _maybe_save_model_cv(
+        self, model, dataset, subject, session, name, cv_ind, eval_type
+    ):
+        """Save model for a CV fold when saving is enabled."""
+        if self.hdf5_path is None or not self.save_model:
+            return
+        model_save_path = _create_save_path(
+            hdf5_path=self.hdf5_path,
+            code=dataset.code,
+            subject=subject,
+            session=session,
+            name=name,
+            grid=self.search,
+            eval_type=eval_type,
+        )
+        _save_model_cv(model=model, save_path=model_save_path, cv_index=str(cv_ind))
+
+    @staticmethod
+    def _attach_emissions(res, emissions, task_name):
+        res["carbon_emission"] = (1000 * emissions,)
+        res["codecarbon_task_name"] = task_name
+
+    def _build_result(
+        self,
+        dataset,
+        subject,
+        session,
+        pipeline,
+        n_samples,
+        n_channels,
+        duration,
+        **extra,
+    ):
+        """Build a result dictionary with all required columns.
+
+        This is the single place where the evaluation result schema is defined.
+        All evaluation subclasses should use this instead of constructing the
+        dict manually, so the schema stays consistent when columns are added
+        or evaluations are merged.
+
+        Any ``additional_columns`` not provided via *extra* are defaulted to
+        NaN so that ``Results.add()`` never fails on a missing key.
+        """
+        res = {
+            "time": duration,
+            "dataset": dataset,
+            "subject": subject,
+            "session": session,
+            "n_samples": n_samples,
+            "n_channels": n_channels,
+            "pipeline": pipeline,
+        }
+        for col in self.additional_columns:
+            if col not in res:
+                res[col] = extra.get(col, math.nan)
+        return res
 
     def process(self, pipelines, param_grid=None, postprocess_pipeline=None):
         """Runs all pipelines on all datasets.
