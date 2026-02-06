@@ -287,7 +287,8 @@ class BNCI2014_001(MNEBNCI):
            and Nolte, G., 2012. Review of the BCI competition IV.
            Frontiers in neuroscience, 6, p.55.
 
-    Notes -----
+    Notes
+    -----
     .. versionadded:: 0.4.0
 
     This is one of the most widely used motor imagery datasets in BCI research,
@@ -522,7 +523,8 @@ class BNCI2014_002(MNEBNCI):
            sum of its parts. Soft Computing, 19(11), 3173-3186.
            https://doi.org/10.1007/s00500-014-1547-8
 
-    Notes -----
+    Notes
+    -----
     .. versionadded:: 0.4.0
 
     See Also
@@ -728,7 +730,8 @@ class BNCI2014_004(MNEBNCI):
            and Nolte, G., 2012. Review of the BCI competition IV.
            Frontiers in neuroscience, 6, p.55.
 
-    Notes -----
+    Notes
+    -----
     .. versionadded:: 0.4.0
 
     This dataset is commonly referred to as "BCI Competition IV Dataset 2b".
@@ -925,7 +928,8 @@ class BNCI2014_008(MNEBNCI):
            in human neuroscience, 7, 732.
            https://doi.org/10.3389/fnhum.2013.00732
 
-    Notes -----
+    Notes
+    -----
     .. versionadded:: 0.4.0
     """
 
@@ -1081,7 +1085,8 @@ class BNCI2014_009(MNEBNCI):
            in human neuroscience, 7, 732.
            https://doi.org/10.3389/fnhum.2013.00732
 
-    Notes -----
+    Notes
+    -----
     .. versionadded:: 0.4.0
     """
 

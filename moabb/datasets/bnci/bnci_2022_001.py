@@ -77,7 +77,8 @@ def _load_data_001_2022(
     sessions : dict
         Dictionary containing sessions with raw data for each run.
 
-    Notes -----
+    Notes
+    -----
     The dataset provides two types of recordings per subject:
     - Baseline: 1-minute eye close/open recording
     - Task (wpsize): Drone piloting task with varying difficulty levels
@@ -402,7 +403,8 @@ class BNCI2022_001(BNCIBaseDataset):
            Mapping Tasks. IEEE Transactions on Human-Machine Systems, 51(2), 99-108.
            https://doi.org/10.1109/THMS.2020.3038339
 
-    Notes -----
+    Notes
+    -----
     .. versionadded:: 1.3.0
 
     This dataset is designed for cognitive workload assessment and difficulty

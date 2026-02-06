@@ -103,7 +103,8 @@ class Rodrigues2017(BaseDataset):
            Grenoble: GIPSA-lab; 2018. Available from:
            https://github.com/plcrodrigues/Alpha-Waves-Dataset
 
-    Notes -----
+    Notes
+    -----
 
     .. versionadded:: 1.1.0
 

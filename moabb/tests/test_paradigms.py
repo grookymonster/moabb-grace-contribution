@@ -203,7 +203,7 @@ class TestMotorImagery(unittest.TestCase):
                     overwrite_array=False,
                 ),
             )
-        print(" ".join(cm.output))
+        print("\n".join(cm.output))
         expected = [
             "Attempting to retrieve cache .* suffix-array",
             "No cache found at",
@@ -241,7 +241,7 @@ class TestMotorImagery(unittest.TestCase):
                     overwrite_array=False,
                 ),
             )
-        print(" ".join(cm.output))
+        print("\n".join(cm.output))
         expected = [
             "Attempting to retrieve cache .* suffix-array",
             "Finished reading cache .* suffix-array",
@@ -266,7 +266,7 @@ class TestMotorImagery(unittest.TestCase):
                     overwrite_array=True,
                 ),
             )
-        print(" ".join(cm.output))
+        print("\n".join(cm.output))
         expected = [
             "Starting erasing cache .* suffix-array",
             "Finished erasing cache .* suffix-array",
@@ -293,7 +293,7 @@ class TestMotorImagery(unittest.TestCase):
                     overwrite_array=False,
                 ),
             )
-        print(" ".join(cm.output))
+        print("\n".join(cm.output))
         expected = [
             "Attempting to retrieve cache .* suffix-array",
             "No cache found at",

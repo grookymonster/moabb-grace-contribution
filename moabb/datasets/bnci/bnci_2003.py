@@ -123,7 +123,8 @@ class BNCI2003_004(MNEBNCI):
            classifications by feature combination and multi-class paradigms.
            IEEE Trans. Biomed. Eng., 51(6):993-1002, June 2004.
 
-    Notes -----
+    Notes
+    -----
     .. versionadded:: 0.4.0
 
     This is one of the earliest and most influential motor imagery BCI datasets,

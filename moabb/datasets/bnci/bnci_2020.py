@@ -279,7 +279,8 @@ class BNCI2020_001(BNCIBaseDataset):
            Water and Dry EEG Systems. Frontiers in Neuroscience, 14, 849.
            https://doi.org/10.3389/fnins.2020.00849
 
-    Notes -----
+    Notes
+    -----
     .. versionadded:: 1.3.0
 
     This dataset is valuable for comparing electrode technologies in naturalistic
@@ -751,7 +752,8 @@ class BNCI2020_002(BNCIBaseDataset):
            Based on Covert Spatial Attention Shifts. Frontiers in Neuroscience,
            14, 591777. https://doi.org/10.3389/fnins.2020.591777
 
-    Notes -----
+    Notes
+    -----
     .. versionadded:: 1.3.0
 
     This dataset uses a covert spatial attention paradigm with N2pc ERP

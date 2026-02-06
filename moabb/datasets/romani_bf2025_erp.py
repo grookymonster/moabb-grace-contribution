@@ -132,7 +132,8 @@ class RomaniBF2025ERP(BaseDataset):
         - **Steps**: notch filtering, bandpass filtering, segmentation
 
 
-    Notes -----
+    Notes
+    -----
     - EEG signals were recorded using a g.tec Unicorn with a sampling rate of 250 Hz and conductive gel applied.
 
     - Data were collected in Trento, Italy, where the power line frequency is 50 Hz.

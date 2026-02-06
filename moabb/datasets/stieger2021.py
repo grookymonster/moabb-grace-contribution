@@ -156,7 +156,8 @@ class Stieger2021(BaseDataset):
            learning in a large population. Scientific Data, 8(1), 98.
            https://doi.org/10.1038/s41597-021-00883-1
 
-    Notes -----
+    Notes
+    -----
     .. versionadded:: 1.1.0
     """
 

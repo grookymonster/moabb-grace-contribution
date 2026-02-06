@@ -84,7 +84,8 @@ class Hinss2021(BaseDataset):
         - **Data state**: raw (no filtering applied during acquisition)
 
 
-    Notes -----
+    Notes
+    -----
 
     .. versionadded:: 1.0.1
 

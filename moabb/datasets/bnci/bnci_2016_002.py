@@ -318,7 +318,8 @@ class BNCI2016_002(BNCIBaseDataset):
            brakings during simulated driving. Journal of Neural Engineering,
            8(5), 056001. https://doi.org/10.1088/1741-2560/8/5/056001
 
-    Notes -----
+    Notes
+    -----
     .. versionadded:: 1.3.0
 
     This dataset is valuable for research on:

@@ -325,7 +325,8 @@ class CastillosBurstVEP100(BaseCastillos2023):
            2023,120446,ISSN 1053-8119
            DOI: https://doi.org/10.1016/j.neuroimage.2023.120446
 
-    Notes -----
+    Notes
+    -----
 
     .. versionadded:: 1.1.0
 
@@ -380,7 +381,8 @@ class CastillosBurstVEP40(BaseCastillos2023):
            2023,120446,ISSN 1053-8119
            DOI: https://doi.org/10.1016/j.neuroimage.2023.120446
 
-    Notes -----
+    Notes
+    -----
 
     .. versionadded:: 1.1.0
 
@@ -434,7 +436,8 @@ class CastillosCVEP100(BaseCastillos2023):
            2023,120446,ISSN 1053-8119
            DOI: https://doi.org/10.1016/j.neuroimage.2023.120446
 
-    Notes -----
+    Notes
+    -----
 
     .. versionadded:: 1.1.0
 
@@ -489,7 +492,8 @@ class CastillosCVEP40(BaseCastillos2023):
            2023,120446,ISSN 1053-8119
            DOI: https://doi.org/10.1016/j.neuroimage.2023.120446
 
-    Notes -----
+    Notes
+    -----
 
     .. versionadded:: 1.1.0
 

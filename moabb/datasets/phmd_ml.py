@@ -83,7 +83,8 @@ class Cattan2019_PHMD(BaseDataset):
         - **Data state**: raw, unfiltered
 
 
-    Notes -----
+    Notes
+    -----
 
     .. versionadded:: 1.0.0
 

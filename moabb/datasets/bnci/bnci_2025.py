@@ -109,7 +109,8 @@ def _load_data_001_2025(
     sessions : dict
         Dictionary of sessions with raw data.
 
-    Notes -----
+    Notes
+    -----
     Dataset details:
     - 20 subjects (12 male, 8 female, mean age 26.1 +/- 4.1 years)
     - 60 EEG + 4 EOG channels = 64 total
@@ -263,7 +264,8 @@ class BNCI2025_001(BNCIBaseDataset):
            Journal of Neural Engineering, 21(6).
            https://doi.org/10.1088/1741-2552/ada0ea
 
-    Notes -----
+    Notes
+    -----
     .. versionadded:: 1.3.0
 
     This dataset is notable for its multi-parameter kinematic design,
@@ -943,7 +945,8 @@ class BNCI2025_002(BNCIBaseDataset):
            spinal cord injured participant. Journal of Neural Engineering,
            19(3), 036005. https://doi.org/10.1088/1741-2552/ac689f
 
-    Notes -----
+    Notes
+    -----
     .. versionadded:: 1.3.0
 
     This dataset is designed for continuous decoding research, specifically

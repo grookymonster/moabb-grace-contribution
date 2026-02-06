@@ -304,7 +304,8 @@ class BNCI2024_001(BNCIBaseDataset):
            Computers in Biology and Medicine, 182, 109132.
            https://doi.org/10.1016/j.compbiomed.2024.109132
 
-    Notes -----
+    Notes
+    -----
     .. versionadded:: 1.3.0
 
     This dataset is notable for exploring non-invasive EEG-based handwritten

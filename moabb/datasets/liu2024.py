@@ -111,7 +111,8 @@ class Liu2024(BaseDataset):
        for brain computer interface in acute stroke patients. Sci Data 11, 131
        (2024). DOI: https://doi.org/10.1038/s41597-023-02787-8
 
-    Notes -----
+    Notes
+    -----
     To add the break and instruction events, set the `break_events` and
     `instr_events` parameters to True while instantiating the class.
 
@@ -337,7 +338,8 @@ class Liu2024(BaseDataset):
         np.ndarray
             Array of encoded event types.
 
-        Notes -----
+        Notes
+        -----
         The 'trial_type' variable can take the following values:
          - 1 : Left hand
          - 2 : Right hand

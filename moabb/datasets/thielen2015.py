@@ -112,7 +112,8 @@ class Thielen2015(BaseDataset):
            re(con)volution in brain-computer interfacing. PLOS ONE, 10(7), e0133797.
            DOI: https://doi.org/10.1371/journal.pone.0133797
 
-    Notes -----
+    Notes
+    -----
 
     .. versionadded:: 1.0.0
 

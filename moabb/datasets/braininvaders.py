@@ -482,7 +482,8 @@ class BI2012(BaseDataset):
         - **Data state**: raw EEG with software tagging (note: tagging introduces jitter and latency)
 
 
-    Notes -----
+    Notes
+    -----
 
     .. versionadded:: 0.4.6
 
@@ -860,7 +861,8 @@ class BI2014a(BaseDataset):
         - **Data state**: raw (no digital filter applied)
 
 
-    Notes -----
+    Notes
+    -----
 
     .. versionadded:: 0.4.6
 
@@ -1027,7 +1029,8 @@ class BI2014b(BaseDataset):
         - **Data state**: no digital filter applied
 
 
-    Notes -----
+    Notes
+    -----
 
     .. versionadded:: 0.4.6
 
@@ -1211,7 +1214,8 @@ class BI2015a(BaseDataset):
         - **Data state**: no digital filter applied
 
 
-    Notes -----
+    Notes
+    -----
 
     .. versionadded:: 0.4.6
 
@@ -1395,7 +1399,8 @@ class BI2015b(BaseDataset):
         - **Data state**: raw (no digital filter applied)
 
 
-    Notes -----
+    Notes
+    -----
 
     .. versionadded:: 0.4.6
 
@@ -1584,7 +1589,8 @@ class Cattan2019_VR(BaseDataset):
         - **Data state**: raw (no digital filter applied during acquisition)
 
 
-    Notes -----
+    Notes
+    -----
     .. versionadded:: 0.5.0
 
 

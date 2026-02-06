@@ -158,7 +158,8 @@ class Thielen2021(BaseDataset):
            sensor tying for VEP-based BCI. Journal of Neural Engineering, 16(6), 066038.
            DOI: https://doi.org/10.1088/1741-2552/ab4057
 
-    Notes -----
+    Notes
+    -----
 
     .. versionadded:: 0.6.0
 

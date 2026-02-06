@@ -500,7 +500,8 @@ class BNCI2015_001(MNEBNCI):
            severe motor impairment. PLOS ONE, 9(7), e101168.
            https://doi.org/10.1371/journal.pone.0101168
 
-    Notes -----
+    Notes
+    -----
     .. versionadded:: 0.4.0
     """
 
@@ -665,7 +666,8 @@ class BNCI2015_003(MNEBNCI):
            Frontiers in neuroscience, 5, 112.
            https://doi.org/10.3389/fnins.2011.00112
 
-    Notes -----
+    Notes
+    -----
     .. versionadded:: 0.4.0
     """
 
@@ -877,7 +879,8 @@ class BNCI2015_004(MNEBNCI):
            Recent advances and new frontiers. IEEE Transactions on Cognitive
            and Developmental Systems, 10(2), 145-163.
 
-    Notes -----
+    Notes
+    -----
     .. versionadded:: 0.4.0
     """
 
@@ -1078,7 +1081,8 @@ class BNCI2015_006(MNEBNCI):
            using single-trial EEG classification. Journal of Neural Engineering,
            11(2), 026009. https://doi.org/10.1088/1741-2560/11/2/026009
 
-    Notes -----
+    Notes
+    -----
     .. versionadded:: 1.2.0
     """
 
@@ -1352,7 +1356,8 @@ class BNCI2015_007(MNEBNCI):
            using single-trial EEG classification. Journal of Neural Engineering,
            11(2), 026009. https://doi.org/10.1088/1741-2560/11/2/026009
 
-    Notes -----
+    Notes
+    -----
     .. versionadded:: 1.2.0
 
     See Also
@@ -1614,7 +1619,8 @@ class BNCI2015_008(MNEBNCI):
            Journal of Neural Engineering, 8(6), 066003.
            https://doi.org/10.1088/1741-2560/8/6/066003
 
-    Notes -----
+    Notes
+    -----
     .. versionadded:: 1.2.0
     """
 
@@ -1863,7 +1869,8 @@ class BNCI2015_009(MNEBNCI):
            Frontiers in neuroscience, 5, 112.
            https://doi.org/10.3389/fnins.2011.00112
 
-    Notes -----
+    Notes
+    -----
     .. versionadded:: 1.2.0
     """
 
@@ -2044,7 +2051,8 @@ class BNCI2015_010(MNEBNCI):
            124(5), 901-908.
            https://doi.org/10.1016/j.clinph.2012.12.050
 
-    Notes -----
+    Notes
+    -----
     .. versionadded:: 1.2.0
     """
 
@@ -2266,7 +2274,8 @@ class BNCI2015_012(MNEBNCI):
            Frontiers in neuroscience, 5, 112.
            https://doi.org/10.3389/fnins.2011.00112
 
-    Notes -----
+    Notes
+    -----
     .. versionadded:: 1.2.0
     """
 
@@ -2479,7 +2488,8 @@ class BNCI2015_013(MNEBNCI):
            in brain-computer interfaces. Journal of Neural Engineering, 5(1), 62.
            https://doi.org/10.1088/1741-2560/5/1/007
 
-    Notes -----
+    Notes
+    -----
     .. versionadded:: 1.2.0
     """
 

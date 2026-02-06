@@ -105,7 +105,8 @@ class BNCI2019_001(BaseDataset):
            Scientific Reports, 9(1), 7134.
            https://doi.org/10.1038/s41598-019-43594-9
 
-    Notes -----
+    Notes
+    -----
     .. versionadded:: 1.2.0
     """
 

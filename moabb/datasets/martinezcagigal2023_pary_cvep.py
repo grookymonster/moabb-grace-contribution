@@ -148,7 +148,8 @@ class MartinezCagigal2023Pary(BaseDataset):
        *Computer Methods and Programs in Biomedicine, 230*, 107357.
        https://doi.org/10.1016/j.cmpb.2023.107357
 
-    Notes -----
+    Notes
+    -----
     Although the dataset was recorded in a single session, each condition is
     stored as a separate session to match the MOABB structure. Within each
     session, eight runs are available (six for training, two for testing).

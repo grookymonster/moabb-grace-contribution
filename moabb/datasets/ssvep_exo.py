@@ -88,7 +88,8 @@ class Kalunga2016(BaseDataset):
         - **Steps**: band-pass filtering around each stimulus frequency
 
 
-    Notes -----
+    Notes
+    -----
     The events notation 17Hz and 21Hz were swapped after an investigation conducted
     by ponpopon at Github.
 
