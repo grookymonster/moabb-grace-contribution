@@ -61,7 +61,7 @@ class BaseCastillos2023(BaseDataset):
             else:
                 code = raw.annotations.description[idx].split("_")[0]
                 lab = raw.annotations.description[idx].split("_")[1]
-                code = code.replace(" ", "")
+                code = code.replace("\n", "")
                 code = code.replace("[", "")
                 code = code.replace("]", "")
                 code = code.replace(" ", "")

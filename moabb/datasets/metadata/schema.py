@@ -225,22 +225,22 @@ class FilterDetails:
         High-pass filter cutoff frequency in Hz.
     lowpass_hz : float, optional
         Low-pass filter cutoff frequency in Hz.
-    bandpass : List[float], optional
-        Bandpass filter range [low, high] in Hz.
-    notch_hz : List[float], optional
+    bandpass : List[float] | Dict[str, float], optional
+        Bandpass filter range [low, high] in Hz, or explicit cutoff mapping.
+    notch_hz : List[float] | float | int, optional
         Notch filter frequencies in Hz (e.g., [50, 60] for line noise).
     filter_type : str, optional
         Filter type, e.g., "butterworth", "FIR", "IIR".
-    filter_order : int, optional
+    filter_order : int | str, optional
         Filter order.
     """
 
     highpass_hz: Optional[float] = None
     lowpass_hz: Optional[float] = None
-    bandpass: Optional[List[float]] = None
-    notch_hz: Optional[List[float]] = None
+    bandpass: Optional[List[float] | Dict[str, float]] = None
+    notch_hz: Optional[List[float] | float | int] = None
     filter_type: Optional[str] = None
-    filter_order: Optional[int] = None
+    filter_order: Optional[int | str] = None
 
 
 @dataclass
@@ -460,8 +460,9 @@ class DataStructureMetadata:
 
     Parameters
     ----------
-    n_trials : int, optional
+    n_trials : int | Dict[str, int] | str, optional
         Total number of trials per subject.
+        Can be a single integer, split counts by subset, or a textual summary.
     n_trials_per_class : Dict[str, int], optional
         Number of trials per class.
     n_blocks : int, optional
@@ -472,7 +473,7 @@ class DataStructureMetadata:
         Context description of trial structure.
     """
 
-    n_trials: Optional[int] = None
+    n_trials: Optional[int | Dict[str, int] | str] = None
     n_trials_per_class: Optional[Dict[str, int]] = None
     n_blocks: Optional[int] = None
     block_duration_s: Optional[float] = None

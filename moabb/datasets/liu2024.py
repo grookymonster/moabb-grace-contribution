@@ -246,7 +246,7 @@ class Liu2024(BaseDataset):
             environment="outdoor",
         ),
         paradigm_specific=ParadigmSpecificMetadata(
-            detected_paradigm="mi",
+            detected_paradigm="imagery",
         ),
         data_structure=DataStructureMetadata(
             n_trials=40,

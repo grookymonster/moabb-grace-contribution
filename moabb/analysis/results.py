@@ -42,7 +42,7 @@ def get_string_rep(obj):
     str_no_addresses = re.sub(
         r"0x[\w]+>", "0x__", str_repr
     )  # \w also includes _ for address such as 0x__
-    return str_no_addresses.replace(" ", "").encode("utf8")
+    return str_no_addresses.replace("\n", "").encode("utf8")
 
 
 def get_digest(obj):

@@ -88,7 +88,7 @@ jobs:
 
           failed = []
           for module_path, class_name, n_subjects in datasets_to_download:
-              print(f' {"="*60}')
+              print(f'\n{"="*60}')
               print(f'Pre-downloading {class_name} ({n_subjects} subjects)...')
               print(f'{"="*60}')
               success = False
@@ -117,12 +117,12 @@ jobs:
               time.sleep(60)
 
           if failed:
-              print(f' {"="*60}')
+              print(f'\n{"="*60}')
               print(f'ERROR: Failed to download: {", ".join(failed)}')
               print(f'{"="*60}')
               sys.exit(1)
           else:
-              print(f' {"="*60}')
+              print(f'\n{"="*60}')
               print('All datasets downloaded successfully!')
               print(f'{"="*60}')
           EOF

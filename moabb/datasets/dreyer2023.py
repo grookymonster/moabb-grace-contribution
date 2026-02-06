@@ -472,7 +472,7 @@ class Dreyer2023A(_Dreyer2023Base):
             ],
         ),
         paradigm_specific=ParadigmSpecificMetadata(
-            detected_paradigm="mi",
+            detected_paradigm="imagery",
         ),
         data_structure=DataStructureMetadata(
             n_trials=800,

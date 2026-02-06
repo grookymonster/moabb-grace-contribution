@@ -193,7 +193,7 @@ def generate_paradigms(pipeline_configs, context=None, logger=log):
                 paradigms[paradigm] = {}
 
             # FIXME name are not unique
-            logger.debug("Pipeline:    {}  ".format(get_string_rep(pipeline)))
+            logger.debug("Pipeline: \n\n {} \n".format(get_string_rep(pipeline)))
             paradigms[paradigm][config["name"]] = pipeline
 
     return paradigms

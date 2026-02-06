@@ -247,7 +247,7 @@ class Cho2017(BaseDataset):
             applications=["smart_home", "vr_ar", "communication"],
         ),
         paradigm_specific=ParadigmSpecificMetadata(
-            detected_paradigm="motor_imagery",
+            detected_paradigm="imagery",
         ),
         data_structure=DataStructureMetadata(
             n_trials=10,

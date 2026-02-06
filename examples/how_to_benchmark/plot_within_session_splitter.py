@@ -199,7 +199,7 @@ print(df.head())
 
 
 summary = df.groupby(["subject", "session"])["score"].agg(["mean", "std"]).reset_index()
-print(" Summary of within-session fold scores (mean ± std):")
+print("\nSummary of within-session fold scores (mean ± std):")
 print(summary)
 
 

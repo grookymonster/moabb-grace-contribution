@@ -486,7 +486,7 @@ class Lee2019_MI(Lee2019):
             applications=["speller", "vr_ar", "communication"],
         ),
         paradigm_specific=ParadigmSpecificMetadata(
-            detected_paradigm="ssvep",
+            detected_paradigm="imagery",
             n_targets=4,
             stimulus_frequencies_hz=[5.45, 6.67, 8.57, 12.0],
         ),
@@ -771,7 +771,7 @@ class Lee2019_ERP(Lee2019):
             applications=["speller", "vr_ar", "communication"],
         ),
         paradigm_specific=ParadigmSpecificMetadata(
-            detected_paradigm="ssvep",
+            detected_paradigm="p300",
             n_targets=4,
             stimulus_frequencies_hz=[5.45, 6.67, 8.57, 12.0],
         ),

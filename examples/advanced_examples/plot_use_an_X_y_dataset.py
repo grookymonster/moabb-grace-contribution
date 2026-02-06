@@ -161,4 +161,4 @@ pipelines["XD+TS+LR"] = make_pipeline(
 print("Start classification ...")
 scores = evaluation.process(pipelines)
 
-print("  Results: ", scores[["score", "time", "samples", "dataset", "pipeline"]])
+print("\n\nResults:\n", scores[["score", "time", "samples", "dataset", "pipeline"]])

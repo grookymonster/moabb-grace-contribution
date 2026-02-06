@@ -333,7 +333,7 @@ ax1.barh(range(len(summary_sorted)), summary_sorted["efficiency"], color=colors)
 ax1.set_yticks(range(len(summary_sorted)))
 ax1.set_yticklabels(summary_sorted.index)
 ax1.set_xlabel("Efficiency (Accuracy / kg CO2)")
-ax1.set_title("Pipeline Efficiency Ranking (Higher is Better)")
+ax1.set_title("Pipeline Efficiency Ranking\n(Higher is Better)")
 ax1.grid(axis="x", alpha=0.3)
 
 # Plot 2: Average Emissions Comparison
@@ -348,7 +348,7 @@ ax2.bar(
 ax2.set_xticks(range(len(summary_sorted_emissions)))
 ax2.set_xticklabels(summary_sorted_emissions.index, rotation=45, ha="right")
 ax2.set_ylabel("Average CO2 Emissions (kg/eval)")
-ax2.set_title("Carbon Footprint per Pipeline (Lower is Better)")
+ax2.set_title("Carbon Footprint per Pipeline\n(Lower is Better)")
 ax2.grid(axis="y", alpha=0.3)
 
 # Plot 3: Accuracy Distribution with Standard Deviation
@@ -366,7 +366,7 @@ ax3.bar(
 ax3.set_xticks(x_pos)
 ax3.set_xticklabels(summary_sorted_score.index, rotation=45, ha="right")
 ax3.set_ylabel("Average Score")
-ax3.set_title("Accuracy Performance with Variability (Higher is Better)")
+ax3.set_title("Accuracy Performance with Variability\n(Higher is Better)")
 ax3.set_ylim([0, 1.0])
 ax3.grid(axis="y", alpha=0.3)
 
@@ -382,7 +382,7 @@ ax4.bar(
 ax4.set_xticks(range(len(summary_sorted_total)))
 ax4.set_xticklabels(summary_sorted_total.index, rotation=45, ha="right")
 ax4.set_ylabel("Total CO2 Emissions (kg)")
-ax4.set_title("Total Carbon Footprint per Pipeline (Lower is Better)")
+ax4.set_title("Total Carbon Footprint per Pipeline\n(Lower is Better)")
 ax4.grid(axis="y", alpha=0.3)
 
 plt.tight_layout()

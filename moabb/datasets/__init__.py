@@ -102,7 +102,7 @@ from .stieger2021 import Stieger2021
 from .thielen2015 import Thielen2015
 from .thielen2021 import Thielen2021
 from .upper_limb import Ofner2017
-from .utils import _init_dataset
+from .utils import _init_dataset, dataset_dict
 from .Weibo2014 import Weibo2014
 from .Zhou2016 import Zhou2016
 
@@ -110,3 +110,19 @@ from .Zhou2016 import Zhou2016
 # Call this last in order to make sure the dataset list, dict are populated with
 # the datasets imported in this file.
 _init_dataset()
+
+# Keep class-level METADATA authoritative by aligning it to dataset attributes.
+from moabb.datasets.metadata import canonicalize_dataset_class_catalog
+
+canonicalize_dataset_class_catalog(dict(dataset_dict))
+
+
+_REMOVED_DATASETS = {
+    "DemonsP300": "DemonsP300 has been removed due to unresolved data issues.",
+}
+
+
+def __getattr__(name):
+    if name in _REMOVED_DATASETS:
+        raise ImportError(_REMOVED_DATASETS[name])
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")

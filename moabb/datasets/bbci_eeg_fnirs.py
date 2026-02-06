@@ -462,7 +462,7 @@ class Shin2017A(BaseShin2017):
             ],
         ),
         paradigm_specific=ParadigmSpecificMetadata(
-            detected_paradigm="p300",
+            detected_paradigm="imagery",
             n_repetitions=20,
         ),
         data_structure=DataStructureMetadata(
@@ -729,7 +729,7 @@ class Shin2017B(BaseShin2017):
             ],
         ),
         paradigm_specific=ParadigmSpecificMetadata(
-            detected_paradigm="p300",
+            detected_paradigm="imagery",
             n_repetitions=20,
         ),
         data_structure=DataStructureMetadata(

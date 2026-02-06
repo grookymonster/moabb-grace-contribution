@@ -85,6 +85,7 @@ Example
 9
 """
 
+import warnings
 from dataclasses import replace
 
 from .schema import (  # Core MOABB classes; Additional classes; New classes from RALPH extraction; Validation functions
@@ -221,6 +222,27 @@ def _build_minimal_metadata(dataset) -> DatasetMetadata:
     )
 
 
+def _build_fallback_metadata(dataset_name: str) -> DatasetMetadata:
+    """Create minimal metadata when a dataset class cannot be instantiated."""
+    warnings.warn(
+        (
+            f"Could not instantiate dataset {dataset_name} while building metadata catalog. "
+            "Using minimal fallback metadata."
+        ),
+        RuntimeWarning,
+        stacklevel=2,
+    )
+    return DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=1.0,
+            n_channels=1,
+            channel_types={"eeg": 1},
+        ),
+        participants=ParticipantMetadata(n_subjects=1),
+        experiment=ExperimentMetadata(paradigm="imagery"),
+    )
+
+
 def _merge_with_dataset(metadata: DatasetMetadata, dataset) -> DatasetMetadata:
     if dataset is None:
         return metadata
@@ -297,15 +319,105 @@ def _merge_with_dataset(metadata: DatasetMetadata, dataset) -> DatasetMetadata:
     if getattr(dataset, "n_runs", None):
         runs_per_session = dataset.n_runs
 
+    # Paradigm-specific
+    paradigm_specific = metadata.paradigm_specific
+    if paradigm_specific is not None and experiment is not None:
+        detected_by_paradigm = {
+            "imagery": "motor_imagery",
+            "p300": "p300",
+            "ssvep": "ssvep",
+            "cvep": "cvep",
+            "rstate": "resting_state",
+        }
+        detected = detected_by_paradigm.get(experiment.paradigm, experiment.paradigm)
+        paradigm_specific = replace(paradigm_specific, detected_paradigm=detected)
+
     return replace(
         metadata,
         acquisition=acquisition,
         participants=participants,
         experiment=experiment,
         documentation=documentation,
+        paradigm_specific=paradigm_specific,
         sessions_per_subject=sessions_per_subject or 1,
         runs_per_session=runs_per_session or 1,
     )
+
+
+def _apply_dataset_family_defaults(name: str, metadata: DatasetMetadata) -> DatasetMetadata:
+    # ERP CORE defaults
+    if name.startswith("ErpCore2021"):
+        documentation = metadata.documentation or DocumentationMetadata()
+        documentation = replace(documentation, doi="10.1016/j.neuroimage.2020.117465")
+        acquisition = metadata.acquisition or AcquisitionMetadata(
+            sampling_rate=256.0, n_channels=64, channel_types={"eeg": 64}
+        )
+        acquisition = replace(acquisition, hardware="Biosemi ActiveTwo")
+        participants = metadata.participants or ParticipantMetadata(n_subjects=40)
+        participants = replace(participants, n_subjects=40)
+        experiment = metadata.experiment or ExperimentMetadata(paradigm="p300")
+        experiment = replace(experiment, paradigm="p300")
+        metadata = replace(
+            metadata,
+            documentation=documentation,
+            acquisition=acquisition,
+            participants=participants,
+            experiment=experiment,
+        )
+
+    # Castillos cVEP defaults
+    if name.startswith("Castillos"):
+        documentation = metadata.documentation or DocumentationMetadata()
+        documentation = replace(documentation, doi="10.1016/j.neuroimage.2023.120446")
+        participants = metadata.participants or ParticipantMetadata(n_subjects=12)
+        participants = replace(participants, n_subjects=12)
+        experiment = metadata.experiment or ExperimentMetadata(paradigm="cvep")
+        experiment = replace(experiment, paradigm="cvep")
+        metadata = replace(
+            metadata,
+            documentation=documentation,
+            participants=participants,
+            experiment=experiment,
+        )
+
+    # MartinezCagigal cVEP defaults
+    if name.startswith("MartinezCagigal2023"):
+        participants = metadata.participants or ParticipantMetadata(n_subjects=16)
+        participants = replace(participants, n_subjects=16)
+        experiment = metadata.experiment or ExperimentMetadata(paradigm="cvep")
+        experiment = replace(experiment, paradigm="cvep")
+        metadata = replace(
+            metadata,
+            participants=participants,
+            experiment=experiment,
+        )
+
+    return metadata
+
+
+def canonicalize_dataset_class_metadata(dataset_name: str, dataset_cls) -> None:
+    """Align class-level METADATA with runtime dataset attributes."""
+    metadata = getattr(dataset_cls, "METADATA", None)
+    if not isinstance(metadata, DatasetMetadata):
+        return
+
+    try:
+        dataset = dataset_cls()
+    except Exception:
+        dataset = None
+
+    metadata = _merge_with_dataset(metadata, dataset)
+    metadata = _apply_manual_overrides(dataset_name, metadata)
+    metadata = _apply_dataset_family_defaults(dataset_name, metadata)
+    setattr(dataset_cls, "METADATA", metadata)
+
+
+def canonicalize_dataset_class_catalog(dataset_classes: dict[str, type]) -> None:
+    """Canonicalize METADATA for all dataset classes in a class mapping."""
+    for name, dataset_cls in dataset_classes.items():
+        if "Fake" in name:
+            continue
+        canonicalize_dataset_class_metadata(name, dataset_cls)
 
 
 def _build_dataset_metadata_catalog():
@@ -348,59 +460,13 @@ def _build_dataset_metadata_catalog():
                         ),
                     )
                 else:
-                    continue
+                    metadata = _build_fallback_metadata(name)
             else:
                 metadata = _build_minimal_metadata(dataset)
 
         metadata = _merge_with_dataset(metadata, dataset)
         metadata = _apply_manual_overrides(name, metadata)
-
-        # ERP CORE defaults
-        if name.startswith("ErpCore2021"):
-            documentation = metadata.documentation or DocumentationMetadata()
-            documentation = replace(documentation, doi="10.1016/j.neuroimage.2020.117465")
-            acquisition = metadata.acquisition or AcquisitionMetadata(
-                sampling_rate=256.0, n_channels=64, channel_types={"eeg": 64}
-            )
-            acquisition = replace(acquisition, hardware="Biosemi ActiveTwo")
-            participants = metadata.participants or ParticipantMetadata(n_subjects=40)
-            participants = replace(participants, n_subjects=40)
-            experiment = metadata.experiment or ExperimentMetadata(paradigm="p300")
-            experiment = replace(experiment, paradigm="p300")
-            metadata = replace(
-                metadata,
-                documentation=documentation,
-                acquisition=acquisition,
-                participants=participants,
-                experiment=experiment,
-            )
-
-        # Castillos cVEP defaults
-        if name.startswith("Castillos"):
-            documentation = metadata.documentation or DocumentationMetadata()
-            documentation = replace(documentation, doi="10.1016/j.neuroimage.2023.120446")
-            participants = metadata.participants or ParticipantMetadata(n_subjects=12)
-            participants = replace(participants, n_subjects=12)
-            experiment = metadata.experiment or ExperimentMetadata(paradigm="cvep")
-            experiment = replace(experiment, paradigm="cvep")
-            metadata = replace(
-                metadata,
-                documentation=documentation,
-                participants=participants,
-                experiment=experiment,
-            )
-
-        # MartinezCagigal cVEP defaults
-        if name.startswith("MartinezCagigal2023"):
-            participants = metadata.participants or ParticipantMetadata(n_subjects=16)
-            participants = replace(participants, n_subjects=16)
-            experiment = metadata.experiment or ExperimentMetadata(paradigm="cvep")
-            experiment = replace(experiment, paradigm="cvep")
-            metadata = replace(
-                metadata,
-                participants=participants,
-                experiment=experiment,
-            )
+        metadata = _apply_dataset_family_defaults(name, metadata)
 
         catalog[name] = metadata
     return catalog
@@ -428,6 +494,9 @@ class _LazyMetadataCatalog:
 
     def __contains__(self, key):
         return key in self._ensure()
+
+    def get(self, key, default=None):
+        return self._ensure().get(key, default)
 
     def items(self):
         return self._ensure().items()
@@ -480,4 +549,6 @@ __all__ = [
     "get_dataset_description",
     "DATASET_METADATA_CATALOG",
     "get_dataset_metadata",
+    "canonicalize_dataset_class_metadata",
+    "canonicalize_dataset_class_catalog",
 ]

@@ -178,7 +178,7 @@ class PhysionetMI(BaseDataset):
             ],
         ),
         paradigm_specific=ParadigmSpecificMetadata(
-            detected_paradigm="motor_imagery",
+            detected_paradigm="imagery",
         ),
         data_processed=True,
     )

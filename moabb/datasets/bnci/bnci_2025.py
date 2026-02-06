@@ -1106,7 +1106,7 @@ class BNCI2025_002(BNCIBaseDataset):
             environment="outdoor",
         ),
         paradigm_specific=ParadigmSpecificMetadata(
-            detected_paradigm="motor_imagery",
+            detected_paradigm="imagery",
         ),
         data_structure=DataStructureMetadata(
             n_trials={

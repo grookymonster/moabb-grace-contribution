@@ -260,7 +260,7 @@ class Thielen2015(BaseDataset):
             environment="outdoor",
         ),
         paradigm_specific=ParadigmSpecificMetadata(
-            detected_paradigm="ssvep",
+            detected_paradigm="cvep",
         ),
         data_structure=DataStructureMetadata(
             n_trials=36,

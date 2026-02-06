@@ -236,7 +236,7 @@ class RomaniBF2025ERP(BaseDataset):
             environment="home",
         ),
         paradigm_specific=ParadigmSpecificMetadata(
-            detected_paradigm="motor_imagery",
+            detected_paradigm="p300",
         ),
         data_structure=DataStructureMetadata(
             n_trials=60,

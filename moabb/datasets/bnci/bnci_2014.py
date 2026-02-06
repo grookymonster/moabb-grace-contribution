@@ -440,7 +440,7 @@ class BNCI2014_001(MNEBNCI):
             environment="outdoor",
         ),
         paradigm_specific=ParadigmSpecificMetadata(
-            detected_paradigm="mi",
+            detected_paradigm="imagery",
         ),
         data_structure=DataStructureMetadata(
             n_trials=288,
@@ -650,7 +650,7 @@ class BNCI2014_002(MNEBNCI):
             applications=["speller", "prosthetic", "vr_ar", "communication"],
         ),
         paradigm_specific=ParadigmSpecificMetadata(
-            detected_paradigm="motor_imagery",
+            detected_paradigm="imagery",
         ),
         data_structure=DataStructureMetadata(
             n_trials=80,
@@ -852,7 +852,7 @@ class BNCI2014_004(MNEBNCI):
             environment="laboratory",
         ),
         paradigm_specific=ParadigmSpecificMetadata(
-            detected_paradigm="motor_imagery",
+            detected_paradigm="imagery",
         ),
         data_structure=DataStructureMetadata(
             n_trials=20,

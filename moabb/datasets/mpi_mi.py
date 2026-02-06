@@ -302,7 +302,7 @@ class GrosseWentrup2009(BaseDataset):
             environment="shielded_room",
         ),
         paradigm_specific=ParadigmSpecificMetadata(
-            detected_paradigm="mi",
+            detected_paradigm="imagery",
         ),
         data_structure=DataStructureMetadata(
             n_trials=150,

@@ -180,7 +180,7 @@ class Rodrigues2017(BaseDataset):
             applications=["vr_ar", "communication"],
         ),
         paradigm_specific=ParadigmSpecificMetadata(
-            detected_paradigm="resting_state",
+            detected_paradigm="rstate",
         ),
         data_structure=DataStructureMetadata(
             n_trials=10,

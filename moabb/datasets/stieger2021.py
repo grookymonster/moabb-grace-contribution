@@ -300,7 +300,7 @@ class Stieger2021(BaseDataset):
             ],
         ),
         paradigm_specific=ParadigmSpecificMetadata(
-            detected_paradigm="p300",
+            detected_paradigm="imagery",
         ),
         data_structure=DataStructureMetadata(
             n_trials=450,

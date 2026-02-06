@@ -283,7 +283,7 @@ def codecarbon_plot(
 
         ax.set_xlabel("Energy Efficiency (Accuracy / kg CO2)")
         ax.set_title(
-            "Pipeline Energy Efficiency (Higher is Better)",
+            "Pipeline Energy Efficiency\n(Higher is Better)",
             fontsize=12,
             fontweight="bold",
         )
@@ -329,7 +329,7 @@ def codecarbon_plot(
         ax.set_xlabel(r"Avg CO$_2$ Emissions (kg)")
         ax.set_ylabel("Avg Accuracy Score")
         ax.set_title(
-            "Accuracy vs Emissions Trade-off (Upper-Right is Better)",
+            "Accuracy vs Emissions Trade-off\n(Upper-Right is Better)",
             fontsize=12,
             fontweight="bold",
         )
@@ -480,7 +480,7 @@ def summary_plot(sig_df, effect_df, p_threshold=0.05, simplify=True):
     for row in annot_df.index:
         for col in annot_df.columns:
             if effect_df.loc[row, col] > 0:
-                txt = "{:.2f} p={:1.0e}".format(
+                txt = "{:.2f}\np={:1.0e}".format(
                     effect_df.loc[row, col], sig_df.loc[row, col]
                 )
             else:
@@ -655,7 +655,7 @@ def meta_analysis_plot(stats_df, alg1, alg2):  # noqa: C901
     ax.spines["right"].set_visible(False)
     ax.axvline(0, linestyle="--", c="k")
     ax.axhline(0.5, linestyle="-", linewidth=3, c="k")
-    title = "< {} better{} {}{} better >".format(
+    title = "< {} better{}\n{}{} better >".format(
         alg2, " " * (45 - len(alg2)), " " * (45 - len(alg1)), alg1
     )
     ax.set_title(title, ha="left", ma="right", loc="left")

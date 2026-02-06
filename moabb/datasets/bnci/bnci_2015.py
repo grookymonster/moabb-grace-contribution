@@ -599,7 +599,7 @@ class BNCI2015_001(MNEBNCI):
             applications=["speller", "gaming", "vr_ar", "communication"],
         ),
         paradigm_specific=ParadigmSpecificMetadata(
-            detected_paradigm="motor_imagery",
+            detected_paradigm="imagery",
         ),
         data_structure=DataStructureMetadata(
             n_trials=10,
@@ -1007,7 +1007,7 @@ class BNCI2015_004(MNEBNCI):
             ],
         ),
         paradigm_specific=ParadigmSpecificMetadata(
-            detected_paradigm="motor_imagery",
+            detected_paradigm="imagery",
         ),
         data_structure=DataStructureMetadata(
             n_trials=40,
@@ -2421,7 +2421,7 @@ class BNCI2015_012(MNEBNCI):
             ],
         ),
         paradigm_specific=ParadigmSpecificMetadata(
-            detected_paradigm="erp",
+            detected_paradigm="p300",
         ),
         data_structure=DataStructureMetadata(
             n_trials={"calibration_per_run": 9, "total_calibration": 27},

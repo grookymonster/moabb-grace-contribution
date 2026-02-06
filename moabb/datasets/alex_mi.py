@@ -55,7 +55,7 @@ class AlexMI(BaseDataset):
 
     .. admonition:: Experimental Protocol
 
-        P300
+        Motor Imagery
 
 
     .. admonition:: Preprocessing
@@ -161,7 +161,7 @@ class AlexMI(BaseDataset):
             applications=["vr_ar", "communication"],
         ),
         paradigm_specific=ParadigmSpecificMetadata(
-            detected_paradigm="p300",
+            detected_paradigm="imagery",
         ),
     )
 

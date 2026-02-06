@@ -504,7 +504,7 @@ class Huebner2018(_BaseVisualMatrixSpellerDataset):
             ],
         ),
         paradigm_specific=ParadigmSpecificMetadata(
-            detected_paradigm="ssvep",
+            detected_paradigm="p300",
         ),
         data_structure=DataStructureMetadata(
             n_trials=35,

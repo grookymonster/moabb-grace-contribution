@@ -277,7 +277,7 @@ class Wang2016(BaseDataset):
             environment="outdoor",
         ),
         paradigm_specific=ParadigmSpecificMetadata(
-            detected_paradigm="p300",
+            detected_paradigm="ssvep",
         ),
         data_structure=DataStructureMetadata(
             n_trials=240,

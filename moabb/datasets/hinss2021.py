@@ -237,7 +237,7 @@ class Hinss2021(BaseDataset):
             environment="outdoor",
         ),
         paradigm_specific=ParadigmSpecificMetadata(
-            detected_paradigm="p300",
+            detected_paradigm="rstate",
         ),
         data_structure=DataStructureMetadata(
             n_trials=90,

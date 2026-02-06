@@ -443,7 +443,7 @@ class BNCI2020_001(BNCIBaseDataset):
             environment="laboratory",
         ),
         paradigm_specific=ParadigmSpecificMetadata(
-            detected_paradigm="p300",
+            detected_paradigm="imagery",
         ),
         data_structure=DataStructureMetadata(
             n_trials=80,
