@@ -87,7 +87,6 @@ class RomaniBF2025ERP(BaseDataset):
 
     You can test the dataset with the following code:
 
-
     Examples
     --------
     Loading the dataset and then create a subset of the available sessions and runs for subject P01 and P02:
@@ -97,40 +96,6 @@ class RomaniBF2025ERP(BaseDataset):
 
     Expected output:
     Sessions for subject 2: ['0grain', '1cb', '2cbExtra']
-
-
-    .. admonition:: Participants
-
-        - **Population**: ALS
-        - **BCI experience**: naive
-
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: g.tec
-        - **Montage**: 10-20
-
-
-    .. admonition:: Experimental Protocol
-
-        minimize movement during recording to reduce motion artifacts.
-
-
-    .. admonition:: Data Access
-
-        - **Repository**: GitHub
-        - **DOI**: 10.1371/journal.pone.0111070
-        - **URL**: https://github.com/BRomans/BrainForm
-
-
-
-    .. admonition:: Preprocessing
-
-        - **Data state**: raw EEG data collected and publicly available
-        - **Bandpass filter**: 0.5-15 Hz
-        - **Notch filter**: [50, 60] Hz
-        - **Steps**: notch filtering, bandpass filtering, segmentation
-
 
     Notes
     -----
@@ -152,7 +117,6 @@ class RomaniBF2025ERP(BaseDataset):
     11: 'P12', 12: 'P13', 13: 'P14', 14: 'P16', 15: 'P17', 16: 'P19', 17: 'P20', 18: 'P21', 19: 'P22', 20: 'P23',
     21: 'P24'}
 
-
     References
     ----------
 
@@ -160,7 +124,6 @@ class RomaniBF2025ERP(BaseDataset):
            Oct. 14, 2025, arXiv: arXiv:2510.10169. doi: 10.48550/arXiv.2510.10169.
     .. [2] M. Romani, F. Paissan, A. Fossà, and E. Farella, "Explicit modelling of subject dependency in BCI decoding,"
            Sept. 27, 2025, arXiv: arXiv:2509.23247. doi: 10.48550/arXiv.2509.23247.
-
 
     """
 

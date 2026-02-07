@@ -72,35 +72,6 @@ class Liu2024(BaseDataset):
     0.4 μVrms, and the resolution was 24 bits. The acquisition impedance was less than or equal to 20 kΩ. The sampling frequency
     was 500 Hz.
 
-
-    .. admonition:: Participants
-
-        - **Population**: healthy
-        - **Age**: 56.7 years
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: Emotiv EPOC
-        - **Electrodes**: Ag/AgCl
-        - **Montage**: 10-10
-        - **Reference**: car
-
-    .. admonition:: Data Access
-
-        - **DOI**: 10.1038/s41597-023-02787-8
-
-
-    .. admonition:: Experimental Protocol
-
-        Hand-grip motor imagery of left or right hand grasping a spherical object, guided by video of gripping motion
-        - **Feedback**: video of gripping motion played during MI
-
-    .. admonition:: Preprocessing
-
-        - **Data state**: raw (.mat) and preprocessed (.edf) available
-        - **Bandpass filter**: 0.5-40 Hz
-        - **Steps**: baseline removal with mean removal method, time-domain bandpass filtering 0.5-40 Hz, segmentation into trials by marker
-
     References
     ----------
 

@@ -74,30 +74,6 @@ class BNCI2019_001(BaseDataset):
     - palmar_grasp (925): Palmar (power) grasp
     - lateral_grasp (926): Lateral (key) grasp
 
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: g.tec
-        - **Electrodes**: active electrode
-        - **Montage**: 10-5
-        - **Reference**: the left earlobe
-
-    .. admonition:: Experimental Protocol
-
-        move their eyes and to blink, and 3 runs each comprising one trial in which participants were
-        instructed to rest (i.
-
-    .. admonition:: Preprocessing
-
-        - **Bandpass filter**: 0.01-100.0 Hz
-        - **Notch filter**: [50] Hz
-
-    .. admonition:: Data Access
-
-        - **Repository**: Zenodo
-        - **DOI**: 10.1038/s41598-019-43594-9
-        - **URL**: https://doi.org/10.5281/zenodo.2222268
-
     References
     ----------
     .. [1] Ofner, P. et al. (2019). Attempted arm and hand movements can be

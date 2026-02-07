@@ -64,31 +64,6 @@ class Schirrmeister2017(BaseDataset):
     2004).  The experiment was approved by the ethical committee of the University
     of Freiburg.
 
-
-    .. admonition:: Participants
-
-        - **Population**: ALS
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: Emotiv EPOC
-
-    .. admonition:: Data Access
-
-        - **Repository**: GitHub
-        - **DOI**: 10.1002/hbm.23730
-        - **URL**: https://github.com/robintibor/braindecode/
-
-
-    .. admonition:: Experimental Protocol
-
-        Imagined or executed movements including hand (left), hand (right), feet, and rest conditions
-
-    .. admonition:: Preprocessing
-
-        - **Data state**: preprocessed signals of recorded electrodes
-        - **Bandpass filter**: multiple frequency bands (filter bank approach)
-
     References
     ----------
 

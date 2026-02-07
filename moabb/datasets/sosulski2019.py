@@ -69,29 +69,6 @@ class Sosulski2019(BaseDataset):
        to achieve the functionality to handle different conditions in MOABB. As a result, the statistical testing
        features of MOABB cannot be used for this dataset.
 
-
-    .. admonition:: Participants
-
-        - **Population**: healthy
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: BrainAmp
-        - **Electrodes**: Ag/AgCl
-        - **Montage**: 10-10
-        - **Reference**: the nose
-
-    .. admonition:: Experimental Protocol
-
-        oddball
-
-
-    .. admonition:: Preprocessing
-
-        - **Data state**: epoched and baseline corrected
-        - **Bandpass filter**: 1.5-40 Hz
-        - **Steps**: two-pass bandpass filtering, epoching, baseline correction
-
     References
     ----------
 

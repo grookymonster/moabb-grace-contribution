@@ -69,29 +69,6 @@ class Rodrigues2017(BaseDataset):
 
     We supply an online and open-source example working with Python [2]_.
 
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: g.tec
-        - **Electrodes**: wet electrodes
-        - **Montage**: 10-10
-        - **Reference**: the right earlobe
-
-    .. admonition:: Data Access
-
-        - **Repository**: Zenodo
-        - **DOI**: 10.5281/zenodo.2348891
-        - **URL**: https://doi.org/10.5281/zenodo.2348891
-
-
-    .. admonition:: Experimental Protocol
-
-        Subjects alternated between keeping eyes closed and eyes open during recording blocks
-
-    .. admonition:: Preprocessing
-
-        - **Data state**: raw, no digital filter applied during acquisition
-
     References
     ----------
 

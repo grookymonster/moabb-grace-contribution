@@ -50,44 +50,10 @@ class Cattan2019_PHMD(BaseDataset):
     **ID of the dataset**
     PHMDML.EEG.2017-GIPSA
 
-
-    .. admonition:: Participants
-
-        - **Population**: healthy
-
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: g.tec
-        - **Electrodes**: wet electrodes
-        - **Montage**: 10-10
-        - **Reference**: the right earlobe
-
-
-    .. admonition:: Experimental Protocol
-
-        focus on the marker and to listen to the music that was diffused during
-        the experiment (Bach Invention from one to ten on harpsichord).
-
-
-    .. admonition:: Data Access
-
-        - **Repository**: Zenodo
-        - **DOI**: 10.5281/zenodo.2617084
-        - **URL**: https://doi.org/10.5281/zenodo.2617084
-
-
-
-    .. admonition:: Preprocessing
-
-        - **Data state**: raw, unfiltered
-
-
     Notes
     -----
 
     .. versionadded:: 1.0.0
-
 
     References
     ----------

@@ -108,32 +108,6 @@ class Weibo2014(BaseDataset):
     section consisting of 80 trials for rest state. The sequence of six MI
     tasks was randomized. Intersection break was about 5 to 10 minutes.
 
-
-    .. admonition:: Participants
-
-        - **Population**: healthy
-        - **Age**: 23.0 years
-        - **BCI experience**: naive
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: Neuroscan
-        - **Reference**: nose
-
-    .. admonition:: Preprocessing
-
-        - **Bandpass filter**: 0.5-50.0 Hz
-
-    .. admonition:: Data Access
-
-        - **DOI**: 10.1371/journal.pone.0114853
-
-
-    .. admonition:: Experimental Protocol
-
-        Simple limb motor imagery (left hand, right hand, feet) and compound limb motor imagery (both hands, left hand combined with right foot, right hand combined with left foot) plus rest state
-        - **Feedback**: visual cues (character indication)
-
     References
     ----------
     .. [1] Yi, Weibo, et al. "Evaluation of EEG oscillatory patterns and

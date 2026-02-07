@@ -37,7 +37,6 @@ from .download import download_if_missing, get_dataset_path, get_user_agent
 
 log = logging.getLogger(__name__)
 
-
 ZENODO_RECORD_ID = 16534752
 # Zenodo API endpoint for published records
 ZENODO_URL = f"https://zenodo.org/api/records/{ZENODO_RECORD_ID}"
@@ -62,30 +61,6 @@ class Zhou2016(BaseBIDSDataset):
     4 s. The subject was instructed to immediately perform the imagination
     tasks of the left hand, right hand or foot movement respectively according
     to the cue direction, and try to relax during the black screen.
-
-
-    .. admonition:: Participants
-
-        - **Population**: healthy
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: BCI2000
-        - **Montage**: 10-20
-        - **Reference**: car
-
-    .. admonition:: Experimental Protocol
-
-        Motor Imagery
-
-    .. admonition:: Preprocessing
-
-        - **Bandpass filter**: 0.1-100.0 Hz
-        - **Notch filter**: [50] Hz
-
-    .. admonition:: Data Access
-
-        - **DOI**: 10.1371/journal.pone.0162657
 
     References
     ----------

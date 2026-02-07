@@ -45,23 +45,6 @@ class AlexMI(BaseDataset):
     references
     ----------
 
-    .. admonition:: Participants
-
-        - **Population**: spinal_cord_injury
-
-    .. admonition:: Equipment
-
-        - **Reference**: car
-
-    .. admonition:: Experimental Protocol
-
-        Motor Imagery
-
-
-    .. admonition:: Preprocessing
-
-        - **Steps**: spatial filtering, Common Spatial Pattern (CSP), frequency filtering
-
     .. [1] Barachant, A., 2012. Commande robuste d'un effecteur par une
            interface cerveau machine EEG asynchrone (Doctoral dissertation,
            Université de Grenoble).

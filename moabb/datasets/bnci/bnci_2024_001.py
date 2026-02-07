@@ -285,18 +285,6 @@ class BNCI2024_001(BNCIBaseDataset):
     - letter_t (9): Letter 't'
     - letter_v (10): Letter 'v'
 
-
-    .. admonition:: Preprocessing
-
-        - **Bandpass filter**: 0.3-70.0 Hz
-        - **Notch filter**: [50] Hz
-
-    .. admonition:: Data Access
-
-        - **Repository**: GitHub
-        - **DOI**: 10.1016/j.neuroimage.2020.117000
-        - **URL**: https://github.com/rkobler/ey
-
     References
     ----------
     .. [1] Crell, M. R., & Muller-Putz, G. R. (2024). Handwritten character

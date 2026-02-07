@@ -32,7 +32,6 @@ from moabb.datasets.metadata.schema import (
 
 logger = logging.getLogger(__name__)
 
-
 EPFLP300_URL = "http://documents.epfl.ch/groups/m/mm/mmspg/www/BCI/p300/"
 
 
@@ -72,31 +71,6 @@ class EPFLP300(BaseDataset):
     between runs was approximately 30 minutes. One session comprised on average
     810 trials, and the whole data for one subject consisted on average of 3240
     trials.
-
-
-    .. admonition:: Participants
-
-        - **Population**: healthy
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: Biosemi ActiveTwo
-        - **Reference**: Car
-
-    .. admonition:: Experimental Protocol
-
-        P300
-
-    .. admonition:: Data Access
-
-        - **DOI**: 10.1016/j.jneumeth.2007.03.005
-
-
-    .. admonition:: Preprocessing
-
-        - **Data state**: preprocessed
-        - **Bandpass filter**: 1.0-12.0 Hz
-        - **Steps**: Referencing to average of two mastoid electrodes, Bandpass filtering (1.0-12.0 Hz), Downsampling from 2048 Hz to 32 Hz, Single trial extraction (1000 ms duration from stimulus onset), Windsorizing (10th and 90th percentile clipping)...
 
     References
     ----------

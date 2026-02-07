@@ -45,27 +45,6 @@ class Nakanishi2015(BaseDataset):
     references
     ----------
 
-    .. admonition:: Participants
-
-        - **Population**: healthy
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: Biosemi ActiveTwo
-        - **Reference**: the CMS
-
-    .. admonition:: Experimental Protocol
-
-        Steady-State Visual Evoked Potential
-
-    .. admonition:: Preprocessing
-
-        - **Bandpass filter**: 6.0-80.0 Hz
-
-    .. admonition:: Data Access
-
-        - **DOI**: 10.1371/journal.pone.0140703
-
     .. [1] Masaki Nakanishi, Yijun Wang, Yu-Te Wang and Tzyy-Ping Jung,
            "A Comparison Study of Canonical Correlation Analysis Based Methods for
            Detecting Steady-State Visual Evoked Potentials," PLoS One, vol.10, no.10,

@@ -75,32 +75,6 @@ class Thielen2015(BaseDataset):
     different noise-code set, and is therefore also ignored in this dataset. In total, this dataset should contain 108
     trials of 4.2 seconds each, with 3 repetitions for each of the 36 codes.
 
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: Biosemi ActiveTwo
-        - **Electrodes**: active electrodes
-        - **Montage**: 10-20
-        - **Reference**: car
-
-    .. admonition:: Data Access
-
-        - **Repository**: GitHub
-        - **DOI**: 10.1371/journal.pone.0133797
-        - **URL**: https://github.com/thijor/
-
-
-    .. admonition:: Experimental Protocol
-
-        6x6 matrix speller using Gold codes for visual stimulation; participants focused on target symbols while cells flashed according to specific bit-sequences
-        - **Feedback**: visual colour feedback (cell coloured blue for classifier output, green/red edge colouring for certainty)
-
-    .. admonition:: Preprocessing
-
-        - **Data state**: preprocessed data available at DANS; raw EEG stored at Donders Center for Cognition
-        - **Bandpass filter**: 5-48 Hz-52-100 Hz Hz
-        - **Steps**: downsampling from 2048 Hz to 360 Hz, linear de-trending, common average referencing, spectral filtering
-
     References
     ----------
 

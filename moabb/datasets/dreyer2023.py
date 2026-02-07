@@ -180,7 +180,6 @@ class _Dreyer2023Base(BaseDataset):
             The path to the directory where the dataset should be downloaded.
             If None, the default directory is used.
 
-
         Returns
         -------
         path : str
@@ -312,39 +311,6 @@ class Dreyer2023A(_Dreyer2023Base):
         - only performance measure used to give the feedback to the participants
 
     * Subject 59 contains only 4 runs
-
-
-    .. admonition:: Participants
-
-        - **Population**: epilepsy
-        - **Age**: 18.0 (range: 19-59) years
-        - **Gender**: female: 3, male: 3
-        - **BCI experience**: naive
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: g.tec
-        - **Electrodes**: active electrodes
-        - **Montage**: 10-20
-        - **Reference**: the left earlobe
-
-    .. admonition:: Experimental Protocol
-
-        MI
-        - **Feedback**: visual
-
-    .. admonition:: Data Access
-
-        - **Repository**: Zenodo
-        - **DOI**: 10.1038/s41597-023-02445-z
-        - **URL**: https://doi.org/10.5281/zenodo.808982032
-
-
-    .. admonition:: Preprocessing
-
-        - **Data state**: raw signals recorded without any hardware filters
-        - **Bandpass filter**: participant-specific discriminant frequency band (5-35 Hz range)
-        - **Steps**: subject-specific frequency band selection, Butterworth bandpass filtering, Common Spatial Pattern (CSP) spatial filtering, band power computation, log transformation
 
     References
     ----------
@@ -558,7 +524,6 @@ class Dreyer2023B(_Dreyer2023Base):
     The online OpenViBE BCI classification performance [1]_:
         - only performance measure used to give the feedback to the participants
 
-
     References
     ----------
 
@@ -641,7 +606,6 @@ class Dreyer2023C(_Dreyer2023Base):
 
     The online OpenViBE BCI classification performance [1]_:
         - only performance measure used to give the feedback to the participants
-
 
     References
     ----------
@@ -728,7 +692,6 @@ class Dreyer2023(_Dreyer2023Base):
 
     The online OpenViBE BCI classification performance [1]_:
         - only performance measure used to give the feedback to the participants
-
 
     References
     ----------

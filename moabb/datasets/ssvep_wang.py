@@ -104,32 +104,6 @@ class Wang2016(BaseDataset):
     Users should be aware of this ambiguity when interpreting spatial analyses
     or when comparing to other datasets with strictly standard montages.
 
-
-
-    .. admonition:: Participants
-
-        - **Population**: healthy
-        - **Age**: 25.5 (range: 17-34) years
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: Neuroscan SynAmps
-        - **Montage**: 10-20
-
-    .. admonition:: Experimental Protocol
-
-        P300
-
-    .. admonition:: Preprocessing
-
-        - **Bandpass filter**: 7.0-70.0 Hz
-        - **Notch filter**: [50] Hz
-
-    .. admonition:: Data Access
-
-        - **Repository**: BNCI Horizon 2020
-        - **URL**: https://bnci-horizon-2020.eu/database/data-sets
-
     References
     ----------
     .. [1] Wang, Y., Chen, X., Gao, X., & Gao, S. (2016). A benchmark dataset for

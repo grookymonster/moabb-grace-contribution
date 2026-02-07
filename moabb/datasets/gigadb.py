@@ -66,33 +66,6 @@ class Cho2017(BaseDataset):
     Between each run, a maximum 4-minute break was given depending on
     the subject's demands.
 
-
-    .. admonition:: Participants
-
-        - **Population**: healthy
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: Biosemi ActiveTwo
-        - **Electrodes**: active electrodes
-        - **Montage**: 10-10
-        - **Reference**: Car
-
-    .. admonition:: Experimental Protocol
-
-        motor imagery
-
-    .. admonition:: Data Access
-
-        - **DOI**: 10.5524/100295
-
-
-    .. admonition:: Preprocessing
-
-        - **Data state**: raw with bad trial indices provided
-        - **Bandpass filter**: 8-30 Hz
-        - **Steps**: high-pass filtering above 0.5 Hz, common average reference, band-pass filtering 8-30 Hz, Laplacian filtering, bad trial detection...
-
     References
     ----------
 

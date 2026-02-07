@@ -41,7 +41,6 @@ log = logging.getLogger(__name__)
 
 MAMEM_URL = "https://ndownloader.figshare.com/files/"
 
-
 # Specific release
 # MAMEM1_URL = 'https://ndownloader.figshare.com/articles/2068677/versions/6'
 # MAMEM2_URL = 'https://ndownloader.figshare.com/articles/3153409/versions/4'
@@ -275,32 +274,6 @@ class MAMEM1(BaseMAMEM):
     mimic the stimulation frequency and still be small enough for making a
     selection in the context
 
-
-    .. admonition:: Participants
-
-        - **Population**: healthy
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: EGI
-        - **Montage**: 10-20
-        - **Reference**: CAR
-
-    .. admonition:: Preprocessing
-
-        - **Bandpass filter**: 5.0-48.0 Hz
-
-    .. admonition:: Data Access
-
-        - **Repository**: GitHub
-        - **DOI**: 10.6084/m9.figshare.2068677.v1
-        - **URL**: https://github.com/MAMEM/ssvep-eeg-processing-toolbox
-
-
-    .. admonition:: Experimental Protocol
-
-        Subjects focus attention on visual stimuli flickering at different frequencies to select commands
-
     References
     ----------
     .. [1] Oikonomou, V. P., Liaros, G., Georgiadis, K., Chatzilari, E., Adam, K.,
@@ -480,32 +453,6 @@ class MAMEM2(BaseMAMEM):
     noted that the subject had a tendency to eye blink. As a result the
     interference, in matters of artifacts, on the recorded signal is expected
     to be high.
-
-
-    .. admonition:: Participants
-
-        - **Population**: healthy
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: EGI
-        - **Montage**: 10-20
-        - **Reference**: CAR
-
-    .. admonition:: Preprocessing
-
-        - **Bandpass filter**: 5.0-48.0 Hz
-
-    .. admonition:: Data Access
-
-        - **Repository**: GitHub
-        - **DOI**: 10.6084/m9.figshare.2068677.v1
-        - **URL**: https://github.com/MAMEM/ssvep-eeg-processing-toolbox
-
-
-    .. admonition:: Experimental Protocol
-
-        Subjects focus attention on visual stimuli (colored lights flickering at different frequencies) to select commands
 
     References
     ----------
@@ -695,32 +642,6 @@ class MAMEM3(BaseMAMEM):
     noted that the subject had a tendency to eye blink. As a result the
     interference, in matters of artifacts, on the recorded signal is expected
     to be high.
-
-
-    .. admonition:: Participants
-
-        - **Population**: healthy
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: EGI
-        - **Montage**: 10-20
-        - **Reference**: CAR
-
-    .. admonition:: Preprocessing
-
-        - **Bandpass filter**: 5.0-48.0 Hz
-
-    .. admonition:: Data Access
-
-        - **Repository**: GitHub
-        - **DOI**: 10.6084/m9.figshare.2068677.v1
-        - **URL**: https://github.com/MAMEM/ssvep-eeg-processing-toolbox
-
-
-    .. admonition:: Experimental Protocol
-
-        User focuses attention on visual stimuli flickering at different frequencies to select commands
 
     References
     ----------

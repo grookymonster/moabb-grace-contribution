@@ -57,37 +57,6 @@ class Kalunga2016(BaseDataset):
     days, by the same operators, on the same hardware and in the same
     conditions.
 
-
-    .. admonition:: Participants
-
-        - **Population**: healthy
-
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: g.tec
-        - **Reference**: car
-
-
-    .. admonition:: Experimental Protocol
-
-        SSVEP
-
-
-    .. admonition:: Data Access
-
-        - **Repository**: GitHub
-        - **DOI**: 10.1016/j.neucom.2016.01.007
-        - **URL**: https://github.com/sylvchev/dataset-
-
-
-
-    .. admonition:: Preprocessing
-
-        - **Bandpass filter**: around stimulus frequencies (13 Hz, 17 Hz, 21 Hz)
-        - **Steps**: band-pass filtering around each stimulus frequency
-
-
     Notes
     -----
     The events notation 17Hz and 21Hz were swapped after an investigation conducted
@@ -96,7 +65,6 @@ class Kalunga2016(BaseDataset):
     The dataset includes recordings from 12 healthy subjects.
 
     .. versionadded:: 1.2.0
-
 
     References
     ----------

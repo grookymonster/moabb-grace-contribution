@@ -449,44 +449,10 @@ class BI2012(BaseDataset):
 
     :ID of the dataset: BI.EEG.2012-GIPSA
 
-
-    .. admonition:: Participants
-
-        - **Population**: healthy
-
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: NeXus (MindMedia/TMSi)
-        - **Electrodes**: wet electrodes
-        - **Montage**: 10-20
-        - **Reference**: car
-
-
-    .. admonition:: Experimental Protocol
-
-        limit eye blinks, head movements and
-        face muscular contractions, which disrupt the EEG signal.
-
-
-    .. admonition:: Data Access
-
-        - **Repository**: Zenodo
-        - **DOI**: 10.5281/zenodo.2649006
-        - **URL**: https://doi.org/10.5281/zenodo.2649006
-
-
-
-    .. admonition:: Preprocessing
-
-        - **Data state**: raw EEG with software tagging (note: tagging introduces jitter and latency)
-
-
     Notes
     -----
 
     .. versionadded:: 0.4.6
-
 
     References
     ----------
@@ -654,34 +620,6 @@ class BI2013a(BaseDataset):
     :Scientific Supervisor:  Dr. Marco Congedo
     :Technical Supervisor: Anton Andreev
 
-
-    .. admonition:: Participants
-
-        - **Population**: healthy
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: g.tec
-        - **Electrodes**: Silver/Silver
-        Chloride
-        - **Montage**: 10-20
-        - **Reference**: the left earlobe
-
-    .. admonition:: Experimental Protocol
-
-        P300
-
-    .. admonition:: Data Access
-
-        - **Repository**: Zenodo
-        - **DOI**: 10.5281/zenodo.1494163
-        - **URL**: https://doi.org/10.5281/zenodo.1494163
-
-
-    .. admonition:: Preprocessing
-
-        - **Data state**: raw, unfiltered
-
     References
     ----------
 
@@ -828,44 +766,10 @@ class BI2014a(BaseDataset):
                         M. Sc. Violette Gautheret
     :Scientific Supervisor: Ph.D. Marco Congedo
 
-
-    .. admonition:: Participants
-
-        - **Population**: spinal_cord_injury
-        - **Gender**: male: 49, female: 22
-
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: g.tec
-        - **Electrodes**: dry electrodes
-        - **Montage**: 10-10
-        - **Reference**: the right earlobe
-
-
-    .. admonition:: Experimental Protocol
-
-        P300
-
-
-    .. admonition:: Data Access
-
-        - **Repository**: Zenodo
-        - **DOI**: 10.5281/zenodo.3266223
-        - **URL**: https://doi.org/10.5281/zenodo.3266223
-
-
-
-    .. admonition:: Preprocessing
-
-        - **Data state**: raw (no digital filter applied)
-
-
     Notes
     -----
 
     .. versionadded:: 0.4.6
-
 
     References
     ----------
@@ -996,44 +900,10 @@ class BI2014b(BaseDataset):
                         M. Sc. Violette Gautheret
     :Scientific Supervisor: Ph.D. Marco Congedo
 
-
-    .. admonition:: Participants
-
-        - **Population**: spinal_cord_injury
-        - **Gender**: male: 24, female: 14
-
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: g.tec
-        - **Electrodes**: Silver/Silver Chloride
-        - **Montage**: 10-10
-        - **Reference**: the right earlobe
-
-
-    .. admonition:: Experimental Protocol
-
-        P300
-
-
-    .. admonition:: Data Access
-
-        - **Repository**: Zenodo
-        - **DOI**: 10.5281/zenodo.3267301
-        - **URL**: https://doi.org/10.5281/zenodo.3267301
-
-
-
-    .. admonition:: Preprocessing
-
-        - **Data state**: no digital filter applied
-
-
     Notes
     -----
 
     .. versionadded:: 0.4.6
-
 
     References
     ----------
@@ -1181,44 +1051,10 @@ class BI2015a(BaseDataset):
                         M. Sc. Violette Gautheret
     :Scientific Supervisor: Ph.D. Marco Congedo
 
-
-    .. admonition:: Participants
-
-        - **Population**: spinal_cord_injury
-        - **Gender**: male: 36, female: 14
-
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: g.tec
-        - **Electrodes**: Silver/Silver Chloride
-        - **Montage**: 10-10
-        - **Reference**: the right earlobe
-
-
-    .. admonition:: Experimental Protocol
-
-        P300
-
-
-    .. admonition:: Data Access
-
-        - **Repository**: Zenodo
-        - **DOI**: 10.5281/zenodo.3266930
-        - **URL**: https://doi.org/10.5281/zenodo.3266930
-
-
-
-    .. admonition:: Preprocessing
-
-        - **Data state**: no digital filter applied
-
-
     Notes
     -----
 
     .. versionadded:: 0.4.6
-
 
     References
     ----------
@@ -1366,44 +1202,10 @@ class BI2015b(BaseDataset):
                         M. Sc. Violette Gautheret
     :Scientific Supervisor: Ph.D. Marco Congedo
 
-
-    .. admonition:: Participants
-
-        - **Population**: spinal_cord_injury
-        - **Gender**: male: 36, female: 14
-
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: g.tec
-        - **Electrodes**: Silver/Silver Chloride
-        - **Montage**: 10-10
-        - **Reference**: the right earlobe
-
-
-    .. admonition:: Experimental Protocol
-
-        P300
-
-
-    .. admonition:: Data Access
-
-        - **Repository**: Zenodo
-        - **DOI**: 10.5281/zenodo.3266930
-        - **URL**: https://doi.org/10.5281/zenodo.3266930
-
-
-
-    .. admonition:: Preprocessing
-
-        - **Data state**: raw (no digital filter applied)
-
-
     Notes
     -----
 
     .. versionadded:: 0.4.6
-
 
     References
     ----------
@@ -1557,42 +1359,9 @@ class Cattan2019_VR(BaseDataset):
     screen_display: bool (default True)
         if True, return runs corresponding to P300 experiment on personal computer.
 
-
-    .. admonition:: Participants
-
-        - **Population**: spinal_cord_injury
-
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: g.tec
-        - **Electrodes**: wet electrodes
-        - **Montage**: 10-10
-        - **Reference**: the right earlobe
-
-
-    .. admonition:: Experimental Protocol
-
-        P300
-
-
-    .. admonition:: Data Access
-
-        - **Repository**: Zenodo
-        - **DOI**: 10.5281/zenodo.2605204
-        - **URL**: https://doi.org/10.5281/zenodo.2605204
-
-
-
-    .. admonition:: Preprocessing
-
-        - **Data state**: raw (no digital filter applied during acquisition)
-
-
     Notes
     -----
     .. versionadded:: 0.5.0
-
 
     References
     ----------

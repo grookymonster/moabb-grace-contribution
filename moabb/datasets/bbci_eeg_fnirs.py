@@ -209,7 +209,6 @@ class Shin2017A(BaseShin2017):
 
     Dataset from [1]_.
 
-
     .. caution::
        You should accept the licence term [2]_ to download this dataset, using:
        ``Shin2017A(accept=True)``
@@ -295,33 +294,6 @@ class Shin2017A(BaseShin2017):
     single session, motor imagery tasks were performed on the basis of ten
     subsequent blocks randomly consisting of one of two conditions: Either
     first left and then right hand motor imagery or vice versa.
-
-
-    .. admonition:: Participants
-
-        - **Population**: healthy
-
-
-
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: BrainAmp
-        - **Electrodes**: active electrodes
-        - **Montage**: 10-5
-        - **Reference**: 1000 Hz sampling rate
-
-    .. admonition:: Data Access
-
-        - **Repository**: GitHub
-        - **URL**: https://github.com/bbci/bbci_public/
-
-
-    .. admonition:: Preprocessing
-
-        - **Data state**: raw data available for download
-        - **Bandpass filter**: 0.5-50 Hz
-        - **Steps**: common average reference, bandpass filtering (0.5-50 Hz), ICA-based EOG rejection, downsampling to 200 Hz
 
     References
     ----------
@@ -566,30 +538,6 @@ class Shin2017B(BaseShin2017):
     periods were finished with a short beep sound and a 'STOP' displayed for
     1 s on the screen. The fixation cross was displayed again during the rest
     period. MA and baseline trials were randomized in the same way as MI.
-
-
-    .. admonition:: Participants
-
-        - **Population**: spinal_cord_injury
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: BrainAmp
-        - **Electrodes**: active electrodes
-        - **Montage**: 10-5
-        - **Reference**: 1000 Hz sampling rate
-
-    .. admonition:: Data Access
-
-        - **Repository**: GitHub
-        - **URL**: https://github.com/bbci/bbci_public/
-
-
-    .. admonition:: Preprocessing
-
-        - **Data state**: raw data available, preprocessed analysis also provided
-        - **Bandpass filter**: 0.5-50 Hz
-        - **Steps**: re-referencing to common average reference, bandpass filtering (0.5-50 Hz), ICA-based EOG rejection using EEGLAB, downsampling to 200 Hz
 
     References
     ----------

@@ -255,23 +255,6 @@ class BNCI2020_001(BNCIBaseDataset):
     - Water-based: 62.3% (9.2% STD)
     - Dry electrodes: 56.4% (8.0% STD)
 
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: g.tec
-        - **Electrodes**: active electrodes
-        - **Reference**: Car
-
-    .. admonition:: Preprocessing
-
-        - **Notch filter**: [50] Hz
-
-    .. admonition:: Data Access
-
-        - **Repository**: BNCI Horizon 2020
-        - **DOI**: 10.3389/fnins.2020.00849
-        - **URL**: https://bnci-horizon-2020.eu/database/data-sets
-
     References
     ----------
     .. [1] Schwarz, A., Escolano, C., Montesano, L., & Muller-Putz, G. R. (2020).
@@ -734,15 +717,6 @@ class BNCI2020_002(BNCIBaseDataset):
         - bciexp.heog, bciexp.veog: EOG data
         - bciexp.intention: subject's intended response (yes/no)
         - subject: demographic information
-
-
-    .. admonition:: Preprocessing
-
-        - **Bandpass filter**: 1.0-12.5 Hz
-
-    .. admonition:: Data Access
-
-        - **DOI**: 10.3389/fnins.2020.591777
 
     References
     ----------

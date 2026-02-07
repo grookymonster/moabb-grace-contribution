@@ -63,32 +63,6 @@ class Ofner2017(BaseDataset):
     movement classes and a rest class and recorded 60 trials per class in a
     session.
 
-
-    .. admonition:: Participants
-
-        - **Population**: healthy
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: g.tec
-        - **Electrodes**: active electrodes
-        - **Reference**: the right mastoid
-
-    .. admonition:: Experimental Protocol
-
-        avoid any movement and to stay in the starting position.
-
-    .. admonition:: Preprocessing
-
-        - **Bandpass filter**: 0.01-200.0 Hz
-        - **Notch filter**: [50] Hz
-
-    .. admonition:: Data Access
-
-        - **Repository**: BNCI Horizon 2020
-        - **DOI**: 10.1371/journal.pone.0182578
-        - **URL**: https://bnci-horizon-2020.eu/database/data-sets
-
     References
     ----------
     .. [1] Ofner, P., Schwarz, A., Pereira, J. and Müller-Putz, G.R., 2017.

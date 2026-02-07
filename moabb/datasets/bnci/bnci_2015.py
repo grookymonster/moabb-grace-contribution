@@ -470,29 +470,6 @@ class BNCI2015_001(MNEBNCI):
     - Sampling rate: 512 Hz
     - Reference: not specified
 
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: g.tec
-        - **Electrodes**: active electrode
-        - **Montage**: 10-20
-        - **Reference**: Car
-
-    .. admonition:: Experimental Protocol
-
-        to relax and to perform sustained, kinesthetic movement imagery ([5]) during
-        the complete activity period of the presented trials (see Figure 1).
-        - **Feedback**: none
-
-    .. admonition:: Preprocessing
-
-        - **Bandpass filter**: 0.5-100.0 Hz
-        - **Notch filter**: [50] Hz
-
-    .. admonition:: Data Access
-
-        - **DOI**: 10.1109/tnsre.2012.2189584
-
     References
     ----------
     .. [1] Faller, J., Scherer, R., Costa, U., Opisso, E., Medina, J., Muller-Putz,
@@ -631,33 +608,6 @@ class BNCI2015_003(MNEBNCI):
     This dataset contains EEG data from 10 subjects using a P300 speller
     system. The dataset includes target and non-target responses during a
     visual P300 paradigm.
-
-
-    .. admonition:: Participants
-
-        - **Population**: healthy
-        - **Age**: 34.1 years
-        - **BCI experience**: naive
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: BrainAmp
-        - **Electrodes**: Ag/AgCl
-        - **Reference**: the nose
-
-    .. admonition:: Preprocessing
-
-        - **Bandpass filter**: 0.1-250.0 Hz
-
-    .. admonition:: Data Access
-
-        - **DOI**: 10.3389/fnins.2011.00112
-
-
-    .. admonition:: Experimental Protocol
-
-        Subjects focused attention on one of six spatial directions (speakers) and mentally counted target appearances while using a hex-o-spell like auditory spelling interface
-        - **Feedback**: visual
 
     References
     ----------
@@ -843,35 +793,6 @@ class BNCI2015_004(MNEBNCI):
     mental tasks: mental multiplication, mental letter composing, mental
     rotation, mental counting, and a baseline task.
 
-
-    .. admonition:: Participants
-
-        - **Population**: healthy
-        - **Age**: 38.5 (range: 20-57) years
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: g.tec
-        - **Electrodes**: active
-        electrodes
-        - **Montage**: 10-20
-
-    .. admonition:: Experimental Protocol
-
-        avoid movements during the imagery period, and
-        to move and blink during the ITI.
-
-    .. admonition:: Preprocessing
-
-        - **Bandpass filter**: 0.5-100.0 Hz
-        - **Notch filter**: [50] Hz
-
-    .. admonition:: Data Access
-
-        - **Repository**: BNCI Horizon 2020
-        - **DOI**: 10.1016/S1388-2457(02
-        - **URL**: https://bnci-horizon-2020.eu/database/data-sets
-
     References
     ----------
     .. [1] Zhang, X., Yao, L., Zhang, Q., Kanhere, S., Sheng, M., & Liu, Y.
@@ -1044,35 +965,6 @@ class BNCI2015_006(MNEBNCI):
     This dataset investigates the suitability of musical stimuli for use in a P300
     paradigm. 11 subjects listened to polyphonic music clips featuring three
     instruments playing together. A multi-streamed oddball paradigm was used.
-
-
-    .. admonition:: Participants
-
-        - **Population**: spinal_cord_injury
-        - **Age**: 35.5 (range: 21-50) years
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: Brain Products
-        - **Electrodes**: active electrode
-        - **Montage**: 10-10
-        - **Reference**: left mastoid
-
-    .. admonition:: Experimental Protocol
-
-        oddball
-
-    .. admonition:: Data Access
-
-        - **Repository**: GitHub
-        - **DOI**: 10.1088/1741-2560/11/2/026009
-        - **URL**: https://github.com/bbci/bbci_public/blob/master/doc/index.markdown
-
-
-    .. admonition:: Preprocessing
-
-        - **Data state**: epoched
-        - **Steps**: downsampling, lowpass filtering, epoching, baseline correction, artifact rejection
 
     References
     ----------
@@ -1340,15 +1232,6 @@ class BNCI2015_007(MNEBNCI):
     - Target (1): Target stimulus presented (attended)
     - NonTarget (2): Non-target stimulus presented (not attended)
 
-
-    .. admonition:: Preprocessing
-
-        - **Bandpass filter**: 0.016-250.0 Hz
-
-    .. admonition:: Data Access
-
-        - **DOI**: 10.1088/1741-2560/9/4/045006
-
     References
     ----------
     .. [1] Treder, M. S., Purwins, H., Miklody, D., Sturm, I., & Blankertz, B.
@@ -1585,33 +1468,6 @@ class BNCI2015_008(MNEBNCI):
     - Target (1): Target stimulus presented (attended)
     - NonTarget (2): Non-target stimulus presented (not attended)
 
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: Brain Products
-        - **Electrodes**: active electrode
-        - **Montage**: 10-10
-        - **Reference**: left mastoids
-
-    .. admonition:: Experimental Protocol
-
-        sit still, relax
-        their muscles and try to minimize eye movements during the
-        course of a trial.
-        - **Feedback**: none
-
-    .. admonition:: Data Access
-
-        - **Repository**: GitHub
-        - **DOI**: 10.1088/1741-2560/8/6/066003
-        - **URL**: https://github.com/bbci/bbci_public/blob/master/doc/index.markdown
-
-
-    .. admonition:: Preprocessing
-
-        - **Data state**: preprocessed for ERP analysis; downsampled to 100 Hz with no software filter for classification
-        - **Steps**: downsampling, lowpass filtering, epoching, baseline correction, re-referencing
-
     References
     ----------
     .. [1] Treder, M. S., Schmidt, N. M., & Blankertz, B. (2011). Gaze-independent
@@ -1847,21 +1703,6 @@ class BNCI2015_009(MNEBNCI):
     - Target (1): Attended stimulus
     - NonTarget (2): Unattended stimulus
 
-
-    .. admonition:: Preprocessing
-
-        - **Bandpass filter**: 0.1-250.0 Hz
-
-    .. admonition:: Data Access
-
-        - **DOI**: 10.1371/journal.pone.0009813
-
-
-    .. admonition:: Experimental Protocol
-
-        Subjects attended to sounds from specific spatial directions while fixating on a screen. In physiological experiments, subjects mentally counted targets from the attended direction. In BCI experiments, subjects identified target sounds based on spatial location and pitch properties.
-        - **Feedback**: visual
-
     References
     ----------
     .. [1] Schreuder, M., Rost, T., & Tangermann, M. (2011). Listen, you are
@@ -2017,32 +1858,6 @@ class BNCI2015_010(MNEBNCI):
     This dataset contains EEG recordings from 12 subjects during a rapid serial
     visual presentation (RSVP) task. Subjects were instructed to attend to target
     images in a continuous stream of stimuli, eliciting P300 responses.
-
-
-    .. admonition:: Participants
-
-        - **Population**: healthy
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: BrainAmp
-        - **Electrodes**: active electrode
-        - **Reference**: the left mastoid
-
-    .. admonition:: Data Access
-
-        - **DOI**: 10.1016/j.clinph.2012.12.050
-
-
-    .. admonition:: Experimental Protocol
-
-        Visual BCI speller where all 30 symbols are presented one-by-one in random order at center of screen. Participants concentrate on target letter and silently count its occurrences. Three conditions: NoColor 116ms SOA, Color 116ms SOA, Color 83ms SOA.
-        - **Feedback**: visual feedback - classifier selected symbol displayed after each trial
-
-    .. admonition:: Preprocessing
-
-        - **Data state**: raw data recorded, preprocessing applied offline for analysis
-        - **Steps**: lowpass filtering, downsampling to 200 Hz, epoching, baseline correction, artifact rejection using min-max criterion
 
     References
     ----------
@@ -2242,31 +2057,6 @@ class BNCI2015_012(MNEBNCI):
     Note: Only 10 of the original 12 participants' data is available on the BNCI
     server. Subjects 3 (VPnx) and 6 (VPmg) return HTTP 404 errors.
 
-
-    .. admonition:: Participants
-
-        - **Population**: healthy
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: Brain Products
-        - **Electrodes**: Ag/AgCl
-        - **Montage**: 10-20
-        - **Reference**: the nose
-
-    .. admonition:: Experimental Protocol
-
-        ERP
-        - **Feedback**: visual
-
-    .. admonition:: Preprocessing
-
-        - **Bandpass filter**: 0.1-250.0 Hz
-
-    .. admonition:: Data Access
-
-        - **DOI**: 10.3389/fnins.2011.00099
-
     References
     ----------
     .. [1] Schreuder, M., Rost, T., & Tangermann, M. (2011). Listen, you are
@@ -2457,30 +2247,6 @@ class BNCI2015_013(MNEBNCI):
     This dataset contains EEG recordings from 6 subjects performing a
     cursor control task with error-related potentials. The dataset includes
     both correct and error responses.
-
-
-    .. admonition:: Participants
-
-        - **Population**: spinal_cord_injury
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: Biosemi ActiveTwo
-        - **Reference**: car
-
-    .. admonition:: Preprocessing
-
-        - **Bandpass filter**: 1.0-10.0 Hz
-
-    .. admonition:: Data Access
-
-        - **DOI**: 10.1109/TNSRE.2010.2053387
-
-
-    .. admonition:: Experimental Protocol
-
-        Subjects monitored a cursor moving towards a target on screen. The cursor moved automatically with a probability of moving in the wrong direction. Subjects assessed whether the cursor performed properly without providing any control commands.
-        - **Feedback**: visual
 
     References
     ----------

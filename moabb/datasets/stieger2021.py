@@ -124,30 +124,6 @@ class Stieger2021(BaseDataset):
     the normalized control signals were used to update the position of
     the cursor every 40 ms.
 
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: Neuroscan SynAmps
-        - **Montage**: 10-10
-        - **Reference**: target presentation
-
-    .. admonition:: Preprocessing
-
-        - **Bandpass filter**: 8.0-30.0 Hz
-        - **Notch filter**: [60] Hz
-
-    .. admonition:: Data Access
-
-        - **Repository**: GitHub
-        - **DOI**: 10.1038/s41597-021-00883-1
-        - **URL**: https://github.com/bfinl/BCI_Data_Paper
-
-
-    .. admonition:: Experimental Protocol
-
-        Cursor control using motor imagery: left/right hand imagery for horizontal movement, both hands for up, rest for down. 2D cursor control to reach targets.
-        - **Feedback**: continuous online visual feedback (cursor movement)
-
     References
     ----------
 

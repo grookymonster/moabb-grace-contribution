@@ -245,18 +245,6 @@ class BNCI2025_001(BNCIBaseDataset):
     - left_slow_near (9), left_slow_far (10), left_fast_near (11), left_fast_far (12)
     - right_slow_near (13), right_slow_far (14), right_fast_near (15), right_fast_far (16)
 
-
-    .. admonition:: Preprocessing
-
-        - **Bandpass filter**: 0.3-80.0 Hz
-        - **Notch filter**: [50] Hz
-
-    .. admonition:: Data Access
-
-        - **Repository**: GitHub
-        - **DOI**: 10.1088/1741-2552/ada0ea
-        - **URL**: https://github.com/rkobler/eyeartifactcorrection
-
     References
     ----------
     .. [1] Srisrisawang, N., & Muller-Putz, G. R. (2024). Simultaneous encoding
@@ -922,20 +910,6 @@ class BNCI2025_002(BNCIBaseDataset):
     - 3 sessions per subject (recorded over 5 days)
     - 3 perception levels per session (perc0, perc50, perc100)
     - Files named: {subject_id}_ses{session}_perc{level}.mat
-
-
-    .. admonition:: Data Access
-
-        - **Repository**: GitHub
-        - **DOI**: 10.1088/1741-2552/ac689f
-        - **URL**: https://github.com/sccn/labstreaminglayer
-
-
-    .. admonition:: Preprocessing
-
-        - **Data state**: preprocessed
-        - **Notch filter**: 50 Hz
-        - **Steps**: Anti-aliasing filter (25 Hz), Notch filter at 50 Hz (powerline noise removal), Downsampling to 100 Hz, Bad channel interpolation (4 nearest neighbors, inverse distance weighted), Eye artifact subtraction (SGEYESUB algorithm)...
 
     References
     ----------

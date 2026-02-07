@@ -64,31 +64,6 @@ class GrosseWentrup2009(BaseDataset):
     locations of the 128 electrodes were measured in three dimensions using a
     Zebris ultrasound tracking system and stored for further offline analysis.
 
-
-
-    .. admonition:: Participants
-
-        - **Population**: healthy
-        - **BCI experience**: experienced
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: BrainAmp
-        - **Montage**: 10-20
-        - **Reference**: car
-
-
-    .. admonition:: Experimental Protocol
-
-        Two-class motor imagery paradigm. Subjects performed haptic motor imagery of left or right hand as indicated by arrow direction. Subjects imagined feeling hand movements rather than visualizing them.
-        - **Feedback**: none (offline); visual cursor control (online experiment)
-
-    .. admonition:: Preprocessing
-
-        - **Data state**: minimally preprocessed
-        - **Bandpass filter**: 7-30 Hz (CSP), 1-41 Hz in 2 Hz bands (features)
-        - **Steps**: Re-referencing to common average reference, Bandpass filtering 7-30 Hz (for CSP), Highpass filtering 0.5 Hz (for beamforming), Bandpass filtering in 20 frequency bands of 2 Hz width (1-41 Hz) for feature extraction
-
     References
     ----------
     .. [1] Grosse-Wentrup, Moritz, et al. "Beamforming in noninvasive

@@ -267,7 +267,6 @@ class Lee2019_MI(Lee2019):
     center of the monitor and moved right or left, according to the
     real-time classifier output of the EEG signal.
 
-
     Parameters
     ----------
     train_run: bool (default True)
@@ -283,36 +282,6 @@ class Lee2019_MI(Lee2019):
 
     sessions: list of int (default [1,2])
         the list of the sessions to load (2 available).
-
-
-    .. admonition:: Participants
-
-        - **Population**: healthy
-        - **Age**: 29.5 (range: 24-35) years
-        - **Handedness**: {'right': 4}
-        - **BCI experience**: experienced
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: BrainAmp
-        - **Electrodes**: Ag/AgCl
-        - **Montage**: 10-20
-
-    .. admonition:: Preprocessing
-
-        - **Bandpass filter**: 0.5-40.0 Hz
-
-    .. admonition:: Data Access
-
-        - **DOI**: 10.1093/gigascience/giz002
-
-
-    .. admonition:: Experimental Protocol
-
-        - **MI**: binary-class motor imagery of left or right hand grasping
-        - **ERP**: 36-symbol row-column speller with random-set presentation and face stimuli
-        - **SSVEP**: four target frequencies (5.45, 6.67, 8.57, 12 Hz) in four directions
-        - **Feedback**: visual
 
     References
     ----------
@@ -569,36 +538,6 @@ class Lee2019_ERP(Lee2019):
     sessions: list of int (default [1,2])
         the list of the sessions to load (2 available).
 
-
-    .. admonition:: Participants
-
-        - **Population**: healthy
-        - **Age**: 29.5 (range: 24-35) years
-        - **Handedness**: {'right': 4}
-        - **BCI experience**: experienced
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: BrainAmp
-        - **Electrodes**: Ag/AgCl
-        - **Montage**: 10-20
-
-    .. admonition:: Preprocessing
-
-        - **Bandpass filter**: 0.5-40.0 Hz
-
-    .. admonition:: Data Access
-
-        - **DOI**: 10.1093/gigascience/giz002
-
-
-    .. admonition:: Experimental Protocol
-
-        - **MI**: binary-class motor imagery of left/right hand grasping
-        - **ERP**: 36 symbol row-column speller with random-set presentation and face stimuli
-        - **SSVEP**: four target frequencies (5.45, 6.67, 8.57, 12 Hz) in four directions
-        - **Feedback**: visual
-
     References
     ----------
     .. [1] Lee, M. H., Kwon, O. Y., Kim, Y. J., Kim, H. K., Lee, Y. E.,
@@ -838,36 +777,6 @@ class Lee2019_SSVEP(Lee2019):
 
     sessions: list of int (default [1,2])
         the list of the sessions to load (2 available).
-
-
-    .. admonition:: Participants
-
-        - **Population**: healthy
-        - **Age**: 29.5 (range: 24-35) years
-        - **Handedness**: {'right': 4}
-        - **BCI experience**: experienced
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: BrainAmp
-        - **Electrodes**: Ag/AgCl
-        - **Montage**: 10-20
-
-    .. admonition:: Preprocessing
-
-        - **Bandpass filter**: 0.5-40.0 Hz
-
-    .. admonition:: Data Access
-
-        - **DOI**: 10.1093/gigascience/giz002
-
-
-    .. admonition:: Experimental Protocol
-
-        - **MI**: binary-class motor imagery (left/right hand grasping)
-        - **ERP**: 36-symbol row-column speller with face stimuli
-        - **SSVEP**: four target frequencies (5.45, 6.67, 8.57, 12 Hz) in four directions
-        - **Feedback**: visual
 
     References
     ----------

@@ -253,33 +253,6 @@ class BNCI2014_001(MNEBNCI):
     the amplifier was set to 100 uV . An additional 50 Hz notch filter was
     enabled to suppress line noise
 
-
-    .. admonition:: Participants
-
-        - **Population**: healthy
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: BrainAmp
-        - **Electrodes**: Ag/AgCl
-        - **Montage**: 10-20
-        - **Reference**: Car
-
-    .. admonition:: Preprocessing
-
-        - **Bandpass filter**: 0.05-200.0 Hz
-        - **Notch filter**: [50] Hz
-
-    .. admonition:: Data Access
-
-        - **DOI**: 10.3389/fnins.2012.00055
-
-
-    .. admonition:: Experimental Protocol
-
-        Two classes of motor imagery selected from left hand, right hand, and foot. Training: visual cues (arrows). Test: acoustic cues (spoken words).
-        - **Feedback**: none
-
     References
     ----------
     .. [1] Tangermann, M., Muller, K.R., Aertsen, A., Birbaumer, N., Braun, C.,
@@ -496,26 +469,6 @@ class BNCI2014_002(MNEBNCI):
     were aged between 20 and 30 years, 8 naive to the task, and had no known
     disabilities.
 
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: g.tec
-        - **Electrodes**: Ag/AgCl
-        - **Reference**: the left mastoid
-
-    .. admonition:: Experimental Protocol
-
-        MI
-        - **Feedback**: none
-
-    .. admonition:: Preprocessing
-
-        - **Notch filter**: [50] Hz
-
-    .. admonition:: Data Access
-
-        - **DOI**: 10.1515/bmt-2014-0117
-
     References
     ----------
     .. [1] Scherer, R., Faller, J., Balderas, D., Friedrich, E. V., &
@@ -702,27 +655,6 @@ class BNCI2014_004(MNEBNCI):
     and 100 Hz. The reference was the left mastoid and the ground was the right
     mastoid. The electrode montage is a reduced version of the 10-20 system.
 
-
-    .. admonition:: Participants
-
-        - **Population**: spinal_cord_injury
-        - **BCI experience**: naive
-
-    .. admonition:: Equipment
-
-        - **Electrodes**: Ag/AgCl
-        - **Reference**: the left
-
-    .. admonition:: Experimental Protocol
-
-        motor
-        imagery
-        - **Feedback**: none
-
-    .. admonition:: Preprocessing
-
-        - **Notch filter**: [50] Hz
-
     References
     ----------
     .. [1] Tangermann, M., Muller, K.R., Aertsen, A., Birbaumer, N., Braun, C.,
@@ -898,28 +830,6 @@ class BNCI2014_008(MNEBNCI):
     - Sampling rate: 256 Hz
     - Reference: Linked mastoids
 
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: Emotiv EPOC
-        - **Electrodes**: active electrodes
-        - **Montage**: 10-10
-        - **Reference**: the right earlobe
-
-    .. admonition:: Experimental Protocol
-
-        report if the orientation of the rectangles in the test array was
-        identical to the ones in the memory array.
-        - **Feedback**: none
-
-    .. admonition:: Preprocessing
-
-        - **Bandpass filter**: 0.1-30.0 Hz
-
-    .. admonition:: Data Access
-
-        - **DOI**: 10.3389/fnhum.2013.00732
-
     References
     ----------
     .. [1] Riccio, A., Simione, L., Schettini, F., Pizzimenti, A., Inghilleri,
@@ -1054,28 +964,6 @@ class BNCI2014_009(MNEBNCI):
     - Channels: 16 EEG channels
     - Sampling rate: 256 Hz
     - Reference: Linked mastoids
-
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: g.tec
-        - **Electrodes**: Ag/AgCl
-        - **Montage**: 10-10
-        - **Reference**: the linked earlobes
-
-    .. admonition:: Experimental Protocol
-
-        attend the stimulation and push a button
-        Figure 1.
-        - **Feedback**: none
-
-    .. admonition:: Preprocessing
-
-        - **Bandpass filter**: 0.1-20.0 Hz
-
-    .. admonition:: Data Access
-
-        - **DOI**: 10.1080/00140139.2012.661084
 
     References
     ----------

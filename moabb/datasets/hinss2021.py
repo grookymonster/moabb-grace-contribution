@@ -51,44 +51,10 @@ class Hinss2021(BaseDataset):
     (i.e., easy, medium, and difficult). The task assignments
     were randomized. For more details, please check [Hinss2021]_.
 
-
-    .. admonition:: Participants
-
-        - **Population**: healthy
-        - **Gender**: female: 11, male: 18
-
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: Brain Products
-        - **Montage**: 10-20
-        - **Reference**: car
-
-
-    .. admonition:: Data Access
-
-        - **Repository**: Zenodo
-        - **DOI**: 10.1038/s41597-022-01898-y
-        - **URL**: https://doi.org/10.5281/zenodo.6874128
-
-
-
-    .. admonition:: Experimental Protocol
-
-        Four cognitive tasks: Psychomotor Vigilance Task (PVT) for vigilance/fatigue, N-Back task (0-back, 1-back, 2-back) for working memory/mental workload, MATB-II for task-switching and mental workload in realistic environment, and Flanker task for decision-making and conflict evaluation
-        - **Feedback**: trial-based feedback (Flanker task provides correct/incorrect/miss feedback)
-
-
-    .. admonition:: Preprocessing
-
-        - **Data state**: raw (no filtering applied during acquisition)
-
-
     Notes
     -----
 
     .. versionadded:: 1.0.1
-
 
     References
     ----------

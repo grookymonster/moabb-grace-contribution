@@ -300,17 +300,6 @@ class BNCI2016_002(BNCIBaseDataset):
     2. Mental evaluation of the sensory information
     3. Motor preparation
 
-
-    .. admonition:: Data Access
-
-        - **DOI**: 10.1088/1741-2560/8/5/056001
-
-
-    .. admonition:: Preprocessing
-
-        - **Data state**: preprocessed
-        - **Steps**: lowpass filtering (EEG), bandpass filtering (EMG), notch filtering (EMG), rectification (EMG), resampling to 200 Hz...
-
     References
     ----------
     .. [1] Haufe, S., Treder, M. S., Gugler, M. F., Sagebaum, M., Curio, G., &

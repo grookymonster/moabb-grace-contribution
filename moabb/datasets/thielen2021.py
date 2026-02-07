@@ -114,33 +114,6 @@ class Thielen2021(BaseDataset):
 
     Note, here, we only load the offline data of this study and ignore the online phase.
 
-
-    .. admonition:: Participants
-
-        - **Population**: ALS
-        - **Age**: 40.5 (range: 19-62) years
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: Biosemi ActiveTwo
-        - **Montage**: 10-20
-        - **Reference**: car
-
-    .. admonition:: Experimental Protocol
-
-        cVEP
-        - **Feedback**: none
-
-    .. admonition:: Data Access
-
-        - **DOI**: 10.1088/1741-2552/abecef
-
-
-    .. admonition:: Preprocessing
-
-        - **Data state**: preprocessed
-        - **Steps**: high-pass filtering, low-pass filtering, downsampling, raster latency correction
-
     References
     ----------
 

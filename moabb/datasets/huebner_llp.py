@@ -29,7 +29,6 @@ from moabb.datasets.metadata.schema import (
 
 logger = logging.getLogger(__name__)
 
-
 VSPELL_BASE_URL = "https://zenodo.org/record/"
 VISUAL_SPELLER_LLP_URL = VSPELL_BASE_URL + "5831826/files/"
 VISUAL_SPELLER_MIX_URL = VSPELL_BASE_URL + "5831879/files/"
@@ -166,36 +165,6 @@ class Huebner2017(_BaseVisualMatrixSpellerDataset):
     raw_slice_offset: int, None
         defines the crop offset in milliseconds before the first and after the last event (target or non-targeet) onset.
         Default None which crops with an offset 2,000 ms.
-
-
-    .. admonition:: Participants
-
-        - **Population**: healthy
-        - **BCI experience**: experienced
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: BrainAmp
-        - **Electrodes**: Ag/AgCl
-        - **Montage**: 10-20
-        - **Reference**: car
-
-    .. admonition:: Experimental Protocol
-
-        ERP
-
-    .. admonition:: Data Access
-
-        - **Repository**: Zenodo
-        - **DOI**: 10.1371/journal.pone.0175856
-        - **URL**: https://doi.org/10.5281/zenodo.192684
-
-
-    .. admonition:: Preprocessing
-
-        - **Data state**: preprocessed
-        - **Bandpass filter**: 0.5-8 Hz
-        - **Steps**: Bandpass filtering (0.5-8 Hz), Downsampling to 100 Hz, Epoch windowing [-200, 700] ms, Baseline correction [-200, 0] ms, Channel rejection (Fp1, Fp2 dismissed)...
 
     References
     ----------
@@ -372,31 +341,6 @@ class Huebner2018(_BaseVisualMatrixSpellerDataset):
     raw_slice_offset: int, None
         defines the crop offset in milliseconds before the first and after the last event (target or non-targeet) onset.
         Default None which crops with an offset 2,000 ms.
-
-
-    .. admonition:: Participants
-
-        - **Population**: healthy
-        - **Gender**: female: 8, male: 4
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: BrainAmp
-        - **Electrodes**: Ag/AgCl
-        - **Montage**: 10-20
-        - **Reference**: car
-
-    .. admonition:: Data Access
-
-        - **Repository**: Zenodo
-        - **DOI**: 10.5281/zenodo.192684
-        - **URL**: https://doi.org/10.5281/zenodo.192684
-
-
-    .. admonition:: Experimental Protocol
-
-        Copy-spelling task using visual ERP paradigm with modified matrix speller. Subjects spelled the 35-character sentence 'Franzy jagt im Taxi quer durch das'
-        - **Feedback**: Visual feedback showing predicted character after each trial
 
     References
     ----------

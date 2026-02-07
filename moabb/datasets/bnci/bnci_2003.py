@@ -98,24 +98,6 @@ class BNCI2003_004(MNEBNCI):
     both types were recorded, while from the other subjects 3 sessions
     of type (2) and 1 session of type (1) were recorded.
 
-
-    .. admonition:: Participants
-
-        - **Population**: healthy
-
-    .. admonition:: Equipment
-
-        - **Reference**: car
-
-    .. admonition:: Preprocessing
-
-        - **Bandpass filter**: 0.05-200.0 Hz
-
-
-    .. admonition:: Experimental Protocol
-
-        Subjects imagined movement of left or right hand or foot, or imagination of visual, auditory, or tactile sensation according to displayed letter
-
     References
     ----------
     .. [1] Guido Dornhege, Benjamin Blankertz, Gabriel Curio, and Klaus-Robert

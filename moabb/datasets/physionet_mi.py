@@ -68,27 +68,6 @@ class PhysionetMI(BaseDataset):
     references
     ----------
 
-
-    .. admonition:: Participants
-
-        - **Population**: ALS
-
-    .. admonition:: Equipment
-
-        - **Amplifier**: Brain Products
-        - **Reference**: both mastoids
-
-
-    .. admonition:: Experimental Protocol
-
-        Multiple paradigms: (1) Mu/beta rhythm cursor control - user controls vertical cursor movement using sensorimotor rhythm amplitude; (2) SCP cursor control - user controls slow cortical potentials to move cursor to targets; (3) P300 spelling - user focuses attention on characters in 6x6 matrix while ...
-        - **Feedback**: visual
-
-    .. admonition:: Preprocessing
-
-        - **Data state**: raw with online processing capabilities
-        - **Steps**: calibration (linear transformation to microvolts), spatial filtering, temporal filtering
-
     .. [1] Schalk, G., McFarland, D.J., Hinterberger, T., Birbaumer, N. and
            Wolpaw, J.R., 2004. BCI2000: a general-purpose brain-computer
            interface (BCI) system. IEEE Transactions on biomedical engineering,

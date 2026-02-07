@@ -384,18 +384,6 @@ class BNCI2022_001(BNCIBaseDataset):
         - Baseline: eye close/open recording
         - Task (wpsize): main piloting task with difficulty variations
 
-
-    .. admonition:: Data Access
-
-        - **DOI**: 10.1109/THMS.2020.3038339
-
-
-    .. admonition:: Preprocessing
-
-        - **Data state**: processed
-        - **Bandpass filter**: 1-40 Hz
-        - **Steps**: downsampling to 256 Hz, bandpass filtering 1-40 Hz (14th order Butterworth), SPHARA spatial low-pass filter (20th order), peripheral electrode removal (25 channels retained), common-average re-referencing...
-
     References
     ----------
     .. [1] Jao, P.-K., Chavarriaga, R., & Millan, J. d. R. (2021). EEG Correlates
