@@ -831,16 +831,16 @@ for ERP vs ERD paradigms.</p>
 <h3>Motor Imagery Paradigms<a class="headerlink" href="#motor-imagery-paradigms" title="Link to this heading">#</a></h3>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/moabb.paradigms.MotorImagery.html#moabb.paradigms.MotorImagery" title="moabb.paradigms.MotorImagery"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MotorImagery</span></code></a>([n_classes])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/moabb.paradigms.MotorImagery.html#moabb.paradigms.MotorImagery" title="moabb.paradigms.MotorImagery"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MotorImagery</span></code></a>([n_classes, fmin, fmax, ...])</p></td>
 <td><p>N-class motor imagery.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/moabb.paradigms.LeftRightImagery.html#moabb.paradigms.LeftRightImagery" title="moabb.paradigms.LeftRightImagery"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LeftRightImagery</span></code></a>(**kwargs)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/moabb.paradigms.LeftRightImagery.html#moabb.paradigms.LeftRightImagery" title="moabb.paradigms.LeftRightImagery"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LeftRightImagery</span></code></a>([fmin, fmax, events, tmin, ...])</p></td>
 <td><p>Motor Imagery for left hand/right hand classification.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/moabb.paradigms.FilterBankLeftRightImagery.html#moabb.paradigms.FilterBankLeftRightImagery" title="moabb.paradigms.FilterBankLeftRightImagery"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FilterBankLeftRightImagery</span></code></a>(**kwargs)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/moabb.paradigms.FilterBankLeftRightImagery.html#moabb.paradigms.FilterBankLeftRightImagery" title="moabb.paradigms.FilterBankLeftRightImagery"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FilterBankLeftRightImagery</span></code></a>([filters, ...])</p></td>
 <td><p>Filter Bank Motor Imagery for left hand/right hand classification.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/moabb.paradigms.FilterBankMotorImagery.html#moabb.paradigms.FilterBankMotorImagery" title="moabb.paradigms.FilterBankMotorImagery"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FilterBankMotorImagery</span></code></a>([n_classes])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/moabb.paradigms.FilterBankMotorImagery.html#moabb.paradigms.FilterBankMotorImagery" title="moabb.paradigms.FilterBankMotorImagery"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FilterBankMotorImagery</span></code></a>([n_classes, filters, ...])</p></td>
 <td><p>Filter bank n-class motor imagery.</p></td>
 </tr>
 </tbody>
@@ -851,10 +851,7 @@ for ERP vs ERD paradigms.</p>
 <h3>P300 Paradigms<a class="headerlink" href="#p300-paradigms" title="Link to this heading">#</a></h3>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/moabb.paradigms.SinglePass.html#moabb.paradigms.SinglePass" title="moabb.paradigms.SinglePass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SinglePass</span></code></a>([fmin, fmax])</p></td>
-<td><p>Single Bandpass filter P300.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/moabb.paradigms.P300.html#moabb.paradigms.P300" title="moabb.paradigms.P300"><code class="xref py py-obj docutils literal notranslate"><span class="pre">P300</span></code></a>(**kwargs)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/moabb.paradigms.P300.html#moabb.paradigms.P300" title="moabb.paradigms.P300"><code class="xref py py-obj docutils literal notranslate"><span class="pre">P300</span></code></a>([fmin, fmax, events, tmin, tmax, ...])</p></td>
 <td><p>P300 for Target/NonTarget classification.</p></td>
 </tr>
 </tbody>
@@ -865,10 +862,10 @@ for ERP vs ERD paradigms.</p>
 <h3>SSVEP Paradigms<a class="headerlink" href="#ssvep-paradigms" title="Link to this heading">#</a></h3>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/moabb.paradigms.SSVEP.html#moabb.paradigms.SSVEP" title="moabb.paradigms.SSVEP"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SSVEP</span></code></a>([fmin, fmax])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/moabb.paradigms.SSVEP.html#moabb.paradigms.SSVEP" title="moabb.paradigms.SSVEP"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SSVEP</span></code></a>([fmin, fmax, filters, events, ...])</p></td>
 <td><p>Single bandpass filter SSVEP.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/moabb.paradigms.FilterBankSSVEP.html#moabb.paradigms.FilterBankSSVEP" title="moabb.paradigms.FilterBankSSVEP"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FilterBankSSVEP</span></code></a>([filters])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/moabb.paradigms.FilterBankSSVEP.html#moabb.paradigms.FilterBankSSVEP" title="moabb.paradigms.FilterBankSSVEP"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FilterBankSSVEP</span></code></a>([filters, events, ...])</p></td>
 <td><p>Filtered bank n-class SSVEP paradigm.</p></td>
 </tr>
 </tbody>
@@ -879,10 +876,10 @@ for ERP vs ERD paradigms.</p>
 <h3>c-VEP Paradigms<a class="headerlink" href="#c-vep-paradigms" title="Link to this heading">#</a></h3>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/moabb.paradigms.CVEP.html#moabb.paradigms.CVEP" title="moabb.paradigms.CVEP"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CVEP</span></code></a>([fmin, fmax])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/moabb.paradigms.CVEP.html#moabb.paradigms.CVEP" title="moabb.paradigms.CVEP"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CVEP</span></code></a>([fmin, fmax, filters, events, ...])</p></td>
 <td><p>Single bandpass c-VEP paradigm for epoch-level decoding.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/moabb.paradigms.FilterBankCVEP.html#moabb.paradigms.FilterBankCVEP" title="moabb.paradigms.FilterBankCVEP"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FilterBankCVEP</span></code></a>([filters])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/moabb.paradigms.FilterBankCVEP.html#moabb.paradigms.FilterBankCVEP" title="moabb.paradigms.FilterBankCVEP"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FilterBankCVEP</span></code></a>([filters, events, n_classes, ...])</p></td>
 <td><p>Filterbank c-VEP paradigm for epoch-level decoding.</p></td>
 </tr>
 </tbody>
@@ -920,12 +917,6 @@ for ERP vs ERD paradigms.</p>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/moabb.paradigms.motor_imagery.BaseMotorImagery.html#moabb.paradigms.motor_imagery.BaseMotorImagery" title="moabb.paradigms.motor_imagery.BaseMotorImagery"><code class="xref py py-obj docutils literal notranslate"><span class="pre">motor_imagery.BaseMotorImagery</span></code></a>([filters, ...])</p></td>
 <td><p>Base Motor imagery paradigm.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/moabb.paradigms.motor_imagery.SinglePass.html#moabb.paradigms.motor_imagery.SinglePass" title="moabb.paradigms.motor_imagery.SinglePass"><code class="xref py py-obj docutils literal notranslate"><span class="pre">motor_imagery.SinglePass</span></code></a>([fmin, fmax])</p></td>
-<td><p>Single Bandpass filter motor Imagery.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/moabb.paradigms.motor_imagery.FilterBank.html#moabb.paradigms.motor_imagery.FilterBank" title="moabb.paradigms.motor_imagery.FilterBank"><code class="xref py py-obj docutils literal notranslate"><span class="pre">motor_imagery.FilterBank</span></code></a>([filters])</p></td>
-<td><p>Filter Bank MI.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="generated/moabb.paradigms.p300.BaseP300.html#moabb.paradigms.p300.BaseP300" title="moabb.paradigms.p300.BaseP300"><code class="xref py py-obj docutils literal notranslate"><span class="pre">p300.BaseP300</span></code></a>([filters, events, tmin, tmax, ...])</p></td>
 <td><p>Base P300 paradigm.</p></td>

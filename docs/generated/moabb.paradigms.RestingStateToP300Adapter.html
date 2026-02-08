@@ -541,7 +541,6 @@
 <li class="toctree-l1"><a class="reference internal" href="moabb.paradigms.FilterBankMotorImagery.html">moabb.paradigms.FilterBankMotorImagery</a></li>
 </ul>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="moabb.paradigms.SinglePass.html">moabb.paradigms.SinglePass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moabb.paradigms.P300.html">moabb.paradigms.P300</a></li>
 </ul>
 <ul class="nav bd-sidenav">
@@ -561,8 +560,6 @@
 </ul>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="moabb.paradigms.motor_imagery.BaseMotorImagery.html">moabb.paradigms.motor_imagery.BaseMotorImagery</a></li>
-<li class="toctree-l1"><a class="reference internal" href="moabb.paradigms.motor_imagery.SinglePass.html">moabb.paradigms.motor_imagery.SinglePass</a></li>
-<li class="toctree-l1"><a class="reference internal" href="moabb.paradigms.motor_imagery.FilterBank.html">moabb.paradigms.motor_imagery.FilterBank</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moabb.paradigms.p300.BaseP300.html">moabb.paradigms.p300.BaseP300</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moabb.paradigms.ssvep.BaseSSVEP.html">moabb.paradigms.ssvep.BaseSSVEP</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moabb.paradigms.BaseFixedIntervalWindowsProcessing.html">moabb.paradigms.BaseFixedIntervalWindowsProcessing</a></li>
@@ -678,9 +675,9 @@
 <h1>moabb.paradigms.RestingStateToP300Adapter<a class="headerlink" href="#moabb-paradigms-restingstatetop300adapter" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="moabb.paradigms.RestingStateToP300Adapter">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.paradigms.</span></span><span class="sig-name descname"><span class="pre">RestingStateToP300Adapter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">35</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resample</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">128</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/paradigms/resting_state.py#L17-L95"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.paradigms.RestingStateToP300Adapter" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.paradigms.</span></span><span class="sig-name descname"><span class="pre">RestingStateToP300Adapter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">35</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">events</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">baseline</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resample</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">128</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_relabelling</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scorer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/paradigms/resting_state.py#L17-L96"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.paradigms.RestingStateToP300Adapter" title="Link to this definition">#</a></dt>
 <dd><p>Adapter to the P300 paradigm for resting state experiments.</p>
-<p>It implements a SinglePass processing as for P300, except that:
+<p>It implements a single bandpass processing as for P300, except that:
 - the name of the event is free (it is not enforced to Target/NonTarget as for P300)
 - the default values are different. In particular, the length of the epochs is larger.</p>
 <dl class="field-list simple">
@@ -688,31 +685,20 @@
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>fmin</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em> (</em><em>default 1</em><em>)</em>) – cutoff frequency (Hz) for the high pass filter</p></li>
 <li><p><strong>fmax</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em> (</em><em>default 35</em><em>)</em>) – cutoff frequency (Hz) for the low pass filter</p></li>
-<li><p><strong>events</strong> (<em>List</em><em> of </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> | </em><em>None</em><em> (</em><em>default None</em><em>)</em>) – event to use for epoching. If None, default to all events defined in
-the dataset.</p></li>
-<li><p><strong>tmin</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em> (</em><em>default 10s</em><em>)</em>) – Start time (in second) of the epoch, relative to the dataset specific
+<li><p><strong>tmin</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em> (</em><em>default 10</em><em>)</em>) – Start time (in second) of the epoch, relative to the dataset specific
 task interval e.g. tmin = 1 would mean the epoch will start 1 second
 after the beginning of the task as defined by the dataset.</p></li>
-<li><p><strong>tmax</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em> | </em><em>None</em><em>, </em><em>(</em><em>default 50s</em><em>)</em>) – End time (in second) of the epoch, relative to the beginning of the
+<li><p><strong>tmax</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em> | </em><em>None</em><em>, </em><em>(</em><em>default 50</em><em>)</em>) – End time (in second) of the epoch, relative to the beginning of the
 dataset specific task interval. tmax = 5 would mean the epoch will end
 5 second after the beginning of the task as defined in the dataset. If
 None, use the dataset value.</p></li>
 <li><p><strong>resample</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em> | </em><em>None</em><em> (</em><em>default 128</em><em>)</em>) – If not None, resample the eeg data with the sampling rate provided.</p></li>
-<li><p><strong>baseline</strong> (<em>None</em><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><em>tuple</em></a><em> of </em><em>length 2</em>) – The time interval to consider as “baseline” when applying baseline
-correction. If None, do not apply baseline correction.
-If a tuple (a, b), the interval is between a and b (in seconds),
-including the endpoints.
-Correction is applied by computing the mean of the baseline period
-and subtracting it from the data (see mne.Epochs)</p></li>
-<li><p><strong>channels</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> | </em><em>None</em><em> (</em><em>default None</em><em>)</em>) – list of channel to select. If None, use all EEG channels available in
-the dataset.</p></li>
-<li><p><strong>scorer</strong> (<em>sklearn-compatible string</em><em> or </em><em>a compatible sklearn scorer</em><em> | </em><em>None</em><em> (</em><em>default None</em><em>)</em>) – If None, and n_classes==2 use the roc_auc, else use accuracy.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="moabb.paradigms.RestingStateToP300Adapter.is_valid">
-<span class="sig-name descname"><span class="pre">is_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/paradigms/resting_state.py#L74-L83"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.paradigms.RestingStateToP300Adapter.is_valid" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">is_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/paradigms/resting_state.py#L75-L84"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.paradigms.RestingStateToP300Adapter.is_valid" title="Link to this definition">#</a></dt>
 <dd><p>Verify the dataset is compatible with the paradigm.</p>
 <p>This method is called to verify dataset is compatible with the
 paradigm.</p>

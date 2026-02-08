@@ -607,39 +607,10 @@ coefficients for continuous paradigms.</p>
         requires all imagery sorts to be within the events list.
 
     fmin: float (default 8)
-        cutoff frequency (Hz) for the high pass filter
+        cutoff frequency (Hz) for the high pass filter.
 
     fmax: float (default 32)
-        cutoff frequency (Hz) for the low pass filter
-
-    tmin: float (default 0.0)
-        Start time (in second) of the epoch, relative to the dataset specific
-        task interval e.g. tmin = 1 would mean the epoch will start 1 second
-        after the beginning of the task as defined by the dataset.
-
-    tmax: float | None, (default None)
-        End time (in second) of the epoch, relative to the beginning of the
-        dataset specific task interval. tmax = 5 would mean the epoch will end
-        5 second after the beginning of the task as defined in the dataset. If
-        None, use the dataset value.
-
-    baseline: None | tuple of length 2
-            The time interval to consider as “baseline” when applying baseline
-            correction. If None, do not apply baseline correction.
-            If a tuple (a, b), the interval is between a and b (in seconds),
-            including the endpoints.
-            Correction is applied by computing the mean of the baseline period
-            and subtracting it from the data (see mne.Epochs)
-
-    channels: list of str | None (default None)
-        list of channel to select. If None, use all EEG channels available in
-        the dataset.
-
-    resample: float | None (default None)
-        If not None, resample the eeg data with the sampling rate provided.
-
-    scorer: sklearn-compatible string or a compatible sklearn scorer | None (default None)
-        If None, and n_classes==2 use the roc_auc, else use accuracy.
+        cutoff frequency (Hz) for the low pass filter.
 </pre></div>
 </div>
 <p>The function <cite>get_data</cite> allow you to access preprocessed data from a dataset.
@@ -831,6 +802,15 @@ restricted to left- and right-hand events.</p>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Motor Imagery for left hand/right hand classification.
 
     Metric is &#39;roc_auc&#39; by default
+
+    Parameters
+    ----------
+
+    fmin: float (default 8)
+        cutoff frequency (Hz) for the high pass filter.
+
+    fmax: float (default 32)
+        cutoff frequency (Hz) for the low pass filter.
 </pre></div>
 </div>
 <p>The compatible dataset list is a subset of motor imagery dataset that
@@ -852,8 +832,8 @@ corresponding to left- and right-hand motor imagination.</p>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[&#39;left_hand&#39; &#39;right_hand&#39;]
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 20.498 seconds)</p>
-<p><strong>Estimated memory usage:</strong>  877 MB</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 19.884 seconds)</p>
+<p><strong>Estimated memory usage:</strong>  968 MB</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-data-management-and-configuration-plot-explore-paradigm-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/f8c9f4692c841c569c6639f1d3e66bf0/plot_explore_paradigm.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_explore_paradigm.ipynb</span></code></a></p>

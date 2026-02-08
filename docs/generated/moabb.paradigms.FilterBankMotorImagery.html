@@ -77,7 +77,7 @@
     <link rel="canonical" href="https://moabb.neurotechx.com/docs/generated/moabb.paradigms.FilterBankMotorImagery.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="moabb.paradigms.SinglePass" href="moabb.paradigms.SinglePass.html" />
+    <link rel="next" title="moabb.paradigms.P300" href="moabb.paradigms.P300.html" />
     <link rel="prev" title="moabb.paradigms.FilterBankLeftRightImagery" href="moabb.paradigms.FilterBankLeftRightImagery.html" />
     <link rel="canonical" href="https://moabb.neurotechx.com/docs/generated/moabb.paradigms.FilterBankMotorImagery.html" />
     
@@ -541,7 +541,6 @@
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">moabb.paradigms.FilterBankMotorImagery</a></li>
 </ul>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="moabb.paradigms.SinglePass.html">moabb.paradigms.SinglePass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moabb.paradigms.P300.html">moabb.paradigms.P300</a></li>
 </ul>
 <ul class="nav bd-sidenav">
@@ -561,8 +560,6 @@
 </ul>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="moabb.paradigms.motor_imagery.BaseMotorImagery.html">moabb.paradigms.motor_imagery.BaseMotorImagery</a></li>
-<li class="toctree-l1"><a class="reference internal" href="moabb.paradigms.motor_imagery.SinglePass.html">moabb.paradigms.motor_imagery.SinglePass</a></li>
-<li class="toctree-l1"><a class="reference internal" href="moabb.paradigms.motor_imagery.FilterBank.html">moabb.paradigms.motor_imagery.FilterBank</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moabb.paradigms.p300.BaseP300.html">moabb.paradigms.p300.BaseP300</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moabb.paradigms.ssvep.BaseSSVEP.html">moabb.paradigms.ssvep.BaseSSVEP</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moabb.paradigms.BaseFixedIntervalWindowsProcessing.html">moabb.paradigms.BaseFixedIntervalWindowsProcessing</a></li>
@@ -678,7 +675,7 @@
 <h1>moabb.paradigms.FilterBankMotorImagery<a class="headerlink" href="#moabb-paradigms-filterbankmotorimagery" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="moabb.paradigms.FilterBankMotorImagery">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.paradigms.</span></span><span class="sig-name descname"><span class="pre">FilterBankMotorImagery</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/paradigms/motor_imagery.py#L222-L303"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.paradigms.FilterBankMotorImagery" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.paradigms.</span></span><span class="sig-name descname"><span class="pre">FilterBankMotorImagery</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">([8,</span> <span class="pre">12],</span> <span class="pre">[12,</span> <span class="pre">16],</span> <span class="pre">[16,</span> <span class="pre">20],</span> <span class="pre">[20,</span> <span class="pre">24],</span> <span class="pre">[24,</span> <span class="pre">28],</span> <span class="pre">[28,</span> <span class="pre">32])</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">events</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">baseline</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resample</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scorer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/paradigms/motor_imagery.py#L288-L389"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.paradigms.FilterBankMotorImagery" title="Link to this definition">#</a></dt>
 <dd><p>Filter bank n-class motor imagery.</p>
 <p>By default, metric is ‘roc-auc’ if 2 classes and ‘accuracy’ if more</p>
 <dl class="field-list simple">
@@ -699,7 +696,7 @@ requires all imagery sorts to be within the events list.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="moabb.paradigms.FilterBankMotorImagery.is_valid">
-<span class="sig-name descname"><span class="pre">is_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/paradigms/motor_imagery.py#L249-L260"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.paradigms.FilterBankMotorImagery.is_valid" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">is_valid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/paradigms/motor_imagery.py#L335-L346"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.paradigms.FilterBankMotorImagery.is_valid" title="Link to this definition">#</a></dt>
 <dd><p>Verify the dataset is compatible with the paradigm.</p>
 <p>This method is called to verify dataset is compatible with the
 paradigm.</p>
@@ -752,11 +749,11 @@ sklearn scorer.</p>
       </div>
     </a>
     <a class="right-next"
-       href="moabb.paradigms.SinglePass.html"
+       href="moabb.paradigms.P300.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">moabb.paradigms.SinglePass</p>
+        <p class="prev-next-title">moabb.paradigms.P300</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
