@@ -429,7 +429,10 @@
 <nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+  <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../plot_pseudoonline.html">Pseudo-Online Motor Imagery with Sliding Window</a></li>
+</ul>
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Getting Started!</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="tutorial_0_plot_getting_started.html">Tutorial 0: Getting Started</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tutorial_1_simple_example_motor_imagery.html">Tutorial 1: Simple Motor Imagery</a></li>
@@ -706,109 +709,127 @@ The rest of the code follows the steps described in the previous tutorials.</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|                                              | 0.00/2.77M [00:00&lt;?, ?B/s]
-  0%|▏                                    | 11.3k/2.77M [00:00&lt;00:29, 94.8kB/s]
-  1%|▌                                     | 39.9k/2.77M [00:00&lt;00:16, 161kB/s]
-  3%|█▏                                    | 82.9k/2.77M [00:00&lt;00:11, 226kB/s]
-  7%|██▊                                    | 198k/2.77M [00:00&lt;00:05, 456kB/s]
- 16%|██████                                 | 430k/2.77M [00:00&lt;00:02, 880kB/s]
- 32%|████████████▏                         | 888k/2.77M [00:00&lt;00:01, 1.67MB/s]
- 65%|███████████████████████▉             | 1.79M/2.77M [00:00&lt;00:00, 3.18MB/s]
+  0%|▏                                    | 12.3k/2.77M [00:00&lt;00:31, 86.5kB/s]
+  1%|▌                                     | 39.9k/2.77M [00:00&lt;00:15, 170kB/s]
+  4%|█▌                                     | 110k/2.77M [00:00&lt;00:07, 362kB/s]
+  9%|███▍                                   | 246k/2.77M [00:00&lt;00:03, 683kB/s]
+ 19%|███████                               | 518k/2.77M [00:00&lt;00:01, 1.29MB/s]
+ 38%|██████████████▏                      | 1.06M/2.77M [00:00&lt;00:00, 2.45MB/s]
+ 77%|████████████████████████████▌        | 2.14M/2.77M [00:00&lt;00:00, 4.74MB/s]
   0%|                                              | 0.00/2.77M [00:00&lt;?, ?B/s]
-100%|█████████████████████████████████████| 2.77M/2.77M [00:00&lt;00:00, 8.65GB/s]
+100%|█████████████████████████████████████| 2.77M/2.77M [00:00&lt;00:00, 13.6GB/s]
 
 ExampleDataset-WithinSession:   0%|          | 0/3 [00:00&lt;?, ?it/s]
-ExampleDataset-WithinSession:  33%|███▎      | 1/3 [00:06&lt;00:12,  6.37s/it]
+ExampleDataset-WithinSession:  33%|███▎      | 1/3 [00:06&lt;00:12,  6.31s/it]
 
   0%|                                              | 0.00/2.77M [00:00&lt;?, ?B/s]
 
-  0%|                                     | 1.02k/2.77M [00:00&lt;05:36, 8.22kB/s]
+  0%|                                     | 1.02k/2.77M [00:00&lt;04:38, 9.92kB/s]
 
-  1%|▌                                     | 39.9k/2.77M [00:00&lt;00:16, 170kB/s]
+  1%|▏                                    | 14.3k/2.77M [00:00&lt;00:36, 74.8kB/s]
 
-  3%|█▎                                    | 94.2k/2.77M [00:00&lt;00:10, 250kB/s]
+  2%|▌                                     | 45.1k/2.77M [00:00&lt;00:16, 164kB/s]
 
-  5%|█▊                                     | 127k/2.77M [00:00&lt;00:10, 254kB/s]
+  4%|█▌                                     | 106k/2.77M [00:00&lt;00:08, 311kB/s]
 
-  8%|██▉                                    | 211k/2.77M [00:00&lt;00:06, 371kB/s]
+  6%|██▏                                    | 155k/2.77M [00:00&lt;00:07, 349kB/s]
 
- 11%|████▏                                  | 295k/2.77M [00:00&lt;00:05, 441kB/s]
+  9%|███▍                                   | 245k/2.77M [00:00&lt;00:05, 496kB/s]
 
- 14%|█████▌                                 | 392k/2.77M [00:01&lt;00:04, 515kB/s]
+ 12%|████▌                                  | 323k/2.77M [00:00&lt;00:04, 554kB/s]
 
- 17%|██████▋                                | 470k/2.77M [00:01&lt;00:04, 520kB/s]
+ 14%|█████▌                                 | 393k/2.77M [00:00&lt;00:04, 572kB/s]
 
- 22%|████████▋                              | 616k/2.77M [00:01&lt;00:03, 670kB/s]
+ 19%|███████▍                               | 524k/2.77M [00:01&lt;00:03, 744kB/s]
 
- 27%|██████████▌                            | 748k/2.77M [00:01&lt;00:02, 739kB/s]
+ 22%|████████▌                              | 605k/2.77M [00:01&lt;00:02, 731kB/s]
 
- 31%|███████████▉                           | 846k/2.77M [00:01&lt;00:02, 716kB/s]
+ 27%|██████████▍                            | 736k/2.77M [00:01&lt;00:02, 853kB/s]
 
- 34%|█████████████                          | 928k/2.77M [00:01&lt;00:02, 668kB/s]
+ 31%|████████████                           | 851k/2.77M [00:01&lt;00:02, 894kB/s]
 
- 37%|██████████████                        | 1.03M/2.77M [00:01&lt;00:02, 669kB/s]
+ 34%|█████████████▎                         | 941k/2.77M [00:01&lt;00:02, 858kB/s]
 
- 41%|███████████████▍                      | 1.12M/2.77M [00:02&lt;00:02, 669kB/s]
+ 38%|██████████████▌                       | 1.06M/2.77M [00:01&lt;00:01, 920kB/s]
 
- 45%|█████████████████                     | 1.24M/2.77M [00:02&lt;00:02, 701kB/s]
+ 42%|███████████████▉                      | 1.16M/2.77M [00:01&lt;00:01, 881kB/s]
 
- 48%|██████████████████▏                   | 1.32M/2.77M [00:02&lt;00:02, 658kB/s]
+ 46%|█████████████████▌                    | 1.28M/2.77M [00:01&lt;00:01, 927kB/s]
 
- 52%|███████████████████▉                  | 1.45M/2.77M [00:02&lt;00:01, 730kB/s]
+ 51%|███████████████████▎                  | 1.41M/2.77M [00:01&lt;00:01, 985kB/s]
 
- 55%|█████████████████████                 | 1.53M/2.77M [00:02&lt;00:01, 679kB/s]
+ 54%|████████████████████▋                 | 1.51M/2.77M [00:02&lt;00:01, 945kB/s]
 
- 61%|███████████████████████               | 1.68M/2.77M [00:02&lt;00:01, 775kB/s]
+ 58%|██████████████████████                | 1.60M/2.77M [00:02&lt;00:01, 910kB/s]
 
- 64%|████████████████████████▏             | 1.76M/2.77M [00:02&lt;00:01, 711kB/s]
+ 64%|███████████████████████▊             | 1.78M/2.77M [00:02&lt;00:00, 1.10MB/s]
 
- 67%|█████████████████████████▌            | 1.86M/2.77M [00:03&lt;00:01, 698kB/s]
+ 72%|██████████████████████████▍          | 1.98M/2.77M [00:02&lt;00:00, 1.28MB/s]
 
- 70%|██████████████████████████▌           | 1.93M/2.77M [00:03&lt;00:01, 633kB/s]
+ 79%|█████████████████████████████        | 2.17M/2.77M [00:02&lt;00:00, 1.40MB/s]
 
- 73%|███████████████████████████▊          | 2.02M/2.77M [00:03&lt;00:01, 635kB/s]
+ 84%|██████████████████████████████▉      | 2.32M/2.77M [00:02&lt;00:00, 1.34MB/s]
 
- 78%|█████████████████████████████▌        | 2.15M/2.77M [00:03&lt;00:00, 713kB/s]
+ 89%|████████████████████████████████▊    | 2.45M/2.77M [00:02&lt;00:00, 1.28MB/s]
 
- 83%|███████████████████████████████▌      | 2.30M/2.77M [00:03&lt;00:00, 798kB/s]
+ 93%|██████████████████████████████████▌  | 2.58M/2.77M [00:02&lt;00:00, 1.23MB/s]
 
- 86%|████████████████████████████████▋     | 2.38M/2.77M [00:03&lt;00:00, 727kB/s]
-
- 89%|█████████████████████████████████▊    | 2.46M/2.77M [00:03&lt;00:00, 676kB/s]
-
- 93%|███████████████████████████████████▍  | 2.58M/2.77M [00:04&lt;00:00, 709kB/s]
-
- 96%|████████████████████████████████████▌ | 2.66M/2.77M [00:04&lt;00:00, 664kB/s]
+ 98%|████████████████████████████████████▏| 2.70M/2.77M [00:03&lt;00:00, 1.18MB/s]
 
   0%|                                              | 0.00/2.77M [00:00&lt;?, ?B/s]
-100%|█████████████████████████████████████| 2.77M/2.77M [00:00&lt;00:00, 13.3GB/s]
+100%|█████████████████████████████████████| 2.77M/2.77M [00:00&lt;00:00, 13.7GB/s]
 
-ExampleDataset-WithinSession:  67%|██████▋   | 2/3 [00:17&lt;00:09,  9.15s/it]
+ExampleDataset-WithinSession:  67%|██████▋   | 2/3 [00:16&lt;00:08,  8.40s/it]
 
   0%|                                              | 0.00/2.77M [00:00&lt;?, ?B/s]
 
-  0%|▏                                    | 11.3k/2.77M [00:00&lt;00:32, 86.0kB/s]
+  1%|▏                                     | 14.3k/2.77M [00:00&lt;00:26, 105kB/s]
 
-  1%|▌                                     | 39.9k/2.77M [00:00&lt;00:19, 136kB/s]
+  2%|▋                                     | 50.2k/2.77M [00:00&lt;00:12, 217kB/s]
 
-  3%|█▎                                    | 95.2k/2.77M [00:00&lt;00:09, 267kB/s]
+  4%|█▋                                     | 120k/2.77M [00:00&lt;00:06, 386kB/s]
 
-  7%|██▊                                    | 202k/2.77M [00:00&lt;00:05, 474kB/s]
+  7%|██▉                                    | 205k/2.77M [00:00&lt;00:06, 425kB/s]
 
- 15%|█████▉                                 | 425k/2.77M [00:00&lt;00:02, 883kB/s]
+ 10%|███▊                                   | 268k/2.77M [00:00&lt;00:05, 463kB/s]
 
- 31%|███████████▉                          | 866k/2.77M [00:00&lt;00:01, 1.66MB/s]
+ 14%|█████▍                                 | 387k/2.77M [00:00&lt;00:03, 635kB/s]
 
- 63%|███████████████████████▍             | 1.75M/2.77M [00:00&lt;00:00, 3.18MB/s]
+ 18%|███████▏                               | 510k/2.77M [00:00&lt;00:02, 762kB/s]
+
+ 30%|███████████▍                          | 837k/2.77M [00:01&lt;00:01, 1.38MB/s]
+
+ 35%|█████████████▍                        | 980k/2.77M [00:01&lt;00:01, 1.33MB/s]
+
+ 40%|███████████████▎                      | 1.12M/2.77M [00:01&lt;00:01, 992kB/s]
+
+ 44%|████████████████▉                     | 1.23M/2.77M [00:01&lt;00:01, 986kB/s]
+
+ 48%|██████████████████▍                   | 1.34M/2.77M [00:01&lt;00:01, 973kB/s]
+
+ 52%|███████████████████▊                  | 1.44M/2.77M [00:01&lt;00:01, 952kB/s]
+
+ 60%|██████████████████████▏              | 1.65M/2.77M [00:01&lt;00:00, 1.20MB/s]
+
+ 66%|████████████████████████▎            | 1.82M/2.77M [00:01&lt;00:00, 1.26MB/s]
+
+ 76%|████████████████████████████▎        | 2.11M/2.77M [00:02&lt;00:00, 1.63MB/s]
+
+ 82%|██████████████████████████████▌      | 2.28M/2.77M [00:02&lt;00:00, 1.57MB/s]
+
+ 88%|████████████████████████████████▋    | 2.44M/2.77M [00:02&lt;00:00, 1.51MB/s]
+
+ 95%|███████████████████████████████████▎ | 2.64M/2.77M [00:02&lt;00:00, 1.56MB/s]
 
   0%|                                              | 0.00/2.77M [00:00&lt;?, ?B/s]
-100%|█████████████████████████████████████| 2.77M/2.77M [00:00&lt;00:00, 8.69GB/s]
+100%|█████████████████████████████████████| 2.77M/2.77M [00:00&lt;00:00, 6.95GB/s]
 
-ExampleDataset-WithinSession: 100%|██████████| 3/3 [00:25&lt;00:00,  8.57s/it]
-ExampleDataset-WithinSession: 100%|██████████| 3/3 [00:25&lt;00:00,  8.45s/it]
+ExampleDataset-WithinSession: 100%|██████████| 3/3 [00:25&lt;00:00,  8.80s/it]
+ExampleDataset-WithinSession: 100%|██████████| 3/3 [00:25&lt;00:00,  8.48s/it]
    score      time  ...  pipeline                  codecarbon_task_name
-0    1.0  0.017227  ...       MDM  da8da0ca-6e19-48d5-aa2f-9b75acb3153a
-1    1.0  0.016853  ...       MDM  172aea49-6240-4a85-99a6-4a2548c2c0bb
-2    1.0  0.017097  ...       MDM  15ff4036-590b-4ba3-9a6c-8e31be7aa8bb
+0    1.0  0.014247  ...       MDM  726b9a94-b828-4d19-963c-7cf84c4e93f6
+1    1.0  0.014091  ...       MDM  e01f84ab-2c0e-49fe-8ef6-aa5d36a07815
+2    1.0  0.014077  ...       MDM  209e2807-15a4-4d7f-9c9d-9cee10e6e6a7
 
 [3 rows x 11 columns]
 </pre></div>
@@ -820,7 +841,7 @@ ExampleDataset-WithinSession: 100%|██████████| 3/3 [00:25&lt
 your data on public server (like Zenodo or Figshare) and signal that you
 want to add your dataset to MOABB in the  <a class="reference external" href="https://github.com/NeuroTechX/moabb/issues/1">dedicated issue</a>.
 You could then follow the instructions on <a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/master/CONTRIBUTING.md">how to contribute</a></p>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 28.124 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 27.830 seconds)</p>
 <p><strong>Estimated memory usage:</strong>  317 MB</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-tutorials-tutorial-4-adding-a-dataset-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
