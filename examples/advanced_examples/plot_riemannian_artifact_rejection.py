@@ -716,6 +716,11 @@ def riemannian_potato_rejection(epochs):
 
     Computes covariance matrices for all channels, fits a Potato,
     and drops epochs whose geometric z-score exceeds the threshold.
+
+    Note: The Potato is fit and evaluated on the same data. In a rigorous
+    benchmark you would fit only on training folds to avoid information
+    leakage. Here the Potato is an unsupervised outlier detector, so the
+    leakage is minimal and acceptable for tutorial purposes.
     """
     data = epochs.get_data()
     n_before = len(data)
@@ -728,9 +733,12 @@ def riemannian_potato_rejection(epochs):
     n_rejected = n_before - is_clean.sum()
     print(f"  RP: rejected {n_rejected}/{n_before} epochs")
 
-    if is_clean.sum() > 0:
-        return epochs[is_clean]
-    return epochs
+    if is_clean.sum() == 0:
+        raise ValueError(
+            f"All {n_before} epochs rejected by Riemannian Potato — "
+            "consider raising the threshold or checking data quality."
+        )
+    return epochs[is_clean]
 
 
 def riemannian_potato_field_rejection(epochs):
@@ -741,6 +749,11 @@ def riemannian_potato_field_rejection(epochs):
     metric (e.g., Riemannian or Euclidean) as specified in the config.
     Per-potato p-values are combined into a single SQI using Fisher's
     method, and epochs below the significance threshold are rejected.
+
+    Note: Each potato is fit and evaluated on the same data. In a rigorous
+    benchmark you would fit only on training folds to avoid information
+    leakage. Here the potatoes are unsupervised outlier detectors, so the
+    leakage is minimal and acceptable for tutorial purposes.
     """
     n_before = len(epochs)
     available_chs = set(epochs.ch_names)
@@ -776,9 +789,12 @@ def riemannian_potato_field_rejection(epochs):
     n_rejected = n_before - is_clean.sum()
     print(f"  RPF: rejected {n_rejected}/{n_before} epochs")
 
-    if is_clean.sum() > 0:
-        return epochs[is_clean]
-    return epochs
+    if is_clean.sum() == 0:
+        raise ValueError(
+            f"All {n_before} epochs rejected by Riemannian Potato Field — "
+            "consider raising the threshold or checking data quality."
+        )
+    return epochs[is_clean]
 
 
 # Build pipelines with artifact rejection inserted
