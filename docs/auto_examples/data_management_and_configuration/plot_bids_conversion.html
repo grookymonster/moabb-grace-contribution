@@ -650,20 +650,20 @@ standard and can vary from one dataset to another.</p>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>After conversion:
 └──MNE-BIDS-alexandre-motor-imagery
-   ├──dataset_description.json
-   ├──participants.json
-   ├──participants.tsv
+   ├──sub-1
+   │  ├──ses-0
+   │  │  ├──eeg
+   │  │  │  ├──sub-1_ses-0_task-imagery_run-0_desc-846a5ffe84a46e90b4b0f355596dfe11_events.tsv
+   │  │  │  ├──sub-1_ses-0_task-imagery_run-0_desc-846a5ffe84a46e90b4b0f355596dfe11_events.json
+   │  │  │  ├──sub-1_ses-0_task-imagery_run-0_desc-846a5ffe84a46e90b4b0f355596dfe11_eeg.json
+   │  │  │  ├──sub-1_ses-0_task-imagery_run-0_desc-846a5ffe84a46e90b4b0f355596dfe11_channels.tsv
+   │  │  │  └──sub-1_ses-0_task-imagery_run-0_desc-846a5ffe84a46e90b4b0f355596dfe11_eeg.edf
+   │  │  └──sub-1_ses-0_scans.tsv
+   │  └──sub-1_desc-846a5ffe84a46e90b4b0f355596dfe11_lockfile.json
    ├──README
-   └──sub-1
-      ├──sub-1_desc-846a5ffe84a46e90b4b0f355596dfe11_lockfile.json
-      └──ses-0
-         ├──eeg
-         │  ├──sub-1_ses-0_task-imagery_run-0_desc-846a5ffe84a46e90b4b0f355596dfe11_events.json
-         │  ├──sub-1_ses-0_task-imagery_run-0_desc-846a5ffe84a46e90b4b0f355596dfe11_events.tsv
-         │  ├──sub-1_ses-0_task-imagery_run-0_desc-846a5ffe84a46e90b4b0f355596dfe11_eeg.edf
-         │  ├──sub-1_ses-0_task-imagery_run-0_desc-846a5ffe84a46e90b4b0f355596dfe11_eeg.json
-         │  └──sub-1_ses-0_task-imagery_run-0_desc-846a5ffe84a46e90b4b0f355596dfe11_channels.tsv
-         └──sub-1_ses-0_scans.tsv
+   ├──participants.tsv
+   ├──dataset_description.json
+   └──participants.json
 </pre></div>
 </div>
 <p>In the BIDS version of our dataset, the raw files are saved in EDF.
@@ -713,7 +713,7 @@ Université de Grenoble).
 <a class="reference external" href="https://tel.archives-ouvertes.fr/tel-01196752">https://tel.archives-ouvertes.fr/tel-01196752</a></p>
 </aside>
 </aside>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 1.917 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 2.483 seconds)</p>
 <p><strong>Estimated memory usage:</strong>  317 MB</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-data-management-and-configuration-plot-bids-conversion-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
