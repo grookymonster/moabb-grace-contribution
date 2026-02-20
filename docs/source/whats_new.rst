@@ -19,6 +19,7 @@ Version 1.5  (Source - GitHub)
 
 Enhancements
 ~~~~~~~~~~~~
+- Separate stable and development documentation: stable docs now deploy from ``master`` to ``moabb.neurotechx.com/docs/`` and dev docs deploy from ``develop`` to ``moabb.neurotechx.com/docs/dev/``. A version switcher is added to the navbar (:gh:`984` by `Bruno Aristimunha`_)
 - Implementation of Pseudo-Online framework (:gh:`641` by `Igor Carrara`_ and `Bruno Aristimunha`_)
 - Introduce a new logo for the MOABB library (:gh:`858` by `Pierre Guetschel`_ and community)
 - Better verbosity control for initialization of the library (:gh:`850` by `Bruno Aristimunha`_)
