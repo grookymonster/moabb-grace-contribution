@@ -1,12 +1,12 @@
 [
-  {
-    "name": "stable",
-    "version": "stable",
-    "url": "https://moabb.neurotechx.com/docs/"
-  },
-  {
-    "name": "dev",
-    "version": "dev",
-    "url": "https://moabb.neurotechx.com/docs/dev/"
-  }
+    {
+        "name": "stable",
+        "version": "stable",
+        "url": "https://moabb.neurotechx.com/docs/"
+    },
+    {
+        "name": "dev",
+        "version": "dev",
+        "url": "https://moabb.neurotechx.com/docs/dev/"
+    }
 ]
