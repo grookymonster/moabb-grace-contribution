@@ -32,10 +32,13 @@ year = datetime.now().year
 copyright = f"2018-{year} MOABB contributors"
 author = "Alexandre Barachant, Vinay Jayaram, Sylvain Chevallier"
 
+# Check if this is a dev/nightly build (set to "1" by CI on the develop branch)
+_is_dev_build = bool(int(os.environ.get("BUILD_DEV_HTML", "0")))
+
 # The short X.Y version
 version = moabb.__version__
 # The full version, including alpha/beta/rc tags
-release = f"{moabb.__version__}-dev"
+release = f"{version}.dev0" if _is_dev_build else version
 
 
 # -- General configuration ---------------------------------------------------
@@ -148,7 +151,8 @@ def linkcode_resolve(domain, info):  # noqa: C901
     #     kind = "develop"
     # else:
     #     kind = "master"
-    return f"{repo}/blob/develop/moabb/{fn}{linespec}"
+    kind = "develop" if _is_dev_build else "master"
+    return f"{repo}/blob/{kind}/moabb/{fn}{linespec}"
 
 
 # -- Path setup --------------------------------------------------------------
@@ -221,7 +225,7 @@ pygments_style = "sphinx"
 
 
 html_theme = "pydata_sphinx_theme"
-switcher_version_match = "dev" if release.endswith("dev0") else version
+switcher_version_match = "dev" if _is_dev_build else "stable"
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
@@ -246,7 +250,11 @@ html_theme_options = {
     "navigation_depth": -1,
     "show_toc_level": 1,
     "nosidebar": True,
-    "navbar_end": ["theme-switcher", "navbar-icon-links"],
+    "switcher": {
+        "json_url": "https://moabb.neurotechx.com/docs/switcher.json",
+        "version_match": switcher_version_match,
+    },
+    "navbar_end": ["version-switcher", "theme-switcher", "navbar-icon-links"],
     "announcement": (
         "<strong>Using MOABB in academic work?</strong> "
         "<a class='moabb-announcement-cta' href='cite.html'>Cite MOABB</a> "
@@ -291,7 +299,11 @@ html_logo = "_static/moabb_logo.svg"
 html_static_path = ["_static"]
 
 # Base URL for sitemap generation (required by sphinx_sitemap)
-html_baseurl = "https://moabb.neurotechx.com/docs/"
+html_baseurl = (
+    "https://moabb.neurotechx.com/docs/dev/"
+    if _is_dev_build
+    else "https://moabb.neurotechx.com/docs/"
+)
 
 # Sitemap configuration
 sitemap_url_scheme = "{link}"
@@ -333,7 +345,7 @@ html_context = {
     "show_toc_level": 1,
     "github_user": "neurotechx",
     "github_repo": "moabb",
-    "github_version": "develop",
+    "github_version": "develop" if _is_dev_build else "master",
     "doc_path": "docs",
     # Colab launcher for Sphinx-Gallery examples (see _templates/sg_launcher_links.html)
     "colab_repo": "NeuroTechX/moabb",

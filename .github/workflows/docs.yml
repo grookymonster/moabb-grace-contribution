@@ -161,6 +161,8 @@ jobs:
           # Disable parallel builds when cache is cold to avoid Zenodo rate limiting
           SPHINX_GALLERY_PARALLEL: ${{ steps.cache-mne_data.outputs.cache-matched-key != '' }}
           SPHINX_JOBS: ${{ steps.cache-mne_data.outputs.cache-matched-key != '' && 'auto' || '1' }}
+          # Signal whether this is a dev (develop branch) or stable (master) build
+          BUILD_DEV_HTML: ${{ github.ref == 'refs/heads/develop' && '1' || '0' }}
         run: |
           echo "Cache matched key: ${{ steps.cache-mne_data.outputs.cache-matched-key }}"
           echo "Parallel gallery builds: $SPHINX_GALLERY_PARALLEL"
@@ -199,7 +201,7 @@ jobs:
           name: DocumentationHTML
           path: docs/build/html/
 
-  deploy_neurotechx:
+  deploy_neurotechx_dev:
     if: ${{ github.ref == 'refs/heads/develop' }}
     needs: build_docs
     runs-on: ${{ matrix.os }}
@@ -222,7 +224,41 @@ jobs:
         if: steps.cache-docs.outputs.cache-hit != 'true'
         run: exit 1
 
-      - name: Deploy Neurotechx Subpage
+      - name: Deploy Neurotechx Dev Subpage
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          external_repository: NeuroTechX/moabb.github.io
+          destination_dir: docs/dev/
+          publish_branch: master
+          publish_dir: ./docs/build/html
+          cname: moabb.neurotechx.com/
+
+  deploy_neurotechx_stable:
+    if: ${{ github.ref == 'refs/heads/master' }}
+    needs: build_docs
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest ]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Restore cached docs build
+        id: cache-docs
+        uses: actions/cache/restore@v3
+        with:
+          key: docs-build-${{ github.run_id }}-${{ github.run_attempt }}
+          path: docs/build
+
+      - name: Check cache hit
+        if: steps.cache-docs.outputs.cache-hit != 'true'
+        run: exit 1
+
+      - name: Deploy Neurotechx Stable Subpage
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -233,7 +269,7 @@ jobs:
           publish_dir: ./docs/build/html
           cname: moabb.neurotechx.com/
 
-  deploy_gh_pages:
+  deploy_gh_pages_dev:
     if: ${{ github.ref == 'refs/heads/develop' }}
     needs: build_docs
     runs-on: ${{ matrix.os }}
@@ -256,7 +292,39 @@ jobs:
         if: steps.cache-docs.outputs.cache-hit != 'true'
         run: exit 1
 
-      - name: Deploy gh-pages
+      - name: Deploy gh-pages dev
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          deploy_key: ${{ secrets.MOABB_DEPLOY_KEY_NEW }}
+          destination_dir: docs/dev/
+          publish_branch: gh-pages
+          publish_dir: ./docs/build/html
+
+  deploy_gh_pages_stable:
+    if: ${{ github.ref == 'refs/heads/master' }}
+    needs: build_docs
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest ]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Restore cached docs build
+        id: cache-docs
+        uses: actions/cache/restore@v3
+        with:
+          key: docs-build-${{ github.run_id }}-${{ github.run_attempt }}
+          path: docs/build
+
+      - name: Check cache hit
+        if: steps.cache-docs.outputs.cache-hit != 'true'
+        run: exit 1
+
+      - name: Deploy gh-pages stable
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -264,4 +332,3 @@ jobs:
           destination_dir: docs/
           publish_branch: gh-pages
           publish_dir: ./docs/build/html
-          cname: neurotechx.github.io/moabb/
