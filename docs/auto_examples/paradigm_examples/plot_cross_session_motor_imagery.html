@@ -634,15 +634,15 @@ be overwritten if necessary.</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>BNCI2014-001-CrossSession:   0%|          | 0/2 [00:00&lt;?, ?it/s]
-BNCI2014-001-CrossSession:  50%|█████     | 1/2 [00:14&lt;00:14, 14.29s/it]
-BNCI2014-001-CrossSession: 100%|██████████| 2/2 [00:26&lt;00:00, 13.35s/it]
-BNCI2014-001-CrossSession: 100%|██████████| 2/2 [00:26&lt;00:00, 13.49s/it]
+BNCI2014-001-CrossSession:  50%|█████     | 1/2 [00:13&lt;00:13, 13.47s/it]
+BNCI2014-001-CrossSession: 100%|██████████| 2/2 [00:26&lt;00:00, 12.92s/it]
+BNCI2014-001-CrossSession: 100%|██████████| 2/2 [00:26&lt;00:00, 13.00s/it]
       score      time  ...  pipeline                  codecarbon_task_name
-0  0.931713  0.168131  ...   CSP+LDA  a77ccfe7-4c90-4270-bd38-8395cca7479c
-1  0.955440  0.166552  ...   CSP+LDA  6d15d019-9ed7-485f-894d-8599b555e13f
-2  0.527199  0.160746  ...   CSP+LDA  b7e1b275-da1c-405f-a2ce-f2676034e871
-3  0.646219  0.275666  ...   CSP+LDA  93281798-ef99-4625-9928-662451b235a1
-4  0.950424  0.144880  ...     RG+LR  e87d5531-0d5b-49a8-adf7-f5164da48246
+0  0.931713  0.181773  ...   CSP+LDA  edd25a6b-7788-4827-bb47-08b31c9f3b13
+1  0.955440  0.230215  ...   CSP+LDA  0e826002-d9b6-49c8-aae7-cb9376638a2f
+2  0.527199  0.246245  ...   CSP+LDA  7aa73230-9c94-481e-afbd-b5f80497c963
+3  0.646219  0.190477  ...   CSP+LDA  14f835b9-ca39-49b4-9b17-7577e039e826
+4  0.950424  0.104088  ...     RG+LR  ba8fedeb-4b49-45c2-adcf-6f798d2c0310
 
 [5 rows x 11 columns]
 </pre></div>
@@ -684,7 +684,19 @@ points are in its quadrant.</p>
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.show.html#matplotlib.pyplot.show" title="matplotlib.pyplot.show" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_cross_session_motor_imagery_001.png" srcset="../../_images/sphx_glr_plot_cross_session_motor_imagery_001.png" alt="plot cross session motor imagery" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 28.423 seconds)</p>
+<img src="../../_images/sphx_glr_plot_cross_session_motor_imagery_001.png" srcset="../../_images/sphx_glr_plot_cross_session_motor_imagery_001.png" alt="plot cross session motor imagery" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/moabb/moabb/examples/paradigm_examples/plot_cross_session_motor_imagery.py:103: FutureWarning:
+
+Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
+
+  sns.stripplot(
+/home/runner/work/moabb/moabb/examples/paradigm_examples/plot_cross_session_motor_imagery.py:113: FutureWarning:
+
+Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
+
+  sns.pointplot(data=results, y=&quot;score&quot;, x=&quot;pipeline&quot;, ax=axes[0], palette=&quot;Set1&quot;)
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 27.426 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-paradigm-examples-plot-cross-session-motor-imagery-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/846c627146b8b580609ce7662075b0e9/plot_cross_session_motor_imagery.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_cross_session_motor_imagery.ipynb</span></code></a></p>
