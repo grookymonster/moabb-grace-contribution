@@ -71,6 +71,7 @@
                 gtag('js', new Date());
                 gtag('config', 'G-5WJBKDMSTE');
             </script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'generated/moabb.pipelines.classification.SSVEP_MsetCCA';</script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.datatables.net/v/dt/dt-2.0.4/b-3.0.2/b-html5-3.0.2/datatables.min.js"></script>
@@ -699,56 +700,56 @@ predefined sinusoidal references as in standard CCA. It maximizes the correlatio
 among canonical variates from multiple sets of EEG trials recorded at the same
 stimulus frequency, extracting common SSVEP features.</p>
 <p><strong>Mathematical Formulation</strong></p>
-<p>Given <span class="math">N_t</span> training trials <span class="math">\mathbf{X}_{n,h} \in \mathbb{R}^{N_c \times N_s}</span>
-for stimulus frequency <span class="math">f_n</span>, MsetCCA finds spatial filters
-<span class="math">\mathbf{w}_1, ..., \mathbf{w}_{N_t}</span> that maximize inter-trial correlation.</p>
+<p>Given <span class="math notranslate nohighlight">\(N_t\)</span> training trials <span class="math notranslate nohighlight">\(\mathbf{X}_{n,h} \in \mathbb{R}^{N_c \times N_s}\)</span>
+for stimulus frequency <span class="math notranslate nohighlight">\(f_n\)</span>, MsetCCA finds spatial filters
+<span class="math notranslate nohighlight">\(\mathbf{w}_1, ..., \mathbf{w}_{N_t}\)</span> that maximize inter-trial correlation.</p>
 <p><strong>MAXVAR Objective Function</strong></p>
 <p>The optimization problem maximizes the sum of pairwise covariances across trials
 subject to a variance constraint:</p>
-<div class="math">
-<p><span class="math">\tilde{\mathbf{w}}_{n,1}, ..., \tilde{\mathbf{w}}_{n,N_t} =
+<div class="math notranslate nohighlight">
+\[\tilde{\mathbf{w}}_{n,1}, ..., \tilde{\mathbf{w}}_{n,N_t} =
 \arg\max_{\mathbf{w}_1, ..., \mathbf{w}_{N_t}}
 \sum_{h_1 \neq h_2}^{N_t} \mathbf{w}_{h_1}^T \mathbf{X}_{n,h_1}
-\mathbf{X}_{n,h_2}^T \mathbf{w}_{h_2}</span></p>
-</div><p>subject to:</p>
-<div class="math">
-<p><span class="math">\frac{1}{N_t} \sum_{h=1}^{N_t} \mathbf{w}_h^T \mathbf{X}_{n,h}
-\mathbf{X}_{n,h}^T \mathbf{w}_h = 1</span></p>
-</div><p><strong>Generalized Eigenvalue Problem</strong></p>
+\mathbf{X}_{n,h_2}^T \mathbf{w}_{h_2}\]</div>
+<p>subject to:</p>
+<div class="math notranslate nohighlight">
+\[\frac{1}{N_t} \sum_{h=1}^{N_t} \mathbf{w}_h^T \mathbf{X}_{n,h}
+\mathbf{X}_{n,h}^T \mathbf{w}_h = 1\]</div>
+<p><strong>Generalized Eigenvalue Problem</strong></p>
 <p>The optimization transforms into a generalized eigenvalue problem. Let
-<span class="math">\mathbf{Y}_n</span> be the concatenation of whitened trials stacked as
-<span class="math">[\mathbf{X}_{n,1}; \mathbf{X}_{n,2}; ...; \mathbf{X}_{n,N_t}]</span>:</p>
-<div class="math">
-<p><span class="math">(\mathbf{R}_n - \mathbf{S}_n) \mathbf{w} = \lambda \mathbf{S}_n \mathbf{w}</span></p>
-</div><p>where:</p>
+<span class="math notranslate nohighlight">\(\mathbf{Y}_n\)</span> be the concatenation of whitened trials stacked as
+<span class="math notranslate nohighlight">\([\mathbf{X}_{n,1}; \mathbf{X}_{n,2}; ...; \mathbf{X}_{n,N_t}]\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[(\mathbf{R}_n - \mathbf{S}_n) \mathbf{w} = \lambda \mathbf{S}_n \mathbf{w}\]</div>
+<p>where:</p>
 <ul class="simple">
-<li><p><span class="math">\mathbf{R}_n = \mathbf{Y}_n \mathbf{Y}_n^T</span> is the total covariance matrix</p></li>
-<li><p><span class="math">\mathbf{S}_n</span> is the block-diagonal matrix containing within-trial covariances</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{R}_n = \mathbf{Y}_n \mathbf{Y}_n^T\)</span> is the total covariance matrix</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{S}_n\)</span> is the block-diagonal matrix containing within-trial covariances</p></li>
 </ul>
 <p>The eigenvectors corresponding to the largest eigenvalues give the optimal
 spatial filters.</p>
 <p><strong>Whitening Preprocessing</strong></p>
 <p>Before solving the eigenvalue problem, each trial is whitened using:</p>
-<div class="math">
-<p><span class="math">\tilde{\mathbf{X}} = \mathbf{V} \mathbf{X}, \quad
-\mathbf{V} = \mathbf{\Lambda}^{-1/2} \mathbf{U}^T</span></p>
-</div><p>where <span class="math">\mathbf{U} \mathbf{\Lambda} \mathbf{U}^T</span> is the eigendecomposition
-of the covariance matrix of <span class="math">\mathbf{X}</span>.</p>
+<div class="math notranslate nohighlight">
+\[\tilde{\mathbf{X}} = \mathbf{V} \mathbf{X}, \quad
+\mathbf{V} = \mathbf{\Lambda}^{-1/2} \mathbf{U}^T\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{U} \mathbf{\Lambda} \mathbf{U}^T\)</span> is the eigendecomposition
+of the covariance matrix of <span class="math notranslate nohighlight">\(\mathbf{X}\)</span>.</p>
 <p><strong>Reference Signal (Template) Construction</strong></p>
-<p>For each stimulus frequency <span class="math">f_n</span>, the optimized reference signal is
+<p>For each stimulus frequency <span class="math notranslate nohighlight">\(f_n\)</span>, the optimized reference signal is
 the <strong>average</strong> of spatially filtered training trials:</p>
-<div class="math">
-<p><span class="math">\mathbf{Y}_n^{\text{ref}} = \frac{1}{N_t} \sum_{h=1}^{N_t}
-\mathbf{W}_h^T \tilde{\mathbf{X}}_{n,h}</span></p>
-</div><p>where <span class="math">\mathbf{W}_h</span> contains the spatial filters for trial <span class="math">h</span>.</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{Y}_n^{\text{ref}} = \frac{1}{N_t} \sum_{h=1}^{N_t}
+\mathbf{W}_h^T \tilde{\mathbf{X}}_{n,h}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{W}_h\)</span> contains the spatial filters for trial <span class="math notranslate nohighlight">\(h\)</span>.</p>
 <p><strong>Classification Rule</strong></p>
-<p>For a test signal <span class="math">\mathbf{X}</span>, CCA is computed between the test data
-and each reference signal <span class="math">\mathbf{Y}_n^{\text{ref}}</span>:</p>
-<div class="math">
-<p><span class="math">\rho_n = \max_{\mathbf{w}_x, \mathbf{w}_y}
+<p>For a test signal <span class="math notranslate nohighlight">\(\mathbf{X}\)</span>, CCA is computed between the test data
+and each reference signal <span class="math notranslate nohighlight">\(\mathbf{Y}_n^{\text{ref}}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\rho_n = \max_{\mathbf{w}_x, \mathbf{w}_y}
 \text{corr}(\mathbf{X}^T \mathbf{w}_x,
-(\mathbf{Y}_n^{\text{ref}})^T \mathbf{w}_y)</span></p>
-</div><p>The predicted class is: <span class="math">\hat{f} = \arg\max_n \rho_n</span></p>
+(\mathbf{Y}_n^{\text{ref}})^T \mathbf{w}_y)\]</div>
+<p>The predicted class is: <span class="math notranslate nohighlight">\(\hat{f} = \arg\max_n \rho_n\)</span></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -808,7 +809,7 @@ Use <code class="docutils literal notranslate"><span class="pre">-1</span></code
 <dt class="sig sig-object py" id="moabb.pipelines.classification.SSVEP_MsetCCA.Ym">
 <span class="sig-name descname"><span class="pre">Ym</span></span><a class="headerlink" href="#moabb.pipelines.classification.SSVEP_MsetCCA.Ym" title="Link to this definition">#</a></dt>
 <dd><p>Dictionary mapping encoded class labels to optimized reference signals
-<span class="math">\mathbf{Y}_n^{\text{ref}}</span> of shape <code class="docutils literal notranslate"><span class="pre">(n_filters,</span> <span class="pre">n_times)</span></code>.</p>
+<span class="math notranslate nohighlight">\(\mathbf{Y}_n^{\text{ref}}\)</span> of shape <code class="docutils literal notranslate"><span class="pre">(n_filters,</span> <span class="pre">n_times)</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a></p>

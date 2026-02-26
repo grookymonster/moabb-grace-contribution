@@ -477,6 +477,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_mne_and_scikit_estimators.html">MNE Epochs-based pipelines</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_phmd_ml_spectrum.html">Spectral analysis of the trials</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_pre_processing_steps.html">Playing with the pre-processing steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_riemannian_artifact_rejection.html">Riemannian Artifact Rejection as a Pre-processing Step</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_select_electrodes_resample.html">Select Electrodes and Resampling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_statistical_analysis.html">Statistical Analysis</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_use_an_X_y_dataset.html">Using X y data (epoched data) instead of continuous signal</a></li>
@@ -633,15 +634,15 @@ be overwritten if necessary.</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>BNCI2014-001-CrossSession:   0%|          | 0/2 [00:00&lt;?, ?it/s]
-BNCI2014-001-CrossSession:  50%|█████     | 1/2 [00:09&lt;00:09,  9.41s/it]
-BNCI2014-001-CrossSession: 100%|██████████| 2/2 [00:18&lt;00:00,  9.23s/it]
-BNCI2014-001-CrossSession: 100%|██████████| 2/2 [00:18&lt;00:00,  9.26s/it]
+BNCI2014-001-CrossSession:  50%|█████     | 1/2 [00:12&lt;00:12, 12.60s/it]
+BNCI2014-001-CrossSession: 100%|██████████| 2/2 [00:24&lt;00:00, 12.36s/it]
+BNCI2014-001-CrossSession: 100%|██████████| 2/2 [00:24&lt;00:00, 12.40s/it]
       score      time  ...  pipeline                  codecarbon_task_name
-0  0.931713  0.273588  ...   CSP+LDA  a403b68f-fa9b-46b1-9995-3c9345be4d2d
-1  0.955440  0.280913  ...   CSP+LDA  266af617-cbc4-4e1a-ad00-e0d65969e9ab
-2  0.527199  0.245072  ...   CSP+LDA  3fc45402-3497-4b93-a474-4764fdae9d01
-3  0.646219  0.210099  ...   CSP+LDA  a4936d30-b4bc-4db4-b639-dbd3688e9be8
-4  0.950424  0.091031  ...     RG+LR  16392647-9774-4f50-b70e-9736e8cb2fa4
+0  0.931713  0.272569  ...   CSP+LDA  55969818-a1e1-4792-8c4b-19f4aa5d60f8
+1  0.955440  0.207350  ...   CSP+LDA  2ad6803d-9d63-4b32-a163-93324a58ecbd
+2  0.527199  0.235074  ...   CSP+LDA  c7570d9b-a9a7-4d61-a906-45169a8dd557
+3  0.646219  0.206442  ...   CSP+LDA  ee5d83bc-6cff-47e5-b767-9470f40e4b26
+4  0.950424  0.091367  ...     RG+LR  78a3d2f9-014e-45b7-9464-0eec68aa62f3
 
 [5 rows x 11 columns]
 </pre></div>
@@ -683,7 +684,7 @@ points are in its quadrant.</p>
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.show.html#matplotlib.pyplot.show" title="matplotlib.pyplot.show" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_cross_session_motor_imagery_001.png" srcset="../../_images/sphx_glr_plot_cross_session_motor_imagery_001.png" alt="plot cross session motor imagery" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 20.889 seconds)</p>
+<img src="../../_images/sphx_glr_plot_cross_session_motor_imagery_001.png" srcset="../../_images/sphx_glr_plot_cross_session_motor_imagery_001.png" alt="plot cross session motor imagery" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 27.283 seconds)</p>
 <p><strong>Estimated memory usage:</strong>  322 MB</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-paradigm-examples-plot-cross-session-motor-imagery-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">

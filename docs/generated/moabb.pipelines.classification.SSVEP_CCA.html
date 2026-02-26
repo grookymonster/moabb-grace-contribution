@@ -71,6 +71,7 @@
                 gtag('js', new Date());
                 gtag('config', 'G-5WJBKDMSTE');
             </script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'generated/moabb.pipelines.classification.SSVEP_CCA';</script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.datatables.net/v/dt/dt-2.0.4/b-3.0.2/b-html5-3.0.2/datatables.min.js"></script>
@@ -700,21 +701,21 @@ detection, CCA finds spatial filters that maximize the correlation between
 multi-channel EEG signals and predefined sinusoidal reference signals at
 stimulation frequencies <a class="reference internal" href="#rc3fd88100f85-1" id="id1">[1]</a>.</p>
 <p><strong>Mathematical Formulation</strong></p>
-<p>Given multi-channel EEG signal <span class="math">\mathbf{X} \in \mathbb{R}^{N_c \times N_s}</span>
-and reference signal <span class="math">\mathbf{Y}_f \in \mathbb{R}^{2N_h \times N_s}</span>, CCA
-finds weight vectors <span class="math">\mathbf{w}_x</span> and <span class="math">\mathbf{w}_y</span> that maximize
-the correlation between linear combinations <span class="math">x = \mathbf{X}^T \mathbf{w}_x</span>
-and <span class="math">y = \mathbf{Y}_f^T \mathbf{w}_y</span>:</p>
-<div class="math">
-<p><span class="math">\max_{\mathbf{w}_x, \mathbf{w}_y}
+<p>Given multi-channel EEG signal <span class="math notranslate nohighlight">\(\mathbf{X} \in \mathbb{R}^{N_c \times N_s}\)</span>
+and reference signal <span class="math notranslate nohighlight">\(\mathbf{Y}_f \in \mathbb{R}^{2N_h \times N_s}\)</span>, CCA
+finds weight vectors <span class="math notranslate nohighlight">\(\mathbf{w}_x\)</span> and <span class="math notranslate nohighlight">\(\mathbf{w}_y\)</span> that maximize
+the correlation between linear combinations <span class="math notranslate nohighlight">\(x = \mathbf{X}^T \mathbf{w}_x\)</span>
+and <span class="math notranslate nohighlight">\(y = \mathbf{Y}_f^T \mathbf{w}_y\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\max_{\mathbf{w}_x, \mathbf{w}_y}
 \rho(x, y) = \frac{E[\mathbf{w}_x^T \mathbf{X} \mathbf{Y}_f^T \mathbf{w}_y]}
 {\sqrt{E[\mathbf{w}_x^T \mathbf{X} \mathbf{X}^T \mathbf{w}_x]
-E[\mathbf{w}_y^T \mathbf{Y}_f \mathbf{Y}_f^T \mathbf{w}_y]}}</span></p>
-</div><p><strong>Reference Signal Construction</strong></p>
-<p>The reference signals <span class="math">\mathbf{Y}_f</span> for stimulus frequency <span class="math">f</span> consist
+E[\mathbf{w}_y^T \mathbf{Y}_f \mathbf{Y}_f^T \mathbf{w}_y]}}\]</div>
+<p><strong>Reference Signal Construction</strong></p>
+<p>The reference signals <span class="math notranslate nohighlight">\(\mathbf{Y}_f\)</span> for stimulus frequency <span class="math notranslate nohighlight">\(f\)</span> consist
 of sine and cosine pairs at the fundamental frequency and its harmonics:</p>
-<div class="math">
-<p><span class="math">\mathbf{Y}_f = \begin{bmatrix}
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf{Y}_f = \begin{bmatrix}
 \sin(2\pi f t) \\
 \cos(2\pi f t) \\
 \sin(2\pi \cdot 2f \cdot t) \\
@@ -722,18 +723,18 @@ of sine and cosine pairs at the fundamental frequency and its harmonics:</p>
 \vdots \\
 \sin(2\pi \cdot N_h \cdot f \cdot t) \\
 \cos(2\pi \cdot N_h \cdot f \cdot t)
-\end{bmatrix}</span></p>
-</div><p>where <span class="math">N_h</span> is the number of harmonics and <span class="math">t</span> is the time vector.</p>
+\end{bmatrix}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(N_h\)</span> is the number of harmonics and <span class="math notranslate nohighlight">\(t\)</span> is the time vector.</p>
 <p><strong>Classification Rule</strong></p>
-<p>For a test signal <span class="math">\mathbf{X}</span>, the predicted class is the stimulus
+<p>For a test signal <span class="math notranslate nohighlight">\(\mathbf{X}\)</span>, the predicted class is the stimulus
 frequency that yields the maximum canonical correlation:</p>
-<div class="math">
-<p><span class="math">\hat{f} = \arg\max_{f \in \mathcal{F}} \rho_f</span></p>
-</div><p>where <span class="math">\mathcal{F}</span> is the set of stimulus frequencies and <span class="math">\rho_f</span>
-is the canonical correlation between the test signal and reference <span class="math">\mathbf{Y}_f</span>.</p>
+<div class="math notranslate nohighlight">
+\[\hat{f} = \arg\max_{f \in \mathcal{F}} \rho_f\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathcal{F}\)</span> is the set of stimulus frequencies and <span class="math notranslate nohighlight">\(\rho_f\)</span>
+is the canonical correlation between the test signal and reference <span class="math notranslate nohighlight">\(\mathbf{Y}_f\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>n_harmonics</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>default=3</em>) – Number of harmonics <span class="math">N_h</span> to include in the reference signal.
+<dd class="field-odd"><p><strong>n_harmonics</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>default=3</em>) – Number of harmonics <span class="math notranslate nohighlight">\(N_h\)</span> to include in the reference signal.
 Higher values capture more harmonic components of the SSVEP response.</p>
 </dd>
 </dl>
@@ -796,7 +797,7 @@ Higher values capture more harmonic components of the SSVEP response.</p>
 <dt class="sig sig-object py" id="moabb.pipelines.classification.SSVEP_CCA.Yf">
 <span class="sig-name descname"><span class="pre">Yf</span></span><a class="headerlink" href="#moabb.pipelines.classification.SSVEP_CCA.Yf" title="Link to this definition">#</a></dt>
 <dd><p>Dictionary mapping frequency strings to reference signals
-<span class="math">\mathbf{Y}_f</span> of shape <code class="docutils literal notranslate"><span class="pre">(2</span> <span class="pre">*</span> <span class="pre">n_harmonics,</span> <span class="pre">n_times)</span></code>.</p>
+<span class="math notranslate nohighlight">\(\mathbf{Y}_f\)</span> of shape <code class="docutils literal notranslate"><span class="pre">(2</span> <span class="pre">*</span> <span class="pre">n_harmonics,</span> <span class="pre">n_times)</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a></p>

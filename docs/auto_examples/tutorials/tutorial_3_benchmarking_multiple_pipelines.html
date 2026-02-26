@@ -477,6 +477,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_mne_and_scikit_estimators.html">MNE Epochs-based pipelines</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_phmd_ml_spectrum.html">Spectral analysis of the trials</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_pre_processing_steps.html">Playing with the pre-processing steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_riemannian_artifact_rejection.html">Riemannian Artifact Rejection as a Pre-processing Step</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_select_electrodes_resample.html">Select Electrodes and Resampling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_statistical_analysis.html">Statistical Analysis</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_use_an_X_y_dataset.html">Using X y data (epoched data) instead of continuous signal</a></li>
@@ -616,16 +617,16 @@ obtaining a pandas dataframe containing the results of the evaluation.</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>BNCI2014-001-WithinSession:   0%|          | 0/3 [00:00&lt;?, ?it/s]
-BNCI2014-001-WithinSession:  33%|███▎      | 1/3 [00:29&lt;00:58, 29.49s/it]
-BNCI2014-001-WithinSession:  67%|██████▋   | 2/3 [00:58&lt;00:29, 29.38s/it]
-BNCI2014-001-WithinSession: 100%|██████████| 3/3 [01:28&lt;00:00, 29.32s/it]
-BNCI2014-001-WithinSession: 100%|██████████| 3/3 [01:28&lt;00:00, 29.34s/it]
+BNCI2014-001-WithinSession:  33%|███▎      | 1/3 [00:41&lt;01:23, 41.77s/it]
+BNCI2014-001-WithinSession:  67%|██████▋   | 2/3 [01:23&lt;00:41, 41.57s/it]
+BNCI2014-001-WithinSession: 100%|██████████| 3/3 [02:04&lt;00:00, 41.45s/it]
+BNCI2014-001-WithinSession: 100%|██████████| 3/3 [02:04&lt;00:00, 41.50s/it]
 
 Zhou2016-WithinSession:   0%|          | 0/3 [00:00&lt;?, ?it/s]
-Zhou2016-WithinSession:  33%|███▎      | 1/3 [00:39&lt;01:19, 39.89s/it]
-Zhou2016-WithinSession:  67%|██████▋   | 2/3 [01:19&lt;00:39, 39.61s/it]
-Zhou2016-WithinSession: 100%|██████████| 3/3 [01:58&lt;00:00, 39.55s/it]
-Zhou2016-WithinSession: 100%|██████████| 3/3 [01:58&lt;00:00, 39.60s/it]
+Zhou2016-WithinSession:  33%|███▎      | 1/3 [00:57&lt;01:55, 57.82s/it]
+Zhou2016-WithinSession:  67%|██████▋   | 2/3 [01:55&lt;00:57, 57.65s/it]
+Zhou2016-WithinSession: 100%|██████████| 3/3 [02:53&lt;00:00, 57.66s/it]
+Zhou2016-WithinSession: 100%|██████████| 3/3 [02:53&lt;00:00, 57.67s/it]
 </pre></div>
 </div>
 <p>As <cite>overwrite</cite> is set to False, the results from the previous tutorial are reused and
@@ -652,8 +653,8 @@ for each subject of each dataset.</p>
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.show.html#matplotlib.pyplot.show" title="matplotlib.pyplot.show" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_tutorial_3_benchmarking_multiple_pipelines_001.png" srcset="../../_images/sphx_glr_tutorial_3_benchmarking_multiple_pipelines_001.png" alt="dataset = BNCI2014-001, dataset = Zhou2016" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (3 minutes 32.588 seconds)</p>
-<p><strong>Estimated memory usage:</strong>  322 MB</p>
+<img src="../../_images/sphx_glr_tutorial_3_benchmarking_multiple_pipelines_001.png" srcset="../../_images/sphx_glr_tutorial_3_benchmarking_multiple_pipelines_001.png" alt="dataset = BNCI2014-001, dataset = Zhou2016" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (5 minutes 3.353 seconds)</p>
+<p><strong>Estimated memory usage:</strong>  360 MB</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-tutorials-tutorial-3-benchmarking-multiple-pipelines-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/b1ef6679c42641a93a2c91dca426f94f/tutorial_3_benchmarking_multiple_pipelines.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">tutorial_3_benchmarking_multiple_pipelines.ipynb</span></code></a></p>
