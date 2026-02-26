@@ -82,6 +82,7 @@ Bugs
 - Fix ``Beetl2021_A`` and ``Beetl2021_B`` 403 Forbidden errors by skipping Figshare API calls when data already exists locally, and fix double-nested zip extraction directory structure (:gh:`969` by `Bruno Aristimunha`_)
 - Fix :class:`moabb.datasets.RomaniBF2025ERP` to follow MOABB nomenclature pattern by using dynamic folder name ``MNE-{code}-data`` instead of hardcoded folder name. Automatically migrates legacy folder ``BrainForm-BIDS-eeg-dataset`` to new nomenclature for backward compatibility (by `Bruno Aristimunha`_)
 - Fix ``MOABB_RESULTS`` default path to respect ``MNE_DATA`` configuration instead of hardcoding ``~/mne_data``, and fix docs CI cache to use workspace-relative ``MNE_DATA`` path and cache ``~/.mne`` config directory (by `Bruno Aristimunha`_)
+- Fix :class:`moabb.datasets.RomaniBF2025ERP` ``get_data()`` failing with description merge error when adding stim channel, causing sessions to be silently dropped (:gh:`991` by `Bruno Aristimunha`_)
 
 Code health
 ~~~~~~~~~~~
