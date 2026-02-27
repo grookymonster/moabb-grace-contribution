@@ -692,7 +692,7 @@
 <h1>moabb.datasets.EPFLP300<a class="headerlink" href="#moabb-datasets-epflp300" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="moabb.datasets.EPFLP300">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">EPFLP300</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/epfl.py#L38-L332"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.EPFLP300" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">EPFLP300</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/epfl.py#L36-L392"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.EPFLP300" title="Link to this definition">#</a></dt>
 <dd><p>P300 dataset from Hoffmann et al 2008.</p>
 <p><strong>PapersWithCode leaderboard:</strong> <a class="reference external" href="https://paperswithcode.com/dataset/epflp300-moabb">https://paperswithcode.com/dataset/epflp300-moabb</a></p>
 <div class="admonition-dataset-summary admonition">
@@ -724,7 +724,10 @@
 <div class="admonition-participants admonition">
 <p class="admonition-title">Participants</p>
 <ul class="simple">
-<li><p><strong>Population</strong>: healthy</p></li>
+<li><p><strong>Population</strong>: mixed</p></li>
+<li><p><strong>Clinical population</strong>: 5 disabled (cerebral palsy, multiple sclerosis, ALS, traumatic brain injury, post-anoxic encephalopathy), 4 able-bodied</p></li>
+<li><p><strong>Age</strong>: 43.7 (range: 30-56) years</p></li>
+<li><p><strong>BCI experience</strong>: no training required</p></li>
 </ul>
 </div>
 <div class="admonition-equipment admonition">
@@ -733,7 +736,7 @@
 <li><p><strong>Amplifier</strong>: Biosemi ActiveTwo</p></li>
 <li><p><strong>Electrodes</strong>: active</p></li>
 <li><p><strong>Montage</strong>: 10-20</p></li>
-<li><p><strong>Reference</strong>: Car</p></li>
+<li><p><strong>Reference</strong>: mastoid</p></li>
 </ul>
 </div>
 <div class="admonition-preprocessing admonition">
@@ -742,21 +745,23 @@
 <li><p><strong>Data state</strong>: preprocessed</p></li>
 <li><p><strong>Bandpass filter</strong>: 1-12 Hz</p></li>
 <li><p><strong>Steps</strong>: referencing, bandpass filtering, downsampling, single trial extraction, windsorizing, scaling</p></li>
-<li><p><strong>Re-reference</strong>: Car</p></li>
+<li><p><strong>Re-reference</strong>: mastoid</p></li>
+<li><p><strong>Notes</strong>: 10th and 90th percentile windsorizing applied to reduce outliers from eye blinks, eye movement, muscle activity</p></li>
 </ul>
 </div>
 <div class="admonition-data-access admonition">
 <p class="admonition-title">Data Access</p>
 <ul class="simple">
 <li><p><strong>DOI</strong>: 10.1016/j.jneumeth.2007.03.005</p></li>
+<li><p><strong>Repository</strong>: <a class="reference external" href="http://bci.epfl.ch/p300">http://bci.epfl.ch/p300</a></p></li>
 </ul>
 </div>
 <div class="admonition-experimental-protocol admonition">
 <p class="admonition-title">Experimental Protocol</p>
 <ul class="simple">
 <li><p><strong>Paradigm</strong>: p300</p></li>
-<li><p><strong>Feedback</strong>: visual (target image flashed 5 times at end of run)</p></li>
-<li><p><strong>Stimulus</strong>: rc_speller</p></li>
+<li><p><strong>Feedback</strong>: visual</p></li>
+<li><p><strong>Stimulus</strong>: image_selection</p></li>
 </ul>
 </div>
 <div class="tip admonition">
@@ -806,7 +811,7 @@ subjects. Journal of Neuroscience Methods .
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="moabb.datasets.EPFLP300.data_path">
-<span class="sig-name descname"><span class="pre">data_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subject</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/epfl.py#L311-L332"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.EPFLP300.data_path" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">data_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subject</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/epfl.py#L371-L392"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.EPFLP300.data_path" title="Link to this definition">#</a></dt>
 <dd><p>Get path to local copy of a subject data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>

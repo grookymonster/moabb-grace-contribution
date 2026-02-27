@@ -692,7 +692,7 @@
 <h1>moabb.datasets.Cattan2019_PHMD<a class="headerlink" href="#moabb-datasets-cattan2019-phmd" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="moabb.datasets.Cattan2019_PHMD">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">Cattan2019_PHMD</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/phmd_ml.py#L26-L192"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Cattan2019_PHMD" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">Cattan2019_PHMD</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/phmd_ml.py#L27-L235"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Cattan2019_PHMD" title="Link to this definition">#</a></dt>
 <dd><p>Passive Head Mounted Display with Music Listening dataset <a class="reference internal" href="#rf4e3a2801e75-1" id="id1">[1]</a>.</p>
 <div class="admonition-dataset-summary admonition">
 <p class="admonition-title">Dataset summary</p>
@@ -733,7 +733,7 @@
 <div class="admonition-equipment admonition">
 <p class="admonition-title">Equipment</p>
 <ul class="simple">
-<li><p><strong>Amplifier</strong>: g.tec</p></li>
+<li><p><strong>Amplifier</strong>: g.USBamp</p></li>
 <li><p><strong>Electrodes</strong>: wet electrodes</p></li>
 <li><p><strong>Montage</strong>: 10-10</p></li>
 <li><p><strong>Reference</strong>: right earlobe</p></li>
@@ -743,7 +743,7 @@
 <p class="admonition-title">Preprocessing</p>
 <ul class="simple">
 <li><p><strong>Data state</strong>: raw, unfiltered</p></li>
-<li><p><strong>Re-reference</strong>: car</p></li>
+<li><p><strong>Notes</strong>: Data were acquired with no digital filter. No Faraday cage used to mimic real-world usage.</p></li>
 </ul>
 </div>
 <div class="admonition-data-access admonition">
@@ -758,7 +758,8 @@
 <p class="admonition-title">Experimental Protocol</p>
 <ul class="simple">
 <li><p><strong>Paradigm</strong>: rstate</p></li>
-<li><p><strong>Stimulus</strong>: avatar</p></li>
+<li><p><strong>Feedback</strong>: none</p></li>
+<li><p><strong>Stimulus</strong>: visual marker (purple marker on smartphone screen)</p></li>
 </ul>
 </div>
 <div class="tip admonition">
@@ -804,7 +805,7 @@ Gipsa-Lab ; IHMTEK, Research Report 2, Mar. 2019. doi: 10.5281/zenodo.2617084.
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="moabb.datasets.Cattan2019_PHMD.data_path">
-<span class="sig-name descname"><span class="pre">data_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subject</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/phmd_ml.py#L183-L192"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Cattan2019_PHMD.data_path" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">data_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subject</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/phmd_ml.py#L226-L235"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Cattan2019_PHMD.data_path" title="Link to this definition">#</a></dt>
 <dd><p>Get path to local copy of a subject data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>

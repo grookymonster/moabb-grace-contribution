@@ -692,7 +692,7 @@
 <h1>moabb.datasets.Ofner2017<a class="headerlink" href="#moabb-datasets-ofner2017" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="moabb.datasets.Ofner2017">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">Ofner2017</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">imagined</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">executed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/upper_limb.py#L29-L309"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Ofner2017" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">Ofner2017</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">imagined</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">executed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/upper_limb.py#L29-L462"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Ofner2017" title="Link to this definition">#</a></dt>
 <dd><p>Motor Imagery ataset from Ofner et al 2017.</p>
 <div class="admonition-dataset-summary admonition">
 <p class="admonition-title">Dataset summary</p>
@@ -733,12 +733,14 @@
 <p class="admonition-title">Participants</p>
 <ul class="simple">
 <li><p><strong>Population</strong>: healthy</p></li>
+<li><p><strong>Age</strong>: 27 (range: 22-40) years</p></li>
+<li><p><strong>Handedness</strong>: {‘right’: 14, ‘left’: 1}</p></li>
 </ul>
 </div>
 <div class="admonition-equipment admonition">
 <p class="admonition-title">Equipment</p>
 <ul class="simple">
-<li><p><strong>Amplifier</strong>: g.tec</p></li>
+<li><p><strong>Amplifier</strong>: g.tec medical engineering GmbH</p></li>
 <li><p><strong>Electrodes</strong>: active electrodes</p></li>
 <li><p><strong>Montage</strong>: standard_1005</p></li>
 <li><p><strong>Reference</strong>: right mastoid</p></li>
@@ -747,8 +749,10 @@
 <div class="admonition-preprocessing admonition">
 <p class="admonition-title">Preprocessing</p>
 <ul class="simple">
-<li><p><strong>Bandpass filter</strong>: 0.01-200 Hz</p></li>
+<li><p><strong>Bandpass filter</strong>: 0.3-3 Hz</p></li>
+<li><p><strong>Steps</strong>: Noisy channel detection and removal (joint probability), Downsampling to 256 Hz, Artifact marking (bandpass 0.3-70 Hz), Threshold detection (-200 to 200 μV), Abnormal joint probability detection, Abnormal kurtosis detection, Bandpass filtering 0.3-3 Hz, Common average reference</p></li>
 <li><p><strong>Re-reference</strong>: common average reference</p></li>
+<li><p><strong>Notes</strong>: Original acquisition filter: 0.01-200 Hz (8th order Chebyshev). Preprocessing filter: 0.3-3 Hz (4th order zero-phase Butterworth).</p></li>
 </ul>
 </div>
 <div class="admonition-data-access admonition">
@@ -764,7 +768,7 @@
 <ul class="simple">
 <li><p><strong>Paradigm</strong>: imagery</p></li>
 <li><p><strong>Feedback</strong>: visual cues on computer screen</p></li>
-<li><p><strong>Stimulus</strong>: avatar</p></li>
+<li><p><strong>Stimulus</strong>: visual cue</p></li>
 </ul>
 </div>
 <div class="tip admonition">
@@ -814,7 +818,7 @@ low-frequency EEG. PloS one, 12(8), p.e0182578.
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="moabb.datasets.Ofner2017.data_path">
-<span class="sig-name descname"><span class="pre">data_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subject</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/upper_limb.py#L276-L309"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Ofner2017.data_path" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">data_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subject</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/upper_limb.py#L429-L462"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Ofner2017.data_path" title="Link to this definition">#</a></dt>
 <dd><p>Get path to local copy of a subject data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>

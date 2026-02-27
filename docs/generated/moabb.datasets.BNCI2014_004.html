@@ -692,7 +692,7 @@
 <h1>moabb.datasets.BNCI2014_004<a class="headerlink" href="#moabb-datasets-bnci2014-004" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="moabb.datasets.BNCI2014_004">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">BNCI2014_004</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bnci/bnci_2014.py#L630-L811"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BNCI2014_004" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">BNCI2014_004</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bnci/bnci_2014.py#L694-L950"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BNCI2014_004" title="Link to this definition">#</a></dt>
 <dd><p>BNCI 2014-004 Motor Imagery dataset.</p>
 <p><strong>PapersWithCode leaderboard:</strong> <a class="reference external" href="https://paperswithcode.com/dataset/bnci2014-004-moabb-1">https://paperswithcode.com/dataset/bnci2014-004-moabb-1</a></p>
 <div class="admonition-dataset-summary admonition">
@@ -734,7 +734,6 @@
 <p class="admonition-title">Participants</p>
 <ul class="simple">
 <li><p><strong>Population</strong>: healthy</p></li>
-<li><p><strong>Age</strong>: 24.6 years</p></li>
 <li><p><strong>Handedness</strong>: right</p></li>
 <li><p><strong>BCI experience</strong>: naive</p></li>
 </ul>
@@ -742,25 +741,26 @@
 <div class="admonition-equipment admonition">
 <p class="admonition-title">Equipment</p>
 <ul class="simple">
-<li><p><strong>Amplifier</strong>: g.tec Guger Technologies OEG (two 16-channel biosignal amplifiers)</p></li>
+<li><p><strong>Amplifier</strong>: BrainAmp</p></li>
 <li><p><strong>Electrodes</strong>: Ag/AgCl</p></li>
-<li><p><strong>Montage</strong>: 10-20</p></li>
-<li><p><strong>Reference</strong>: Car</p></li>
+<li><p><strong>Montage</strong>: bipolar</p></li>
+<li><p><strong>Reference</strong>: left mastoid</p></li>
 </ul>
 </div>
 <div class="admonition-preprocessing admonition">
 <p class="admonition-title">Preprocessing</p>
 <ul class="simple">
-<li><p><strong>Data state</strong>: preprocessed</p></li>
+<li><p><strong>Data state</strong>: raw with online filtering</p></li>
 <li><p><strong>Bandpass filter</strong>: 0.5-100 Hz</p></li>
-<li><p><strong>Steps</strong>: EOG regression artifact reduction, bandpass filtering, notch filtering</p></li>
-<li><p><strong>Re-reference</strong>: car</p></li>
+<li><p><strong>Steps</strong>: bandpass filtering, notch filtering, EOG artifact correction</p></li>
+<li><p><strong>Notes</strong>: EOG artifact correction using linear regression. Artifact trials marked with event type 1023.</p></li>
 </ul>
 </div>
 <div class="admonition-data-access admonition">
 <p class="admonition-title">Data Access</p>
 <ul class="simple">
 <li><p><strong>DOI</strong>: 10.1109/TNSRE.2007.906956</p></li>
+<li><p><strong>Data URL</strong>: <a class="reference external" href="http://biosig.sourceforge.net/">http://biosig.sourceforge.net/</a></p></li>
 <li><p><strong>Repository</strong>: BNCI Horizon</p></li>
 </ul>
 </div>
@@ -768,8 +768,10 @@
 <p class="admonition-title">Experimental Protocol</p>
 <ul class="simple">
 <li><p><strong>Paradigm</strong>: imagery</p></li>
-<li><p><strong>Feedback</strong>: none</p></li>
-<li><p><strong>Stimulus</strong>: avatar</p></li>
+<li><p><strong>Task type</strong>: motor_imagery</p></li>
+<li><p><strong>Tasks</strong>: left_hand_imagery, right_hand_imagery</p></li>
+<li><p><strong>Feedback</strong>: smiley_visual</p></li>
+<li><p><strong>Stimulus</strong>: arrow_cue</p></li>
 </ul>
 </div>
 <div class="tip admonition">

@@ -692,7 +692,7 @@
 <h1>moabb.datasets.BNCI2020_001<a class="headerlink" href="#moabb-datasets-bnci2020-001" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="moabb.datasets.BNCI2020_001">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">BNCI2020_001</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bnci/bnci_2020.py#L194-L450"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BNCI2020_001" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">BNCI2020_001</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bnci/bnci_2020.py#L191-L544"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BNCI2020_001" title="Link to this definition">#</a></dt>
 <dd><p>BNCI 2020-001 Reach-and-Grasp Electrode Comparison dataset.</p>
 <div class="admonition-dataset-summary admonition">
 <p class="admonition-title">Dataset summary</p>
@@ -739,10 +739,10 @@
 <div class="admonition-equipment admonition">
 <p class="admonition-title">Equipment</p>
 <ul class="simple">
-<li><p><strong>Amplifier</strong>: g.tec</p></li>
-<li><p><strong>Electrodes</strong>: Gel-based electrodes</p></li>
-<li><p><strong>Montage</strong>: 10-20</p></li>
-<li><p><strong>Reference</strong>: Car</p></li>
+<li><p><strong>Amplifier</strong>: g.tec USBamp/g.tec Ladybird</p></li>
+<li><p><strong>Electrodes</strong>: Gel-based active electrodes</p></li>
+<li><p><strong>Montage</strong>: 5% grid system</p></li>
+<li><p><strong>Reference</strong>: right earlobe</p></li>
 </ul>
 </div>
 <div class="admonition-preprocessing admonition">
@@ -750,8 +750,9 @@
 <ul class="simple">
 <li><p><strong>Data state</strong>: raw</p></li>
 <li><p><strong>Bandpass filter</strong>: 0.3-60 Hz</p></li>
-<li><p><strong>Steps</strong>: zero-phase 4th order Butterworth bandpass filter (0.3-60 Hz), extended infomax ICA for eye artifact removal (gel and water-based only), artifact rejection by amplitude threshold (&gt;125 µV), artifact rejection by abnormal joint probability (4 SD threshold), artifact rejection by abnormal kurtosis (4 SD threshold)</p></li>
-<li><p><strong>Re-reference</strong>: Car</p></li>
+<li><p><strong>Steps</strong>: zero-phase 4th order Butterworth bandpass filter (0.3-60 Hz), extended infomax ICA for eye artifact removal, artifact rejection by amplitude threshold (&gt;125 µV), artifact rejection by abnormal joint probability (4 SD threshold), artifact rejection by abnormal kurtosis (4 SD threshold)</p></li>
+<li><p><strong>Re-reference</strong>: CAR</p></li>
+<li><p><strong>Notes</strong>: Preprocessing applied during analysis, not to raw data. For gel-based and water-based recordings, extended infomax ICA algorithm was applied on all available EEG and EOG channels. ICA was not applied to dry-electrode recordings due to unfavorable number of channels (n=11).</p></li>
 </ul>
 </div>
 <div class="admonition-data-access admonition">
@@ -766,8 +767,10 @@
 <p class="admonition-title">Experimental Protocol</p>
 <ul class="simple">
 <li><p><strong>Paradigm</strong>: imagery</p></li>
+<li><p><strong>Task type</strong>: reach-and-grasp</p></li>
+<li><p><strong>Tasks</strong>: reach-and-grasp toward jar (palmar grasp), reach-and-grasp toward spoon (lateral grasp)</p></li>
 <li><p><strong>Feedback</strong>: visual (screen showing number of completed grasps)</p></li>
-<li><p><strong>Stimulus</strong>: avatar</p></li>
+<li><p><strong>Stimulus</strong>: physical objects (jar, spoon)</p></li>
 </ul>
 </div>
 <div class="tip admonition">

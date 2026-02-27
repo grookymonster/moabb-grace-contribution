@@ -692,7 +692,7 @@
 <h1>moabb.datasets.BNCI2022_001<a class="headerlink" href="#moabb-datasets-bnci2022-001" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="moabb.datasets.BNCI2022_001">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">BNCI2022_001</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bnci/bnci_2022_001.py#L328-L578"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BNCI2022_001" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">BNCI2022_001</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bnci/bnci_2022_001.py#L328-L673"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BNCI2022_001" title="Link to this definition">#</a></dt>
 <dd><p>BNCI 2022-001 EEG Correlates of Difficulty Level dataset.</p>
 <div class="admonition-dataset-summary admonition">
 <p class="admonition-title">Dataset summary</p>
@@ -734,7 +734,7 @@
 <ul class="simple">
 <li><p><strong>Population</strong>: normal or corrected-to-normal vision, no history of motor or neurological disease (one subject with history of vasovagal syncope)</p></li>
 <li><p><strong>Age</strong>: 22.6 years</p></li>
-<li><p><strong>Handedness</strong>: 12 right-handed, 1 left-handed</p></li>
+<li><p><strong>Handedness</strong>: {‘right’: 12, ‘left’: 1}</p></li>
 </ul>
 </div>
 <div class="admonition-equipment admonition">
@@ -743,16 +743,17 @@
 <li><p><strong>Amplifier</strong>: Biosemi ActiveTwo</p></li>
 <li><p><strong>Electrodes</strong>: active</p></li>
 <li><p><strong>Montage</strong>: 10-10</p></li>
-<li><p><strong>Reference</strong>: Car</p></li>
+<li><p><strong>Reference</strong>: car</p></li>
 </ul>
 </div>
 <div class="admonition-preprocessing admonition">
 <p class="admonition-title">Preprocessing</p>
 <ul class="simple">
-<li><p><strong>Data state</strong>: downsampled raw</p></li>
+<li><p><strong>Data state</strong>: preprocessed</p></li>
 <li><p><strong>Bandpass filter</strong>: 1-40 Hz</p></li>
-<li><p><strong>Steps</strong>: downsampling from 2048 Hz to 256 Hz</p></li>
+<li><p><strong>Steps</strong>: downsampling from 2048 Hz to 256 Hz, casual bandpass filtering between 1 and 40 Hz, SPHARA 20th order spatial low-pass filter for interpolation and artifact reduction, common-average re-referencing, ICA for EOG artifact removal, peripheral electrodes removed (25 central channels kept), artifact rejection: windows with peak value &gt; 50 µV rejected</p></li>
 <li><p><strong>Re-reference</strong>: car</p></li>
+<li><p><strong>Notes</strong>: Out of 39 recordings, P2 was removed twice from offline or online sessions due to short-circuit with the CMS or DRL electrode. On average, 15.8 ICA components were returned and 1.07 components were removed during construction of online decoders (correlation &gt; 0.7 with EOG).</p></li>
 </ul>
 </div>
 <div class="admonition-data-access admonition">
@@ -766,8 +767,8 @@
 <p class="admonition-title">Experimental Protocol</p>
 <ul class="simple">
 <li><p><strong>Paradigm</strong>: imagery</p></li>
-<li><p><strong>Feedback</strong>: none</p></li>
-<li><p><strong>Stimulus</strong>: avatar</p></li>
+<li><p><strong>Feedback</strong>: visual</p></li>
+<li><p><strong>Stimulus</strong>: visual</p></li>
 </ul>
 </div>
 <div class="tip admonition">

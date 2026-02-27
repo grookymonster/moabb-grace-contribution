@@ -692,7 +692,7 @@
 <h1>moabb.datasets.Kojima2024B<a class="headerlink" href="#moabb-datasets-kojima2024b" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="moabb.datasets.Kojima2024B">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">Kojima2024B</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">events</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{'NonTarget':</span> <span class="pre">[101,</span> <span class="pre">102,</span> <span class="pre">103,</span> <span class="pre">104],</span> <span class="pre">'Target':</span> <span class="pre">[111,</span> <span class="pre">112,</span> <span class="pre">113,</span> <span class="pre">114]}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/kojima2024b.py#L46-L366"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Kojima2024B" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">Kojima2024B</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">events</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{'NonTarget':</span> <span class="pre">[101,</span> <span class="pre">102,</span> <span class="pre">103,</span> <span class="pre">104],</span> <span class="pre">'Target':</span> <span class="pre">[111,</span> <span class="pre">112,</span> <span class="pre">113,</span> <span class="pre">114]}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/kojima2024b.py#L61-L651"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Kojima2024B" title="Link to this definition">#</a></dt>
 <dd><p>Class for Kojima2024B dataset management. P300 dataset.</p>
 <div class="admonition-dataset-summary admonition">
 <p class="admonition-title">Dataset summary</p>
@@ -719,6 +719,47 @@
 </tbody>
 </table>
 </div>
+</div>
+<div class="admonition-participants admonition">
+<p class="admonition-title">Participants</p>
+<ul class="simple">
+<li><p><strong>Population</strong>: healthy</p></li>
+<li><p><strong>Age</strong>: 22.8 (range: 21-24) years</p></li>
+</ul>
+</div>
+<div class="admonition-equipment admonition">
+<p class="admonition-title">Equipment</p>
+<ul class="simple">
+<li><p><strong>Amplifier</strong>: BrainAmp</p></li>
+<li><p><strong>Electrodes</strong>: EEG</p></li>
+<li><p><strong>Montage</strong>: extended 10-20</p></li>
+<li><p><strong>Reference</strong>: right mastoid</p></li>
+</ul>
+</div>
+<div class="admonition-preprocessing admonition">
+<p class="admonition-title">Preprocessing</p>
+<ul class="simple">
+<li><p><strong>Data state</strong>: raw</p></li>
+<li><p><strong>Bandpass filter</strong>: 1-40 Hz</p></li>
+<li><p><strong>Steps</strong>: highpass filter 1.0 Hz (2nd order Butterworth), PCA (15 components), ICA with FastICA for EOG artifact removal, bandpass filter 1-40 Hz (2nd order Butterworth, zero-phase) for ERP analysis, bandpass filter 0.1-8 Hz (2nd order Butterworth, zero-phase) for classification, epoching -0.1 to 1.2s relative to stimulus onset, downsampling to 250 Hz</p></li>
+<li><p><strong>Notes</strong>: EOG artifact removal using ICA on 15 PCs selected via PCA. Different bandpass filters applied for ERP analysis (1-40 Hz) vs classification (0.1-8 Hz)</p></li>
+</ul>
+</div>
+<div class="admonition-data-access admonition">
+<p class="admonition-title">Data Access</p>
+<ul class="simple">
+<li><p><strong>DOI</strong>: 10.3389/fnhum.2024.1461960</p></li>
+</ul>
+</div>
+<div class="admonition-experimental-protocol admonition">
+<p class="admonition-title">Experimental Protocol</p>
+<ul class="simple">
+<li><p><strong>Paradigm</strong>: p300</p></li>
+<li><p><strong>Task type</strong>: auditory stream segregation with oddball</p></li>
+<li><p><strong>Tasks</strong>: ASME-4stream, ASME-2stream</p></li>
+<li><p><strong>Feedback</strong>: no feedback</p></li>
+<li><p><strong>Stimulus</strong>: auditory tones</p></li>
+</ul>
 </div>
 <div class="tip admonition">
 <p class="admonition-title">Found an issue with this dataset?</p>
@@ -816,7 +857,7 @@ Frontiers in Human Neuroscience 18:1461960. DOI: <a class="reference external" h
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="moabb.datasets.Kojima2024B.convert_subject_to_subject_id">
-<span class="sig-name descname"><span class="pre">convert_subject_to_subject_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subjects</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/kojima2024b.py#L199-L224"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Kojima2024B.convert_subject_to_subject_id" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">convert_subject_to_subject_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subjects</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/kojima2024b.py#L484-L509"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Kojima2024B.convert_subject_to_subject_id" title="Link to this definition">#</a></dt>
 <dd><p>Convert subject number(s) to subject ID(s).
 (In this dataset, subject IDs are encoded using alphabet letters.)</p>
 <dl class="field-list simple">
@@ -834,7 +875,7 @@ Frontiers in Human Neuroscience 18:1461960. DOI: <a class="reference external" h
 
 <dl class="py method">
 <dt class="sig sig-object py" id="moabb.datasets.Kojima2024B.data_path">
-<span class="sig-name descname"><span class="pre">data_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subject</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/kojima2024b.py#L226-L264"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Kojima2024B.data_path" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">data_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subject</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/kojima2024b.py#L511-L549"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Kojima2024B.data_path" title="Link to this definition">#</a></dt>
 <dd><p>Return the data paths of a single subject.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -858,7 +899,7 @@ will be automatically downloaded to the specified folder.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="moabb.datasets.Kojima2024B.download_by_subject">
-<span class="sig-name descname"><span class="pre">download_by_subject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subject</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/kojima2024b.py#L266-L304"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Kojima2024B.download_by_subject" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">download_by_subject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subject</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/kojima2024b.py#L551-L589"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Kojima2024B.download_by_subject" title="Link to this definition">#</a></dt>
 <dd><p>Download and extract the dataset.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>

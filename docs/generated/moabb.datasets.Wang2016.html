@@ -692,7 +692,7 @@
 <h1>moabb.datasets.Wang2016<a class="headerlink" href="#moabb-datasets-wang2016" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="moabb.datasets.Wang2016">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">Wang2016</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/ssvep_wang.py#L41-L334"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Wang2016" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">Wang2016</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/ssvep_wang.py#L38-L495"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Wang2016" title="Link to this definition">#</a></dt>
 <dd><p>SSVEP Wang 2016 dataset.</p>
 <p><strong>PapersWithCode leaderboard:</strong> <a class="reference external" href="https://paperswithcode.com/dataset/wang2016-moabb">https://paperswithcode.com/dataset/wang2016-moabb</a></p>
 <div class="admonition-dataset-summary admonition">
@@ -728,23 +728,25 @@
 <p class="admonition-title">Participants</p>
 <ul class="simple">
 <li><p><strong>Population</strong>: healthy</p></li>
-<li><p><strong>Age</strong>: 25.5 (range: 17-34) years</p></li>
+<li><p><strong>Age</strong>: 22 (range: 17-34) years</p></li>
 <li><p><strong>BCI experience</strong>: 8 experienced, 27 naïve</p></li>
 </ul>
 </div>
 <div class="admonition-equipment admonition">
 <p class="admonition-title">Equipment</p>
 <ul class="simple">
-<li><p><strong>Amplifier</strong>: Neuroscan SynAmps</p></li>
-<li><p><strong>Montage</strong>: 10-20</p></li>
+<li><p><strong>Amplifier</strong>: Synamps2 EEG system (Neuroscan, Inc.)</p></li>
+<li><p><strong>Electrodes</strong>: Ag/AgCl electrodes</p></li>
+<li><p><strong>Montage</strong>: extended 10-20</p></li>
+<li><p><strong>Reference</strong>: Cz</p></li>
 </ul>
 </div>
 <div class="admonition-preprocessing admonition">
 <p class="admonition-title">Preprocessing</p>
 <ul class="simple">
-<li><p><strong>Data state</strong>: Raw epochs without digital filters applied in preprocessing</p></li>
-<li><p><strong>Bandpass filter</strong>: 7-70 Hz</p></li>
-<li><p><strong>Steps</strong>: Epoch extraction according to stimulus onsets, Downsampling to 250 Hz</p></li>
+<li><p><strong>Data state</strong>: Raw epochs extracted from continuous EEG recordings according to stimulus onsets, downsampled to 250 Hz, no digital filters applied</p></li>
+<li><p><strong>Steps</strong>: Epoch extraction according to stimulus onsets from event channel, Downsampling from 1000 Hz to 250 Hz, No digital filters applied in preprocessing</p></li>
+<li><p><strong>Notes</strong>: Data epochs include 0.5 s before stimulus onset, 5 s for stimulation, and 0.5 s after stimulus offset. Upper bound frequency of SSVEP harmonics is around 90 Hz.</p></li>
 </ul>
 </div>
 <div class="admonition-data-access admonition">
@@ -759,7 +761,7 @@
 <p class="admonition-title">Experimental Protocol</p>
 <ul class="simple">
 <li><p><strong>Paradigm</strong>: ssvep</p></li>
-<li><p><strong>Stimulus</strong>: avatar</p></li>
+<li><p><strong>Stimulus</strong>: visual flicker</p></li>
 </ul>
 </div>
 <div class="tip admonition">
@@ -836,7 +838,7 @@ doi: 10.1109/TNSRE.2016.2627556.</p>
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="moabb.datasets.Wang2016.data_path">
-<span class="sig-name descname"><span class="pre">data_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subject</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/ssvep_wang.py#L328-L334"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Wang2016.data_path" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">data_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subject</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/ssvep_wang.py#L489-L495"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Wang2016.data_path" title="Link to this definition">#</a></dt>
 <dd><p>Get path to local copy of a subject data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>

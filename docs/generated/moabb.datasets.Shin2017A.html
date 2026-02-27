@@ -692,7 +692,7 @@
 <h1>moabb.datasets.Shin2017A<a class="headerlink" href="#moabb-datasets-shin2017a" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="moabb.datasets.Shin2017A">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">Shin2017A</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">accept</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bbci_eeg_fnirs.py#L207-L455"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Shin2017A" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">Shin2017A</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">accept</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bbci_eeg_fnirs.py#L204-L514"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Shin2017A" title="Link to this definition">#</a></dt>
 <dd><p>Motor Imagey Dataset from Shin et al 2017.</p>
 <p><strong>PapersWithCode leaderboard:</strong> <a class="reference external" href="https://paperswithcode.com/dataset/shin2017a-moabb">https://paperswithcode.com/dataset/shin2017a-moabb</a></p>
 <div class="admonition-dataset-summary admonition">
@@ -733,7 +733,7 @@
 <div class="admonition-participants admonition">
 <p class="admonition-title">Participants</p>
 <ul class="simple">
-<li><p><strong>Population</strong>: paralysis</p></li>
+<li><p><strong>Population</strong>: healthy</p></li>
 <li><p><strong>Age</strong>: 28.5 years</p></li>
 <li><p><strong>Handedness</strong>: {‘right’: 29, ‘left’: 1}</p></li>
 <li><p><strong>BCI experience</strong>: naive to MI experiment</p></li>
@@ -745,7 +745,7 @@
 <li><p><strong>Amplifier</strong>: BrainAmp</p></li>
 <li><p><strong>Electrodes</strong>: active electrodes</p></li>
 <li><p><strong>Montage</strong>: 10-5</p></li>
-<li><p><strong>Reference</strong>: Car</p></li>
+<li><p><strong>Reference</strong>: linked mastoids</p></li>
 </ul>
 </div>
 <div class="admonition-preprocessing admonition">
@@ -755,6 +755,7 @@
 <li><p><strong>Bandpass filter</strong>: 0.5-50 Hz</p></li>
 <li><p><strong>Steps</strong>: common average reference, bandpass filtering (0.5-50 Hz), ICA-based EOG rejection, downsampling to 200 Hz</p></li>
 <li><p><strong>Re-reference</strong>: car</p></li>
+<li><p><strong>Notes</strong>: Preprocessing applied for analysis only. Raw data is available.</p></li>
 </ul>
 </div>
 <div class="admonition-data-access admonition">
@@ -770,7 +771,7 @@
 <ul class="simple">
 <li><p><strong>Paradigm</strong>: imagery</p></li>
 <li><p><strong>Feedback</strong>: visual</p></li>
-<li><p><strong>Stimulus</strong>: avatar</p></li>
+<li><p><strong>Stimulus</strong>: visual arrow and fixation cross</p></li>
 </ul>
 </div>
 <div class="tip admonition">

@@ -692,7 +692,7 @@
 <h1>moabb.datasets.BNCI2024_001<a class="headerlink" href="#moabb-datasets-bnci2024-001" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="moabb.datasets.BNCI2024_001">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">BNCI2024_001</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bnci/bnci_2024_001.py#L239-L498"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BNCI2024_001" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">BNCI2024_001</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bnci/bnci_2024_001.py#L237-L572"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BNCI2024_001" title="Link to this definition">#</a></dt>
 <dd><p>BNCI 2024-001 Handwritten Character Classification dataset.</p>
 <div class="admonition-dataset-summary admonition">
 <p class="admonition-title">Dataset summary</p>
@@ -733,6 +733,9 @@
 <p class="admonition-title">Participants</p>
 <ul class="simple">
 <li><p><strong>Population</strong>: healthy</p></li>
+<li><p><strong>Age</strong>: 27.5 years</p></li>
+<li><p><strong>Handedness</strong>: {‘right’: 22}</p></li>
+<li><p><strong>BCI experience</strong>: not specified</p></li>
 </ul>
 </div>
 <div class="admonition-equipment admonition">
@@ -749,8 +752,9 @@
 <ul class="simple">
 <li><p><strong>Data state</strong>: raw</p></li>
 <li><p><strong>Bandpass filter</strong>: 0.3-70 Hz</p></li>
-<li><p><strong>Steps</strong>: resampling, notch filtering, high-pass filtering, bad channel interpolation, EOG derivative computation, low-pass filtering of EOG, epoching, visual artifact rejection</p></li>
+<li><p><strong>Steps</strong>: notch filtering, bandpass filtering, bad channel interpolation, EOG artifact correction (SGEYESUB), ICA for artifact removal, re-referencing to CAR, bad segment rejection, lowpass filtering, downsampling, epoching</p></li>
 <li><p><strong>Re-reference</strong>: car</p></li>
+<li><p><strong>Notes</strong>: Two datasets created: dataset 1 (0.3-3 Hz, 10 Hz sampling) and dataset 2 (0.3-40 Hz, 128 Hz sampling). Bad segments rejected if exceeding ±120 μV or kurtosis/probability &gt; 7 SD from mean.</p></li>
 </ul>
 </div>
 <div class="admonition-data-access admonition">
@@ -765,7 +769,8 @@
 <p class="admonition-title">Experimental Protocol</p>
 <ul class="simple">
 <li><p><strong>Paradigm</strong>: imagery</p></li>
-<li><p><strong>Feedback</strong>: none during main paradigm; training included visual guidance</p></li>
+<li><p><strong>Task type</strong>: handwriting</p></li>
+<li><p><strong>Feedback</strong>: Training included visual feedback showing finger position; main paradigm had no feedback during writing (only fixation cross)</p></li>
 <li><p><strong>Stimulus</strong>: letter cue</p></li>
 </ul>
 </div>

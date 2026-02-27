@@ -692,10 +692,9 @@
 <h1>moabb.datasets.BNCI2015_007<a class="headerlink" href="#moabb-datasets-bnci2015-007" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="moabb.datasets.BNCI2015_007">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">BNCI2015_007</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bnci/bnci_2015.py#L1173-L1427"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BNCI2015_007" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">BNCI2015_007</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bnci/bnci_2015.py#L1416-L1741"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BNCI2015_007" title="Link to this definition">#</a></dt>
 <dd><p>BNCI 2015-007 Motion VEP (mVEP) Speller dataset.</p>
-<blockquote>
-<div><div class="admonition-dataset-summary admonition">
+<div class="admonition-dataset-summary admonition">
 <p class="admonition-title">Dataset summary</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <tbody>
@@ -724,15 +723,16 @@
 <div class="admonition-participants admonition">
 <p class="admonition-title">Participants</p>
 <ul class="simple">
-<li><p><strong>Population</strong>: healthy</p></li>
-<li><p><strong>Age</strong>: 23.8 years</p></li>
-<li><p><strong>BCI experience</strong>: experienced</p></li>
+<li><p><strong>Population</strong>: Healthy</p></li>
+<li><p><strong>Age</strong>: 23.8 (range: 21-30) years</p></li>
+<li><p><strong>Handedness</strong>: normal or corrected-to-normal vision</p></li>
+<li><p><strong>BCI experience</strong>: naive</p></li>
 </ul>
 </div>
 <div class="admonition-equipment admonition">
 <p class="admonition-title">Equipment</p>
 <ul class="simple">
-<li><p><strong>Amplifier</strong>: BrainAmp</p></li>
+<li><p><strong>Amplifier</strong>: BrainAmp EEG amplifier</p></li>
 <li><p><strong>Electrodes</strong>: active electrode</p></li>
 <li><p><strong>Montage</strong>: 10-10</p></li>
 <li><p><strong>Reference</strong>: linked mastoids</p></li>
@@ -741,16 +741,14 @@
 <div class="admonition-preprocessing admonition">
 <p class="admonition-title">Preprocessing</p>
 <ul class="simple">
-<li><p><strong>Data state</strong>: epoched</p></li>
+<li><p><strong>Data state</strong>: filtered</p></li>
 <li><p><strong>Bandpass filter</strong>: 0.016-250 Hz</p></li>
-<li><p><strong>Steps</strong>: downsampling, low-pass filtering, epoching, baseline correction, artifact rejection, re-referencing</p></li>
-<li><p><strong>Re-reference</strong>: linked</p></li>
+<li><p><strong>Steps</strong>: downsampling, low-pass filter, baseline correction, artifact rejection</p></li>
+<li><p><strong>Re-reference</strong>: linked mastoids</p></li>
+<li><p><strong>Notes</strong>: For offline analysis: downsampled to 200 Hz, low-pass filtered (42 Hz passband, 49 Hz stopband). For online: downsampled to 100 Hz. Artifact rejection: min-max ≥70 μV. Nontarget epochs filtered to avoid overlap with targets (3 preceding and 4 following stimuli must be nontargets).</p></li>
 </ul>
 </div>
-</div></blockquote>
-<p>mastoid</p>
-<blockquote>
-<div><div class="admonition-data-access admonition">
+<div class="admonition-data-access admonition">
 <p class="admonition-title">Data Access</p>
 <ul class="simple">
 <li><p><strong>DOI</strong>: 10.1088/1741-2560/9/4/045006</p></li>
@@ -761,8 +759,9 @@
 <p class="admonition-title">Experimental Protocol</p>
 <ul class="simple">
 <li><p><strong>Paradigm</strong>: p300</p></li>
-<li><p><strong>Feedback</strong>: online visual feedback (selected symbols displayed in gray at top of screen)</p></li>
-<li><p><strong>Stimulus</strong>: rsvp</p></li>
+<li><p><strong>Task type</strong>: visual_speller</p></li>
+<li><p><strong>Feedback</strong>: visual</p></li>
+<li><p><strong>Stimulus</strong>: motion VEP (mVEP)</p></li>
 </ul>
 </div>
 <div class="tip admonition">
@@ -797,7 +796,7 @@ incorrect metadata, loading errors, etc.), please let us know!</p>
 </table>
 </div>
 </div>
-<p>Dataset from <span id="id1">[R0ffe78ffbafd-1]</span>.</p>
+<p>Dataset from <a class="reference internal" href="#r0ffe78ffbafd-1" id="id1">[1]</a>.</p>
 <p><strong>Dataset Description</strong></p>
 <p>This dataset implements a motion-onset visual evoked potential (mVEP) based
 brain-computer interface for gaze-independent spelling. Unlike conventional
@@ -849,7 +848,20 @@ ibx, iby, ice, icv</p></li>
 <li><p>Target (1): Target stimulus presented (attended)</p></li>
 <li><p>NonTarget (2): Non-target stimulus presented (not attended)</p></li>
 </ul>
-</div></blockquote>
+<p class="rubric">References</p>
+<div role="list" class="citation-list">
+<div class="citation" id="r0ffe78ffbafd-1" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Treder, M. S., Purwins, H., Miklody, D., Sturm, I., &amp; Blankertz, B.
+(2012). Decoding auditory attention to instruments in polyphonic music
+using single-trial EEG classification. Journal of Neural Engineering,
+11(2), 026009. <a class="reference external" href="https://doi.org/10.1088/1741-2560/11/2/026009">https://doi.org/10.1088/1741-2560/11/2/026009</a></p>
+</div>
+</div>
+<p class="rubric">Notes</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 1.2.0.</span></p>
+</div>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <dl class="simple">
@@ -860,10 +872,6 @@ ibx, iby, ice, icv</p></li>
 <dt><a class="reference internal" href="moabb.datasets.BNCI2015_010.html#moabb.datasets.BNCI2015_010" title="moabb.datasets.BNCI2015_010"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BNCI2015_010</span></code></a></dt><dd><p>RSVP visual speller (gaze-independent visual paradigm)</p>
 </dd>
 </dl>
-</div>
-<p class="rubric">Notes</p>
-<div class="versionadded">
-<p><span class="versionmodified added">Added in version 1.2.0.</span></p>
 </div>
 </dd></dl>
 

@@ -692,7 +692,7 @@
 <h1>moabb.datasets.BNCI2020_002<a class="headerlink" href="#moabb-datasets-bnci2020-002" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="moabb.datasets.BNCI2020_002">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">BNCI2020_002</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bnci/bnci_2020.py#L654-L886"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BNCI2020_002" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">BNCI2020_002</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bnci/bnci_2020.py#L748-L1044"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BNCI2020_002" title="Link to this definition">#</a></dt>
 <dd><p>BNCI 2020-002 Attention Shift (Covert Spatial Attention) dataset.</p>
 <div class="admonition-dataset-summary admonition">
 <p class="admonition-title">Dataset summary</p>
@@ -724,40 +724,42 @@
 <p class="admonition-title">Participants</p>
 <ul class="simple">
 <li><p><strong>Population</strong>: healthy</p></li>
-<li><p><strong>Age</strong>: 27 years</p></li>
+<li><p><strong>Age</strong>: 27 (range: 19-38) years</p></li>
 </ul>
 </div>
 <div class="admonition-equipment admonition">
 <p class="admonition-title">Equipment</p>
 <ul class="simple">
-<li><p><strong>Amplifier</strong>: BrainAmp</p></li>
-<li><p><strong>Electrodes</strong>: Ag/AgCl</p></li>
-<li><p><strong>Montage</strong>: 10-20</p></li>
+<li><p><strong>Amplifier</strong>: BrainAmp DC Amplifier</p></li>
+<li><p><strong>Electrodes</strong>: Ag/AgCl electrodes</p></li>
+<li><p><strong>Montage</strong>: extended 10-20</p></li>
 <li><p><strong>Reference</strong>: right mastoid</p></li>
 </ul>
 </div>
 <div class="admonition-preprocessing admonition">
 <p class="admonition-title">Preprocessing</p>
 <ul class="simple">
-<li><p><strong>Data state</strong>: segmented into trials</p></li>
+<li><p><strong>Data state</strong>: raw</p></li>
 <li><p><strong>Bandpass filter</strong>: 1-12.5 Hz</p></li>
-<li><p><strong>Steps</strong>: highpass filtering</p></li>
-<li><p><strong>Re-reference</strong>: Car</p></li>
+<li><p><strong>Steps</strong>: re-referenced to average of left and right mastoid, 4th order zero-phase IIR Butterworth bandpass filter (1.0-12.5 Hz), resampled to 50 Hz, epoched from stimulus onset to 750 ms after</p></li>
+<li><p><strong>Re-reference</strong>: average of left and right mastoid</p></li>
 </ul>
 </div>
 <div class="admonition-data-access admonition">
 <p class="admonition-title">Data Access</p>
 <ul class="simple">
 <li><p><strong>DOI</strong>: 10.3389/fnins.2020.591777</p></li>
+<li><p><strong>Data URL</strong>: <a class="reference external" href="http://bnci-horizon-2020.eu/database/data-sets">http://bnci-horizon-2020.eu/database/data-sets</a></p></li>
 <li><p><strong>Repository</strong>: BNCI Horizon</p></li>
 </ul>
 </div>
 <div class="admonition-experimental-protocol admonition">
 <p class="admonition-title">Experimental Protocol</p>
 <ul class="simple">
-<li><p><strong>Paradigm</strong>: p300</p></li>
-<li><p><strong>Feedback</strong>: visual (yes/no decoded answer)</p></li>
-<li><p><strong>Stimulus</strong>: rsvp</p></li>
+<li><p><strong>Paradigm</strong>: covert spatial attention</p></li>
+<li><p><strong>Task type</strong>: binary decision</p></li>
+<li><p><strong>Feedback</strong>: visual (yes/no text)</p></li>
+<li><p><strong>Stimulus</strong>: colored crosses (green + and red x)</p></li>
 </ul>
 </div>
 <div class="tip admonition">

@@ -692,7 +692,7 @@
 <h1>moabb.datasets.BNCI2016_002<a class="headerlink" href="#moabb-datasets-bnci2016-002" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="moabb.datasets.BNCI2016_002">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">BNCI2016_002</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bnci/bnci_2016_002.py#L218-L498"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BNCI2016_002" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">BNCI2016_002</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bnci/bnci_2016_002.py#L217-L604"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BNCI2016_002" title="Link to this definition">#</a></dt>
 <dd><p>BNCI 2016-002 Emergency Braking during Simulated Driving dataset.</p>
 <div class="admonition-dataset-summary admonition">
 <p class="admonition-title">Dataset summary</p>
@@ -734,16 +734,18 @@
 <ul class="simple">
 <li><p><strong>Amplifier</strong>: BrainAmp</p></li>
 <li><p><strong>Electrodes</strong>: Ag/AgCl</p></li>
-<li><p><strong>Montage</strong>: 10-20</p></li>
-<li><p><strong>Reference</strong>: Car</p></li>
+<li><p><strong>Montage</strong>: extended 10-20</p></li>
+<li><p><strong>Reference</strong>: nose</p></li>
 </ul>
 </div>
 <div class="admonition-preprocessing admonition">
 <p class="admonition-title">Preprocessing</p>
 <ul class="simple">
 <li><p><strong>Data state</strong>: preprocessed</p></li>
-<li><p><strong>Steps</strong>: lowpass filtering, bandpass filtering, notch filtering, rectification, downsampling/upsampling, baseline correction</p></li>
-<li><p><strong>Re-reference</strong>: car</p></li>
+<li><p><strong>Bandpass filter</strong>: 15-90 Hz</p></li>
+<li><p><strong>Steps</strong>: lowpass filtering, bandpass filtering, notch filtering, rectification, downsampling/upsampling, baseline correction, synchronization</p></li>
+<li><p><strong>Re-reference</strong>: nose</p></li>
+<li><p><strong>Notes</strong>: EEG lowpass filtered at 45 Hz (causal). EMG bandpass filtered 15-90 Hz with 50 Hz notch and rectified. All signals synchronized and resampled to 200 Hz. Baseline correction using first 100 ms.</p></li>
 </ul>
 </div>
 <div class="admonition-data-access admonition">
@@ -756,9 +758,10 @@
 <div class="admonition-experimental-protocol admonition">
 <p class="admonition-title">Experimental Protocol</p>
 <ul class="simple">
-<li><p><strong>Paradigm</strong>: p300</p></li>
+<li><p><strong>Paradigm</strong>: emergency_braking</p></li>
+<li><p><strong>Task type</strong>: driving_simulation</p></li>
 <li><p><strong>Feedback</strong>: visual (colored circle indicating distance: green &lt;20m, yellow otherwise; brakelight flashing)</p></li>
-<li><p><strong>Stimulus</strong>: oddball</p></li>
+<li><p><strong>Stimulus</strong>: emergency_braking_scenario</p></li>
 </ul>
 </div>
 <div class="tip admonition">

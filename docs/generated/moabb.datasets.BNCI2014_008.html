@@ -692,7 +692,7 @@
 <h1>moabb.datasets.BNCI2014_008<a class="headerlink" href="#moabb-datasets-bnci2014-008" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="moabb.datasets.BNCI2014_008">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">BNCI2014_008</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bnci/bnci_2014.py#L814-L949"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BNCI2014_008" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">BNCI2014_008</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bnci/bnci_2014.py#L953-L1149"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BNCI2014_008" title="Link to this definition">#</a></dt>
 <dd><p>BNCI 2014-008 P300 dataset (ALS patients).</p>
 <p><strong>PapersWithCode leaderboard:</strong> <a class="reference external" href="https://paperswithcode.com/dataset/bnci2014-008-moabb-1">https://paperswithcode.com/dataset/bnci2014-008-moabb-1</a></p>
 <div class="admonition-dataset-summary admonition">
@@ -724,15 +724,16 @@
 <div class="admonition-participants admonition">
 <p class="admonition-title">Participants</p>
 <ul class="simple">
-<li><p><strong>Population</strong>: healthy</p></li>
-<li><p><strong>Age</strong>: 58 years</p></li>
+<li><p><strong>Population</strong>: ALS patients</p></li>
+<li><p><strong>Clinical population</strong>: amyotrophic lateral sclerosis</p></li>
+<li><p><strong>Age</strong>: 58 (range: 40-72) years</p></li>
 <li><p><strong>BCI experience</strong>: naive</p></li>
 </ul>
 </div>
 <div class="admonition-equipment admonition">
 <p class="admonition-title">Equipment</p>
 <ul class="simple">
-<li><p><strong>Amplifier</strong>: BCI2000</p></li>
+<li><p><strong>Amplifier</strong>: g.MOBILAB</p></li>
 <li><p><strong>Electrodes</strong>: active electrodes</p></li>
 <li><p><strong>Montage</strong>: 10-10</p></li>
 <li><p><strong>Reference</strong>: right earlobe</p></li>
@@ -741,9 +742,11 @@
 <div class="admonition-preprocessing admonition">
 <p class="admonition-title">Preprocessing</p>
 <ul class="simple">
-<li><p><strong>Data state</strong>: epoched</p></li>
+<li><p><strong>Data state</strong>: preprocessed</p></li>
 <li><p><strong>Bandpass filter</strong>: 0.1-10 Hz</p></li>
-<li><p><strong>Steps</strong>: bandpass filtering, notch filtering, epoching, artifact rejection, baseline correction, decimation</p></li>
+<li><p><strong>Steps</strong>: bandpass filtering, notch filtering, artifact rejection, baseline correction</p></li>
+<li><p><strong>Re-reference</strong>: right earlobe</p></li>
+<li><p><strong>Notes</strong>: Epochs with peak amplitude &gt;70 μV or &lt;-70 μV were rejected. Baseline correction based on 200 ms preceding each epoch.</p></li>
 </ul>
 </div>
 <div class="admonition-data-access admonition">
@@ -757,8 +760,8 @@
 <p class="admonition-title">Experimental Protocol</p>
 <ul class="simple">
 <li><p><strong>Paradigm</strong>: p300</p></li>
-<li><p><strong>Feedback</strong>: none</p></li>
-<li><p><strong>Stimulus</strong>: rsvp</p></li>
+<li><p><strong>Feedback</strong>: visual</p></li>
+<li><p><strong>Stimulus</strong>: row-column intensification</p></li>
 </ul>
 </div>
 <div class="tip admonition">

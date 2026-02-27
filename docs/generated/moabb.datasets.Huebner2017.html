@@ -692,7 +692,7 @@
 <h1>moabb.datasets.Huebner2017<a class="headerlink" href="#moabb-datasets-huebner2017" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="moabb.datasets.Huebner2017">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">Huebner2017</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raw_slice_offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_blocks_as_sessions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/huebner_llp.py#L135-L317"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Huebner2017" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">Huebner2017</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raw_slice_offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_blocks_as_sessions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/huebner_llp.py#L134-L405"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Huebner2017" title="Link to this definition">#</a></dt>
 <dd><p>Learning from label proportions for a visual matrix speller (ERP)
 dataset from Hübner et al 2017 <a class="reference internal" href="#r0a211c89d39d-1" id="id1">[1]</a>.</p>
 <p><strong>PapersWithCode leaderboard:</strong> <a class="reference external" href="https://paperswithcode.com/dataset/huebner2017-moabb">https://paperswithcode.com/dataset/huebner2017-moabb</a></p>
@@ -727,16 +727,16 @@ dataset from Hübner et al 2017 <a class="reference internal" href="#r0a211c89d3
 <ul class="simple">
 <li><p><strong>Population</strong>: healthy</p></li>
 <li><p><strong>Age</strong>: 26 years</p></li>
-<li><p><strong>BCI experience</strong>: experienced</p></li>
+<li><p><strong>BCI experience</strong>: naive</p></li>
 </ul>
 </div>
 <div class="admonition-equipment admonition">
 <p class="admonition-title">Equipment</p>
 <ul class="simple">
-<li><p><strong>Amplifier</strong>: BrainAmp</p></li>
+<li><p><strong>Amplifier</strong>: BrainAmp DC</p></li>
 <li><p><strong>Electrodes</strong>: Ag/AgCl</p></li>
-<li><p><strong>Montage</strong>: 10-20</p></li>
-<li><p><strong>Reference</strong>: Car</p></li>
+<li><p><strong>Montage</strong>: extended 10-20</p></li>
+<li><p><strong>Reference</strong>: nose</p></li>
 </ul>
 </div>
 <div class="admonition-preprocessing admonition">
@@ -744,15 +744,16 @@ dataset from Hübner et al 2017 <a class="reference internal" href="#r0a211c89d3
 <ul class="simple">
 <li><p><strong>Data state</strong>: preprocessed</p></li>
 <li><p><strong>Bandpass filter</strong>: 0.5-8 Hz</p></li>
-<li><p><strong>Steps</strong>: bandpass filtering (0.5-8 Hz), downsampling to 100 Hz, epoching, baseline correction</p></li>
-<li><p><strong>Re-reference</strong>: car</p></li>
+<li><p><strong>Steps</strong>: bandpass filtering (0.5-8 Hz), downsampling to 100 Hz, epoching [-200, 700] ms, baseline correction [-200, 0] ms, removed Fp1 and Fp2 channels, feature extraction (mean amplitudes of 6 time intervals per channel)</p></li>
+<li><p><strong>Re-reference</strong>: nose</p></li>
+<li><p><strong>Notes</strong>: Features: mean amplitudes of 6 intervals ([50,120], [121,200], [201,280], [281,380], [381,530], [531,700] ms) per channel, resulting in 6×29=174 features per epoch</p></li>
 </ul>
 </div>
 <div class="admonition-data-access admonition">
 <p class="admonition-title">Data Access</p>
 <ul class="simple">
 <li><p><strong>DOI</strong>: 10.1371/journal.pone.0175856</p></li>
-<li><p><strong>Data URL</strong>: <a class="reference external" href="https://doi.org/10.5281/zenodo.192684">https://doi.org/10.5281/zenodo.192684</a></p></li>
+<li><p><strong>Data URL</strong>: <a class="reference external" href="http://doi.org/10.5281/zenodo.192684">http://doi.org/10.5281/zenodo.192684</a></p></li>
 <li><p><strong>Repository</strong>: Zenodo</p></li>
 </ul>
 </div>
@@ -760,8 +761,8 @@ dataset from Hübner et al 2017 <a class="reference internal" href="#r0a211c89d3
 <p class="admonition-title">Experimental Protocol</p>
 <ul class="simple">
 <li><p><strong>Paradigm</strong>: p300</p></li>
-<li><p><strong>Feedback</strong>: visual feedback after each character</p></li>
-<li><p><strong>Stimulus</strong>: rsvp</p></li>
+<li><p><strong>Feedback</strong>: visual feedback after each character (4s)</p></li>
+<li><p><strong>Stimulus</strong>: character matrix</p></li>
 </ul>
 </div>
 <div class="tip admonition">

@@ -692,7 +692,7 @@
 <h1>moabb.datasets.BNCI2025_002<a class="headerlink" href="#moabb-datasets-bnci2025-002" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="moabb.datasets.BNCI2025_002">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">BNCI2025_002</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bnci/bnci_2025.py#L852-L1107"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BNCI2025_002" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">BNCI2025_002</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bnci/bnci_2025.py#L963-L1289"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BNCI2025_002" title="Link to this definition">#</a></dt>
 <dd><p>BNCI 2025-002 Continuous 2D Trajectory Decoding dataset.</p>
 <div class="admonition-dataset-summary admonition">
 <p class="admonition-title">Dataset summary</p>
@@ -732,28 +732,28 @@
 <div class="admonition-participants admonition">
 <p class="admonition-title">Participants</p>
 <ul class="simple">
-<li><p><strong>Population</strong>: healthy</p></li>
+<li><p><strong>Population</strong>: Healthy (able-bodied participants) + 1 SCI participant</p></li>
 <li><p><strong>Age</strong>: 24 years</p></li>
-<li><p><strong>Handedness</strong>: right-handed (Edinburgh Handedness Inventory)</p></li>
-<li><p><strong>BCI experience</strong>: naive BCI users in terms of motor decoding (4 had previous EEG experience)</p></li>
+<li><p><strong>Handedness</strong>: {‘right’: 10}</p></li>
+<li><p><strong>BCI experience</strong>: naive BCI users in terms of motor decoding; 4 had previous EEG experience</p></li>
 </ul>
 </div>
 <div class="admonition-equipment admonition">
 <p class="admonition-title">Equipment</p>
 <ul class="simple">
-<li><p><strong>Amplifier</strong>: BrainVision</p></li>
-<li><p><strong>Electrodes</strong>: active electrodes (actiCAP)</p></li>
-<li><p><strong>Montage</strong>: channels_fyrxyz</p></li>
-<li><p><strong>Reference</strong>: Car</p></li>
+<li><p><strong>Amplifier</strong>: actiCAP, Brain Products GmbH</p></li>
+<li><p><strong>Electrodes</strong>: EEG</p></li>
+<li><p><strong>Montage</strong>: af7 af3 afz af4 af8 f7 f5 f3 f1 fz f2 f4 f6 f8 ft7 fc5 fc3 fc1 fcz fc2 fc4 fc6 ft8 t7 c5 c3 c1 cz c2 c4 c6 t8 tp7 cp5 cp3 cp1 cpz cp2 cp4 cp6 tp8 p7 p5 p3 p1 pz p2 p4 p6 p8 ppo1h ppo2h po7 po3 poz po4 po8 o1 oz o2</p></li>
+<li><p><strong>Reference</strong>: right mastoid</p></li>
 </ul>
 </div>
 <div class="admonition-preprocessing admonition">
 <p class="admonition-title">Preprocessing</p>
 <ul class="simple">
-<li><p><strong>Data state</strong>: continuous signals with synchronized decoded control signals, paradigm targets, visual feedback trajectories, and error metrics</p></li>
+<li><p><strong>Data state</strong>: preprocessed</p></li>
 <li><p><strong>Bandpass filter</strong>: 0.18-3 Hz</p></li>
-<li><p><strong>Steps</strong>: resampling and alignment to EEG timeline, GND channel removal, channel location assignment</p></li>
-<li><p><strong>Re-reference</strong>: common average</p></li>
+<li><p><strong>Steps</strong>: anti-aliasing filter (25 Hz), notch filter (50 Hz), downsampling to 100 Hz, bad channel interpolation, eye artifact subtraction (SGEYESUB algorithm), removal of frontal (AF) row channels, high-pass filter (0.18 Hz), common average re-reference, pops and drifts attenuation (HEAR algorithm), low-pass filter (3 Hz), downsampling to 20 Hz</p></li>
+<li><p><strong>Re-reference</strong>: common average reference</p></li>
 </ul>
 </div>
 <div class="admonition-data-access admonition">
@@ -767,9 +767,10 @@
 <div class="admonition-experimental-protocol admonition">
 <p class="admonition-title">Experimental Protocol</p>
 <ul class="simple">
-<li><p><strong>Paradigm</strong>: imagery</p></li>
-<li><p><strong>Feedback</strong>: none</p></li>
-<li><p><strong>Stimulus</strong>: avatar</p></li>
+<li><p><strong>Paradigm</strong>: motor imagery</p></li>
+<li><p><strong>Task type</strong>: continuous 2D trajectory decoding</p></li>
+<li><p><strong>Feedback</strong>: visual (green dot showing EEG-decoded trajectory position)</p></li>
+<li><p><strong>Stimulus</strong>: visual targets (white snake/shapes on black screen)</p></li>
 </ul>
 </div>
 <div class="tip admonition">

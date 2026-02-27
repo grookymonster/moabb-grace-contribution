@@ -692,7 +692,7 @@
 <h1>moabb.datasets.BNCI2015_004<a class="headerlink" href="#moabb-datasets-bnci2015-004" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="moabb.datasets.BNCI2015_004">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">BNCI2015_004</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bnci/bnci_2015.py#L789-L960"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BNCI2015_004" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">BNCI2015_004</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bnci/bnci_2015.py#L867-L1103"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BNCI2015_004" title="Link to this definition">#</a></dt>
 <dd><p>BNCI 2015-004 Mental tasks dataset.</p>
 <p><strong>PapersWithCode leaderboard:</strong> <a class="reference external" href="https://paperswithcode.com/dataset/bnci2015-004-moabb-1">https://paperswithcode.com/dataset/bnci2015-004-moabb-1</a></p>
 <div class="admonition-dataset-summary admonition">
@@ -733,8 +733,10 @@
 <div class="admonition-participants admonition">
 <p class="admonition-title">Participants</p>
 <ul class="simple">
-<li><p><strong>Population</strong>: SCI and stroke</p></li>
-<li><p><strong>Age</strong>: 38.5 (range: 20-57) years</p></li>
+<li><p><strong>Population</strong>: CNS tissue damage</p></li>
+<li><p><strong>Clinical population</strong>: stroke and spinal cord injury</p></li>
+<li><p><strong>Age</strong>: 38 (range: 20-57) years</p></li>
+<li><p><strong>Handedness</strong>: not specified</p></li>
 <li><p><strong>BCI experience</strong>: naive</p></li>
 </ul>
 </div>
@@ -742,17 +744,18 @@
 <p class="admonition-title">Equipment</p>
 <ul class="simple">
 <li><p><strong>Amplifier</strong>: g.tec</p></li>
-<li><p><strong>Electrodes</strong>: active electrodes</p></li>
+<li><p><strong>Electrodes</strong>: active electrode</p></li>
 <li><p><strong>Montage</strong>: 10-20</p></li>
-<li><p><strong>Reference</strong>: left mastoid</p></li>
+<li><p><strong>Reference</strong>: left and right mastoid</p></li>
 </ul>
 </div>
 <div class="admonition-preprocessing admonition">
 <p class="admonition-title">Preprocessing</p>
 <ul class="simple">
-<li><p><strong>Data state</strong>: raw filtered</p></li>
+<li><p><strong>Data state</strong>: filtered</p></li>
 <li><p><strong>Bandpass filter</strong>: 0.5-100 Hz</p></li>
-<li><p><strong>Steps</strong>: bandpass filter, notch filter</p></li>
+<li><p><strong>Steps</strong>: bandpass filter, notch filter, artifact rejection</p></li>
+<li><p><strong>Re-reference</strong>: left and right mastoid</p></li>
 </ul>
 </div>
 <div class="admonition-data-access admonition">
@@ -767,8 +770,9 @@
 <p class="admonition-title">Experimental Protocol</p>
 <ul class="simple">
 <li><p><strong>Paradigm</strong>: imagery</p></li>
-<li><p><strong>Feedback</strong>: cue-guided, no online feedback during screening</p></li>
-<li><p><strong>Stimulus</strong>: avatar</p></li>
+<li><p><strong>Tasks</strong>: word_association, mental_subtraction, spatial_navigation, right_hand_imagery, feet_imagery</p></li>
+<li><p><strong>Feedback</strong>: none</p></li>
+<li><p><strong>Stimulus</strong>: visual cue</p></li>
 </ul>
 </div>
 <div class="tip admonition">

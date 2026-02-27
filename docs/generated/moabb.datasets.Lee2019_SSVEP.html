@@ -692,7 +692,7 @@
 <h1>moabb.datasets.Lee2019_SSVEP<a class="headerlink" href="#moabb-datasets-lee2019-ssvep" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="moabb.datasets.Lee2019_SSVEP">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">Lee2019_SSVEP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train_run</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_run</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resting_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sessions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(1,</span> <span class="pre">2)</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/Lee2019.py#L735-L970"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Lee2019_SSVEP" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">Lee2019_SSVEP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train_run</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_run</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resting_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sessions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(1,</span> <span class="pre">2)</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/Lee2019.py#L818-L1085"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Lee2019_SSVEP" title="Link to this definition">#</a></dt>
 <dd><p>BMI/OpenBMI dataset for SSVEP.</p>
 <p><strong>PapersWithCode leaderboard:</strong> <a class="reference external" href="https://paperswithcode.com/dataset/lee2019-ssvep-moabb-1">https://paperswithcode.com/dataset/lee2019-ssvep-moabb-1</a></p>
 <div class="admonition-dataset-summary admonition">
@@ -730,7 +730,7 @@
 <li><p><strong>Population</strong>: healthy</p></li>
 <li><p><strong>Age</strong>: 29.5 (range: 24-35) years</p></li>
 <li><p><strong>Handedness</strong>: {‘right’: 4}</p></li>
-<li><p><strong>BCI experience</strong>: experienced</p></li>
+<li><p><strong>BCI experience</strong>: mixed</p></li>
 </ul>
 </div>
 <div class="admonition-equipment admonition">
@@ -745,10 +745,9 @@
 <div class="admonition-preprocessing admonition">
 <p class="admonition-title">Preprocessing</p>
 <ul class="simple">
-<li><p><strong>Data state</strong>: raw EEG provided, preprocessing applied for analysis</p></li>
+<li><p><strong>Data state</strong>: raw EEG available</p></li>
 <li><p><strong>Bandpass filter</strong>: 0.5-40 Hz</p></li>
-<li><p><strong>Steps</strong>: downsampling, bandpass filtering, segmentation, baseline correction</p></li>
-<li><p><strong>Re-reference</strong>: car</p></li>
+<li><p><strong>Steps</strong>: downsampling, bandpass filtering</p></li>
 </ul>
 </div>
 <div class="admonition-data-access admonition">
@@ -762,8 +761,9 @@
 <p class="admonition-title">Experimental Protocol</p>
 <ul class="simple">
 <li><p><strong>Paradigm</strong>: ssvep</p></li>
+<li><p><strong>Task type</strong>: selective_attention</p></li>
 <li><p><strong>Feedback</strong>: visual</p></li>
-<li><p><strong>Stimulus</strong>: rc_speller</p></li>
+<li><p><strong>Stimulus</strong>: flickering_box</p></li>
 </ul>
 </div>
 <div class="tip admonition">

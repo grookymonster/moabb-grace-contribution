@@ -692,7 +692,7 @@
 <h1>moabb.datasets.Nakanishi2015<a class="headerlink" href="#moabb-datasets-nakanishi2015" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="moabb.datasets.Nakanishi2015">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">Nakanishi2015</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/ssvep_nakanishi.py#L37-L184"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Nakanishi2015" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">Nakanishi2015</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/ssvep_nakanishi.py#L35-L303"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Nakanishi2015" title="Link to this definition">#</a></dt>
 <dd><p>SSVEP Nakanishi 2015 dataset.</p>
 <p><strong>PapersWithCode leaderboard:</strong> <a class="reference external" href="https://paperswithcode.com/dataset/nakanishi2015-moabb">https://paperswithcode.com/dataset/nakanishi2015-moabb</a></p>
 <div class="admonition-dataset-summary admonition">
@@ -728,26 +728,32 @@
 <p class="admonition-title">Participants</p>
 <ul class="simple">
 <li><p><strong>Population</strong>: healthy</p></li>
+<li><p><strong>Age</strong>: 28 years</p></li>
+<li><p><strong>BCI experience</strong>: not specified</p></li>
 </ul>
 </div>
 <div class="admonition-equipment admonition">
 <p class="admonition-title">Equipment</p>
 <ul class="simple">
 <li><p><strong>Amplifier</strong>: Biosemi ActiveTwo</p></li>
-<li><p><strong>Montage</strong>: standard_1005</p></li>
-<li><p><strong>Reference</strong>: cms</p></li>
+<li><p><strong>Electrodes</strong>: EEG</p></li>
+<li><p><strong>Montage</strong>: standard_1020</p></li>
+<li><p><strong>Reference</strong>: CMS</p></li>
 </ul>
 </div>
 <div class="admonition-preprocessing admonition">
 <p class="admonition-title">Preprocessing</p>
 <ul class="simple">
 <li><p><strong>Bandpass filter</strong>: 6-80 Hz</p></li>
+<li><p><strong>Steps</strong>: downsampling, bandpass filtering</p></li>
+<li><p><strong>Notes</strong>: Zero-phase forward and reverse IIR filtering was implemented using the filtfilt() function in MATLAB. Data epochs were extracted with a 135-ms latency delay considering the visual system delay.</p></li>
 </ul>
 </div>
 <div class="admonition-data-access admonition">
 <p class="admonition-title">Data Access</p>
 <ul class="simple">
 <li><p><strong>DOI</strong>: 10.1371/journal.pone.0140703</p></li>
+<li><p><strong>Data URL</strong>: <a class="reference external" href="ftp://sccn.ucsd.edu/pub/cca_ssvep">ftp://sccn.ucsd.edu/pub/cca_ssvep</a></p></li>
 <li><p><strong>Repository</strong>: Github</p></li>
 </ul>
 </div>
@@ -755,6 +761,7 @@
 <p class="admonition-title">Experimental Protocol</p>
 <ul class="simple">
 <li><p><strong>Paradigm</strong>: ssvep</p></li>
+<li><p><strong>Feedback</strong>: none</p></li>
 <li><p><strong>Stimulus</strong>: flickering</p></li>
 </ul>
 </div>
@@ -781,7 +788,7 @@ e140703, 2015.
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="moabb.datasets.Nakanishi2015.data_path">
-<span class="sig-name descname"><span class="pre">data_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subject</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/ssvep_nakanishi.py#L178-L184"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Nakanishi2015.data_path" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">data_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subject</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/ssvep_nakanishi.py#L297-L303"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Nakanishi2015.data_path" title="Link to this definition">#</a></dt>
 <dd><p>Get path to local copy of a subject data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>

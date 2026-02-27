@@ -692,7 +692,7 @@
 <h1>moabb.datasets.BNCI2014_002<a class="headerlink" href="#moabb-datasets-bnci2014-002" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="moabb.datasets.BNCI2014_002">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">BNCI2014_002</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bnci/bnci_2014.py#L440-L627"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BNCI2014_002" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">BNCI2014_002</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bnci/bnci_2014.py#L474-L691"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BNCI2014_002" title="Link to this definition">#</a></dt>
 <dd><p>BNCI 2014-002 Motor Imagery dataset.</p>
 <p><strong>PapersWithCode leaderboard:</strong> <a class="reference external" href="https://paperswithcode.com/dataset/bnci2014-002-moabb-1">https://paperswithcode.com/dataset/bnci2014-002-moabb-1</a></p>
 <div class="admonition-dataset-summary admonition">
@@ -734,31 +734,29 @@
 <p class="admonition-title">Participants</p>
 <ul class="simple">
 <li><p><strong>Population</strong>: healthy</p></li>
-<li><p><strong>BCI experience</strong>: naive</p></li>
+<li><p><strong>BCI experience</strong>: mixed</p></li>
 </ul>
 </div>
 <div class="admonition-equipment admonition">
 <p class="admonition-title">Equipment</p>
 <ul class="simple">
-<li><p><strong>Amplifier</strong>: g.tec</p></li>
+<li><p><strong>Amplifier</strong>: g.USBamp</p></li>
 <li><p><strong>Electrodes</strong>: Ag/AgCl</p></li>
-<li><p><strong>Montage</strong>: laplacian</p></li>
+<li><p><strong>Montage</strong>: Laplacian</p></li>
 <li><p><strong>Reference</strong>: left mastoid</p></li>
 </ul>
 </div>
 <div class="admonition-preprocessing admonition">
 <p class="admonition-title">Preprocessing</p>
 <ul class="simple">
-<li><p><strong>Data state</strong>: raw with online filtering applied</p></li>
-<li><p><strong>Bandpass filter</strong>: 0.1-200 Hz</p></li>
-<li><p><strong>Steps</strong>: Bandpass filtering, Notch filtering, Automated outlier rejection, Laplacian spatial filtering, DFT for PSD estimation</p></li>
-<li><p><strong>Re-reference</strong>: car</p></li>
+<li><p><strong>Data state</strong>: minimally preprocessed (online filtered)</p></li>
+<li><p><strong>Steps</strong>: bandpass filtering</p></li>
 </ul>
 </div>
 <div class="admonition-data-access admonition">
 <p class="admonition-title">Data Access</p>
 <ul class="simple">
-<li><p><strong>DOI</strong>: 10.1007/s00500-012-0895-4</p></li>
+<li><p><strong>DOI</strong>: 10.1515/bmt-2014-0117</p></li>
 <li><p><strong>Repository</strong>: BNCI Horizon</p></li>
 </ul>
 </div>
@@ -766,8 +764,8 @@
 <p class="admonition-title">Experimental Protocol</p>
 <ul class="simple">
 <li><p><strong>Paradigm</strong>: imagery</p></li>
-<li><p><strong>Feedback</strong>: none</p></li>
-<li><p><strong>Stimulus</strong>: cursor_feedback</p></li>
+<li><p><strong>Feedback</strong>: continuous</p></li>
+<li><p><strong>Stimulus</strong>: bar_graph</p></li>
 </ul>
 </div>
 <div class="tip admonition">

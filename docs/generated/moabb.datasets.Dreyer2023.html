@@ -692,7 +692,7 @@
 <h1>moabb.datasets.Dreyer2023<a class="headerlink" href="#moabb-datasets-dreyer2023" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="moabb.datasets.Dreyer2023">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">Dreyer2023</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/dreyer2023.py#L625-L799"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Dreyer2023" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">Dreyer2023</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/dreyer2023.py#L1056-L1310"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Dreyer2023" title="Link to this definition">#</a></dt>
 <dd><p>Class for Dreyer2023 dataset management. MI dataset.</p>
 <div class="admonition-dataset-summary admonition">
 <p class="admonition-title">Dataset summary</p>
@@ -734,15 +734,23 @@
 <ul class="simple">
 <li><p><strong>Population</strong>: healthy</p></li>
 <li><p><strong>Age</strong>: 29 (range: 19-59) years</p></li>
+<li><p><strong>BCI experience</strong>: naive</p></li>
 </ul>
 </div>
 <div class="admonition-equipment admonition">
 <p class="admonition-title">Equipment</p>
 <ul class="simple">
-<li><p><strong>Amplifier</strong>: g.USBAmp (g.tec)</p></li>
+<li><p><strong>Amplifier</strong>: g.USBAmp</p></li>
 <li><p><strong>Electrodes</strong>: active electrodes</p></li>
-<li><p><strong>Montage</strong>: standard_1020</p></li>
+<li><p><strong>Montage</strong>: 10-20</p></li>
 <li><p><strong>Reference</strong>: left earlobe</p></li>
+</ul>
+</div>
+<div class="admonition-preprocessing admonition">
+<p class="admonition-title">Preprocessing</p>
+<ul class="simple">
+<li><p><strong>Data state</strong>: raw</p></li>
+<li><p><strong>Re-reference</strong>: Laplacian (C3, C4)</p></li>
 </ul>
 </div>
 <div class="admonition-data-access admonition">
@@ -757,9 +765,8 @@
 <p class="admonition-title">Experimental Protocol</p>
 <ul class="simple">
 <li><p><strong>Paradigm</strong>: imagery</p></li>
-<li><p><strong>Task type</strong>: left_right_hand</p></li>
-<li><p><strong>Tasks</strong>: rest, feet, left_hand, right_hand</p></li>
 <li><p><strong>Feedback</strong>: visual</p></li>
+<li><p><strong>Stimulus</strong>: arrow_cue</p></li>
 </ul>
 </div>
 <div class="tip admonition">

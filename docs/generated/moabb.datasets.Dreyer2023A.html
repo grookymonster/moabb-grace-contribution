@@ -692,7 +692,7 @@
 <h1>moabb.datasets.Dreyer2023A<a class="headerlink" href="#moabb-datasets-dreyer2023a" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="moabb.datasets.Dreyer2023A">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">Dreyer2023A</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/dreyer2023.py#L241-L452"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Dreyer2023A" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">Dreyer2023A</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/dreyer2023.py#L239-L519"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Dreyer2023A" title="Link to this definition">#</a></dt>
 <dd><p>Class for Dreyer2023A dataset management. MI dataset.</p>
 <div class="admonition-dataset-summary admonition">
 <p class="admonition-title">Dataset summary</p>
@@ -733,14 +733,15 @@
 <p class="admonition-title">Participants</p>
 <ul class="simple">
 <li><p><strong>Population</strong>: healthy</p></li>
-<li><p><strong>Age</strong>: 39 (range: 19-59) years</p></li>
+<li><p><strong>Age</strong>: 29 (range: 19-59) years</p></li>
+<li><p><strong>Handedness</strong>: right</p></li>
 <li><p><strong>BCI experience</strong>: naive</p></li>
 </ul>
 </div>
 <div class="admonition-equipment admonition">
 <p class="admonition-title">Equipment</p>
 <ul class="simple">
-<li><p><strong>Amplifier</strong>: g.tec</p></li>
+<li><p><strong>Amplifier</strong>: g.USBAmp (g.tec, Austria)</p></li>
 <li><p><strong>Electrodes</strong>: active electrodes</p></li>
 <li><p><strong>Montage</strong>: 10-20</p></li>
 <li><p><strong>Reference</strong>: left earlobe</p></li>
@@ -750,7 +751,9 @@
 <p class="admonition-title">Preprocessing</p>
 <ul class="simple">
 <li><p><strong>Data state</strong>: raw</p></li>
-<li><p><strong>Re-reference</strong>: car</p></li>
+<li><p><strong>Bandpass filter</strong>: 5-35 Hz</p></li>
+<li><p><strong>Re-reference</strong>: Laplacian (C3, C4 for feature extraction)</p></li>
+<li><p><strong>Notes</strong>: The raw signals were recorded without any hardware filters. For online processing, a fifth-order Butterworth filter was applied in a participant-specific discriminant frequency band in the range of 5 Hz to 35 Hz with 0.5 Hz large bins.</p></li>
 </ul>
 </div>
 <div class="admonition-data-access admonition">
@@ -765,8 +768,9 @@
 <p class="admonition-title">Experimental Protocol</p>
 <ul class="simple">
 <li><p><strong>Paradigm</strong>: imagery</p></li>
-<li><p><strong>Feedback</strong>: visual</p></li>
-<li><p><strong>Stimulus</strong>: cursor_feedback</p></li>
+<li><p><strong>Tasks</strong>: right_hand_MI, left_hand_MI, resting_state</p></li>
+<li><p><strong>Feedback</strong>: continuous visual</p></li>
+<li><p><strong>Stimulus</strong>: blue bar varying in length</p></li>
 </ul>
 </div>
 <div class="tip admonition">

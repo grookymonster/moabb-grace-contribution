@@ -692,7 +692,7 @@
 <h1>moabb.datasets.BI2015a<a class="headerlink" href="#moabb-datasets-bi2015a" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="moabb.datasets.BI2015a">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">BI2015a</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/braininvaders.py#L1039-L1185"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BI2015a" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">BI2015a</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/braininvaders.py#L1317-L1523"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BI2015a" title="Link to this definition">#</a></dt>
 <dd><p>P300 dataset BI2015a from a “Brain Invaders” experiment.</p>
 <p><strong>PapersWithCode leaderboard:</strong> <a class="reference external" href="https://paperswithcode.com/dataset/braininvaders2015a-moabb">https://paperswithcode.com/dataset/braininvaders2015a-moabb</a></p>
 <div class="admonition-dataset-summary admonition">
@@ -726,13 +726,14 @@
 <ul class="simple">
 <li><p><strong>Population</strong>: healthy</p></li>
 <li><p><strong>Age</strong>: 23.7 years</p></li>
+<li><p><strong>BCI experience</strong>: mostly students and young researchers</p></li>
 </ul>
 </div>
 <div class="admonition-equipment admonition">
 <p class="admonition-title">Equipment</p>
 <ul class="simple">
-<li><p><strong>Amplifier</strong>: g.tec</p></li>
-<li><p><strong>Electrodes</strong>: Silver/Silver Chloride</p></li>
+<li><p><strong>Amplifier</strong>: g.USBamp (g.tec, Schiedlberg, Austria)</p></li>
+<li><p><strong>Electrodes</strong>: wet electrodes</p></li>
 <li><p><strong>Montage</strong>: 10-10</p></li>
 <li><p><strong>Reference</strong>: right earlobe</p></li>
 </ul>
@@ -740,7 +741,8 @@
 <div class="admonition-preprocessing admonition">
 <p class="admonition-title">Preprocessing</p>
 <ul class="simple">
-<li><p><strong>Data state</strong>: no digital filter applied</p></li>
+<li><p><strong>Data state</strong>: raw EEG with synchronized USB tagging (reduced jitter using USB digital-to-analog converter)</p></li>
+<li><p><strong>Notes</strong>: no digital filter applied during acquisition; tags synchronized with EEG signals to reduce jitter; consistent tagging latency across Brain Invaders databases</p></li>
 </ul>
 </div>
 <div class="admonition-data-access admonition">
@@ -755,8 +757,9 @@
 <p class="admonition-title">Experimental Protocol</p>
 <ul class="simple">
 <li><p><strong>Paradigm</strong>: p300</p></li>
-<li><p><strong>Feedback</strong>: visual (real-time adaptive Riemannian MDM classifier)</p></li>
-<li><p><strong>Stimulus</strong>: oddball</p></li>
+<li><p><strong>Task type</strong>: target detection</p></li>
+<li><p><strong>Feedback</strong>: visual (game interface with real-time adaptive Riemannian RMDM classifier)</p></li>
+<li><p><strong>Stimulus</strong>: oddball paradigm on grid of 36 symbols (1 Target, 35 Non-Target) flashed pseudo-randomly</p></li>
 </ul>
 </div>
 <div class="tip admonition">
@@ -806,7 +809,7 @@ BCI with modulation of flash duration Dataset (BI2015a)
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="moabb.datasets.BI2015a.data_path">
-<span class="sig-name descname"><span class="pre">data_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subject</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/braininvaders.py#L1182-L1185"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BI2015a.data_path" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">data_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subject</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/braininvaders.py#L1520-L1523"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BI2015a.data_path" title="Link to this definition">#</a></dt>
 <dd><p>Get path to local copy of a subject data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>

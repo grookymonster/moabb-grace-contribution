@@ -692,7 +692,7 @@
 <h1>moabb.datasets.BNCI2025_001<a class="headerlink" href="#moabb-datasets-bnci2025-001" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="moabb.datasets.BNCI2025_001">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">BNCI2025_001</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bnci/bnci_2025.py#L192-L440"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BNCI2025_001" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">BNCI2025_001</span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bnci/bnci_2025.py#L190-L551"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BNCI2025_001" title="Link to this definition">#</a></dt>
 <dd><p>BNCI 2025-001 Motor Kinematics Reaching dataset.</p>
 <div class="admonition-dataset-summary admonition">
 <p class="admonition-title">Dataset summary</p>
@@ -732,7 +732,7 @@
 <div class="admonition-participants admonition">
 <p class="admonition-title">Participants</p>
 <ul class="simple">
-<li><p><strong>Population</strong>: healthy</p></li>
+<li><p><strong>Population</strong>: Healthy</p></li>
 <li><p><strong>Age</strong>: 26.1 years</p></li>
 <li><p><strong>Handedness</strong>: {‘right’: 17, ‘left’: 3}</p></li>
 </ul>
@@ -741,17 +741,19 @@
 <p class="admonition-title">Equipment</p>
 <ul class="simple">
 <li><p><strong>Amplifier</strong>: BrainAmp</p></li>
+<li><p><strong>Electrodes</strong>: EEG</p></li>
 <li><p><strong>Montage</strong>: af7 af3 afz af4 af8 f7 f5 f3 f1 fz f2 f4 f6 f8 ft7 fc5 fc3 fc1 fcz fc2 fc4 fc6 ft8 t7 c5 c3 c1 cz c2 c4 c6 t8 tp7 cp5 cp3 cp1 cpz cp2 cp4 cp6 tp8 p7 p5 p3 p1 pz p2 p4 p6 p8 ppo1h ppo2h po7 po3 poz po4 po8 o1 oz o2</p></li>
-<li><p><strong>Reference</strong>: right mastoid</p></li>
+<li><p><strong>Reference</strong>: common average</p></li>
 </ul>
 </div>
 <div class="admonition-preprocessing admonition">
 <p class="admonition-title">Preprocessing</p>
 <ul class="simple">
-<li><p><strong>Data state</strong>: raw with eye artifact correction model available</p></li>
+<li><p><strong>Data state</strong>: preprocessed with eye artifact correction</p></li>
 <li><p><strong>Bandpass filter</strong>: 0.3-80 Hz</p></li>
-<li><p><strong>Steps</strong>: eye artifact correction</p></li>
+<li><p><strong>Steps</strong>: low-pass filter at 100 Hz, notch filter at 50 Hz, downsampling to 200 Hz, bad channel rejection and interpolation, bandpass filter 0.3-80 Hz, eye artifact correction via SGEYESUB, ICA with FastICA algorithm, IC artifact removal, low-pass filter at 3 Hz, downsampling to 10 Hz, bad trial rejection, common average reference</p></li>
 <li><p><strong>Re-reference</strong>: common average</p></li>
+<li><p><strong>Notes</strong>: Frontal channels (AF7, AF3, AFz, AF4, AF8) and EOG removed prior to CAR to reduce residual eye artifacts. Final analysis used 55 channels. Eye blocks recorded separately for SGEYESUB model training. Bad trials rejected based on amplitude &gt;200 µV or standard deviation &gt;5SD. Movement-related bad trials rejected for incorrect direction, no movement, duration &lt;0.2s or &gt;4s, or movement initiated &lt;0.5s after cue stop.</p></li>
 </ul>
 </div>
 <div class="admonition-data-access admonition">
@@ -766,8 +768,10 @@
 <p class="admonition-title">Experimental Protocol</p>
 <ul class="simple">
 <li><p><strong>Paradigm</strong>: imagery</p></li>
+<li><p><strong>Task type</strong>: discrete reaching</p></li>
+<li><p><strong>Tasks</strong>: discrete reaching</p></li>
 <li><p><strong>Feedback</strong>: visual (cue color: green for correct, red for incorrect direction)</p></li>
-<li><p><strong>Stimulus</strong>: avatar</p></li>
+<li><p><strong>Stimulus</strong>: visual cue</p></li>
 </ul>
 </div>
 <div class="tip admonition">
