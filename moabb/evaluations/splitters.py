@@ -232,7 +232,7 @@ class CrossSessionSplitter(BaseCrossValidator):
         # To make sure that when I shuffle the subject, I shuffle the same way
         # the session when the object is created
         cv_kwargs = {**self._cv_kwargs}  # Copy the original kwargs
-        if self._need_rng:
+        if self._accepts_rng and self.random_state is not None:
             cv_kwargs["random_state"] = check_random_state(self.random_state)
 
         # For each subject I am creating the mask to select the subject metainformation.
@@ -267,3 +267,137 @@ class CrossSessionSplitter(BaseCrossValidator):
                 yield subject_indices[train_session_idx], subject_indices[
                     test_session_idx
                 ]
+
+
+class CrossDatasetSplitter(BaseCrossValidator):
+    """Data splitter for cross-dataset evaluation.
+
+    This splitter divides data based on dataset membership: training indices
+    come from ``train_datasets`` and test indices from ``test_datasets``.
+    The inner ``cv_class`` determines how the test data is further divided
+    into folds (by default, per-subject using LeaveOneGroupOut).
+
+    The metadata passed to :meth:`split` must contain a ``dataset`` column
+    identifying which dataset each sample belongs to, as well as a
+    ``subject`` column used for grouping.
+
+    The inner cross-validation strategy can be changed by passing the
+    ``cv_class`` and ``cv_kwargs`` arguments. By default, it uses
+    LeaveOneGroupOut, which evaluates each test subject independently.
+
+    Parameters
+    ----------
+    train_datasets : list of str
+        Dataset codes to use for training.
+    test_datasets : list of str
+        Dataset codes to use for testing.
+    cv_class : cross-validation class, default=LeaveOneGroupOut
+        Inner cross-validation strategy for splitting the test data.
+        The default LeaveOneGroupOut produces one fold per unique
+        (dataset, subject) pair in the test data.
+    random_state : int, RandomState instance or None, default=None
+        Controls the randomness of the inner cross-validation.
+        Pass an int for reproducible output across multiple function calls.
+    cv_kwargs : dict
+        Additional arguments to pass to the inner cross-validation strategy.
+
+    Yields
+    ------
+    train : ndarray
+        The training set indices for that split (all training dataset samples).
+
+    test : ndarray
+        The testing set indices for that split (one fold from inner CV).
+    """
+
+    def __init__(
+        self,
+        train_datasets,
+        test_datasets,
+        cv_class: type[BaseCrossValidator] = LeaveOneGroupOut,
+        random_state: int = None,
+        **cv_kwargs,
+    ):
+        self.train_datasets = train_datasets
+        self.test_datasets = test_datasets
+        self.cv_class = cv_class
+        self.cv_kwargs = cv_kwargs
+        self._cv_kwargs = dict(**cv_kwargs)
+        self.random_state = random_state
+
+        params = inspect.signature(self.cv_class).parameters
+        self._accepts_rng = "random_state" in params
+
+    def _make_groups(self, test_metadata):
+        """Create composite (dataset, subject) groups for the inner CV."""
+        return (
+            test_metadata["dataset"].astype(str)
+            + "_"
+            + test_metadata["subject"].astype(str)
+        ).values
+
+    def get_n_splits(self, metadata):
+        """Return the number of splits for the cross-validation.
+
+        Parameters
+        ----------
+        metadata : pd.DataFrame
+            The metadata containing ``dataset`` and ``subject`` columns.
+
+        Returns
+        -------
+        n_splits : int
+            The number of splits for the cross-validation.
+        """
+        test_mask = metadata["dataset"].isin(self.test_datasets)
+        test_metadata = metadata[test_mask]
+
+        cv_kwargs = {**self._cv_kwargs}
+        if self._accepts_rng and self.random_state is not None:
+            cv_kwargs["random_state"] = check_random_state(self.random_state)
+
+        splitter = self.cv_class(**cv_kwargs)
+        groups = self._make_groups(test_metadata)
+        return splitter.get_n_splits(test_metadata, groups=groups)
+
+    def split(self, y, metadata):
+        """Generate train/test indices for cross-dataset evaluation.
+
+        Training indices are all samples from ``train_datasets``.
+        Test indices come from the inner ``cv_class`` applied to
+        ``test_datasets`` data.
+
+        Parameters
+        ----------
+        y : array-like
+            Labels for all samples.
+        metadata : pd.DataFrame
+            Must contain ``dataset`` and ``subject`` columns.
+
+        Yields
+        ------
+        train : ndarray
+            Training set indices (all training dataset samples).
+        test : ndarray
+            Testing set indices (one fold from inner CV on test data).
+        """
+        train_mask = metadata["dataset"].isin(self.train_datasets)
+        train_indices = metadata.index[train_mask].values
+
+        test_mask = metadata["dataset"].isin(self.test_datasets)
+        test_metadata = metadata[test_mask]
+        test_y = y[test_mask]
+        test_all_indices = metadata.index[test_mask].values
+
+        cv_kwargs = {**self._cv_kwargs}
+        if self._accepts_rng and self.random_state is not None:
+            cv_kwargs["random_state"] = check_random_state(self.random_state)
+
+        splitter = self.cv_class(**cv_kwargs)
+
+        groups = self._make_groups(test_metadata)
+
+        for _, test_fold_ix in splitter.split(
+            X=test_all_indices, y=test_y, groups=groups
+        ):
+            yield train_indices, test_all_indices[test_fold_ix]

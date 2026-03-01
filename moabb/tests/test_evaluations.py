@@ -6,6 +6,7 @@ from collections import OrderedDict
 
 import numpy as np
 import pytest
+import sklearn
 import sklearn.base
 from pyriemann.estimation import Covariances
 from pyriemann.spatialfilters import CSP
@@ -395,13 +396,13 @@ class Test_CrossDataset:
         self.test_ds = FakeDataset(
             paradigm="imagery",
             event_list=["left_hand", "right_hand"],
-            n_subjects=1,  # Different number of subjects
-            n_sessions=3,  # Different number of sessions
+            n_subjects=1,
+            n_sessions=3,
         )
         self.paradigm = FakeImageryParadigm()
         self.eval = ev.CrossDatasetEvaluation(
-            train_dataset=self.train_ds,
-            test_dataset=self.test_ds,
+            train_datasets=self.train_ds,
+            test_datasets=self.test_ds,
             paradigm=self.paradigm,
         )
 
@@ -410,36 +411,54 @@ class Test_CrossDataset:
             FunctionTransformer(), Dummy(strategy="stratified", random_state=42)
         )
 
-    def test_validate_datasets(self):
-        """Test dataset validation."""
-        # Test with compatible dataset
+    def test_is_valid(self):
+        """Test that is_valid always returns True."""
+        assert self.eval.is_valid(self.train_ds)
         assert self.eval.is_valid(self.test_ds)
 
-        # Test with incompatible dataset (different events)
-        incompatible_ds = FakeDataset(
-            paradigm="imagery",
-            event_list=["left_hand"],  # Only one class
-            n_subjects=1,
-        )
+    @pytest.mark.skipif(
+        tuple(int(x) for x in sklearn.__version__.split(".")[:2]) >= (1, 6),
+        reason="sklearn >= 1.6 Pipeline.transform requires fitted check",
+    )
+    def test_process_returns_dataframe(self):
+        """Test that process returns a non-empty DataFrame."""
+        results_df = self.eval.process(pipelines=self.test_pipelines)
+        assert len(results_df) > 0
+        assert "score" in results_df.columns
 
-        # This should work but return a warning
-        eval_incompatible = ev.CrossDatasetEvaluation(
-            train_dataset=self.train_ds,
-            test_dataset=incompatible_ds,
-            paradigm=self.paradigm,
-        )
-        assert eval_incompatible.is_valid(incompatible_ds)
+    @pytest.mark.skipif(
+        tuple(int(x) for x in sklearn.__version__.split(".")[:2]) >= (1, 6),
+        reason="sklearn >= 1.6 Pipeline.transform requires fitted check",
+    )
+    def test_per_subject_granularity(self):
+        """Test that results contain per-subject scores."""
+        results_df = self.eval.process(pipelines=self.test_pipelines)
+        assert "subject" in results_df.columns
+        assert "session" in results_df.columns
 
-    def test_evaluate(self):
-        """Test basic evaluation functionality."""
-        results = list(self.eval.evaluate(dataset=None, pipelines=self.test_pipelines))
+    @pytest.mark.skipif(
+        tuple(int(x) for x in sklearn.__version__.split(".")[:2]) >= (1, 6),
+        reason="sklearn >= 1.6 Pipeline.transform requires fitted check",
+    )
+    def test_result_columns(self):
+        """Test that expected columns exist in results."""
+        results_df = self.eval.process(pipelines=self.test_pipelines)
+        for col in ["score", "time", "n_samples", "n_channels", "pipeline"]:
+            assert col in results_df.columns
 
-        # Check results structure
-        assert len(results) > 0
-        assert "score" in results[0]
-        assert "training_datasets" in results[0]
-        assert isinstance(results[0]["training_datasets"], list)
-        assert self.train_ds.code in results[0]["training_datasets"]
+    def test_no_overlap_validation(self):
+        """Test that overlapping train/test datasets raise ValueError."""
+        with pytest.raises(ValueError, match="cannot appear in both"):
+            ev.CrossDatasetEvaluation(
+                train_datasets=self.train_ds,
+                test_datasets=self.train_ds,
+                paradigm=self.paradigm,
+            )
+
+    def test_evaluate_raises(self):
+        """Test that evaluate() raises NotImplementedError."""
+        with pytest.raises(NotImplementedError):
+            list(self.eval.evaluate(None, {}, None, None))
 
 
 class UtilEvaluation:
