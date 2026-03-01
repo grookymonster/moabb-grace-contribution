@@ -98,8 +98,8 @@ class TestDepreciatedAlias(unittest.TestCase):
             self.assertEqual(
                 a.__doc__,
                 "DummyA class\n\n    Notes\n    -----\n\n"
-                "    .. note::\n\n        ``DummyA`` was previously named ``DummyB``. "
-                "``DummyB`` will be removed in version 0.1.\n\n",
+                "    .. note:: ``DummyA`` was previously named ``DummyB``. "
+                "``DummyB`` will be removed in  version 0.1.\n",
             )
 
         with self.assertLogs(logger="moabb.utils", level="WARN") as cm:
@@ -146,9 +146,8 @@ class TestDepreciatedAlias(unittest.TestCase):
             self.assertEqual(
                 a.__doc__,
                 "DummyA class\n\n            Notes\n            -----\n\n"
-                "            .. note::\n\n"
-                "        ``DummyA`` was previously named ``DummyB``. "
-                "``DummyB`` will be removed in version 0.1.\n\n\n"
+                "            .. note:: ``DummyA`` was previously named ``DummyB``. "
+                "``DummyB`` will be removed in  version 0.1.\n\n"
                 "            a note",
             )
 
@@ -170,8 +169,8 @@ class TestDepreciatedAlias(unittest.TestCase):
             # "``dummy_a`` was previously named ``dummy_b``. "
             # "``dummy_b`` will be removed in  version 0.1.",
             "Dummy function\n\n    Notes\n    -----\n\n"
-            "    .. note::\n\n        ``dummy_a`` was previously named ``dummy_b``. "
-            "``dummy_b`` will be removed in version 0.1.\n\n",
+            "    .. note:: ``dummy_a`` was previously named ``dummy_b``. "
+            "``dummy_b`` will be removed in  version 0.1.\n",
         )
 
         with self.assertLogs(logger="moabb.utils", level="WARN") as cm:

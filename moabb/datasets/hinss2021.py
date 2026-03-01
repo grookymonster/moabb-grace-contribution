@@ -7,21 +7,6 @@ import numpy as np
 
 from moabb.datasets import download as dl
 from moabb.datasets.base import BaseDataset
-from moabb.datasets.metadata.schema import (
-    AcquisitionMetadata,
-    AuxiliaryChannelsMetadata,
-    BCIApplicationMetadata,
-    CrossValidationMetadata,
-    DatasetMetadata,
-    DataStructureMetadata,
-    DocumentationMetadata,
-    ExperimentMetadata,
-    ParadigmSpecificMetadata,
-    ParticipantMetadata,
-    PreprocessingMetadata,
-    SignalProcessingMetadata,
-    Tags,
-)
 
 
 URL = "https://zenodo.org/record/5055046/files/"
@@ -46,7 +31,7 @@ class Hinss2021(BaseDataset):
 
     Subsequently, participants undertook 3 tasks of varying difficulty levels
     (i.e., easy, medium, and difficult). The task assignments
-    were randomized. For more details, please check [Hinss2021]_ and [Hinss2023]_.
+    were randomized. For more details, please check [Hinss2021]_.
 
     Notes
     -----
@@ -60,165 +45,9 @@ class Hinss2021(BaseDataset):
             Open EEG Datasets for Passive Brain-Computer
             Interface Applications: Lacks and Perspectives.
             IEEE Neural Engineering Conference.
-
-    .. [Hinss2023] M. F. Hinss, et al. (2023)
-            An EEG dataset for cross-session mental workload estimation:
-            Passive BCI competition of the Neuroergonomics Conference 2021.
-            Scientific Data, 10, 85.
-            https://doi.org/10.1038/s41597-022-01898-y
     """
 
-    METADATA = DatasetMetadata(
-        acquisition=AcquisitionMetadata(
-            sampling_rate=500.0,
-            n_channels=62,
-            channel_types={"eeg": 62},
-            montage="standard_1020",
-            hardware="ActiCHamp (Brain Products Gmbh)",
-            sensor_type="active Ag/AgCl",
-            reference="Fpz",
-            software=None,
-            filters=None,
-            impedance_threshold_kohm=25,
-            sensors=[
-                "AF3",
-                "AF4",
-                "AF7",
-                "AF8",
-                "AFz",
-                "C1",
-                "C2",
-                "C3",
-                "C4",
-                "C5",
-                "C6",
-                "CP1",
-                "CP2",
-                "CP3",
-                "CP4",
-                "CP5",
-                "CP6",
-                "CPz",
-                "F1",
-                "F2",
-                "F3",
-                "F4",
-                "F5",
-                "F6",
-                "F7",
-                "F8",
-                "FC1",
-                "FC2",
-                "FC3",
-                "FC4",
-                "FC5",
-                "FC6",
-                "FCz",
-                "FT10",
-                "FT7",
-                "FT8",
-                "FT9",
-                "Fp1",
-                "Fp2",
-                "Fz",
-                "O1",
-                "O2",
-                "Oz",
-                "P1",
-                "P2",
-                "P3",
-                "P4",
-                "P5",
-                "P6",
-                "P7",
-                "P8",
-                "PO3",
-                "PO4",
-                "PO7",
-                "PO8",
-                "POz",
-                "Pz",
-                "T7",
-                "T8",
-                "TP7",
-                "TP8",
-            ],
-            line_freq=50.0,
-            auxiliary_channels=AuxiliaryChannelsMetadata(
-                other_physiological=["ecg"],
-            ),
-        ),
-        participants=ParticipantMetadata(
-            n_subjects=15,
-            gender={"female": 11, "male": 18},
-            age_mean=23.9,
-            handedness=None,
-        ),
-        experiment=ExperimentMetadata(
-            events={"rs": 1, "easy": 2, "medium": 3, "diff": 4},
-            paradigm="rstate",
-            n_classes=4,
-            class_labels=["rest", "easy", "medium", "difficult"],
-            study_design="Passive BCI neuroergonomics dataset with resting state and 3 difficulty levels of MATB-II task (easy, medium, difficult). The MOABB loader provides resting state and MATB conditions only.",
-            feedback_type="none",
-            stimulus_type="visual display",
-            has_training_test_split=False,
-        ),
-        documentation=DocumentationMetadata(
-            doi="10.1038/s41597-022-01898-y",
-            repository="Zenodo",
-            data_url="https://doi.org/10.5281/zenodo.6874128",
-            license="CC-BY-SA-4.0",
-        ),
-        tags=Tags(
-            pathology=["Healthy"],
-            modality=["Cognitive"],
-            type=["Research"],
-        ),
-        preprocessing=PreprocessingMetadata(
-            data_state="raw",
-            preprocessing_applied=False,
-            highpass_hz=None,
-            filter_type=None,
-            artifact_methods=None,
-            re_reference=None,
-            downsampled_to_hz=None,
-        ),
-        signal_processing=SignalProcessingMetadata(
-            classifiers=["MDM", "Riemannian"],
-            feature_extraction=["Bandpower", "Covariance/Riemannian", "ICA"],
-            frequency_bands={
-                "alpha": [8.0, 13.0],
-                "theta": [4.0, 8.0],
-            },
-        ),
-        cross_validation=CrossValidationMetadata(
-            cv_method="5-fold",
-            cv_folds=5,
-            evaluation_type=["cross_subject", "cross_session", "transfer_learning"],
-        ),
-        performance={
-            "accuracy_percent": 70.67,
-        },
-        bci_application=BCIApplicationMetadata(
-            applications=["neuroergonomics", "mental_workload_estimation"],
-            environment="laboratory",
-        ),
-        paradigm_specific=ParadigmSpecificMetadata(
-            detected_paradigm="rstate",
-        ),
-        data_structure=DataStructureMetadata(
-            n_trials=90,
-            n_blocks=None,
-            trials_context="total",
-        ),
-        sessions_per_subject=2,
-        runs_per_session=1,
-        data_processed=False,
-        file_format="set",
-    )
-
-    def __init__(self, subjects=None, sessions=None):
+    def __init__(self):
         super().__init__(
             subjects=list(range(1, 16)),  # 15 participants
             sessions_per_subject=2,  # 2 sessions per subject
@@ -226,9 +55,6 @@ class Hinss2021(BaseDataset):
             code="Hinss2021",
             interval=[0, 2],  # Epochs are 2-second long
             paradigm="rstate",
-            doi="10.1038/s41597-022-01898-y",
-            selected_subjects=subjects,
-            selected_sessions=sessions,
         )
 
     def _get_stim_channel(self, rs_epochs, easy_epochs, med_epochs, n_epochs, n_samples):

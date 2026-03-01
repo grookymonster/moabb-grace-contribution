@@ -40,14 +40,10 @@ moabb.set_log_level("info")
 #
 # Load 2 subjects of BNCI 2014-004 and Zhou2016 datasets, with 2 session each
 
-subjects_list = [1, 2]
-
+subj = [1, 2]
 datasets = [Zhou2016(), BNCI2014_001()]
-
 for d in datasets:
-    # replace the subject list
-    d.subject_list = subjects_list
-
+    d.subject_list = subj
 
 ###############################################################################
 # Choose Paradigm

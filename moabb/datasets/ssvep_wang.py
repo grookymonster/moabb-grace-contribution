@@ -8,21 +8,6 @@ from mne.channels import make_standard_montage
 from mne.io import RawArray
 from scipy.io import loadmat
 
-from moabb.datasets.metadata.schema import (
-    AcquisitionMetadata,
-    BCIApplicationMetadata,
-    CrossValidationMetadata,
-    DatasetMetadata,
-    DataStructureMetadata,
-    DocumentationMetadata,
-    ExperimentMetadata,
-    ParadigmSpecificMetadata,
-    ParticipantMetadata,
-    PreprocessingMetadata,
-    SignalProcessingMetadata,
-    Tags,
-)
-
 from . import download as dl
 from .base import BaseDataset
 
@@ -82,346 +67,17 @@ class Wang2016(BaseDataset):
 
     Information for all subjects was listed in a ‘Sub_info.txt’ file. For each
     subject, there are five factors including ‘Subject Index’, ‘Gender’, ‘Age’,
-    'Handedness', and 'Group'. Subjects were divided into an 'experienced'
-    group (eight subjects, S01-S08) and a 'naive' group (27 subjects, S09-S35)
+    ‘Handedness’, and ‘Group’. Subjects were divided into an ‘experienced’
+    group (eight subjects, S01-S08) and a ‘naive’ group (27 subjects, S09-S35)
     according to their experience in SSVEP-based BCIs.
-
-    Warnings
-    --------
-    The original dataset includes two channels labeled 'CB1' and 'CB2',
-    which are **not part of the standard 10-20 EEG montage**.
-    Although the authors of Wang2016 state that the 10-20 layout was used,
-    the provided channel location file suggests that 'CB1' and 'CB2'
-    may correspond approximately to 'P9' and 'P10'. However, this mapping is
-    **not confirmed**, and the exact locations remain uncertain.
-
-    In this implementation, we treat 'CB1' and 'CB2' as standard EEG channels,
-    following the approach used by the authors.
-
-    Users should be aware of this ambiguity when interpreting spatial analyses
-    or when comparing to other datasets with strictly standard montages.
 
     References
     ----------
-    .. [1] Wang, Y., Chen, X., Gao, X., & Gao, S. (2016). A benchmark dataset for
-           SSVEP-based brain–computer interfaces. IEEE Transactions on Neural
-           Systems and Rehabilitation Engineering, 25(10), 1746-1752.
+    .. [1] Y. Wang, X. Chen, X. Gao and S. Gao, 2017, "A Benchmark Dataset for
+           SSVEP-Based Brain–Computer Interfaces," in IEEE Transactions on Neural
+           Systems and Rehabilitation Engineering, vol. 25, no. 10, pp. 1746-1752,
            doi: 10.1109/TNSRE.2016.2627556.
     """
-
-    METADATA = DatasetMetadata(
-        acquisition=AcquisitionMetadata(
-            sampling_rate=250.0,
-            n_channels=64,
-            channel_types={"eeg": 64},
-            montage="standard_1005",
-            hardware="Synamps2 EEG system (Neuroscan, Inc.)",
-            software=None,
-            filters={"bandpass": [0.15, 200], "notch": 50},
-            impedance_threshold_kohm=10,
-            sensors=[
-                "AF3",
-                "AF4",
-                "C1",
-                "C2",
-                "C3",
-                "C4",
-                "C5",
-                "C6",
-                "CB1",
-                "CB2",
-                "CP1",
-                "CP2",
-                "CP3",
-                "CP4",
-                "CP5",
-                "CP6",
-                "CPz",
-                "Cz",
-                "F1",
-                "F2",
-                "F3",
-                "F4",
-                "F5",
-                "F6",
-                "F7",
-                "F8",
-                "FC1",
-                "FC2",
-                "FC3",
-                "FC4",
-                "FC5",
-                "FC6",
-                "FCz",
-                "FT7",
-                "FT8",
-                "Fp1",
-                "Fp2",
-                "Fpz",
-                "Fz",
-                "M1",
-                "M2",
-                "O1",
-                "O2",
-                "Oz",
-                "P1",
-                "P2",
-                "P3",
-                "P4",
-                "P5",
-                "P6",
-                "P7",
-                "P8",
-                "PO3",
-                "PO4",
-                "PO5",
-                "PO6",
-                "PO7",
-                "PO8",
-                "POz",
-                "Pz",
-                "T7",
-                "T8",
-                "TP7",
-                "TP8",
-            ],
-            line_freq=50.0,
-            reference="Cz",
-            sensor_type=None,
-        ),
-        participants=ParticipantMetadata(
-            n_subjects=35,
-            health_status="healthy",
-            gender={"female": 17, "male": 18},
-            age_mean=22.0,
-            age_min=17,
-            age_max=34,
-            bci_experience="8 experienced, 27 naïve",
-            species="human",
-        ),
-        experiment=ExperimentMetadata(
-            paradigm="ssvep",
-            n_classes=40,
-            class_labels=[
-                "8.0hz_0.0pi",
-                "8.2hz_0.5pi",
-                "8.4hz_1.0pi",
-                "8.6hz_1.5pi",
-                "8.8hz_2.0pi",
-                "9.0hz_2.5pi",
-                "9.2hz_3.0pi",
-                "9.4hz_3.5pi",
-                "9.6hz_4.0pi",
-                "9.8hz_4.5pi",
-                "10.0hz_5.0pi",
-                "10.2hz_5.5pi",
-                "10.4hz_6.0pi",
-                "10.6hz_6.5pi",
-                "10.8hz_7.0pi",
-                "11.0hz_7.5pi",
-                "11.2hz_8.0pi",
-                "11.4hz_8.5pi",
-                "11.6hz_9.0pi",
-                "11.8hz_9.5pi",
-                "12.0hz_10.0pi",
-                "12.2hz_10.5pi",
-                "12.4hz_11.0pi",
-                "12.6hz_11.5pi",
-                "12.8hz_12.0pi",
-                "13.0hz_12.5pi",
-                "13.2hz_13.0pi",
-                "13.4hz_13.5pi",
-                "13.6hz_14.0pi",
-                "13.8hz_14.5pi",
-                "14.0hz_15.0pi",
-                "14.2hz_15.5pi",
-                "14.4hz_16.0pi",
-                "14.6hz_16.5pi",
-                "14.8hz_17.0pi",
-                "15.0hz_17.5pi",
-                "15.2hz_18.0pi",
-                "15.4hz_18.5pi",
-                "15.6hz_19.0pi",
-                "15.8hz_19.5pi",
-            ],
-            trial_duration=6.0,
-            study_design="Cue-guided target selecting task using a 40-target BCI speller with joint frequency and phase modulation (JFPM) approach",
-            stimulus_type="visual flicker",
-            stimulus_modalities=["visual"],
-            primary_modality="visual",
-            mode="offline",
-            synchronicity="synchronous",
-            stimulus_presentation={
-                "SoftwareName": "MATLAB Psychophysics Toolbox Ver. 3 (PTB-3)",
-                "display": "23.6-in LCD monitor (Acer GD245 HQ, response time: 2 ms)",
-                "resolution": "1920 × 1080 pixels at 60 Hz",
-                "viewing_distance": "70 cm",
-                "stimulus_size": "140 × 140 pixels (3.2° × 3.2°)",
-                "character_size": "32 × 32 pixels (0.7° × 0.7°)",
-                "matrix_size": "1510 × 1037 pixels (34° × 24°)",
-                "matrix_layout": "5 × 8 stimulus matrix",
-                "inter_stimulus_distance": "50 pixels vertical and horizontal",
-                "method": "sampled sinusoidal stimulation",
-            },
-            instructions="Subjects were asked to shift their gaze to the target as soon as possible after cue and avoid eye blinks during the 5-s stimulation duration",
-            events={
-                "cue": 0,
-                "stimulation_start": 500,
-                "stimulation_end": 5500,
-                "trial_end": 6000,
-            },
-        ),
-        documentation=DocumentationMetadata(
-            doi="10.1109/TNSRE.2016.2627556",
-            description="A benchmark SSVEP dataset acquired with a 40-target BCI speller using joint frequency and phase modulation (JFPM) approach",
-            investigators=[
-                "Yijun Wang",
-                "Xiaogang Chen",
-                "Xiaorong Gao",
-                "Shangkai Gao",
-            ],
-            institution="Tsinghua University",
-            country="CN",
-            publication_year=2016,
-            senior_author="Shangkai Gao",
-            contact_info=[
-                "wangyj@semi.ac.cn",
-                "chenxg@bme.cams.cn",
-                "gxrdea@tsinghua.edu.cn",
-                "gsk-dea@tsinghua.edu.cn",
-            ],
-            funding=[
-                "National Natural Science Foundation of China (No. 61431007, No. 91220301, and No. 91320202)",
-                "National High-tech R&D Program (863) of China (No. 2012AA011601)",
-                "Recruitment Program for Young Professionals",
-                "Young Talents Lift Project of Chinese Association of Science and Technology",
-                "PUMC Youth Fund (No. 3332016101)",
-            ],
-            institution_address="Beijing, China",
-            institution_department="Department of Biomedical Engineering, Tsinghua University",
-            ethics_approval=["Research Ethics Committee of Tsinghua University"],
-            keywords=[
-                "Brain–computer interface (BCI)",
-                "electroencephalogram (EEG)",
-                "joint frequency and phase modulation (JFPM)",
-                "public data set",
-                "steady-state visual evoked potential (SSVEP)",
-            ],
-            repository="BNCI Horizon 2020",
-            data_url="http://bci.med.tsinghua.edu.cn/download.html",
-            license="CC-BY-4.0",
-        ),
-        tags=Tags(
-            pathology=["Healthy"],
-            modality=["Visual"],
-            type=["Perception"],
-        ),
-        preprocessing=PreprocessingMetadata(
-            data_state="Raw epochs extracted from continuous EEG recordings according to stimulus onsets, downsampled to 250 Hz, no digital filters applied",
-            preprocessing_applied=True,
-            preprocessing_steps=[
-                "Epoch extraction according to stimulus onsets from event channel",
-                "Downsampling from 1000 Hz to 250 Hz",
-                "No digital filters applied in preprocessing",
-            ],
-            notch_hz=None,
-            filter_type=None,
-            downsampled_to_hz=250.0,
-            epoch_window=[-0.5, 5.5],
-            notes="Data epochs include 0.5 s before stimulus onset, 5 s for stimulation, and 0.5 s after stimulus offset. Upper bound frequency of SSVEP harmonics is around 90 Hz.",
-        ),
-        signal_processing=SignalProcessingMetadata(
-            classifiers=["CCA", "FBCCA"],
-            feature_extraction=["Canonical Correlation Analysis", "Filter Bank CCA"],
-            frequency_bands={
-                "analyzed_range": [7.0, 90.0],
-            },
-        ),
-        cross_validation=CrossValidationMetadata(
-            cv_method="leave-one-out (on six blocks)",
-            cv_folds=6,
-            evaluation_type=["within_subject"],
-        ),
-        bci_application=BCIApplicationMetadata(
-            applications=["speller"],
-            environment="dimly lit soundproof room",
-            online_feedback=False,
-        ),
-        paradigm_specific=ParadigmSpecificMetadata(
-            detected_paradigm="ssvep",
-            stimulus_frequencies_hz=[
-                8.0,
-                8.2,
-                8.4,
-                8.6,
-                8.8,
-                9.0,
-                9.2,
-                9.4,
-                9.6,
-                9.8,
-                10.0,
-                10.2,
-                10.4,
-                10.6,
-                10.8,
-                11.0,
-                11.2,
-                11.4,
-                11.6,
-                11.8,
-                12.0,
-                12.2,
-                12.4,
-                12.6,
-                12.8,
-                13.0,
-                13.2,
-                13.4,
-                13.6,
-                13.8,
-                14.0,
-                14.2,
-                14.4,
-                14.6,
-                14.8,
-                15.0,
-                15.2,
-                15.4,
-                15.6,
-                15.8,
-            ],
-            frequency_resolution_hz=0.2,
-            n_targets=40,
-            n_repetitions=6,
-            cue_duration_s=0.5,
-        ),
-        data_structure=DataStructureMetadata(
-            n_trials=240,
-            n_trials_per_class={"per_target": 6},
-            n_blocks=6,
-            trials_context="40 trials per block corresponding to all 40 characters in random order",
-        ),
-        performance={
-            "itr_bits_per_min": 117.75,
-            "peak_itr_fbcca_0.55s_gaze": 117.75,
-            "peak_itr_fbcca_2s_gaze": 68.99,
-            "peak_itr_cca_0.55s_gaze": 89.89,
-            "peak_itr_cca_2s_gaze": 56.03,
-            "visual_latency_ms": 136.91,
-            "visual_latency_std_ms": 18.4,
-        },
-        sessions_per_subject=1,
-        runs_per_session=1,
-        data_processed=True,
-        file_format="MATLAB MAT",
-        external_links={
-            "source": "http://bci.med.tsinghua.edu.cn/download.html",
-            "bnci_horizon": "https://bnci-horizon-2020.eu/database/data-sets",
-        },
-        abstract="This paper presents a benchmark steady-state visual evoked potential (SSVEP) dataset acquired with a 40-target brain–computer interface (BCI) speller. The dataset consists of 64-channel Electroencephalogram (EEG) data from 35 healthy subjects (8 experienced and 27 naïve) while they performed a cue-guided target selecting task. The virtual keyboard of the speller was composed of 40 visual flickers, which were coded using a joint frequency and phase modulation (JFPM) approach. The stimulation frequencies ranged from 8 Hz to 15.8 Hz with an interval of 0.2 Hz. The phase difference between two adjacent frequencies was 0.5π. For each subject, the data included six blocks of 40 trials corresponding to all 40 flickers indicated by a visual cue in a random order. The stimulation duration in each trial was five seconds.",
-        methodology="The study used a cue-guided target selecting task with a 40-target BCI speller. Stimuli were presented on a 23.6-in LCD monitor at 60 Hz using sampled sinusoidal stimulation method. Each trial started with a 0.5-s target cue, followed by 5 s of concurrent flickering of all stimuli, and ended with 0.5 s blank screen. The experiment included six blocks per subject, with 40 trials per block in random order. EEG data were recorded using Synamps2 system at 1000 Hz with 64 electrodes, referenced to Cz. Data were preprocessed by extracting epochs according to stimulus onsets and downsampling to 250 Hz. The JFPM approach encoded 40 characters using frequencies from 8-15.8 Hz (0.2 Hz interval) and phases from 0 to 19.5π (0.5π interval). Performance was evaluated using CCA and FBCCA methods with leave-one-out cross-validation.",
-    )
 
     # fmt: off
     _events = {
@@ -443,7 +99,7 @@ class Wang2016(BaseDataset):
 
     # fmt: on
 
-    def __init__(self, subjects=None, sessions=None):
+    def __init__(self):
         super().__init__(
             subjects=list(range(1, 35)),
             sessions_per_subject=1,
@@ -451,9 +107,7 @@ class Wang2016(BaseDataset):
             code="Wang2016",
             interval=[0.5, 5.5],
             paradigm="ssvep",
-            doi="10.1109/TNSRE.2016.2627556",
-            selected_subjects=subjects,
-            selected_sessions=sessions,
+            doi="doi://10.1109/TNSRE.2016.2627556",
         )
 
     def _get_single_subject_data(self, subject):
@@ -480,13 +134,12 @@ class Wang2016(BaseDataset):
         buff = (data.shape[0], n_channels + 1, 50)
         data = np.concatenate([np.zeros(buff), data, np.zeros(buff)], axis=2)
 
-        ch_types = ["eeg"] * 64 + ["stim"]
+        ch_types = ["eeg"] * 59 + ["misc"] + 3 * ["eeg"] + ["misc", "stim"]
         sfreq = 250
         info = create_info(self._ch_names, sfreq, ch_types)
         raw = RawArray(data=np.concatenate(list(data), axis=1), info=info, verbose=False)
         montage = make_standard_montage("standard_1005")
-        # CB1 and CB2 are not in standard_1005 montage - ignore them
-        raw.set_montage(montage, on_missing="ignore")
+        raw.set_montage(montage)
         return {"0": {"0": raw}}
 
     def data_path(

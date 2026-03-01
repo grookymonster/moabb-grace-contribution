@@ -1,16 +1,15 @@
-import os
 import re
 import tempfile
 from pathlib import Path
 
 import numpy as np
-from mne import Annotations, annotations_from_events, create_info, get_config
+from mne import Annotations, annotations_from_events, create_info, get_config, set_config
 from mne.channels import make_standard_montage
 from mne.io import RawArray
 
 from moabb.datasets.base import BaseDataset
+from moabb.datasets.braininvaders import Cattan2019_VR
 from moabb.datasets.utils import block_rep
-from moabb.utils import _handle_deprecated_kwargs
 
 
 class FakeDataset(BaseDataset):
@@ -28,9 +27,8 @@ class FakeDataset(BaseDataset):
         Number of runs to generate
     n_subjects: int, default 10
         Number of subject to generate
-    paradigm : str
-        Defines what sort of dataset this is. Allowed values are
-        'p300', 'imagery', and 'ssvep'.
+    paradigm: ['p300','imagery', 'ssvep']
+        Defines what sort of dataset this is
     channels: list or tuple of str
         List of channels to generate, default ("C3", "Cz", "C4")
     duration: float or list of float
@@ -62,46 +60,7 @@ class FakeDataset(BaseDataset):
         n_events=60,
         stim=True,
         annotations=False,
-        subjects=None,
-        sessions=None,
-        **kwargs,
     ):
-        deprecated_renames = {
-            "EventList": "event_list",
-            "NSessions": "n_sessions",
-            "NRuns": "n_runs",
-            "NSubjects": "n_subjects",
-            "Code": "code",
-            "Paradigm": "paradigm",
-            "Channels": "channels",
-            "Seed": "seed",
-            "Sfreq": "sfreq",
-            "Duration": "duration",
-            "NEvents": "n_events",
-            "Stim": "stim",
-            "Annotations": "annotations",
-            "Subjects": "subjects",
-            "Sessions": "sessions",
-        }
-        resolved = _handle_deprecated_kwargs(kwargs, deprecated_renames, "FakeDataset")
-        event_list = resolved.get("event_list", event_list)
-        n_sessions = resolved.get("n_sessions", n_sessions)
-        n_runs = resolved.get("n_runs", n_runs)
-        n_subjects = resolved.get("n_subjects", n_subjects)
-        code = resolved.get("code", code)
-        paradigm = resolved.get("paradigm", paradigm)
-        channels = resolved.get("channels", channels)
-        seed = resolved.get("seed", seed)
-        sfreq = resolved.get("sfreq", sfreq)
-        duration = resolved.get("duration", duration)
-        n_events = resolved.get("n_events", n_events)
-        stim = resolved.get("stim", stim)
-        annotations = resolved.get("annotations", annotations)
-        subjects = resolved.get("subjects", subjects)
-        sessions = resolved.get("sessions", sessions)
-
-        self.n_sessions = n_sessions
-        self.n_runs = n_runs
         self.n_events = n_events if isinstance(n_events, list) else [n_events] * n_runs
         self.duration = duration if isinstance(duration, list) else [duration] * n_runs
         assert len(self.n_events) == n_runs
@@ -126,17 +85,12 @@ class FakeDataset(BaseDataset):
             code=code,
             interval=[0, 3],
             paradigm=paradigm,
-            selected_subjects=subjects,
-            selected_sessions=sessions,
         )
         key = "MNE_DATASETS_{:s}_PATH".format(self.code.upper())
         temp_dir = get_config(key)
         if temp_dir is None or not Path(temp_dir).is_dir():
             temp_dir = tempfile.mkdtemp()
-            # Use os.environ instead of mne.set_config to avoid
-            # "Setting non-standard config type" warnings.
-            # MNE's get_config() checks environment variables first.
-            os.environ[key] = temp_dir
+            set_config(key, temp_dir)
 
     def _get_single_subject_data(self, subject):
         if self.seed is not None:
@@ -209,19 +163,7 @@ class FakeVirtualRealityDataset(FakeDataset):
     .. versionadded:: 0.5.0
     """
 
-    def __init__(self, seed=None, subjects=None, sessions=None, **kwargs):
-        deprecated_renames = {
-            "Seed": "seed",
-            "Subjects": "subjects",
-            "Sessions": "sessions",
-        }
-        resolved = _handle_deprecated_kwargs(
-            kwargs, deprecated_renames, "FakeVirtualRealityDataset"
-        )
-        seed = resolved.get("seed", seed)
-        subjects = resolved.get("subjects", subjects)
-        sessions = resolved.get("sessions", sessions)
-
+    def __init__(self, seed=None):
         self.n_blocks = 5
         self.n_repetitions = 12
         self.n_events_rep = [60] * self.n_repetitions
@@ -238,8 +180,6 @@ class FakeVirtualRealityDataset(FakeDataset):
             n_events=self.n_events_rep * self.n_blocks,
             stim=True,
             annotations=False,
-            subjects=subjects,
-            sessions=sessions,
         )
 
     def _get_single_subject_data(self, subject):
@@ -257,5 +197,37 @@ class FakeVirtualRealityDataset(FakeDataset):
                     ] = self._generate_raw(n, d)
         return data
 
-    def _block_rep(self, block, repetition):
-        return block_rep(block, repetition, self.n_repetitions)
+    def get_block_repetition(self, paradigm, subjects, block_list, repetition_list):
+        """Select data for all provided subjects, blocks and repetitions. Each
+        subject has 5 blocks of 12 repetitions.
+
+        The returned data is a dictionary with the following structure::
+
+            data = {'subject_id' :
+                        {'session_id':
+                            {'run_id': raw}
+                        }
+                    }
+
+        See also
+        --------
+        BaseDataset.get_data
+        Cattan2019_VR.get_block_repetition
+
+        Parameters
+        ----------
+        subjects: List of int
+            List of subject number
+        block_list: List of int
+            List of block number (from 1 to 5)
+        repetition_list: List of int
+            List of repetition number inside a block (from 1 to 12)
+
+        Returns
+        -------
+        data: Dict
+            dict containing the raw data
+        """
+        return Cattan2019_VR.get_block_repetition(
+            self, paradigm, subjects, block_list, repetition_list
+        )

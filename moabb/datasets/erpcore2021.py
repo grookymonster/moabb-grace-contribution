@@ -20,7 +20,6 @@ from mne_bids import BIDSPath, read_raw_bids
 
 from moabb.datasets import download as dl
 from moabb.datasets.base import BaseDataset
-from moabb.utils import _handle_deprecated_kwargs
 
 
 OSF_BASE_URL = "https://files.osf.io/v1/resources/"
@@ -115,11 +114,7 @@ class ErpCore2021(BaseDataset):
     {_docstring_tail}
     """
 
-    def __init__(self, task, subjects=None, sessions=None, **kwargs):
-        deprecated_renames = {"Task": "task"}
-        resolved = _handle_deprecated_kwargs(kwargs, deprecated_renames, "ErpCore2021")
-        task = resolved.get("task", task)
-
+    def __init__(self, task):
         if task == "N170":
             interval = (-0.2, 0.8)
             events = {"Target": 1, "NonTarget": 2}
@@ -154,8 +149,6 @@ class ErpCore2021(BaseDataset):
             interval=interval,
             paradigm="p300",
             doi="10.1016/j.neuroimage.2020.117465",
-            selected_subjects=subjects,
-            selected_sessions=sessions,
         )
 
     def _get_single_subject_data(self, subject):

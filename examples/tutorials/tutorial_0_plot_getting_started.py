@@ -24,7 +24,6 @@ next tutorial.
 
 import numpy as np
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
-from sklearn.metrics import accuracy_score, roc_auc_score
 from sklearn.model_selection import GridSearchCV
 from sklearn.pipeline import make_pipeline
 from sklearn.svm import SVC
@@ -98,12 +97,7 @@ datasets = [dataset]
 
 fmin = 8
 fmax = 35
-# You can inject custom scoring directly into the paradigm (single or multi-metric).
-custom_scorer = [
-    accuracy_score,
-    (roc_auc_score, {"needs_threshold": True}),
-]
-paradigm = LeftRightImagery(fmin=fmin, fmax=fmax, scorer=custom_scorer)
+paradigm = LeftRightImagery(fmin=fmin, fmax=fmax)
 
 ##########################################################################
 # Evaluation
@@ -119,8 +113,7 @@ evaluation = CrossSessionEvaluation(
 results = evaluation.process(pipelines)
 
 ##########################################################################
-# Results are returned as a pandas DataFrame. When multiple metrics are
-# provided, MOABB adds a primary `score` plus one column per metric
-# (e.g., `score_accuracy_score`, `score_roc_auc_score`).
+# Results are returned as a pandas DataFrame, and from here you can do as you
+# want with them
 
 print(results.head())

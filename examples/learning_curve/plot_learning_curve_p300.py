@@ -33,7 +33,6 @@ from sklearn.pipeline import make_pipeline
 import moabb
 from moabb.datasets import BNCI2014_009
 from moabb.evaluations import WithinSessionEvaluation
-from moabb.evaluations.splitters import LearningCurveSplitter
 from moabb.paradigms import P300
 
 
@@ -90,8 +89,8 @@ np.random.seed(7536298)
 evaluation = WithinSessionEvaluation(
     paradigm=paradigm,
     datasets=datasets,
-    cv_class=LearningCurveSplitter,
-    cv_kwargs=dict(data_size=data_size, n_perms=n_perms),
+    data_size=data_size,
+    n_perms=n_perms,
     suffix="examples_lr",
     overwrite=overwrite,
 )
