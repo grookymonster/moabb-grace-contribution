@@ -14,7 +14,6 @@ from tqdm import tqdm
 
 from moabb.evaluations.base import BaseEvaluation
 from moabb.evaluations.splitters import (
-    CrossDatasetSplitter,
     CrossSessionSplitter,
     CrossSubjectSplitter,
     WithinSessionSplitter,
@@ -633,15 +632,15 @@ class CrossDatasetEvaluation(BaseEvaluation):
         """Run cross-dataset evaluation across all pipelines.
 
         Loads data from all train and test datasets, concatenates them,
-        fits each pipeline once on the training data, and scores
-        per-subject on each test dataset.
+        and uses :class:`CrossDatasetSplitter` to generate per-subject
+        train/test splits.
 
         Parameters
         ----------
         pipelines : dict of pipeline instance.
             A dict containing the sklearn pipeline to evaluate.
         param_grid : dict of str, default=None
-            Not used (accepted for API compatibility).
+            The key of the dictionary must be the same as the associated pipeline.
         postprocess_pipeline : Pipeline | None, default=None
             Optional pipeline to apply to the data after preprocessing.
 
@@ -652,13 +651,15 @@ class CrossDatasetEvaluation(BaseEvaluation):
         """
         import pandas as pd
 
-        # Validate pipelines (same check as base class)
+        from moabb.evaluations.splitters import CrossDatasetSplitter
+        from moabb.evaluations.utils import _create_scorer, _get_nchan
+
         if not isinstance(pipelines, dict):
-            raise (ValueError("pipelines must be a dict"))
+            raise ValueError("pipelines must be a dict")
 
         for _, pipeline in pipelines.items():
-            if not (isinstance(pipeline, BaseEstimator)):
-                raise (ValueError("pipelines must only contains Pipelines " "instance"))
+            if not isinstance(pipeline, BaseEstimator):
+                raise ValueError("pipelines must only contain Pipeline instances")
 
         # Build a process pipeline from the first dataset (all are now matched)
         process_pipeline = self.paradigm.make_process_pipelines(
@@ -691,55 +692,46 @@ class CrossDatasetEvaluation(BaseEvaluation):
         X = np.concatenate(all_X, axis=0)
         y = np.concatenate(all_y, axis=0)
         metadata = pd.concat(all_metadata, ignore_index=True)
-        del all_X, all_y, all_metadata
 
         le = LabelEncoder()
         y_encoded = y if self.mne_labels else le.fit_transform(y)
 
-        # Split: training data is all samples from train datasets
+        # Create the splitter
         train_codes = [ds.code for ds in self.train_datasets]
         test_codes = [ds.code for ds in self.test_datasets]
-        train_mask = metadata["dataset"].isin(train_codes)
-        X_train = X[train_mask]
-        y_train = y_encoded[train_mask]
-
-        nchan = self._get_nchan(X)
-
-        # Fit each pipeline once on the (invariant) training data
-        if _carbonfootprint:
-            tracker = self.emissions.create_tracker()
-            tracker.start()
-
-        fitted = {}
-        for name, clf in pipelines.items():
-            model = clone(clf)
-            duration, emissions, task_name = self._fit_cv(
-                model, X_train, y_train,
-                tracker if _carbonfootprint else None,
-            )
-            fitted[name] = (model, duration, emissions, task_name)
-
-        if _carbonfootprint:
-            tracker.stop()
-
-        # Score per-subject per-session on each test dataset
         splitter = CrossDatasetSplitter(
             train_datasets=train_codes,
             test_datasets=test_codes,
         )
 
-        for _, test_idx in splitter.split(y_encoded, metadata):
+        nchan = _get_nchan(X)
+
+        if _carbonfootprint:
+            tracker = self.emissions.create_tracker()
+            tracker.start()
+
+        for train_idx, test_idx in splitter.split(y_encoded, metadata):
+            X_train, y_train = X[train_idx], y_encoded[train_idx]
+            X_test, y_test = X[test_idx], y_encoded[test_idx]
+
             test_metadata = metadata.iloc[test_idx]
             test_ds_code = test_metadata["dataset"].iloc[0]
             test_subject = test_metadata["subject"].iloc[0]
             test_dataset_obj = ds_code_to_obj[test_ds_code]
 
-            X_test = X[test_idx]
-            y_test = y_encoded[test_idx]
             sessions = test_metadata["session"].unique()
 
-            for name, (model, duration, emissions, task_name) in fitted.items():
-                scorer = _create_scorer(model, self.paradigm.scoring)
+            for name, clf in pipelines.items():
+                cvclf = clone(clf)
+
+                duration, emissions, task_name = self._fit_cv(
+                    cvclf,
+                    X_train,
+                    y_train,
+                    tracker if _carbonfootprint else None,
+                )
+
+                scorer = _create_scorer(cvclf, self.paradigm.scoring)
 
                 for session in sessions:
                     sess_mask = test_metadata["session"] == session
@@ -754,7 +746,7 @@ class CrossDatasetEvaluation(BaseEvaluation):
                         nchan,
                         duration,
                         scorer,
-                        model,
+                        cvclf,
                         X_test[sess_idx],
                         y_test[sess_idx],
                     )
@@ -763,6 +755,9 @@ class CrossDatasetEvaluation(BaseEvaluation):
                         self._attach_emissions(res, emissions, task_name)
 
                     self.push_result(res, pipelines, process_pipeline)
+
+        if _carbonfootprint:
+            tracker.stop()
 
         return self.results.to_dataframe(
             pipelines=pipelines, process_pipeline=process_pipeline
