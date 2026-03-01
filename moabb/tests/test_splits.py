@@ -689,7 +689,7 @@ def test_cross_dataset_get_n_splits(cross_dataset_data):
     """Test that get_n_splits returns the correct count."""
     y, metadata, train_codes, test_codes = cross_dataset_data
     splitter = CrossDatasetSplitter(train_codes, test_codes)
-    assert splitter.get_n_splits(metadata) == 2
+    assert splitter.get_n_splits(y, metadata) == 2
 
 
 def test_cross_dataset_test_single_subject_per_split(cross_dataset_data):
@@ -730,41 +730,4 @@ def test_cross_dataset_multiple_test_datasets():
     splits = list(splitter.split(y, metadata))
     # 2 subjects in test_ds_1 + 2 subjects in test_ds_2 = 4 splits
     assert len(splits) == 4
-    assert splitter.get_n_splits(metadata) == 4
-
-
-def test_cross_dataset_custom_cv_class(cross_dataset_data):
-    """Test CrossDatasetSplitter with a custom cv_class."""
-    y, metadata, train_codes, test_codes = cross_dataset_data
-    n_splits = 2
-    splitter = CrossDatasetSplitter(
-        train_codes,
-        test_codes,
-        cv_class=GroupShuffleSplit,
-        random_state=42,
-        n_splits=n_splits,
-    )
-
-    splits = list(splitter.split(y, metadata))
-    assert len(splits) == n_splits
-
-    for train_idx, test_idx in splits:
-        # Train indices must come from train datasets
-        train_datasets = metadata.iloc[train_idx]["dataset"].unique()
-        for ds in train_datasets:
-            assert ds in train_codes
-        # Test indices must come from test datasets
-        test_datasets = metadata.iloc[test_idx]["dataset"].unique()
-        for ds in test_datasets:
-            assert ds in test_codes
-
-
-def test_cross_dataset_current_splitter(cross_dataset_data):
-    """Test that _current_splitter is set after split()."""
-    y, metadata, train_codes, test_codes = cross_dataset_data
-    splitter = CrossDatasetSplitter(train_codes, test_codes)
-
-    splits = list(splitter.split(y, metadata))
-    assert len(splits) > 0
-    assert hasattr(splitter, "_current_splitter")
-    assert splitter._current_splitter is not None
+    assert splitter.get_n_splits(y, metadata) == 4

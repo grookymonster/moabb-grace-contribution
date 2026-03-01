@@ -819,13 +819,7 @@ class CrossDatasetSplitter(BaseCrossValidator):
 
     This splitter enables cross-dataset evaluation by splitting data based on
     dataset membership. All samples from training datasets are used as training
-    data, and test splits are generated per test dataset using an inner
-    cross-validation strategy (by default, Leave-One-Subject-Out).
-
-    The inner cross-validation strategy can be changed by passing the
-    ``cv_class`` and ``cv_kwargs`` arguments. By default, it uses
-    LeaveOneGroupOut with groups set to ``subject``, which yields one test
-    fold per subject in each test dataset.
+    data, and test splits are created per-subject within each test dataset.
 
     Parameters
     ----------
@@ -833,74 +827,41 @@ class CrossDatasetSplitter(BaseCrossValidator):
         List of dataset codes to use for training.
     test_datasets : list of str
         List of dataset codes to use for testing.
-    cv_class : cross-validation class, default=LeaveOneGroupOut
-        Inner cross-validation strategy for splitting subjects within each
-        test dataset.
-    random_state : int, RandomState instance or None, default=None
-        Controls the randomness of the inner cross-validation.
-        Pass an int for reproducible output across multiple calls.
-    cv_kwargs : dict
-        Additional arguments to pass to the inner cross-validation strategy.
 
     Yields
     ------
     train : ndarray
         The training set indices for that split (all samples from train datasets).
     test : ndarray
-        The testing set indices for that split.
+        The testing set indices for that split (one subject from one test dataset).
     """
 
-    def __init__(
-        self,
-        train_datasets,
-        test_datasets,
-        cv_class: type[BaseCrossValidator] = LeaveOneGroupOut,
-        random_state: int = None,
-        **cv_kwargs,
-    ):
+    def __init__(self, train_datasets, test_datasets):
         self.train_datasets = train_datasets
         self.test_datasets = test_datasets
-        self.cv_class = cv_class
-        self.cv_kwargs = cv_kwargs
-        self._cv_kwargs = dict(**cv_kwargs)
-        self.random_state = random_state
 
-        params = inspect.signature(self.cv_class).parameters
-        if "random_state" in params:
-            self._cv_kwargs["random_state"] = random_state
+    def get_n_splits(self, y=None, metadata=None):
+        """Return the number of splits.
 
-        # Detect whether the cv_class uses the groups parameter
-        self._cv_uses_groups = issubclass(cv_class, GroupsConsumerMixin)
-
-    def get_n_splits(self, metadata):
-        """Return the number of splits for the cross-validation.
-
-        The number of splits is the sum of inner CV splits across all test
-        datasets.
+        The number of splits equals the number of unique (dataset, subject)
+        pairs in the test datasets.
 
         Parameters
         ----------
+        y : array-like, default=None
+            Ignored, present for API compatibility.
         metadata : pd.DataFrame
-            The metadata containing dataset, subject, and session information.
+            Must contain 'dataset' and 'subject' columns.
 
         Returns
         -------
         n_splits : int
-            The number of splits for the cross-validation.
+            The number of splits.
         """
         n_splits = 0
         for test_code in self.test_datasets:
             ds_mask = metadata["dataset"] == test_code
-            test_ds_metadata = metadata[ds_mask]
-
-            if test_ds_metadata.empty:
-                continue
-
-            splitter = self.cv_class(**self._cv_kwargs)
-            get_n_splits_kwargs = {"X": test_ds_metadata}
-            if self._cv_uses_groups:
-                get_n_splits_kwargs["groups"] = test_ds_metadata["subject"]
-            n_splits += splitter.get_n_splits(**get_n_splits_kwargs)
+            n_splits += metadata.loc[ds_mask, "subject"].nunique()
         return n_splits
 
     def split(self, y, metadata):
@@ -909,7 +870,7 @@ class CrossDatasetSplitter(BaseCrossValidator):
         Parameters
         ----------
         y : array-like
-            Target variable.
+            Target variable (unused, present for API compatibility).
         metadata : pd.DataFrame
             Must contain 'dataset' and 'subject' columns.
 
@@ -918,27 +879,14 @@ class CrossDatasetSplitter(BaseCrossValidator):
         train_indices : ndarray
             Indices of training samples (all samples from train datasets).
         test_indices : ndarray
-            Indices of test samples.
+            Indices of test samples (one subject from one test dataset).
         """
-        all_index = metadata.index.values
         train_mask = metadata["dataset"].isin(self.train_datasets)
-        train_indices = all_index[train_mask]
+        train_indices = np.where(train_mask)[0]
 
         for test_code in self.test_datasets:
             ds_mask = metadata["dataset"] == test_code
-            test_ds_metadata = metadata[ds_mask]
-            test_ds_indices = all_index[ds_mask]
-            y_test_ds = y[ds_mask]
-
-            splitter = self.cv_class(**self._cv_kwargs)
-
-            # Store reference to the current inner splitter for metadata access
-            self._current_splitter = splitter
-
-            split_kwargs = {"X": test_ds_indices, "y": y_test_ds}
-            if self._cv_uses_groups:
-                split_kwargs["groups"] = test_ds_metadata["subject"]
-
-            for _, test_fold_ix in splitter.split(**split_kwargs):
-                test_indices = test_ds_indices[test_fold_ix]
+            for subject in metadata.loc[ds_mask, "subject"].unique():
+                subj_mask = ds_mask & (metadata["subject"] == subject)
+                test_indices = np.where(subj_mask)[0]
                 yield train_indices, test_indices
