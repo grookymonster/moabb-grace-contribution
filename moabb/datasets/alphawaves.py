@@ -9,6 +9,19 @@ from scipy.io import loadmat
 
 from moabb.datasets import download as dl
 from moabb.datasets.base import BaseDataset
+from moabb.datasets.metadata.schema import (
+    AcquisitionMetadata,
+    BCIApplicationMetadata,
+    DatasetMetadata,
+    DataStructureMetadata,
+    DocumentationMetadata,
+    ExperimentMetadata,
+    ParadigmSpecificMetadata,
+    ParticipantMetadata,
+    PreprocessingMetadata,
+    SignalProcessingMetadata,
+    Tags,
+)
 
 
 ALPHAWAVES_URL = "https://zenodo.org/record/2348892/files/"
@@ -73,7 +86,87 @@ class Rodrigues2017(BaseDataset):
 
     """
 
-    def __init__(self):
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=512.0,
+            n_channels=16,
+            channel_types={"eeg": 16},
+            montage="standard_1010",
+            hardware="g.tec g.USBamp",
+            sensor_type="wet electrodes",
+            reference="right earlobe",
+            software="OpenViBE",
+            filters="no digital filter",
+            sensors=[
+                "Cz",
+                "Fc5",
+                "Fc6",
+                "Fp1",
+                "Fp2",
+                "Fz",
+                "O1",
+                "O2",
+                "Oz",
+                "P3",
+                "P4",
+                "P7",
+                "P8",
+                "Pz",
+                "T7",
+                "T8",
+            ],
+            line_freq=50.0,
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=19,
+            health_status="healthy",
+            gender={"female": 7, "male": 13},
+            age_mean=25.8,
+        ),
+        experiment=ExperimentMetadata(
+            events={"closed": 1, "open": 2},
+            paradigm="rstate",
+            n_classes=2,
+            class_labels=["closed", "open"],
+            trial_duration=10,
+            study_design="Subjects alternated between keeping eyes closed (condition 1) and eyes open (condition 2) while EEG was recorded",
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.5281/zenodo.2348891",
+            repository="Zenodo",
+            data_url="https://doi.org/10.5281/zenodo.2348891",
+            license="CC-BY-4.0",
+        ),
+        tags=Tags(
+            pathology=["Healthy"],
+            modality=["Resting State"],
+            type=["Resting-state"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            data_state="raw",
+            preprocessing_applied=False,
+            artifact_methods=None,
+            re_reference=None,
+        ),
+        signal_processing=SignalProcessingMetadata(
+            feature_extraction=["ERS"],
+            frequency_bands={
+                "alpha": [8, 12],
+            },
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=None,
+        ),
+        paradigm_specific=ParadigmSpecificMetadata(
+            detected_paradigm="rstate",
+        ),
+        data_structure=DataStructureMetadata(
+            n_trials=10,
+        ),
+        data_processed=False,
+    )
+
+    def __init__(self, subjects=None, sessions=None):
         subject_list = list(range(1, 6 + 1)) + list(range(8, 20 + 1))
         super().__init__(
             subjects=subject_list,
@@ -83,6 +176,8 @@ class Rodrigues2017(BaseDataset):
             interval=[0, 10],
             paradigm="rstate",
             doi="https://doi.org/10.5281/zenodo.2348892",
+            selected_subjects=subjects,
+            selected_sessions=sessions,
         )
 
     def _get_single_subject_data(self, subject):

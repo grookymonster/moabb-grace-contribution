@@ -1,12 +1,15 @@
+from __future__ import annotations
+
 import abc
 import logging
 from operator import methodcaller
-from typing import List, Optional, Tuple
+from typing import List, Literal, Optional, Tuple
 
 import mne
 import numpy as np
 import pandas as pd
-from sklearn.pipeline import Pipeline, make_pipeline
+from sklearn.metrics import check_scoring, make_scorer
+from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import FunctionTransformer
 
 from moabb.datasets.base import BaseDataset
@@ -14,6 +17,7 @@ from moabb.datasets.bids_interface import StepType
 from moabb.datasets.preprocessing import (
     EpochsToEvents,
     EventsToLabels,
+    FixedPipeline,
     ForkPipelines,
     RawToEpochs,
     RawToEvents,
@@ -21,13 +25,171 @@ from moabb.datasets.preprocessing import (
     get_crop_pipeline,
     get_filter_pipeline,
     get_resample_pipeline,
+    make_fixed_pipeline,
 )
+from moabb.utils import MoabbMetaClass
 
 
 log = logging.getLogger(__name__)
 
 
-class BaseProcessing(metaclass=abc.ABCMeta):
+def _normalize_scorer(scorer):
+    """Normalize scorer, converting list-style scorers to a dict.
+
+    This handles lists of metric functions or scorer objects and converts
+    them to a dict format that sklearn's check_scoring can handle.
+
+    Parameters
+    ----------
+    scorer : str, callable, dict, list, or None
+        The scoring specification. Can be:
+        - None: returns None (use default)
+        - str: returns as-is
+        - callable: returns as-is
+        - dict: returns as-is
+        - list of str: returns as-is (sklearn handles this)
+        - list of callable/scorer/tuple: converts to dict with metric names as keys.
+          Each element can be:
+          - a callable metric function (assumes greater_is_better=True)
+          - a scorer object (e.g., make_scorer/get_scorer output), passed through
+          - a tuple of (callable, greater_is_better)
+          - a tuple of (callable, scorer_kwargs) where scorer_kwargs is a dict
+            (e.g., needs_proba/needs_threshold; may include greater_is_better)
+          - a tuple of (callable, greater_is_better, scorer_kwargs)
+
+    Returns
+    -------
+    normalized_scorer : str, callable, dict, list, or None
+        The normalized scorer specification.
+
+    Raises
+    ------
+    ValueError
+        If list is empty or contains invalid types.
+
+    Examples
+    --------
+    >>> from sklearn.metrics import accuracy_score, mean_squared_error
+    >>> # Simple list of metrics (all assume higher is better)
+    >>> scorer = [accuracy_score, balanced_accuracy_score]
+    >>> # Mix of metrics with explicit greater_is_better control
+    >>> scorer = [
+    ...     accuracy_score,                  # greater_is_better=True (default)
+    ...     (mean_squared_error, False),     # greater_is_better=False (loss)
+    ... ]
+    >>> # Metrics needing probability/threshold based scoring
+    >>> scorer = [
+    ...     (roc_auc_score, {"needs_threshold": True}),
+    ... ]
+    """
+    if scorer is None or isinstance(scorer, (str, dict)):
+        return scorer
+
+    if isinstance(scorer, list):
+        if len(scorer) == 0:
+            raise ValueError("scorer list cannot be empty")
+        if all(isinstance(s, str) for s in scorer):
+            # List of strings - sklearn handles this natively
+            return scorer
+
+        def _is_scorer_object(obj):
+            # Detect sklearn scorer objects (e.g., make_scorer/get_scorer output)
+            return callable(obj) and hasattr(obj, "_score_func") and hasattr(obj, "_sign")
+
+        # Check if list contains valid scorer items
+        def _is_valid_scorer_item(item):
+            if _is_scorer_object(item):
+                return True
+            if callable(item):
+                return True
+            if isinstance(item, tuple):
+                if len(item) == 2:
+                    func, second = item
+                    return callable(func) and (
+                        isinstance(second, bool) or isinstance(second, dict)
+                    )
+                if len(item) == 3:
+                    func, greater, kwargs = item
+                    return (
+                        callable(func)
+                        and isinstance(greater, bool)
+                        and isinstance(kwargs, dict)
+                    )
+            return False
+
+        if all(_is_valid_scorer_item(s) for s in scorer):
+            # Convert list of metric functions/tuples to dict
+            result = {}
+            seen = {}
+            for i, item in enumerate(scorer):
+                # Pass through scorer objects unchanged
+                if _is_scorer_object(item):
+                    scorer_obj = item
+                    func = getattr(item, "_score_func", None)
+                else:
+                    scorer_kwargs = {}
+                    # Extract function and greater_is_better/kwargs
+                    if isinstance(item, tuple):
+                        if len(item) == 2:
+                            func, second = item
+                            if isinstance(second, bool):
+                                greater_is_better = second
+                            else:
+                                scorer_kwargs = dict(second)
+                                greater_is_better = scorer_kwargs.pop(
+                                    "greater_is_better", True
+                                )
+                        else:
+                            func, greater_is_better, scorer_kwargs = item
+                            if "greater_is_better" in scorer_kwargs:
+                                raise ValueError(
+                                    "greater_is_better should not be provided in "
+                                    "scorer_kwargs when passed as a separate argument"
+                                )
+                    else:
+                        func = item
+                        greater_is_better = True
+
+                    # Handle deprecated parameters for sklearn 1.4+ and 1.6+
+                    if "needs_threshold" in scorer_kwargs and scorer_kwargs.pop(
+                        "needs_threshold"
+                    ):
+                        scorer_kwargs.setdefault(
+                            "response_method", ("decision_function", "predict_proba")
+                        )
+                    if "needs_proba" in scorer_kwargs and scorer_kwargs.pop(
+                        "needs_proba"
+                    ):
+                        scorer_kwargs.setdefault("response_method", "predict_proba")
+
+                    scorer_obj = make_scorer(
+                        func, greater_is_better=greater_is_better, **scorer_kwargs
+                    )
+
+                # Generate unique name
+                name = getattr(func, "__name__", f"scorer_{i}")
+                if name == "<lambda>":
+                    name = f"scorer_{i}"
+                if name in seen:
+                    seen[name] += 1
+                    name = f"{name}_{seen[name]}"
+                else:
+                    seen[name] = 0
+
+                result[name] = scorer_obj
+            return result
+
+        raise ValueError(
+            "scorer list must contain all strings, all callables/scorers, "
+            "or all tuples with (callable, bool), (callable, kwargs), "
+            "or (callable, bool, kwargs)"
+        )
+
+    # callable passes through
+    return scorer
+
+
+class BaseProcessing(metaclass=MoabbMetaClass):
     """Base Processing.
 
     Please use one of the child classes
@@ -58,6 +220,11 @@ class BaseProcessing(metaclass=abc.ABCMeta):
         the dataset.
     resample: float | None (default None)
         If not None, resample the eeg data with the sampling rate provided.
+    overlap: float | None (default None)
+        Overlap percentage (0-100) for the sliding window approach used in
+        pseudo-online evaluation. If None, no overlap is applied. When overlap
+        is used, windows may cross event boundaries; such windows are kept and
+        labeled using a majority vote over the events they cover.
     """
 
     def __init__(
@@ -68,6 +235,7 @@ class BaseProcessing(metaclass=abc.ABCMeta):
         baseline: Optional[Tuple[float, float]] = None,
         channels: Optional[List[str]] = None,
         resample: Optional[float] = None,
+        overlap: Optional[float] = None,
     ):
         if tmax is not None:
             if tmin >= tmax:
@@ -79,6 +247,7 @@ class BaseProcessing(metaclass=abc.ABCMeta):
         self.tmin = tmin
         self.tmax = tmax
         self.interpolate_missing_channels = False
+        self.overlap = overlap
 
     @property
     @abc.abstractmethod
@@ -174,7 +343,10 @@ class BaseProcessing(metaclass=abc.ABCMeta):
                 f"events to generate labels: {dataset.event_id}"
             )
             events_pipeline = (
-                RawToEvents(dataset.event_id, interval=dataset.interval)
+                RawToEvents(
+                    dataset.event_id,
+                    interval=dataset.interval,
+                )
                 if epochs_pipeline is None
                 else EpochsToEvents()
             )
@@ -203,7 +375,7 @@ class BaseProcessing(metaclass=abc.ABCMeta):
                     ]
                 )
                 steps.append((StepType.ARRAY, array_events_pipeline))
-            process_pipelines.append(Pipeline(steps))
+            process_pipelines.append(FixedPipeline(steps))
         return process_pipelines
 
     def make_labels_pipeline(self, dataset, return_epochs=False, return_raws=False):
@@ -211,12 +383,12 @@ class BaseProcessing(metaclass=abc.ABCMeta):
         output of the postprocess_pipeline.
         Refer to the arguments of :func:`get_data` for more information."""
         if return_epochs:
-            labels_pipeline = make_pipeline(
+            labels_pipeline = make_fixed_pipeline(
                 EpochsToEvents(),
                 EventsToLabels(event_id=self.used_events(dataset)),
             )
         elif return_raws:
-            labels_pipeline = make_pipeline(
+            labels_pipeline = make_fixed_pipeline(
                 self._get_events_pipeline(dataset),
                 EventsToLabels(event_id=self.used_events(dataset)),
             )
@@ -232,6 +404,8 @@ class BaseProcessing(metaclass=abc.ABCMeta):
         return_raws=False,
         cache_config=None,
         postprocess_pipeline=None,
+        process_pipelines=None,
+        additional_metadata: Literal["all"] | list[str] = None,
     ):
         """
         Return the data for a list of subject.
@@ -265,6 +439,20 @@ class BaseProcessing(metaclass=abc.ABCMeta):
             This pipeline must return an ``np.ndarray``.
             This pipeline must be "fixed" because it will not be trained,
             i.e. no call to ``fit`` will be made.
+        process_pipelines: Pipeline | None
+            Optional pipeline to apply to the data after the preprocessing.
+            You must set the ``return_epochs`` and ``return_raws` parameters
+            accordingly, i.e., if your custom pipeline returns raw objects,
+            you must also set ``return_raws=True``, otherwise you will get unexpected results.
+            Only use it if you know what you are doing.
+        additional_metadata: Literal["all"] | list[str] | None
+            Additional metadata to be loaded from the dataset.
+            If None, the default metadata will be loaded containing
+            `subject`, `session` and `run`. If "all", all columns of the `events.tsv`
+            file will be loaded. A list of column names can be passed to just
+            select these columns in addition to the three default values mentioned
+            before. This parameter works regardless of the return type
+            (epochs, raws, or array).
 
         Returns
         -------
@@ -278,6 +466,20 @@ class BaseProcessing(metaclass=abc.ABCMeta):
             A dataframe containing the metadata.
         """
 
+        if process_pipelines is not None:
+            assert isinstance(process_pipelines, list)
+            assert isinstance(process_pipelines[0], Pipeline)
+            output_step_type, _ = process_pipelines[0].steps[-1]
+            if (
+                (output_step_type == StepType.ARRAY and (return_epochs or return_raws))
+                or (output_step_type == StepType.EPOCHS and not return_epochs)
+                or (output_step_type == StepType.RAW and not return_raws)
+            ):
+                raise ValueError(
+                    f"process_pipeline output step type {output_step_type} incompatible with "
+                    f"arguments {return_epochs=} and {return_raws=}."
+                )
+
         if not self.is_valid(dataset):
             message = f"Dataset {dataset.code} is not valid for paradigm"
             raise AssertionError(message)
@@ -285,9 +487,11 @@ class BaseProcessing(metaclass=abc.ABCMeta):
         if subjects is None:
             subjects = dataset.subject_list
 
-        process_pipelines = self.make_process_pipelines(
-            dataset, return_epochs, return_raws, postprocess_pipeline
-        )
+        if process_pipelines is None:
+            process_pipelines = self.make_process_pipelines(
+                dataset, return_epochs, return_raws, postprocess_pipeline
+            )
+
         labels_pipeline = self.make_labels_pipeline(dataset, return_epochs, return_raws)
 
         data = [
@@ -306,6 +510,22 @@ class BaseProcessing(metaclass=abc.ABCMeta):
             for session, runs in sessions.items():
                 for run in runs.keys():
                     proc = [data_i[subject][session][run] for data_i in data]
+
+                    if additional_metadata:
+                        ext_metadata = [
+                            dataset.get_additional_metadata(
+                                subject=subject, session=session, run=run
+                            )
+                        ] * len(process_pipelines)
+
+                        if isinstance(additional_metadata, list):
+                            ext_metadata = [
+                                dm[["session", "subject", "run"] + additional_metadata]
+                                for dm in ext_metadata
+                            ]
+                    else:
+                        ext_metadata = [None] * len(process_pipelines)
+
                     if any(obj is None for obj in proc):
                         # this mean the run did not contain any selected event
                         # go to next
@@ -316,11 +536,13 @@ class BaseProcessing(metaclass=abc.ABCMeta):
                         assert all(len(proc[0]) == len(p) for p in proc[1:])
                         n = len(proc[0])
                         lbs = labels_pipeline.transform(proc[0])
-                        x = (
-                            proc[0]
-                            if len(self.filters) == 1
-                            else mne.concatenate_epochs(proc)
-                        )
+                        if len(self.filters) == 1:
+                            x = proc[0]
+                        else:
+                            for p in proc:
+                                p.set_annotations(None)
+                            x = mne.concatenate_epochs(proc)
+
                     elif return_raws:
                         assert all(len(proc[0]) == len(p) for p in proc[1:])
                         n = 1
@@ -350,22 +572,38 @@ class BaseProcessing(metaclass=abc.ABCMeta):
                     met["subject"] = subject
                     met["session"] = session
                     met["run"] = run
+
                     metadata.append(met)
+
+                    # overwrite if additional is required
+                    if additional_metadata:
+                        # extend the metadata according to the filters
+
+                        dmeta_ext = (
+                            ext_metadata[0].copy()
+                            if isinstance(ext_metadata[0], pd.DataFrame)
+                            else pd.DataFrame()
+                        )
+                        metadata[-1] = dmeta_ext
 
                     if return_epochs:
                         x.metadata = (
-                            met.copy()
+                            metadata[-1].copy()
                             if len(self.filters) == 1
                             else pd.concat(
-                                [met.copy()] * len(self.filters), ignore_index=True
+                                [metadata[-1].copy()] * len(self.filters),
+                                ignore_index=True,
                             )
                         )
+
                     X.append(x)
                     labels.append(lbs)
 
         metadata = pd.concat(metadata, ignore_index=True)
         labels = np.concatenate(labels)
         if return_epochs:
+            for ep in X:
+                ep.set_annotations(None)
             X = mne.concatenate_epochs(X)
         elif return_raws:
             pass
@@ -401,10 +639,10 @@ class BaseProcessing(metaclass=abc.ABCMeta):
         steps.append(
             (
                 "epoching",
-                make_pipeline(
+                make_fixed_pipeline(
                     ForkPipelines(
                         [
-                            ("raw", make_pipeline(None)),
+                            ("raw", make_fixed_pipeline(None)),
                             ("events", self._get_events_pipeline(dataset)),
                         ]
                     ),
@@ -425,7 +663,7 @@ class BaseProcessing(metaclass=abc.ABCMeta):
             steps.append(("resample", get_resample_pipeline(self.resample)))
         if return_epochs:  # needed to concatenate epochs
             steps.append(("load_data", FunctionTransformer(methodcaller("load_data"))))
-        return Pipeline(steps)
+        return FixedPipeline(steps)
 
     def _get_array_pipeline(
         self, return_epochs, return_raws, dataset, processing_pipeline
@@ -443,7 +681,7 @@ class BaseProcessing(metaclass=abc.ABCMeta):
             steps.append(("postprocess_pipeline", processing_pipeline))
         if len(steps) == 0:
             return None
-        return Pipeline(steps)
+        return FixedPipeline(steps)
 
     def match_all(
         self,
@@ -454,6 +692,7 @@ class BaseProcessing(metaclass=abc.ABCMeta):
     ):
         """
         Initialize this paradigm to match all datasets in parameter:
+
         - `self.resample` is set to match the minimum frequency in all datasets, minus `shift`.
           If the frequency is 128 for example, then MNE can return 128 or 129 samples
           depending on the dataset, even if the length of the epochs is 1s
@@ -519,8 +758,11 @@ class BaseParadigm(BaseProcessing):
     ----------
 
     events: List of str | None (default None)
-        event to use for epoching. If None, default to all events defined in
+        events to use for epoching. If None, default to all events defined in
         the dataset.
+
+    scorer: sklearn-compatible string or a compatible sklearn scorer | None (default None)
+        If None, and n_classes==2 use the roc_auc, else use accuracy.
     """
 
     def __init__(
@@ -532,6 +774,8 @@ class BaseParadigm(BaseProcessing):
         baseline=None,
         channels=None,
         resample=None,
+        overlap=None,
+        scorer=None,
     ):
         super().__init__(
             filters=filters,
@@ -540,8 +784,20 @@ class BaseParadigm(BaseProcessing):
             resample=resample,
             tmin=tmin,
             tmax=tmax,
+            overlap=overlap,
         )
         self.events = events
+
+        # Normalize scorer (convert list of callables to dict)
+        scorer = _normalize_scorer(scorer)
+
+        if scorer is not None:
+            try:
+                check_scoring(None, scoring=scorer)
+            except (ValueError, TypeError) as e:
+                raise ValueError(f"Invalid scorer: {e}") from e
+
+        self.scorer = scorer
 
     @property
     @abc.abstractmethod
@@ -549,10 +805,23 @@ class BaseParadigm(BaseProcessing):
         """Property that defines scoring metric (e.g. ROC-AUC or accuracy
         or f-score), given as a sklearn-compatible string or a compatible
         sklearn scorer.
-
         """
         pass
 
     def _get_events_pipeline(self, dataset):
         event_id = self.used_events(dataset)
+        if self.overlap is not None:
+            tmax = (
+                self.tmax
+                if self.tmax is not None
+                else (dataset.interval[1] - dataset.interval[0])
+            )
+            window_length = tmax - self.tmin
+            return RawToEvents(
+                event_id=event_id,
+                interval=dataset.interval,
+                overlap=self.overlap,
+                window_length=window_length,
+                tmin=self.tmin,
+            )
         return RawToEvents(event_id=event_id, interval=dataset.interval)

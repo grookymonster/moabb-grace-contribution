@@ -6,17 +6,32 @@ import abc
 import logging
 import re
 import traceback
+import warnings
+from collections.abc import Sequence
 from dataclasses import dataclass
+from functools import cached_property
 from inspect import signature
 from pathlib import Path
-from typing import Any, Dict, Union
+from typing import TYPE_CHECKING, Any, Dict, Union
+from urllib.parse import quote
 
 import mne_bids
+import numpy as np
 import pandas as pd
-from sklearn.pipeline import Pipeline
+from mne_bids import events_file_to_annotation_kwargs
 
-from moabb.datasets.bids_interface import StepType, _interface_map
-from moabb.datasets.preprocessing import SetRawAnnotations
+from moabb.datasets.bids_interface import (
+    _FORMAT_EXTENSION_MAP,
+    StepType,
+    _BIDSInterfaceRawEDFNoDesc,
+    _interface_map,
+    get_bids_root,
+)
+from moabb.datasets.preprocessing import FixedPipeline, SetRawAnnotations
+
+
+if TYPE_CHECKING:
+    from moabb.datasets.metadata import DatasetMetadata
 
 
 log = logging.getLogger(__name__)
@@ -123,7 +138,7 @@ class CacheConfig:
         Create a CacheConfig object from a dict or another CacheConfig object.
 
         Examples
-        -------
+        --------
         Using default parameters:
 
         >>> CacheConfig.make()
@@ -169,6 +184,17 @@ def is_abbrev(abbrev_name: str, full_name: str):
     and in the same order. They must share the same capital letters."""
     pattern = re.sub(r"([A-Za-z])", r"\1[a-z0-9\-]*", re.escape(abbrev_name))
     return re.fullmatch(pattern, full_name) is not None
+
+
+def _is_event_int(v):
+    """Return True if v is int or np.integer but not bool."""
+    return not isinstance(v, bool) and isinstance(v, (int, np.integer))
+
+
+_KWARG_HINT = (
+    "Check that keyword arguments were not accidentally "
+    "included inside the events dict."
+)
 
 
 def check_subject_names(data):
@@ -229,7 +255,16 @@ def check_run_names(data):
                 )
 
 
-def format_row(row: pd.Series):
+def _transfer_unit(key: str, value: str):
+    pattern = r"( ?\((\w+)\))$"
+    match = re.search(pattern, key)
+    if match:
+        suffix, unit = match.groups()
+        return key[: -len(suffix)], f"{value} {unit}"
+    return key, value
+
+
+def format_row(row: pd.Series, horizontal: bool = True):
     pwc_key = "PapersWithCode leaderboard"
     tab_prefix = " " * 8
     tab_sep = "="
@@ -237,7 +272,6 @@ def format_row(row: pd.Series):
     pwc_link = row.get(pwc_key, None)
     if pwc_link is not None:
         row = row.drop(pwc_key)
-    col_names = [str(col) for col in row.index]
 
     def to_int(x):
         try:
@@ -248,41 +282,290 @@ def format_row(row: pd.Series):
         except ValueError:
             return x
 
-    values = [str(to_int(val)) for val in row.values]
-    widths = [max(len(col), len(val)) for col, val in zip(col_names, values)]
-    row_sep = " ".join([tab_sep * width for width in widths])
-    cols_row = " ".join([col.rjust(width) for col, width in zip(col_names, widths)])
-    values_row = " ".join([val.rjust(width) for val, width in zip(values, widths)])
-    out = (
-        "    .. admonition:: Dataset summary\n\n"
-        f"{tab_prefix}{row_sep}\n"
-        f"{tab_prefix}{cols_row}\n"
-        f"{tab_prefix}{row_sep}\n"
-        f"{tab_prefix}{values_row}\n"
-        f"{tab_prefix}{row_sep}"
+    # append the eventual units to the values:
+    keys, values = zip(
+        *[_transfer_unit(str(key), str(to_int(val))) for key, val in row.items()]
     )
+    # make columns bold:
+    keys: Sequence[str] = [f"**{key}**" for key in keys]
+    # transpose the table if vertical:
+    rows: Sequence[Sequence[str]] = (
+        [keys, values] if horizontal else list(zip(keys, values))
+    )
+    # compute the width of each column:
+    widths = [max(map(len, col)) for col in zip(*rows)]
+    # pad each column with spaces:
+    rows = [[str(col).rjust(width) for col, width in zip(row, widths)] for row in rows]
+    # add separator rows:
+    sep_row = [tab_sep * width for width in widths]
+    if horizontal:
+        rows.insert(1, sep_row)
+    rows.insert(0, sep_row)
+    rows.append(sep_row)
+    # join the columns and rows into one string:
+    rows_str = "\n".join([f"{tab_prefix}{' '.join(row)}" for row in rows])
+    # add the header:
+    out = f"    .. admonition:: Dataset summary\n\n{rows_str}"
+    # add the PapersWithCode link if it exists:
     if pwc_link is not None:
         out = f"    **{pwc_key}:** {pwc_link}\n\n" + out
-    return out
+    return out, row
+
+
+def _has_nonempty(value: Any) -> bool:
+    if value is None:
+        return False
+    if isinstance(value, str):
+        return bool(value.strip())
+    if isinstance(value, (list, tuple, dict, set)):
+        return len(value) > 0
+    return True
+
+
+def _format_metadata_value(value: Any) -> str:
+    if isinstance(value, float):
+        return str(int(value)) if value.is_integer() else f"{value:g}"
+    if isinstance(value, (list, tuple, set)):
+        return ", ".join(_format_metadata_value(v) for v in value)
+    return str(value)
+
+
+def _metadata_admonition_block(
+    title: str, items: list[tuple[str, Any]], existing_doc: str
+) -> str | None:
+    if f".. admonition:: {title}" in existing_doc:
+        return None
+
+    lines = []
+    for label, value in items:
+        if not _has_nonempty(value):
+            continue
+        lines.append(f"        - **{label}**: {_format_metadata_value(value)}")
+
+    if not lines:
+        return None
+    return "\n".join([f"    .. admonition:: {title}", "", *lines])
+
+
+def _format_age(participants) -> str | None:
+    age_mean = getattr(participants, "age_mean", None)
+    age_min = getattr(participants, "age_min", None)
+    age_max = getattr(participants, "age_max", None)
+    if age_mean is None:
+        return None
+    age_text = _format_metadata_value(age_mean)
+    if age_min is not None and age_max is not None:
+        age_text += f" (range: {_format_metadata_value(age_min)}-{_format_metadata_value(age_max)})"
+    return f"{age_text} years"
+
+
+def _format_bandpass(preprocessing) -> str | None:
+    bandpass = getattr(preprocessing, "bandpass", None)
+    if isinstance(bandpass, dict):
+        low = bandpass.get(
+            "low",
+            bandpass.get(
+                "highpass", bandpass.get("low_cutoff_hz", bandpass.get("highpass_hz"))
+            ),
+        )
+        high = bandpass.get(
+            "high",
+            bandpass.get(
+                "lowpass", bandpass.get("high_cutoff_hz", bandpass.get("lowpass_hz"))
+            ),
+        )
+        if low is not None and high is not None:
+            return f"{_format_metadata_value(low)}-{_format_metadata_value(high)} Hz"
+    elif isinstance(bandpass, (list, tuple)) and len(bandpass) >= 2:
+        return (
+            f"{_format_metadata_value(bandpass[0])}"
+            f"-{_format_metadata_value(bandpass[1])} Hz"
+        )
+
+    highpass = getattr(preprocessing, "highpass_hz", None)
+    lowpass = getattr(preprocessing, "lowpass_hz", None)
+    if highpass is not None and lowpass is not None:
+        return f"{_format_metadata_value(highpass)}-{_format_metadata_value(lowpass)} Hz"
+    return None
+
+
+def _metadata_doc_sections(metadata: Any, existing_doc: str) -> str:
+    if metadata is None:
+        return ""
+
+    participants = getattr(metadata, "participants", None)
+    acquisition = getattr(metadata, "acquisition", None)
+    experiment = getattr(metadata, "experiment", None)
+    documentation = getattr(metadata, "documentation", None)
+    preprocessing = getattr(metadata, "preprocessing", None)
+    external_links = getattr(metadata, "external_links", None)
+
+    blocks = []
+
+    if participants is not None:
+        blocks.append(
+            _metadata_admonition_block(
+                "Participants",
+                [
+                    ("Population", getattr(participants, "health_status", None)),
+                    (
+                        "Clinical population",
+                        getattr(participants, "clinical_population", None),
+                    ),
+                    ("Age", _format_age(participants)),
+                    ("Handedness", getattr(participants, "handedness", None)),
+                    ("BCI experience", getattr(participants, "bci_experience", None)),
+                ],
+                existing_doc,
+            )
+        )
+
+    if acquisition is not None:
+        blocks.append(
+            _metadata_admonition_block(
+                "Equipment",
+                [
+                    ("Amplifier", getattr(acquisition, "hardware", None)),
+                    ("Electrodes", getattr(acquisition, "sensor_type", None)),
+                    ("Montage", getattr(acquisition, "montage", None)),
+                    ("Reference", getattr(acquisition, "reference", None)),
+                ],
+                existing_doc,
+            )
+        )
+
+    if preprocessing is not None:
+        steps = getattr(preprocessing, "preprocessing_steps", None)
+        steps_text = ", ".join(steps) if isinstance(steps, list) else steps
+        blocks.append(
+            _metadata_admonition_block(
+                "Preprocessing",
+                [
+                    ("Data state", getattr(preprocessing, "data_state", None)),
+                    ("Bandpass filter", _format_bandpass(preprocessing)),
+                    ("Steps", steps_text),
+                    ("Re-reference", getattr(preprocessing, "re_reference", None)),
+                    ("Notes", getattr(preprocessing, "notes", None)),
+                ],
+                existing_doc,
+            )
+        )
+
+    data_url = None
+    if documentation is not None:
+        data_url = getattr(documentation, "data_url", None)
+    if data_url is None and external_links is not None:
+        data_url = (
+            external_links.get("source") if isinstance(external_links, dict) else None
+        )
+
+    if documentation is not None or _has_nonempty(data_url):
+        blocks.append(
+            _metadata_admonition_block(
+                "Data Access",
+                [
+                    (
+                        "DOI",
+                        getattr(documentation, "doi", None) if documentation else None,
+                    ),
+                    ("Data URL", data_url),
+                    (
+                        "Repository",
+                        (
+                            getattr(documentation, "repository", None)
+                            if documentation
+                            else None
+                        ),
+                    ),
+                ],
+                existing_doc,
+            )
+        )
+
+    if experiment is not None:
+        blocks.append(
+            _metadata_admonition_block(
+                "Experimental Protocol",
+                [
+                    ("Paradigm", getattr(experiment, "paradigm", None)),
+                    ("Task type", getattr(experiment, "task_type", None)),
+                    ("Tasks", getattr(experiment, "tasks", None)),
+                    ("Feedback", getattr(experiment, "feedback_type", None)),
+                    ("Stimulus", getattr(experiment, "stimulus_type", None)),
+                ],
+                existing_doc,
+            )
+        )
+
+    blocks = [block for block in blocks if block is not None]
+    return "\n\n".join(blocks)
+
+
+def _format_feedback_section(dataset_id: str) -> str:
+    """Generate a feedback section with a button to report issues on GitHub."""
+    issue_title = quote(f"[Dataset] Issue with {dataset_id}")
+    issue_body = quote(
+        f"## Dataset\n\n"
+        f"- **Dataset ID:** {dataset_id}\n\n"
+        f"## Issue Description\n\n"
+        f"Please describe the issue you encountered with this dataset:\n\n"
+        f"## Steps to Reproduce\n\n"
+        f"1. \n2. \n3. \n\n"
+        f"## Expected Behavior\n\n\n"
+        f"## Additional Context\n\n"
+    )
+    github_url = (
+        f"https://github.com/NeuroTechX/moabb/issues/new"
+        f"?title={issue_title}&body={issue_body}&labels=dataset"
+    )
+
+    return (
+        f"    .. admonition:: Found an issue with this dataset?\n"
+        f"       :class: tip\n"
+        f"\n"
+        f"       If you encounter any problems with this dataset (missing files,\n"
+        f"       incorrect metadata, loading errors, etc.), please let us know!\n"
+        f"\n"
+        f"       .. button-link:: {github_url}\n"
+        f"          :color: primary\n"
+        f"          :outline:\n"
+        f"\n"
+        f"          Report an Issue on GitHub"
+    )
 
 
 class MetaclassDataset(abc.ABCMeta):
     def __new__(cls, name, bases, attrs):
-        doc = attrs.get("__doc__", "")
+        doc = attrs.get("__doc__", "") or ""
+        insert_blocks = []
+
         try:
             row = _summary_table.loc[name]
-            row_str = format_row(row)
-            doc_list = doc.split("\n\n")
-            if len(doc_list) >= 2:
-                doc_list = [doc_list[0], row_str] + doc_list[1:]
-            else:
-                doc_list.append(row_str)
-            attrs["__doc__"] = "\n\n".join(doc_list)
+            row_str, row = format_row(row, horizontal=False)
+            insert_blocks.append(row_str)
+            attrs["_summary_table"] = row.to_dict()
         except KeyError:
             log.debug(
                 f"No description found for dataset {name}. "
                 f"Complete the appropriate moabb/datasets/summary_*.csv file"
             )
+
+        metadata_sections = _metadata_doc_sections(attrs.get("METADATA"), doc)
+        if metadata_sections:
+            insert_blocks.append(metadata_sections)
+
+        # Note: feedback "Report Issue" button is now part of the enhanced
+        # dataset card header injected by dataset_timeline_ext.py, so the
+        # standalone feedback admonition is no longer injected here.
+
+        if insert_blocks:
+            if doc.strip():
+                doc_list = doc.split("\n\n")
+                doc_list = [doc_list[0], *insert_blocks, *doc_list[1:]]
+                attrs["__doc__"] = "\n\n".join(doc_list)
+            else:
+                attrs["__doc__"] = "\n\n".join(insert_blocks)
+
         return super().__new__(cls, name, bases, attrs)
 
 
@@ -327,6 +610,8 @@ class BaseDataset(metaclass=MetaclassDataset):
     doi: DOI for dataset, optional (for now)
     """
 
+    _summary_table: dict[str, Any]
+
     def __init__(
         self,
         subjects,
@@ -337,6 +622,9 @@ class BaseDataset(metaclass=MetaclassDataset):
         paradigm,
         doi=None,
         unit_factor=1e6,
+        *,
+        selected_subjects=None,
+        selected_sessions=None,
     ):
         """Initialize function for the BaseDataset."""
         try:
@@ -358,8 +646,68 @@ class BaseDataset(metaclass=MetaclassDataset):
                 "See moabb.datasets.base.is_abbrev for more information."
             )
 
-        self.subject_list = subjects
+        self._all_subjects = list(subjects)
+        if selected_subjects is not None:
+            selected_subjects = list(selected_subjects)
+            # Warn on duplicate subjects and deduplicate preserving order
+            if len(selected_subjects) != len(set(selected_subjects)):
+                unique = dict.fromkeys(selected_subjects)
+                dupes = [s for s in unique if selected_subjects.count(s) > 1]
+                warnings.warn(
+                    f"Duplicate subjects detected: {dupes}. "
+                    "Duplicates will be removed, preserving order.",
+                    stacklevel=2,
+                )
+                selected_subjects = list(unique)
+            invalid = [s for s in selected_subjects if s not in self._all_subjects]
+            if invalid:
+                raise ValueError(
+                    f"Invalid subjects: {invalid}. "
+                    f"Valid subjects are: {self._all_subjects}"
+                )
+            self.subject_list = selected_subjects
+        else:
+            self.subject_list = list(subjects)
         self.n_sessions = sessions_per_subject
+
+        # Validate selected_sessions
+        if selected_sessions is not None:
+            try:
+                selected_sessions = list(selected_sessions)
+            except TypeError:
+                raise TypeError(
+                    f"selected_sessions must be an iterable, "
+                    f"got {type(selected_sessions).__name__}"
+                ) from None
+            bad = [s for s in selected_sessions if not isinstance(s, (int, str))]
+            if bad:
+                raise TypeError(
+                    f"selected_sessions elements must be int or str, "
+                    f"got: {[(type(s).__name__, s) for s in bad]}"
+                )
+        self._selected_sessions = selected_sessions
+
+        # Validate events dict integrity
+        if not isinstance(events, dict):
+            raise TypeError(f"events must be a dict, got {type(events).__name__}")
+        for key, value in events.items():
+            if not isinstance(key, str):
+                raise TypeError(
+                    f"All event dict keys must be strings, but got "
+                    f"{type(key).__name__}: {key!r}. {_KWARG_HINT}"
+                )
+            if isinstance(value, (list, tuple)):
+                for i, v in enumerate(value):
+                    if not _is_event_int(v):
+                        raise TypeError(
+                            f"Event {key!r} list element {i} is {v!r} "
+                            f"({type(v).__name__}), expected int. {_KWARG_HINT}"
+                        )
+            elif not _is_event_int(value):
+                raise TypeError(
+                    f"Event {key!r} has value {value!r} ({type(value).__name__}), "
+                    f"expected int or list of int. {_KWARG_HINT}"
+                )
         self.event_id = events
         self.code = code
         self.interval = interval
@@ -367,8 +715,43 @@ class BaseDataset(metaclass=MetaclassDataset):
         self.doi = doi
         self.unit_factor = unit_factor
 
+    @property
+    def all_subjects(self):
+        """Full list of subjects available in this dataset (unfiltered)."""
+        return list(self._all_subjects)
+
+    @cached_property
+    def metadata(self) -> "DatasetMetadata | None":
+        """Return structured metadata for this dataset.
+
+        Returns the DatasetMetadata object from the centralized catalog,
+        or None if metadata is not available for this dataset.
+
+        Returns
+        -------
+        DatasetMetadata | None
+            The metadata object containing acquisition parameters,
+            participant demographics, experiment details, and documentation.
+            Returns None if no metadata is registered for this dataset.
+
+        Examples
+        --------
+        >>> from moabb.datasets import BNCI2014_001
+        >>> dataset = BNCI2014_001()
+        >>> dataset.metadata.participants.n_subjects
+        9
+        >>> dataset.metadata.acquisition.sampling_rate
+        250.0
+        """
+        from moabb.datasets.metadata import get_dataset_metadata
+
+        try:
+            return get_dataset_metadata(self.__class__.__name__)
+        except KeyError:
+            return None
+
     def _create_process_pipeline(self):
-        return Pipeline(
+        return FixedPipeline(
             [
                 (
                     StepType.RAW,
@@ -379,6 +762,50 @@ class BaseDataset(metaclass=MetaclassDataset):
                 ),
             ]
         )
+
+    def _block_rep(self, block, repetition):
+        raise NotImplementedError()
+
+    def get_block_repetition(self, paradigm, subjects, block_list, repetition_list):
+        """Select data for all provided subjects, blocks and repetitions.
+
+        subject -> session -> run -> block -> repetition
+
+        See also
+        --------
+        BaseDataset.get_data
+
+        Parameters
+        ----------
+        subjects: List of int
+            List of subject number
+        block_list: List of int
+            List of block number
+        repetition_list: List of int
+            List of repetition number inside a block
+
+        Returns
+        -------
+        data: Dict
+            dict containing the raw data
+        """
+        X, labels, meta = paradigm.get_data(self, subjects)
+        X_select = []
+        labels_select = []
+        meta_select = []
+        for block in block_list:
+            for repetition in repetition_list:
+                run = self._block_rep(block, repetition)
+                X_select.append(X[meta["run"] == run])
+                labels_select.append(labels[meta["run"] == run])
+                meta_select.append(meta[meta["run"] == run])
+        X_select = np.concatenate(X_select)
+        labels_select = np.concatenate(labels_select)
+        meta_select = np.concatenate(meta_select)
+        df = pd.DataFrame(meta_select, columns=meta.columns)
+        meta_select = df
+
+        return X_select, labels_select, meta_select
 
     def get_data(
         self,
@@ -439,6 +866,8 @@ class BaseDataset(metaclass=MetaclassDataset):
         if not isinstance(subjects, list):
             raise ValueError("subjects must be a list")
 
+        effective_sessions = self._selected_sessions
+
         cache_config = CacheConfig.make(cache_config)
 
         if process_pipeline is None:
@@ -448,11 +877,17 @@ class BaseDataset(metaclass=MetaclassDataset):
         for subject in subjects:
             if subject not in self.subject_list:
                 raise ValueError("Invalid subject {:d} given".format(subject))
-            data[subject] = self._get_single_subject_data_using_cache(
+            subject_data = self._get_single_subject_data_using_cache(
                 subject,
                 cache_config,
                 process_pipeline,
             )
+            if effective_sessions is not None:
+                str_sessions = {str(s) for s in effective_sessions}
+                subject_data = {
+                    k: v for k, v in subject_data.items() if k in str_sessions
+                }
+            data[subject] = subject_data
         check_subject_names(data)
         check_session_names(data)
         check_run_names(data)
@@ -519,6 +954,99 @@ class BaseDataset(metaclass=MetaclassDataset):
                     verbose=verbose,
                 )
 
+    def convert_to_bids(
+        self, path=None, subjects=None, overwrite=False, format="EDF", verbose=None
+    ):
+        """Convert the dataset to BIDS format.
+
+        Saves the raw EEG data in a BIDS-compliant directory structure.
+        Unlike the caching mechanism (see :class:`CacheConfig`), the files
+        produced here do **not** contain a processing-pipeline hash
+        (``desc-<hash>``) in their names, making the output a clean,
+        shareable BIDS dataset.
+
+        Parameters
+        ----------
+        path : str | Path | None
+            Directory under which the BIDS dataset will be written.
+            If ``None`` the default MNE data directory is used (same default
+            as the rest of MOABB).
+        subjects : list of int | None
+            Subject numbers to convert.  If ``None``, all subjects in
+            :attr:`subject_list` are converted.
+        overwrite : bool
+            If ``True``, existing BIDS files for a subject are removed before
+            saving.  Default is ``False``.
+        format : str
+            The file format for the raw EEG data.  Supported values are
+            ``"EDF"`` (default), ``"BrainVision"``, ``"BDF"``, and
+            ``"EEGLAB"``.
+        verbose : str | None
+            Verbosity level forwarded to MNE/MNE-BIDS.
+
+        Returns
+        -------
+        bids_root : pathlib.Path
+            Path to the root of the written BIDS dataset.
+
+        Examples
+        --------
+        >>> from moabb.datasets import AlexMI
+        >>> dataset = AlexMI()
+        >>> bids_root = dataset.convert_to_bids(path='/tmp/bids', subjects=[1])
+
+        See Also
+        --------
+        CacheConfig : Cache configuration for :meth:`get_data`.
+        moabb.datasets.bids_interface.get_bids_root : Return the BIDS root path.
+
+        Notes
+        -----
+
+        .. versionadded:: 1.5
+        """
+        if format not in _FORMAT_EXTENSION_MAP:
+            raise ValueError(
+                f"Unsupported format {format!r}. "
+                f"Allowed formats are {tuple(_FORMAT_EXTENSION_MAP)}"
+            )
+        if subjects is None:
+            subjects = self.subject_list
+
+        invalid = [s for s in subjects if s not in self.subject_list]
+        if invalid:
+            raise ValueError(
+                f"Invalid subject(s) {invalid}. "
+                f"Valid subjects are {self.subject_list}"
+            )
+
+        ext = _FORMAT_EXTENSION_MAP[format]
+
+        for subject in subjects:
+            interface = _BIDSInterfaceRawEDFNoDesc(
+                dataset=self,
+                subject=subject,
+                path=path,
+                process_pipeline=None,
+                verbose=verbose,
+                _format=format,
+            )
+            if overwrite:
+                interface.erase()
+            else:
+                subject_dir = interface.root / f"sub-{subject}"
+                if any(subject_dir.rglob(f"*{ext}")):
+                    log.info(
+                        "BIDS data already exists for %s, skipping "
+                        "(use overwrite=True to overwrite).",
+                        repr(interface),
+                    )
+                    continue
+            sessions_data = self.get_data(subjects=[subject])
+            interface.save(sessions_data[subject])
+
+        return get_bids_root(self.code, path)
+
     def _get_single_subject_data_using_cache(
         self, subject, cache_config, process_pipeline
     ):
@@ -551,7 +1079,7 @@ class BaseDataset(metaclass=MetaclassDataset):
                     self,
                     subject,
                     path=cache_config.path,
-                    process_pipeline=Pipeline(cached_steps),
+                    process_pipeline=FixedPipeline(cached_steps),
                     verbose=cache_config.verbose,
                 )
 
@@ -598,7 +1126,7 @@ class BaseDataset(metaclass=MetaclassDataset):
                         self,
                         subject,
                         path=cache_config.path,
-                        process_pipeline=Pipeline(
+                        process_pipeline=FixedPipeline(
                             cached_steps + remaining_steps[: step_idx + 1]
                         ),
                         verbose=cache_config.verbose,
@@ -673,6 +1201,34 @@ class BaseDataset(metaclass=MetaclassDataset):
             list of length one, for compatibility.
         """  # noqa: E501
         pass
+
+    def get_additional_metadata(
+        self, subject: str, session: str, run: str
+    ) -> None | pd.DataFrame:
+        """
+        Load additional metadata for a specific subject, session, and run.
+
+        This method is intended to be overridden by subclasses to provide
+        additional metadata specific to the dataset. The metadata is typically
+        loaded from an `events.tsv` file or similar data source.
+
+        Parameters
+        ----------
+        subject : str
+            The identifier for the subject.
+        session : str
+            The identifier for the session.
+        run : str
+            The identifier for the run.
+
+        Returns
+        -------
+        None | pd.DataFrame
+            A DataFrame containing the additional metadata if available,
+            otherwise None.
+        """
+
+        return None
 
 
 class BaseBIDSDataset(BaseDataset):
@@ -763,6 +1319,73 @@ class BaseBIDSDataset(BaseDataset):
                 run = bids_path.run
             data.setdefault(session, {})[run] = raw
         return data
+
+    def get_additional_metadata(
+        self, subject: str, session: str, run: str
+    ) -> None | pd.DataFrame:
+        """
+        Load additional metadata for a specific subject, session, and run.
+
+        Parameters
+        ----------
+        subject : str
+            The identifier for the subject.
+        session : str
+            The identifier for the session.
+        run : str
+            The identifier for the run.
+
+        Returns
+        -------
+        None | pd.DataFrame
+            A DataFrame containing the additional metadata if available,
+            otherwise None.
+        """
+        bids_paths = self.bids_paths(subject)
+
+        # select only with matching session and run
+        bids_path_selected = [
+            pth
+            for pth in bids_paths
+            if f"ses-{session}" in pth.basename and f"run-{run}" in pth.basename
+        ]
+
+        if len(bids_path_selected) > 1:
+            raise ValueError("More than one matching BIDS path found.")
+        bids_path = bids_path_selected[0]
+
+        events_fname = bids_path.find_matching_sidecar(
+            suffix="events", extension=".tsv", on_error="warn"
+        )
+        if events_fname is None:
+            return None
+
+        # Use official mne-bids API — handles n/a filtering, stim_type compat, etc.
+        annot_kwargs = events_file_to_annotation_kwargs(events_fname)
+
+        # Build DataFrame from API output
+        dm = pd.DataFrame(
+            {
+                "onset": annot_kwargs["onset"],
+                "duration": annot_kwargs["duration"],
+                "trial_type": annot_kwargs["description"],
+            }
+        )
+
+        # Reconstruct 'value' from event_id mapping (description -> integer)
+        dm["value"] = dm["trial_type"].map(annot_kwargs["event_id"])
+
+        # Add extras (custom columns beyond standard BIDS columns)
+        extras = annot_kwargs.get("extras")
+        if extras and len(extras) > 0:
+            extras_df = pd.DataFrame(extras)
+            dm = pd.concat([dm, extras_df], axis=1)
+
+        # Filter by dataset's event_id
+        dm = dm[dm["trial_type"].isin(self.event_id.keys())]
+
+        dm = dm.assign(subject=subject, session=session, run=run)
+        return dm
 
 
 class LocalBIDSDataset(BaseBIDSDataset):

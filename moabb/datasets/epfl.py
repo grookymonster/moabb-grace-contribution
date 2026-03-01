@@ -1,5 +1,6 @@
 import datetime as dt
 import glob
+import logging
 import os
 import zipfile
 
@@ -10,7 +11,24 @@ from scipy.io import loadmat
 
 from moabb.datasets import download as dl
 from moabb.datasets.base import BaseDataset
+from moabb.datasets.metadata.schema import (
+    AcquisitionMetadata,
+    AuxiliaryChannelsMetadata,
+    BCIApplicationMetadata,
+    CrossValidationMetadata,
+    DatasetMetadata,
+    DataStructureMetadata,
+    DocumentationMetadata,
+    ExperimentMetadata,
+    ParadigmSpecificMetadata,
+    ParticipantMetadata,
+    PreprocessingMetadata,
+    SignalProcessingMetadata,
+    Tags,
+)
 
+
+logger = logging.getLogger(__name__)
 
 EPFLP300_URL = "http://documents.epfl.ch/groups/m/mm/mmspg/www/BCI/p300/"
 
@@ -61,7 +79,174 @@ class EPFLP300(BaseDataset):
            https://doi.org/10.1016/j.jneumeth.2007.03.005
     """
 
-    def __init__(self):
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=2048.0,
+            n_channels=32,
+            channel_types={"eeg": 32, "misc": 2},
+            montage="standard_1020",
+            hardware="Biosemi ActiveTwo",
+            sensor_type="active",
+            reference=None,
+            software=None,
+            sensors=[
+                "AF3",
+                "AF4",
+                "C3",
+                "C4",
+                "CP1",
+                "CP2",
+                "CP5",
+                "CP6",
+                "Cz",
+                "F3",
+                "F4",
+                "F7",
+                "F8",
+                "FC1",
+                "FC2",
+                "FC5",
+                "FC6",
+                "Fp1",
+                "Fp2",
+                "Fz",
+                "MA1",
+                "MA2",
+                "O1",
+                "O2",
+                "Oz",
+                "P3",
+                "P4",
+                "P7",
+                "P8",
+                "PO3",
+                "PO4",
+                "Pz",
+                "T7",
+                "T8",
+            ],
+            line_freq=50.0,
+            auxiliary_channels=AuxiliaryChannelsMetadata(
+                has_eog=False,
+            ),
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=8,
+            health_status="mixed",
+            gender={"male": 7, "female": 1},
+            age_mean=38.4,
+            age_min=30,
+            age_max=56,
+            ages=[56, 51, 47, 33, 30, 30, 30, 30],
+            clinical_population="4 disabled (cerebral palsy, multiple sclerosis, late-stage amyotrophic lateral sclerosis, traumatic brain and spinal-cord injury C4 level), 4 able-bodied",
+            bci_experience="no training required",
+            species="human",
+        ),
+        experiment=ExperimentMetadata(
+            events={"Target": 2, "NonTarget": 1},
+            paradigm="p300",
+            n_classes=2,
+            class_labels=["target", "non-target"],
+            trial_duration=1.0,
+            study_design="Subjects counted silently how often a prescribed image (one of six: television, telephone, lamp, door, window, radio) was flashed while images were flashed in random sequences",
+            feedback_type="none",
+            stimulus_type="image_flash",
+            stimulus_modalities=["visual"],
+            primary_modality="visual",
+            mode="offline",
+            instructions="Subjects were asked to count silently how often a prescribed image was flashed",
+            stimulus_presentation={
+                "flash_duration": "100ms",
+                "isi": "400ms",
+                "display": "six images (television, telephone, lamp, door, window, radio)",
+            },
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.1016/j.jneumeth.2007.03.005",
+            investigators=[
+                "Ulrich Hoffmann",
+                "Jean-Marc Vesin",
+                "Touradj Ebrahimi",
+                "Karin Diserens",
+            ],
+            institution="Ecole Polytechnique Fédérale de Lausanne",
+            country="CH",
+            publication_year=2008,
+            senior_author="Karin Diserens",
+            contact_info=["ulrich.hoffmann@epfl.ch"],
+            funding=["Swiss National Science Foundation Grant No. 200020-112313"],
+            institution_address="Signal Processing Institute, CH-1015 Lausanne, Switzerland",
+            institution_department="Signal Processing Institute",
+            keywords=[
+                "Brain–computer interface",
+                "P300",
+                "Disabled subjects",
+                "Fisher's linear discriminant analysis",
+                "Bayesian linear discriminant analysis",
+            ],
+            repository="http://bci.epfl.ch/p300",
+            license="Unknown",
+        ),
+        sessions_per_subject=4,
+        runs_per_session=6,
+        tags=Tags(
+            pathology=[
+                "Healthy",
+                "Cerebral palsy",
+                "Multiple sclerosis",
+                "Amyotrophic lateral sclerosis",
+                "Traumatic brain injury",
+                "Post-anoxic encephalopathy",
+            ],
+            modality=["Visual"],
+            type=["Research"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            data_state="raw",
+            preprocessing_applied=False,
+        ),
+        signal_processing=SignalProcessingMetadata(
+            classifiers=["BLDA", "FLDA"],
+            feature_extraction=["temporal samples from selected electrodes"],
+            frequency_bands={
+                "analyzed_range": [1.0, 12.0],
+            },
+        ),
+        cross_validation=CrossValidationMetadata(
+            cv_method="leave-one-session-out",
+            cv_folds=4,
+            evaluation_type=["session-based"],
+        ),
+        performance={
+            "accuracy_percent": 100.0,
+            "itr_bits_per_min": 28.8,
+            "max_bitrate_disabled_avg": 19.0,
+            "max_bitrate_able_bodied_avg": 38.6,
+            "max_bitrate_overall_avg": 28.8,
+        },
+        bci_application=BCIApplicationMetadata(
+            applications=["environment_control"],
+            environment="laboratory",
+            online_feedback=False,
+        ),
+        paradigm_specific=ParadigmSpecificMetadata(
+            detected_paradigm="p300",
+            n_targets=6,
+            n_repetitions=None,
+            isi_ms=400.0,
+            soa_ms=400.0,
+        ),
+        data_structure=DataStructureMetadata(
+            n_trials={"target": 135, "non-target": 675},
+            n_trials_per_class={"target": 135, "non-target": 675},
+            n_blocks=None,
+            trials_context="per_session",
+        ),
+        data_processed=False,
+        file_format="MATLAB",
+    )
+
+    def __init__(self, subjects=None, sessions=None):
         super().__init__(
             subjects=[1, 2, 3, 4, 6, 7, 8, 9],
             sessions_per_subject=4,
@@ -70,6 +255,8 @@ class EPFLP300(BaseDataset):
             interval=[0, 1],
             paradigm="p300",
             doi="10.1016/j.jneumeth.2007.03.005",
+            selected_subjects=subjects,
+            selected_sessions=sessions,
         )
 
     def _get_single_run_data(self, file_path):
@@ -172,7 +359,7 @@ class EPFLP300(BaseDataset):
 
         # check if has to unzip
         if not (os.path.isdir(path_folder + "subject{:d}".format(subject))):
-            print("unzip", path_zip)
+            logger.info("unzip", path_zip)
             zip_ref = zipfile.ZipFile(path_zip, "r")
             zip_ref.extractall(path_folder)
 

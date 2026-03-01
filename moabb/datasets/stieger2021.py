@@ -12,6 +12,21 @@ import pooch
 from scipy.io import loadmat
 
 import moabb.datasets.download as dl
+from moabb.datasets.metadata.schema import (
+    AcquisitionMetadata,
+    BCIApplicationMetadata,
+    CrossValidationMetadata,
+    DatasetMetadata,
+    DataStructureMetadata,
+    DocumentationMetadata,
+    ExperimentMetadata,
+    ParadigmSpecificMetadata,
+    ParticipantMetadata,
+    PreprocessingMetadata,
+    SignalProcessingMetadata,
+    Tags,
+)
+from moabb.utils import _handle_deprecated_kwargs
 
 from .base import BaseDataset
 from .download import get_dataset_path
@@ -120,7 +135,210 @@ class Stieger2021(BaseDataset):
     .. versionadded:: 1.1.0
     """
 
-    def __init__(self, interval=[0, 3], sessions=None):
+    METADATA = DatasetMetadata(
+        acquisition=AcquisitionMetadata(
+            sampling_rate=1000.0,
+            n_channels=62,
+            channel_types={"eeg": 62},
+            montage="10-10",
+            hardware="Neuroscan SynAmps RT amplifiers",
+            sensor_type="EEG",
+            reference=None,
+            software="Neuroscan",
+            filters="0.1 to 200 Hz with 60 Hz notch filter",
+            sensors=[
+                "AF3",
+                "AF4",
+                "C1",
+                "C2",
+                "C3",
+                "C4",
+                "C5",
+                "C6",
+                "CP1",
+                "CP2",
+                "CP3",
+                "CP4",
+                "CP5",
+                "CP6",
+                "CPz",
+                "Cz",
+                "F1",
+                "F2",
+                "F3",
+                "F4",
+                "F5",
+                "F6",
+                "F7",
+                "F8",
+                "FC1",
+                "FC2",
+                "FC3",
+                "FC4",
+                "FC5",
+                "FC6",
+                "FCz",
+                "FT7",
+                "FT8",
+                "Fp1",
+                "Fp2",
+                "Fpz",
+                "Fz",
+                "O1",
+                "O2",
+                "Oz",
+                "P1",
+                "P2",
+                "P3",
+                "P4",
+                "P5",
+                "P6",
+                "P7",
+                "P8",
+                "PO3",
+                "PO4",
+                "PO5",
+                "PO6",
+                "PO7",
+                "PO8",
+                "POz",
+                "Pz",
+                "T7",
+                "T8",
+                "TP7",
+                "TP8",
+            ],
+            line_freq=60.0,
+            impedance_threshold_kohm=5.0,
+            cap_manufacturer="Neuroscan",
+            cap_model="Quik-Cap",
+        ),
+        participants=ParticipantMetadata(
+            n_subjects=62,
+            health_status="healthy",
+            gender={"male": 13, "female": 49},
+            age_mean=None,
+            age_std=None,
+            age_min=18,
+            age_max=63,
+            handedness="mostly right-handed",
+            species="human",
+        ),
+        experiment=ExperimentMetadata(
+            events={"right_hand": 1, "left_hand": 2, "both_hand": 3, "rest": 4},
+            paradigm="imagery",
+            n_classes=4,
+            class_labels=["right_hand", "left_hand", "both_hands", "rest"],
+            feedback_type="visual",
+            stimulus_type="target_bar",
+            stimulus_modalities=["visual"],
+            primary_modality="visual",
+            mode="online",
+            has_training_test_split=None,
+            trial_duration=None,
+            instructions="Imagine your left (right) hand opening and closing to move the cursor left (right). Imagine both hands opening and closing to move the cursor up. Finally, to move the cursor down, voluntarily rest; in other words, clear your mind.",
+            study_design="longitudinal training study with intervention",
+            tasks=["LR", "UD", "2D"],
+        ),
+        documentation=DocumentationMetadata(
+            doi="10.1038/s41597-021-00883-1",
+            publication_year=2021,
+            investigators=["James R. Stieger", "Stephen A. Engel", "Bin He"],
+            senior_author="Bin He",
+            contact_info=["bhe1@andrew.cmu.edu"],
+            institution="Carnegie Mellon University, University of Minnesota",
+            country="US",
+            institution_address="Pittsburgh, PA, USA; Minneapolis, MN, USA",
+            institution_department="Carnegie Mellon University, Pittsburgh, PA, USA; University of Minnesota, Minneapolis, MN, USA",
+            ethics_approval=[
+                "University of Minnesota IRB",
+                "Carnegie Mellon University IRB",
+            ],
+            description="Continuous sensorimotor rhythm based brain computer interface learning in a large population",
+            keywords=[
+                "BCI",
+                "sensorimotor rhythm",
+                "motor imagery",
+                "EEG",
+                "longitudinal",
+                "learning",
+            ],
+            repository="GitHub",
+            data_url="https://doi.org/10.6084/m9.figshare.13123148.v1",
+            funding=[
+                "NIH AT009263",
+                "NIH EB021027",
+                "NIH NS096761",
+                "NIH MH114233",
+                "NIH EB029354",
+            ],
+            license="CC-BY-NC-4.0",
+        ),
+        tags=Tags(
+            pathology=["Healthy"],
+            modality=["Motor"],
+            type=["Active"],
+        ),
+        preprocessing=PreprocessingMetadata(
+            data_state="raw",
+            preprocessing_applied=False,
+        ),
+        signal_processing=SignalProcessingMetadata(
+            classifiers=None,
+            feature_extraction=["ERD", "ERS", "autoregressive model", "power spectrum"],
+            frequency_bands={
+                "alpha": [10.5, 13.5],
+                "mu": [8, 14],
+            },
+            spatial_filters=["Laplacian (C3/C4 with 4 surrounding electrodes)"],
+        ),
+        cross_validation=CrossValidationMetadata(
+            evaluation_type=["cross_session"],
+        ),
+        bci_application=BCIApplicationMetadata(
+            applications=["cursor_control"],
+            environment="laboratory",
+            online_feedback=True,
+        ),
+        paradigm_specific=ParadigmSpecificMetadata(
+            detected_paradigm="imagery",
+            imagery_tasks=["left_hand", "right_hand", "both_hands", "rest"],
+            cue_duration_s=2.0,
+            imagery_duration_s=6.0,
+        ),
+        data_structure=DataStructureMetadata(
+            n_trials=450,
+            n_blocks=18,
+            trials_context="per_session",
+        ),
+        file_format="MAT",
+        sessions_per_subject=11,
+        runs_per_session=1,
+        data_processed=False,
+        abstract="Brain computer interfaces (BCIs) are valuable tools that expand the nature of communication through bypassing traditional neuromuscular pathways. The non-invasive, intuitive, and continuous nature of sensorimotor rhythm (SMR) based BCIs enables individuals to control computers, robotic arms, wheelchairs, and even drones by decoding motor imagination from electroencephalography (EEG). Large and uniform datasets are needed to design, evaluate, and improve the BCI algorithms. In this work, we release a large and longitudinal dataset collected during a study that examined how individuals learn to control SMR-BCIs. The dataset contains over 600 hours of EEG recordings collected during online and continuous BCI control from 62 healthy adults, (mostly) right hand dominant participants, across (up to) 11 training sessions per participant. The data record consists of 598 recording sessions, and over 250,000 trials of 4 different motor-imagery-based BCI tasks.",
+        methodology="Participants completed 7-11 online BCI training sessions. Each session consisted of 450 trials across 3 tasks (LR, UD, 2D) with 6 runs total. Each trial: 2s inter-trial interval, 2s target presentation, up to 6s feedback control. Online control used spatial filtering (Laplacian around C3/C4), autoregressive model (order 16) for spectrum estimation, alpha power (12 Hz ± 1.5 Hz) for control signal. Horizontal motion controlled by lateralized alpha power (C4-C3), vertical motion by total alpha power (C4+C3). Control signals normalized to zero mean and unit variance. Cursor position updated every 40 ms.",
+        performance={
+            "accuracy_percent": 70.0,
+            "PVC_1D_threshold": 70.0,
+            "PVC_2D_threshold": 40.0,
+        },
+    )
+
+    def __init__(
+        self, interval=[0, 3], sessions=None, fix_bads=True, subjects=None, **kwargs
+    ):
+        deprecated_renames = {
+            "Interval": "interval",
+            "Sessions": "sessions",
+            "FixBads": "fix_bads",
+            "Subjects": "subjects",
+        }
+        resolved = _handle_deprecated_kwargs(kwargs, deprecated_renames, "Stieger2021")
+        interval = resolved.get("interval", interval)
+        sessions = resolved.get("sessions", sessions)
+        fix_bads = resolved.get("fix_bads", fix_bads)
+        subjects = resolved.get("subjects", subjects)
+
         super().__init__(
             subjects=list(range(1, 63)),
             sessions_per_subject=11,
@@ -129,8 +347,10 @@ class Stieger2021(BaseDataset):
             interval=interval,
             paradigm="imagery",
             doi="10.1038/s41597-021-00883-1",
+            selected_subjects=subjects,
+            selected_sessions=sessions,
         )
-
+        self.fix_bads = fix_bads
         self.sessions = sessions
         self.figshare_id = 13123148  # id on figshare
 
@@ -279,5 +499,13 @@ class Stieger2021(BaseDataset):
                     session,
                     raw.info["bads"],
                 )
+                if self.fix_bads:
+                    raw = raw.interpolate_bads()
+                    LOGGER.info(
+                        "Bad channels were interpolated for record %s/%s (subject/session)",
+                        subject,
+                        session,
+                    )
+
             subject_data[str(session)] = {"0": raw}
         return subject_data
