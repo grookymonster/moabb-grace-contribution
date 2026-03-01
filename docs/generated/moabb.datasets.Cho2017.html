@@ -692,7 +692,7 @@
 <h1>moabb.datasets.Cho2017<a class="headerlink" href="#moabb-datasets-cho2017" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="moabb.datasets.Cho2017">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">Cho2017</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subjects</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sessions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/gigadb.py#L35-L366"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Cho2017" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">Cho2017</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subjects</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sessions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/gigadb.py#L35-L355"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Cho2017" title="Link to this definition">#</a></dt>
 <dd><p>Motor Imagery dataset from Cho et al 2017.</p>
 <p><strong>PapersWithCode leaderboard:</strong> <a class="reference external" href="https://paperswithcode.com/dataset/cho2017-moabb">https://paperswithcode.com/dataset/cho2017-moabb</a></p>
 <div class="admonition-dataset-summary admonition">
@@ -744,17 +744,15 @@
 <ul class="simple">
 <li><p><strong>Amplifier</strong>: Biosemi ActiveTwo</p></li>
 <li><p><strong>Electrodes</strong>: active electrodes</p></li>
-<li><p><strong>Montage</strong>: 10-10</p></li>
-<li><p><strong>Reference</strong>: Car</p></li>
+<li><p><strong>Montage</strong>: standard_1005</p></li>
+<li><p><strong>Reference</strong>: CMS/DRL</p></li>
 </ul>
 </div>
 <div class="admonition-preprocessing admonition">
 <p class="admonition-title">Preprocessing</p>
 <ul class="simple">
-<li><p><strong>Data state</strong>: raw with bad trial indices provided</p></li>
-<li><p><strong>Steps</strong>: high-pass filtering above 0.5 Hz, common average reference, band-pass filtering (8-30 Hz for analysis, 8-14 Hz for ERD/ERS), Laplacian filtering (for ERD/ERS), Hilbert transform, bad trial rejection (amplitude &gt; ±100 μV), EMG correlation detection</p></li>
-<li><p><strong>Re-reference</strong>: Car</p></li>
-<li><p><strong>Notes</strong>: Bad trials detected by amplitude threshold and EMG correlation; baseline correction using -500 to 0 msec for ERD/ERS</p></li>
+<li><p><strong>Data state</strong>: raw</p></li>
+<li><p><strong>Notes</strong>: Bad trial indices provided separately in .mat files (bad_trial_indices); raw EEG data is unfiltered</p></li>
 </ul>
 </div>
 <div class="admonition-data-access admonition">
@@ -769,7 +767,7 @@
 <p class="admonition-title">Experimental Protocol</p>
 <ul class="simple">
 <li><p><strong>Paradigm</strong>: imagery</p></li>
-<li><p><strong>Feedback</strong>: classification accuracy feedback after each run</p></li>
+<li><p><strong>Feedback</strong>: none</p></li>
 <li><p><strong>Stimulus</strong>: visual instruction</p></li>
 </ul>
 </div>
@@ -813,7 +811,7 @@ GigaScience. <a class="reference external" href="https://doi.org/10.1093/gigasci
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="moabb.datasets.Cho2017.data_path">
-<span class="sig-name descname"><span class="pre">data_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subject</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/gigadb.py#L359-L366"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Cho2017.data_path" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">data_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subject</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/gigadb.py#L348-L355"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Cho2017.data_path" title="Link to this definition">#</a></dt>
 <dd><p>Get path to local copy of a subject data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>

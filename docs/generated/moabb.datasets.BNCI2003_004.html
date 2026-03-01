@@ -692,7 +692,7 @@
 <h1>moabb.datasets.BNCI2003_004<a class="headerlink" href="#moabb-datasets-bnci2003-004" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="moabb.datasets.BNCI2003_004">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">BNCI2003_004</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subjects</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sessions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bnci/bnci_2003.py#L75-L390"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BNCI2003_004" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">BNCI2003_004</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subjects</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sessions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bnci/bnci_2003.py#L74-L369"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BNCI2003_004" title="Link to this definition">#</a></dt>
 <dd><p>BNCI2003_IVa Motor Imagery dataset.</p>
 <div class="admonition-dataset-summary admonition">
 <p class="admonition-title">Dataset summary</p>
@@ -738,10 +738,9 @@
 <div class="admonition-equipment admonition">
 <p class="admonition-title">Equipment</p>
 <ul class="simple">
-<li><p><strong>Amplifier</strong>: multichannel EEG amplifiers</p></li>
+<li><p><strong>Amplifier</strong>: BrainAmp</p></li>
 <li><p><strong>Electrodes</strong>: EEG</p></li>
 <li><p><strong>Montage</strong>: standard_1005</p></li>
-<li><p><strong>Reference</strong>: Car</p></li>
 </ul>
 </div>
 <div class="admonition-preprocessing admonition">
@@ -749,9 +748,8 @@
 <ul class="simple">
 <li><p><strong>Data state</strong>: downsampled to 100 Hz for offline analysis</p></li>
 <li><p><strong>Bandpass filter</strong>: 0.05-200 Hz</p></li>
-<li><p><strong>Steps</strong>: downsampling, baseline correction, spatial Laplacian filtering, bandpass filtering</p></li>
-<li><p><strong>Re-reference</strong>: car</p></li>
-<li><p><strong>Notes</strong>: surface EMG at both forearms and one leg, as well as horizontal and vertical EOG signals were recorded to check for muscle activation and eye movements, but no trial was rejected</p></li>
+<li><p><strong>Steps</strong>: bandpass filtering, downsampling</p></li>
+<li><p><strong>Notes</strong>: Band-pass filtered 0.05-200 Hz during acquisition at 1000 Hz with 16-bit (0.1 uV) accuracy, then downsampled to 100 Hz by picking each 10th sample. Original experiment also recorded EMG and EOG but these are not in the shared data files.</p></li>
 </ul>
 </div>
 <div class="admonition-data-access admonition">
@@ -765,7 +763,7 @@
 <p class="admonition-title">Experimental Protocol</p>
 <ul class="simple">
 <li><p><strong>Paradigm</strong>: imagery</p></li>
-<li><p><strong>Stimulus</strong>: cursor_feedback</p></li>
+<li><p><strong>Stimulus</strong>: visual cue</p></li>
 </ul>
 </div>
 <div class="tip admonition">

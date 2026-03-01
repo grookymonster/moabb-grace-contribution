@@ -692,7 +692,7 @@
 <h1>moabb.datasets.Huebner2018<a class="headerlink" href="#moabb-datasets-huebner2018" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="moabb.datasets.Huebner2018">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">Huebner2018</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raw_slice_offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_blocks_as_sessions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subjects</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sessions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/huebner_llp.py#L421-L685"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Huebner2018" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">Huebner2018</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raw_slice_offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_blocks_as_sessions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subjects</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sessions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/huebner_llp.py#L403-L645"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Huebner2018" title="Link to this definition">#</a></dt>
 <dd><p>Mixture of LLP and EM for a visual matrix speller (ERP) dataset from
 Hübner et al 2018 <a class="reference internal" href="#r8f30fc0d0ace-1" id="id1">[1]</a>.</p>
 <p><strong>PapersWithCode leaderboard:</strong> <a class="reference external" href="https://paperswithcode.com/dataset/huebner2018-moabb">https://paperswithcode.com/dataset/huebner2018-moabb</a></p>
@@ -727,7 +727,7 @@ Hübner et al 2018 <a class="reference internal" href="#r8f30fc0d0ace-1" id="id1
 <ul class="simple">
 <li><p><strong>Population</strong>: healthy</p></li>
 <li><p><strong>Age</strong>: 26 (range: 19-31) years</p></li>
-<li><p><strong>BCI experience</strong>: mostly naive</p></li>
+<li><p><strong>BCI experience</strong>: mixed</p></li>
 </ul>
 </div>
 <div class="admonition-equipment admonition">
@@ -736,24 +736,20 @@ Hübner et al 2018 <a class="reference internal" href="#r8f30fc0d0ace-1" id="id1
 <li><p><strong>Amplifier</strong>: BrainAmp DC</p></li>
 <li><p><strong>Electrodes</strong>: Ag/AgCl</p></li>
 <li><p><strong>Montage</strong>: extended 10-20</p></li>
-<li><p><strong>Reference</strong>: not specified</p></li>
+<li><p><strong>Reference</strong>: nose</p></li>
 </ul>
 </div>
 <div class="admonition-preprocessing admonition">
 <p class="admonition-title">Preprocessing</p>
 <ul class="simple">
-<li><p><strong>Data state</strong>: raw with online preprocessing</p></li>
-<li><p><strong>Bandpass filter</strong>: 0.5-8 Hz</p></li>
-<li><p><strong>Steps</strong>: bandpass filtering (0.5-8 Hz), downsampling to 100 Hz, epoching, baseline correction</p></li>
-<li><p><strong>Re-reference</strong>: not specified</p></li>
-<li><p><strong>Notes</strong>: Epochs windowed to [-200, 700] ms relative to stimulus onset and corrected for baseline shifts observed in the interval [-200, 0] ms. No artifact rejection was applied - participants were instructed to avoid artifacts.</p></li>
+<li><p><strong>Data state</strong>: raw</p></li>
 </ul>
 </div>
 <div class="admonition-data-access admonition">
 <p class="admonition-title">Data Access</p>
 <ul class="simple">
 <li><p><strong>DOI</strong>: 10.5281/zenodo.192684</p></li>
-<li><p><strong>Data URL</strong>: <a class="reference external" href="http://doi.org/10.5281/zenodo.192684">http://doi.org/10.5281/zenodo.192684</a></p></li>
+<li><p><strong>Data URL</strong>: <a class="reference external" href="https://zenodo.org/record/5831879">https://zenodo.org/record/5831879</a></p></li>
 <li><p><strong>Repository</strong>: Zenodo</p></li>
 </ul>
 </div>
@@ -762,7 +758,7 @@ Hübner et al 2018 <a class="reference internal" href="#r8f30fc0d0ace-1" id="id1
 <ul class="simple">
 <li><p><strong>Paradigm</strong>: p300</p></li>
 <li><p><strong>Tasks</strong>: copy-spelling</p></li>
-<li><p><strong>Feedback</strong>: visual feedback after each character</p></li>
+<li><p><strong>Feedback</strong>: visual</p></li>
 <li><p><strong>Stimulus</strong>: modified matrix speller with flexible highlighting</p></li>
 </ul>
 </div>

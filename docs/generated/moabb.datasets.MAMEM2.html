@@ -692,7 +692,7 @@
 <h1>moabb.datasets.MAMEM2<a class="headerlink" href="#moabb-datasets-mamem2" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="moabb.datasets.MAMEM2">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">MAMEM2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subjects</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sessions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/ssvep_mamem.py#L755-L1278"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.MAMEM2" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">MAMEM2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subjects</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sessions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/ssvep_mamem.py#L734-L1236"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.MAMEM2" title="Link to this definition">#</a></dt>
 <dd><p>SSVEP MAMEM 2 dataset.</p>
 <p><strong>PapersWithCode leaderboard:</strong> <a class="reference external" href="https://paperswithcode.com/dataset/mamem2-moabb">https://paperswithcode.com/dataset/mamem2-moabb</a></p>
 <div class="admonition-dataset-summary admonition">
@@ -728,7 +728,6 @@
 <p class="admonition-title">Participants</p>
 <ul class="simple">
 <li><p><strong>Population</strong>: healthy</p></li>
-<li><p><strong>Clinical population</strong>: able-bodied subjects without any known neuro-muscular or mental disorders</p></li>
 <li><p><strong>Handedness</strong>: {‘right’: 10, ‘left’: 1}</p></li>
 </ul>
 </div>
@@ -736,25 +735,21 @@
 <p class="admonition-title">Equipment</p>
 <ul class="simple">
 <li><p><strong>Amplifier</strong>: EGI 300 Geodesic EEG System (GES 300)</p></li>
-<li><p><strong>Electrodes</strong>: scalp electrodes</p></li>
-<li><p><strong>Montage</strong>: 10-20</p></li>
+<li><p><strong>Montage</strong>: GSN-HydroCel-256</p></li>
 <li><p><strong>Reference</strong>: Cz</p></li>
 </ul>
 </div>
 <div class="admonition-preprocessing admonition">
 <p class="admonition-title">Preprocessing</p>
 <ul class="simple">
-<li><p><strong>Bandpass filter</strong>: 5-48 Hz</p></li>
-<li><p><strong>Steps</strong>: bandpass filtering (5-48 Hz), notch filtering (50 Hz), artifact removal (AMUSE, ICA), normalization to zero mean</p></li>
-<li><p><strong>Re-reference</strong>: CAR</p></li>
-<li><p><strong>Notes</strong>: AMUSE removes first 15 and last 4 components. Optimal configuration uses IIR-Elliptic filter.</p></li>
+<li><p><strong>Data state</strong>: raw</p></li>
 </ul>
 </div>
 <div class="admonition-data-access admonition">
 <p class="admonition-title">Data Access</p>
 <ul class="simple">
 <li><p><strong>DOI</strong>: 10.48550/arXiv.1602.00904</p></li>
-<li><p><strong>Data URL</strong>: <a class="github reference external" href="https://github.com/MAMEM/ssvep-eeg-processing-toolbox">MAMEM/ssvep-eeg-processing-toolbox</a></p></li>
+<li><p><strong>Data URL</strong>: <a class="reference external" href="https://figshare.com/articles/dataset/3153409">https://figshare.com/articles/dataset/3153409</a></p></li>
 <li><p><strong>Repository</strong>: GitHub</p></li>
 </ul>
 </div>
@@ -763,7 +758,7 @@
 <ul class="simple">
 <li><p><strong>Paradigm</strong>: ssvep</p></li>
 <li><p><strong>Feedback</strong>: none</p></li>
-<li><p><strong>Stimulus</strong>: visual</p></li>
+<li><p><strong>Stimulus</strong>: flickering box</p></li>
 </ul>
 </div>
 <div class="tip admonition">

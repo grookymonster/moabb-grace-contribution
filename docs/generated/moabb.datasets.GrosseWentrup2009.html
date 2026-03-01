@@ -692,7 +692,7 @@
 <h1>moabb.datasets.GrosseWentrup2009<a class="headerlink" href="#moabb-datasets-grossewentrup2009" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="moabb.datasets.GrosseWentrup2009">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">GrosseWentrup2009</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subjects</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sessions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/mpi_mi.py#L30-L362"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.GrosseWentrup2009" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">GrosseWentrup2009</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subjects</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sessions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/mpi_mi.py#L29-L356"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.GrosseWentrup2009" title="Link to this definition">#</a></dt>
 <dd><p>Munich Motor Imagery dataset.</p>
 <p><strong>PapersWithCode leaderboard:</strong> <a class="reference external" href="https://paperswithcode.com/dataset/grossewentrup2009-moabb">https://paperswithcode.com/dataset/grossewentrup2009-moabb</a></p>
 <div class="admonition-dataset-summary admonition">
@@ -735,7 +735,7 @@
 <ul class="simple">
 <li><p><strong>Population</strong>: healthy</p></li>
 <li><p><strong>Age</strong>: 25.6 years</p></li>
-<li><p><strong>Handedness</strong>: {‘right’: 8, ‘left’: 2}</p></li>
+<li><p><strong>Handedness</strong>: {‘right’: 8}</p></li>
 <li><p><strong>BCI experience</strong>: mixed</p></li>
 </ul>
 </div>
@@ -743,15 +743,14 @@
 <p class="admonition-title">Equipment</p>
 <ul class="simple">
 <li><p><strong>Amplifier</strong>: BrainAmp</p></li>
-<li><p><strong>Electrodes</strong>: Ag/AgCl</p></li>
-<li><p><strong>Montage</strong>: 10-20</p></li>
-<li><p><strong>Reference</strong>: Car</p></li>
+<li><p><strong>Montage</strong>: standard_1020</p></li>
+<li><p><strong>Reference</strong>: Cz</p></li>
 </ul>
 </div>
 <div class="admonition-preprocessing admonition">
 <p class="admonition-title">Preprocessing</p>
 <ul class="simple">
-<li><p><strong>Data state</strong>: raw</p></li>
+<li><p><strong>Data state</strong>: preprocessed</p></li>
 <li><p><strong>Re-reference</strong>: car</p></li>
 <li><p><strong>Notes</strong>: No trials were rejected and no artifact correction was performed. Data were re-referenced to common average reference offline.</p></li>
 </ul>
@@ -769,7 +768,7 @@
 <li><p><strong>Paradigm</strong>: imagery</p></li>
 <li><p><strong>Task type</strong>: motor_imagery</p></li>
 <li><p><strong>Tasks</strong>: motor_imagery</p></li>
-<li><p><strong>Feedback</strong>: none (offline); visual cursor control (online experiment)</p></li>
+<li><p><strong>Feedback</strong>: none</p></li>
 <li><p><strong>Stimulus</strong>: arrow_cue</p></li>
 </ul>
 </div>
@@ -824,7 +823,7 @@ Engineering 56.4 (2009): 1209-1219.</p>
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="moabb.datasets.GrosseWentrup2009.data_path">
-<span class="sig-name descname"><span class="pre">data_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subject</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/mpi_mi.py#L350-L362"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.GrosseWentrup2009.data_path" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">data_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subject</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/mpi_mi.py#L344-L356"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.GrosseWentrup2009.data_path" title="Link to this definition">#</a></dt>
 <dd><p>Get path to local copy of a subject data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
