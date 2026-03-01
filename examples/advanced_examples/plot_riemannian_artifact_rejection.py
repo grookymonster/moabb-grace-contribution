@@ -454,11 +454,10 @@ plt.show()
 # - **General artifacts**: broader channel sets, wide frequency bands,
 #   Riemannian distance.
 #
-# Note that pyriemann's ``PotatoField`` uses a **single metric** for all
-# potatoes, which is appropriate for the standard RPF [2]_. Per-potato
-# distance metrics (e.g., Euclidean for ocular, Riemannian for general)
-# are an iRPF [3]_ enhancement implemented with individual ``Potato``
-# instances.
+# Recent pyriemann enhancements allow ``PotatoField`` to use a
+# **different metric per potato** and custom p-value combination methods.
+# We leverage that API below to implement both standard RPF (Fisher) and
+# iRPF-style min(Fisher, Stouffer) combinations with the same estimator.
 #
 # For the BNCI2014-009 dataset (16 channels, no EOG,
 # bandpass 1-24 Hz applied by the P300 paradigm), we adapt
@@ -614,6 +613,13 @@ def compute_potato_covariances(epochs, config):
             covs = normalize(covs, potato_cfg["normalization"])
         cov_list.append(covs)
     return cov_list
+
+
+def min_fisher_stouffer(probas, axis=0):
+    """Combine p-values as min(Fisher, Stouffer)."""
+    _, fisher_p = combine_pvalues(probas, method="fisher", axis=axis)
+    _, stouffer_p = combine_pvalues(probas, method="stouffer", axis=axis)
+    return np.minimum(fisher_p, stouffer_p)
 
 
 # Compute covariance matrices for each potato
@@ -1015,10 +1021,9 @@ def improved_rpf_rejection(epochs):
     epochs that may not be detected by Riemannian analysis alone.
 
     **Potato field with per-potato metrics** (Section 2.4.4):
-    Fits individual ``Potato`` instances with per-potato distance metrics
-    (an iRPF enhancement over the single metric used by ``PotatoField``).
-    Per-potato p-values are combined using both Fisher's and Stouffer's
-    (Liptak) methods, and the minimum is used as the final SQI.
+    Uses pyriemann's enhanced ``PotatoField`` with per-potato distance
+    metrics and a custom combination callable implementing
+    ``min(Fisher, Stouffer)``.
 
     Both mechanisms operate on the original data independently, and their
     rejections are combined via union. This parallel approach avoids the
@@ -1049,28 +1054,15 @@ def improved_rpf_rejection(epochs):
 
     # Potato field with per-potato metrics (on all data, in parallel)
     cov_list = compute_potato_covariances(epochs, valid_config)
-
-    # Each potato uses its own metric for both mean and distance
-    # (a string metric like "euclid" applies to both; see Potato docstring).
-    p_values_list = []
-    for cov, cfg in zip(cov_list, valid_config):
-        p = Potato(metric=cfg["metric"], threshold=3)
-        p.fit(cov)
-        z = p.transform(cov)
-        p_values_list.append(1 - norm.cdf(z))
-
-    # iRPF combination strategy (Section 2.4.4 of the paper):
-    # 1. Fisher's combination across potatoes
-    # 2. Stouffer's (Liptak) combination across potatoes
-    # 3. Take the minimum of both combined p-values per epoch
-    p_matrix = np.array(p_values_list)
-    p_matrix = np.clip(p_matrix, 1e-10, 1.0)
-
-    _, fisher_p = combine_pvalues(p_matrix, method="fisher", axis=0)
-    _, stouffer_p = combine_pvalues(p_matrix, method="stouffer", axis=0)
-
-    combined_p = np.minimum(fisher_p, stouffer_p)
-    is_clean_rpf = combined_p >= 0.01
+    irpf = PotatoField(
+        n_potatoes=len(valid_config),
+        metric=[cfg["metric"] for cfg in valid_config],
+        z_threshold=3,
+        p_threshold=0.01,
+        method_combination=min_fisher_stouffer,
+    )
+    irpf.fit(cov_list)
+    is_clean_rpf = _predict_clean_mask(irpf, cov_list)
 
     # Union of both rejection mechanisms
     is_clean = is_clean_amplitude & is_clean_rpf
@@ -1305,22 +1297,17 @@ plt.show()
 rpf_combined_p = rpf_vis.predict_proba(cov_list)
 
 # iRPF: per-potato metrics with min(Fisher, Stouffer) combination
-# (This compares the Riemannian stages only. In the full iRPF pipeline,
-# GFRMS amplitude rejection provides additional complementary detection.)
-# Per-potato metrics: each potato uses its own metric (string applies to
-# both mean and distance; "euclid" for ocular, "riemann" for the rest).
-irpf_p_values = []
-for cov, cfg in zip(cov_list, POTATO_FIELD_CONFIG):
-    p = Potato(metric=cfg["metric"], threshold=3)
-    p.fit(cov)
-    z = p.transform(cov)
-    irpf_p_values.append(1 - norm.cdf(z))
-
-irpf_p_matrix = np.array(irpf_p_values)
-irpf_p_matrix = np.clip(irpf_p_matrix, 1e-10, 1.0)
-_, fisher_p_viz = combine_pvalues(irpf_p_matrix, method="fisher", axis=0)
-_, stouffer_p_viz = combine_pvalues(irpf_p_matrix, method="stouffer", axis=0)
-irpf_combined_p = np.minimum(fisher_p_viz, stouffer_p_viz)
+# (Riemannian stage only; GFRMS provides additional complementary detection
+# in the full iRPF pipeline).
+irpf_vis = PotatoField(
+    n_potatoes=len(POTATO_FIELD_CONFIG),
+    metric=[cfg["metric"] for cfg in POTATO_FIELD_CONFIG],
+    z_threshold=3,
+    p_threshold=0.01,
+    method_combination=min_fisher_stouffer,
+)
+irpf_vis.fit(cov_list)
+irpf_combined_p = irpf_vis.predict_proba(cov_list)
 
 fig, axes = plt.subplots(1, 2, figsize=(14, 5), facecolor="white")
 
@@ -1372,16 +1359,17 @@ plt.show()
 #    epochs that Riemannian analysis might miss. The adaptive thresholds
 #    use the golden ratio (1.618) following the Julia RAR implementation.
 #
-# 2. **Per-potato distance metrics**: the iRPF uses individual ``Potato``
-#    instances with metrics tailored to each artifact type (e.g.,
-#    Euclidean for ocular, Riemannian for general), unlike pyriemann's
-#    ``PotatoField`` which uses a single metric for all potatoes.
+# 2. **Per-potato distance metrics**: the iRPF uses metrics tailored to
+#    each artifact type (e.g., Euclidean for ocular, Riemannian for
+#    general), implemented here through pyriemann's enhanced
+#    ``PotatoField(metric=[...])`` API.
 #
 # 3. **Multiple combination functions** (Section 2.4.4): per-potato
 #    p-values are combined using both Fisher's and Stouffer's (Liptak)
-#    methods, and the minimum is used as the final SQI. Fisher is more
-#    sensitive to a single extreme outlier, while Stouffer is more
-#    sensitive to many moderate departures.
+#    methods, and the minimum is used as the final SQI, implemented with
+#    ``PotatoField(method_combination=...)``. Fisher is more sensitive to
+#    a single extreme outlier, while Stouffer is more sensitive to many
+#    moderate departures.
 #
 # **Parallel vs sequential rejection:** In this tutorial, the GFRMS and
 # Riemannian potato field stages are applied **in parallel** on the full
