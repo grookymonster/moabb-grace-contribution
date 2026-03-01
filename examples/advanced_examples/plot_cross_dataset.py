@@ -22,6 +22,7 @@ from moabb.datasets import BNCI2014_001, Zhou2016
 from moabb.evaluations import CrossDatasetEvaluation
 from moabb.paradigms import LeftRightImagery
 
+
 # %%
 # Define paradigm and datasets
 # -----------------------------

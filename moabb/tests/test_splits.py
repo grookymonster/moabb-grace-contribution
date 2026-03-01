@@ -383,9 +383,7 @@ def cross_dataset_data():
         for subj in range(1, n_subjects + 1):
             for sess in ["session_0", "session_1"]:
                 for i in range(n_per_session):
-                    rows.append(
-                        {"dataset": ds_code, "subject": subj, "session": sess}
-                    )
+                    rows.append({"dataset": ds_code, "subject": subj, "session": sess})
                     labels.append(i % 2)
     metadata = pd.DataFrame(rows)
     y = np.array(labels)
@@ -459,9 +457,7 @@ def test_cross_dataset_multiple_test_datasets():
     for ds_code, n_subj in [("ds_train", 3), ("ds_test_A", 2), ("ds_test_B", 2)]:
         for subj in range(1, n_subj + 1):
             for i in range(50):
-                rows.append(
-                    {"dataset": ds_code, "subject": subj, "session": "session_0"}
-                )
+                rows.append({"dataset": ds_code, "subject": subj, "session": "session_0"})
                 labels.append(i % 2)
     metadata = pd.DataFrame(rows)
     y = np.array(labels)

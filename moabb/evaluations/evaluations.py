@@ -835,9 +835,7 @@ class CrossDatasetEvaluation(BaseEvaluation):
         test_codes = {ds.code for ds in self.test_datasets}
         overlap = train_codes & test_codes
         if overlap:
-            raise ValueError(
-                f"Datasets cannot appear in both train and test: {overlap}"
-            )
+            raise ValueError(f"Datasets cannot appear in both train and test: {overlap}")
 
         # Pass all datasets to super for paradigm validation
         kwargs.pop("datasets", None)
