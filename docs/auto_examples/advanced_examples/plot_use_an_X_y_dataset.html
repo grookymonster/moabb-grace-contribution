@@ -570,13 +570,13 @@ classification is performed.</p>
 Start classification ...
 
 DummyRawEpochsDataset-WithinSession:   0%|          | 0/1 [00:00&lt;?, ?it/s]
-DummyRawEpochsDataset-WithinSession: 100%|██████████| 1/1 [00:00&lt;00:00,  1.90it/s]
-DummyRawEpochsDataset-WithinSession: 100%|██████████| 1/1 [00:00&lt;00:00,  1.90it/s]
+DummyRawEpochsDataset-WithinSession: 100%|██████████| 1/1 [00:09&lt;00:00,  9.47s/it]
+DummyRawEpochsDataset-WithinSession: 100%|██████████| 1/1 [00:09&lt;00:00,  9.47s/it]
 
 
 Results:
     score      time  samples                dataset  pipeline
-0   0.57  0.073885    100.0  DummyRawEpochsDataset  XD+TS+LR
+0   0.57  0.055124    100.0  DummyRawEpochsDataset  XD+TS+LR
 </pre></div>
 </div>
 <div class="line-block">
@@ -596,10 +596,10 @@ Results:
 <span class="kn">from</span><span class="w"> </span><span class="nn">moabb.evaluations</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <a href="../../generated/moabb.evaluations.WithinSessionEvaluation.html#moabb.evaluations.WithinSessionEvaluation" title="moabb.evaluations.WithinSessionEvaluation" class="sphx-glr-backref-module-moabb-evaluations sphx-glr-backref-type-py-class"><span class="n">WithinSessionEvaluation</span></a><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">moabb.paradigms.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseParadigm</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">moabb.paradigms.base</span><span class="w"> </span><span class="kn">import</span> <a href="../../generated/moabb.paradigms.base.BaseParadigm.html#moabb.paradigms.base.BaseParadigm" title="moabb.paradigms.base.BaseParadigm" class="sphx-glr-backref-module-moabb-paradigms-base sphx-glr-backref-type-py-class"><span class="n">BaseParadigm</span></a>
 
 
-<span class="k">class</span><span class="w"> </span><span class="nc">RawEpochParadigm</span><span class="p">(</span><span class="n">BaseParadigm</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">RawEpochParadigm</span><span class="p">(</span><a href="../../generated/moabb.paradigms.base.BaseParadigm.html#moabb.paradigms.base.BaseParadigm" title="moabb.paradigms.base.BaseParadigm" class="sphx-glr-backref-module-moabb-paradigms-base sphx-glr-backref-type-py-class"><span class="n">BaseParadigm</span></a><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A minimal paradigm that directly uses dataset.get_epoch_data()</span>
 <span class="sd">    with no filtering, epoching, or signal processing.</span>
@@ -706,9 +706,9 @@ Results:
 
 <span class="n">dataset</span> <span class="o">=</span> <a href="../../generated/moabb.datasets.base.BaseDataset.html#moabb.datasets.base.BaseDataset" title="moabb.datasets.base.BaseDataset" class="sphx-glr-backref-module-moabb-datasets-base sphx-glr-backref-type-py-class"><span class="n">DummyRawEpochsDataset</span></a><span class="p">()</span>
 
-<span class="n">paradigm</span> <span class="o">=</span> <span class="n">RawEpochParadigm</span><span class="p">()</span>  <span class="c1"># using the new special RawEpochParadigm paradigm</span>
+<span class="n">paradigm</span> <span class="o">=</span> <a href="../../generated/moabb.paradigms.base.BaseParadigm.html#moabb.paradigms.base.BaseParadigm" title="moabb.paradigms.base.BaseParadigm" class="sphx-glr-backref-module-moabb-paradigms-base sphx-glr-backref-type-py-class"><span class="n">RawEpochParadigm</span></a><span class="p">()</span>  <span class="c1"># using the new special RawEpochParadigm paradigm</span>
 
-<a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">X</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">labels</span></a><span class="p">,</span> <span class="n">meta</span> <span class="o">=</span> <span class="n">paradigm</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">dataset</span><span class="p">,</span> <span class="n">subjects</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">X</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">labels</span></a><span class="p">,</span> <span class="n">meta</span> <span class="o">=</span> <a href="../../generated/moabb.paradigms.base.BaseProcessing.html#moabb.paradigms.base.BaseProcessing.get_data" title="moabb.paradigms.base.BaseProcessing.get_data" class="sphx-glr-backref-module-moabb-paradigms-base sphx-glr-backref-type-py-method"><span class="n">paradigm</span><span class="o">.</span><span class="n">get_data</span></a><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">dataset</span><span class="p">,</span> <span class="n">subjects</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Epochs count before classification&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">labels</span></a><span class="p">))</span>
 
@@ -730,7 +730,8 @@ Results:
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">Results:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">scores</span><span class="p">[[</span><span class="s2">&quot;score&quot;</span><span class="p">,</span> <span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="s2">&quot;samples&quot;</span><span class="p">,</span> <span class="s2">&quot;dataset&quot;</span><span class="p">,</span> <span class="s2">&quot;pipeline&quot;</span><span class="p">]])</span>
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.562 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 9.766 seconds)</p>
+<p><strong>Estimated memory usage:</strong>  319 MB</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-advanced-examples-plot-use-an-x-y-dataset-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/e5de6f35345558b773e3c906606d7bc4/plot_use_an_X_y_dataset.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_use_an_X_y_dataset.ipynb</span></code></a></p>
