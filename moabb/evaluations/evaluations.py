@@ -4,8 +4,9 @@ from time import time
 from typing import Optional, Union
 
 import numpy as np
+import pandas as pd
 from mne.epochs import BaseEpochs
-from sklearn.base import clone
+from sklearn.base import BaseEstimator, clone
 from sklearn.metrics import get_scorer
 from sklearn.model_selection import (
     GroupKFold,
@@ -783,129 +784,205 @@ class CrossSubjectEvaluation(BaseEvaluation):
 
 
 class CrossDatasetEvaluation(BaseEvaluation):
-    """Evaluation class for deep learning models across different datasets. Useful for cross-dataset transfer learning.
+    """Cross-dataset evaluation: train on one or more datasets, test on others.
+
+    This evaluation trains pipelines on all data from the training datasets
+    and evaluates per-subject on the test datasets. Channels and sampling
+    rates are automatically aligned across datasets using
+    ``paradigm.match_all``.
 
     Parameters
     ----------
-    train_dataset : Dataset or list of Dataset
-        Dataset(s) to use for training
-    test_dataset : Dataset or list of Dataset
-        Dataset(s) to use for testing
-    pretrained_model : Optional[BaseEstimator]
-        Pre-trained model to use (if None, will train from scratch)
-    fine_tune : bool, default=True
-        Whether to fine-tune the pretrained model on train_dataset
-    sfreq : float, default=128
-        Target sampling frequency for all datasets
+    train_datasets : Dataset or list of Dataset
+        Dataset(s) to use for training.
+    test_datasets : Dataset or list of Dataset
+        Dataset(s) to use for testing.
     **kwargs : dict
         Additional parameters passed to BaseEvaluation (paradigm, n_jobs, etc.)
+
+    Notes
+    -----
+    .. versionadded:: 1.2.1
     """
 
-    def __init__(
-        self,
-        train_dataset,
-        test_dataset,
-        pretrained_model=None,
-        fine_tune=True,
-        sfreq=128,
-        **kwargs,
-    ):
-        super().__init__(**kwargs)
-        self.train_dataset = (
-            train_dataset if isinstance(train_dataset, list) else [train_dataset]
-        )
-        self.test_dataset = (
-            test_dataset if isinstance(test_dataset, list) else [test_dataset]
-        )
-        self.pretrained_model = pretrained_model
-        self.fine_tune = fine_tune
-        self.sfreq = sfreq
+    def __init__(self, train_datasets, test_datasets, **kwargs):
+        # Normalize to lists
+        if not isinstance(train_datasets, list):
+            train_datasets = [train_datasets]
+        if not isinstance(test_datasets, list):
+            test_datasets = [test_datasets]
 
-        self._validate_datasets()
+        self.train_datasets = train_datasets
+        self.test_datasets = test_datasets
 
-    def _validate_datasets(self):
-        """Validate compatibility of train and test datasets."""
-        all_datasets = self.train_dataset + self.test_dataset
+        # Validate non-empty
+        if not self.train_datasets:
+            raise ValueError("train_datasets must not be empty")
+        if not self.test_datasets:
+            raise ValueError("test_datasets must not be empty")
 
-        for dataset in all_datasets:
-            if not self.paradigm.is_valid(dataset):
-                raise ValueError(f"Dataset {dataset.code} not compatible with paradigm")
+        # Validate no overlap
+        train_codes = {ds.code for ds in self.train_datasets}
+        test_codes = {ds.code for ds in self.test_datasets}
+        overlap = train_codes & test_codes
+        if overlap:
+            raise ValueError(f"Datasets cannot be both train and test: {overlap}")
 
-    def evaluate(self, dataset, pipelines):
-        """Evaluate models across datasets.
+        # Pass all datasets to super for paradigm validation
+        all_datasets = self.train_datasets + self.test_datasets
+        super().__init__(datasets=all_datasets, **kwargs)
+
+        # Align channels and sampling rates across all datasets
+        self.paradigm.match_all(self.datasets, channel_merge_strategy="intersect")
+
+    def process(self, pipelines, param_grid=None, postprocess_pipeline=None):
+        """Run cross-dataset evaluation across all pipelines.
+
+        Loads data from all train and test datasets, concatenates them,
+        and uses :class:`CrossDatasetSplitter` to generate per-subject
+        train/test splits.
 
         Parameters
         ----------
-        dataset : Dataset
-            Unused but required by interface
-        pipelines : dict
-            Dictionary of pipelines to evaluate
+        pipelines : dict of pipeline instance.
+            A dict containing the sklearn pipeline to evaluate.
+        param_grid : dict of str, default=None
+            The key of the dictionary must be the same as the associated pipeline.
+        postprocess_pipeline : Pipeline | None, default=None
+            Optional pipeline to apply to the data after preprocessing.
 
-        Yields
-        ------
-        dict
-            Evaluation results containing scores and metadata
+        Returns
+        -------
+        results : pd.DataFrame
+            A dataframe containing the results.
         """
-        log.info("Starting cross-dataset evaluation")
+        from moabb.evaluations.splitters import CrossDatasetSplitter
 
-        # Prepare training data
-        train_X, train_y, train_metadata = [], [], []
-        for train_ds in self.train_dataset:
-            raw, labels, events = self.paradigm.get_data(
-                dataset=train_ds, subjects=train_ds.subject_list, return_epochs=False
+        if not isinstance(pipelines, dict):
+            raise ValueError("pipelines must be a dict")
+
+        for _, pipeline in pipelines.items():
+            if not isinstance(pipeline, BaseEstimator):
+                raise ValueError("pipelines must only contain Pipeline instances")
+
+        # Build a process pipeline from the first dataset (all are now matched)
+        process_pipeline = self.paradigm.make_process_pipelines(
+            self.datasets[0],
+            return_epochs=self.return_epochs,
+            return_raws=self.return_raws,
+            postprocess_pipeline=postprocess_pipeline,
+        )[0]
+
+        # Load and concatenate data from all datasets
+        all_X, all_y, all_metadata = [], [], []
+
+        # Build a mapping from dataset code to dataset object
+        ds_code_to_obj = {}
+
+        for ds in self.datasets:
+            X, y, metadata = self.paradigm.get_data(
+                dataset=ds,
+                return_epochs=self.return_epochs,
+                return_raws=self.return_raws,
+                cache_config=self.cache_config,
+                postprocess_pipeline=postprocess_pipeline,
             )
+            metadata = metadata.copy()
+            metadata["dataset"] = ds.code
+            ds_code_to_obj[ds.code] = ds
 
-            if len(events) == 0:
-                log.warning(f"No events found in dataset {train_ds.code}, skipping")
-                continue
+            all_X.append(X)
+            all_y.append(y)
+            all_metadata.append(metadata)
 
-            train_X.append(raw)
-            train_y.extend(labels)
-            train_metadata.append({"events": events})
+        X = np.concatenate(all_X, axis=0)
+        y = np.concatenate(all_y, axis=0)
+        metadata = pd.concat(all_metadata, ignore_index=True)
 
-        if not train_X:
-            raise ValueError("No valid training data found with events")
+        le = LabelEncoder()
+        y_encoded = y if self.mne_labels else le.fit_transform(y)
 
-        # Evaluate on test datasets
-        for test_ds in self.test_dataset:
-            raw, labels, events = self.paradigm.get_data(
-                dataset=test_ds, subjects=test_ds.subject_list, return_epochs=False
-            )
+        # Create the splitter
+        train_codes = [ds.code for ds in self.train_datasets]
+        test_codes = [ds.code for ds in self.test_datasets]
+        splitter = CrossDatasetSplitter(
+            train_datasets=train_codes,
+            test_datasets=test_codes,
+        )
 
-            if len(events) == 0:
-                log.warning(f"No events found in dataset {test_ds.code}, skipping")
-                continue
+        scorer = get_scorer(self.paradigm.scoring)
 
-            test_X = raw
-            test_y = labels
+        for train_idx, test_idx in splitter.split(y_encoded, metadata):
+            X_train, y_train = X[train_idx], y_encoded[train_idx]
+            X_test, y_test = X[test_idx], y_encoded[test_idx]
 
-            for name, pipeline in pipelines.items():
+            test_metadata = metadata.iloc[test_idx]
+            test_ds_code = test_metadata["dataset"].iloc[0]
+            test_subject = test_metadata["subject"].iloc[0]
+            test_dataset_obj = ds_code_to_obj[test_ds_code]
+
+            # Score per session within this subject
+            sessions = test_metadata["session"].unique()
+
+            for name, clf in pipelines.items():
                 if _carbonfootprint:
                     tracker = EmissionsTracker(save_to_file=False, log_level="error")
                     tracker.start()
 
                 t_start = time()
+                model = clone(clf).fit(X_train, y_train)
 
-                try:
-                    model = clone(pipeline).fit(train_X[0], train_y)
-                    score = model.score(test_X, test_y)
-                    duration = time() - t_start
+                if _carbonfootprint:
+                    emissions = tracker.stop()
+                    if emissions is None:
+                        emissions = np.nan
 
-                    result = {
+                duration = time() - t_start
+                nchan = (
+                    X.info["nchan"] if isinstance(X, BaseEpochs) else X.shape[1]
+                )
+
+                for session in sessions:
+                    sess_mask = test_metadata["session"] == session
+                    sess_idx = np.where(sess_mask)[0]
+                    score = scorer(model, X_test[sess_idx], y_test[sess_idx])
+
+                    res = {
                         "time": duration,
-                        "dataset": test_ds,
+                        "dataset": test_dataset_obj,
+                        "subject": test_subject,
+                        "session": session,
                         "score": score,
-                        "n_samples": len(test_y),
+                        "n_samples": len(y_train),
+                        "n_channels": nchan,
                         "pipeline": name,
-                        "training_datasets": [ds.code for ds in self.train_dataset],
                     }
+                    if _carbonfootprint:
+                        res["carbon_emission"] = 1000 * emissions
 
-                    yield result
+                    self.push_result(res, pipelines, process_pipeline)
 
-                except Exception as e:
-                    log.error(f"Error evaluating pipeline {name}: {str(e)}")
-                    raise
+        return self.results.to_dataframe(
+            pipelines=pipelines, process_pipeline=process_pipeline
+        )
+
+    def evaluate(
+        self, dataset, pipelines, param_grid, process_pipeline, postprocess_pipeline=None
+    ):
+        """Not used directly — use :meth:`process` instead.
+
+        This method satisfies the abstract interface but is not called
+        because :meth:`process` is overridden.
+        """
+        raise NotImplementedError(
+            "CrossDatasetEvaluation.evaluate() should not be called directly. "
+            "Use process() instead."
+        )
 
     def is_valid(self, dataset):
-        """Check if dataset is valid for this evaluation."""
+        """Check if dataset is valid for this evaluation.
+
+        Always returns True because multi-dataset validation is
+        enforced in ``__init__``, not per-dataset.
+        """
         return True

@@ -6,6 +6,7 @@ from collections import OrderedDict
 
 import numpy as np
 import pytest
+import sklearn
 import sklearn.base
 from pyriemann.estimation import Covariances
 from pyriemann.spatialfilters import CSP
@@ -391,55 +392,104 @@ class Test_CrossDataset:
             event_list=["left_hand", "right_hand"],
             n_subjects=2,
             n_sessions=2,
+            seed=12,
+            code="TrainDataset",
         )
         self.test_ds = FakeDataset(
             paradigm="imagery",
             event_list=["left_hand", "right_hand"],
-            n_subjects=1,  # Different number of subjects
-            n_sessions=3,  # Different number of sessions
+            n_subjects=2,
+            n_sessions=2,
+            seed=42,
+            code="TestDataset",
         )
         self.paradigm = FakeImageryParadigm()
-        self.eval = ev.CrossDatasetEvaluation(
-            train_dataset=self.train_ds,
-            test_dataset=self.test_ds,
-            paradigm=self.paradigm,
-        )
 
         self.test_pipelines = OrderedDict()
         self.test_pipelines["dummy"] = make_pipeline(
             FunctionTransformer(), Dummy(strategy="stratified", random_state=42)
         )
 
-    def test_validate_datasets(self):
-        """Test dataset validation."""
-        # Test with compatible dataset
-        assert self.eval.is_valid(self.test_ds)
-
-        # Test with incompatible dataset (different events)
-        incompatible_ds = FakeDataset(
-            paradigm="imagery",
-            event_list=["left_hand"],  # Only one class
-            n_subjects=1,
-        )
-
-        # This should work but return a warning
-        eval_incompatible = ev.CrossDatasetEvaluation(
-            train_dataset=self.train_ds,
-            test_dataset=incompatible_ds,
+    @pytest.mark.skipif(
+        tuple(int(x) for x in sklearn.__version__.split(".")[:2]) >= (1, 6),
+        reason="sklearn >= 1.6 Pipeline.transform requires fitted check (moabb pins <1.6)",
+    )
+    def test_process_returns_dataframe(self):
+        """Test that process() returns a DataFrame with results."""
+        evaluation = ev.CrossDatasetEvaluation(
+            train_datasets=self.train_ds,
+            test_datasets=self.test_ds,
             paradigm=self.paradigm,
         )
-        assert eval_incompatible.is_valid(incompatible_ds)
-
-    def test_evaluate(self):
-        """Test basic evaluation functionality."""
-        results = list(self.eval.evaluate(dataset=None, pipelines=self.test_pipelines))
-
-        # Check results structure
+        results = evaluation.process(self.test_pipelines)
         assert len(results) > 0
-        assert "score" in results[0]
-        assert "training_datasets" in results[0]
-        assert isinstance(results[0]["training_datasets"], list)
-        assert self.train_ds.code in results[0]["training_datasets"]
+        assert "score" in results.columns
+
+    @pytest.mark.skipif(
+        tuple(int(x) for x in sklearn.__version__.split(".")[:2]) >= (1, 6),
+        reason="sklearn >= 1.6 Pipeline.transform requires fitted check (moabb pins <1.6)",
+    )
+    def test_per_subject_granularity(self):
+        """Test that results are generated per test subject."""
+        evaluation = ev.CrossDatasetEvaluation(
+            train_datasets=self.train_ds,
+            test_datasets=self.test_ds,
+            paradigm=self.paradigm,
+        )
+        results = evaluation.process(self.test_pipelines)
+        # test_ds has 2 subjects, so we expect at least 2 result rows
+        assert len(results["subject"].unique()) == len(self.test_ds.subject_list)
+
+    @pytest.mark.skipif(
+        tuple(int(x) for x in sklearn.__version__.split(".")[:2]) >= (1, 6),
+        reason="sklearn >= 1.6 Pipeline.transform requires fitted check (moabb pins <1.6)",
+    )
+    def test_result_columns(self):
+        """Test that expected columns exist in results."""
+        evaluation = ev.CrossDatasetEvaluation(
+            train_datasets=self.train_ds,
+            test_datasets=self.test_ds,
+            paradigm=self.paradigm,
+        )
+        results = evaluation.process(self.test_pipelines)
+        for col in ["score", "subject", "session", "pipeline", "dataset", "time"]:
+            assert col in results.columns, f"Missing column: {col}"
+
+    def test_is_valid(self):
+        """Test that is_valid always returns True."""
+        evaluation = ev.CrossDatasetEvaluation(
+            train_datasets=self.train_ds,
+            test_datasets=self.test_ds,
+            paradigm=self.paradigm,
+        )
+        assert evaluation.is_valid(self.train_ds)
+        assert evaluation.is_valid(self.test_ds)
+
+    def test_no_overlap_validation(self):
+        """Test that overlapping train/test datasets raises ValueError."""
+        with pytest.raises(ValueError, match="cannot be both train and test"):
+            ev.CrossDatasetEvaluation(
+                train_datasets=self.train_ds,
+                test_datasets=self.train_ds,
+                paradigm=self.paradigm,
+            )
+
+    def test_evaluate_raises(self):
+        """Test that evaluate() raises NotImplementedError."""
+        evaluation = ev.CrossDatasetEvaluation(
+            train_datasets=self.train_ds,
+            test_datasets=self.test_ds,
+            paradigm=self.paradigm,
+        )
+        with pytest.raises(NotImplementedError):
+            list(
+                evaluation.evaluate(
+                    dataset=None,
+                    pipelines=self.test_pipelines,
+                    param_grid=None,
+                    process_pipeline=None,
+                )
+            )
 
 
 class UtilEvaluation:

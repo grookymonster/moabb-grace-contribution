@@ -1,6 +1,7 @@
 import inspect
 import logging
 
+import numpy as np
 from sklearn.model_selection import (
     BaseCrossValidator,
     LeaveOneGroupOut,
@@ -267,3 +268,81 @@ class CrossSessionSplitter(BaseCrossValidator):
                 yield subject_indices[train_session_idx], subject_indices[
                     test_session_idx
                 ]
+
+
+class CrossDatasetSplitter(BaseCrossValidator):
+    """Data splitter for cross-dataset evaluation.
+
+    This splitter enables cross-dataset evaluation by splitting data based on
+    dataset membership. All samples from training datasets are used as training
+    data, and test splits are created per-subject within each test dataset.
+
+    Parameters
+    ----------
+    train_datasets : list of str
+        List of dataset codes to use for training.
+    test_datasets : list of str
+        List of dataset codes to use for testing.
+
+    Yields
+    ------
+    train : ndarray
+        The training set indices for that split (all samples from train datasets).
+    test : ndarray
+        The testing set indices for that split (one subject from one test dataset).
+    """
+
+    def __init__(self, train_datasets, test_datasets):
+        self.train_datasets = train_datasets
+        self.test_datasets = test_datasets
+
+    def get_n_splits(self, y=None, metadata=None):
+        """Return the number of splits.
+
+        The number of splits equals the number of unique (dataset, subject)
+        pairs in the test datasets.
+
+        Parameters
+        ----------
+        y : array-like, default=None
+            Ignored, present for API compatibility.
+        metadata : pd.DataFrame
+            Must contain 'dataset' and 'subject' columns.
+
+        Returns
+        -------
+        n_splits : int
+            The number of splits.
+        """
+        n_splits = 0
+        for test_code in self.test_datasets:
+            ds_mask = metadata["dataset"] == test_code
+            n_splits += metadata.loc[ds_mask, "subject"].nunique()
+        return n_splits
+
+    def split(self, y, metadata):
+        """Generate train/test indices for cross-dataset evaluation.
+
+        Parameters
+        ----------
+        y : array-like
+            Target variable (unused, present for API compatibility).
+        metadata : pd.DataFrame
+            Must contain 'dataset' and 'subject' columns.
+
+        Yields
+        ------
+        train_indices : ndarray
+            Indices of training samples (all samples from train datasets).
+        test_indices : ndarray
+            Indices of test samples (one subject from one test dataset).
+        """
+        train_mask = metadata["dataset"].isin(self.train_datasets)
+        train_indices = np.where(train_mask)[0]
+
+        for test_code in self.test_datasets:
+            ds_mask = metadata["dataset"] == test_code
+            for subject in metadata.loc[ds_mask, "subject"].unique():
+                subj_mask = ds_mask & (metadata["subject"] == subject)
+                test_indices = np.where(subj_mask)[0]
+                yield train_indices, test_indices

@@ -18,8 +18,14 @@ from sklearn.model_selection import (
 )
 from sklearn.utils import check_random_state
 
+import pandas as pd
+
 from moabb.datasets.fake import FakeDataset
-from moabb.evaluations.splitters import CrossSessionSplitter, WithinSessionSplitter
+from moabb.evaluations.splitters import (
+    CrossDatasetSplitter,
+    CrossSessionSplitter,
+    WithinSessionSplitter,
+)
 from moabb.paradigms.motor_imagery import FakeImageryParadigm
 
 
@@ -362,3 +368,124 @@ def test_cross_session_splitter_without_error(
     splitter = CrossSessionSplitter(shuffle=True, cv_class=cv_class)
     assert splitter is not None
     assert isinstance(splitter, CrossSessionSplitter)
+
+
+# ---------- CrossDatasetSplitter tests ----------
+
+
+@pytest.fixture
+def cross_dataset_data():
+    """Create synthetic metadata for cross-dataset splitter tests."""
+    # Simulate two training datasets and one test dataset
+    n_train1 = 40  # 2 subjects x 20 samples
+    n_train2 = 30  # 1 subject x 30 samples
+    n_test = 40  # 2 subjects x 20 samples
+
+    y = np.concatenate(
+        [
+            np.tile([0, 1], n_train1 // 2),
+            np.tile([0, 1], n_train2 // 2),
+            np.tile([0, 1], n_test // 2),
+        ]
+    )
+
+    metadata = pd.DataFrame(
+        {
+            "dataset": (
+                ["ds_train_1"] * n_train1
+                + ["ds_train_2"] * n_train2
+                + ["ds_test"] * n_test
+            ),
+            "subject": (
+                [1] * 20 + [2] * 20 + [1] * 30 + [1] * 20 + [2] * 20
+            ),
+            "session": (
+                ["s1"] * 10 + ["s2"] * 10 + ["s1"] * 10 + ["s2"] * 10
+                + ["s1"] * 15 + ["s2"] * 15
+                + ["s1"] * 10 + ["s2"] * 10 + ["s1"] * 10 + ["s2"] * 10
+            ),
+        }
+    )
+
+    train_codes = ["ds_train_1", "ds_train_2"]
+    test_codes = ["ds_test"]
+    return y, metadata, train_codes, test_codes
+
+
+def test_cross_dataset_split_count(cross_dataset_data):
+    """Test that the splitter yields one split per test subject."""
+    y, metadata, train_codes, test_codes = cross_dataset_data
+    splitter = CrossDatasetSplitter(train_codes, test_codes)
+    splits = list(splitter.split(y, metadata))
+    # ds_test has 2 subjects, so 2 splits
+    assert len(splits) == 2
+
+
+def test_cross_dataset_train_from_train_dataset(cross_dataset_data):
+    """Test that training indices come only from training datasets."""
+    y, metadata, train_codes, test_codes = cross_dataset_data
+    splitter = CrossDatasetSplitter(train_codes, test_codes)
+
+    for train_idx, _ in splitter.split(y, metadata):
+        train_datasets = metadata.iloc[train_idx]["dataset"].unique()
+        for ds in train_datasets:
+            assert ds in train_codes, f"Train index from non-train dataset: {ds}"
+
+
+def test_cross_dataset_test_from_test_dataset(cross_dataset_data):
+    """Test that test indices come only from test datasets."""
+    y, metadata, train_codes, test_codes = cross_dataset_data
+    splitter = CrossDatasetSplitter(train_codes, test_codes)
+
+    for _, test_idx in splitter.split(y, metadata):
+        test_datasets = metadata.iloc[test_idx]["dataset"].unique()
+        for ds in test_datasets:
+            assert ds in test_codes, f"Test index from non-test dataset: {ds}"
+
+
+def test_cross_dataset_get_n_splits(cross_dataset_data):
+    """Test that get_n_splits returns the correct count."""
+    y, metadata, train_codes, test_codes = cross_dataset_data
+    splitter = CrossDatasetSplitter(train_codes, test_codes)
+    assert splitter.get_n_splits(y, metadata) == 2
+
+
+def test_cross_dataset_test_single_subject_per_split(cross_dataset_data):
+    """Test that each split tests exactly one subject."""
+    y, metadata, train_codes, test_codes = cross_dataset_data
+    splitter = CrossDatasetSplitter(train_codes, test_codes)
+
+    for _, test_idx in splitter.split(y, metadata):
+        subjects = metadata.iloc[test_idx]["subject"].unique()
+        assert len(subjects) == 1, f"Expected 1 test subject, got {len(subjects)}"
+
+
+def test_cross_dataset_train_indices_consistent(cross_dataset_data):
+    """Test that train indices are the same across all splits."""
+    y, metadata, train_codes, test_codes = cross_dataset_data
+    splitter = CrossDatasetSplitter(train_codes, test_codes)
+
+    train_indices_list = [train_idx for train_idx, _ in splitter.split(y, metadata)]
+    for train_idx in train_indices_list:
+        np.testing.assert_array_equal(train_idx, train_indices_list[0])
+
+
+def test_cross_dataset_multiple_test_datasets():
+    """Test splitter with multiple test datasets."""
+    y = np.tile([0, 1], 50)
+    metadata = pd.DataFrame(
+        {
+            "dataset": ["train_ds"] * 40 + ["test_ds_1"] * 30 + ["test_ds_2"] * 30,
+            "subject": (
+                [1] * 20 + [2] * 20
+                + [1] * 15 + [2] * 15
+                + [1] * 15 + [2] * 15
+            ),
+            "session": ["s1"] * 100,
+        }
+    )
+    splitter = CrossDatasetSplitter(["train_ds"], ["test_ds_1", "test_ds_2"])
+    splits = list(splitter.split(y, metadata))
+    # 2 subjects in test_ds_1 + 2 subjects in test_ds_2 = 4 splits
+    assert len(splits) == 4
+    assert splitter.get_n_splits(y, metadata) == 4
