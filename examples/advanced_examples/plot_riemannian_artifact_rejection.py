@@ -107,6 +107,15 @@ warnings.filterwarnings("ignore", category=RuntimeWarning, module="pyriemann")
 
 moabb.set_log_level("info")
 
+
+def _predict_clean_mask(model, covariances):
+    """Return clean-epoch mask across pyRiemann label encodings."""
+    labels = np.asarray(model.predict(covariances))
+    if np.issubdtype(labels.dtype, np.number) and np.any(labels < 0):
+        return labels > 0
+    return labels.astype(bool)
+
+
 ##############################################################################
 # Load Dataset and Visualize Data
 # --------------------------------
@@ -192,7 +201,7 @@ covs = Covariances(estimator="lwf").transform(data)
 potato = Potato(metric=dict(mean="riemann", distance="riemann"), threshold=3)
 potato.fit(covs)
 z_scores = potato.transform(covs)
-is_clean = potato.predict(covs).astype(bool)
+is_clean = _predict_clean_mask(potato, covs)
 
 print(f"RP detected {(~is_clean).sum()}/{len(covs)} artifact epochs")
 
@@ -235,38 +244,48 @@ plt.show()
 # This visualization is inspired by Figure 1 of [2]_ (see also
 # `pyRiemann's example <https://pyriemann.readthedocs.io/en/latest/auto_examples/artifacts/plot_detect_riemannian_potato_EEG.html>`_). We project the
 # covariance matrices onto a 2D plane defined by two selected channels
-# (FCz and Cz) and display the z-score isocontours. The characteristic
+# (Oz and C4) and display the z-score isocontours. The characteristic
 # "potato" shape arises from the non-linearity of the Riemannian
 # manifold. Clean epochs cluster inside the potato, while artifacts
 # fall outside.
 
-# Select two central channels for 2D visualization
-ch_idx_fcz = epochs.ch_names.index("FCz")
-ch_idx_cz = epochs.ch_names.index("Cz")
-covs_2d = covs[:, [ch_idx_fcz, ch_idx_cz], :][:, :, [ch_idx_fcz, ch_idx_cz]]
+# Select two channels with clearer spread for this 2D visualization
+ch_name_x = "Oz"
+ch_name_y = "C4"
+ch_idx_x = epochs.ch_names.index(ch_name_x)
+ch_idx_y = epochs.ch_names.index(ch_name_y)
+covs_2d = covs[:, [ch_idx_x, ch_idx_y], :][:, :, [ch_idx_x, ch_idx_y]]
 
-potato_2d = Potato(metric=dict(mean="riemann", distance="riemann"), threshold=3)
-potato_2d.fit(covs_2d)
+# Offline calibration on early epochs, following pyRiemann's potato example.
+n_calib_2d = min(40, len(covs_2d))
+z_threshold_2d = 3.0
+potato_2d = Potato(
+    metric=dict(mean="riemann", distance="riemann"),
+    threshold=z_threshold_2d,
+)
+potato_2d.fit(covs_2d[:n_calib_2d])
 z_2d = potato_2d.transform(covs_2d)
-is_clean_2d = potato_2d.predict(covs_2d).astype(bool)
+is_clean_2d = _predict_clean_mask(potato_2d, covs_2d)
 barycenter_2d = potato_2d.covmean_
 
-# Extract the (0,0) and (1,1) diagonal entries for plotting
-x_vals = covs_2d[:, 0, 0]  # variance of FCz
-y_vals = covs_2d[:, 1, 1]  # variance of Cz
+# Extract the (0,0) and (1,1) diagonal entries for plotting.
+# Scale to uV^2 for more readable axis values.
+cov_scale = 1e12
+x_vals = covs_2d[:, 0, 0] * cov_scale
+y_vals = covs_2d[:, 1, 1] * cov_scale
 
 fig, ax = plt.subplots(figsize=(7, 6), facecolor="white")
 
 # Create a grid and compute z-scores for isocontours
-x_grid = np.linspace(x_vals.min() * 0.8, x_vals.max() * 1.1, 80)
-y_grid = np.linspace(y_vals.min() * 0.8, y_vals.max() * 1.1, 80)
+x_grid = np.linspace(x_vals.min() * 0.8, x_vals.max() * 1.05, 100)
+y_grid = np.linspace(y_vals.min() * 0.8, y_vals.max() * 1.05, 100)
 xx, yy = np.meshgrid(x_grid, y_grid)
 # Build 2x2 SPD matrices from diagonal entries using the barycenter's
 # off-diagonal as a reference
 off_diag = barycenter_2d[0, 1]
 grid_covs = np.zeros((len(x_grid) * len(y_grid), 2, 2))
-grid_covs[:, 0, 0] = xx.ravel()
-grid_covs[:, 1, 1] = yy.ravel()
+grid_covs[:, 0, 0] = xx.ravel() / cov_scale
+grid_covs[:, 1, 1] = yy.ravel() / cov_scale
 grid_covs[:, 0, 1] = off_diag
 grid_covs[:, 1, 0] = off_diag
 
@@ -277,16 +296,15 @@ z_grid = np.full(len(grid_covs), np.nan)
 if valid.sum() > 0:
     z_grid[valid] = potato_2d.transform(grid_covs[valid])
 
-z_map = z_grid.reshape(xx.shape)
-contour = ax.contourf(xx, yy, z_map, levels=20, cmap="coolwarm", alpha=0.4)
+z_map = np.ma.masked_invalid(z_grid.reshape(xx.shape))
+contour = ax.contourf(xx, yy, z_map, levels=20, cmap="RdYlBu_r", alpha=0.5)
 ax.contour(
     xx,
     yy,
     z_map,
-    levels=[3],
-    colors=["#C44E52"],
+    levels=[z_threshold_2d],
+    colors=["black"],
     linewidths=2,
-    linestyles="--",
 )
 plt.colorbar(contour, ax=ax, label="z-score")
 
@@ -294,36 +312,36 @@ plt.colorbar(contour, ax=ax, label="z-score")
 ax.scatter(
     x_vals[is_clean_2d],
     y_vals[is_clean_2d],
-    c="#4C72B0",
-    s=10,
-    alpha=0.4,
+    c="b",
+    s=20,
+    alpha=0.35,
+    edgecolors="none",
     label="Clean",
 )
 ax.scatter(
     x_vals[~is_clean_2d],
     y_vals[~is_clean_2d],
-    c="#C44E52",
-    s=30,
-    marker="x",
+    c="r",
+    s=36,
     label="Artifact",
     zorder=5,
 )
 ax.scatter(
-    barycenter_2d[0, 0],
-    barycenter_2d[1, 1],
+    barycenter_2d[0, 0] * cov_scale,
+    barycenter_2d[1, 1] * cov_scale,
     c="black",
-    s=100,
-    marker="+",
-    linewidths=2,
+    s=120,
+    marker="o",
     label="Barycenter",
     zorder=5,
 )
 
-ax.set_xlabel("Variance of FCz")
-ax.set_ylabel("Variance of Cz")
+ax.set_xlabel(f"Cov({ch_name_x},{ch_name_x}) [uV^2]")
+ax.set_ylabel(f"Cov({ch_name_y},{ch_name_y}) [uV^2]")
 ax.set_title(
-    "2D projection of the Riemannian Potato\n"
-    "(dashed red line = z=3 isocontour, the 'potato' boundary)"
+    "2D projection of the Riemannian potato\n"
+    f"(black line = z={z_threshold_2d:.0f} isocontour, "
+    f"calibrated on first {n_calib_2d} epochs)"
 )
 ax.legend(loc="upper right")
 plt.tight_layout()
@@ -382,9 +400,9 @@ plt.show()
 #
 #     q = -2 \sum_{j=1}^{J} \log(p_j)
 #
-# Under the null hypothesis (no artifact), :math:`q` follows a
-# :math:`\chi^2` distribution with :math:`2J` degrees of freedom, yielding
-# a combined p-value: :math:`p = 1 - F_{\chi^2(2J)}(q)`.
+# In practice, per-potato p-values are dependent, so we use the combined
+# score as a practical summary of deviancy from the clean-data barycenters
+# and apply an empirical rejection threshold.
 #
 # The iRPF method [3]_ further introduces **Liptak's combination**:
 #
@@ -744,7 +762,7 @@ def riemannian_potato_rejection(epochs):
     covs = Covariances(estimator="lwf").transform(data)
     potato = Potato(metric=dict(mean="riemann", distance="riemann"), threshold=3)
     potato.fit(covs)
-    is_clean = potato.predict(covs).astype(bool)
+    is_clean = _predict_clean_mask(potato, covs)
 
     n_rejected = n_before - is_clean.sum()
     print(f"  RP: rejected {n_rejected}/{n_before} epochs")
@@ -795,7 +813,7 @@ def riemannian_potato_field_rejection(epochs):
         p_threshold=0.01,
     )
     rpf.fit(cov_list)
-    is_clean = rpf.predict(cov_list).astype(bool)
+    is_clean = _predict_clean_mask(rpf, cov_list)
 
     n_rejected = n_before - is_clean.sum()
     print(f"  RPF: rejected {n_rejected}/{n_before} epochs")
