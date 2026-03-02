@@ -41,6 +41,7 @@ Enhancements
 - Add ``additional_metadata`` parameter to ``paradigm.get_data()`` to fetch additional metadata columns from BIDS ``events.tsv`` files. Supports ``"all"`` to load all columns or a list of specific column names (:gh:`744` by `Matthias Dold`_)
 - Add ``get_additional_metadata()`` method to :class:`moabb.datasets.base.BaseDataset` allowing datasets to provide additional metadata for epochs. Implemented for BIDS datasets in :class:`moabb.datasets.base.BaseBIDSDataset` (:gh:`744` by `Matthias Dold`_)
 - Add automatic HED 8.4.0 (Hierarchical Event Descriptors) annotations to BIDS export with 83 validated paradigm-specific tags covering all MOABB datasets, ``HEDVersion`` in ``dataset_description.json``, events.json sidecar patching, per-dataset override via ``ExperimentMetadata.hed_tags``, and ``Label/`` fallback for unmapped events (:gh:`974` by `Bruno Aristimunha`_)
+- Add tutorial on time-resolved decoding with :class:`mne.decoding.SlidingEstimator`, showing how to evaluate per-time-point AUC across subjects as an alternative to pseudo-online evaluation (by `Bruno Aristimunha`_)
 - Add advanced tutorial on Riemannian Artifact Rejection (Riemannian Potato and Potato Field) as a pre-processing step using pipeline surgery (by `Davoud Hajhassani`_ and `Bruno Aristimunha`_)
 - Simplify the Riemannian Artifact Rejection tutorial by using pyRiemann's enhanced ``PotatoField`` API (per-potato metrics and configurable p-value combination), and refresh the 2D potato visualization to better match the pyRiemann reference (:gh:`1011` by `Bruno Aristimunha`_)
 - Add pipeline surgery methods (``find_steps``, ``insert_step``, ``remove_step``) to :class:`moabb.datasets.preprocessing.FixedPipeline` for easier pipeline manipulation (by `Davoud Hajhassani`_ and `Bruno Aristimunha`_)
@@ -103,6 +104,11 @@ Bugs
 - Fix CI dataset cache reuse across commits/PR updates by using stable cache keys and default-branch cache saves for docs/tests workflows, avoiding repeated dataset downloads (by `Bruno Aristimunha`_)
 - Fix :class:`moabb.datasets.Liu2024` download failure by switching Figshare URLs from ``figshare.com/ndownloader`` to ``ndownloader.figshare.com`` and adding ``BadZipFile`` recovery for corrupted cached downloads (:gh:`992` by `Bruno Aristimunha`_)
 - Fix TRCA Riemannian mean convergence failure by regularizing ill-conditioned cross-covariance matrices in :class:`moabb.pipelines.classification.SSVEP_TRCA`. Eigenvalue clamping bounds the condition number, eliminating ``Convergence not reached`` and ``invalid value encountered in log`` warnings (by `Bruno Aristimunha`_)
+- Fix SSVEP CCA-family estimator consistency and eCCA formulation:
+  :class:`moabb.pipelines.classification.SSVEP_CCA`,
+  :class:`moabb.pipelines.classification.SSVEP_MsetCCA`,
+  :class:`moabb.pipelines.classification.SSVEP_itCCA`, and
+  :class:`moabb.pipelines.classification.SSVEP_eCCA` now return predictions in the same label space as ``classes_`` and align ``predict_proba`` columns with ``classes_`` order. :class:`moabb.pipelines.classification.SSVEP_CCA` and :class:`moabb.pipelines.classification.SSVEP_eCCA` now infer frequencies robustly from epochs metadata (with ``freq_map`` override), and :class:`moabb.pipelines.classification.SSVEP_eCCA` now uses the corrected 4-feature filter assignments with updated reference/citation alignment (by `Bruno Aristimunha`_)
 - Add documentation note to :class:`moabb.datasets.PhysionetMI` that subject 88 was recorded at 128 Hz instead of 160 Hz, which causes errors when loaded alongside other subjects (:gh:`538` by `Bruno Aristimunha`_)
 
 Code health
