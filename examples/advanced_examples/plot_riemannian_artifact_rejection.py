@@ -188,7 +188,7 @@ print(f"Channels: {epochs.ch_names}")
 #
 # We compute covariance matrices and fit a Riemannian Potato to illustrate
 # how z-scores separate clean from artifacted epochs. This visualization
-# is inspired by Figure 1 and Figure 2 of [3]_.
+# is inspired by Figure 2 of [3]_.
 
 data = epochs.get_data()
 covs = Covariances(estimator="lwf").transform(data)
