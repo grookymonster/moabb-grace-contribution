@@ -41,7 +41,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=32f982a3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=f118ea32" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-2.0.4/b-3.0.2/b-html5-3.0.2/datatables.min.css" />
   
   <!-- So that users can add custom icons -->
@@ -429,10 +429,7 @@
 <nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../plot_pseudoonline.html">Pseudo-Online Motor Imagery with Sliding Window</a></li>
-</ul>
-<ul class="current nav bd-sidenav">
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Getting Started!</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="tutorial_0_plot_getting_started.html">Tutorial 0: Getting Started</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tutorial_1_simple_example_motor_imagery.html">Tutorial 1: Simple Motor Imagery</a></li>
@@ -477,8 +474,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_mne_and_scikit_estimators.html">MNE Epochs-based pipelines</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_phmd_ml_spectrum.html">Spectral analysis of the trials</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_pre_processing_steps.html">Playing with the pre-processing steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_pseudoonline.html">Pseudo-Online Motor Imagery with Sliding Window</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_riemannian_artifact_rejection.html">Riemannian Artifact Rejection as a Pre-processing Step</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_select_electrodes_resample.html">Select Electrodes and Resampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_sliding_estimator.html">Time-Resolved Decoding with SlidingEstimator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_statistical_analysis.html">Statistical Analysis</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_use_an_X_y_dataset.html">Using X y data (epoched data) instead of continuous signal</a></li>
 </ul>
@@ -710,65 +709,65 @@ The rest of the code follows the steps described in the previous tutorials.</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|                                              | 0.00/2.77M [00:00&lt;?, ?B/s]
-  0%|▏                                    | 11.3k/2.77M [00:00&lt;00:30, 91.5kB/s]
-  2%|▌                                     | 44.0k/2.77M [00:00&lt;00:14, 193kB/s]
-  4%|█▍                                     | 103k/2.77M [00:00&lt;00:08, 323kB/s]
-  9%|███▌                                   | 251k/2.77M [00:00&lt;00:03, 664kB/s]
- 19%|███████▏                              | 520k/2.77M [00:00&lt;00:01, 1.21MB/s]
- 38%|██████████████▏                      | 1.06M/2.77M [00:00&lt;00:00, 2.28MB/s]
- 77%|████████████████████████████▌        | 2.14M/2.77M [00:00&lt;00:00, 4.37MB/s]
+  0%|▏                                    | 11.3k/2.77M [00:00&lt;00:28, 98.3kB/s]
+  2%|▋                                     | 49.2k/2.77M [00:00&lt;00:11, 237kB/s]
+  4%|█▌                                     | 115k/2.77M [00:00&lt;00:06, 391kB/s]
+  9%|███▌                                   | 254k/2.77M [00:00&lt;00:03, 718kB/s]
+ 19%|███████                               | 517k/2.77M [00:00&lt;00:01, 1.29MB/s]
+ 38%|██████████████▏                      | 1.06M/2.77M [00:00&lt;00:00, 2.46MB/s]
+ 77%|████████████████████████████▌        | 2.14M/2.77M [00:00&lt;00:00, 4.74MB/s]
   0%|                                              | 0.00/2.77M [00:00&lt;?, ?B/s]
-100%|█████████████████████████████████████| 2.77M/2.77M [00:00&lt;00:00, 13.6GB/s]
+100%|█████████████████████████████████████| 2.77M/2.77M [00:00&lt;00:00, 10.9GB/s]
 
 ExampleDataset-WithinSession:   0%|          | 0/3 [00:00&lt;?, ?it/s]
-ExampleDataset-WithinSession:  33%|███▎      | 1/3 [00:09&lt;00:18,  9.45s/it]
+ExampleDataset-WithinSession:  33%|███▎      | 1/3 [00:09&lt;00:18,  9.36s/it]
 
   0%|                                              | 0.00/2.77M [00:00&lt;?, ?B/s]
 
-  0%|▏                                    | 12.3k/2.77M [00:00&lt;00:32, 84.3kB/s]
+  1%|▏                                     | 14.3k/2.77M [00:00&lt;00:22, 124kB/s]
 
-  2%|▋                                     | 46.1k/2.77M [00:00&lt;00:14, 187kB/s]
+  2%|▌                                     | 44.0k/2.77M [00:00&lt;00:13, 202kB/s]
 
-  4%|█▋                                     | 118k/2.77M [00:00&lt;00:07, 359kB/s]
+  4%|█▋                                     | 117k/2.77M [00:00&lt;00:06, 397kB/s]
 
-  9%|███▌                                   | 252k/2.77M [00:00&lt;00:03, 636kB/s]
+  9%|███▌                                   | 251k/2.77M [00:00&lt;00:03, 699kB/s]
 
- 19%|███████▏                              | 522k/2.77M [00:00&lt;00:01, 1.18MB/s]
+ 19%|███████▏                              | 519k/2.77M [00:00&lt;00:01, 1.28MB/s]
 
- 38%|██████████████▏                      | 1.06M/2.77M [00:00&lt;00:00, 2.25MB/s]
+ 38%|██████████████▏                      | 1.06M/2.77M [00:00&lt;00:00, 2.44MB/s]
 
- 78%|████████████████████████████▊        | 2.16M/2.77M [00:00&lt;00:00, 4.38MB/s]
-
-  0%|                                              | 0.00/2.77M [00:00&lt;?, ?B/s]
-100%|█████████████████████████████████████| 2.77M/2.77M [00:00&lt;00:00, 10.5GB/s]
-
-ExampleDataset-WithinSession:  67%|██████▋   | 2/3 [00:20&lt;00:10, 10.21s/it]
+ 77%|████████████████████████████▍        | 2.12M/2.77M [00:00&lt;00:00, 4.65MB/s]
 
   0%|                                              | 0.00/2.77M [00:00&lt;?, ?B/s]
+100%|█████████████████████████████████████| 2.77M/2.77M [00:00&lt;00:00, 12.3GB/s]
 
-  1%|▏                                     | 14.3k/2.77M [00:00&lt;00:23, 117kB/s]
-
-  2%|▌                                     | 45.1k/2.77M [00:00&lt;00:13, 195kB/s]
-
-  4%|█▍                                     | 103k/2.77M [00:00&lt;00:09, 295kB/s]
-
-  9%|███▍                                   | 241k/2.77M [00:00&lt;00:04, 601kB/s]
-
- 19%|███████                               | 517k/2.77M [00:00&lt;00:01, 1.17MB/s]
-
- 38%|█████████████▉                       | 1.04M/2.77M [00:00&lt;00:00, 2.19MB/s]
-
- 73%|███████████████████████████▏         | 2.03M/2.77M [00:00&lt;00:00, 4.34MB/s]
+ExampleDataset-WithinSession:  67%|██████▋   | 2/3 [00:19&lt;00:10, 10.09s/it]
 
   0%|                                              | 0.00/2.77M [00:00&lt;?, ?B/s]
-100%|█████████████████████████████████████| 2.77M/2.77M [00:00&lt;00:00, 13.0GB/s]
 
-ExampleDataset-WithinSession: 100%|██████████| 3/3 [00:30&lt;00:00, 10.45s/it]
-ExampleDataset-WithinSession: 100%|██████████| 3/3 [00:30&lt;00:00, 10.31s/it]
+  0%|▏                                    | 12.3k/2.77M [00:00&lt;00:30, 91.4kB/s]
+
+  1%|▌                                     | 41.0k/2.77M [00:00&lt;00:15, 179kB/s]
+
+  4%|█▋                                     | 116k/2.77M [00:00&lt;00:06, 388kB/s]
+
+  7%|██▋                                    | 195k/2.77M [00:00&lt;00:05, 504kB/s]
+
+ 15%|█████▋                                | 414k/2.77M [00:00&lt;00:02, 1.01MB/s]
+
+ 31%|███████████▊                          | 856k/2.77M [00:00&lt;00:00, 1.97MB/s]
+
+ 63%|███████████████████████▎             | 1.74M/2.77M [00:00&lt;00:00, 3.84MB/s]
+
+  0%|                                              | 0.00/2.77M [00:00&lt;?, ?B/s]
+100%|█████████████████████████████████████| 2.77M/2.77M [00:00&lt;00:00, 8.23GB/s]
+
+ExampleDataset-WithinSession: 100%|██████████| 3/3 [00:30&lt;00:00, 10.33s/it]
+ExampleDataset-WithinSession: 100%|██████████| 3/3 [00:30&lt;00:00, 10.19s/it]
    score      time  ...  pipeline                  codecarbon_task_name
-0    1.0  0.017480  ...       MDM  133b50df-8aa8-4f18-a913-533b2be4d86a
-1    1.0  0.016631  ...       MDM  d0b212b1-7d23-4288-b47e-5a92c8be8139
-2    1.0  0.016667  ...       MDM  fea9fafb-56bd-41c8-8c5c-9d6d3129f7d9
+0    1.0  0.017066  ...       MDM  0cae0ccd-2494-4131-a4a0-81fc144b26c3
+1    1.0  0.017258  ...       MDM  f720fe40-e378-4f13-94db-37c7d2bd4210
+2    1.0  0.017420  ...       MDM  edfe19e1-7fed-4130-bd4b-999c77021d51
 
 [3 rows x 11 columns]
 </pre></div>
@@ -780,8 +779,8 @@ ExampleDataset-WithinSession: 100%|██████████| 3/3 [00:30&lt
 your data on public server (like Zenodo or Figshare) and signal that you
 want to add your dataset to MOABB in the  <a class="reference external" href="https://github.com/NeuroTechX/moabb/issues/1">dedicated issue</a>.
 You could then follow the instructions on <a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/master/CONTRIBUTING.md">how to contribute</a></p>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 33.424 seconds)</p>
-<p><strong>Estimated memory usage:</strong>  319 MB</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 33.107 seconds)</p>
+<p><strong>Estimated memory usage:</strong>  318 MB</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-tutorials-tutorial-4-adding-a-dataset-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/46d014244b321e934a890e079a5f0042/tutorial_4_adding_a_dataset.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">tutorial_4_adding_a_dataset.ipynb</span></code></a></p>

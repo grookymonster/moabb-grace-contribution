@@ -41,7 +41,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=32f982a3" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=f118ea32" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-2.0.4/b-3.0.2/b-html5-3.0.2/datatables.min.css" />
   
   <!-- So that users can add custom icons -->
@@ -295,10 +295,6 @@
     </div>
   
 
-  
-    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
-      <span class="fa-solid fa-outdent"></span>
-    </button>
   
 </div>
 
@@ -607,6 +603,11 @@
 <li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_CCA.html">moabb.pipelines.classification.SSVEP_CCA</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_TRCA.html">moabb.pipelines.classification.SSVEP_TRCA</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_MsetCCA.html">moabb.pipelines.classification.SSVEP_MsetCCA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_itCCA.html">moabb.pipelines.classification.SSVEP_itCCA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_eCCA.html">moabb.pipelines.classification.SSVEP_eCCA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_TRCA_R.html">moabb.pipelines.classification.SSVEP_TRCA_R</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_SSCOR.html">moabb.pipelines.classification.SSVEP_SSCOR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_TDCA.html">moabb.pipelines.classification.SSVEP_TDCA</a></li>
 </ul>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="moabb.analysis.plotting.score_plot.html">moabb.analysis.plotting.score_plot</a></li>
@@ -693,7 +694,301 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="moabb.datasets.BNCI2025_001">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">BNCI2025_001</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subjects</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sessions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bnci/bnci_2025.py#L190-L553"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BNCI2025_001" title="Link to this definition">#</a></dt>
-<dd><p>BNCI 2025-001 Motor Kinematics Reaching dataset.</p>
+<dd><div class="ds-card" role="region" aria-label="BNCI2025_001 dataset overview">
+  <a class="ds-card-source" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bnci/bnci_2025.py#L190-L553" target="_blank" rel="noopener">[source]</a>
+  <div class="ds-card-head">
+    <p class="ds-card-kicker">Dataset Snapshot</p>
+    <p class="ds-card-title">BNCI2025_001</p>
+    <p class="ds-subtitle">Motor Imagery, 16 classes</p>
+  </div>
+  <div class="ds-stats">
+      <span class="ds-chip" style="--chip-color: #1565C0">Motor Imagery</span>
+      <span class="ds-chip ds-chip-muted">Code: BNCI2025-001</span>
+      <span class="ds-chip ds-chip-muted">20 subjects</span>
+      <span class="ds-chip ds-chip-muted">1 session</span>
+      <span class="ds-chip ds-chip-muted">67 ch</span>
+      <span class="ds-chip ds-chip-muted">500 Hz</span>
+      <span class="ds-chip ds-chip-muted">16 classes</span>
+      <span class="ds-chip ds-chip-muted">4.0 s trials</span>
+  </div>
+  <p class="ds-class-line"><span class="ds-class-line-label">Class Labels:</span> up_slow_near, up_slow_far, up_fast_near, up_fast_far, down_slow_near, down_slow_far, down_fast_near, down_fast_far, ...</p>
+  <div class="ds-actions">
+      <button class="ds-btn ds-btn-primary ds-btn-toggle" type="button" aria-controls="ds-quickstart-bnci2025_001" aria-expanded="false" onclick="var el=document.getElementById('ds-quickstart-bnci2025_001');if(el){el.open=!el.open;this.setAttribute('aria-expanded',el.open?'true':'false');}">Quickstart</button>
+      <a class="ds-btn" href="https://doi.org/10.1088%2F1741-2552%2Fada0ea" target="_blank" rel="noopener">Read Paper</a>
+      <a class="ds-btn" href="../dataset_summary.html#motor-imagery">Compare Similar</a>
+      <a class="ds-btn" href="https://github.com/NeuroTechX/moabb/issues/new?title=%5BDataset%5D%20Issue%20with%20BNCI2025_001&amp;body=%23%23%20Dataset%0A%0A-%20%2A%2ADataset%20ID%3A%2A%2A%20BNCI2025_001%0A%0A%23%23%20Issue%20Description%0A%0APlease%20describe%20the%20issue%20you%20encountered%20with%20this%20dataset%3A%0A%0A%23%23%20Steps%20to%20Reproduce%0A%0A1.%20%0A2.%20%0A3.%20%0A%0A%23%23%20Expected%20Behavior%0A%0A%0A%23%23%20Additional%20Context%0A%0A&amp;labels=dataset" target="_blank" rel="noopener">Report Issue</a>
+  </div>
+  <details id="ds-quickstart-bnci2025_001" class="ds-quickstart">
+  <summary class="ds-quickstart-summary">Toggle quickstart code</summary>
+  <pre class="ds-quickstart-code"><code>from moabb.datasets import BNCI2025_001
+
+dataset = BNCI2025_001()
+data = dataset.get_data(subjects=[1])
+print(data[1])</code></pre>
+</details>
+
+  <div class="ds-citation-impact"><p class="ds-citation-title">Citation & Impact</p><ul><li><span>DOI</span><a href="https://doi.org/10.1088%2F1741-2552%2Fada0ea" target="_blank" rel="noopener">10.1088/1741-2552/ada0ea</a></li>
+      <li><span>Citations</span><strong class="ds-citation-count" data-doi="10.1088/1741-2552/ada0ea">Loading…</strong></li>
+      <li><span>Public API</span><span class="ds-citation-links"><a href="https://api.crossref.org/works/10.1088/1741-2552/ada0ea" target="_blank" rel="noopener">Crossref</a>&nbsp;|&nbsp;<a href="https://api.openalex.org/works/https%3A%2F%2Fdoi.org%2F10.1088%2F1741-2552%2Fada0ea" target="_blank" rel="noopener">OpenAlex</a></span></li>
+      <li><span>PapersWithCode</span><a href="https://paperswithcode.com/dataset/bnci2025-001-moabb-1" target="_blank" rel="noopener">Dataset page</a></li></ul>
+<script>
+(function () {
+  if (window.__moabbCitationCountsInit) return;
+  window.__moabbCitationCountsInit = true;
+
+  function fmt(value) {
+    return (typeof value === "number" && Number.isFinite(value))
+      ? value.toLocaleString()
+      : "N/A";
+  }
+
+  function setBoth(el, openalexCount, crossrefCount) {
+    el.textContent = "OpenAlex: " + fmt(openalexCount) + " | Crossref: " + fmt(crossrefCount);
+  }
+
+  async function fetchOpenAlex(doi) {
+    const id = encodeURIComponent("https://doi.org/" + doi);
+    const resp = await fetch("https://api.openalex.org/works/" + id);
+    if (!resp.ok) throw new Error("OpenAlex request failed");
+    const data = await resp.json();
+    return data && typeof data.cited_by_count === "number"
+      ? data.cited_by_count
+      : null;
+  }
+
+  async function fetchCrossref(doi) {
+    const resp = await fetch("https://api.crossref.org/works/" + encodeURIComponent(doi));
+    if (!resp.ok) throw new Error("Crossref request failed");
+    const data = await resp.json();
+    const count = data && data.message ? data.message["is-referenced-by-count"] : null;
+    return typeof count === "number" ? count : null;
+  }
+
+  document.querySelectorAll(".ds-citation-count[data-doi]").forEach(async function (el) {
+    const doi = (el.getAttribute("data-doi") || "").trim();
+    if (!doi) {
+      setBoth(el, null, null);
+      return;
+    }
+    const [oaRes, crRes] = await Promise.allSettled([
+      fetchOpenAlex(doi),
+      fetchCrossref(doi),
+    ]);
+    const oa = oaRes.status === "fulfilled" ? oaRes.value : null;
+    const cr = crRes.status === "fulfilled" ? crRes.value : null;
+    setBoth(el, oa, cr);
+  });
+})();
+</script>
+</div>
+  <div class="ds-caveats"><p class="ds-caveats-title">Known Caveats</p><ul><li>Single-session recordings</li>
+      <li>Custom montage (non-10-05)</li>
+      <li>16-class paradigm increases task complexity</li>
+      <li>Competition dataset in controlled lab conditions</li></ul></div>
+</div><div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-2 sd-row-cols-xs-2 sd-row-cols-sm-2 sd-row-cols-md-2 sd-row-cols-lg-2 sd-g-3 sd-g-xs-3 sd-g-sm-3 sd-g-md-3 sd-g-lg-3 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm ds-viz-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+HED Event Tags</div>
+<div class="ds-hed-card"><div class="ds-hed-head"><span class="ds-hed-pill">HED tags</span><span class="ds-hed-meta">16/16 events annotated</span></div><p class="ds-hed-source">Source: MOABB BIDS HED annotation mapping.</p><div class="ds-hed-bars"><div class="ds-hed-bar-row"><span class="ds-hed-bar-label">Cue</span><div class="ds-hed-bar"><i style="width:100%"></i></div><strong>16</strong></div><div class="ds-hed-bar-row"><span class="ds-hed-bar-label">Experimental-stimulus</span><div class="ds-hed-bar"><i style="width:100%"></i></div><strong>16</strong></div><div class="ds-hed-bar-row"><span class="ds-hed-bar-label">Reach</span><div class="ds-hed-bar"><i style="width:100%"></i></div><strong>16</strong></div><div class="ds-hed-bar-row"><span class="ds-hed-bar-label">Sensory-event</span><div class="ds-hed-bar"><i style="width:100%"></i></div><strong>16</strong></div></div><div class="ds-hed-events"><div class="ds-hed-event-row"><span class="ds-hed-event-name">up_slow_near</span><div class="ds-hed-chip-wrap" title="Sensory-event, Experimental-stimulus, Cue, (Reach, Upward, (Label/slow), (Label/near))"><span class="ds-hed-chip">Sensory-event</span><span class="ds-hed-chip">Experimental-stimulus</span><span class="ds-hed-chip">Cue</span><span class="ds-hed-chip">Reach</span></div></div><div class="ds-hed-event-row"><span class="ds-hed-event-name">up_slow_far</span><div class="ds-hed-chip-wrap" title="Sensory-event, Experimental-stimulus, Cue, (Reach, Upward, (Label/slow), (Label/far))"><span class="ds-hed-chip">Sensory-event</span><span class="ds-hed-chip">Experimental-stimulus</span><span class="ds-hed-chip">Cue</span><span class="ds-hed-chip">Reach</span></div></div><div class="ds-hed-event-row"><span class="ds-hed-event-name">up_fast_near</span><div class="ds-hed-chip-wrap" title="Sensory-event, Experimental-stimulus, Cue, (Reach, Upward, (Label/fast), (Label/near))"><span class="ds-hed-chip">Sensory-event</span><span class="ds-hed-chip">Experimental-stimulus</span><span class="ds-hed-chip">Cue</span><span class="ds-hed-chip">Reach</span></div></div><div class="ds-hed-event-row"><span class="ds-hed-event-name">up_fast_far</span><div class="ds-hed-chip-wrap" title="Sensory-event, Experimental-stimulus, Cue, (Reach, Upward, (Label/fast), (Label/far))"><span class="ds-hed-chip">Sensory-event</span><span class="ds-hed-chip">Experimental-stimulus</span><span class="ds-hed-chip">Cue</span><span class="ds-hed-chip">Reach</span></div></div><div class="ds-hed-event-row"><span class="ds-hed-event-name">down_slow_near</span><div class="ds-hed-chip-wrap" title="Sensory-event, Experimental-stimulus, Cue, (Reach, Downward, (Label/slow), (Label/near))"><span class="ds-hed-chip">Sensory-event</span><span class="ds-hed-chip">Experimental-stimulus</span><span class="ds-hed-chip">Cue</span><span class="ds-hed-chip">Reach</span></div></div><div class="ds-hed-event-row"><span class="ds-hed-event-name">down_slow_far</span><div class="ds-hed-chip-wrap" title="Sensory-event, Experimental-stimulus, Cue, (Reach, Downward, (Label/slow), (Label/far))"><span class="ds-hed-chip">Sensory-event</span><span class="ds-hed-chip">Experimental-stimulus</span><span class="ds-hed-chip">Cue</span><span class="ds-hed-chip">Reach</span></div></div><div class="ds-hed-event-row"><span class="ds-hed-event-name">down_fast_near</span><div class="ds-hed-chip-wrap" title="Sensory-event, Experimental-stimulus, Cue, (Reach, Downward, (Label/fast), (Label/near))"><span class="ds-hed-chip">Sensory-event</span><span class="ds-hed-chip">Experimental-stimulus</span><span class="ds-hed-chip">Cue</span><span class="ds-hed-chip">Reach</span></div></div><div class="ds-hed-event-row"><span class="ds-hed-event-name">down_fast_far</span><div class="ds-hed-chip-wrap" title="Sensory-event, Experimental-stimulus, Cue, (Reach, Downward, (Label/fast), (Label/far))"><span class="ds-hed-chip">Sensory-event</span><span class="ds-hed-chip">Experimental-stimulus</span><span class="ds-hed-chip">Cue</span><span class="ds-hed-chip">Reach</span></div></div><div class="ds-hed-event-row"><span class="ds-hed-event-name">left_slow_near</span><div class="ds-hed-chip-wrap" title="Sensory-event, Experimental-stimulus, Cue, (Reach, Left, (Label/slow), (Label/near))"><span class="ds-hed-chip">Sensory-event</span><span class="ds-hed-chip">Experimental-stimulus</span><span class="ds-hed-chip">Cue</span><span class="ds-hed-chip">Reach</span></div></div><div class="ds-hed-event-row"><span class="ds-hed-event-name">left_slow_far</span><div class="ds-hed-chip-wrap" title="Sensory-event, Experimental-stimulus, Cue, (Reach, Left, (Label/slow), (Label/far))"><span class="ds-hed-chip">Sensory-event</span><span class="ds-hed-chip">Experimental-stimulus</span><span class="ds-hed-chip">Cue</span><span class="ds-hed-chip">Reach</span></div></div><div class="ds-hed-event-row"><span class="ds-hed-event-name">left_fast_near</span><div class="ds-hed-chip-wrap" title="Sensory-event, Experimental-stimulus, Cue, (Reach, Left, (Label/fast), (Label/near))"><span class="ds-hed-chip">Sensory-event</span><span class="ds-hed-chip">Experimental-stimulus</span><span class="ds-hed-chip">Cue</span><span class="ds-hed-chip">Reach</span></div></div><div class="ds-hed-event-row"><span class="ds-hed-event-name">left_fast_far</span><div class="ds-hed-chip-wrap" title="Sensory-event, Experimental-stimulus, Cue, (Reach, Left, (Label/fast), (Label/far))"><span class="ds-hed-chip">Sensory-event</span><span class="ds-hed-chip">Experimental-stimulus</span><span class="ds-hed-chip">Cue</span><span class="ds-hed-chip">Reach</span></div></div><div class="ds-hed-event-row"><span class="ds-hed-event-name">right_slow_near</span><div class="ds-hed-chip-wrap" title="Sensory-event, Experimental-stimulus, Cue, (Reach, Right, (Label/slow), (Label/near))"><span class="ds-hed-chip">Sensory-event</span><span class="ds-hed-chip">Experimental-stimulus</span><span class="ds-hed-chip">Cue</span><span class="ds-hed-chip">Reach</span></div></div><div class="ds-hed-event-row"><span class="ds-hed-event-name">right_slow_far</span><div class="ds-hed-chip-wrap" title="Sensory-event, Experimental-stimulus, Cue, (Reach, Right, (Label/slow), (Label/far))"><span class="ds-hed-chip">Sensory-event</span><span class="ds-hed-chip">Experimental-stimulus</span><span class="ds-hed-chip">Cue</span><span class="ds-hed-chip">Reach</span></div></div><div class="ds-hed-event-row"><span class="ds-hed-event-name">right_fast_near</span><div class="ds-hed-chip-wrap" title="Sensory-event, Experimental-stimulus, Cue, (Reach, Right, (Label/fast), (Label/near))"><span class="ds-hed-chip">Sensory-event</span><span class="ds-hed-chip">Experimental-stimulus</span><span class="ds-hed-chip">Cue</span><span class="ds-hed-chip">Reach</span></div></div><div class="ds-hed-event-row"><span class="ds-hed-event-name">right_fast_far</span><div class="ds-hed-chip-wrap" title="Sensory-event, Experimental-stimulus, Cue, (Reach, Right, (Label/fast), (Label/far))"><span class="ds-hed-chip">Sensory-event</span><span class="ds-hed-chip">Experimental-stimulus</span><span class="ds-hed-chip">Cue</span><span class="ds-hed-chip">Reach</span></div></div></div><div class="ds-hed-tree-block"><p class="ds-hed-tree-title">HED tree view</p><details class="ds-hed-tree-item"><summary class="ds-hed-tree-summary">Tree · up_slow_near</summary><pre class="ds-hed-tree-pre">├─ Sensory-event
+├─ Experimental-stimulus
+├─ Cue
+└─ Reach
+   ├─ Upward
+   ├─ Label
+   └─ Label</pre></details><details class="ds-hed-tree-item"><summary class="ds-hed-tree-summary">Tree · up_slow_far</summary><pre class="ds-hed-tree-pre">├─ Sensory-event
+├─ Experimental-stimulus
+├─ Cue
+└─ Reach
+   ├─ Upward
+   ├─ Label
+   └─ Label</pre></details><details class="ds-hed-tree-item"><summary class="ds-hed-tree-summary">Tree · up_fast_near</summary><pre class="ds-hed-tree-pre">├─ Sensory-event
+├─ Experimental-stimulus
+├─ Cue
+└─ Reach
+   ├─ Upward
+   ├─ Label
+   └─ Label</pre></details><details class="ds-hed-tree-item"><summary class="ds-hed-tree-summary">Tree · up_fast_far</summary><pre class="ds-hed-tree-pre">├─ Sensory-event
+├─ Experimental-stimulus
+├─ Cue
+└─ Reach
+   ├─ Upward
+   ├─ Label
+   └─ Label</pre></details><details class="ds-hed-tree-item"><summary class="ds-hed-tree-summary">Tree · down_slow_near</summary><pre class="ds-hed-tree-pre">├─ Sensory-event
+├─ Experimental-stimulus
+├─ Cue
+└─ Reach
+   ├─ Downward
+   ├─ Label
+   └─ Label</pre></details><details class="ds-hed-tree-item"><summary class="ds-hed-tree-summary">Tree · down_slow_far</summary><pre class="ds-hed-tree-pre">├─ Sensory-event
+├─ Experimental-stimulus
+├─ Cue
+└─ Reach
+   ├─ Downward
+   ├─ Label
+   └─ Label</pre></details><details class="ds-hed-tree-item"><summary class="ds-hed-tree-summary">Tree · down_fast_near</summary><pre class="ds-hed-tree-pre">├─ Sensory-event
+├─ Experimental-stimulus
+├─ Cue
+└─ Reach
+   ├─ Downward
+   ├─ Label
+   └─ Label</pre></details><details class="ds-hed-tree-item"><summary class="ds-hed-tree-summary">Tree · down_fast_far</summary><pre class="ds-hed-tree-pre">├─ Sensory-event
+├─ Experimental-stimulus
+├─ Cue
+└─ Reach
+   ├─ Downward
+   ├─ Label
+   └─ Label</pre></details><details class="ds-hed-tree-item"><summary class="ds-hed-tree-summary">Tree · left_slow_near</summary><pre class="ds-hed-tree-pre">├─ Sensory-event
+├─ Experimental-stimulus
+├─ Cue
+└─ Reach
+   ├─ Left
+   ├─ Label
+   └─ Label</pre></details><details class="ds-hed-tree-item"><summary class="ds-hed-tree-summary">Tree · left_slow_far</summary><pre class="ds-hed-tree-pre">├─ Sensory-event
+├─ Experimental-stimulus
+├─ Cue
+└─ Reach
+   ├─ Left
+   ├─ Label
+   └─ Label</pre></details><details class="ds-hed-tree-item"><summary class="ds-hed-tree-summary">Tree · left_fast_near</summary><pre class="ds-hed-tree-pre">├─ Sensory-event
+├─ Experimental-stimulus
+├─ Cue
+└─ Reach
+   ├─ Left
+   ├─ Label
+   └─ Label</pre></details><details class="ds-hed-tree-item"><summary class="ds-hed-tree-summary">Tree · left_fast_far</summary><pre class="ds-hed-tree-pre">├─ Sensory-event
+├─ Experimental-stimulus
+├─ Cue
+└─ Reach
+   ├─ Left
+   ├─ Label
+   └─ Label</pre></details><details class="ds-hed-tree-item"><summary class="ds-hed-tree-summary">Tree · right_slow_near</summary><pre class="ds-hed-tree-pre">├─ Sensory-event
+├─ Experimental-stimulus
+├─ Cue
+└─ Reach
+   ├─ Right
+   ├─ Label
+   └─ Label</pre></details><details class="ds-hed-tree-item"><summary class="ds-hed-tree-summary">Tree · right_slow_far</summary><pre class="ds-hed-tree-pre">├─ Sensory-event
+├─ Experimental-stimulus
+├─ Cue
+└─ Reach
+   ├─ Right
+   ├─ Label
+   └─ Label</pre></details><details class="ds-hed-tree-item"><summary class="ds-hed-tree-summary">Tree · right_fast_near</summary><pre class="ds-hed-tree-pre">├─ Sensory-event
+├─ Experimental-stimulus
+├─ Cue
+└─ Reach
+   ├─ Right
+   ├─ Label
+   └─ Label</pre></details><details class="ds-hed-tree-item"><summary class="ds-hed-tree-summary">Tree · right_fast_far</summary><pre class="ds-hed-tree-pre">├─ Sensory-event
+├─ Experimental-stimulus
+├─ Cue
+└─ Reach
+   ├─ Right
+   ├─ Label
+   └─ Label</pre></details></div></div></div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm ds-viz-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Channel Summary</div>
+<div class="ds-channel-card"><div class="ds-channel-row"><span>Total channels</span><strong>67</strong></div>
+<div class="ds-channel-row"><span>EEG</span><strong>67 (EEG)</strong></div>
+<div class="ds-channel-row"><span>EOG</span><strong>4</strong></div>
+<div class="ds-channel-row"><span>Montage</span><strong>af7 af3 afz af4 af8 f7 f5 f3 f1 fz f2 f4 f6 f8 ft7 fc5 fc3 fc1 fcz fc2 fc4 fc6 ft8 t7 c5 c3 c1 cz c2 c4 c6 t8 tp7 cp5 cp3 cp1 cpz cp2 cp4 cp6 tp8 p7 p5 p3 p1 pz p2 p4 p6 p8 ppo1h ppo2h po7 po3 poz po4 po8 o1 oz o2</strong></div>
+<div class="ds-channel-row"><span>Sampling</span><strong>500 Hz</strong></div>
+<div class="ds-channel-row"><span>Reference</span><strong>common average</strong></div>
+<div class="ds-channel-row"><span>Filter</span><strong>50 Hz notch</strong></div>
+<div class="ds-channel-row"><span>Notch / line</span><strong>50 Hz</strong></div></div></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-0">
+Overview</label><div class="sd-tab-content docutils">
+<p>BNCI 2025-001 Motor Kinematics Reaching dataset.</p>
+<p>Dataset from Srisrisawang &amp; Muller-Putz (2024) <a class="reference internal" href="#rd1fa27d43a34-1" id="id1">[1]</a>.</p>
+<p><strong>Dataset Description</strong></p>
+<p>This dataset investigates how the brain simultaneously encodes multiple
+kinematic parameters (speed, distance, and direction) during discrete
+reaching movements. Participants performed a four-direction center-out
+reaching task with varying speeds (quick/slow) and distances (near/far).</p>
+<p>The dataset provides insight into movement planning and execution
+processes as measured through EEG, enabling research on brain-computer
+interfaces for motor control and neurorehabilitation applications.</p>
+<p><strong>Participants</strong></p>
+<ul class="simple">
+<li><p>20 healthy subjects (12 male, 8 female)</p></li>
+<li><p>Age: 26.1 +/- 4.1 years</p></li>
+<li><p>Handedness: 17 right-handed, 3 left-handed (all used right hand)</p></li>
+<li><p>Location: Institute of Neural Engineering, Graz University of
+Technology, Austria</p></li>
+</ul>
+<p><strong>Recording Details</strong></p>
+<ul class="simple">
+<li><p>Equipment: BrainAmp (Brain Products GmbH)</p></li>
+<li><p>Channels: 60 EEG + 4 EOG = 64 total channels</p></li>
+<li><p>Sampling rate: 500 Hz</p></li>
+<li><p>Reference: Common average reference (CAR) across 55 channels</p></li>
+<li><p>EOG placement: Outer canthi, above/below left eye</p></li>
+<li><p>Electrode positions: Measured with ultrasonic device (ELPOS, Zebris)</p></li>
+</ul>
+<p><strong>Experimental Procedure</strong></p>
+<ul class="simple">
+<li><p>4-direction center-out reaching task</p></li>
+<li><p>2 speed levels: slow, quick</p></li>
+<li><p>2 distance levels: near, far</p></li>
+<li><p>16 conditions total (4 directions x 2 speeds x 2 distances)</p></li>
+<li><p>~60 trials per condition (~960 total per subject)</p></li>
+<li><dl class="simple">
+<dt>Trial structure:</dt><dd><ul>
+<li><p>1 s preparation period</p></li>
+<li><p>Cue movement (0.4-2.4 s depending on condition)</p></li>
+<li><p>&gt;= 1 s waiting period</p></li>
+<li><p>Movement execution</p></li>
+<li><p>1 s feedback display</p></li>
+<li><p>2 s intertrial interval</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<p><strong>Event Codes</strong></p>
+<p>Events encode the combination of direction, speed, and distance:
+- up_slow_near (1), up_slow_far (2), up_fast_near (3), up_fast_far (4)
+- down_slow_near (5), down_slow_far (6), down_fast_near (7), down_fast_far (8)
+- left_slow_near (9), left_slow_far (10), left_fast_near (11), left_fast_far (12)
+- right_slow_near (13), right_slow_far (14), right_fast_near (15), right_fast_far (16)</p>
+<p class="rubric">References</p>
+<div role="list" class="citation-list">
+<div class="citation" id="rd1fa27d43a34-1" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Srisrisawang, N., &amp; Muller-Putz, G. R. (2024). Simultaneous encoding
+of speed, distance, and direction in discrete reaching: an EEG study.
+Journal of Neural Engineering, 21(6).
+<a class="reference external" href="https://doi.org/10.1088/1741-2552/ada0ea">https://doi.org/10.1088/1741-2552/ada0ea</a></p>
+</div>
+</div>
+</div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-1">
+Code Examples</label><div class="sd-tab-content docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">moabb.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">BNCI2025_001</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">BNCI2025_001</span><span class="p">()</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="n">subjects</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-2" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-2">
+Metadata</label><div class="sd-tab-content docutils">
 <div class="admonition-dataset-summary admonition">
 <p class="admonition-title">Dataset summary</p>
 <div class="pst-scrollable-table-container"><table class="table">
@@ -774,74 +1069,10 @@
 <li><p><strong>Stimulus</strong>: visual cue</p></li>
 </ul>
 </div>
-<div class="tip admonition">
-<p class="admonition-title">Found an issue with this dataset?</p>
-<p>If you encounter any problems with this dataset (missing files,
-incorrect metadata, loading errors, etc.), please let us know!</p>
-<p><a class="sd-sphinx-override sd-btn sd-text-wrap sd-btn-outline-primary reference external" href="https://github.com/NeuroTechX/moabb/issues/new?title=%5BDataset%5D%20Issue%20with%20BNCI2025_001&amp;body=%23%23%20Dataset%0A%0A-%20%2A%2ADataset%20ID%3A%2A%2A%20BNCI2025_001%0A%0A%23%23%20Issue%20Description%0A%0APlease%20describe%20the%20issue%20you%20encountered%20with%20this%20dataset%3A%0A%0A%23%23%20Steps%20to%20Reproduce%0A%0A1.%20%0A2.%20%0A3.%20%0A%0A%23%23%20Expected%20Behavior%0A%0A%0A%23%23%20Additional%20Context%0A%0A&amp;labels=dataset"><span>Report an Issue on GitHub</span></a></p>
 </div>
-<p>Dataset from Srisrisawang &amp; Muller-Putz (2024) <a class="reference internal" href="#rd1fa27d43a34-1" id="id1">[1]</a>.</p>
-<p><strong>Dataset Description</strong></p>
-<p>This dataset investigates how the brain simultaneously encodes multiple
-kinematic parameters (speed, distance, and direction) during discrete
-reaching movements. Participants performed a four-direction center-out
-reaching task with varying speeds (quick/slow) and distances (near/far).</p>
-<p>The dataset provides insight into movement planning and execution
-processes as measured through EEG, enabling research on brain-computer
-interfaces for motor control and neurorehabilitation applications.</p>
-<p><strong>Participants</strong></p>
-<ul class="simple">
-<li><p>20 healthy subjects (12 male, 8 female)</p></li>
-<li><p>Age: 26.1 +/- 4.1 years</p></li>
-<li><p>Handedness: 17 right-handed, 3 left-handed (all used right hand)</p></li>
-<li><p>Location: Institute of Neural Engineering, Graz University of
-Technology, Austria</p></li>
-</ul>
-<p><strong>Recording Details</strong></p>
-<ul class="simple">
-<li><p>Equipment: BrainAmp (Brain Products GmbH)</p></li>
-<li><p>Channels: 60 EEG + 4 EOG = 64 total channels</p></li>
-<li><p>Sampling rate: 500 Hz</p></li>
-<li><p>Reference: Common average reference (CAR) across 55 channels</p></li>
-<li><p>EOG placement: Outer canthi, above/below left eye</p></li>
-<li><p>Electrode positions: Measured with ultrasonic device (ELPOS, Zebris)</p></li>
-</ul>
-<p><strong>Experimental Procedure</strong></p>
-<ul class="simple">
-<li><p>4-direction center-out reaching task</p></li>
-<li><p>2 speed levels: slow, quick</p></li>
-<li><p>2 distance levels: near, far</p></li>
-<li><p>16 conditions total (4 directions x 2 speeds x 2 distances)</p></li>
-<li><p>~60 trials per condition (~960 total per subject)</p></li>
-<li><dl class="simple">
-<dt>Trial structure:</dt><dd><ul>
-<li><p>1 s preparation period</p></li>
-<li><p>Cue movement (0.4-2.4 s depending on condition)</p></li>
-<li><p>&gt;= 1 s waiting period</p></li>
-<li><p>Movement execution</p></li>
-<li><p>1 s feedback display</p></li>
-<li><p>2 s intertrial interval</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-<p><strong>Event Codes</strong></p>
-<p>Events encode the combination of direction, speed, and distance:
-- up_slow_near (1), up_slow_far (2), up_fast_near (3), up_fast_far (4)
-- down_slow_near (5), down_slow_far (6), down_fast_near (7), down_fast_far (8)
-- left_slow_near (9), left_slow_far (10), left_fast_near (11), left_fast_far (12)
-- right_slow_near (13), right_slow_far (14), right_fast_near (15), right_fast_far (16)</p>
-<p class="rubric">References</p>
-<div role="list" class="citation-list">
-<div class="citation" id="rd1fa27d43a34-1" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
-<p>Srisrisawang, N., &amp; Muller-Putz, G. R. (2024). Simultaneous encoding
-of speed, distance, and direction in discrete reaching: an EEG study.
-Journal of Neural Engineering, 21(6).
-<a class="reference external" href="https://doi.org/10.1088/1741-2552/ada0ea">https://doi.org/10.1088/1741-2552/ada0ea</a></p>
-</div>
-</div>
+<input id="sd-tab-item-3" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-3">
+Notes</label><div class="sd-tab-content docutils">
 <p class="rubric">Notes</p>
 <div class="versionadded">
 <p><span class="versionmodified added">Added in version 1.3.0.</span></p>
@@ -852,6 +1083,14 @@ simultaneously in EEG activity. The paradigm uses movement execution
 rather than motor imagery, making it complementary to MI datasets.</p>
 <p>The data is compatible with the MOABB motor imagery paradigm for
 processing purposes, though the underlying task is movement execution.</p>
+</div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="moabb.datasets.BNCI2025_001.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subjects</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sessions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bnci/bnci_2025.py#L523-L553"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BNCI2025_001.__init__" title="Link to this definition">#</a></dt>
+<dd><p>Initialize function for the BaseDataset.</p>
+</dd></dl>
+
 </dd></dl>
 
 <div style='clear:both'></div></section>
@@ -890,24 +1129,6 @@ processing purposes, though the underlying task is movement execution.</p>
             </div>
             
             
-              
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-<div
-    id="pst-page-navigation-heading-2"
-    class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> On this page
-  </div>
-  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#moabb.datasets.BNCI2025_001"><code class="docutils literal notranslate"><span class="pre">BNCI2025_001</span></code></a></li>
-</ul>
-  </nav></div>
-
-</div></div>
               
             
           </div>

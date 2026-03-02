@@ -41,7 +41,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=32f982a3" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=f118ea32" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-2.0.4/b-3.0.2/b-html5-3.0.2/datatables.min.css" />
   
   <!-- So that users can add custom icons -->
@@ -607,6 +607,11 @@
 <li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_CCA.html">moabb.pipelines.classification.SSVEP_CCA</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_TRCA.html">moabb.pipelines.classification.SSVEP_TRCA</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_MsetCCA.html">moabb.pipelines.classification.SSVEP_MsetCCA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_itCCA.html">moabb.pipelines.classification.SSVEP_itCCA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_eCCA.html">moabb.pipelines.classification.SSVEP_eCCA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_TRCA_R.html">moabb.pipelines.classification.SSVEP_TRCA_R</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_SSCOR.html">moabb.pipelines.classification.SSVEP_SSCOR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_TDCA.html">moabb.pipelines.classification.SSVEP_TDCA</a></li>
 </ul>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="moabb.analysis.plotting.score_plot.html">moabb.analysis.plotting.score_plot</a></li>
@@ -715,10 +720,7 @@ sklearn scorer.</p>
 
 <section id="examples-using-moabb-paradigms-base-baseparadigm">
 <h2>Examples using <code class="docutils literal notranslate"><span class="pre">moabb.paradigms.base.BaseParadigm</span></code><a class="headerlink" href="#examples-using-moabb-paradigms-base-baseparadigm" title="Link to this heading">#</a></h2>
-<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This example shows how to perform a pseudo-online motor imagery evaluation using sliding window overlap. The overlap parameter in the paradigm generates overlapping epochs from the original trials, simulating an online BCI scenario."><img alt="" src="../_images/sphx_glr_plot_pseudoonline_thumb.png" />
-<p><a class="reference internal" href="../auto_examples/plot_pseudoonline.html"><span class="doc">Pseudo-Online Motor Imagery with Sliding Window</span></a></p>
-  <div class="sphx-glr-thumbnail-title">Pseudo-Online Motor Imagery with Sliding Window</div>
-</div><div class="sphx-glr-thumbcontainer" tooltip="This tutorial takes you through a basic working example of how to use this codebase, including all the different components, up to the results generation. If you&#x27;d like to know about the statistics and plotting, see the next tutorial."><img alt="" src="../_images/sphx_glr_tutorial_0_plot_getting_started_thumb.png" />
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This tutorial takes you through a basic working example of how to use this codebase, including all the different components, up to the results generation. If you&#x27;d like to know about the statistics and plotting, see the next tutorial."><img alt="" src="../_images/sphx_glr_tutorial_0_plot_getting_started_thumb.png" />
 <p><a class="reference internal" href="../auto_examples/tutorials/tutorial_0_plot_getting_started.html"><span class="doc">Tutorial 0: Getting Started</span></a></p>
   <div class="sphx-glr-thumbnail-title">Tutorial 0: Getting Started</div>
 </div><div class="sphx-glr-thumbcontainer" tooltip="In this example, we will go through all the steps to make a simple BCI classification task, downloading a dataset and using a standard classifier. We choose the dataset 2a from BCI Competition IV, a motor imagery task. We will use a CSP to enhance the signal-to-noise ratio of the EEG epochs and a LDA to classify these signals."><img alt="" src="../_images/sphx_glr_tutorial_1_simple_example_motor_imagery_thumb.png" />
@@ -790,12 +792,18 @@ sklearn scorer.</p>
 </div><div class="sphx-glr-thumbcontainer" tooltip="Behind the curtains, these steps are defined in a scikit-learn Pipeline. This pipeline receives raw signals and applies various signal processing steps to construct the final array object and class labels, which will be used to train and evaluate the classifiers."><img alt="" src="../_images/sphx_glr_plot_pre_processing_steps_thumb.png" />
 <p><a class="reference internal" href="../auto_examples/advanced_examples/plot_pre_processing_steps.html"><span class="doc">Playing with the pre-processing steps</span></a></p>
   <div class="sphx-glr-thumbnail-title">Playing with the pre-processing steps</div>
+</div><div class="sphx-glr-thumbcontainer" tooltip="This example shows how to perform a pseudo-online motor imagery evaluation using sliding window overlap. The overlap parameter in the paradigm generates overlapping epochs from the original trials, simulating an online BCI scenario."><img alt="" src="../_images/sphx_glr_plot_pseudoonline_thumb.png" />
+<p><a class="reference internal" href="../auto_examples/advanced_examples/plot_pseudoonline.html"><span class="doc">Pseudo-Online Motor Imagery with Sliding Window</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Pseudo-Online Motor Imagery with Sliding Window</div>
 </div><div class="sphx-glr-thumbcontainer" tooltip="Electroencephalography (EEG) signal cleaning has long been a critical challenge in the research community. The presence of artifacts can significantly degrade EEG data quality, complicating analysis and potentially leading to erroneous interpretations. These artifacts are broadly categorized as either endogenous (biological: ocular, myogenic, cardiac) or exogenous (environmental, instrumental). As noted in [3]_, manual annotation of artifacts is time-consuming, subjective, and impractical for large-scale EEG studies."><img alt="" src="../_images/sphx_glr_plot_riemannian_artifact_rejection_thumb.png" />
 <p><a class="reference internal" href="../auto_examples/advanced_examples/plot_riemannian_artifact_rejection.html"><span class="doc">Riemannian Artifact Rejection as a Pre-processing Step</span></a></p>
   <div class="sphx-glr-thumbnail-title">Riemannian Artifact Rejection as a Pre-processing Step</div>
 </div><div class="sphx-glr-thumbcontainer" tooltip="Within paradigm, it is possible to restrict analysis only to a subset of electrodes and to resample to a specific sampling rate. There is also a utility function to select common electrodes shared between datasets. This tutorial demonstrates how to use this functionality."><img alt="" src="../_images/sphx_glr_plot_select_electrodes_resample_thumb.png" />
 <p><a class="reference internal" href="../auto_examples/advanced_examples/plot_select_electrodes_resample.html"><span class="doc">Select Electrodes and Resampling</span></a></p>
   <div class="sphx-glr-thumbnail-title">Select Electrodes and Resampling</div>
+</div><div class="sphx-glr-thumbcontainer" tooltip="This example shows how to perform time-resolved decoding of EEG signals using mne.decoding.SlidingEstimator. Instead of reducing the entire trial to a single score, a SlidingEstimator fits an independent classifier at each time point, revealing when during a trial the neural signal carries information about the mental state."><img alt="" src="../_images/sphx_glr_plot_sliding_estimator_thumb.png" />
+<p><a class="reference internal" href="../auto_examples/advanced_examples/plot_sliding_estimator.html"><span class="doc">Time-Resolved Decoding with SlidingEstimator</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Time-Resolved Decoding with SlidingEstimator</div>
 </div><div class="sphx-glr-thumbcontainer" tooltip="The MOABB codebase comes with convenience plotting utilities and some statistical testing. This tutorial focuses on what those exactly are and how they can be used."><img alt="" src="../_images/sphx_glr_plot_statistical_analysis_thumb.png" />
 <p><a class="reference internal" href="../auto_examples/advanced_examples/plot_statistical_analysis.html"><span class="doc">Statistical Analysis</span></a></p>
   <div class="sphx-glr-thumbnail-title">Statistical Analysis</div>

@@ -41,7 +41,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=32f982a3" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=f118ea32" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-2.0.4/b-3.0.2/b-html5-3.0.2/datatables.min.css" />
   
   <!-- So that users can add custom icons -->
@@ -607,6 +607,11 @@
 <li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_CCA.html">moabb.pipelines.classification.SSVEP_CCA</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_TRCA.html">moabb.pipelines.classification.SSVEP_TRCA</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_MsetCCA.html">moabb.pipelines.classification.SSVEP_MsetCCA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_itCCA.html">moabb.pipelines.classification.SSVEP_itCCA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_eCCA.html">moabb.pipelines.classification.SSVEP_eCCA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_TRCA_R.html">moabb.pipelines.classification.SSVEP_TRCA_R</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_SSCOR.html">moabb.pipelines.classification.SSVEP_SSCOR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_TDCA.html">moabb.pipelines.classification.SSVEP_TDCA</a></li>
 </ul>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="moabb.analysis.plotting.score_plot.html">moabb.analysis.plotting.score_plot</a></li>
@@ -742,10 +747,7 @@ sklearn scorer.</p>
 
 <section id="examples-using-moabb-paradigms-motorimagery">
 <h2>Examples using <code class="docutils literal notranslate"><span class="pre">moabb.paradigms.MotorImagery</span></code><a class="headerlink" href="#examples-using-moabb-paradigms-motorimagery" title="Link to this heading">#</a></h2>
-<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This example shows how to perform a pseudo-online motor imagery evaluation using sliding window overlap. The overlap parameter in the paradigm generates overlapping epochs from the original trials, simulating an online BCI scenario."><img alt="" src="../_images/sphx_glr_plot_pseudoonline_thumb.png" />
-<p><a class="reference internal" href="../auto_examples/plot_pseudoonline.html"><span class="doc">Pseudo-Online Motor Imagery with Sliding Window</span></a></p>
-  <div class="sphx-glr-thumbnail-title">Pseudo-Online Motor Imagery with Sliding Window</div>
-</div><div class="sphx-glr-thumbcontainer" tooltip="A paradigm defines how the raw data will be converted to trials ready to be processed by a decoding algorithm. This is a function of the paradigm used, i.e. in motor imagery one can have two-class, multi-class, or continuous paradigms; similarly, different preprocessing is necessary for ERP vs ERD paradigms."><img alt="" src="../_images/sphx_glr_plot_explore_paradigm_thumb.png" />
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="A paradigm defines how the raw data will be converted to trials ready to be processed by a decoding algorithm. This is a function of the paradigm used, i.e. in motor imagery one can have two-class, multi-class, or continuous paradigms; similarly, different preprocessing is necessary for ERP vs ERD paradigms."><img alt="" src="../_images/sphx_glr_plot_explore_paradigm_thumb.png" />
 <p><a class="reference internal" href="../auto_examples/data_management_and_configuration/plot_explore_paradigm.html"><span class="doc">Explore Paradigm Object</span></a></p>
   <div class="sphx-glr-thumbnail-title">Explore Paradigm Object</div>
 </div><div class="sphx-glr-thumbcontainer" tooltip="This example shows how to process a dataset using the moabb.paradigms.FixedIntervalWindowsProcessing paradigm. This paradigm creates epochs at fixed intervals, ignoring the stim channel and events of the datasets. Therefore, it is compatible with all the datasets. Unfortunately, this paradigm is not compatible with the MOABB evaluation framework. However, it can be used to process datasets for unsupervised algorithms."><img alt="" src="../_images/sphx_glr_plot_fixed_interval_windows_thumb.png" />
@@ -757,6 +759,9 @@ sklearn scorer.</p>
 </div><div class="sphx-glr-thumbcontainer" tooltip="This example demonstrates how to make a model selection in pipelines for finding the best model parameter, using grid search. Two models are compared, one &quot;vanilla&quot; model with model tuned via grid search."><img alt="" src="../_images/sphx_glr_plot_grid_search_withinsession_thumb.png" />
 <p><a class="reference internal" href="../auto_examples/advanced_examples/plot_grid_search_withinsession.html"><span class="doc">GridSearch within a session</span></a></p>
   <div class="sphx-glr-thumbnail-title">GridSearch within a session</div>
+</div><div class="sphx-glr-thumbcontainer" tooltip="This example shows how to perform a pseudo-online motor imagery evaluation using sliding window overlap. The overlap parameter in the paradigm generates overlapping epochs from the original trials, simulating an online BCI scenario."><img alt="" src="../_images/sphx_glr_plot_pseudoonline_thumb.png" />
+<p><a class="reference internal" href="../auto_examples/advanced_examples/plot_pseudoonline.html"><span class="doc">Pseudo-Online Motor Imagery with Sliding Window</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Pseudo-Online Motor Imagery with Sliding Window</div>
 </div></div><div style='clear:both'></div></section>
 </section>
 

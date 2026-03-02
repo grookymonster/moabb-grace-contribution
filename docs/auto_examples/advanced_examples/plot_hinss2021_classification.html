@@ -41,7 +41,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=32f982a3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=f118ea32" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-2.0.4/b-3.0.2/b-html5-3.0.2/datatables.min.css" />
   
   <!-- So that users can add custom icons -->
@@ -429,10 +429,7 @@
 <nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../plot_pseudoonline.html">Pseudo-Online Motor Imagery with Sliding Window</a></li>
-</ul>
-<ul class="current nav bd-sidenav">
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../tutorials/index.html">Getting Started!</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../tutorials/tutorial_0_plot_getting_started.html">Tutorial 0: Getting Started</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorials/tutorial_1_simple_example_motor_imagery.html">Tutorial 1: Simple Motor Imagery</a></li>
@@ -477,8 +474,10 @@
 <li class="toctree-l2"><a class="reference internal" href="plot_mne_and_scikit_estimators.html">MNE Epochs-based pipelines</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_phmd_ml_spectrum.html">Spectral analysis of the trials</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_pre_processing_steps.html">Playing with the pre-processing steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot_pseudoonline.html">Pseudo-Online Motor Imagery with Sliding Window</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_riemannian_artifact_rejection.html">Riemannian Artifact Rejection as a Pre-processing Step</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_select_electrodes_resample.html">Select Electrodes and Resampling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot_sliding_estimator.html">Time-Resolved Decoding with SlidingEstimator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_statistical_analysis.html">Statistical Analysis</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_use_an_X_y_dataset.html">Using X y data (epoched data) instead of continuous signal</a></li>
 </ul>
@@ -687,145 +686,165 @@ select electrodes based on the covariance information</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Hinss2021-CrossSession:   0%|          | 0/2 [00:00&lt;?, ?it/s]
-Hinss2021-CrossSession:  50%|█████     | 1/2 [00:23&lt;00:23, 23.37s/it]
+Hinss2021-CrossSession:  50%|█████     | 1/2 [00:23&lt;00:23, 23.10s/it]
 
   0%|                                               | 0.00/181M [00:00&lt;?, ?B/s]
 
-  0%|                                      | 12.3k/181M [00:00&lt;39:19, 76.7kB/s]
+  0%|                                      | 12.3k/181M [00:00&lt;33:00, 91.4kB/s]
 
-  0%|                                       | 39.9k/181M [00:00&lt;19:47, 152kB/s]
+  0%|                                       | 41.0k/181M [00:00&lt;16:58, 178kB/s]
 
-  0%|                                       | 95.2k/181M [00:00&lt;10:55, 276kB/s]
+  0%|                                       | 94.2k/181M [00:00&lt;09:57, 303kB/s]
 
-  0%|                                        | 212k/181M [00:00&lt;05:44, 525kB/s]
+  0%|                                        | 176k/181M [00:00&lt;06:33, 460kB/s]
 
-  0%|                                        | 428k/181M [00:00&lt;03:10, 946kB/s]
+  0%|                                        | 368k/181M [00:00&lt;03:23, 887kB/s]
 
-  0%|▏                                      | 886k/181M [00:00&lt;01:37, 1.85MB/s]
+  0%|▏                                      | 761k/181M [00:00&lt;01:43, 1.74MB/s]
 
-  1%|▍                                     | 1.80M/181M [00:00&lt;00:49, 3.61MB/s]
+  1%|▎                                     | 1.43M/181M [00:00&lt;00:58, 3.06MB/s]
 
-  2%|▊                                     | 3.63M/181M [00:01&lt;00:25, 7.05MB/s]
+  1%|▍                                     | 2.30M/181M [00:00&lt;00:39, 4.47MB/s]
 
-  4%|█▎                                    | 6.54M/181M [00:01&lt;00:14, 12.0MB/s]
+  3%|▉                                     | 4.59M/181M [00:01&lt;00:19, 9.26MB/s]
 
-  6%|██                                    | 10.1M/181M [00:01&lt;00:10, 17.0MB/s]
+  4%|█▌                                    | 7.32M/181M [00:01&lt;00:12, 13.7MB/s]
 
-  7%|██▋                                   | 13.0M/181M [00:01&lt;00:08, 18.8MB/s]
+  5%|██                                    | 9.62M/181M [00:01&lt;00:10, 15.6MB/s]
 
-  9%|███▎                                  | 15.9M/181M [00:01&lt;00:08, 20.2MB/s]
+  7%|██▌                                   | 12.4M/181M [00:01&lt;00:09, 18.1MB/s]
 
- 10%|███▉                                  | 18.7M/181M [00:01&lt;00:07, 20.8MB/s]
+  8%|███                                   | 14.7M/181M [00:01&lt;00:08, 18.7MB/s]
 
- 12%|████▌                                 | 21.5M/181M [00:01&lt;00:07, 21.1MB/s]
+ 10%|███▋                                  | 17.4M/181M [00:01&lt;00:08, 20.2MB/s]
 
- 14%|█████▏                                | 24.7M/181M [00:01&lt;00:06, 22.6MB/s]
+ 11%|████▏                                 | 19.8M/181M [00:01&lt;00:07, 20.3MB/s]
 
- 15%|█████▊                                | 27.7M/181M [00:02&lt;00:06, 22.9MB/s]
+ 12%|████▋                                 | 22.5M/181M [00:01&lt;00:07, 21.3MB/s]
 
- 17%|██████▍                               | 30.7M/181M [00:02&lt;00:06, 23.3MB/s]
+ 14%|█████▏                                | 24.8M/181M [00:01&lt;00:07, 21.0MB/s]
 
- 19%|███████                               | 33.8M/181M [00:02&lt;00:06, 23.4MB/s]
+ 15%|█████▊                                | 27.6M/181M [00:02&lt;00:07, 21.9MB/s]
 
- 20%|███████▋                              | 36.9M/181M [00:02&lt;00:06, 23.9MB/s]
+ 17%|██████▎                               | 30.0M/181M [00:02&lt;00:07, 21.5MB/s]
 
- 22%|████████▎                             | 39.8M/181M [00:02&lt;00:06, 23.5MB/s]
+ 18%|██████▊                               | 32.7M/181M [00:02&lt;00:06, 22.3MB/s]
 
- 24%|█████████                             | 43.0M/181M [00:02&lt;00:05, 24.1MB/s]
+ 19%|███████▎                              | 35.1M/181M [00:02&lt;00:06, 21.6MB/s]
 
- 25%|█████████▋                            | 46.0M/181M [00:02&lt;00:05, 24.0MB/s]
+ 21%|███████▉                              | 37.9M/181M [00:02&lt;00:06, 22.4MB/s]
 
- 27%|██████████▎                           | 49.0M/181M [00:02&lt;00:05, 23.9MB/s]
+ 22%|████████▍                             | 40.2M/181M [00:02&lt;00:06, 21.7MB/s]
 
- 29%|██████████▊                           | 51.8M/181M [00:03&lt;00:05, 23.4MB/s]
+ 24%|█████████                             | 43.0M/181M [00:02&lt;00:06, 22.5MB/s]
 
- 30%|███████████▌                          | 55.1M/181M [00:03&lt;00:05, 24.4MB/s]
+ 25%|█████████▌                            | 45.4M/181M [00:02&lt;00:06, 21.9MB/s]
 
- 32%|████████████▎                         | 58.4M/181M [00:03&lt;00:04, 25.0MB/s]
+ 27%|██████████                            | 48.1M/181M [00:03&lt;00:05, 22.4MB/s]
 
- 34%|████████████▉                         | 61.4M/181M [00:03&lt;00:04, 24.6MB/s]
+ 28%|██████████▌                           | 50.5M/181M [00:03&lt;00:05, 21.9MB/s]
 
- 36%|█████████████▌                        | 64.4M/181M [00:03&lt;00:04, 24.2MB/s]
+ 29%|███████████▏                          | 53.2M/181M [00:03&lt;00:05, 22.4MB/s]
 
- 37%|██████████████▏                       | 67.9M/181M [00:03&lt;00:04, 25.3MB/s]
+ 31%|███████████▋                          | 55.7M/181M [00:03&lt;00:05, 22.1MB/s]
 
- 39%|██████████████▊                       | 70.8M/181M [00:03&lt;00:04, 24.7MB/s]
+ 32%|████████████▏                         | 58.4M/181M [00:03&lt;00:05, 22.5MB/s]
 
- 41%|███████████████▌                      | 74.0M/181M [00:03&lt;00:04, 24.8MB/s]
+ 34%|████████████▊                         | 60.8M/181M [00:03&lt;00:05, 22.1MB/s]
 
- 43%|████████████████▏                     | 77.0M/181M [00:04&lt;00:04, 24.6MB/s]
+ 35%|█████████████▎                        | 63.5M/181M [00:03&lt;00:05, 22.5MB/s]
 
- 44%|████████████████▊                     | 80.1M/181M [00:04&lt;00:04, 24.6MB/s]
+ 36%|█████████████▊                        | 65.9M/181M [00:03&lt;00:05, 22.0MB/s]
 
- 46%|█████████████████▌                    | 83.4M/181M [00:04&lt;00:03, 25.0MB/s]
+ 38%|██████████████▍                       | 68.6M/181M [00:03&lt;00:05, 22.4MB/s]
 
- 48%|██████████████████▏                   | 86.7M/181M [00:04&lt;00:03, 25.3MB/s]
+ 39%|██████████████▉                       | 71.1M/181M [00:04&lt;00:04, 22.1MB/s]
 
- 50%|██████████████████▊                   | 89.7M/181M [00:04&lt;00:03, 25.0MB/s]
+ 41%|███████████████▍                      | 73.8M/181M [00:04&lt;00:04, 22.5MB/s]
 
- 51%|███████████████████▍                  | 92.7M/181M [00:04&lt;00:03, 24.6MB/s]
+ 42%|███████████████▉                      | 76.2M/181M [00:04&lt;00:04, 22.1MB/s]
 
- 53%|████████████████████▏                 | 96.1M/181M [00:04&lt;00:03, 25.2MB/s]
+ 44%|████████████████▌                     | 79.0M/181M [00:04&lt;00:04, 22.5MB/s]
 
- 55%|████████████████████▊                 | 98.9M/181M [00:04&lt;00:03, 24.4MB/s]
+ 45%|█████████████████                     | 81.4M/181M [00:04&lt;00:04, 22.2MB/s]
 
- 56%|█████████████████████▉                 | 102M/181M [00:05&lt;00:03, 24.6MB/s]
+ 46%|█████████████████▋                    | 84.2M/181M [00:04&lt;00:04, 22.6MB/s]
 
- 58%|██████████████████████▌                | 105M/181M [00:05&lt;00:03, 23.8MB/s]
+ 48%|██████████████████▏                   | 86.6M/181M [00:04&lt;00:04, 22.3MB/s]
 
- 60%|███████████████████████▎               | 108M/181M [00:05&lt;00:02, 25.2MB/s]
+ 49%|██████████████████▊                   | 89.5M/181M [00:04&lt;00:03, 23.1MB/s]
 
- 62%|████████████████████████               | 112M/181M [00:05&lt;00:02, 25.1MB/s]
+ 51%|███████████████████▎                  | 91.9M/181M [00:04&lt;00:03, 22.4MB/s]
 
- 63%|████████████████████████▋              | 114M/181M [00:05&lt;00:02, 24.4MB/s]
+ 52%|███████████████████▉                  | 94.9M/181M [00:05&lt;00:03, 23.4MB/s]
 
- 65%|█████████████████████████▎             | 118M/181M [00:05&lt;00:02, 24.7MB/s]
+ 54%|████████████████████▍                 | 97.3M/181M [00:05&lt;00:03, 22.7MB/s]
 
- 67%|██████████████████████████             | 121M/181M [00:05&lt;00:02, 25.3MB/s]
+ 55%|█████████████████████▌                 | 100M/181M [00:05&lt;00:03, 23.8MB/s]
 
- 69%|██████████████████████████▋            | 124M/181M [00:05&lt;00:02, 25.2MB/s]
+ 57%|██████████████████████▏                | 103M/181M [00:05&lt;00:03, 23.0MB/s]
 
- 70%|███████████████████████████▎           | 127M/181M [00:06&lt;00:02, 24.4MB/s]
+ 58%|██████████████████████▊                | 106M/181M [00:05&lt;00:03, 23.8MB/s]
 
- 72%|████████████████████████████           | 130M/181M [00:06&lt;00:02, 25.3MB/s]
+ 60%|███████████████████████▎               | 108M/181M [00:05&lt;00:03, 23.2MB/s]
 
- 74%|████████████████████████████▊          | 134M/181M [00:06&lt;00:01, 25.3MB/s]
+ 61%|███████████████████████▉               | 111M/181M [00:05&lt;00:02, 23.7MB/s]
 
- 75%|█████████████████████████████▍         | 136M/181M [00:06&lt;00:01, 24.4MB/s]
+ 63%|████████████████████████▍              | 114M/181M [00:05&lt;00:02, 23.1MB/s]
 
- 77%|██████████████████████████████▏        | 140M/181M [00:06&lt;00:01, 25.4MB/s]
+ 64%|█████████████████████████              | 117M/181M [00:06&lt;00:02, 23.7MB/s]
 
- 79%|██████████████████████████████▊        | 143M/181M [00:06&lt;00:01, 25.6MB/s]
+ 66%|█████████████████████████▋             | 119M/181M [00:06&lt;00:02, 23.7MB/s]
 
- 81%|███████████████████████████████▍       | 146M/181M [00:06&lt;00:01, 24.4MB/s]
+ 67%|██████████████████████████▎            | 122M/181M [00:06&lt;00:02, 24.3MB/s]
 
- 82%|████████████████████████████████▏      | 149M/181M [00:06&lt;00:01, 25.2MB/s]
+ 69%|██████████████████████████▉            | 125M/181M [00:06&lt;00:02, 24.0MB/s]
 
- 84%|████████████████████████████████▊      | 152M/181M [00:07&lt;00:01, 25.2MB/s]
+ 71%|███████████████████████████▌           | 128M/181M [00:06&lt;00:02, 24.4MB/s]
 
- 86%|█████████████████████████████████▌     | 156M/181M [00:07&lt;00:00, 25.7MB/s]
+ 72%|████████████████████████████           | 131M/181M [00:06&lt;00:02, 24.1MB/s]
 
- 88%|██████████████████████████████████▏    | 159M/181M [00:07&lt;00:00, 24.8MB/s]
+ 74%|████████████████████████████▊          | 134M/181M [00:06&lt;00:01, 24.3MB/s]
 
- 89%|██████████████████████████████████▉    | 162M/181M [00:07&lt;00:00, 25.2MB/s]
+ 75%|█████████████████████████████▎         | 136M/181M [00:06&lt;00:01, 23.8MB/s]
 
- 91%|███████████████████████████████████▌   | 165M/181M [00:07&lt;00:00, 24.8MB/s]
+ 77%|█████████████████████████████▉         | 139M/181M [00:06&lt;00:01, 23.9MB/s]
 
- 93%|████████████████████████████████████▏  | 168M/181M [00:07&lt;00:00, 24.9MB/s]
+ 78%|██████████████████████████████▌        | 142M/181M [00:07&lt;00:01, 23.7MB/s]
 
- 95%|████████████████████████████████████▉  | 171M/181M [00:07&lt;00:00, 25.0MB/s]
+ 80%|███████████████████████████████▏       | 145M/181M [00:07&lt;00:01, 23.8MB/s]
 
- 97%|█████████████████████████████████████▋ | 175M/181M [00:07&lt;00:00, 25.5MB/s]
+ 81%|███████████████████████████████▊       | 147M/181M [00:07&lt;00:01, 23.7MB/s]
 
- 98%|██████████████████████████████████████▎| 178M/181M [00:08&lt;00:00, 24.6MB/s]
+ 83%|████████████████████████████████▎      | 150M/181M [00:07&lt;00:01, 23.7MB/s]
 
-100%|██████████████████████████████████████▉| 181M/181M [00:08&lt;00:00, 25.3MB/s]
+ 84%|████████████████████████████████▉      | 153M/181M [00:07&lt;00:01, 23.4MB/s]
+
+ 86%|█████████████████████████████████▌     | 156M/181M [00:07&lt;00:01, 23.5MB/s]
+
+ 88%|██████████████████████████████████▏    | 158M/181M [00:07&lt;00:00, 23.3MB/s]
+
+ 89%|██████████████████████████████████▋    | 161M/181M [00:07&lt;00:00, 23.4MB/s]
+
+ 91%|███████████████████████████████████▎   | 164M/181M [00:08&lt;00:00, 23.2MB/s]
+
+ 92%|███████████████████████████████████▉   | 167M/181M [00:08&lt;00:00, 23.3MB/s]
+
+ 94%|████████████████████████████████████▍  | 169M/181M [00:08&lt;00:00, 23.2MB/s]
+
+ 95%|█████████████████████████████████████  | 172M/181M [00:08&lt;00:00, 23.3MB/s]
+
+ 97%|█████████████████████████████████████▋ | 175M/181M [00:08&lt;00:00, 23.2MB/s]
+
+ 98%|██████████████████████████████████████▎| 178M/181M [00:08&lt;00:00, 23.4MB/s]
+
+100%|██████████████████████████████████████▊| 180M/181M [00:08&lt;00:00, 23.1MB/s]
 
   0%|                                               | 0.00/181M [00:00&lt;?, ?B/s]
-100%|████████████████████████████████████████| 181M/181M [00:00&lt;00:00, 696GB/s]
+100%|████████████████████████████████████████| 181M/181M [00:00&lt;00:00, 657GB/s]
 
-Hinss2021-CrossSession: 100%|██████████| 2/2 [00:56&lt;00:00, 29.02s/it]
-Hinss2021-CrossSession: 100%|██████████| 2/2 [00:56&lt;00:00, 28.17s/it]
+Hinss2021-CrossSession: 100%|██████████| 2/2 [00:56&lt;00:00, 29.17s/it]
+Hinss2021-CrossSession: 100%|██████████| 2/2 [00:56&lt;00:00, 28.26s/it]
 </pre></div>
 </div>
 <p>Here, with the ElSel+Cov+TS+LDA pipeline, we reduce the computation time
@@ -837,9 +856,9 @@ in approximately 8 times to the Cov+ElSel+TS+LDA pipeline.</p>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Averaging the session performance:
                      score      time
 pipeline
-Cov+ElSel+TS+LDA  0.770303  1.570739
-ElSel+Cov+TS+LDA  0.775472  0.235670
-Xdawn+Cov+TS+LDA  0.658810  0.192911
+Cov+ElSel+TS+LDA  0.770303  1.608389
+ElSel+Cov+TS+LDA  0.775472  0.237510
+Xdawn+Cov+TS+LDA  0.658810  0.205759
 </pre></div>
 </div>
 </section>
@@ -876,8 +895,8 @@ Xdawn+Cov+TS+LDA  0.658810  0.192911
 <li><p>Electrode selection strategy based on covariance matrices demonstrates less variability and typically yields better performance.</p></li>
 <li><p>However, this strategy is more time-consuming compared to the simpler electrode selection based on time epoch data.</p></li>
 </ul>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 59.990 seconds)</p>
-<p><strong>Estimated memory usage:</strong>  545 MB</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 59.951 seconds)</p>
+<p><strong>Estimated memory usage:</strong>  715 MB</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-advanced-examples-plot-hinss2021-classification-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/5abf5216139378fc86b18e340a1f77b5/plot_hinss2021_classification.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_hinss2021_classification.ipynb</span></code></a></p>

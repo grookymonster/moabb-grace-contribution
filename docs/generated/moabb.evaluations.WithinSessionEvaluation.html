@@ -41,7 +41,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=32f982a3" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=f118ea32" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-2.0.4/b-3.0.2/b-html5-3.0.2/datatables.min.css" />
   
   <!-- So that users can add custom icons -->
@@ -607,6 +607,11 @@
 <li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_CCA.html">moabb.pipelines.classification.SSVEP_CCA</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_TRCA.html">moabb.pipelines.classification.SSVEP_TRCA</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_MsetCCA.html">moabb.pipelines.classification.SSVEP_MsetCCA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_itCCA.html">moabb.pipelines.classification.SSVEP_itCCA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_eCCA.html">moabb.pipelines.classification.SSVEP_eCCA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_TRCA_R.html">moabb.pipelines.classification.SSVEP_TRCA_R</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_SSCOR.html">moabb.pipelines.classification.SSVEP_SSCOR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_TDCA.html">moabb.pipelines.classification.SSVEP_TDCA</a></li>
 </ul>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="moabb.analysis.plotting.score_plot.html">moabb.analysis.plotting.score_plot</a></li>
@@ -758,10 +763,7 @@ contain enough session for a cross-session eval.</p>
 
 <section id="examples-using-moabb-evaluations-withinsessionevaluation">
 <h2>Examples using <code class="docutils literal notranslate"><span class="pre">moabb.evaluations.WithinSessionEvaluation</span></code><a class="headerlink" href="#examples-using-moabb-evaluations-withinsessionevaluation" title="Link to this heading">#</a></h2>
-<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This example shows how to perform a pseudo-online motor imagery evaluation using sliding window overlap. The overlap parameter in the paradigm generates overlapping epochs from the original trials, simulating an online BCI scenario."><img alt="" src="../_images/sphx_glr_plot_pseudoonline_thumb.png" />
-<p><a class="reference internal" href="../auto_examples/plot_pseudoonline.html"><span class="doc">Pseudo-Online Motor Imagery with Sliding Window</span></a></p>
-  <div class="sphx-glr-thumbnail-title">Pseudo-Online Motor Imagery with Sliding Window</div>
-</div><div class="sphx-glr-thumbcontainer" tooltip="In this example, we will go through all the steps to make a simple BCI classification task, downloading a dataset and using a standard classifier. We choose the dataset 2a from BCI Competition IV, a motor imagery task. We will use a CSP to enhance the signal-to-noise ratio of the EEG epochs and a LDA to classify these signals."><img alt="" src="../_images/sphx_glr_tutorial_1_simple_example_motor_imagery_thumb.png" />
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="In this example, we will go through all the steps to make a simple BCI classification task, downloading a dataset and using a standard classifier. We choose the dataset 2a from BCI Competition IV, a motor imagery task. We will use a CSP to enhance the signal-to-noise ratio of the EEG epochs and a LDA to classify these signals."><img alt="" src="../_images/sphx_glr_tutorial_1_simple_example_motor_imagery_thumb.png" />
 <p><a class="reference internal" href="../auto_examples/tutorials/tutorial_1_simple_example_motor_imagery.html"><span class="doc">Tutorial 1: Simple Motor Imagery</span></a></p>
   <div class="sphx-glr-thumbnail-title">Tutorial 1: Simple Motor Imagery</div>
 </div><div class="sphx-glr-thumbcontainer" tooltip="We extend the previous example to a case where we want to analyze the score of a classifier with three different MI datasets instead of just one. As before, we begin by importing all relevant libraries."><img alt="" src="../_images/sphx_glr_tutorial_2_using_mulitple_datasets_thumb.png" />
@@ -791,6 +793,9 @@ contain enough session for a cross-session eval.</p>
 </div><div class="sphx-glr-thumbcontainer" tooltip="This example demonstrates how to make a model selection in pipelines for finding the best model parameter, using grid search. Two models are compared, one &quot;vanilla&quot; model with model tuned via grid search."><img alt="" src="../_images/sphx_glr_plot_grid_search_withinsession_thumb.png" />
 <p><a class="reference internal" href="../auto_examples/advanced_examples/plot_grid_search_withinsession.html"><span class="doc">GridSearch within a session</span></a></p>
   <div class="sphx-glr-thumbnail-title">GridSearch within a session</div>
+</div><div class="sphx-glr-thumbcontainer" tooltip="This example shows how to perform a pseudo-online motor imagery evaluation using sliding window overlap. The overlap parameter in the paradigm generates overlapping epochs from the original trials, simulating an online BCI scenario."><img alt="" src="../_images/sphx_glr_plot_pseudoonline_thumb.png" />
+<p><a class="reference internal" href="../auto_examples/advanced_examples/plot_pseudoonline.html"><span class="doc">Pseudo-Online Motor Imagery with Sliding Window</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Pseudo-Online Motor Imagery with Sliding Window</div>
 </div><div class="sphx-glr-thumbcontainer" tooltip="Electroencephalography (EEG) signal cleaning has long been a critical challenge in the research community. The presence of artifacts can significantly degrade EEG data quality, complicating analysis and potentially leading to erroneous interpretations. These artifacts are broadly categorized as either endogenous (biological: ocular, myogenic, cardiac) or exogenous (environmental, instrumental). As noted in [3]_, manual annotation of artifacts is time-consuming, subjective, and impractical for large-scale EEG studies."><img alt="" src="../_images/sphx_glr_plot_riemannian_artifact_rejection_thumb.png" />
 <p><a class="reference internal" href="../auto_examples/advanced_examples/plot_riemannian_artifact_rejection.html"><span class="doc">Riemannian Artifact Rejection as a Pre-processing Step</span></a></p>
   <div class="sphx-glr-thumbnail-title">Riemannian Artifact Rejection as a Pre-processing Step</div>

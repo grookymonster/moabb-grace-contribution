@@ -41,7 +41,7 @@
     <link rel="stylesheet" type="text/css" href="_static/sg_gallery-dataframe.css?v=2082cf3c" />
     <link rel="stylesheet" type="text/css" href="_static/sg_gallery-rendered-html.css?v=1277b6f3" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=32f982a3" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=f118ea32" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-2.0.4/b-3.0.2/b-html5-3.0.2/datatables.min.css" />
   
   <!-- So that users can add custom icons -->
@@ -477,15 +477,27 @@
   
   <section id="api-and-main-concepts">
 <h1>API and Main Concepts<a class="headerlink" href="#api-and-main-concepts" title="Link to this heading">#</a></h1>
-<figure class="align-default">
-<img alt="architecture" src="_images/architecture.png" />
+<div class="api-hero"><figure class="align-default" id="id16">
+<img alt="Concept flow in MOABB" class="api-architecture-diagram" src="_images/architecture.svg" />
+<figcaption>
+<p><span class="caption-text">Datasets and Paradigms define the problem; Evaluations and Pipelines
+define the measurement.</span><a class="headerlink" href="#id16" title="Link to this image">#</a></p>
+</figcaption>
 </figure>
-<p>There are 4 main concepts in the MOABB: <strong>the datasets</strong>, <strong>the paradigm</strong>, <strong>the
-evaluation</strong>, and <strong>the pipelines</strong>. In addition, we offer <strong>statistical</strong>,
-<strong>visualization</strong>, <strong>utilities</strong> to simplify the workflow.</p>
-<p>And if you want to just run the benchmark, you can use our <strong>benchmark</strong> module that wraps
-all the steps in a single function.</p>
-<section id="datasets">
+<p class="api-intro">
+There are 4 main concepts in the MOABB:
+<strong class="concept-dataset">the datasets</strong>,
+<strong class="concept-paradigm">the paradigms</strong>,
+<strong class="concept-evaluation">the evaluations</strong>, and
+<strong class="concept-pipeline">the pipelines</strong>.
+In addition, we offer <strong>statistical</strong>,
+<strong>visualization</strong>, <strong>utilities</strong> to simplify the workflow.
+</p>
+<p class="api-intro">
+And if you want to just run the benchmark, you can use our
+<strong>benchmark</strong> module that wraps all the steps in a single function.
+</p>
+</div><section id="datasets">
 <h2>Datasets<a class="headerlink" href="#datasets" title="Link to this heading">#</a></h2>
 <p>A dataset handles and abstracts low-level access to the data. The
 dataset will read data stored locally, in the format in which they have
@@ -807,8 +819,8 @@ evaluate them separately.</p>
 </table>
 </div>
 </section>
-<section id="base-utils">
-<h3>Base &amp; Utils<a class="headerlink" href="#base-utils" title="Link to this heading">#</a></h3>
+<section id="utilities">
+<h3>Utilities<a class="headerlink" href="#utilities" title="Link to this heading">#</a></h3>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/moabb.datasets.base.BaseDataset.html#moabb.datasets.base.BaseDataset" title="moabb.datasets.base.BaseDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">base.BaseDataset</span></code></a>(subjects, ...[, doi, ...])</p></td>
@@ -872,8 +884,8 @@ evaluate them separately.</p>
 </div>
 </section>
 </section>
-<section id="paradigm">
-<h2>Paradigm<a class="headerlink" href="#paradigm" title="Link to this heading">#</a></h2>
+<section id="paradigms">
+<h2>Paradigms<a class="headerlink" href="#paradigms" title="Link to this heading">#</a></h2>
 <p>A paradigm defines how the raw data will be converted to trials ready to
 be processed by a decoding algorithm. This is a function of the paradigm
 used, i.e. in motor imagery one can have two-class, multi-class, or
@@ -939,7 +951,7 @@ for ERP vs ERD paradigms.</p>
 </div>
 </section>
 <section id="resting-state-paradigms">
-<h3>Resting state Paradigms<a class="headerlink" href="#resting-state-paradigms" title="Link to this heading">#</a></h3>
+<h3>Resting State Paradigms<a class="headerlink" href="#resting-state-paradigms" title="Link to this heading">#</a></h3>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/moabb.paradigms.RestingStateToP300Adapter.html#moabb.paradigms.RestingStateToP300Adapter" title="moabb.paradigms.RestingStateToP300Adapter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RestingStateToP300Adapter</span></code></a>([fmin, fmax, ...])</p></td>
@@ -964,7 +976,7 @@ for ERP vs ERD paradigms.</p>
 </div>
 </section>
 <section id="id7">
-<h3>Base &amp; Utils<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<h3>Utilities<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/moabb.paradigms.motor_imagery.BaseMotorImagery.html#moabb.paradigms.motor_imagery.BaseMotorImagery" title="moabb.paradigms.motor_imagery.BaseMotorImagery"><code class="xref py py-obj docutils literal notranslate"><span class="pre">motor_imagery.BaseMotorImagery</span></code></a>([filters, ...])</p></td>
@@ -1028,7 +1040,7 @@ accuracy, across-subject accuracy, or other transfer learning settings.</p>
 </table>
 </div>
 <section id="id8">
-<h3>Base &amp; Utils<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<h3>Utilities<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/moabb.evaluations.base.BaseEvaluation.html#moabb.evaluations.base.BaseEvaluation" title="moabb.evaluations.base.BaseEvaluation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">base.BaseEvaluation</span></code></a>(paradigm[, datasets, ...])</p></td>
@@ -1066,7 +1078,7 @@ for more info.</p>
 <tr class="row-even"><td><p><a class="reference internal" href="generated/moabb.pipelines.csp.TRCSP.html#moabb.pipelines.csp.TRCSP" title="moabb.pipelines.csp.TRCSP"><code class="xref py py-obj docutils literal notranslate"><span class="pre">csp.TRCSP</span></code></a>([nfilter, metric, log, alpha])</p></td>
 <td><p>Weighted Tikhonov-regularized CSP as described in Lotte and Guan 2011.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/moabb.pipelines.classification.SSVEP_CCA.html#moabb.pipelines.classification.SSVEP_CCA" title="moabb.pipelines.classification.SSVEP_CCA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">classification.SSVEP_CCA</span></code></a>([n_harmonics])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/moabb.pipelines.classification.SSVEP_CCA.html#moabb.pipelines.classification.SSVEP_CCA" title="moabb.pipelines.classification.SSVEP_CCA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">classification.SSVEP_CCA</span></code></a>([n_harmonics, freq_map])</p></td>
 <td><p>Classifier based on Canonical Correlation Analysis for SSVEP.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="generated/moabb.pipelines.classification.SSVEP_TRCA.html#moabb.pipelines.classification.SSVEP_TRCA" title="moabb.pipelines.classification.SSVEP_TRCA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">classification.SSVEP_TRCA</span></code></a>([n_fbands, ...])</p></td>
@@ -1074,6 +1086,21 @@ for more info.</p>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/moabb.pipelines.classification.SSVEP_MsetCCA.html#moabb.pipelines.classification.SSVEP_MsetCCA" title="moabb.pipelines.classification.SSVEP_MsetCCA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">classification.SSVEP_MsetCCA</span></code></a>([n_filters, n_jobs])</p></td>
 <td><p>Multi-set Canonical Correlation Analysis (MsetCCA) for SSVEP detection <a class="reference internal" href="generated/moabb.pipelines.classification.SSVEP_MsetCCA.html#r59288fba6272-1" id="id10"><span>[R59288fba6272-1]</span></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/moabb.pipelines.classification.SSVEP_itCCA.html#moabb.pipelines.classification.SSVEP_itCCA" title="moabb.pipelines.classification.SSVEP_itCCA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">classification.SSVEP_itCCA</span></code></a>()</p></td>
+<td><p>Individual Template CCA (itCCA) for SSVEP detection <a class="reference internal" href="generated/moabb.pipelines.classification.SSVEP_itCCA.html#r5a429eba8324-1" id="id11"><span>[R5a429eba8324-1]</span></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/moabb.pipelines.classification.SSVEP_eCCA.html#moabb.pipelines.classification.SSVEP_eCCA" title="moabb.pipelines.classification.SSVEP_eCCA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">classification.SSVEP_eCCA</span></code></a>([n_harmonics, ...])</p></td>
+<td><p>Extended CCA (eCCA) for SSVEP detection <a class="reference internal" href="generated/moabb.pipelines.classification.SSVEP_eCCA.html#rd15f3b9780b1-1" id="id12"><span>[Rd15f3b9780b1-1]</span></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/moabb.pipelines.classification.SSVEP_TRCA_R.html#moabb.pipelines.classification.SSVEP_TRCA_R" title="moabb.pipelines.classification.SSVEP_TRCA_R"><code class="xref py py-obj docutils literal notranslate"><span class="pre">classification.SSVEP_TRCA_R</span></code></a>([n_fbands, ...])</p></td>
+<td><p>Regularized TRCA (TRCA-R) for SSVEP detection <a class="reference internal" href="generated/moabb.pipelines.classification.SSVEP_TRCA_R.html#ra4f1f6a65bfe-1" id="id13"><span>[Ra4f1f6a65bfe-1]</span></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/moabb.pipelines.classification.SSVEP_SSCOR.html#moabb.pipelines.classification.SSVEP_SSCOR" title="moabb.pipelines.classification.SSVEP_SSCOR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">classification.SSVEP_SSCOR</span></code></a>([n_fbands, ...])</p></td>
+<td><p>Sum of Squared Correlations (SSCOR) for SSVEP detection <a class="reference internal" href="generated/moabb.pipelines.classification.SSVEP_SSCOR.html#r7d4302723069-1" id="id14"><span>[R7d4302723069-1]</span></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/moabb.pipelines.classification.SSVEP_TDCA.html#moabb.pipelines.classification.SSVEP_TDCA" title="moabb.pipelines.classification.SSVEP_TDCA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">classification.SSVEP_TDCA</span></code></a>([n_fbands, ...])</p></td>
+<td><p>Task Discriminant Component Analysis (TDCA) for SSVEP detection <a class="reference internal" href="generated/moabb.pipelines.classification.SSVEP_TDCA.html#r0cf9e5080bfb-1" id="id15"><span>[R0cf9e5080bfb-1]</span></a>.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1156,6 +1183,8 @@ generate some basic visualization and statistical comparisons:</p>
 <p>The benchmark module wraps all the steps in a single function. It
 downloads the data, runs the benchmark, and returns the results. It is
 the easiest way to run a benchmark.</p>
+<div class="admonition-minimal-benchmark-example admonition">
+<p class="admonition-title">Minimal benchmark example</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">moabb</span><span class="w"> </span><span class="kn">import</span> <span class="n">benchmark</span>
 
 <span class="n">results</span> <span class="o">=</span> <span class="n">benchmark</span><span class="p">(</span>
@@ -1171,6 +1200,7 @@ the easiest way to run a benchmark.</p>
     <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
+</div>
 </div>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
@@ -1237,23 +1267,23 @@ the easiest way to run a benchmark.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c-vep-datasets">c-VEP Datasets</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#resting-state-datasets">Resting State Datasets</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#compound-datasets">Compound Datasets</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#base-utils">Base &amp; Utils</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#utilities">Utilities</a><ul class="nav section-nav flex-column">
 </ul>
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#paradigm">Paradigm</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#paradigms">Paradigms</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#motor-imagery-paradigms">Motor Imagery Paradigms</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#p300-paradigms">P300 Paradigms</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ssvep-paradigms">SSVEP Paradigms</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c-vep-paradigms">c-VEP Paradigms</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#resting-state-paradigms">Resting state Paradigms</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#resting-state-paradigms">Resting State Paradigms</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fixed-interval-windows-processings">Fixed Interval Windows Processings</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Base &amp; Utils</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Utilities</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluations">Evaluations</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Base &amp; Utils</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Utilities</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pipelines">Pipelines</a></li>

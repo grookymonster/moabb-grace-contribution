@@ -41,7 +41,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=32f982a3" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=f118ea32" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-2.0.4/b-3.0.2/b-html5-3.0.2/datatables.min.css" />
   
   <!-- So that users can add custom icons -->
@@ -295,10 +295,6 @@
     </div>
   
 
-  
-    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
-      <span class="fa-solid fa-outdent"></span>
-    </button>
   
 </div>
 
@@ -607,6 +603,11 @@
 <li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_CCA.html">moabb.pipelines.classification.SSVEP_CCA</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_TRCA.html">moabb.pipelines.classification.SSVEP_TRCA</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_MsetCCA.html">moabb.pipelines.classification.SSVEP_MsetCCA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_itCCA.html">moabb.pipelines.classification.SSVEP_itCCA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_eCCA.html">moabb.pipelines.classification.SSVEP_eCCA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_TRCA_R.html">moabb.pipelines.classification.SSVEP_TRCA_R</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_SSCOR.html">moabb.pipelines.classification.SSVEP_SSCOR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_TDCA.html">moabb.pipelines.classification.SSVEP_TDCA</a></li>
 </ul>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="moabb.analysis.plotting.score_plot.html">moabb.analysis.plotting.score_plot</a></li>
@@ -693,7 +694,193 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="moabb.datasets.RomaniBF2025ERP">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">RomaniBF2025ERP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_folder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subjects</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.14)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude_subjects</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.14)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">['P15',</span> <span class="pre">'P18']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calibration_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">60</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_targets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nt_target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[-0.1,</span> <span class="pre">1.0]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_runs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_inference</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_failed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">montage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'standard_1020'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sessions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/romani_bf2025_erp.py#L50-L665"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.RomaniBF2025ERP" title="Link to this definition">#</a></dt>
-<dd><p>MOABB class for BrainForm event-related potentials (ERP) dataset.</p>
+<dd><div class="ds-card" role="region" aria-label="RomaniBF2025ERP dataset overview">
+  <a class="ds-card-source" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/romani_bf2025_erp.py#L50-L665" target="_blank" rel="noopener">[source]</a>
+  <div class="ds-card-head">
+    <p class="ds-card-kicker">Dataset Snapshot</p>
+    <p class="ds-card-title">RomaniBF2025ERP</p>
+    <p class="ds-subtitle">P300 / ERP, 2 classes (Target vs NonTarget)</p>
+  </div>
+  <div class="ds-stats">
+      <span class="ds-chip" style="--chip-color: #D32F2F">P300 / ERP</span>
+      <span class="ds-chip ds-chip-muted">Code: RomaniBF2025ERP</span>
+      <span class="ds-chip ds-chip-muted">22 subjects</span>
+      <span class="ds-chip ds-chip-muted">2 sessions</span>
+      <span class="ds-chip ds-chip-muted">8 ch</span>
+      <span class="ds-chip ds-chip-muted">250 Hz</span>
+      <span class="ds-chip ds-chip-muted">2 classes</span>
+      <span class="ds-chip ds-chip-muted">0.9 s trials</span>
+  </div>
+  <p class="ds-class-line"><span class="ds-class-line-label">Class Labels:</span> Target, NonTarget</p>
+  <div class="ds-actions">
+      <button class="ds-btn ds-btn-primary ds-btn-toggle" type="button" aria-controls="ds-quickstart-romanibf2025erp" aria-expanded="false" onclick="var el=document.getElementById('ds-quickstart-romanibf2025erp');if(el){el.open=!el.open;this.setAttribute('aria-expanded',el.open?'true':'false');}">Quickstart</button>
+      <a class="ds-btn" href="https://doi.org/10.48550%2FarXiv.2510.10169" target="_blank" rel="noopener">Read Paper</a>
+      <a class="ds-btn" href="../dataset_summary.html#p300-erp">Compare Similar</a>
+      <a class="ds-btn" href="https://github.com/NeuroTechX/moabb/issues/new?title=%5BDataset%5D%20Issue%20with%20RomaniBF2025ERP&amp;body=%23%23%20Dataset%0A%0A-%20%2A%2ADataset%20ID%3A%2A%2A%20RomaniBF2025ERP%0A%0A%23%23%20Issue%20Description%0A%0APlease%20describe%20the%20issue%20you%20encountered%20with%20this%20dataset%3A%0A%0A%23%23%20Steps%20to%20Reproduce%0A%0A1.%20%0A2.%20%0A3.%20%0A%0A%23%23%20Expected%20Behavior%0A%0A%0A%23%23%20Additional%20Context%0A%0A&amp;labels=dataset" target="_blank" rel="noopener">Report Issue</a>
+  </div>
+  <details id="ds-quickstart-romanibf2025erp" class="ds-quickstart">
+  <summary class="ds-quickstart-summary">Toggle quickstart code</summary>
+  <pre class="ds-quickstart-code"><code>from moabb.datasets import RomaniBF2025ERP
+
+dataset = RomaniBF2025ERP()
+data = dataset.get_data(subjects=[0])
+print(data[0])</code></pre>
+</details>
+
+  <div class="ds-citation-impact"><p class="ds-citation-title">Citation & Impact</p><ul><li><span>DOI</span><a href="https://doi.org/10.48550%2FarXiv.2510.10169" target="_blank" rel="noopener">10.48550/arXiv.2510.10169</a></li>
+      <li><span>Citations</span><strong class="ds-citation-count" data-doi="10.48550/arXiv.2510.10169">Loading…</strong></li>
+      <li><span>Public API</span><span class="ds-citation-links"><a href="https://api.crossref.org/works/10.48550/arXiv.2510.10169" target="_blank" rel="noopener">Crossref</a>&nbsp;|&nbsp;<a href="https://api.openalex.org/works/https%3A%2F%2Fdoi.org%2F10.48550%2FarXiv.2510.10169" target="_blank" rel="noopener">OpenAlex</a></span></li>
+      <li><span>PapersWithCode</span><a href="https://paperswithcode.com/dataset/romanibf2025erp-moabb-1" target="_blank" rel="noopener">Dataset page</a></li></ul>
+<script>
+(function () {
+  if (window.__moabbCitationCountsInit) return;
+  window.__moabbCitationCountsInit = true;
+
+  function fmt(value) {
+    return (typeof value === "number" && Number.isFinite(value))
+      ? value.toLocaleString()
+      : "N/A";
+  }
+
+  function setBoth(el, openalexCount, crossrefCount) {
+    el.textContent = "OpenAlex: " + fmt(openalexCount) + " | Crossref: " + fmt(crossrefCount);
+  }
+
+  async function fetchOpenAlex(doi) {
+    const id = encodeURIComponent("https://doi.org/" + doi);
+    const resp = await fetch("https://api.openalex.org/works/" + id);
+    if (!resp.ok) throw new Error("OpenAlex request failed");
+    const data = await resp.json();
+    return data && typeof data.cited_by_count === "number"
+      ? data.cited_by_count
+      : null;
+  }
+
+  async function fetchCrossref(doi) {
+    const resp = await fetch("https://api.crossref.org/works/" + encodeURIComponent(doi));
+    if (!resp.ok) throw new Error("Crossref request failed");
+    const data = await resp.json();
+    const count = data && data.message ? data.message["is-referenced-by-count"] : null;
+    return typeof count === "number" ? count : null;
+  }
+
+  document.querySelectorAll(".ds-citation-count[data-doi]").forEach(async function (el) {
+    const doi = (el.getAttribute("data-doi") || "").trim();
+    if (!doi) {
+      setBoth(el, null, null);
+      return;
+    }
+    const [oaRes, crRes] = await Promise.allSettled([
+      fetchOpenAlex(doi),
+      fetchCrossref(doi),
+    ]);
+    const oa = oaRes.status === "fulfilled" ? oaRes.value : null;
+    const cr = crRes.status === "fulfilled" ? crRes.value : null;
+    setBoth(el, oa, cr);
+  });
+})();
+</script>
+</div>
+  <div class="ds-caveats"><p class="ds-caveats-title">Known Caveats</p><ul><li>Custom montage (non-10-05)</li>
+      <li>Low channel density for spatial decoding</li></ul></div>
+</div><div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-row-cols-2 sd-row-cols-xs-2 sd-row-cols-sm-2 sd-row-cols-md-2 sd-row-cols-lg-2 sd-g-3 sd-g-xs-3 sd-g-sm-3 sd-g-md-3 sd-g-lg-3 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm ds-viz-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+HED Event Tags</div>
+<div class="ds-hed-card"><div class="ds-hed-head"><span class="ds-hed-pill">HED tags</span><span class="ds-hed-meta">2/2 events annotated</span></div><p class="ds-hed-source">Source: MOABB BIDS HED annotation mapping.</p><div class="ds-hed-bars"><div class="ds-hed-bar-row"><span class="ds-hed-bar-label">Experimental-stimulus</span><div class="ds-hed-bar"><i style="width:100%"></i></div><strong>2</strong></div><div class="ds-hed-bar-row"><span class="ds-hed-bar-label">Sensory-event</span><div class="ds-hed-bar"><i style="width:100%"></i></div><strong>2</strong></div><div class="ds-hed-bar-row"><span class="ds-hed-bar-label">Visual-presentation</span><div class="ds-hed-bar"><i style="width:100%"></i></div><strong>2</strong></div><div class="ds-hed-bar-row"><span class="ds-hed-bar-label">Non-target</span><div class="ds-hed-bar"><i style="width:50%"></i></div><strong>1</strong></div><div class="ds-hed-bar-row"><span class="ds-hed-bar-label">Target</span><div class="ds-hed-bar"><i style="width:50%"></i></div><strong>1</strong></div></div><div class="ds-hed-events"><div class="ds-hed-event-row"><span class="ds-hed-event-name">Target</span><div class="ds-hed-chip-wrap" title="Sensory-event, Experimental-stimulus, Visual-presentation, Target"><span class="ds-hed-chip">Sensory-event</span><span class="ds-hed-chip">Experimental-stimulus</span><span class="ds-hed-chip">Visual-presentation</span><span class="ds-hed-chip">Target</span></div></div><div class="ds-hed-event-row"><span class="ds-hed-event-name">NonTarget</span><div class="ds-hed-chip-wrap" title="Sensory-event, Experimental-stimulus, Visual-presentation, Non-target"><span class="ds-hed-chip">Sensory-event</span><span class="ds-hed-chip">Experimental-stimulus</span><span class="ds-hed-chip">Visual-presentation</span><span class="ds-hed-chip">Non-target</span></div></div></div><div class="ds-hed-tree-block"><p class="ds-hed-tree-title">HED tree view</p><details class="ds-hed-tree-item"><summary class="ds-hed-tree-summary">Tree · Target</summary><pre class="ds-hed-tree-pre">├─ Sensory-event
+├─ Experimental-stimulus
+├─ Visual-presentation
+└─ Target</pre></details><details class="ds-hed-tree-item"><summary class="ds-hed-tree-summary">Tree · NonTarget</summary><pre class="ds-hed-tree-pre">├─ Sensory-event
+├─ Experimental-stimulus
+├─ Visual-presentation
+└─ Non-target</pre></details></div></div></div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm ds-viz-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Channel Summary</div>
+<div class="ds-channel-card"><div class="ds-channel-row"><span>Total channels</span><strong>8</strong></div>
+<div class="ds-channel-row"><span>EEG</span><strong>8 (EEG)</strong></div>
+<div class="ds-channel-row"><span>Montage</span><strong>standard_1020</strong></div>
+<div class="ds-channel-row"><span>Sampling</span><strong>250 Hz</strong></div>
+<div class="ds-channel-row"><span>Reference</span><strong>right mastoid</strong></div>
+<div class="ds-channel-row"><span>Notch / line</span><strong>50 Hz</strong></div></div></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-0">
+Overview</label><div class="sd-tab-content docutils">
+<p>MOABB class for BrainForm event-related potentials (ERP) dataset.</p>
+<figure class="align-center">
+<a class="reference internal image-reference" href="https://arxiv.org/html/2510.10169v2/brainform-tasks.png"><img alt="BrainForm event-related potentials (ERP) dataset." src="https://arxiv.org/html/2510.10169v2/brainform-tasks.png" style="width: 1000px;" />
+</a>
+</figure>
+<p>The BrainForm dataset <a class="reference internal" href="#r382249ec25ce-1" id="id1">[1]</a> is a dataset collected using a serious game
+for brain-computer interface (BCI) training and data collection. It includes
+EEG recordings from multiple subjects performing a ERP task on 10 unique stimuli.
+The dataset is organized in BIDS format and contains calibration and inference sessions.</p>
+<p>Each subject performed two calibration sessions, one with a checkerboard texture on the targets, the other one with
+a grain texture. Each calibration was followed by an inference session where the subject played the game. The game
+consisted of two separate tasks: in the first one, the subject had to hit moving aliens using the color matched
+target; in the second one, they need to follow a randomized sequence of colors by hitting the corresponding targets
+to unlock a door.</p>
+<p>Calibration sessions consisted of 60 trials on a single training target, for a total of 600 events (60 trials x 10
+unique targets). This means that by default, the data is unbalanced, with 60 target events and 540 non-target events
+per session.
+In inference sessions, the number of events varied depending on the subject’s performance</p>
+<p>A total of 16 subjects took an optional free-play run after the main protocol, where they could choose their favorite
+texture and play the game again. The extra sessions include a calibration and can be included by setting the <cite>extra_runs</cite>
+parameter. The full protocol is described in <a class="reference internal" href="#r382249ec25ce-1" id="id2">[1]</a>.
+A study on cross-subject decoding using this dataset is presented in <a class="reference internal" href="#r382249ec25ce-2" id="id3">[2]</a>.</p>
+<p>A total of 2 subjects (15 and 18) did not complete the full protocol and are excluded by default.</p>
+<p>For many subjects, multiple calibration attempts were not successful, but they can be included by setting the
+<cite>exclude_failed</cite> parameter to False.</p>
+<p>Inference sessions can be included along with calibration by setting the <cite>include_inference</cite> parameter to True, but
+the triggers only indicate the stimulus onset and not ground truth labels.</p>
+<p>You can test the dataset with the following code:</p>
+<p class="rubric">Examples</p>
+<p>Loading the dataset and then create a subset of the available sessions and runs for subject P01 and P02:
+&gt;&gt;&gt; paradigm = P300(resample=128)
+&gt;&gt;&gt; dataset = RomaniBF2025ERP(include_inference=True, exclude_failed=False)
+&gt;&gt;&gt; subset = paradigm.get_data(dataset, [0, 1])</p>
+<p>Expected output:
+Sessions for subject 2: [‘0grain’, ‘1cb’, ‘2cbExtra’]</p>
+<p class="rubric">References</p>
+<div role="list" class="citation-list">
+<div class="citation" id="r382249ec25ce-1" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id1">1</a>,<a role="doc-backlink" href="#id2">2</a>)</span>
+<p>M. Romani, D. Zanoni, E. Farella, and L. Turchet, “BrainForm: a Serious Game for BCI Training and Data Collection,”
+Oct. 14, 2025, arXiv: arXiv:2510.10169. doi: 10.48550/arXiv.2510.10169.</p>
+</div>
+<div class="citation" id="r382249ec25ce-2" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">2</a><span class="fn-bracket">]</span></span>
+<p>M. Romani, F. Paissan, A. Fossà, and E. Farella, “Explicit modelling of subject dependency in BCI decoding,”
+Sept. 27, 2025, arXiv: arXiv:2509.23247. doi: 10.48550/arXiv.2509.23247.</p>
+</div>
+</div>
+</div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-1">
+Code Examples</label><div class="sd-tab-content docutils">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">moabb.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">RomaniBF2025ERP</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">RomaniBF2025ERP</span><span class="p">()</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="n">subjects</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-2" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-2">
+Metadata</label><div class="sd-tab-content docutils">
 <div class="admonition-dataset-summary admonition">
 <p class="admonition-title">Dataset summary</p>
 <div class="pst-scrollable-table-container"><table class="table">
@@ -760,46 +947,10 @@
 <li><p><strong>Stimulus</strong>: flickering</p></li>
 </ul>
 </div>
-<div class="tip admonition">
-<p class="admonition-title">Found an issue with this dataset?</p>
-<p>If you encounter any problems with this dataset (missing files,
-incorrect metadata, loading errors, etc.), please let us know!</p>
-<p><a class="sd-sphinx-override sd-btn sd-text-wrap sd-btn-outline-primary reference external" href="https://github.com/NeuroTechX/moabb/issues/new?title=%5BDataset%5D%20Issue%20with%20RomaniBF2025ERP&amp;body=%23%23%20Dataset%0A%0A-%20%2A%2ADataset%20ID%3A%2A%2A%20RomaniBF2025ERP%0A%0A%23%23%20Issue%20Description%0A%0APlease%20describe%20the%20issue%20you%20encountered%20with%20this%20dataset%3A%0A%0A%23%23%20Steps%20to%20Reproduce%0A%0A1.%20%0A2.%20%0A3.%20%0A%0A%23%23%20Expected%20Behavior%0A%0A%0A%23%23%20Additional%20Context%0A%0A&amp;labels=dataset"><span>Report an Issue on GitHub</span></a></p>
 </div>
-<figure class="align-center">
-<a class="reference internal image-reference" href="https://arxiv.org/html/2510.10169v2/brainform-tasks.png"><img alt="BrainForm event-related potentials (ERP) dataset." src="https://arxiv.org/html/2510.10169v2/brainform-tasks.png" style="width: 1000px;" />
-</a>
-</figure>
-<p>The BrainForm dataset <a class="reference internal" href="#r382249ec25ce-1" id="id1">[1]</a> is a dataset collected using a serious game
-for brain-computer interface (BCI) training and data collection. It includes
-EEG recordings from multiple subjects performing a ERP task on 10 unique stimuli.
-The dataset is organized in BIDS format and contains calibration and inference sessions.</p>
-<p>Each subject performed two calibration sessions, one with a checkerboard texture on the targets, the other one with
-a grain texture. Each calibration was followed by an inference session where the subject played the game. The game
-consisted of two separate tasks: in the first one, the subject had to hit moving aliens using the color matched
-target; in the second one, they need to follow a randomized sequence of colors by hitting the corresponding targets
-to unlock a door.</p>
-<p>Calibration sessions consisted of 60 trials on a single training target, for a total of 600 events (60 trials x 10
-unique targets). This means that by default, the data is unbalanced, with 60 target events and 540 non-target events
-per session.
-In inference sessions, the number of events varied depending on the subject’s performance</p>
-<p>A total of 16 subjects took an optional free-play run after the main protocol, where they could choose their favorite
-texture and play the game again. The extra sessions include a calibration and can be included by setting the <cite>extra_runs</cite>
-parameter. The full protocol is described in <a class="reference internal" href="#r382249ec25ce-1" id="id2">[1]</a>.
-A study on cross-subject decoding using this dataset is presented in <a class="reference internal" href="#r382249ec25ce-2" id="id3">[2]</a>.</p>
-<p>A total of 2 subjects (15 and 18) did not complete the full protocol and are excluded by default.</p>
-<p>For many subjects, multiple calibration attempts were not successful, but they can be included by setting the
-<cite>exclude_failed</cite> parameter to False.</p>
-<p>Inference sessions can be included along with calibration by setting the <cite>include_inference</cite> parameter to True, but
-the triggers only indicate the stimulus onset and not ground truth labels.</p>
-<p>You can test the dataset with the following code:</p>
-<p class="rubric">Examples</p>
-<p>Loading the dataset and then create a subset of the available sessions and runs for subject P01 and P02:
-&gt;&gt;&gt; paradigm = P300(resample=128)
-&gt;&gt;&gt; dataset = RomaniBF2025ERP(include_inference=True, exclude_failed=False)
-&gt;&gt;&gt; subset = paradigm.get_data(dataset, [0, 1])</p>
-<p>Expected output:
-Sessions for subject 2: [‘0grain’, ‘1cb’, ‘2cbExtra’]</p>
+<input id="sd-tab-item-3" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" for="sd-tab-item-3">
+Notes</label><div class="sd-tab-content docutils">
 <p class="rubric">Notes</p>
 <ul class="simple">
 <li><p>EEG signals were recorded using a g.tec Unicorn with a sampling rate of 250 Hz and conductive gel applied.</p></li>
@@ -821,20 +972,14 @@ EEG signals were referenced to the right mastoid and grounded to the left mastoi
 {0: ‘P01’, 1: ‘P02’, 2: ‘P03’, 3: ‘P04’, 4: ‘P05’, 5: ‘P06’, 6: ‘P07’, 7: ‘P08’, 8: ‘P09’, 9: ‘P10’, 10: ‘P11’,
 11: ‘P12’, 12: ‘P13’, 13: ‘P14’, 14: ‘P16’, 15: ‘P17’, 16: ‘P19’, 17: ‘P20’, 18: ‘P21’, 19: ‘P22’, 20: ‘P23’,
 21: ‘P24’}</p>
-<p class="rubric">References</p>
-<div role="list" class="citation-list">
-<div class="citation" id="r382249ec25ce-1" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
-<span class="backrefs">(<a role="doc-backlink" href="#id1">1</a>,<a role="doc-backlink" href="#id2">2</a>)</span>
-<p>M. Romani, D. Zanoni, E. Farella, and L. Turchet, “BrainForm: a Serious Game for BCI Training and Data Collection,”
-Oct. 14, 2025, arXiv: arXiv:2510.10169. doi: 10.48550/arXiv.2510.10169.</p>
-</div>
-<div class="citation" id="r382249ec25ce-2" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">2</a><span class="fn-bracket">]</span></span>
-<p>M. Romani, F. Paissan, A. Fossà, and E. Farella, “Explicit modelling of subject dependency in BCI decoding,”
-Sept. 27, 2025, arXiv: arXiv:2509.23247. doi: 10.48550/arXiv.2509.23247.</p>
 </div>
 </div>
+<dl class="py method">
+<dt class="sig sig-object py" id="moabb.datasets.RomaniBF2025ERP.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_folder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subjects</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.14)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude_subjects</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.14)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">['P15',</span> <span class="pre">'P18']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">calibration_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">60</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_targets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nt_target</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><span class="pre">tuple</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[-0.1,</span> <span class="pre">1.0]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_runs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_inference</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_failed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">montage</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'standard_1020'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sessions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/romani_bf2025_erp.py#L261-L355"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.RomaniBF2025ERP.__init__" title="Link to this definition">#</a></dt>
+<dd><p>Initialize the Brainform MOABB dataset.</p>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="moabb.datasets.RomaniBF2025ERP.data_path">
 <span class="sig-name descname"><span class="pre">data_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subject</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/romani_bf2025_erp.py#L448-L476"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.RomaniBF2025ERP.data_path" title="Link to this definition">#</a></dt>
@@ -897,27 +1042,6 @@ Required abstract method from BaseDataset.</p>
             </div>
             
             
-              
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-<div
-    id="pst-page-navigation-heading-2"
-    class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> On this page
-  </div>
-  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#moabb.datasets.RomaniBF2025ERP"><code class="docutils literal notranslate"><span class="pre">RomaniBF2025ERP</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#moabb.datasets.RomaniBF2025ERP.data_path"><code class="docutils literal notranslate"><span class="pre">RomaniBF2025ERP.data_path()</span></code></a></li>
-</ul>
-</li>
-</ul>
-  </nav></div>
-
-</div></div>
               
             
           </div>

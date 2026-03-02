@@ -41,7 +41,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=32f982a3" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=f118ea32" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-2.0.4/b-3.0.2/b-html5-3.0.2/datatables.min.css" />
   
   <!-- So that users can add custom icons -->
@@ -607,6 +607,11 @@
 <li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_CCA.html">moabb.pipelines.classification.SSVEP_CCA</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_TRCA.html">moabb.pipelines.classification.SSVEP_TRCA</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_MsetCCA.html">moabb.pipelines.classification.SSVEP_MsetCCA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_itCCA.html">moabb.pipelines.classification.SSVEP_itCCA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_eCCA.html">moabb.pipelines.classification.SSVEP_eCCA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_TRCA_R.html">moabb.pipelines.classification.SSVEP_TRCA_R</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_SSCOR.html">moabb.pipelines.classification.SSVEP_SSCOR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.pipelines.classification.SSVEP_TDCA.html">moabb.pipelines.classification.SSVEP_TDCA</a></li>
 </ul>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="moabb.analysis.plotting.score_plot.html">moabb.analysis.plotting.score_plot</a></li>
@@ -766,6 +771,9 @@ logging, i.e.: DEBUG, INFO, WARNING, ERROR, CRITICAL</p>
 </div><div class="sphx-glr-thumbcontainer" tooltip="Electroencephalography (EEG) signal cleaning has long been a critical challenge in the research community. The presence of artifacts can significantly degrade EEG data quality, complicating analysis and potentially leading to erroneous interpretations. These artifacts are broadly categorized as either endogenous (biological: ocular, myogenic, cardiac) or exogenous (environmental, instrumental). As noted in [3]_, manual annotation of artifacts is time-consuming, subjective, and impractical for large-scale EEG studies."><img alt="" src="../_images/sphx_glr_plot_riemannian_artifact_rejection_thumb.png" />
 <p><a class="reference internal" href="../auto_examples/advanced_examples/plot_riemannian_artifact_rejection.html"><span class="doc">Riemannian Artifact Rejection as a Pre-processing Step</span></a></p>
   <div class="sphx-glr-thumbnail-title">Riemannian Artifact Rejection as a Pre-processing Step</div>
+</div><div class="sphx-glr-thumbcontainer" tooltip="This example shows how to perform time-resolved decoding of EEG signals using mne.decoding.SlidingEstimator. Instead of reducing the entire trial to a single score, a SlidingEstimator fits an independent classifier at each time point, revealing when during a trial the neural signal carries information about the mental state."><img alt="" src="../_images/sphx_glr_plot_sliding_estimator_thumb.png" />
+<p><a class="reference internal" href="../auto_examples/advanced_examples/plot_sliding_estimator.html"><span class="doc">Time-Resolved Decoding with SlidingEstimator</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Time-Resolved Decoding with SlidingEstimator</div>
 </div><div class="sphx-glr-thumbcontainer" tooltip="The MOABB codebase comes with convenience plotting utilities and some statistical testing. This tutorial focuses on what those exactly are and how they can be used."><img alt="" src="../_images/sphx_glr_plot_statistical_analysis_thumb.png" />
 <p><a class="reference internal" href="../auto_examples/advanced_examples/plot_statistical_analysis.html"><span class="doc">Statistical Analysis</span></a></p>
   <div class="sphx-glr-thumbnail-title">Statistical Analysis</div>
