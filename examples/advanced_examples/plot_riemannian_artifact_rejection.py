@@ -201,7 +201,7 @@ covs = Covariances(estimator="lwf").transform(data)
 potato = Potato(metric=dict(mean="riemann", distance="riemann"), threshold=3)
 potato.fit(covs)
 z_scores = potato.transform(covs)
-is_clean = _predict_clean_mask(potato, covs)
+is_clean = predict_clean_mask(potato, covs)
 
 print(f"RP detected {(~is_clean).sum()}/{len(covs)} artifact epochs")
 
@@ -265,7 +265,7 @@ potato_2d = Potato(
 )
 potato_2d.fit(covs_2d[:n_calib_2d])
 z_2d = potato_2d.transform(covs_2d)
-is_clean_2d = _predict_clean_mask(potato_2d, covs_2d)
+is_clean_2d = predict_clean_mask(potato_2d, covs_2d)
 barycenter_2d = potato_2d.covmean_
 
 # Extract the (0,0) and (1,1) diagonal entries for plotting.
@@ -764,7 +764,7 @@ def riemannian_potato_rejection(epochs):
     covs = Covariances(estimator="lwf").transform(data)
     potato = Potato(metric=dict(mean="riemann", distance="riemann"), threshold=3)
     potato.fit(covs)
-    is_clean = _predict_clean_mask(potato, covs)
+    is_clean = predict_clean_mask(potato, covs)
 
     n_rejected = n_before - is_clean.sum()
     print(f"  RP: rejected {n_rejected}/{n_before} epochs")
@@ -815,7 +815,7 @@ def riemannian_potato_field_rejection(epochs):
         p_threshold=0.01,
     )
     rpf.fit(cov_list)
-    is_clean = _predict_clean_mask(rpf, cov_list)
+    is_clean = predict_clean_mask(rpf, cov_list)
 
     n_rejected = n_before - is_clean.sum()
     print(f"  RPF: rejected {n_rejected}/{n_before} epochs")
@@ -1057,7 +1057,7 @@ def improved_rpf_rejection(epochs):
         method_combination=min_fisher_stouffer,
     )
     irpf.fit(cov_list)
-    is_clean_rpf = _predict_clean_mask(irpf, cov_list)
+    is_clean_rpf = predict_clean_mask(irpf, cov_list)
 
     # Union of both rejection mechanisms
     is_clean = is_clean_amplitude & is_clean_rpf
