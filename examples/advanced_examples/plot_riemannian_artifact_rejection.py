@@ -274,97 +274,140 @@ cov_scale = 1e12
 x_vals = covs_2d[:, 0, 0] * cov_scale
 y_vals = covs_2d[:, 1, 1] * cov_scale
 
-fig, ax = plt.subplots(figsize=(7, 6), facecolor="white")
+# Compare Riemannian and Euclidean potatoes on the same calibration set.
+potato_2d_euclid = Potato(
+    metric=dict(mean="euclid", distance="euclid"),
+    threshold=z_threshold_2d,
+)
+potato_2d_euclid.fit(covs_2d[:n_calib_2d])
 
-# Create a grid and compute z-scores for isocontours
-x_grid = np.linspace(x_vals.min() * 0.8, x_vals.max() * 1.05, 100)
-y_grid = np.linspace(y_vals.min() * 0.8, y_vals.max() * 1.05, 100)
+calib_x = x_vals[:n_calib_2d]
+calib_y = y_vals[:n_calib_2d]
+x_p01, x_p99 = np.percentile(calib_x, [1, 99])
+y_p01, y_p99 = np.percentile(calib_y, [1, 99])
+x_pad = 0.35 * max(x_p99 - x_p01, 1e-12)
+y_pad = 0.35 * max(y_p99 - y_p01, 1e-12)
+x_grid = np.linspace(x_p01 - x_pad, x_p99 + x_pad, 140)
+y_grid = np.linspace(y_p01 - y_pad, y_p99 + y_pad, 140)
 xx, yy = np.meshgrid(x_grid, y_grid)
-# Build 2x2 SPD matrices from diagonal entries using the barycenter's
-# off-diagonal as a reference
-off_diag = barycenter_2d[0, 1]
-grid_covs = np.zeros((len(x_grid) * len(y_grid), 2, 2))
-grid_covs[:, 0, 0] = xx.ravel() / cov_scale
-grid_covs[:, 1, 1] = yy.ravel() / cov_scale
-grid_covs[:, 0, 1] = off_diag
-grid_covs[:, 1, 0] = off_diag
 
-# Only compute z-scores for valid SPD matrices (positive determinant)
-det = grid_covs[:, 0, 0] * grid_covs[:, 1, 1] - off_diag**2
-valid = det > 0
-z_grid = np.full(len(grid_covs), np.nan)
-if valid.sum() > 0:
-    z_grid[valid] = potato_2d.transform(grid_covs[valid])
 
-z_map = np.ma.masked_invalid(z_grid.reshape(xx.shape))
+def make_z_map(model):
+    """Compute z-score map on a diagonal covariance grid."""
+    off_diag = model.covmean_[0, 1]
+    grid_covs = np.zeros((len(x_grid) * len(y_grid), 2, 2))
+    grid_covs[:, 0, 0] = xx.ravel() / cov_scale
+    grid_covs[:, 1, 1] = yy.ravel() / cov_scale
+    grid_covs[:, 0, 1] = off_diag
+    grid_covs[:, 1, 0] = off_diag
 
-# Filled contours INSIDE the potato (z <= threshold)
-z_inside = np.ma.masked_where(z_map > z_threshold_2d, z_map)
-inside_levels = np.linspace(0, z_threshold_2d, 7)
-contour_filled = ax.contourf(
-    xx, yy, z_inside, levels=inside_levels, cmap="RdYlBu_r", alpha=0.6
+    det = grid_covs[:, 0, 0] * grid_covs[:, 1, 1] - off_diag**2
+    valid = det > 0
+    z_grid = np.full(len(grid_covs), np.nan)
+    if valid.sum() > 0:
+        z_grid[valid] = model.transform(grid_covs[valid])
+    return np.ma.masked_invalid(z_grid.reshape(xx.shape))
+
+
+z_map_riemann = make_z_map(potato_2d)
+z_map_euclid = make_z_map(potato_2d_euclid)
+z_abs_max = np.nanmax(
+    np.abs(
+        np.hstack(
+            [z_map_riemann.compressed(), z_map_euclid.compressed(), [z_threshold_2d]]
+        )
+    )
 )
+z_levels = np.linspace(-z_abs_max, z_abs_max, 18)
 
-# Outline contours OUTSIDE the potato (z > threshold)
-ax.contour(
-    xx,
-    yy,
-    z_map,
-    levels=[4, 5, 7, 10],
-    colors="grey",
-    linewidths=0.8,
-    linestyles="dashed",
-    alpha=0.5,
-)
+fig, axes = plt.subplots(1, 2, figsize=(13, 5), facecolor="white")
+plot_specs = [
+    (axes[0], potato_2d, z_map_riemann, "Riemannian", "Z-score of Riemannian distance"),
+    (
+        axes[1],
+        potato_2d_euclid,
+        z_map_euclid,
+        "Euclidean",
+        "Z-score of Euclidean distance",
+    ),
+]
 
-# Prominent potato boundary at z = threshold
-ax.contour(
-    xx,
-    yy,
-    z_map,
-    levels=[z_threshold_2d],
-    colors=["black"],
-    linewidths=2.5,
-)
+for ax, model, z_map, title_name, cbar_label in plot_specs:
+    contour = ax.contourf(xx, yy, z_map, levels=z_levels, cmap="RdYlBu_r", alpha=0.55)
+    ax.contour(
+        xx, yy, z_map, levels=[z_threshold_2d], colors=["black"], linewidths=1.8
+    )
 
-plt.colorbar(contour_filled, ax=ax, label="z-score")
+    # Classify points in the same projected space as the contour:
+    # keep per-epoch diagonal entries and fix off-diagonal to model barycenter.
+    off_diag = model.covmean_[0, 1]
+    covs_2d_projected = covs_2d.copy()
+    covs_2d_projected[:, 0, 1] = off_diag
+    covs_2d_projected[:, 1, 0] = off_diag
+    det_points = (
+        covs_2d_projected[:, 0, 0] * covs_2d_projected[:, 1, 1] - off_diag**2
+    )
+    valid_points = det_points > 0
+    is_clean_full = np.zeros(len(covs_2d_projected), dtype=bool)
+    if valid_points.sum() > 0:
+        is_clean_full[valid_points] = predict_clean_mask(
+            model, covs_2d_projected[valid_points]
+        )
+    is_calib = np.zeros(len(covs_2d), dtype=bool)
+    is_calib[:n_calib_2d] = True
+    is_clean_calib = is_calib & is_clean_full
+    is_artifact_calib = is_calib & ~is_clean_full
+    is_artifact_eval = ~is_calib & ~is_clean_full
 
-# Plot epochs
-ax.scatter(
-    x_vals[is_clean_2d],
-    y_vals[is_clean_2d],
-    c="b",
-    s=20,
-    alpha=0.35,
-    edgecolors="none",
-    label="Clean",
-)
-ax.scatter(
-    x_vals[~is_clean_2d],
-    y_vals[~is_clean_2d],
-    c="r",
-    s=36,
-    label="Artifact",
-    zorder=5,
-)
-ax.scatter(
-    barycenter_2d[0, 0] * cov_scale,
-    barycenter_2d[1, 1] * cov_scale,
-    c="black",
-    s=120,
-    marker="o",
-    label="Barycenter",
-    zorder=5,
-)
+    ax.scatter(
+        x_vals[is_clean_calib],
+        y_vals[is_clean_calib],
+        c="blue",
+        s=34,
+        label="Calibration clean",
+        zorder=4,
+    )
+    ax.scatter(
+        x_vals[is_artifact_calib],
+        y_vals[is_artifact_calib],
+        c="red",
+        s=48,
+        label="Calibration artifact",
+        zorder=5,
+    )
+    ax.scatter(
+        x_vals[is_artifact_eval],
+        y_vals[is_artifact_eval],
+        c="red",
+        s=24,
+        alpha=0.65,
+        marker="x",
+        linewidths=1.2,
+        label="Artifact (outside calibration)",
+        zorder=5,
+    )
+    ax.scatter(
+        model.covmean_[0, 0] * cov_scale,
+        model.covmean_[1, 1] * cov_scale,
+        c="black",
+        s=120,
+        marker="o",
+        label="Barycenter",
+        zorder=5,
+    )
 
-ax.set_xlabel(f"Cov({ch_name_x},{ch_name_x}) [uV^2]")
-ax.set_ylabel(f"Cov({ch_name_y},{ch_name_y}) [uV^2]")
-ax.set_title(
-    "2D projection of the Riemannian potato\n"
-    f"(black line = z={z_threshold_2d:.0f} isocontour, "
-    f"calibrated on first {n_calib_2d} epochs)"
+    ax.set_title(f"2D projection of {title_name} potato")
+    ax.set_xlabel(f"Cov({ch_name_x},{ch_name_x}) [uV^2]")
+    ax.set_ylabel(f"Cov({ch_name_y},{ch_name_y}) [uV^2]")
+    ax.set_xlim(x_grid.min(), x_grid.max())
+    ax.set_ylim(y_grid.min(), y_grid.max())
+    ax.grid(alpha=0.2, linestyle=":")
+    ax.legend(loc="upper right")
+    plt.colorbar(contour, ax=ax, label=cbar_label)
+
+fig.suptitle(
+    f"Offline calibration of potatoes (first {n_calib_2d} epochs)", fontsize=18
 )
-ax.legend(loc="upper right")
 plt.tight_layout()
 plt.show()
 
