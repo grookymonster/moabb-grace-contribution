@@ -108,7 +108,7 @@ warnings.filterwarnings("ignore", category=RuntimeWarning, module="pyriemann")
 moabb.set_log_level("info")
 
 
-def _predict_clean_mask(model, covariances):
+def predict_clean_mask(model, covariances):
     """Return clean-epoch mask across pyRiemann label encodings."""
     labels = np.asarray(model.predict(covariances))
     if np.issubdtype(labels.dtype, np.number) and np.any(labels < 0):
@@ -180,7 +180,7 @@ print(f"Channels: {epochs.ch_names}")
 # **Limitation:** As the number of channels increases, the distance
 # becomes an average over many sensor contributions. Artifacts affecting
 # only a few channels may not produce a large enough distance to be
-# detected [3]_. This motivates the Potato Field.
+# detected [2]_. This motivates the Potato Field.
 
 ##############################################################################
 # Visualizing the Riemannian Potato
@@ -1021,9 +1021,8 @@ def improved_rpf_rejection(epochs):
     epochs that may not be detected by Riemannian analysis alone.
 
     **Potato field with per-potato metrics** (Section 2.4.4):
-    Uses pyriemann's enhanced ``PotatoField`` with per-potato distance
-    metrics and a custom combination callable implementing
-    ``min(Fisher, Stouffer)``.
+    Uses ``PotatoField`` with per-potato distance metrics and a
+    custom combination callable implementing ``min(Fisher, Stouffer)``.
 
     Both mechanisms operate on the original data independently, and their
     rejections are combined via union. This parallel approach avoids the
@@ -1361,8 +1360,7 @@ plt.show()
 #
 # 2. **Per-potato distance metrics**: the iRPF uses metrics tailored to
 #    each artifact type (e.g., Euclidean for ocular, Riemannian for
-#    general), implemented here through pyriemann's enhanced
-#    ``PotatoField(metric=[...])`` API.
+#    general).
 #
 # 3. **Multiple combination functions** (Section 2.4.4): per-potato
 #    p-values are combined using both Fisher's and Stouffer's (Liptak)
