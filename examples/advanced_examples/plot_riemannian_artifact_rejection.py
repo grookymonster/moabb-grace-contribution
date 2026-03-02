@@ -454,10 +454,6 @@ plt.show()
 # - **General artifacts**: broader channel sets, wide frequency bands,
 #   Riemannian distance.
 #
-# Recent pyriemann enhancements allow ``PotatoField`` to use a
-# **different metric per potato** and custom p-value combination methods.
-# We leverage that API below to implement both standard RPF (Fisher) and
-# iRPF-style min(Fisher, Stouffer) combinations with the same estimator.
 #
 # For the BNCI2014-009 dataset (16 channels, no EOG,
 # bandpass 1-24 Hz applied by the P300 paradigm), we adapt
