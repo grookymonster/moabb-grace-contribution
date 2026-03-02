@@ -435,8 +435,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../tutorials/tutorial_1_simple_example_motor_imagery.html">Tutorial 1: Simple Motor Imagery</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorials/tutorial_2_using_mulitple_datasets.html">Tutorial 2: Using multiple datasets</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorials/tutorial_3_benchmarking_multiple_pipelines.html">Tutorial 3: Benchmarking multiple pipelines</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorials/tutorial_4_adding_a_dataset.html">Tutorial 4: Creating a dataset class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorials/tutorial_5_build_a_custom_dataset.html">Tutorial 5: Creating a dataset class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/tutorial_4_adding_a_dataset.html">Tutorial 4: Creating custom datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/tutorial_5_combining_datasets.html">Tutorial 5: Combining Multiple Datasets into a Single Dataset</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../paradigm_examples/index.html">Paradigm-Specific Evaluation Examples (Within- &amp; Cross-Session)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -641,14 +641,14 @@ be overwritten if necessary.</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>BNCI2014-001-WithinSession:   0%|          | 0/1 [00:00&lt;?, ?it/s]
-BNCI2014-001-WithinSession: 100%|██████████| 1/1 [03:50&lt;00:00, 230.79s/it]
-BNCI2014-001-WithinSession: 100%|██████████| 1/1 [03:50&lt;00:00, 230.79s/it]
+BNCI2014-001-WithinSession: 100%|██████████| 1/1 [03:43&lt;00:00, 223.38s/it]
+BNCI2014-001-WithinSession: 100%|██████████| 1/1 [03:43&lt;00:00, 223.38s/it]
       score      time  ...  pipeline                  codecarbon_task_name
-0  0.600000  0.163050  ...   CSP+LDA  c247afe0-4f63-4d01-bea5-3f5bfd93ece4
-1  0.885714  0.074708  ...   CSP+LDA  be94f493-334c-4e63-a1e2-31d4037d6c38
-2  0.909524  0.190183  ...   CSP+LDA  40d5aff6-bd6d-46f1-b1f6-75673d1a9167
-3  0.947619  0.178669  ...   CSP+LDA  8b454fc6-ca71-4387-a917-0b463ae15e10
-4  0.704762  0.034941  ...   CSP+LDA  91303163-862e-4028-9560-c58fb1b2a1e2
+0  0.485714  0.020261  ...   CSP+LDA  37274ed0-a51f-440e-bf83-52a0d132880f
+1  0.828571  0.028495  ...   CSP+LDA  b3b45bbc-4762-4f97-b772-031e0cc20cfa
+2  0.928571  0.065150  ...   CSP+LDA  31be2cec-88dc-4ef8-9c7b-2e14cdd2ca52
+3  0.909524  0.106039  ...   CSP+LDA  2605f397-958e-46b0-b8bd-57de9a97408e
+4  0.890476  0.019887  ...   CSP+LDA  5a57652b-55d3-413b-9373-508d5c23e0ce
 
 [5 rows x 13 columns]
 </pre></div>
@@ -678,8 +678,7 @@ each pipeline</p>
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.show.html#matplotlib.pyplot.show" title="matplotlib.pyplot.show" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_learning_curve_motor_imagery_001.png" srcset="../../_images/sphx_glr_plot_learning_curve_motor_imagery_001.png" alt="Errorbar shows Mean-CI across permutations" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (4 minutes 10.102 seconds)</p>
-<p><strong>Estimated memory usage:</strong>  598 MB</p>
+<img src="../../_images/sphx_glr_plot_learning_curve_motor_imagery_001.png" srcset="../../_images/sphx_glr_plot_learning_curve_motor_imagery_001.png" alt="Errorbar shows Mean-CI across permutations" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (4 minutes 1.080 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-learning-curve-plot-learning-curve-motor-imagery-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/5b1f506cd53838de0dd70e569a36f198/plot_learning_curve_motor_imagery.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_learning_curve_motor_imagery.ipynb</span></code></a></p>

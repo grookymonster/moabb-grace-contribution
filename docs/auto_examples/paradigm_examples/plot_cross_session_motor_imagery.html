@@ -435,8 +435,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../tutorials/tutorial_1_simple_example_motor_imagery.html">Tutorial 1: Simple Motor Imagery</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorials/tutorial_2_using_mulitple_datasets.html">Tutorial 2: Using multiple datasets</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorials/tutorial_3_benchmarking_multiple_pipelines.html">Tutorial 3: Benchmarking multiple pipelines</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorials/tutorial_4_adding_a_dataset.html">Tutorial 4: Creating a dataset class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorials/tutorial_5_build_a_custom_dataset.html">Tutorial 5: Creating a dataset class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/tutorial_4_adding_a_dataset.html">Tutorial 4: Creating custom datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/tutorial_5_combining_datasets.html">Tutorial 5: Combining Multiple Datasets into a Single Dataset</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Paradigm-Specific Evaluation Examples (Within- &amp; Cross-Session)</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
@@ -633,15 +633,15 @@ be overwritten if necessary.</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>BNCI2014-001-CrossSession:   0%|          | 0/2 [00:00&lt;?, ?it/s]
-BNCI2014-001-CrossSession:  50%|█████     | 1/2 [00:12&lt;00:12, 12.34s/it]
-BNCI2014-001-CrossSession: 100%|██████████| 2/2 [00:24&lt;00:00, 12.26s/it]
-BNCI2014-001-CrossSession: 100%|██████████| 2/2 [00:24&lt;00:00, 12.27s/it]
+BNCI2014-001-CrossSession:  50%|█████     | 1/2 [00:14&lt;00:14, 14.44s/it]
+BNCI2014-001-CrossSession: 100%|██████████| 2/2 [00:26&lt;00:00, 13.20s/it]
+BNCI2014-001-CrossSession: 100%|██████████| 2/2 [00:26&lt;00:00, 13.39s/it]
       score      time  ...  pipeline                  codecarbon_task_name
-0  0.931713  0.251227  ...   CSP+LDA  011acebe-d0b1-4e2c-9b09-14c27778e225
-1  0.955440  0.215419  ...   CSP+LDA  6d7be1d8-de1f-419f-ace3-534eb7ddba70
-2  0.527199  0.219265  ...   CSP+LDA  8ef71c47-b2cf-4670-9ba7-16f2bf3ad851
-3  0.646219  0.274869  ...   CSP+LDA  43ff0be8-156b-438e-b633-bd3c56a358f7
-4  0.950424  0.092623  ...     RG+LR  ab235d56-9c93-46b1-b23b-06a92a6547ed
+0  0.931713  0.244089  ...   CSP+LDA  3efcb660-26ce-426f-b960-6b78e5324a63
+1  0.955440  0.238847  ...   CSP+LDA  8e074c47-6a89-4fbd-8dbf-53104764b5ee
+2  0.527199  0.232394  ...   CSP+LDA  197db591-30fd-41a7-a2be-c5e9d964ed54
+3  0.646219  0.176801  ...   CSP+LDA  d6efdee7-9ba6-408d-b2c9-9e1942fa457e
+4  0.950424  0.090095  ...     RG+LR  c5a8577e-88b6-4410-a9b6-d1fb660ebef0
 
 [5 rows x 11 columns]
 </pre></div>
@@ -683,8 +683,7 @@ points are in its quadrant.</p>
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.show.html#matplotlib.pyplot.show" title="matplotlib.pyplot.show" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_cross_session_motor_imagery_001.png" srcset="../../_images/sphx_glr_plot_cross_session_motor_imagery_001.png" alt="plot cross session motor imagery" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 26.808 seconds)</p>
-<p><strong>Estimated memory usage:</strong>  647 MB</p>
+<img src="../../_images/sphx_glr_plot_cross_session_motor_imagery_001.png" srcset="../../_images/sphx_glr_plot_cross_session_motor_imagery_001.png" alt="plot cross session motor imagery" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 28.276 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-paradigm-examples-plot-cross-session-motor-imagery-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/846c627146b8b580609ce7662075b0e9/plot_cross_session_motor_imagery.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_cross_session_motor_imagery.ipynb</span></code></a></p>

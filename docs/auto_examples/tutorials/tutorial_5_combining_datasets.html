@@ -12,7 +12,7 @@
     <link rel="icon" sizes="144x144" href="../../_static/favicon-144.png" type="image/png">
     <link rel="mask-icon" href="../../_static/favicon_mask-icon.svg" color="#222832" type="image/svg+xml">
     <link rel="apple-touch-icon" sizes="500x500" href="../../_static/favicon-500.png" type="image/png">
-    <title>Tutorial 5: Creating a dataset class &#8212; moabb 1.4.3-dev documentation</title>
+    <title>Tutorial 5: Combining Multiple Datasets into a Single Dataset &#8212; moabb 1.4.3-dev documentation</title>
   
   
   
@@ -71,15 +71,15 @@
                 gtag('js', new Date());
                 gtag('config', 'G-5WJBKDMSTE');
             </script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'auto_examples/tutorials/tutorial_5_build_a_custom_dataset';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'auto_examples/tutorials/tutorial_5_combining_datasets';</script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.datatables.net/v/dt/dt-2.0.4/b-3.0.2/b-html5-3.0.2/datatables.min.js"></script>
-    <link rel="canonical" href="https://moabb.neurotechx.com/docs/auto_examples/tutorials/tutorial_5_build_a_custom_dataset.html" />
+    <link rel="canonical" href="https://moabb.neurotechx.com/docs/auto_examples/tutorials/tutorial_5_combining_datasets.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Paradigm-Specific Evaluation Examples (Within- &amp; Cross-Session)" href="../paradigm_examples/index.html" />
-    <link rel="prev" title="Tutorial 4: Creating a dataset class" href="tutorial_4_adding_a_dataset.html" />
-    <link rel="canonical" href="https://moabb.neurotechx.com/docs/auto_examples/tutorials/tutorial_5_build_a_custom_dataset.html" />
+    <link rel="prev" title="Tutorial 4: Creating custom datasets" href="tutorial_4_adding_a_dataset.html" />
+    <link rel="canonical" href="https://moabb.neurotechx.com/docs/auto_examples/tutorials/tutorial_5_combining_datasets.html" />
     
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -435,8 +435,8 @@
 <li class="toctree-l2"><a class="reference internal" href="tutorial_1_simple_example_motor_imagery.html">Tutorial 1: Simple Motor Imagery</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tutorial_2_using_mulitple_datasets.html">Tutorial 2: Using multiple datasets</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tutorial_3_benchmarking_multiple_pipelines.html">Tutorial 3: Benchmarking multiple pipelines</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorial_4_adding_a_dataset.html">Tutorial 4: Creating a dataset class</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Tutorial 5: Creating a dataset class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_4_adding_a_dataset.html">Tutorial 4: Creating custom datasets</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Tutorial 5: Combining Multiple Datasets into a Single Dataset</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../paradigm_examples/index.html">Paradigm-Specific Evaluation Examples (Within- &amp; Cross-Session)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -534,7 +534,7 @@
     
     <li class="breadcrumb-item"><a href="index.html" class="nav-link">Getting Started!</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Tutorial 5: Creating a dataset class</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Tutorial 5: Combining Multiple Datasets into a Single Dataset</span></li>
   </ul>
 </nav>
 </div>
@@ -551,11 +551,11 @@
   
   <div class="sphx-glr-download-link-note admonition note">
 <p class="admonition-title">Note</p>
-<p><a class="reference internal" href="#sphx-glr-download-auto-examples-tutorials-tutorial-5-build-a-custom-dataset-py"><span class="std std-ref">Go to the end</span></a>
+<p><a class="reference internal" href="#sphx-glr-download-auto-examples-tutorials-tutorial-5-combining-datasets-py"><span class="std std-ref">Go to the end</span></a>
 to download the full example code.</p>
 </div>
-<section class="sphx-glr-example-title" id="tutorial-5-creating-a-dataset-class">
-<span id="sphx-glr-auto-examples-tutorials-tutorial-5-build-a-custom-dataset-py"></span><h1>Tutorial 5: Creating a dataset class<a class="headerlink" href="#tutorial-5-creating-a-dataset-class" title="Link to this heading">#</a></h1>
+<section class="sphx-glr-example-title" id="tutorial-5-combining-multiple-datasets-into-a-single-dataset">
+<span id="sphx-glr-auto-examples-tutorials-tutorial-5-combining-datasets-py"></span><h1>Tutorial 5: Combining Multiple Datasets into a Single Dataset<a class="headerlink" href="#tutorial-5-combining-multiple-datasets-into-a-single-dataset" title="Link to this heading">#</a></h1>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Author: Gregoire Cattan</span>
 <span class="c1">#</span>
 <span class="c1"># https://github.com/plcrodrigues/Workshop-MOABB-BCI-Graz-2019</span>
@@ -668,129 +668,11 @@ The CompoundDataset can be used as a <cite>normal</cite> dataset.</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>CustomDataset3-WithinSession:   0%|          | 0/4 [00:00&lt;?, ?it/s]
-CustomDataset3-WithinSession:  25%|██▌       | 1/4 [00:11&lt;00:35, 11.83s/it]
-CustomDataset3-WithinSession:  50%|█████     | 2/4 [00:27&lt;00:27, 13.98s/it]
-
-  0%|                                              | 0.00/46.4M [00:00&lt;?, ?B/s]
-
-  0%|                                      | 13.3k/46.4M [00:00&lt;06:39, 116kB/s]
-
-  0%|                                      | 41.0k/46.4M [00:00&lt;04:04, 190kB/s]
-
-  0%|                                      | 95.2k/46.4M [00:00&lt;02:24, 320kB/s]
-
-  0%|▏                                      | 212k/46.4M [00:00&lt;01:17, 596kB/s]
-
-  1%|▎                                     | 426k/46.4M [00:00&lt;00:43, 1.06MB/s]
-
-  2%|▋                                     | 885k/46.4M [00:00&lt;00:22, 2.06MB/s]
-
-  4%|█▍                                   | 1.80M/46.4M [00:00&lt;00:11, 4.00MB/s]
-
-  8%|██▉                                  | 3.63M/46.4M [00:00&lt;00:05, 7.82MB/s]
-
- 13%|████▉                                | 6.25M/46.4M [00:01&lt;00:03, 12.5MB/s]
-
- 18%|██████▌                              | 8.24M/46.4M [00:01&lt;00:02, 14.0MB/s]
-
- 23%|████████▌                            | 10.8M/46.4M [00:01&lt;00:02, 16.6MB/s]
-
- 32%|███████████▉                         | 14.9M/46.4M [00:01&lt;00:01, 22.4MB/s]
-
- 37%|█████████████▊                       | 17.4M/46.4M [00:01&lt;00:01, 22.1MB/s]
-
- 43%|███████████████▊                     | 19.9M/46.4M [00:01&lt;00:01, 22.1MB/s]
-
- 50%|██████████████████▍                  | 23.1M/46.4M [00:01&lt;00:00, 23.9MB/s]
-
- 56%|████████████████████▊                | 26.1M/46.4M [00:01&lt;00:00, 24.4MB/s]
-
- 62%|██████████████████████▉              | 28.7M/46.4M [00:01&lt;00:00, 24.1MB/s]
-
- 68%|█████████████████████████▎           | 31.8M/46.4M [00:02&lt;00:00, 24.9MB/s]
-
- 75%|███████████████████████████▋         | 34.7M/46.4M [00:02&lt;00:00, 25.1MB/s]
-
- 81%|██████████████████████████████       | 37.7M/46.4M [00:02&lt;00:00, 25.4MB/s]
-
- 87%|████████████████████████████████▎    | 40.5M/46.4M [00:02&lt;00:00, 25.1MB/s]
-
- 93%|██████████████████████████████████▌  | 43.3M/46.4M [00:02&lt;00:00, 25.1MB/s]
-
-  0%|                                              | 0.00/46.4M [00:00&lt;?, ?B/s]
-100%|██████████████████████████████████████| 46.4M/46.4M [00:00&lt;00:00, 150GB/s]
-
-CustomDataset3-WithinSession:  75%|███████▌  | 3/4 [00:51&lt;00:18, 18.54s/it]
-
-  0%|                                              | 0.00/74.3M [00:00&lt;?, ?B/s]
-
-  0%|                                   | 1.02k/74.3M [00:00&lt;2:20:01, 8.84kB/s]
-
-  0%|                                      | 41.0k/74.3M [00:00&lt;05:57, 208kB/s]
-
-  0%|                                      | 95.2k/74.3M [00:00&lt;03:45, 329kB/s]
-
-  0%|                                       | 201k/74.3M [00:00&lt;02:11, 563kB/s]
-
-  1%|▏                                     | 429k/74.3M [00:00&lt;01:08, 1.08MB/s]
-
-  1%|▍                                     | 887k/74.3M [00:00&lt;00:35, 2.07MB/s]
-
-  2%|▉                                    | 1.80M/74.3M [00:00&lt;00:18, 4.01MB/s]
-
-  5%|█▊                                   | 3.62M/74.3M [00:00&lt;00:09, 7.78MB/s]
-
- 10%|███▌                                 | 7.15M/74.3M [00:01&lt;00:04, 14.9MB/s]
-
- 14%|█████                                | 10.3M/74.3M [00:01&lt;00:03, 18.7MB/s]
-
- 17%|██████▍                              | 12.9M/74.3M [00:01&lt;00:03, 20.0MB/s]
-
- 21%|███████▊                             | 15.8M/74.3M [00:01&lt;00:02, 21.4MB/s]
-
- 26%|█████████▌                           | 19.2M/74.3M [00:01&lt;00:02, 23.9MB/s]
-
- 30%|██████████▉                          | 21.9M/74.3M [00:01&lt;00:02, 24.1MB/s]
-
- 33%|████████████▎                        | 24.8M/74.3M [00:01&lt;00:02, 24.2MB/s]
-
- 37%|█████████████▋                       | 27.6M/74.3M [00:01&lt;00:01, 24.3MB/s]
-
- 41%|███████████████▏                     | 30.4M/74.3M [00:01&lt;00:01, 24.5MB/s]
-
- 45%|████████████████▋                    | 33.5M/74.3M [00:02&lt;00:01, 25.2MB/s]
-
- 49%|██████████████████▏                  | 36.5M/74.3M [00:02&lt;00:01, 25.6MB/s]
-
- 53%|███████████████████▋                 | 39.6M/74.3M [00:02&lt;00:01, 26.1MB/s]
-
- 57%|█████████████████████▏               | 42.5M/74.3M [00:02&lt;00:01, 25.7MB/s]
-
- 61%|██████████████████████▌              | 45.3M/74.3M [00:02&lt;00:01, 25.2MB/s]
-
- 65%|████████████████████████▏            | 48.6M/74.3M [00:02&lt;00:00, 26.4MB/s]
-
- 70%|█████████████████████████▊           | 51.8M/74.3M [00:02&lt;00:00, 26.9MB/s]
-
- 74%|███████████████████████████▏         | 54.7M/74.3M [00:02&lt;00:00, 26.3MB/s]
-
- 78%|████████████████████████████▋        | 57.6M/74.3M [00:02&lt;00:00, 26.0MB/s]
-
- 82%|██████████████████████████████▎      | 60.9M/74.3M [00:03&lt;00:00, 27.0MB/s]
-
- 86%|███████████████████████████████▉     | 64.1M/74.3M [00:03&lt;00:00, 27.1MB/s]
-
- 92%|█████████████████████████████████▉   | 68.2M/74.3M [00:03&lt;00:00, 29.0MB/s]
-
- 96%|███████████████████████████████████▌ | 71.3M/74.3M [00:03&lt;00:00, 28.5MB/s]
-
-100%|████████████████████████████████████▉| 74.2M/74.3M [00:03&lt;00:00, 27.4MB/s]
-
-  0%|                                              | 0.00/74.3M [00:00&lt;?, ?B/s]
-100%|██████████████████████████████████████| 74.3M/74.3M [00:00&lt;00:00, 300GB/s]
-
-CustomDataset3-WithinSession: 100%|██████████| 4/4 [01:29&lt;00:00, 26.24s/it]
-CustomDataset3-WithinSession: 100%|██████████| 4/4 [01:29&lt;00:00, 22.33s/it]
+CustomDataset3-WithinSession:  25%|██▌       | 1/4 [00:00&lt;00:00,  4.74it/s]
+CustomDataset3-WithinSession:  50%|█████     | 2/4 [00:00&lt;00:00,  4.68it/s]
+CustomDataset3-WithinSession:  75%|███████▌  | 3/4 [00:00&lt;00:00,  4.60it/s]
+CustomDataset3-WithinSession: 100%|██████████| 4/4 [00:00&lt;00:00,  4.42it/s]
+CustomDataset3-WithinSession: 100%|██████████| 4/4 [00:00&lt;00:00,  4.50it/s]
       score      time  ...  pipeline                  codecarbon_task_name
 0  0.627500  0.334485  ...       MDM  7b74ca6b-92f1-4dc8-a507-f0ebd0f8a6b6
 1  0.640000  0.327466  ...       MDM  f6e48838-04e3-484d-aa61-afe4d8b5a506
@@ -800,17 +682,16 @@ CustomDataset3-WithinSession: 100%|██████████| 4/4 [01:29&lt
 [4 rows x 11 columns]
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (1 minutes 30.655 seconds)</p>
-<p><strong>Estimated memory usage:</strong>  536 MB</p>
-<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-tutorials-tutorial-5-build-a-custom-dataset-py">
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 1.124 seconds)</p>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-tutorials-tutorial-5-combining-datasets-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
-<p><a class="reference download internal" download="" href="../../_downloads/275776a57e5f58879d57ccb28b4daf54/tutorial_5_build_a_custom_dataset.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">tutorial_5_build_a_custom_dataset.ipynb</span></code></a></p>
+<p><a class="reference download internal" download="" href="../../_downloads/1d572f55de1f1c75feff109ca6a55fab/tutorial_5_combining_datasets.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">tutorial_5_combining_datasets.ipynb</span></code></a></p>
 </div>
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
-<p><a class="reference download internal" download="" href="../../_downloads/d04c0dc7171471ea51f4d366ca95bb84/tutorial_5_build_a_custom_dataset.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">tutorial_5_build_a_custom_dataset.py</span></code></a></p>
+<p><a class="reference download internal" download="" href="../../_downloads/0b1ec83b0a2aca7fc81aefb4043b4efe/tutorial_5_combining_datasets.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">tutorial_5_combining_datasets.py</span></code></a></p>
 </div>
 <div class="sphx-glr-download sphx-glr-download-zip docutils container">
-<p><a class="reference download internal" download="" href="../../_downloads/76ffa1cd683b9db1f52beb94d3cd31cc/tutorial_5_build_a_custom_dataset.zip"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">zipped:</span> <span class="pre">tutorial_5_build_a_custom_dataset.zip</span></code></a></p>
+<p><a class="reference download internal" download="" href="../../_downloads/cdf9d72353136316756c6aeadc757ac3/tutorial_5_combining_datasets.zip"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">zipped:</span> <span class="pre">tutorial_5_combining_datasets.zip</span></code></a></p>
 </div>
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
@@ -833,7 +714,7 @@ CustomDataset3-WithinSession: 100%|██████████| 4/4 [01:29&lt
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Tutorial 4: Creating a dataset class</p>
+        <p class="prev-next-title">Tutorial 4: Creating custom datasets</p>
       </div>
     </a>
     <a class="right-next"
@@ -877,8 +758,8 @@ CustomDataset3-WithinSession: 100%|██████████| 4/4 [01:29&lt
   <div class="sphx-glr-sidebar-component">
     
       
-        <div class="sphx-glr-sidebar-item sphx-glr-download-python-sidebar" title="tutorial_5_build_a_custom_dataset.py">
-          <a download href="../../_downloads/d04c0dc7171471ea51f4d366ca95bb84/tutorial_5_build_a_custom_dataset.py">
+        <div class="sphx-glr-sidebar-item sphx-glr-download-python-sidebar" title="tutorial_5_combining_datasets.py">
+          <a download href="../../_downloads/0b1ec83b0a2aca7fc81aefb4043b4efe/tutorial_5_combining_datasets.py">
             <i class="fa-solid fa-download"></i>
             Download source code
           </a>
@@ -886,8 +767,8 @@ CustomDataset3-WithinSession: 100%|██████████| 4/4 [01:29&lt
       
     
       
-        <div class="sphx-glr-sidebar-item sphx-glr-download-jupyter-sidebar" title="tutorial_5_build_a_custom_dataset.ipynb">
-          <a download href="../../_downloads/275776a57e5f58879d57ccb28b4daf54/tutorial_5_build_a_custom_dataset.ipynb">
+        <div class="sphx-glr-sidebar-item sphx-glr-download-jupyter-sidebar" title="tutorial_5_combining_datasets.ipynb">
+          <a download href="../../_downloads/1d572f55de1f1c75feff109ca6a55fab/tutorial_5_combining_datasets.ipynb">
             <i class="fa-solid fa-download"></i>
             Download Jupyter notebook
           </a>
@@ -895,8 +776,8 @@ CustomDataset3-WithinSession: 100%|██████████| 4/4 [01:29&lt
       
     
       
-        <div class="sphx-glr-sidebar-item sphx-glr-download-zip-sidebar" title="tutorial_5_build_a_custom_dataset.zip">
-          <a download href="../../_downloads/76ffa1cd683b9db1f52beb94d3cd31cc/tutorial_5_build_a_custom_dataset.zip">
+        <div class="sphx-glr-sidebar-item sphx-glr-download-zip-sidebar" title="tutorial_5_combining_datasets.zip">
+          <a download href="../../_downloads/cdf9d72353136316756c6aeadc757ac3/tutorial_5_combining_datasets.zip">
             <i class="fa-solid fa-download"></i>
             Download zipped
           </a>
@@ -925,7 +806,7 @@ CustomDataset3-WithinSession: 100%|██████████| 4/4 [01:29&lt
 <div class="sd-card sd-shadow-sm sd-mb-3 moabb-colab-card">
   <div class="sd-card-body moabb-colab-card-body">
     <p class="sd-card-text sd-fs-5 sd-font-weight-bold sd-mb-0">Run this example</p>
-    <a class="sd-btn sd-btn-primary" href="https://colab.research.google.com/github/NeuroTechX/moabb/blob/gh-pages/docs/auto_examples/_notebooks/tutorials/tutorial_5_build_a_custom_dataset.ipynb" target="_blank" rel="noopener">
+    <a class="sd-btn sd-btn-primary" href="https://colab.research.google.com/github/NeuroTechX/moabb/blob/gh-pages/docs/auto_examples/_notebooks/tutorials/tutorial_5_combining_datasets.ipynb" target="_blank" rel="noopener">
       <img class="moabb-colab-badge" alt="Open in Colab" src="https://colab.research.google.com/assets/colab-badge.svg">
     </a>
   </div>

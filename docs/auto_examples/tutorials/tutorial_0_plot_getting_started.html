@@ -435,8 +435,8 @@
 <li class="toctree-l2"><a class="reference internal" href="tutorial_1_simple_example_motor_imagery.html">Tutorial 1: Simple Motor Imagery</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tutorial_2_using_mulitple_datasets.html">Tutorial 2: Using multiple datasets</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tutorial_3_benchmarking_multiple_pipelines.html">Tutorial 3: Benchmarking multiple pipelines</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorial_4_adding_a_dataset.html">Tutorial 4: Creating a dataset class</a></li>
-<li class="toctree-l2"><a class="reference internal" href="tutorial_5_build_a_custom_dataset.html">Tutorial 5: Creating a dataset class</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_4_adding_a_dataset.html">Tutorial 4: Creating custom datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial_5_combining_datasets.html">Tutorial 5: Combining Multiple Datasets into a Single Dataset</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../paradigm_examples/index.html">Paradigm-Specific Evaluation Examples (Within- &amp; Cross-Session)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -618,14 +618,14 @@ is the name of the pipeline and the value is the Pipeline object</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><a href="../../generated/moabb.paradigms.LeftRightImagery.html#moabb.paradigms.LeftRightImagery" title="moabb.paradigms.LeftRightImagery" class="sphx-glr-backref-module-moabb-paradigms sphx-glr-backref-type-py-class"><span class="n">LeftRightImagery</span></a><span class="p">()</span><span class="o">.</span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">datasets</span></a><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[&lt;moabb.datasets.bnci.bnci_2014.BNCI2014_001 object at 0x7f7ac2fdf550&gt;, &lt;moabb.datasets.bnci.bnci_2014.BNCI2014_004 object at 0x7f7ac2fdf430&gt;, &lt;moabb.datasets.beetl.Beetl2021_A object at 0x7f7abe7830a0&gt;, &lt;moabb.datasets.beetl.Beetl2021_B object at 0x7f7ac2fdf9a0&gt;, &lt;moabb.datasets.gigadb.Cho2017 object at 0x7f7abe9e8370&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023 object at 0x7f7abe9ea140&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023A object at 0x7f7abe9e9e40&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023B object at 0x7f7ac2fdfb20&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023C object at 0x7f7ac2fdf730&gt;, &lt;moabb.datasets.mpi_mi.GrosseWentrup2009 object at 0x7f7ac2f7c580&gt;, &lt;moabb.datasets.Lee2019.Lee2019_MI object at 0x7f7ac2fdf610&gt;, &lt;moabb.datasets.liu2024.Liu2024 object at 0x7f7ac2fdf7f0&gt;, &lt;moabb.datasets.physionet_mi.PhysionetMI object at 0x7f7ac2f7c7f0&gt;, &lt;moabb.datasets.schirrmeister2017.Schirrmeister2017 object at 0x7f7ac2fdf820&gt;, &lt;moabb.datasets.bbci_eeg_fnirs.Shin2017A object at 0x7f7ac2f7c7c0&gt;, &lt;moabb.datasets.stieger2021.Stieger2021 object at 0x7f7ac2fdfbe0&gt;, &lt;moabb.datasets.Weibo2014.Weibo2014 object at 0x7f7ac2f7c790&gt;, &lt;moabb.datasets.Zhou2016.Zhou2016 object at 0x7f7ac2f7c610&gt;]
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[&lt;moabb.datasets.bnci.bnci_2014.BNCI2014_001 object at 0x7fa57846a3e0&gt;, &lt;moabb.datasets.bnci.bnci_2014.BNCI2014_004 object at 0x7fa57846a200&gt;, &lt;moabb.datasets.beetl.Beetl2021_A object at 0x7fa57846a2f0&gt;, &lt;moabb.datasets.beetl.Beetl2021_B object at 0x7fa57846a110&gt;, &lt;moabb.datasets.gigadb.Cho2017 object at 0x7fa57846a140&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023 object at 0x7fa57846a290&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023A object at 0x7fa578469f00&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023B object at 0x7fa57846a260&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023C object at 0x7fa57846a1a0&gt;, &lt;moabb.datasets.mpi_mi.GrosseWentrup2009 object at 0x7fa57846a020&gt;, &lt;moabb.datasets.Lee2019.Lee2019_MI object at 0x7fa578469ed0&gt;, &lt;moabb.datasets.liu2024.Liu2024 object at 0x7fa57846a470&gt;, &lt;moabb.datasets.physionet_mi.PhysionetMI object at 0x7fa578469e70&gt;, &lt;moabb.datasets.schirrmeister2017.Schirrmeister2017 object at 0x7fa578469ea0&gt;, &lt;moabb.datasets.bbci_eeg_fnirs.Shin2017A object at 0x7fa578469e10&gt;, &lt;moabb.datasets.stieger2021.Stieger2021 object at 0x7fa5784697e0&gt;, &lt;moabb.datasets.Weibo2014.Weibo2014 object at 0x7fa57846a440&gt;, &lt;moabb.datasets.Zhou2016.Zhou2016 object at 0x7fa57846a320&gt;]
 </pre></div>
 </div>
 <p>Or you can run a search through the available datasets:</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><a href="../../generated/moabb.datasets.utils.dataset_search.html#moabb.datasets.utils.dataset_search" title="moabb.datasets.utils.dataset_search" class="sphx-glr-backref-module-moabb-datasets-utils sphx-glr-backref-type-py-function"><span class="n">utils</span><span class="o">.</span><span class="n">dataset_search</span></a><span class="p">(</span><a href="../../generated/moabb.paradigms.LeftRightImagery.html#moabb.paradigms.LeftRightImagery" title="moabb.paradigms.LeftRightImagery" class="sphx-glr-backref-module-moabb-paradigms sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">paradigm</span></a><span class="o">=</span><span class="s2">&quot;imagery&quot;</span><span class="p">,</span> <span class="n">min_subjects</span><span class="o">=</span><span class="mi">6</span><span class="p">))</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[&lt;moabb.datasets.alex_mi.AlexMI object at 0x7f7abe7806d0&gt;, &lt;moabb.datasets.bnci.bnci_2014.BNCI2014_001 object at 0x7f7abe7829b0&gt;, &lt;moabb.datasets.bnci.bnci_2014.BNCI2014_002 object at 0x7f7abe782bc0&gt;, &lt;moabb.datasets.bnci.bnci_2014.BNCI2014_004 object at 0x7f7abe780130&gt;, &lt;moabb.datasets.bnci.bnci_2015.BNCI2015_001 object at 0x7f7abe783b20&gt;, &lt;moabb.datasets.bnci.bnci_2015.BNCI2015_004 object at 0x7f7abe783ac0&gt;, &lt;moabb.datasets.bnci.bnci_2019.BNCI2019_001 object at 0x7f7abe7801f0&gt;, &lt;moabb.datasets.bnci.bnci_2020.BNCI2020_001 object at 0x7f7ac2fdfaf0&gt;, &lt;moabb.datasets.bnci.bnci_2022_001.BNCI2022_001 object at 0x7f7ac2fdf940&gt;, &lt;moabb.datasets.bnci.bnci_2024_001.BNCI2024_001 object at 0x7f7ac2fdfa90&gt;, &lt;moabb.datasets.bnci.bnci_2025.BNCI2025_001 object at 0x7f7ac2fdf8b0&gt;, &lt;moabb.datasets.bnci.bnci_2025.BNCI2025_002 object at 0x7f7ac2fdf730&gt;, &lt;moabb.datasets.gigadb.Cho2017 object at 0x7f7ac2fdf9a0&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023 object at 0x7f7ac2fdf430&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023A object at 0x7f7ac2fdf550&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023B object at 0x7f7ac2fdf970&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023C object at 0x7f7ac2fdfb50&gt;, &lt;moabb.datasets.fake.FakeDataset object at 0x7f7ac2fdf700&gt;, &lt;moabb.datasets.mpi_mi.GrosseWentrup2009 object at 0x7f7ac2fdf4f0&gt;, &lt;moabb.datasets.Lee2019.Lee2019_MI object at 0x7f7ac2fdf610&gt;, &lt;moabb.datasets.liu2024.Liu2024 object at 0x7f7ac2fdfb80&gt;, &lt;moabb.datasets.upper_limb.Ofner2017 object at 0x7f7ac2fdfb20&gt;, &lt;moabb.datasets.physionet_mi.PhysionetMI object at 0x7f7ac2fdfbe0&gt;, &lt;moabb.datasets.schirrmeister2017.Schirrmeister2017 object at 0x7f7ac2fdf640&gt;, &lt;moabb.datasets.bbci_eeg_fnirs.Shin2017A object at 0x7f7ac2fdfa00&gt;, &lt;moabb.datasets.bbci_eeg_fnirs.Shin2017B object at 0x7f7ac2fdf910&gt;, &lt;moabb.datasets.stieger2021.Stieger2021 object at 0x7f7ac2fdf880&gt;, &lt;moabb.datasets.Weibo2014.Weibo2014 object at 0x7f7ac2fdfbb0&gt;]
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[&lt;moabb.datasets.alex_mi.AlexMI object at 0x7fa578469e10&gt;, &lt;moabb.datasets.bnci.bnci_2014.BNCI2014_001 object at 0x7fa57846a470&gt;, &lt;moabb.datasets.bnci.bnci_2014.BNCI2014_002 object at 0x7fa578469e70&gt;, &lt;moabb.datasets.bnci.bnci_2014.BNCI2014_004 object at 0x7fa578469780&gt;, &lt;moabb.datasets.bnci.bnci_2015.BNCI2015_001 object at 0x7fa578469ea0&gt;, &lt;moabb.datasets.bnci.bnci_2015.BNCI2015_004 object at 0x7fa578469ed0&gt;, &lt;moabb.datasets.bnci.bnci_2019.BNCI2019_001 object at 0x7fa57846a020&gt;, &lt;moabb.datasets.bnci.bnci_2020.BNCI2020_001 object at 0x7fa57846a1a0&gt;, &lt;moabb.datasets.bnci.bnci_2022_001.BNCI2022_001 object at 0x7fa578469660&gt;, &lt;moabb.datasets.bnci.bnci_2024_001.BNCI2024_001 object at 0x7fa57846a200&gt;, &lt;moabb.datasets.bnci.bnci_2025.BNCI2025_001 object at 0x7fa57846a2f0&gt;, &lt;moabb.datasets.bnci.bnci_2025.BNCI2025_002 object at 0x7fa57846a260&gt;, &lt;moabb.datasets.gigadb.Cho2017 object at 0x7fa57846a110&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023 object at 0x7fa57846a3e0&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023A object at 0x7fa57846a410&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023B object at 0x7fa578469810&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023C object at 0x7fa57846a170&gt;, &lt;moabb.datasets.fake.FakeDataset object at 0x7fa578469c30&gt;, &lt;moabb.datasets.mpi_mi.GrosseWentrup2009 object at 0x7fa578469b70&gt;, &lt;moabb.datasets.Lee2019.Lee2019_MI object at 0x7fa578469f90&gt;, &lt;moabb.datasets.liu2024.Liu2024 object at 0x7fa57846a0e0&gt;, &lt;moabb.datasets.upper_limb.Ofner2017 object at 0x7fa578469f00&gt;, &lt;moabb.datasets.physionet_mi.PhysionetMI object at 0x7fa57846a380&gt;, &lt;moabb.datasets.schirrmeister2017.Schirrmeister2017 object at 0x7fa578469720&gt;, &lt;moabb.datasets.bbci_eeg_fnirs.Shin2017A object at 0x7fa5784696f0&gt;, &lt;moabb.datasets.bbci_eeg_fnirs.Shin2017B object at 0x7fa578469c90&gt;, &lt;moabb.datasets.stieger2021.Stieger2021 object at 0x7fa57846a4a0&gt;, &lt;moabb.datasets.Weibo2014.Weibo2014 object at 0x7fa578469bd0&gt;]
 </pre></div>
 </div>
 <p>Or you can simply make your own list (which we do here due to computational
@@ -665,18 +665,19 @@ subjects. This also is the correct place to specify multiple threads.</p>
 <span class="n">results</span> <span class="o">=</span> <a href="../../generated/moabb.evaluations.base.BaseEvaluation.html#moabb.evaluations.base.BaseEvaluation.process" title="moabb.evaluations.base.BaseEvaluation.process" class="sphx-glr-backref-module-moabb-evaluations-base sphx-glr-backref-type-py-method"><span class="n">evaluation</span><span class="o">.</span><span class="n">process</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pipelines</span></a><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>BNCI2014-001-CrossSession:   0%|          | 0/2 [00:00&lt;?, ?it/s]
-BNCI2014-001-CrossSession:  50%|█████     | 1/2 [00:13&lt;00:13, 13.72s/it]
-BNCI2014-001-CrossSession: 100%|██████████| 2/2 [00:25&lt;00:00, 12.68s/it]
-BNCI2014-001-CrossSession: 100%|██████████| 2/2 [00:25&lt;00:00, 12.84s/it]
-2026-03-01 23:13:35,374 INFO MainThread moabb.evaluations.base AM+LDA | BNCI2014-001 | 1 | 0train: Score 0.729
-2026-03-01 23:13:35,507 INFO MainThread moabb.evaluations.base AM+LDA | BNCI2014-001 | 1 | 1test: Score 0.715
-2026-03-01 23:13:35,637 INFO MainThread moabb.evaluations.base AM+SVM | BNCI2014-001 | 1 | 0train: Score 0.743
-2026-03-01 23:13:35,785 INFO MainThread moabb.evaluations.base AM+SVM | BNCI2014-001 | 1 | 1test: Score 0.715
-2026-03-01 23:13:35,931 INFO MainThread moabb.evaluations.base AM+LDA | BNCI2014-001 | 2 | 0train: Score 0.597
-2026-03-01 23:13:36,060 INFO MainThread moabb.evaluations.base AM+LDA | BNCI2014-001 | 2 | 1test: Score 0.521
-2026-03-01 23:13:36,194 INFO MainThread moabb.evaluations.base AM+SVM | BNCI2014-001 | 2 | 0train: Score 0.500
-2026-03-01 23:13:36,340 INFO MainThread moabb.evaluations.base AM+SVM | BNCI2014-001 | 2 | 1test: Score 0.500
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>BNCI2014-001-CrossSession:   0%|          | 0/2 [00:00&lt;?, ?it/s][codecarbon WARNING @ 14:15:44] Multiple instances of codecarbon are allowed to run at the same time.
+
+BNCI2014-001-CrossSession:  50%|█████     | 1/2 [00:15&lt;00:15, 15.37s/it]
+BNCI2014-001-CrossSession: 100%|██████████| 2/2 [00:27&lt;00:00, 13.37s/it]
+BNCI2014-001-CrossSession: 100%|██████████| 2/2 [00:27&lt;00:00, 13.67s/it]
+2026-03-02 14:16:07,636 INFO MainThread moabb.evaluations.base AM+LDA | BNCI2014-001 | 1 | 0train: Score 0.729
+2026-03-02 14:16:07,765 INFO MainThread moabb.evaluations.base AM+LDA | BNCI2014-001 | 1 | 1test: Score 0.715
+2026-03-02 14:16:07,893 INFO MainThread moabb.evaluations.base AM+SVM | BNCI2014-001 | 1 | 0train: Score 0.743
+2026-03-02 14:16:08,038 INFO MainThread moabb.evaluations.base AM+SVM | BNCI2014-001 | 1 | 1test: Score 0.715
+2026-03-02 14:16:08,179 INFO MainThread moabb.evaluations.base AM+LDA | BNCI2014-001 | 2 | 0train: Score 0.597
+2026-03-02 14:16:08,307 INFO MainThread moabb.evaluations.base AM+LDA | BNCI2014-001 | 2 | 1test: Score 0.521
+2026-03-02 14:16:08,438 INFO MainThread moabb.evaluations.base AM+SVM | BNCI2014-001 | 2 | 0train: Score 0.500
+2026-03-02 14:16:08,585 INFO MainThread moabb.evaluations.base AM+SVM | BNCI2014-001 | 2 | 1test: Score 0.500
 </pre></div>
 </div>
 <p>Results are returned as a pandas DataFrame. When multiple metrics are
@@ -686,17 +687,16 @@ provided, MOABB adds a primary <cite>score</cite> plus one column per metric
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>      score      time  ...  pipeline                  codecarbon_task_name
-0  0.729167  0.010888  ...    AM+LDA  b3df82c1-0eaa-4c4e-bc7d-ec08b0444fc9
-1  0.715278  0.009002  ...    AM+LDA  b4d3d0af-02cf-47e1-95c1-65f1c464f2d5
-2  0.597222  0.011024  ...    AM+LDA  6c12e17c-a3d0-4fea-b988-d4ddabc794a6
-3  0.520833  0.008803  ...    AM+LDA  4e58ffee-98aa-402c-941d-aa9e0ddbed74
-4  0.743056  0.130968  ...    AM+SVM  da436318-a0c8-44b1-956a-95a144ee3bdc
+0  0.729167  0.017832  ...    AM+LDA  0c081ec4-a649-4ca1-a658-fb6ddb21acc7
+1  0.715278  0.013751  ...    AM+LDA  4942b13e-028c-4e3d-b137-01785dd3f538
+2  0.597222  0.009351  ...    AM+LDA  0e780d40-4ef8-4a81-a1c5-ecd460365842
+3  0.520833  0.008192  ...    AM+LDA  4d0b3ebc-d5d3-4993-9495-149b2f095b11
+4  0.743056  0.129290  ...    AM+SVM  1b66027a-081a-429c-ad89-0361dc44030b
 
 [5 rows x 13 columns]
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 28.372 seconds)</p>
-<p><strong>Estimated memory usage:</strong>  806 MB</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 30.874 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-tutorials-tutorial-0-plot-getting-started-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/cc78b19f551dfa48627d09f644ea18ad/tutorial_0_plot_getting_started.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">tutorial_0_plot_getting_started.ipynb</span></code></a></p>
