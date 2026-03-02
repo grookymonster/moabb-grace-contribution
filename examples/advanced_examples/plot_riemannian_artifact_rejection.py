@@ -349,7 +349,7 @@ plt.show()
 
 ##############################################################################
 # The z-score distribution shows how the potato separates clean data
-# from outliers. Clean epochs cluster near z=0 while artifact epochs
+# from outliers. Clean epochs have low z-scores while artifact epochs
 # have high z-scores, beyond the threshold.
 
 fig, axes = plt.subplots(1, 2, figsize=(12, 4), facecolor="white")
