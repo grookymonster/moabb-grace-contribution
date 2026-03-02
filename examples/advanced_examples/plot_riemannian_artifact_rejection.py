@@ -297,16 +297,37 @@ if valid.sum() > 0:
     z_grid[valid] = potato_2d.transform(grid_covs[valid])
 
 z_map = np.ma.masked_invalid(z_grid.reshape(xx.shape))
-contour = ax.contourf(xx, yy, z_map, levels=20, cmap="RdYlBu_r", alpha=0.5)
+
+# Filled contours INSIDE the potato (z <= threshold)
+z_inside = np.ma.masked_where(z_map > z_threshold_2d, z_map)
+inside_levels = np.linspace(0, z_threshold_2d, 7)
+contour_filled = ax.contourf(
+    xx, yy, z_inside, levels=inside_levels, cmap="RdYlBu_r", alpha=0.6
+)
+
+# Outline contours OUTSIDE the potato (z > threshold)
+ax.contour(
+    xx,
+    yy,
+    z_map,
+    levels=[4, 5, 7, 10],
+    colors="grey",
+    linewidths=0.8,
+    linestyles="dashed",
+    alpha=0.5,
+)
+
+# Prominent potato boundary at z = threshold
 ax.contour(
     xx,
     yy,
     z_map,
     levels=[z_threshold_2d],
     colors=["black"],
-    linewidths=2,
+    linewidths=2.5,
 )
-plt.colorbar(contour, ax=ax, label="z-score")
+
+plt.colorbar(contour_filled, ax=ax, label="z-score")
 
 # Plot epochs
 ax.scatter(
