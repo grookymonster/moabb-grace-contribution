@@ -41,7 +41,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=f118ea32" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=2bd6ce74" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-2.0.4/b-3.0.2/b-html5-3.0.2/datatables.min.css" />
   
   <!-- So that users can add custom icons -->
@@ -74,6 +74,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'generated/moabb.datasets.compound_dataset.BI_Il';</script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.datatables.net/v/dt/dt-2.0.4/b-3.0.2/b-html5-3.0.2/datatables.min.js"></script>
+    <script src="../_static/js/section-nav-hierarchy.js?v=c53969c2"></script>
     <link rel="canonical" href="https://moabb.neurotechx.com/docs/generated/moabb.datasets.compound_dataset.BI_Il.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -699,7 +700,9 @@
   <div class="ds-card-head">
     <p class="ds-card-kicker">Dataset Snapshot</p>
     <p class="ds-card-title">BI_Il</p>
+
     <p class="ds-subtitle">P300 / ERP, 2 classes (Target vs NonTarget)</p>
+
   </div>
   <div class="ds-stats">
       <span class="ds-chip" style="--chip-color: #D32F2F">P300 / ERP</span>
@@ -709,6 +712,7 @@
       <span class="ds-chip ds-chip-muted">2 classes</span>
       <span class="ds-chip ds-chip-muted">1.0 s trials</span>
   </div>
+  <div class="ds-views-line" title="Google Analytics 4 page views"><div class="ds-views-main"><div class="ds-views-head"><span class="ds-views-label">Page Views</span><span class="ds-views-updated">Updated: 2026-03-02 UTC</span></div><div class="ds-views-metrics"><span>30d: <strong>n/a</strong></span><span class="ds-provenance-sep">·</span><span>all-time: <strong>n/a</strong></span></div><div class="ds-views-rank">Ranking: n/a</div></div><div class="ds-views-spark-wrap"></div></div>
   <p class="ds-class-line"><span class="ds-class-line-label">Class Labels:</span> Target, NonTarget</p>
   <div class="ds-actions">
       <button class="ds-btn ds-btn-primary ds-btn-toggle" type="button" aria-controls="ds-quickstart-bi_il" aria-expanded="false" onclick="var el=document.getElementById('ds-quickstart-bi_il');if(el){el.open=!el.open;this.setAttribute('aria-expanded',el.open?'true':'false');}">Quickstart</button>
@@ -717,15 +721,16 @@
   </div>
   <details id="ds-quickstart-bi_il" class="ds-quickstart">
   <summary class="ds-quickstart-summary">Toggle quickstart code</summary>
-  <pre class="ds-quickstart-code"><code>from moabb.datasets import BI_Il
+  <div class="ds-quickstart-code"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">moabb.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">BI_Il</span>
 
-dataset = BI_Il()
-data = dataset.get_data(subjects=[1])
-print(data[1])</code></pre>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">BI_Il</span><span class="p">()</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="n">subjects</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
 </details>
 
   <div class="ds-citation-impact"><p class="ds-citation-title">Citation & Impact</p><ul><li><span>PapersWithCode</span><a href="https://paperswithcode.com/dataset/braininvaders-il-moabb-1" target="_blank" rel="noopener">Dataset page</a></li></ul></div>
-  <div class="ds-caveats"><p class="ds-caveats-title">Known Caveats</p><ul><li>Single-session recordings</li></ul></div>
 </div><div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
 <div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-1 sd-row-cols-md-1 sd-row-cols-lg-1 sd-g-3 sd-g-xs-3 sd-g-sm-3 sd-g-md-3 sd-g-lg-3 docutils">
 <div class="sd-col sd-d-flex-row docutils">

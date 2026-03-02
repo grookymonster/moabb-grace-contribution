@@ -41,7 +41,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=f118ea32" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=2bd6ce74" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-2.0.4/b-3.0.2/b-html5-3.0.2/datatables.min.css" />
   
   <!-- So that users can add custom icons -->
@@ -74,6 +74,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'auto_examples/how_to_benchmark/noplot_example_codecarbon';</script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.datatables.net/v/dt/dt-2.0.4/b-3.0.2/b-html5-3.0.2/datatables.min.js"></script>
+    <script src="../../_static/js/section-nav-hierarchy.js?v=c53969c2"></script>
     <link rel="canonical" href="https://moabb.neurotechx.com/docs/auto_examples/how_to_benchmark/noplot_example_codecarbon.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -773,10 +774,7 @@ or vice versa).</p>
 </dd>
 </dl>
 <p><strong>Best for:</strong> Complete sustainability analysis and informed decision-making
-<strong>Use case:</strong> Selecting the best pipeline considering both performance</p>
-<blockquote>
-<div><p>and environmental impact</p>
-</div></blockquote>
+<strong>Use case:</strong> Selecting the best pipeline considering both performance and environmental impact</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">fig3</span> <span class="o">=</span> <span class="n">codecarbon_plot</span><span class="p">(</span>
     <span class="n">results</span><span class="p">,</span>
     <span class="n">order_list</span><span class="p">,</span>
@@ -792,76 +790,58 @@ or vice versa).</p>
 <section id="codecarbon-configuration-examples">
 <h2>CodeCarbon Configuration Examples<a class="headerlink" href="#codecarbon-configuration-examples" title="Link to this heading">#</a></h2>
 <p>Below are additional configuration examples for different use cases:</p>
-<p><strong>Example 2: Process-level tracking with custom tracking interval</strong>
-.. code-block:: python</p>
-<blockquote>
-<div><dl class="simple">
-<dt>codecarbon_config = {</dt><dd><p>‘tracking_mode’: ‘process’,
-‘measure_power_secs’: 30,
-‘save_to_file’: True,
-‘log_level’: ‘debug’</p>
-</dd>
-</dl>
-<p>}</p>
-</div></blockquote>
-<p><strong>Example 3: GPU tracking with specific IDs</strong>
-.. code-block:: python</p>
-<blockquote>
-<div><dl class="simple">
-<dt>codecarbon_config = {</dt><dd><p>‘gpu_ids’: ‘0,1,2’,  # Track GPUs 0, 1, 2
-‘save_to_file’: True,
-‘experiment_name’: ‘multi_gpu_benchmark’</p>
-</dd>
-</dl>
-<p>}</p>
-</div></blockquote>
-<p><strong>Example 4: Real-time carbon intensity data with Electricity Maps API</strong>
-.. code-block:: python</p>
-<blockquote>
-<div><dl class="simple">
-<dt>codecarbon_config = {</dt><dd><p>‘electricitymaps_api_token’: ‘your-token-here’,
-‘country_2letter_iso_code’: ‘FR’,
-‘save_to_file’: True,
-‘output_file’: ‘emissions_real_time.csv’</p>
-</dd>
-</dl>
-<p>}</p>
-</div></blockquote>
-<p><strong>Example 5: API-based tracking and reporting</strong>
-.. code-block:: python</p>
-<blockquote>
-<div><dl class="simple">
-<dt>codecarbon_config = {</dt><dd><p>‘save_to_api’: True,
-‘api_endpoint’: ‘<a class="reference external" href="https://api.codecarbon.io">https://api.codecarbon.io</a>’,
-‘api_key’: ‘your-api-key’,
-‘project_name’: ‘MOABB_Project’</p>
-</dd>
-</dl>
-<p>}</p>
-</div></blockquote>
-<p><strong>Example 6: Prometheus metrics export</strong>
-.. code-block:: python</p>
-<blockquote>
-<div><dl class="simple">
-<dt>codecarbon_config = {</dt><dd><p>‘save_to_prometheus’: True,
-‘prometheus_url’: ‘<a class="reference external" href="http://localhost:9091">http://localhost:9091</a>’,
-‘experiment_name’: ‘moabb_metrics’</p>
-</dd>
-</dl>
-<p>}</p>
-</div></blockquote>
-<p><strong>Example 7: Custom data center with manual power specifications</strong>
-.. code-block:: python</p>
-<blockquote>
-<div><dl class="simple">
-<dt>codecarbon_config = {</dt><dd><p>‘force_cpu_power’: 150.0,  # Watts
-‘force_ram_power’: 20.0,   # Watts
-‘pue’: 1.2,                # Data center PUE
-‘save_to_file’: True</p>
-</dd>
-</dl>
-<p>}</p>
-</div></blockquote>
+<p><strong>Example 2: Process-level tracking with custom tracking interval</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">codecarbon_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;tracking_mode&#39;</span><span class="p">:</span> <span class="s1">&#39;process&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;measure_power_secs&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
+    <span class="s1">&#39;save_to_file&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s1">&#39;log_level&#39;</span><span class="p">:</span> <span class="s1">&#39;debug&#39;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Example 3: GPU tracking with specific IDs</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">codecarbon_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;gpu_ids&#39;</span><span class="p">:</span> <span class="s1">&#39;0,1,2&#39;</span><span class="p">,</span>  <span class="c1"># Track GPUs 0, 1, 2</span>
+    <span class="s1">&#39;save_to_file&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s1">&#39;experiment_name&#39;</span><span class="p">:</span> <span class="s1">&#39;multi_gpu_benchmark&#39;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Example 4: Real-time carbon intensity data with Electricity Maps API</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">codecarbon_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;electricitymaps_api_token&#39;</span><span class="p">:</span> <span class="s1">&#39;your-token-here&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;country_2letter_iso_code&#39;</span><span class="p">:</span> <span class="s1">&#39;FR&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;save_to_file&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s1">&#39;output_file&#39;</span><span class="p">:</span> <span class="s1">&#39;emissions_real_time.csv&#39;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Example 5: API-based tracking and reporting</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">codecarbon_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;save_to_api&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s1">&#39;api_endpoint&#39;</span><span class="p">:</span> <span class="s1">&#39;https://api.codecarbon.io&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;api_key&#39;</span><span class="p">:</span> <span class="s1">&#39;your-api-key&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;project_name&#39;</span><span class="p">:</span> <span class="s1">&#39;MOABB_Project&#39;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Example 6: Prometheus metrics export</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">codecarbon_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;save_to_prometheus&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s1">&#39;prometheus_url&#39;</span><span class="p">:</span> <span class="s1">&#39;http://localhost:9091&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;experiment_name&#39;</span><span class="p">:</span> <span class="s1">&#39;moabb_metrics&#39;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Example 7: Custom data center with manual power specifications</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">codecarbon_config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;force_cpu_power&#39;</span><span class="p">:</span> <span class="mf">150.0</span><span class="p">,</span>  <span class="c1"># Watts</span>
+    <span class="s1">&#39;force_ram_power&#39;</span><span class="p">:</span> <span class="mf">20.0</span><span class="p">,</span>   <span class="c1"># Watts</span>
+    <span class="s1">&#39;pue&#39;</span><span class="p">:</span> <span class="mf">1.2</span><span class="p">,</span>                <span class="c1"># Data center PUE</span>
+    <span class="s1">&#39;save_to_file&#39;</span><span class="p">:</span> <span class="kc">True</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <section id="emissions-summary-report-and-analysis">
 <h3>Emissions Summary Report and Analysis<a class="headerlink" href="#emissions-summary-report-and-analysis" title="Link to this heading">#</a></h3>
 <p>Beyond visualizations, you can generate a detailed summary report using
