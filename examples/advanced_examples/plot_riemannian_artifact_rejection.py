@@ -334,9 +334,7 @@ plot_specs = [
 
 for ax, model, z_map, title_name, cbar_label in plot_specs:
     contour = ax.contourf(xx, yy, z_map, levels=z_levels, cmap="RdYlBu_r", alpha=0.55)
-    ax.contour(
-        xx, yy, z_map, levels=[z_threshold_2d], colors=["black"], linewidths=1.8
-    )
+    ax.contour(xx, yy, z_map, levels=[z_threshold_2d], colors=["black"], linewidths=1.8)
 
     # Classify points in the same projected space as the contour:
     # keep per-epoch diagonal entries and fix off-diagonal to model barycenter.
@@ -344,9 +342,7 @@ for ax, model, z_map, title_name, cbar_label in plot_specs:
     covs_2d_projected = covs_2d.copy()
     covs_2d_projected[:, 0, 1] = off_diag
     covs_2d_projected[:, 1, 0] = off_diag
-    det_points = (
-        covs_2d_projected[:, 0, 0] * covs_2d_projected[:, 1, 1] - off_diag**2
-    )
+    det_points = covs_2d_projected[:, 0, 0] * covs_2d_projected[:, 1, 1] - off_diag**2
     valid_points = det_points > 0
     is_clean_full = np.zeros(len(covs_2d_projected), dtype=bool)
     if valid_points.sum() > 0:
@@ -405,9 +401,7 @@ for ax, model, z_map, title_name, cbar_label in plot_specs:
     ax.legend(loc="upper right")
     plt.colorbar(contour, ax=ax, label=cbar_label)
 
-fig.suptitle(
-    f"Offline calibration of potatoes (first {n_calib_2d} epochs)", fontsize=18
-)
+fig.suptitle(f"Offline calibration of potatoes (first {n_calib_2d} epochs)", fontsize=18)
 plt.tight_layout()
 plt.show()
 
