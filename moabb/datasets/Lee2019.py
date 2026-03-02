@@ -1036,7 +1036,7 @@ class Lee2019_SSVEP(Lee2019):
         ),
         data_structure=DataStructureMetadata(
             n_trials=200,
-            n_trials_per_class={"5.45": 25, "6.67": 25, "8.57": 25, "12.0": 25},
+            n_trials_per_class={"5.45": 50, "6.67": 50, "8.57": 50, "12.0": 50},
             trials_context="100 trials (4 classes × 25 trials) in offline training phase and 100 trials in online test phase for SSVEP",
         ),
         file_format="MAT",

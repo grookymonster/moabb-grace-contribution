@@ -244,7 +244,7 @@ class Wang2016(BaseDataset):
                 "15.6hz_19.0pi",
                 "15.8hz_19.5pi",
             ],
-            trial_duration=6.0,
+            trial_duration=5.0,
             study_design="Cue-guided target selecting task using a 40-target BCI speller with joint frequency and phase modulation (JFPM) approach",
             stimulus_type="visual flicker",
             stimulus_modalities=["visual"],

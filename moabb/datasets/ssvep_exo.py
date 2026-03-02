@@ -95,7 +95,7 @@ class Kalunga2016(BaseDataset):
             paradigm="ssvep",
             n_classes=4,
             class_labels=["13hz", "17hz", "21hz", "rest"],
-            trial_duration=6.0,
+            trial_duration=2.0,
             study_design="SSVEP",
             stimulus_type="flickering",
             stimulus_modalities=["visual"],
