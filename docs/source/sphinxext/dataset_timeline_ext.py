@@ -101,14 +101,46 @@ def _cc_icon_svg(icon_key, size=16):
 # ---------------------------------------------------------------------------
 
 _LICENSE_INFO = {
-    "cc-by-4.0": ("CC BY 4.0", "https://creativecommons.org/licenses/by/4.0/", ["cc", "by"]),
-    "cc-by-1.0": ("CC BY 1.0", "https://creativecommons.org/licenses/by/1.0/", ["cc", "by"]),
-    "cc-by-sa-4.0": ("CC BY-SA 4.0", "https://creativecommons.org/licenses/by-sa/4.0/", ["cc", "by", "sa"]),
-    "cc-by-nc-4.0": ("CC BY-NC 4.0", "https://creativecommons.org/licenses/by-nc/4.0/", ["cc", "by", "nc"]),
-    "cc-by-nc-sa-4.0": ("CC BY-NC-SA 4.0", "https://creativecommons.org/licenses/by-nc-sa/4.0/", ["cc", "by", "nc", "sa"]),
-    "cc-by-nc-nd-4.0": ("CC BY-NC-ND 4.0", "https://creativecommons.org/licenses/by-nc-nd/4.0/", ["cc", "by", "nc", "nd"]),
-    "cc-by-nd-4.0": ("CC BY-ND 4.0", "https://creativecommons.org/licenses/by-nd/4.0/", ["cc", "by", "nd"]),
-    "cc0-1.0": ("CC0 1.0", "https://creativecommons.org/publicdomain/zero/1.0/", ["cc", "zero"]),
+    "cc-by-4.0": (
+        "CC BY 4.0",
+        "https://creativecommons.org/licenses/by/4.0/",
+        ["cc", "by"],
+    ),
+    "cc-by-1.0": (
+        "CC BY 1.0",
+        "https://creativecommons.org/licenses/by/1.0/",
+        ["cc", "by"],
+    ),
+    "cc-by-sa-4.0": (
+        "CC BY-SA 4.0",
+        "https://creativecommons.org/licenses/by-sa/4.0/",
+        ["cc", "by", "sa"],
+    ),
+    "cc-by-nc-4.0": (
+        "CC BY-NC 4.0",
+        "https://creativecommons.org/licenses/by-nc/4.0/",
+        ["cc", "by", "nc"],
+    ),
+    "cc-by-nc-sa-4.0": (
+        "CC BY-NC-SA 4.0",
+        "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+        ["cc", "by", "nc", "sa"],
+    ),
+    "cc-by-nc-nd-4.0": (
+        "CC BY-NC-ND 4.0",
+        "https://creativecommons.org/licenses/by-nc-nd/4.0/",
+        ["cc", "by", "nc", "nd"],
+    ),
+    "cc-by-nd-4.0": (
+        "CC BY-ND 4.0",
+        "https://creativecommons.org/licenses/by-nd/4.0/",
+        ["cc", "by", "nd"],
+    ),
+    "cc0-1.0": (
+        "CC0 1.0",
+        "https://creativecommons.org/publicdomain/zero/1.0/",
+        ["cc", "zero"],
+    ),
     "odc-by-1.0": ("ODC-By 1.0", "https://opendatacommons.org/licenses/by/1-0/", []),
     "gpl-3.0": ("GPL 3.0", "https://www.gnu.org/licenses/gpl-3.0.html", []),
     "unknown": ("Unknown", None, []),
@@ -1338,12 +1370,12 @@ def _make_header_html(
             chips.append(
                 f'<a class="ds-chip ds-chip-license" href="{escape(license_url)}" '
                 f'target="_blank" rel="noopener" title="{escape(display_name)}">'
-                f'{icons_html}{escape(display_name)}</a>'
+                f"{icons_html}{escape(display_name)}</a>"
             )
         else:
             chips.append(
                 f'<span class="ds-chip ds-chip-license" title="{escape(display_name)}">'
-                f'{icons_html}{escape(display_name)}</span>'
+                f"{icons_html}{escape(display_name)}</span>"
             )
 
     chips_html = "\n      ".join(chips)
