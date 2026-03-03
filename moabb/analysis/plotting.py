@@ -13,6 +13,7 @@ from matplotlib.collections import PatchCollection
 from matplotlib.patches import Circle, RegularPolygon
 from scipy.stats import t
 
+from moabb.analysis._utils import _match_float, _match_int
 from moabb.analysis.meta_analysis import (
     collapse_session_scores,
     combine_effects,
@@ -25,6 +26,161 @@ sea.set(font="serif", style="whitegrid", palette=PIPELINE_PALETTE, color_codes=F
 
 log = logging.getLogger(__name__)
 
+# Line style definitions for adjusted chance level alpha thresholds
+_ALPHA_LINE_STYLES = {
+    0.05: {"linestyle": "--", "color": "0.5", "linewidth": 1.5},
+    0.01: {"linestyle": "-.", "color": "0.6", "linewidth": 1.5},
+    0.001: {"linestyle": ":", "color": "0.7", "linewidth": 1.5},
+}
+
+
+def _resolve_chance_levels(data, chance_level):
+    """Resolve the chance_level parameter to a per-dataset mapping.
+
+    Parameters
+    ----------
+    data : DataFrame
+        Results dataframe with a 'dataset' column.
+    chance_level : None, float, or dict
+        - None: defaults to 0.5 for all datasets (backward compat).
+        - float: uniform chance level for all datasets.
+        - dict: either ``{dataset_name: float}`` or the output of
+          :func:`get_chance_levels` with ``{dataset_name: {'theoretical': float, ...}}``.
+
+    Returns
+    -------
+    theoretical : dict[str, float]
+        Mapping of dataset name to theoretical chance level.
+    adjusted : dict[str, dict[float, float]] or None
+        Mapping of dataset name to ``{alpha: adjusted_level}``, or None.
+    """
+    datasets = data["dataset"].unique()
+
+    if chance_level is None:
+        return {d: 0.5 for d in datasets}, None
+
+    if isinstance(chance_level, (int, float)):
+        return {d: float(chance_level) for d in datasets}, None
+
+    if isinstance(chance_level, dict):
+        theoretical = {}
+        adjusted = {}
+        for d in datasets:
+            val = chance_level.get(d)
+            if val is None:
+                theoretical[d] = 0.5
+            elif isinstance(val, (int, float)):
+                theoretical[d] = float(val)
+            elif isinstance(val, dict):
+                theoretical[d] = val.get("theoretical", 0.5)
+                if "adjusted" in val:
+                    adjusted[d] = val["adjusted"]
+            else:
+                theoretical[d] = 0.5
+        return theoretical, adjusted if adjusted else None
+
+    raise TypeError(
+        f"chance_level must be None, a float, or a dict, got {type(chance_level)}"
+    )
+
+
+def _draw_chance_lines(ax, chance_levels, datasets, orientation):
+    """Draw theoretical chance level lines on an axis.
+
+    If all datasets share the same level, draws a single spanning line.
+    Otherwise, draws per-dataset line segments.
+
+    Parameters
+    ----------
+    ax : matplotlib.axes.Axes
+    chance_levels : dict[str, float]
+    datasets : array-like
+        Ordered dataset names as they appear on the categorical axis.
+    orientation : str
+        'horizontal' or 'vertical'.
+    """
+    unique_levels = set(chance_levels.values())
+
+    if len(unique_levels) == 1:
+        level = unique_levels.pop()
+        line_kw = dict(linestyle="--", color="k", linewidth=2)
+        if orientation in ("horizontal", "h"):
+            ax.axvline(level, **line_kw)
+        else:
+            ax.axhline(level, **line_kw)
+    else:
+        datasets_list = list(datasets)
+        for i, d in enumerate(datasets_list):
+            level = chance_levels.get(d, 0.5)
+            line_kw = dict(linestyle="--", color="k", linewidth=1.5, alpha=0.8)
+            if orientation in ("horizontal", "h"):
+                ax.plot(
+                    [level, level],
+                    [i - 0.4, i + 0.4],
+                    **line_kw,
+                )
+            else:
+                ax.plot(
+                    [i - 0.4, i + 0.4],
+                    [level, level],
+                    **line_kw,
+                )
+
+
+def _draw_adjusted_chance_lines(ax, adjusted_levels, datasets, orientation):
+    """Draw adjusted significance threshold lines.
+
+    Parameters
+    ----------
+    ax : matplotlib.axes.Axes
+    adjusted_levels : dict[str, dict[float, float]]
+        Mapping of dataset name to ``{alpha: threshold}``.
+    datasets : array-like
+        Ordered dataset names as they appear on the categorical axis.
+    orientation : str
+        'horizontal' or 'vertical'.
+    """
+    if not adjusted_levels:
+        return
+
+    # Collect all alpha values across datasets
+    all_alphas = set()
+    for levels in adjusted_levels.values():
+        all_alphas.update(levels.keys())
+
+    for alpha_val in sorted(all_alphas, reverse=True):
+        style = _ALPHA_LINE_STYLES.get(
+            alpha_val,
+            {"linestyle": "--", "color": "0.5", "linewidth": 1.5},
+        )
+
+        # Check if all datasets share the same adjusted level for this alpha
+        per_dataset = {}
+        for d in datasets:
+            if d in adjusted_levels and alpha_val in adjusted_levels[d]:
+                per_dataset[d] = adjusted_levels[d][alpha_val]
+
+        if not per_dataset:
+            continue
+
+        unique_vals = set(per_dataset.values())
+        if len(unique_vals) == 1 and len(per_dataset) == len(datasets):
+            level = unique_vals.pop()
+            if orientation in ("horizontal", "h"):
+                ax.axvline(level, label=f"p={alpha_val}", **style)
+            else:
+                ax.axhline(level, label=f"p={alpha_val}", **style)
+        else:
+            datasets_list = list(datasets)
+            for i, d in enumerate(datasets_list):
+                if d not in per_dataset:
+                    continue
+                level = per_dataset[d]
+                if orientation in ("horizontal", "h"):
+                    ax.plot([level, level], [i - 0.4, i + 0.4], **style)
+                else:
+                    ax.plot([i - 0.4, i + 0.4], [level, level], **style)
+
 
 def _simplify_names(x):
     if len(x) > 10:
@@ -33,24 +189,20 @@ def _simplify_names(x):
         return x
 
 
-def score_plot(data, pipelines=None, orientation="vertical"):
-    """Plot scores for all pipelines and all datasets
+def _prepare_plot_data(data, pipelines=None):
+    """Collapse sessions, simplify dataset names, and filter pipelines.
 
     Parameters
     ----------
-    data: output of Results.to_dataframe()
-        results on datasets
-    pipelines: list of str | None
-        pipelines to include in this plot
-    orientation: str, default="vertical"
-        plot orientation, could be ["vertical", "v", "horizontal", "h"]
+    data : DataFrame
+        Results dataframe.
+    pipelines : list of str | None
+        Pipelines to keep. If None, all pipelines are kept.
 
     Returns
     -------
-    fig: Figure
-        Pyplot handle
-    color_dict: dict
-        Dictionary with the facecolor
+    DataFrame
+        Preprocessed copy of the data.
     """
     data = collapse_session_scores(data)
     unique_ids = data["dataset"].apply(_simplify_names)
@@ -58,9 +210,71 @@ def score_plot(data, pipelines=None, orientation="vertical"):
         log.warning("Dataset names are too similar, turning off name shortening")
     else:
         data["dataset"] = unique_ids
-
     if pipelines is not None:
         data = data[data.pipeline.isin(pipelines)]
+    return data
+
+
+def _extract_color_dict(handles, labels):
+    """Build a color dictionary from legend handles.
+
+    Parameters
+    ----------
+    handles : list
+        Matplotlib legend handles.
+    labels : list of str
+        Corresponding labels.
+
+    Returns
+    -------
+    dict
+        Mapping of label to facecolor.
+    """
+    color_dict = {}
+    for lb, h in zip(labels, handles):
+        if hasattr(h, "get_facecolor"):
+            fc = h.get_facecolor()
+            color_dict[lb] = fc[0] if hasattr(fc, "__len__") and len(fc) > 0 else fc
+        elif hasattr(h, "get_color"):
+            color_dict[lb] = h.get_color()
+        elif hasattr(h, "get_markerfacecolor"):
+            color_dict[lb] = h.get_markerfacecolor()
+        else:
+            color_dict[lb] = h.get_color() if hasattr(h, "get_color") else "C0"
+    return color_dict
+
+
+def score_plot(data, pipelines=None, orientation="vertical", chance_level=None):
+    """Plot scores for all pipelines and all datasets.
+
+    Parameters
+    ----------
+    data : DataFrame
+        Output of ``Results.to_dataframe()``.
+    pipelines : list of str | None
+        Pipelines to include in this plot.
+    orientation : str, default="vertical"
+        Plot orientation, one of ``["vertical", "v", "horizontal", "h"]``.
+    chance_level : None, float, or dict, default=None
+        Chance level to display on the plot.
+
+        - ``None`` : defaults to 0.5 for all datasets (backward compatible).
+        - ``float`` : uniform chance level for all datasets.
+        - ``dict`` : per-dataset chance levels. Can be a simple
+          ``{dataset_name: float}`` mapping or the output of
+          :func:`~moabb.analysis.chance_level.get_chance_levels`.
+          When the dict includes ``'adjusted'`` entries, adjusted
+          significance threshold lines are also drawn.
+
+    Returns
+    -------
+    fig : Figure
+        Pyplot handle.
+    color_dict : dict
+        Dictionary with the facecolor for each pipeline.
+    """
+    data = _prepare_plot_data(data, pipelines)
+    theoretical, adjusted = _resolve_chance_levels(data, chance_level)
 
     if orientation in ["horizontal", "h"]:
         y, x = "dataset", "score"
@@ -71,7 +285,6 @@ def score_plot(data, pipelines=None, orientation="vertical"):
     else:
         raise ValueError("Invalid plot orientation selected!")
 
-    # markers = ['o', '8', 's', 'p', '+', 'x', 'D', 'd', '>', '<', '^']
     ax = fig.add_subplot(111)
     sea.stripplot(
         data=data,
@@ -84,27 +297,138 @@ def score_plot(data, pipelines=None, orientation="vertical"):
         ax=ax,
         alpha=0.7,
     )
+
+    datasets_order = data["dataset"].unique()
+
     if orientation in ["horizontal", "h"]:
         ax.set_xlim([0, 1])
-        ax.axvline(0.5, linestyle="--", color="k", linewidth=2)
     else:
         ax.set_ylim([0, 1])
-        ax.axhline(0.5, linestyle="--", color="k", linewidth=2)
+
+    _draw_chance_lines(ax, theoretical, datasets_order, orientation)
+    if adjusted:
+        _draw_adjusted_chance_lines(ax, adjusted, datasets_order, orientation)
+
     ax.set_title("Scores per dataset and algorithm")
     handles, labels = ax.get_legend_handles_labels()
-    color_dict = {}
-    for lb, h in zip(labels, handles):
-        if hasattr(h, "get_facecolor"):
-            color_dict[lb] = h.get_facecolor()[0]
-        elif hasattr(h, "get_color"):
-            color_dict[lb] = h.get_color()
-        elif hasattr(h, "get_markerfacecolor"):
-            color_dict[lb] = h.get_markerfacecolor()
-        else:
-            # Fallback: try to get color from the line
-            color_dict[lb] = h.get_color() if hasattr(h, "get_color") else "C0"
+    color_dict = _extract_color_dict(handles, labels)
     plt.tight_layout()
 
+    return fig, color_dict
+
+
+def distribution_plot(
+    data,
+    pipelines=None,
+    orientation="vertical",
+    chance_level=None,
+    figsize=None,
+):
+    """Plot score distributions using violin (KDE) and strip plots.
+
+    Creates a combined violin plot and strip plot visualization that
+    shows both the distribution shape (via KDE) and individual data
+    points for each dataset/pipeline combination.
+
+    Parameters
+    ----------
+    data : DataFrame
+        Output of ``Results.to_dataframe()``.
+    pipelines : list of str | None
+        Pipelines to include in this plot.
+    orientation : str, default="vertical"
+        Plot orientation, one of ``["vertical", "v", "horizontal", "h"]``.
+    chance_level : None, float, or dict, default=None
+        Chance level to display on the plot.
+
+        - ``None`` : defaults to 0.5 for all datasets.
+        - ``float`` : uniform chance level for all datasets.
+        - ``dict`` : per-dataset chance levels. Can be a simple
+          ``{dataset_name: float}`` mapping or the output of
+          :func:`~moabb.analysis.chance_level.get_chance_levels`.
+          When the dict includes ``'adjusted'`` entries, adjusted
+          significance threshold lines are also drawn.
+    figsize : tuple of (float, float) | None
+        Figure size. If None, defaults based on orientation.
+
+    Returns
+    -------
+    fig : Figure
+        Pyplot handle.
+    color_dict : dict
+        Dictionary with the facecolor for each pipeline.
+    """
+    data = _prepare_plot_data(data, pipelines)
+    theoretical, adjusted = _resolve_chance_levels(data, chance_level)
+
+    if orientation in ["horizontal", "h"]:
+        y, x = "dataset", "score"
+        figsize = figsize or (8.5, 11)
+    elif orientation in ["vertical", "v"]:
+        x, y = "dataset", "score"
+        figsize = figsize or (11, 8.5)
+    else:
+        raise ValueError("Invalid plot orientation selected!")
+
+    fig = plt.figure(figsize=figsize)
+    ax = fig.add_subplot(111)
+
+    # Violin plot for KDE density
+    sea.violinplot(
+        data=data,
+        y=y,
+        x=x,
+        hue="pipeline",
+        palette=PIPELINE_PALETTE,
+        inner=None,
+        alpha=0.3,
+        dodge=True,
+        ax=ax,
+        cut=0,
+        density_norm="width",
+    )
+
+    # Strip plot for individual data points
+    sea.stripplot(
+        data=data,
+        y=y,
+        x=x,
+        jitter=0.15,
+        palette=PIPELINE_PALETTE,
+        hue="pipeline",
+        dodge=True,
+        ax=ax,
+        alpha=0.7,
+        size=4,
+    )
+
+    datasets_order = data["dataset"].unique()
+
+    if orientation in ["horizontal", "h"]:
+        ax.set_xlim([0, 1])
+    else:
+        ax.set_ylim([0, 1])
+
+    _draw_chance_lines(ax, theoretical, datasets_order, orientation)
+    if adjusted:
+        _draw_adjusted_chance_lines(ax, adjusted, datasets_order, orientation)
+
+    ax.set_title("Score distributions per dataset and algorithm")
+
+    # Deduplicate legend entries (violin + strip create duplicates)
+    handles, labels = ax.get_legend_handles_labels()
+    seen = {}
+    unique_handles = []
+    unique_labels = []
+    for h, lb in zip(handles, labels):
+        if lb not in seen:
+            seen[lb] = h
+            unique_handles.append(h)
+            unique_labels.append(lb)
+    ax.legend(unique_handles, unique_labels)
+
+    color_dict = _extract_color_dict(unique_handles, unique_labels)
+    plt.tight_layout()
     return fig, color_dict
 
 
@@ -423,25 +747,36 @@ def emissions_summary(data, order_list=None, pipelines=None):
     return summary
 
 
-def paired_plot(data, alg1, alg2):
+def paired_plot(data, alg1, alg2, chance_level=None):
     """Generate a figure with a paired plot.
 
     Parameters
     ----------
-    data: DataFrame
-        dataframe obtained from evaluation
-    alg1: str
-        Name of a member of column data.pipeline
-    alg2: str
-        Name of a member of column data.pipeline
+    data : DataFrame
+        Dataframe obtained from evaluation.
+    alg1 : str
+        Name of a member of column ``data.pipeline``.
+    alg2 : str
+        Name of a member of column ``data.pipeline``.
+    chance_level : None, float, or dict, default=None
+        Chance level used to set axis limits and draw reference lines.
+
+        - ``None`` : defaults to 0.5.
+        - ``float`` : uniform chance level.
+        - ``dict`` : per-dataset levels (the minimum value across datasets
+          is used for axis limits).
 
     Returns
     -------
-    fig: Figure
-        Pyplot handle
+    fig : Figure
+        Pyplot handle.
     """
     data = collapse_session_scores(data)
     data = data[data.pipeline.isin([alg1, alg2])]
+
+    theoretical, _ = _resolve_chance_levels(data, chance_level)
+    min_chance = min(theoretical.values()) if theoretical else 0.5
+
     data = data.pivot_table(
         values="score", columns="pipeline", index=["subject", "dataset"]
     )
@@ -450,8 +785,8 @@ def paired_plot(data, alg1, alg2):
     ax = fig.add_subplot(111)
     data.plot.scatter(alg1, alg2, ax=ax)
     ax.plot([0, 1], [0, 1], ls="--", c="k")
-    ax.set_xlim([0.5, 1])
-    ax.set_ylim([0.5, 1])
+    ax.set_xlim([min_chance, 1])
+    ax.set_ylim([min_chance, 1])
     return fig
 
 
@@ -766,60 +1101,18 @@ def _add_bubble_legend(scale, size_mode, color_map, alphas, fontsize, shape, x0,
         )
 
 
-def _match_int(s, default=None):
-    """Match the first integer in a string.
-
-    Parameters
-    ----------
-    s : str
-        String to search for an integer.
-    default : int or None, optional
-        Default value to return if no integer is found. If None and no
-        integer is found, raises AssertionError.
-
-    Returns
-    -------
-    int
-        The first integer found in the string, or default if not found.
-    """
-    match = re.search(r"(\d+)", str(s))
-    if match is None:
-        if default is not None:
-            return default
-        raise AssertionError(f"Cannot parse number from '{s}'")
-    return int(match.group(1))
-
-
-def _match_float(s):
-    """Match the first float in a string."""
-    match = re.search(r"(\d+\.?\d*)", str(s))
-    assert match, f"Cannot parse float from '{s}'"
-    return float(match.group(1))
-
-
 def _get_dataset_parameters(dataset):
+    from moabb.analysis._utils import _compute_n_trials
+
     row = dataset._summary_table
     dataset_name = dataset.__class__.__name__
     paradigm = dataset.paradigm
     n_subjects = len(dataset.subject_list)
     n_sessions = _match_int(row["#Sessions"])
-    if paradigm in ["imagery", "ssvep"]:
-        # Handle "varies" in trials per class - use 1 as default for variable trials
-        trials_per_class = _match_int(row["#Trials / class"], default=1)
-        n_trials = trials_per_class * _match_int(row["#Classes"])
-    elif paradigm == "rstate":
-        n_trials = _match_int(row["#Classes"]) * _match_int(row["#Blocks / class"])
-    elif paradigm == "cvep":
-        # Handle "varies" in trials per class - use 1 as default for variable trials
-        trials_per_class = _match_int(row["#Trials / class"], default=1)
-        n_trials = trials_per_class * _match_int(row["#Trial classes"])
-    else:  # p300
-        match = re.search(r"(\d+) NT / (\d+) T", row["#Trials / class"])
-        if match is not None:
-            n_trials = int(match.group(1)) + int(match.group(2))
-        else:
-            # Handle "varies" in trials per class - use 1 as default for variable trials
-            n_trials = _match_int(row["#Trials / class"], default=1)
+    n_trials = _compute_n_trials(row, paradigm)
+    if n_trials is None:
+        # Fallback for unparseable trial counts
+        n_trials = _match_int(row.get("#Trials / class", "1"), default=1)
     trial_len = _match_float(row["Trials length (s)"])
     return (
         dataset_name,
