@@ -166,9 +166,7 @@ results = pd.concat([results, results_fb, results_TRCA, results_MSET_CCA])
 # annotations. The 3-class SSVEP paradigm has a theoretical chance level
 # of 33.3%.
 
-chance_levels = get_chance_levels(
-    [dataset], alpha=[0.05, 0.01], paradigm=paradigm
-)
+chance_levels = get_chance_levels([dataset], alpha=[0.05, 0.01], paradigm=paradigm)
 
 fig, _ = moabb_plt.score_plot(results, chance_level=chance_levels)
 plt.show()

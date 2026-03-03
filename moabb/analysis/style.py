@@ -13,6 +13,7 @@ import seaborn as sea
 
 import moabb
 
+
 # ---------------------------------------------------------------------------
 # Brand colors — CVD-friendly categorical palette
 # Designed for deuteranopia/protanopia/tritanopia separability while

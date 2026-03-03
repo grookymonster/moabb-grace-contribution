@@ -151,9 +151,7 @@ print(
 # This ensures that the adjusted chance level is computed with the correct
 # binomial parameters.
 
-chance_levels = get_chance_levels(
-    datasets, alpha=[0.05, 0.01, 0.001], paradigm=paradigm
-)
+chance_levels = get_chance_levels(datasets, alpha=[0.05, 0.01, 0.001], paradigm=paradigm)
 
 print("\nChance levels:")
 for name, levels in chance_levels.items():

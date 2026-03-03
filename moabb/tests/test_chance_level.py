@@ -80,9 +80,7 @@ class TestGetChanceLevels:
         return ds
 
     def test_theoretical_only(self):
-        ds = self._make_mock_dataset(
-            "BinaryDS", {"left": 1, "right": 2}
-        )
+        ds = self._make_mock_dataset("BinaryDS", {"left": 1, "right": 2})
         levels = get_chance_levels([ds])
         assert "BinaryDS" in levels
         assert levels["BinaryDS"]["theoretical"] == 0.5

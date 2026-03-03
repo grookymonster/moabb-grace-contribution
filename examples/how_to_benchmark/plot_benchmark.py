@@ -125,9 +125,7 @@ results = benchmark(
 ###############################################################################
 # Compute chance levels for the dataset used in the benchmark.
 
-chance_levels = get_chance_levels(
-    [Zhou2016()], alpha=[0.05, 0.01], paradigm=paradigm
-)
+chance_levels = get_chance_levels([Zhou2016()], alpha=[0.05, 0.01], paradigm=paradigm)
 
 score_plot(results, chance_level=chance_levels)
 plt.show()

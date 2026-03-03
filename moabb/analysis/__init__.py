@@ -20,11 +20,11 @@ from moabb.analysis.plotting import (  # noqa: F401
     distribution_plot,
     emissions_summary,
 )
+from moabb.analysis.results import Results  # noqa: F401
 from moabb.analysis.style import (  # noqa: F401
     MOABB_PALETTE,
     apply_moabb_style,
 )
-from moabb.analysis.results import Results  # noqa: F401
 from moabb.analysis.timeline import (  # noqa: F401
     class_balance_svg,
     plot_class_balance,

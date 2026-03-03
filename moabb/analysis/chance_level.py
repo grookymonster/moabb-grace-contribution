@@ -16,6 +16,7 @@ from scipy.stats import binom
 
 from moabb.analysis._utils import _compute_n_trials, _match_int
 
+
 log = logging.getLogger(__name__)
 
 
@@ -44,9 +45,7 @@ def theoretical_chance_level(n_classes: int) -> float:
     return 1.0 / n_classes
 
 
-def adjusted_chance_level(
-    n_classes: int, n_trials: int, alpha: float = 0.05
-) -> float:
+def adjusted_chance_level(n_classes: int, n_trials: int, alpha: float = 0.05) -> float:
     """Return the adjusted chance level using a binomial significance threshold.
 
     Computes the minimum accuracy that significantly exceeds chance at
@@ -145,8 +144,7 @@ def get_chance_levels(
             n_trials = _extract_n_trials(dataset, n_classes=n_classes)
             if n_trials is not None:
                 entry["adjusted"] = {
-                    a: adjusted_chance_level(n_classes, n_trials, a)
-                    for a in alpha
+                    a: adjusted_chance_level(n_classes, n_trials, a) for a in alpha
                 }
             else:
                 log.warning(

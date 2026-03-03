@@ -4,6 +4,7 @@ import pandas as pd
 import pytest
 from matplotlib.pyplot import Figure
 
+
 matplotlib.use("Agg")
 
 from moabb.analysis.plotting import (
@@ -86,9 +87,7 @@ class TestResolveChanceLevels:
 
     def test_dict_simple(self):
         data = _make_results_df(dataset_names=["A", "B"])
-        theoretical, adjusted = _resolve_chance_levels(
-            data, {"A": 0.5, "B": 0.25}
-        )
+        theoretical, adjusted = _resolve_chance_levels(data, {"A": 0.5, "B": 0.25})
         assert theoretical == {"A": 0.5, "B": 0.25}
         assert adjusted is None
 
@@ -136,9 +135,7 @@ class TestScorePlot:
 
     def test_with_dict_chance_level(self):
         data = _make_results_df(dataset_names=["DS1", "DS2"])
-        fig, color_dict = score_plot(
-            data, chance_level={"DS1": 0.5, "DS2": 0.25}
-        )
+        fig, color_dict = score_plot(data, chance_level={"DS1": 0.5, "DS2": 0.25})
         assert isinstance(fig, Figure)
 
     def test_with_get_chance_levels_dict(self):
@@ -225,9 +222,7 @@ class TestPairedPlot:
             pipeline_names=["Alg1", "Alg2"],
             dataset_names=["DS1", "DS2"],
         )
-        fig = paired_plot(
-            data, "Alg1", "Alg2", chance_level={"DS1": 0.5, "DS2": 0.25}
-        )
+        fig = paired_plot(data, "Alg1", "Alg2", chance_level={"DS1": 0.5, "DS2": 0.25})
         assert isinstance(fig, Figure)
         ax = fig.axes[0]
         # min chance level is 0.25 -> 25%
@@ -259,7 +254,8 @@ class TestPairedPlot:
         patches = [
             c
             for c in ax.get_children()
-            if isinstance(c, (Patch, Rectangle)) and c.get_alpha() is not None
+            if isinstance(c, (Patch, Rectangle))
+            and c.get_alpha() is not None
             and c.get_alpha() < 0.15
         ]
         # Should have at least 2 shaded patches (axhspan + axvspan)
@@ -274,7 +270,8 @@ class TestPairedPlot:
         patches = [
             c
             for c in ax.get_children()
-            if isinstance(c, (Patch, Rectangle)) and c.get_alpha() is not None
+            if isinstance(c, (Patch, Rectangle))
+            and c.get_alpha() is not None
             and c.get_alpha() < 0.15
         ]
         assert len(patches) == 0

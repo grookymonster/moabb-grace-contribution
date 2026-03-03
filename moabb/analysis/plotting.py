@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import logging
-import re
 from typing import Any, Literal, Sequence
 
 import matplotlib.gridspec as gridspec
@@ -20,21 +19,20 @@ from moabb.analysis.meta_analysis import (
     combine_effects,
     combine_pvalues,
 )
-
-
 from moabb.analysis.style import (
     FONT_SIZES,
     GRID_COLOR,
     MOABB_CORAL,
     MOABB_DARK_TEXT,
-    MOABB_SKY,
     MOABB_NAVY,
     MOABB_PALETTE,
+    MOABB_SKY,
     MOABB_TEAL,
     apply_moabb_style,
     set_moabb_defaults,
     style_legend,
 )
+
 
 PIPELINE_PALETTE = MOABB_PALETTE  # backward-compat alias
 set_moabb_defaults()
@@ -147,17 +145,20 @@ def _draw_chance_lines(ax, chance_levels, datasets, orientation, adjusted=None):
 
     if max_adj is not None:
         if orientation in ("horizontal", "h"):
-            ax.axvspan(ax.get_xlim()[0], max_adj,
-                       color=_CHANCE_COLOR, alpha=0.06, zorder=0)
+            ax.axvspan(
+                ax.get_xlim()[0], max_adj, color=_CHANCE_COLOR, alpha=0.06, zorder=0
+            )
         else:
-            ax.axhspan(ax.get_ylim()[0], max_adj,
-                       color=_CHANCE_COLOR, alpha=0.06, zorder=0)
+            ax.axhspan(
+                ax.get_ylim()[0], max_adj, color=_CHANCE_COLOR, alpha=0.06, zorder=0
+            )
 
     # --- Draw chance level lines ---
     if len(unique_levels) == 1:
         level = unique_levels.pop()
-        line_kw = dict(linestyle="--", color=_CHANCE_COLOR, linewidth=1.5,
-                       alpha=0.75, zorder=2)
+        line_kw = dict(
+            linestyle="--", color=_CHANCE_COLOR, linewidth=1.5, alpha=0.75, zorder=2
+        )
         if orientation in ("horizontal", "h"):
             ax.axvline(level, **line_kw)
         else:
@@ -166,8 +167,9 @@ def _draw_chance_lines(ax, chance_levels, datasets, orientation, adjusted=None):
         datasets_list = list(datasets)
         for i, d in enumerate(datasets_list):
             level = chance_levels.get(d, 0.5)
-            line_kw = dict(linestyle="--", color=_CHANCE_COLOR, linewidth=1.3,
-                           alpha=0.75, zorder=2)
+            line_kw = dict(
+                linestyle="--", color=_CHANCE_COLOR, linewidth=1.3, alpha=0.75, zorder=2
+            )
             if orientation in ("horizontal", "h"):
                 ax.plot([level, level], [i - 0.4, i + 0.4], **line_kw)
             else:
@@ -185,16 +187,24 @@ def _draw_chance_lines(ax, chance_levels, datasets, orientation, adjusted=None):
     if orientation in ("horizontal", "h"):
         ax.annotate(
             label,
-            xy=(max_adj, 0), xycoords=("data", "axes fraction"),
-            xytext=(6, 8), textcoords="offset points",
-            va="bottom", ha="left", **_CHANCE_ANNOT_KW,
+            xy=(max_adj, 0),
+            xycoords=("data", "axes fraction"),
+            xytext=(6, 8),
+            textcoords="offset points",
+            va="bottom",
+            ha="left",
+            **_CHANCE_ANNOT_KW,
         )
     else:
         ax.annotate(
             label,
-            xy=(1, max_adj), xycoords=("axes fraction", "data"),
-            xytext=(-8, 6), textcoords="offset points",
-            va="bottom", ha="right", **_CHANCE_ANNOT_KW,
+            xy=(1, max_adj),
+            xycoords=("axes fraction", "data"),
+            xytext=(-8, 6),
+            textcoords="offset points",
+            va="bottom",
+            ha="right",
+            **_CHANCE_ANNOT_KW,
         )
 
 
@@ -225,8 +235,7 @@ def _draw_adjusted_chance_lines(ax, adjusted_levels, datasets, orientation):
     for rank, alpha_val in enumerate(alpha_list):
         style = _ALPHA_LINE_STYLES.get(
             alpha_val,
-            {"linestyle": "--", "color": _CHANCE_COLOR, "linewidth": 1.2,
-             "alpha": 0.5},
+            {"linestyle": "--", "color": _CHANCE_COLOR, "linewidth": 1.2, "alpha": 0.5},
         )
 
         # Check if all datasets share the same adjusted level for this alpha
@@ -255,24 +264,29 @@ def _draw_adjusted_chance_lines(ax, adjusted_levels, datasets, orientation):
                 fontsize=FONT_SIZES["source"] - 1,
                 color=_CHANCE_COLOR,
                 alpha=line_alpha + 0.15,
-                bbox=dict(facecolor="white", edgecolor="none",
-                          alpha=0.85, pad=1.5),
+                bbox=dict(facecolor="white", edgecolor="none", alpha=0.85, pad=1.5),
             )
             if orientation in ("horizontal", "h"):
                 ax.annotate(
                     label,
-                    xy=(level, 1), xycoords=("data", "axes fraction"),
+                    xy=(level, 1),
+                    xycoords=("data", "axes fraction"),
                     xytext=(6, -4),
                     textcoords="offset points",
-                    va="top", ha="left", **annot_kw,
+                    va="top",
+                    ha="left",
+                    **annot_kw,
                 )
             else:
                 ax.annotate(
                     label,
-                    xy=(1, level), xycoords=("axes fraction", "data"),
+                    xy=(1, level),
+                    xycoords=("axes fraction", "data"),
                     xytext=(-6, 4),
                     textcoords="offset points",
-                    va="bottom", ha="right", **annot_kw,
+                    va="bottom",
+                    ha="right",
+                    **annot_kw,
                 )
         else:
             datasets_list = list(datasets)
@@ -386,8 +400,7 @@ def score_plot(data, pipelines=None, orientation="vertical", chance_level=None):
     theoretical = {k: v * 100 for k, v in theoretical.items()}
     if adjusted:
         adjusted = {
-            k: {a: v * 100 for a, v in alphas.items()}
-            for k, alphas in adjusted.items()
+            k: {a: v * 100 for a, v in alphas.items()} for k, alphas in adjusted.items()
         }
 
     if orientation in ["horizontal", "h"]:
@@ -423,8 +436,9 @@ def score_plot(data, pipelines=None, orientation="vertical", chance_level=None):
         ax.set_ylabel("Score (%)", fontsize=FONT_SIZES["axis_label"] + 2)
 
     if chance_level is not None:
-        _draw_chance_lines(ax, theoretical, datasets_order, orientation,
-                           adjusted=adjusted)
+        _draw_chance_lines(
+            ax, theoretical, datasets_order, orientation, adjusted=adjusted
+        )
         if adjusted:
             _draw_adjusted_chance_lines(ax, adjusted, datasets_order, orientation)
 
@@ -492,8 +506,7 @@ def distribution_plot(
     theoretical = {k: v * 100 for k, v in theoretical.items()}
     if adjusted:
         adjusted = {
-            k: {a: v * 100 for a, v in alphas.items()}
-            for k, alphas in adjusted.items()
+            k: {a: v * 100 for a, v in alphas.items()} for k, alphas in adjusted.items()
         }
 
     if orientation in ["horizontal", "h"]:
@@ -547,8 +560,9 @@ def distribution_plot(
         ax.set_ylabel("Score (%)", fontsize=FONT_SIZES["axis_label"] + 2)
 
     if chance_level is not None:
-        _draw_chance_lines(ax, theoretical, datasets_order, orientation,
-                           adjusted=adjusted)
+        _draw_chance_lines(
+            ax, theoretical, datasets_order, orientation, adjusted=adjusted
+        )
         if adjusted:
             _draw_adjusted_chance_lines(ax, adjusted, datasets_order, orientation)
 
@@ -929,12 +943,18 @@ def _draw_paired_chance_region(ax, theoretical, adjusted, min_chance):
                     max_adj = val
         if max_adj is not None:
             ax.axhspan(
-                ax.get_ylim()[0], max_adj,
-                color=_CHANCE_COLOR, alpha=0.06, zorder=0,
+                ax.get_ylim()[0],
+                max_adj,
+                color=_CHANCE_COLOR,
+                alpha=0.06,
+                zorder=0,
             )
             ax.axvspan(
-                ax.get_xlim()[0], max_adj,
-                color=_CHANCE_COLOR, alpha=0.06, zorder=0,
+                ax.get_xlim()[0],
+                max_adj,
+                color=_CHANCE_COLOR,
+                alpha=0.06,
+                zorder=0,
             )
 
     # Annotate at the top-right edge of the shaded band
