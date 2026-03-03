@@ -14,23 +14,25 @@ import seaborn as sea
 import moabb
 
 # ---------------------------------------------------------------------------
-# Brand colors (extracted from MOABB logo SVG curves)
+# Brand colors — CVD-friendly categorical palette
+# Designed for deuteranopia/protanopia/tritanopia separability while
+# retaining the MOABB brand feel.  Based on Wong (2011) + ColorBrewer
+# principles with hue-spread across navy, green-teal, sky-blue, purple,
+# amber, and red axes.
 # ---------------------------------------------------------------------------
-MOABB_NAVY = "#314d67"  # Front curve — primary accent
-MOABB_TEAL = "#7fd3ca"  # Middle curve
-MOABB_LIGHT_BLUE = "#a5cfe5"  # Back curve
-
-# Derived colors (extend palette to 6 for pipeline differentiation)
-MOABB_DEEP_TEAL = "#2a9d8f"  # Darker saturated teal
-MOABB_WARM_SLATE = "#5c7a99"  # Desaturated mid-tone
-MOABB_CORAL = "#e07a5f"  # Warm contrast
+MOABB_NAVY = "#2F3E5C"  # Deep navy — primary accent
+MOABB_TEAL = "#1B9E77"  # Saturated green-teal
+MOABB_SKY = "#56B4E9"  # Distinct sky blue
+MOABB_PURPLE = "#7E63B8"  # Purple — new hue axis
+MOABB_AMBER = "#E69F00"  # Warm gold — high contrast
+MOABB_CORAL = "#D55E5E"  # Slightly cooler red
 
 MOABB_PALETTE = [
     MOABB_NAVY,
     MOABB_TEAL,
-    MOABB_LIGHT_BLUE,
-    MOABB_DEEP_TEAL,
-    MOABB_WARM_SLATE,
+    MOABB_SKY,
+    MOABB_PURPLE,
+    MOABB_AMBER,
     MOABB_CORAL,
 ]
 

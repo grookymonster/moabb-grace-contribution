@@ -27,7 +27,7 @@ from moabb.analysis.style import (
     GRID_COLOR,
     MOABB_CORAL,
     MOABB_DARK_TEXT,
-    MOABB_LIGHT_BLUE,
+    MOABB_SKY,
     MOABB_NAVY,
     MOABB_PALETTE,
     MOABB_TEAL,
@@ -248,32 +248,31 @@ def _draw_adjusted_chance_lines(ax, adjusted_levels, datasets, orientation):
             else:
                 ax.axhline(level, **style)
 
-            # Annotate with value and alpha
+            # Annotate with value and alpha — place at right edge
             pct = f"{level:.1f}%"
             label = f"p<{alpha_val} ({pct})"
-            y_offset = 6 + rank * 14  # stagger vertically
             annot_kw = dict(
                 fontsize=FONT_SIZES["source"] - 1,
                 color=_CHANCE_COLOR,
                 alpha=line_alpha + 0.15,
                 bbox=dict(facecolor="white", edgecolor="none",
-                          alpha=0.8, pad=1.0),
+                          alpha=0.85, pad=1.5),
             )
             if orientation in ("horizontal", "h"):
                 ax.annotate(
                     label,
-                    xy=(level, 0), xycoords=("data", "axes fraction"),
-                    xytext=(6, 8 + rank * 14),
+                    xy=(level, 1), xycoords=("data", "axes fraction"),
+                    xytext=(6, -4),
                     textcoords="offset points",
-                    va="bottom", ha="left", **annot_kw,
+                    va="top", ha="left", **annot_kw,
                 )
             else:
                 ax.annotate(
                     label,
-                    xy=(0, level), xycoords=("axes fraction", "data"),
-                    xytext=(8, y_offset),
+                    xy=(1, level), xycoords=("axes fraction", "data"),
+                    xytext=(-6, 4),
                     textcoords="offset points",
-                    va="bottom", ha="left", **annot_kw,
+                    va="bottom", ha="right", **annot_kw,
                 )
         else:
             datasets_list = list(datasets)
@@ -418,10 +417,10 @@ def score_plot(data, pipelines=None, orientation="vertical", chance_level=None):
 
     if orientation in ["horizontal", "h"]:
         ax.set_xlim([0, 100])
-        ax.set_xlabel("Score (%)")
+        ax.set_xlabel("Score (%)", fontsize=FONT_SIZES["axis_label"] + 2)
     else:
         ax.set_ylim([0, 100])
-        ax.set_ylabel("Score (%)")
+        ax.set_ylabel("Score (%)", fontsize=FONT_SIZES["axis_label"] + 2)
 
     if chance_level is not None:
         _draw_chance_lines(ax, theoretical, datasets_order, orientation,
@@ -542,10 +541,10 @@ def distribution_plot(
 
     if orientation in ["horizontal", "h"]:
         ax.set_xlim([0, 100])
-        ax.set_xlabel("Score (%)")
+        ax.set_xlabel("Score (%)", fontsize=FONT_SIZES["axis_label"] + 2)
     else:
         ax.set_ylim([0, 100])
-        ax.set_ylabel("Score (%)")
+        ax.set_ylabel("Score (%)", fontsize=FONT_SIZES["axis_label"] + 2)
 
     if chance_level is not None:
         _draw_chance_lines(ax, theoretical, datasets_order, orientation,
@@ -1191,7 +1190,7 @@ def meta_analysis_plot(stats_df, alg1, alg2):  # noqa: C901
         ax.plot(
             np.array([v - ci[-1], v + ci[-1]]),
             np.ones((2,)) * (ind + 1),
-            c=MOABB_LIGHT_BLUE,
+            c=MOABB_SKY,
         )
     _range = max(abs(_min), abs(_max)) * 1.25  # extra breathing room
     ax.set_xlim((0 - _range, 0 + _range))
@@ -1201,7 +1200,7 @@ def meta_analysis_plot(stats_df, alg1, alg2):  # noqa: C901
         np.arange(len(dsets) + 1),
         s=np.array([50] + [30] * len(dsets)),
         marker="D",
-        c=[MOABB_NAVY] + [MOABB_LIGHT_BLUE] * len(dsets),
+        c=[MOABB_NAVY] + [MOABB_SKY] * len(dsets),
     )
     for i, p in zip(sig_ind, pvals):
         m, s = _marker(p)
