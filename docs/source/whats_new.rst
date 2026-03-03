@@ -45,6 +45,7 @@ Enhancements
 - Add automatic HED 8.4.0 (Hierarchical Event Descriptors) annotations to BIDS export with 83 validated paradigm-specific tags covering all MOABB datasets, ``HEDVersion`` in ``dataset_description.json``, events.json sidecar patching, per-dataset override via ``ExperimentMetadata.hed_tags``, and ``Label/`` fallback for unmapped events (:gh:`974` by `Bruno Aristimunha`_)
 - Add tutorial on time-resolved decoding with :class:`mne.decoding.SlidingEstimator`, showing how to evaluate per-time-point AUC across subjects as an alternative to pseudo-online evaluation (:gh:`718` by `Bruno Aristimunha`_)
 - Add advanced tutorial on Riemannian Artifact Rejection (Riemannian Potato and Potato Field) as a pre-processing step using pipeline surgery (by `Davoud Hajhassani`_ and `Bruno Aristimunha`_)
+- Simplify the Riemannian Artifact Rejection tutorial by using pyRiemann's enhanced ``PotatoField`` API (per-potato metrics and configurable p-value combination), and refresh the 2D potato visualization to better match the pyRiemann reference (:gh:`1011` by `Bruno Aristimunha`_)
 - Add pipeline surgery methods (``find_steps``, ``insert_step``, ``remove_step``) to :class:`moabb.datasets.preprocessing.FixedPipeline` for easier pipeline manipulation (by `Davoud Hajhassani`_ and `Bruno Aristimunha`_)
 - Add license metadata to all datasets with known licenses, covering BNCI, BrainInvaders, ErpCore2021, Castillos, MartinezCagigal2023, Beetl2021, Kojima2024, Dreyer2023, and many others (:gh:`989` by `Bruno Aristimunha`_)
 - Add parametrized test ``test_all_datasets_have_license`` to ensure all datasets declare a license in their documentation metadata (:gh:`989` by `Bruno Aristimunha`_)
@@ -73,6 +74,7 @@ Requirements
 ~~~~~~~~~~~~
 - Allows CodeCarbon environment variables or a configuration file to be defined in the home directory or the current working directory (:gh:`866` by `Ethan Davis`_).
 - Added ``filelock`` as a core dependency to fix missing import errors in utils (:gh:`959` by `Mateusz Naklicki`_).
+- Temporarily track ``pyriemann`` from GitHub source (``master``) to use new ``PotatoField`` capabilities introduced in pyRiemann PR #423 (:gh:`1011` by `Bruno Aristimunha`_)
 
 Bugs
 ~~~~
