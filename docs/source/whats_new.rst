@@ -56,6 +56,10 @@ Enhancements
 - Enhance Tutorial 4 ("Creating a dataset class") with a new section demonstrating :class:`~moabb.datasets.base.BaseBIDSDataset` and :class:`~moabb.datasets.base.LocalBIDSDataset` as the recommended approach for adding BIDS-format datasets to MOABB (:gh:`1007` by `Bruno Aristimunha`_)
 - Add Copy and CSV export buttons to benchmark results tables on the results webpage, enabling users to copy or download table data directly (:gh:`1002` by `Bruno Aristimunha`_)
 - Add license chip with official Creative Commons SVG icons to dataset documentation pages, showing license type with inline icons and links to license deeds (:gh:`1015` by `Bruno Aristimunha`_)
+- Add statistically adjusted chance levels (Combrisson & Jerbi, 2015) to score and distribution plots, with shaded "chance by chance" bands and per-alpha threshold lines (:gh:`1019` by `Bruno Aristimunha`_)
+- Add KDE-based :func:`moabb.analysis.plotting.distribution_plot` with violin + strip overlay for richer accuracy inspection (:gh:`1019` by `Bruno Aristimunha`_)
+- Restyle all analysis plots with an Economist-inspired MOABB brand identity: accent lines, structured titles/subtitles, and consistent grid, spine, and font treatment (:gh:`1019` by `Bruno Aristimunha`_)
+- Replace the 6-color palette with a colorblind-friendly (CVD) set based on Wong (2011) and ColorBrewer principles, spanning navy, green-teal, sky-blue, purple, amber, and red (:gh:`1019` by `Bruno Aristimunha`_)
 
 API changes
 ~~~~~~~~~~~

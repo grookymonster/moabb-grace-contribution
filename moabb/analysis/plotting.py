@@ -1447,7 +1447,7 @@ def _get_dataset_parameters(dataset):
     n_sessions = _match_int(row["#Sessions"])
     n_trials = _compute_n_trials(row, paradigm)
     if n_trials is None:
-        # Fallback for unparseable trial counts
+        # Fallback for unparsable trial counts
         n_trials = _match_int(row.get("#Trials / class", "1"), default=1)
     trial_len = _match_float(row["Trials length (s)"])
     return (
