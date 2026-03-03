@@ -135,7 +135,7 @@ def get_chance_levels(
 
     result = {}
     for dataset in datasets:
-        name = dataset.__class__.__name__
+        name = dataset.code
         n_classes = _extract_n_classes(dataset, paradigm)
         entry: dict[str, Any] = {
             "theoretical": theoretical_chance_level(n_classes),

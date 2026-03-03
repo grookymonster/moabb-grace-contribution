@@ -21,13 +21,14 @@ import warnings
 
 import matplotlib.pyplot as plt
 import pandas as pd
-import seaborn as sns
 from pyriemann.estimation import Covariances
 from pyriemann.tangentspace import TangentSpace
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import make_pipeline
 
 import moabb
+import moabb.analysis.plotting as moabb_plt
+from moabb.analysis.chance_level import get_chance_levels
 from moabb.datasets import Kalunga2016
 from moabb.evaluations import CrossSubjectEvaluation
 from moabb.paradigms import SSVEP, FilterBankSSVEP
@@ -161,20 +162,13 @@ results = pd.concat([results, results_fb, results_TRCA, results_MSET_CCA])
 # Plot Results
 # ----------------
 #
-# Here we display the results as stripplot, with a pointplot for error bar.
+# Here we display the results using the MOABB score plot with chance level
+# annotations. The 3-class SSVEP paradigm has a theoretical chance level
+# of 33.3%.
 
-fig, ax = plt.subplots(facecolor="white", figsize=[8, 4])
-sns.stripplot(
-    data=results,
-    y="score",
-    x="pipeline",
-    ax=ax,
-    jitter=True,
-    alpha=0.5,
-    zorder=1,
-    palette="Set1",
+chance_levels = get_chance_levels(
+    [dataset], alpha=[0.05, 0.01], paradigm=paradigm
 )
-sns.pointplot(data=results, y="score", x="pipeline", ax=ax, palette="Set1")
-ax.set_ylabel("Accuracy")
-ax.set_ylim(0.1, 0.6)
+
+fig, _ = moabb_plt.score_plot(results, chance_level=chance_levels)
 plt.show()

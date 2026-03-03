@@ -72,6 +72,7 @@ class TestGetChanceLevels:
         ds = MockDataset()
         ds.__class__ = type(name, (), {})
         ds.__class__.__name__ = name
+        ds.code = name
         ds.event_id = event_id
         ds.paradigm = paradigm
         if summary_table is not None:
