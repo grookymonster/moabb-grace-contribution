@@ -114,12 +114,14 @@ _CHANCE_ANNOT_KW = dict(
 )
 
 
-def _draw_chance_lines(ax, chance_levels, datasets, orientation):
-    """Draw theoretical chance level lines on an axis.
+def _draw_chance_lines(ax, chance_levels, datasets, orientation, adjusted=None):
+    """Draw theoretical chance level lines and optional shaded band.
 
     If all datasets share the same level, draws a single spanning line.
-    Otherwise, draws per-dataset line segments.  Each line is annotated with
-    the value and Combrisson & Jerbi (2015) citation.
+    Otherwise, draws per-dataset line segments.  When *adjusted* levels
+    are provided, a shaded band from the axis edge to the maximum
+    adjusted threshold (alpha=0.05) is drawn and annotated with a
+    "Chance by chance" label.
 
     Parameters
     ----------
@@ -129,29 +131,37 @@ def _draw_chance_lines(ax, chance_levels, datasets, orientation):
         Ordered dataset names as they appear on the categorical axis.
     orientation : str
         'horizontal' or 'vertical'.
+    adjusted : dict[str, dict[float, float]] or None
+        Per-dataset adjusted levels ``{dataset: {alpha: threshold}}``.
     """
     unique_levels = set(chance_levels.values())
 
+    # --- Draw shaded band for "chance by chance" region ---
+    max_adj = None
+    if adjusted:
+        for ds_levels in adjusted.values():
+            if 0.05 in ds_levels:
+                val = ds_levels[0.05]
+                if max_adj is None or val > max_adj:
+                    max_adj = val
+
+    if max_adj is not None:
+        if orientation in ("horizontal", "h"):
+            ax.axvspan(ax.get_xlim()[0], max_adj,
+                       color=_CHANCE_COLOR, alpha=0.06, zorder=0)
+        else:
+            ax.axhspan(ax.get_ylim()[0], max_adj,
+                       color=_CHANCE_COLOR, alpha=0.06, zorder=0)
+
+    # --- Draw chance level lines ---
     if len(unique_levels) == 1:
         level = unique_levels.pop()
         line_kw = dict(linestyle="--", color=_CHANCE_COLOR, linewidth=1.5,
                        alpha=0.75, zorder=2)
         if orientation in ("horizontal", "h"):
             ax.axvline(level, **line_kw)
-            ax.annotate(
-                _chance_label_text(level),
-                xy=(level, 1), xycoords=("data", "axes fraction"),
-                xytext=(6, -8), textcoords="offset points",
-                va="top", ha="left", **_CHANCE_ANNOT_KW,
-            )
         else:
             ax.axhline(level, **line_kw)
-            ax.annotate(
-                _chance_label_text(level),
-                xy=(1, level), xycoords=("axes fraction", "data"),
-                xytext=(-6, 6), textcoords="offset points",
-                va="bottom", ha="right", **_CHANCE_ANNOT_KW,
-            )
     else:
         datasets_list = list(datasets)
         for i, d in enumerate(datasets_list):
@@ -162,23 +172,30 @@ def _draw_chance_lines(ax, chance_levels, datasets, orientation):
                 ax.plot([level, level], [i - 0.4, i + 0.4], **line_kw)
             else:
                 ax.plot([i - 0.4, i + 0.4], [level, level], **line_kw)
-        # Annotate once, on the last segment
-        if datasets_list:
-            last_level = chance_levels.get(datasets_list[-1], 0.5)
-            if orientation in ("horizontal", "h"):
-                ax.annotate(
-                    _chance_label_text(last_level),
-                    xy=(last_level, len(datasets_list) - 0.4),
-                    xytext=(6, -6), textcoords="offset points",
-                    va="top", ha="left", **_CHANCE_ANNOT_KW,
-                )
-            else:
-                ax.annotate(
-                    _chance_label_text(last_level),
-                    xy=(len(datasets_list) - 1 + 0.4, last_level),
-                    xytext=(-6, 6), textcoords="offset points",
-                    va="bottom", ha="right", **_CHANCE_ANNOT_KW,
-                )
+
+    # --- Annotate ---
+    if max_adj is not None:
+        pct = f"{max_adj:.1f}%"
+        label = f"Chance by chance ({pct}, p<0.05) \u2014 Combrisson & Jerbi (2015)"
+    else:
+        ref_level = next(iter(chance_levels.values()), 50)
+        label = _chance_label_text(ref_level)
+        max_adj = ref_level  # use theoretical level for annotation position
+
+    if orientation in ("horizontal", "h"):
+        ax.annotate(
+            label,
+            xy=(max_adj, 0), xycoords=("data", "axes fraction"),
+            xytext=(6, 8), textcoords="offset points",
+            va="bottom", ha="left", **_CHANCE_ANNOT_KW,
+        )
+    else:
+        ax.annotate(
+            label,
+            xy=(1, max_adj), xycoords=("axes fraction", "data"),
+            xytext=(-8, 6), textcoords="offset points",
+            va="bottom", ha="right", **_CHANCE_ANNOT_KW,
+        )
 
 
 def _draw_adjusted_chance_lines(ax, adjusted_levels, datasets, orientation):
@@ -406,7 +423,8 @@ def score_plot(data, pipelines=None, orientation="vertical", chance_level=None):
         ax.set_ylim([0, 100])
         ax.set_ylabel("Score (%)")
 
-    _draw_chance_lines(ax, theoretical, datasets_order, orientation)
+    _draw_chance_lines(ax, theoretical, datasets_order, orientation,
+                       adjusted=adjusted)
     if adjusted:
         _draw_adjusted_chance_lines(ax, adjusted, datasets_order, orientation)
 
@@ -416,7 +434,7 @@ def score_plot(data, pipelines=None, orientation="vertical", chance_level=None):
     apply_moabb_style(
         ax,
         title="Scores per dataset and algorithm",
-        subtitle="Individual pipeline scores across datasets",
+        subtitle="",
     )
     style_legend(ax)
     fig.subplots_adjust(top=0.85, bottom=0.14)
@@ -528,7 +546,8 @@ def distribution_plot(
         ax.set_ylim([0, 100])
         ax.set_ylabel("Score (%)")
 
-    _draw_chance_lines(ax, theoretical, datasets_order, orientation)
+    _draw_chance_lines(ax, theoretical, datasets_order, orientation,
+                       adjusted=adjusted)
     if adjusted:
         _draw_adjusted_chance_lines(ax, adjusted, datasets_order, orientation)
 
@@ -549,7 +568,7 @@ def distribution_plot(
     apply_moabb_style(
         ax,
         title="Score distributions per dataset and algorithm",
-        subtitle="Violin density with individual data points",
+        subtitle="",
     )
     style_legend(ax)
     fig.subplots_adjust(top=0.85, bottom=0.14)
@@ -1009,7 +1028,6 @@ def paired_plot(data, alg1, alg2, chance_level=None):
     apply_moabb_style(
         ax,
         title=f"{alg1} vs {alg2}",
-        subtitle="Paired comparison across subjects",
         grid_axis="both",
     )
     fig.subplots_adjust(top=0.85, bottom=0.14)
