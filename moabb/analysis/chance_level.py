@@ -73,14 +73,52 @@ def adjusted_chance_level(n_classes: int, n_trials: int, alpha: float = 0.05) ->
     >>> adjusted_chance_level(2, 100, 0.05)  # doctest: +SKIP
     0.58
     """
-    if n_classes < 2:
-        raise ValueError(f"n_classes must be >= 2, got {n_classes}")
     if n_trials < 1:
         raise ValueError(f"n_trials must be >= 1, got {n_trials}")
     if not 0 < alpha < 1:
         raise ValueError(f"alpha must be in (0, 1), got {alpha}")
-    p_chance = 1.0 / n_classes
+    p_chance = theoretical_chance_level(n_classes)
     return binom.isf(alpha, n_trials, p_chance) / n_trials
+
+
+def chance_levels_from_dataframe(
+    data,
+    alpha: float | list[float] = 0.05,
+) -> dict[str, dict[str, Any]]:
+    """Compute chance levels directly from a results DataFrame.
+
+    Uses ``n_samples_test`` and ``n_classes`` columns stored by the
+    evaluation to compute theoretical and adjusted chance levels without
+    needing dataset objects.
+
+    Parameters
+    ----------
+    data : DataFrame
+        Results dataframe with ``dataset``, ``n_samples_test``, and
+        ``n_classes`` columns.
+    alpha : float or list of float, default=0.05
+        Significance level(s) for adjusted chance levels.
+
+    Returns
+    -------
+    dict
+        Mapping of ``{dataset_name: {'theoretical': float,
+        'adjusted': {alpha: float, ...}}}``.
+    """
+    if isinstance(alpha, (int, float)):
+        alpha = [alpha]
+
+    result = {}
+    for dname, grp in data.groupby("dataset"):
+        n_classes = int(grp["n_classes"].iloc[0])
+        n_trials = int(grp["n_samples_test"].iloc[0])
+        entry: dict[str, Any] = {
+            "theoretical": theoretical_chance_level(n_classes),
+            "adjusted": {a: adjusted_chance_level(n_classes, n_trials, a) for a in alpha},
+        }
+        result[dname] = entry
+
+    return result
 
 
 def get_chance_levels(
@@ -192,21 +230,11 @@ def _extract_n_trials(dataset, n_classes: int | None = None) -> int | None:
 
     if n_classes is not None:
         if dataset_paradigm in ("imagery", "ssvep", "cvep"):
-            try:
-                trials_per_class = _match_int(
-                    row.get("#Trials / class", ""), default=None
-                )
-            except AssertionError:
-                trials_per_class = None
+            trials_per_class = _match_int(row.get("#Trials / class", ""), default=None)
             if trials_per_class is not None:
                 return trials_per_class * n_classes
         elif dataset_paradigm == "rstate":
-            try:
-                blocks_per_class = _match_int(
-                    row.get("#Blocks / class", ""), default=None
-                )
-            except AssertionError:
-                blocks_per_class = None
+            blocks_per_class = _match_int(row.get("#Blocks / class", ""), default=None)
             if blocks_per_class is not None:
                 return blocks_per_class * n_classes
 

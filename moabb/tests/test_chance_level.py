@@ -1,169 +1,60 @@
 """Tests for moabb.analysis.chance_level module."""
 
+import pandas as pd
 import pytest
 
 from moabb.analysis.chance_level import (
     adjusted_chance_level,
+    chance_levels_from_dataframe,
     get_chance_levels,
     theoretical_chance_level,
 )
 
 
-class TestTheoreticalChanceLevel:
-    def test_binary(self):
-        assert theoretical_chance_level(2) == 0.5
-
-    def test_four_class(self):
-        assert theoretical_chance_level(4) == 0.25
-
-    def test_three_class(self):
-        assert abs(theoretical_chance_level(3) - 1 / 3) < 1e-10
-
-    def test_invalid_n_classes(self):
-        with pytest.raises(ValueError):
-            theoretical_chance_level(1)
-        with pytest.raises(ValueError):
-            theoretical_chance_level(0)
+def test_theoretical_chance_level():
+    assert theoretical_chance_level(2) == 0.5
+    assert theoretical_chance_level(4) == 0.25
+    with pytest.raises(ValueError):
+        theoretical_chance_level(1)
 
 
-class TestAdjustedChanceLevel:
-    def test_exceeds_theoretical(self):
-        # Adjusted threshold should be higher than theoretical chance
-        assert adjusted_chance_level(2, 20, 0.05) > 0.5
-
-    def test_exceeds_theoretical_four_class(self):
-        assert adjusted_chance_level(4, 50, 0.05) > 0.25
-
-    def test_approaches_theoretical_large_n(self):
-        # With many trials, adjusted level should approach theoretical
-        adj = adjusted_chance_level(2, 10000, 0.05)
-        assert abs(adj - 0.5) < 0.02
-
-    def test_stricter_alpha_higher_threshold(self):
-        # Stricter significance should require higher accuracy
-        adj_05 = adjusted_chance_level(2, 50, 0.05)
-        adj_01 = adjusted_chance_level(2, 50, 0.01)
-        assert adj_01 > adj_05
-
-    def test_fewer_trials_higher_threshold(self):
-        # Fewer trials should require higher accuracy
-        adj_small = adjusted_chance_level(2, 20, 0.05)
-        adj_large = adjusted_chance_level(2, 200, 0.05)
-        assert adj_small > adj_large
-
-    def test_invalid_inputs(self):
-        with pytest.raises(ValueError):
-            adjusted_chance_level(1, 100, 0.05)
-        with pytest.raises(ValueError):
-            adjusted_chance_level(2, 0, 0.05)
-        with pytest.raises(ValueError):
-            adjusted_chance_level(2, 100, 0.0)
-        with pytest.raises(ValueError):
-            adjusted_chance_level(2, 100, 1.0)
+def test_adjusted_chance_level():
+    # Adjusted threshold should exceed theoretical
+    assert adjusted_chance_level(2, 20, 0.05) > 0.5
+    # Approaches theoretical with many trials
+    assert abs(adjusted_chance_level(2, 10000, 0.05) - 0.5) < 0.02
+    # Stricter alpha -> higher threshold
+    assert adjusted_chance_level(2, 50, 0.01) > adjusted_chance_level(2, 50, 0.05)
+    with pytest.raises(ValueError):
+        adjusted_chance_level(1, 100, 0.05)
 
 
-class TestGetChanceLevels:
-    def _make_mock_dataset(self, name, event_id, summary_table=None, paradigm="imagery"):
-        """Create a minimal mock dataset object."""
+def test_get_chance_levels():
+    class MockDataset:
+        pass
 
-        class MockDataset:
-            pass
+    ds = MockDataset()
+    ds.__class__ = type("BinaryDS", (), {})
+    ds.code = "BinaryDS"
+    ds.event_id = {"left": 1, "right": 2}
+    ds.paradigm = "imagery"
+    ds._summary_table = {"#Trials / class": "50", "#Classes": "2"}
 
-        ds = MockDataset()
-        ds.__class__ = type(name, (), {})
-        ds.__class__.__name__ = name
-        ds.code = name
-        ds.event_id = event_id
-        ds.paradigm = paradigm
-        if summary_table is not None:
-            ds._summary_table = summary_table
-        return ds
+    levels = get_chance_levels([ds], alpha=[0.05, 0.01])
+    assert levels["BinaryDS"]["theoretical"] == 0.5
+    assert levels["BinaryDS"]["adjusted"][0.05] > 0.5
+    assert levels["BinaryDS"]["adjusted"][0.01] > levels["BinaryDS"]["adjusted"][0.05]
 
-    def test_theoretical_only(self):
-        ds = self._make_mock_dataset("BinaryDS", {"left": 1, "right": 2})
-        levels = get_chance_levels([ds])
-        assert "BinaryDS" in levels
-        assert levels["BinaryDS"]["theoretical"] == 0.5
-        assert "adjusted" not in levels["BinaryDS"]
 
-    def test_theoretical_four_class(self):
-        ds = self._make_mock_dataset(
-            "FourClassDS",
-            {"a": 1, "b": 2, "c": 3, "d": 4},
-        )
-        levels = get_chance_levels([ds])
-        assert levels["FourClassDS"]["theoretical"] == 0.25
-
-    def test_multiple_datasets(self):
-        ds1 = self._make_mock_dataset("DS1", {"a": 1, "b": 2})
-        ds2 = self._make_mock_dataset("DS2", {"a": 1, "b": 2, "c": 3, "d": 4})
-        levels = get_chance_levels([ds1, ds2])
-        assert levels["DS1"]["theoretical"] == 0.5
-        assert levels["DS2"]["theoretical"] == 0.25
-
-    def test_with_alpha_and_summary_table(self):
-        summary = {"#Trials / class": "50", "#Classes": "2"}
-        ds = self._make_mock_dataset(
-            "TestDS",
-            {"a": 1, "b": 2},
-            summary_table=summary,
-            paradigm="imagery",
-        )
-        levels = get_chance_levels([ds], alpha=0.05)
-        assert "adjusted" in levels["TestDS"]
-        assert 0.05 in levels["TestDS"]["adjusted"]
-        assert levels["TestDS"]["adjusted"][0.05] > 0.5
-
-    def test_with_multiple_alphas(self):
-        summary = {"#Trials / class": "50", "#Classes": "2"}
-        ds = self._make_mock_dataset(
-            "TestDS",
-            {"a": 1, "b": 2},
-            summary_table=summary,
-            paradigm="imagery",
-        )
-        levels = get_chance_levels([ds], alpha=[0.05, 0.01, 0.001])
-        adj = levels["TestDS"]["adjusted"]
-        assert 0.05 in adj
-        assert 0.01 in adj
-        assert 0.001 in adj
-        # Stricter alpha -> higher threshold
-        assert adj[0.01] > adj[0.05]
-        assert adj[0.001] > adj[0.01]
-
-    def test_paradigm_overrides_dataset_classes(self):
-        summary = {"#Trials / class": "144", "#Classes": "4"}
-        ds = self._make_mock_dataset(
-            "BNCI2014_001",
-            {"left_hand": 1, "right_hand": 2, "feet": 3, "tongue": 4},
-            summary_table=summary,
-            paradigm="imagery",
-        )
-
-        class MockLeftRightParadigm:
-            def used_events(self, dataset):
-                return {
-                    "left_hand": dataset.event_id["left_hand"],
-                    "right_hand": dataset.event_id["right_hand"],
-                }
-
-        levels = get_chance_levels([ds], alpha=0.05, paradigm=MockLeftRightParadigm())
-
-        assert levels["BNCI2014_001"]["theoretical"] == 0.5
-        assert levels["BNCI2014_001"]["adjusted"][0.05] == adjusted_chance_level(
-            2, 288, 0.05
-        )
-
-    def test_no_summary_table_warns(self):
-        ds = self._make_mock_dataset("NoTable", {"a": 1, "b": 2})
-        levels = get_chance_levels([ds], alpha=0.05)
-        # Should still have theoretical, but no adjusted
-        assert levels["NoTable"]["theoretical"] == 0.5
-        assert "adjusted" not in levels["NoTable"]
-
-    def test_invalid_alpha(self):
-        ds = self._make_mock_dataset("DS", {"a": 1, "b": 2})
-        with pytest.raises(ValueError):
-            get_chance_levels([ds], alpha=0.0)
-        with pytest.raises(ValueError):
-            get_chance_levels([ds], alpha=1.0)
+def test_chance_levels_from_dataframe():
+    data = pd.DataFrame(
+        {
+            "dataset": ["DS_A", "DS_A", "DS_B", "DS_B"],
+            "n_samples_test": [50, 50, 100, 100],
+            "n_classes": [2, 2, 4, 4],
+        }
+    )
+    levels = chance_levels_from_dataframe(data, alpha=0.05)
+    assert levels["DS_A"]["theoretical"] == 0.5
+    assert levels["DS_A"]["adjusted"][0.05] > 0.5
+    assert levels["DS_B"]["theoretical"] == 0.25

@@ -10,10 +10,11 @@ import numpy as np
 import pandas as pd
 import seaborn as sea
 from matplotlib.collections import PatchCollection
+from matplotlib.colors import LinearSegmentedColormap
 from matplotlib.patches import Circle, RegularPolygon
 from scipy.stats import t
 
-from moabb.analysis._utils import _match_float, _match_int
+from moabb.analysis._utils import _compute_n_trials, _match_float, _match_int
 from moabb.analysis.meta_analysis import (
     collapse_session_scores,
     combine_effects,
@@ -55,9 +56,11 @@ def _resolve_chance_levels(data, chance_level):
     ----------
     data : DataFrame
         Results dataframe with a 'dataset' column.
-    chance_level : None, float, or dict
+    chance_level : None, float, "auto", or dict
         - None: defaults to 0.5 for all datasets (backward compat).
         - float: uniform chance level for all datasets.
+        - ``"auto"``: compute from ``n_samples_test`` and ``n_classes``
+          columns in the DataFrame (requires MOABB >= 1.2 results).
         - dict: either ``{dataset_name: float}`` or the output of
           :func:`get_chance_levels` with ``{dataset_name: {'theoretical': float, ...}}``.
 
@@ -72,6 +75,12 @@ def _resolve_chance_levels(data, chance_level):
 
     if chance_level is None:
         return {d: 0.5 for d in datasets}, None
+
+    if isinstance(chance_level, str) and chance_level == "auto":
+        from moabb.analysis.chance_level import chance_levels_from_dataframe
+
+        levels = chance_levels_from_dataframe(data)
+        return _resolve_chance_levels(data, levels)
 
     if isinstance(chance_level, (int, float)):
         return {d: float(chance_level) for d in datasets}, None
@@ -94,14 +103,20 @@ def _resolve_chance_levels(data, chance_level):
         return theoretical, adjusted if adjusted else None
 
     raise TypeError(
-        f"chance_level must be None, a float, or a dict, got {type(chance_level)}"
+        f"chance_level must be None, a float, 'auto', or a dict, got {type(chance_level)}"
     )
 
 
 def _chance_label_text(level):
-    """Build the annotation string for a chance level line, including value."""
+    """Build the annotation string for a theoretical chance level line."""
     pct = f"{level:.0f}%" if level == int(level) else f"{level:.1f}%"
     return f"Chance level {pct} \u2014 Combrisson & Jerbi (2015)"
+
+
+def _chance_by_chance_label_text(level):
+    """Build the annotation string for an adjusted chance level band."""
+    pct = f"{level:.1f}%"
+    return f"Chance by chance ({pct}, p<0.05) \u2014 Combrisson & Jerbi (2015)"
 
 
 _CHANCE_ANNOT_KW = dict(
@@ -110,6 +125,44 @@ _CHANCE_ANNOT_KW = dict(
     alpha=0.9,
     bbox=dict(facecolor="white", edgecolor="none", alpha=0.8, pad=1.5),
 )
+
+# Module-level colormap for significance heatmaps
+_MOABB_SIGNIFICANCE_CMAP = LinearSegmentedColormap.from_list(
+    "moabb_sig", ["white", MOABB_TEAL, MOABB_NAVY]
+)
+_MOABB_SIGNIFICANCE_CMAP.set_under(color=[1, 1, 1])
+_MOABB_SIGNIFICANCE_CMAP.set_over(color=MOABB_CORAL)
+
+
+def _max_adjusted_threshold(adjusted, alpha=0.05):
+    """Return the maximum adjusted threshold across datasets for *alpha*.
+
+    Returns None if no datasets have an adjusted level at *alpha*.
+    """
+    if not adjusted:
+        return None
+    max_val = None
+    for ds_levels in adjusted.values():
+        if alpha in ds_levels:
+            val = ds_levels[alpha]
+            if max_val is None or val > max_val:
+                max_val = val
+    return max_val
+
+
+def _to_percentage(data, theoretical, adjusted):
+    """Convert scores, theoretical, and adjusted levels to percentages.
+
+    Returns copies — the originals are not mutated.
+    """
+    data = data.copy()
+    data["score"] = data["score"] * 100
+    theoretical = {k: v * 100 for k, v in theoretical.items()}
+    if adjusted:
+        adjusted = {
+            k: {a: v * 100 for a, v in alphas.items()} for k, alphas in adjusted.items()
+        }
+    return data, theoretical, adjusted
 
 
 def _draw_chance_lines(ax, chance_levels, datasets, orientation, adjusted=None):
@@ -135,13 +188,7 @@ def _draw_chance_lines(ax, chance_levels, datasets, orientation, adjusted=None):
     unique_levels = set(chance_levels.values())
 
     # --- Draw shaded band for "chance by chance" region ---
-    max_adj = None
-    if adjusted:
-        for ds_levels in adjusted.values():
-            if 0.05 in ds_levels:
-                val = ds_levels[0.05]
-                if max_adj is None or val > max_adj:
-                    max_adj = val
+    max_adj = _max_adjusted_threshold(adjusted)
 
     if max_adj is not None:
         if orientation in ("horizontal", "h"):
@@ -177,8 +224,7 @@ def _draw_chance_lines(ax, chance_levels, datasets, orientation, adjusted=None):
 
     # --- Annotate ---
     if max_adj is not None:
-        pct = f"{max_adj:.1f}%"
-        label = f"Chance by chance ({pct}, p<0.05) \u2014 Combrisson & Jerbi (2015)"
+        label = _chance_by_chance_label_text(max_adj)
     else:
         ref_level = next(iter(chance_levels.values()), 50)
         label = _chance_label_text(ref_level)
@@ -358,7 +404,7 @@ def _extract_color_dict(handles, labels):
         elif hasattr(h, "get_markerfacecolor"):
             color_dict[lb] = h.get_markerfacecolor()
         else:
-            color_dict[lb] = h.get_color() if hasattr(h, "get_color") else "C0"
+            color_dict[lb] = "C0"
     return color_dict
 
 
@@ -393,15 +439,7 @@ def score_plot(data, pipelines=None, orientation="vertical", chance_level=None):
     """
     data = _prepare_plot_data(data, pipelines)
     theoretical, adjusted = _resolve_chance_levels(data, chance_level)
-
-    # Display scores as percentages
-    data = data.copy()
-    data["score"] = data["score"] * 100
-    theoretical = {k: v * 100 for k, v in theoretical.items()}
-    if adjusted:
-        adjusted = {
-            k: {a: v * 100 for a, v in alphas.items()} for k, alphas in adjusted.items()
-        }
+    data, theoretical, adjusted = _to_percentage(data, theoretical, adjusted)
 
     if orientation in ["horizontal", "h"]:
         y, x = "dataset", "score"
@@ -499,15 +537,7 @@ def distribution_plot(
     """
     data = _prepare_plot_data(data, pipelines)
     theoretical, adjusted = _resolve_chance_levels(data, chance_level)
-
-    # Display scores as percentages
-    data = data.copy()
-    data["score"] = data["score"] * 100
-    theoretical = {k: v * 100 for k, v in theoretical.items()}
-    if adjusted:
-        adjusted = {
-            k: {a: v * 100 for a, v in alphas.items()} for k, alphas in adjusted.items()
-        }
+    data, theoretical, adjusted = _to_percentage(data, theoretical, adjusted)
 
     if orientation in ["horizontal", "h"]:
         y, x = "dataset", "score"
@@ -922,9 +952,9 @@ def _draw_paired_chance_region(ax, theoretical, adjusted, min_chance):
     ----------
     ax : matplotlib.axes.Axes
     theoretical : dict[str, float]
-        Per-dataset theoretical chance levels (already in percentage).
+        Per-dataset theoretical chance levels (in percentage).
     adjusted : dict[str, dict[float, float]] or None
-        Per-dataset adjusted levels ``{dataset: {alpha: threshold}}``.
+        Per-dataset adjusted levels (in percentage).
     min_chance : float
         Minimum theoretical chance level in percentage (used for crosshair).
     """
@@ -933,34 +963,26 @@ def _draw_paired_chance_region(ax, theoretical, adjusted, min_chance):
     ax.axvline(min_chance, linestyle="--", color=_CHANCE_COLOR, linewidth=1.2, alpha=0.5)
 
     # Draw shaded band if adjusted significance thresholds are available
-    if adjusted:
-        # Find the maximum adjusted threshold at alpha=0.05 across datasets
-        max_adj = None
-        for ds_levels in adjusted.values():
-            if 0.05 in ds_levels:
-                val = ds_levels[0.05] * 100  # convert to percentage
-                if max_adj is None or val > max_adj:
-                    max_adj = val
-        if max_adj is not None:
-            ax.axhspan(
-                ax.get_ylim()[0],
-                max_adj,
-                color=_CHANCE_COLOR,
-                alpha=0.06,
-                zorder=0,
-            )
-            ax.axvspan(
-                ax.get_xlim()[0],
-                max_adj,
-                color=_CHANCE_COLOR,
-                alpha=0.06,
-                zorder=0,
-            )
+    max_adj = _max_adjusted_threshold(adjusted)
+    if max_adj is not None:
+        ax.axhspan(
+            ax.get_ylim()[0],
+            max_adj,
+            color=_CHANCE_COLOR,
+            alpha=0.06,
+            zorder=0,
+        )
+        ax.axvspan(
+            ax.get_xlim()[0],
+            max_adj,
+            color=_CHANCE_COLOR,
+            alpha=0.06,
+            zorder=0,
+        )
 
     # Annotate at the top-right edge of the shaded band
-    if adjusted and max_adj is not None:
-        pct = f"{max_adj:.1f}%"
-        label = f"Chance by chance ({pct}, p<0.05) \u2014 Combrisson & Jerbi (2015)"
+    if max_adj is not None:
+        label = _chance_by_chance_label_text(max_adj)
         ax.annotate(
             label,
             xy=(1, max_adj),
@@ -1018,8 +1040,13 @@ def paired_plot(data, alg1, alg2, chance_level=None):
     theoretical, adjusted = _resolve_chance_levels(data, chance_level)
     min_chance = min(theoretical.values()) if theoretical else 0.5
 
-    # Display scores as percentages
+    # Convert to percentages
     min_chance = min_chance * 100
+    theoretical = {k: v * 100 for k, v in theoretical.items()}
+    if adjusted:
+        adjusted = {
+            k: {a: v * 100 for a, v in alphas.items()} for k, alphas in adjusted.items()
+        }
 
     data = data.pivot_table(
         values="score", columns="pipeline", index=["subject", "dataset"]
@@ -1094,20 +1121,11 @@ def summary_plot(sig_df, effect_df, p_threshold=0.05, simplify=True):
     fig = plt.figure(figsize=(10, 9.5))
     ax = fig.add_subplot(111)
 
-    # MOABB-branded colormap: white -> teal -> navy
-    from matplotlib.colors import LinearSegmentedColormap
-
-    moabb_cmap = LinearSegmentedColormap.from_list(
-        "moabb_sig", ["white", MOABB_TEAL, MOABB_NAVY]
-    )
-    moabb_cmap.set_under(color=[1, 1, 1])
-    moabb_cmap.set_over(color=MOABB_CORAL)
-
     sea.heatmap(
         data=-np.log(sig_df),
         annot=annot_df,
         fmt="",
-        cmap=moabb_cmap,
+        cmap=_MOABB_SIGNIFICANCE_CMAP,
         linewidths=1,
         linecolor="0.8",
         annot_kws={"size": FONT_SIZES["annotation"]},
@@ -1438,8 +1456,6 @@ def _add_bubble_legend(scale, size_mode, color_map, alphas, fontsize, shape, x0,
 
 
 def _get_dataset_parameters(dataset):
-    from moabb.analysis._utils import _compute_n_trials
-
     row = dataset._summary_table
     dataset_name = dataset.__class__.__name__
     paradigm = dataset.paradigm
