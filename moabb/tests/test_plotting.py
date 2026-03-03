@@ -13,6 +13,7 @@ from moabb.analysis.plotting import (
     paired_plot,
     score_plot,
 )
+from moabb.analysis.style import MOABB_PALETTE, apply_moabb_style
 from moabb.datasets.utils import dataset_list
 
 
@@ -215,8 +216,9 @@ class TestPairedPlot:
         fig = paired_plot(data, "Alg1", "Alg2", chance_level=0.25)
         assert isinstance(fig, Figure)
         ax = fig.axes[0]
-        assert ax.get_xlim()[0] == pytest.approx(0.25, abs=0.05)
-        assert ax.get_ylim()[0] == pytest.approx(0.25, abs=0.05)
+        # Scores displayed as percentages: 0.25 -> 25
+        assert ax.get_xlim()[0] == pytest.approx(25, abs=5)
+        assert ax.get_ylim()[0] == pytest.approx(25, abs=5)
 
     def test_with_chance_level_dict(self):
         data = _make_results_df(
@@ -228,5 +230,32 @@ class TestPairedPlot:
         )
         assert isinstance(fig, Figure)
         ax = fig.axes[0]
-        # min chance level is 0.25
-        assert ax.get_xlim()[0] == pytest.approx(0.25, abs=0.05)
+        # min chance level is 0.25 -> 25%
+        assert ax.get_xlim()[0] == pytest.approx(25, abs=5)
+
+
+class TestMoabbStyle:
+    def test_moabb_palette_length(self):
+        assert len(MOABB_PALETTE) == 6
+
+    def test_score_plot_has_accent_line(self):
+        data = _make_results_df()
+        fig, _ = score_plot(data)
+        assert len(fig.patches) > 0
+
+    def test_score_plot_spines(self):
+        data = _make_results_df()
+        fig, _ = score_plot(data)
+        ax = fig.axes[0]
+        assert ax.spines["bottom"].get_visible()
+        assert not ax.spines["top"].get_visible()
+        assert not ax.spines["right"].get_visible()
+        assert not ax.spines["left"].get_visible()
+
+    def test_apply_moabb_style_title(self):
+        fig, ax = matplotlib.pyplot.subplots()
+        apply_moabb_style(ax, title="Test Title", subtitle="Test Sub")
+        texts = [t.get_text() for t in fig.texts]
+        assert "Test Title" in texts
+        assert "Test Sub" in texts
+        matplotlib.pyplot.close(fig)

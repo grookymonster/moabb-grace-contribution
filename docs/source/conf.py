@@ -173,7 +173,9 @@ sphinx_gallery_conf = {
     "backreferences_dir": "generated",
     "show_memory": True,
     "reference_url": dict(moabb=None),
-    "filename_pattern": "(/plot_|/tutorial_)",
+    "filename_pattern": os.environ.get(
+        "SG_PATTERN", "(/plot_|/tutorial_)"
+    ),
     "default_thumb_file": "../images/moabb_logo_copy.png",
     "subsection_order": ExplicitOrder(
         [

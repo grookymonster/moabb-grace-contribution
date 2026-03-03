@@ -21,16 +21,31 @@ from moabb.analysis.meta_analysis import (
 )
 
 
-PIPELINE_PALETTE = sea.color_palette("husl", 6)
-sea.set(font="serif", style="whitegrid", palette=PIPELINE_PALETTE, color_codes=False)
+from moabb.analysis.style import (
+    FONT_SIZES,
+    GRID_COLOR,
+    MOABB_CORAL,
+    MOABB_DARK_TEXT,
+    MOABB_LIGHT_BLUE,
+    MOABB_NAVY,
+    MOABB_PALETTE,
+    MOABB_TEAL,
+    apply_moabb_style,
+    set_moabb_defaults,
+    style_legend,
+)
+
+PIPELINE_PALETTE = MOABB_PALETTE  # backward-compat alias
+set_moabb_defaults()
 
 log = logging.getLogger(__name__)
 
 # Line style definitions for adjusted chance level alpha thresholds
+_CHANCE_COLOR = "#b0413e"  # muted red — distinct from data, not aggressive
 _ALPHA_LINE_STYLES = {
-    0.05: {"linestyle": "--", "color": "0.5", "linewidth": 1.5},
-    0.01: {"linestyle": "-.", "color": "0.6", "linewidth": 1.5},
-    0.001: {"linestyle": ":", "color": "0.7", "linewidth": 1.5},
+    0.05: {"linestyle": "--", "color": _CHANCE_COLOR, "linewidth": 1.2, "alpha": 0.55},
+    0.01: {"linestyle": "-.", "color": _CHANCE_COLOR, "linewidth": 1.2, "alpha": 0.45},
+    0.001: {"linestyle": ":", "color": _CHANCE_COLOR, "linewidth": 1.2, "alpha": 0.35},
 }
 
 
@@ -84,11 +99,26 @@ def _resolve_chance_levels(data, chance_level):
     )
 
 
+def _chance_label_text(level):
+    """Build the annotation string for a chance level line, including value."""
+    pct = f"{level:.0f}%" if level == int(level) else f"{level:.1f}%"
+    return f"Chance level {pct} \u2014 Combrisson & Jerbi (2015)"
+
+
+_CHANCE_ANNOT_KW = dict(
+    fontsize=FONT_SIZES["source"],
+    color=_CHANCE_COLOR,
+    alpha=0.9,
+    bbox=dict(facecolor="white", edgecolor="none", alpha=0.8, pad=1.5),
+)
+
+
 def _draw_chance_lines(ax, chance_levels, datasets, orientation):
     """Draw theoretical chance level lines on an axis.
 
     If all datasets share the same level, draws a single spanning line.
-    Otherwise, draws per-dataset line segments.
+    Otherwise, draws per-dataset line segments.  Each line is annotated with
+    the value and Combrisson & Jerbi (2015) citation.
 
     Parameters
     ----------
@@ -103,32 +133,55 @@ def _draw_chance_lines(ax, chance_levels, datasets, orientation):
 
     if len(unique_levels) == 1:
         level = unique_levels.pop()
-        line_kw = dict(linestyle="--", color="k", linewidth=2)
+        line_kw = dict(linestyle="--", color=_CHANCE_COLOR, linewidth=1.5,
+                       alpha=0.75, zorder=2)
         if orientation in ("horizontal", "h"):
             ax.axvline(level, **line_kw)
+            ax.annotate(
+                _chance_label_text(level),
+                xy=(level, 1), xycoords=("data", "axes fraction"),
+                xytext=(6, -8), textcoords="offset points",
+                va="top", ha="left", **_CHANCE_ANNOT_KW,
+            )
         else:
             ax.axhline(level, **line_kw)
+            ax.annotate(
+                _chance_label_text(level),
+                xy=(1, level), xycoords=("axes fraction", "data"),
+                xytext=(-6, 6), textcoords="offset points",
+                va="bottom", ha="right", **_CHANCE_ANNOT_KW,
+            )
     else:
         datasets_list = list(datasets)
         for i, d in enumerate(datasets_list):
             level = chance_levels.get(d, 0.5)
-            line_kw = dict(linestyle="--", color="k", linewidth=1.5, alpha=0.8)
+            line_kw = dict(linestyle="--", color=_CHANCE_COLOR, linewidth=1.3,
+                           alpha=0.75, zorder=2)
             if orientation in ("horizontal", "h"):
-                ax.plot(
-                    [level, level],
-                    [i - 0.4, i + 0.4],
-                    **line_kw,
+                ax.plot([level, level], [i - 0.4, i + 0.4], **line_kw)
+            else:
+                ax.plot([i - 0.4, i + 0.4], [level, level], **line_kw)
+        # Annotate once, on the last segment
+        if datasets_list:
+            last_level = chance_levels.get(datasets_list[-1], 0.5)
+            if orientation in ("horizontal", "h"):
+                ax.annotate(
+                    _chance_label_text(last_level),
+                    xy=(last_level, len(datasets_list) - 0.4),
+                    xytext=(6, -6), textcoords="offset points",
+                    va="top", ha="left", **_CHANCE_ANNOT_KW,
                 )
             else:
-                ax.plot(
-                    [i - 0.4, i + 0.4],
-                    [level, level],
-                    **line_kw,
+                ax.annotate(
+                    _chance_label_text(last_level),
+                    xy=(len(datasets_list) - 1 + 0.4, last_level),
+                    xytext=(-6, 6), textcoords="offset points",
+                    va="bottom", ha="right", **_CHANCE_ANNOT_KW,
                 )
 
 
 def _draw_adjusted_chance_lines(ax, adjusted_levels, datasets, orientation):
-    """Draw adjusted significance threshold lines.
+    """Draw adjusted significance threshold lines with value annotations.
 
     Parameters
     ----------
@@ -148,10 +201,14 @@ def _draw_adjusted_chance_lines(ax, adjusted_levels, datasets, orientation):
     for levels in adjusted_levels.values():
         all_alphas.update(levels.keys())
 
-    for alpha_val in sorted(all_alphas, reverse=True):
+    # Stagger annotation vertical offset so labels don't overlap
+    alpha_list = sorted(all_alphas, reverse=True)
+
+    for rank, alpha_val in enumerate(alpha_list):
         style = _ALPHA_LINE_STYLES.get(
             alpha_val,
-            {"linestyle": "--", "color": "0.5", "linewidth": 1.5},
+            {"linestyle": "--", "color": _CHANCE_COLOR, "linewidth": 1.2,
+             "alpha": 0.5},
         )
 
         # Check if all datasets share the same adjusted level for this alpha
@@ -164,12 +221,42 @@ def _draw_adjusted_chance_lines(ax, adjusted_levels, datasets, orientation):
             continue
 
         unique_vals = set(per_dataset.values())
+        line_alpha = style.get("alpha", 0.5)
+
         if len(unique_vals) == 1 and len(per_dataset) == len(datasets):
             level = unique_vals.pop()
             if orientation in ("horizontal", "h"):
-                ax.axvline(level, label=f"p={alpha_val}", **style)
+                ax.axvline(level, **style)
             else:
-                ax.axhline(level, label=f"p={alpha_val}", **style)
+                ax.axhline(level, **style)
+
+            # Annotate with value and alpha
+            pct = f"{level:.1f}%"
+            label = f"p<{alpha_val} ({pct})"
+            y_offset = 6 + rank * 14  # stagger vertically
+            annot_kw = dict(
+                fontsize=FONT_SIZES["source"] - 1,
+                color=_CHANCE_COLOR,
+                alpha=line_alpha + 0.15,
+                bbox=dict(facecolor="white", edgecolor="none",
+                          alpha=0.8, pad=1.0),
+            )
+            if orientation in ("horizontal", "h"):
+                ax.annotate(
+                    label,
+                    xy=(level, 0), xycoords=("data", "axes fraction"),
+                    xytext=(6, 8 + rank * 14),
+                    textcoords="offset points",
+                    va="bottom", ha="left", **annot_kw,
+                )
+            else:
+                ax.annotate(
+                    label,
+                    xy=(0, level), xycoords=("axes fraction", "data"),
+                    xytext=(8, y_offset),
+                    textcoords="offset points",
+                    va="bottom", ha="left", **annot_kw,
+                )
         else:
             datasets_list = list(datasets)
             for i, d in enumerate(datasets_list):
@@ -276,12 +363,22 @@ def score_plot(data, pipelines=None, orientation="vertical", chance_level=None):
     data = _prepare_plot_data(data, pipelines)
     theoretical, adjusted = _resolve_chance_levels(data, chance_level)
 
+    # Display scores as percentages
+    data = data.copy()
+    data["score"] = data["score"] * 100
+    theoretical = {k: v * 100 for k, v in theoretical.items()}
+    if adjusted:
+        adjusted = {
+            k: {a: v * 100 for a, v in alphas.items()}
+            for k, alphas in adjusted.items()
+        }
+
     if orientation in ["horizontal", "h"]:
         y, x = "dataset", "score"
         fig = plt.figure(figsize=(8.5, 11))
     elif orientation in ["vertical", "v"]:
         x, y = "dataset", "score"
-        fig = plt.figure(figsize=(11, 8.5))
+        fig = plt.figure(figsize=(11, 9.5))
     else:
         raise ValueError("Invalid plot orientation selected!")
 
@@ -291,28 +388,37 @@ def score_plot(data, pipelines=None, orientation="vertical", chance_level=None):
         y=y,
         x=x,
         jitter=0.15,
-        palette=PIPELINE_PALETTE,
+        palette=MOABB_PALETTE,
         hue="pipeline",
         dodge=True,
         ax=ax,
         alpha=0.7,
+        size=7,
     )
 
     datasets_order = data["dataset"].unique()
 
     if orientation in ["horizontal", "h"]:
-        ax.set_xlim([0, 1])
+        ax.set_xlim([0, 100])
+        ax.set_xlabel("Score (%)")
     else:
-        ax.set_ylim([0, 1])
+        ax.set_ylim([0, 100])
+        ax.set_ylabel("Score (%)")
 
     _draw_chance_lines(ax, theoretical, datasets_order, orientation)
     if adjusted:
         _draw_adjusted_chance_lines(ax, adjusted, datasets_order, orientation)
 
-    ax.set_title("Scores per dataset and algorithm")
     handles, labels = ax.get_legend_handles_labels()
     color_dict = _extract_color_dict(handles, labels)
-    plt.tight_layout()
+
+    apply_moabb_style(
+        ax,
+        title="Scores per dataset and algorithm",
+        subtitle="Individual pipeline scores across datasets",
+    )
+    style_legend(ax)
+    fig.subplots_adjust(top=0.85, bottom=0.08)
 
     return fig, color_dict
 
@@ -361,12 +467,22 @@ def distribution_plot(
     data = _prepare_plot_data(data, pipelines)
     theoretical, adjusted = _resolve_chance_levels(data, chance_level)
 
+    # Display scores as percentages
+    data = data.copy()
+    data["score"] = data["score"] * 100
+    theoretical = {k: v * 100 for k, v in theoretical.items()}
+    if adjusted:
+        adjusted = {
+            k: {a: v * 100 for a, v in alphas.items()}
+            for k, alphas in adjusted.items()
+        }
+
     if orientation in ["horizontal", "h"]:
         y, x = "dataset", "score"
         figsize = figsize or (8.5, 11)
     elif orientation in ["vertical", "v"]:
         x, y = "dataset", "score"
-        figsize = figsize or (11, 8.5)
+        figsize = figsize or (11, 9.5)
     else:
         raise ValueError("Invalid plot orientation selected!")
 
@@ -379,7 +495,7 @@ def distribution_plot(
         y=y,
         x=x,
         hue="pipeline",
-        palette=PIPELINE_PALETTE,
+        palette=MOABB_PALETTE,
         inner=None,
         alpha=0.3,
         dodge=True,
@@ -394,26 +510,26 @@ def distribution_plot(
         y=y,
         x=x,
         jitter=0.15,
-        palette=PIPELINE_PALETTE,
+        palette=MOABB_PALETTE,
         hue="pipeline",
         dodge=True,
         ax=ax,
         alpha=0.7,
-        size=4,
+        size=5,
     )
 
     datasets_order = data["dataset"].unique()
 
     if orientation in ["horizontal", "h"]:
-        ax.set_xlim([0, 1])
+        ax.set_xlim([0, 100])
+        ax.set_xlabel("Score (%)")
     else:
-        ax.set_ylim([0, 1])
+        ax.set_ylim([0, 100])
+        ax.set_ylabel("Score (%)")
 
     _draw_chance_lines(ax, theoretical, datasets_order, orientation)
     if adjusted:
         _draw_adjusted_chance_lines(ax, adjusted, datasets_order, orientation)
-
-    ax.set_title("Score distributions per dataset and algorithm")
 
     # Deduplicate legend entries (violin + strip create duplicates)
     handles, labels = ax.get_legend_handles_labels()
@@ -428,7 +544,14 @@ def distribution_plot(
     ax.legend(unique_handles, unique_labels)
 
     color_dict = _extract_color_dict(unique_handles, unique_labels)
-    plt.tight_layout()
+
+    apply_moabb_style(
+        ax,
+        title="Score distributions per dataset and algorithm",
+        subtitle="Violin density with individual data points",
+    )
+    style_legend(ax)
+    fig.subplots_adjust(top=0.85, bottom=0.08)
     return fig, color_dict
 
 
@@ -546,7 +669,7 @@ def codecarbon_plot(
     # Create bar plot
     for idx, pipeline in enumerate(unique_pipelines):
         pipeline_data = pivot_data[pivot_data["pipeline"] == pipeline]
-        color = PIPELINE_PALETTE[idx % len(PIPELINE_PALETTE)]
+        color = MOABB_PALETTE[idx % len(MOABB_PALETTE)]
         ax.bar(
             pipeline_data["dataset"],
             pipeline_data["carbon_emission"],
@@ -559,12 +682,18 @@ def codecarbon_plot(
     ax.set_yscale("log")
     ax.set_ylabel(r"$CO_2$ Emission (kg, Log Scale)")
     ax.set_xlabel("Dataset")
-    title = r"$CO_2$ Emission per Dataset and Algorithm"
+    co2_title = r"$CO_2$ Emission per Dataset and Algorithm"
     if country:
-        title += f" {country}"
-    ax.set_title(title, fontsize=12, fontweight="bold")
+        co2_title += f" {country}"
     ax.legend(title="Pipeline", bbox_to_anchor=(1.05, 1), loc="upper left")
-    ax.grid(True, alpha=0.3)
+
+    apply_moabb_style(
+        ax,
+        title=co2_title,
+        subtitle="Average emissions by pipeline",
+        accent_line=True,
+    )
+    style_legend(ax)
 
     # Plot 2: Energy efficiency (score per kg CO2)
     if include_efficiency and n_plots > 1:
@@ -585,9 +714,9 @@ def codecarbon_plot(
 
         colors = [
             (
-                PIPELINE_PALETTE[unique_pipelines.index(p) % len(PIPELINE_PALETTE)]
+                MOABB_PALETTE[unique_pipelines.index(p) % len(MOABB_PALETTE)]
                 if p in unique_pipelines
-                else PIPELINE_PALETTE[0]
+                else MOABB_PALETTE[0]
             )
             for p in efficiency_data.index
         ]
@@ -602,16 +731,18 @@ def codecarbon_plot(
                 f"{width:.2f}",
                 ha="left",
                 va="center",
-                fontsize=9,
+                fontsize=FONT_SIZES["annotation"],
             )
 
         ax.set_xlabel("Energy Efficiency (Accuracy / kg CO2)")
-        ax.set_title(
-            "Pipeline Energy Efficiency\n(Higher is Better)",
-            fontsize=12,
-            fontweight="bold",
+        apply_moabb_style(
+            ax,
+            title="Pipeline Energy Efficiency",
+            subtitle="Higher is better",
+            accent_line=False,
+            source="",
+            grid_axis="x",
         )
-        ax.grid(True, alpha=0.3, axis="x")
 
     # Plot 3: Accuracy vs Emissions scatter
     if include_power_vs_score and n_plots > 2:
@@ -628,9 +759,9 @@ def codecarbon_plot(
 
         for idx, (pipeline, row) in enumerate(scatter_data.iterrows()):
             color = (
-                PIPELINE_PALETTE[unique_pipelines.index(pipeline) % len(PIPELINE_PALETTE)]
+                MOABB_PALETTE[unique_pipelines.index(pipeline) % len(MOABB_PALETTE)]
                 if pipeline in unique_pipelines
-                else PIPELINE_PALETTE[0]
+                else MOABB_PALETTE[0]
             )
             ax.scatter(
                 row["avg_emissions"],
@@ -638,7 +769,7 @@ def codecarbon_plot(
                 s=300,
                 alpha=0.7,
                 color=color,
-                edgecolors="black",
+                edgecolors=MOABB_DARK_TEXT,
                 linewidth=1.5,
             )
             ax.annotate(
@@ -646,21 +777,23 @@ def codecarbon_plot(
                 (row["avg_emissions"], row["avg_score"]),
                 xytext=(5, 5),
                 textcoords="offset points",
-                fontsize=9,
+                fontsize=FONT_SIZES["annotation"],
                 fontweight="bold",
             )
 
         ax.set_xlabel(r"Avg CO$_2$ Emissions (kg)")
         ax.set_ylabel("Avg Accuracy Score")
-        ax.set_title(
-            "Accuracy vs Emissions Trade-off\n(Upper-Right is Better)",
-            fontsize=12,
-            fontweight="bold",
-        )
-        ax.grid(True, alpha=0.3)
         ax.set_xscale("log")
+        apply_moabb_style(
+            ax,
+            title="Accuracy vs Emissions Trade-off",
+            subtitle="Upper-right is better",
+            accent_line=False,
+            source="",
+            grid_axis="both",
+        )
 
-    plt.tight_layout()
+    fig.subplots_adjust(top=0.85, bottom=0.08)
     return fig
 
 
@@ -777,16 +910,40 @@ def paired_plot(data, alg1, alg2, chance_level=None):
     theoretical, _ = _resolve_chance_levels(data, chance_level)
     min_chance = min(theoretical.values()) if theoretical else 0.5
 
+    # Display scores as percentages
+    min_chance = min_chance * 100
+
     data = data.pivot_table(
         values="score", columns="pipeline", index=["subject", "dataset"]
     )
     data = data.reset_index()
-    fig = plt.figure(figsize=(11, 8.5))
+    data[alg1] = data[alg1] * 100
+    data[alg2] = data[alg2] * 100
+
+    fig = plt.figure(figsize=(11, 9.5))
     ax = fig.add_subplot(111)
-    data.plot.scatter(alg1, alg2, ax=ax)
-    ax.plot([0, 1], [0, 1], ls="--", c="k")
-    ax.set_xlim([min_chance, 1])
-    ax.set_ylim([min_chance, 1])
+    ax.scatter(
+        data[alg1],
+        data[alg2],
+        color=MOABB_PALETTE[0],
+        edgecolors=MOABB_PALETTE[4],
+        alpha=0.7,
+        s=50,
+        zorder=3,
+    )
+    ax.plot([0, 100], [0, 100], ls="--", c=GRID_COLOR, linewidth=1)
+    ax.set_xlim([min_chance, 100])
+    ax.set_ylim([min_chance, 100])
+    ax.set_xlabel(f"{alg1} (%)", fontsize=FONT_SIZES["axis_label"])
+    ax.set_ylabel(f"{alg2} (%)", fontsize=FONT_SIZES["axis_label"])
+
+    apply_moabb_style(
+        ax,
+        title=f"{alg1} vs {alg2}",
+        subtitle="Paired comparison across subjects",
+        grid_axis="both",
+    )
+    fig.subplots_adjust(top=0.85, bottom=0.08)
     return fig
 
 
@@ -825,28 +982,42 @@ def summary_plot(sig_df, effect_df, p_threshold=0.05, simplify=True):
                     sig_df.loc[row, col] = 1e-110
                 txt = ""
             annot_df.loc[row, col] = txt
-    fig = plt.figure()
+    fig = plt.figure(figsize=(10, 9.5))
     ax = fig.add_subplot(111)
-    palette = sea.light_palette("green", as_cmap=True)
-    palette.set_under(color=[1, 1, 1])
-    palette.set_over(color=[0.5, 0, 0])
+
+    # MOABB-branded colormap: white -> teal -> navy
+    from matplotlib.colors import LinearSegmentedColormap
+
+    moabb_cmap = LinearSegmentedColormap.from_list(
+        "moabb_sig", ["white", MOABB_TEAL, MOABB_NAVY]
+    )
+    moabb_cmap.set_under(color=[1, 1, 1])
+    moabb_cmap.set_over(color=MOABB_CORAL)
+
     sea.heatmap(
         data=-np.log(sig_df),
         annot=annot_df,
         fmt="",
-        cmap=palette,
+        cmap=moabb_cmap,
         linewidths=1,
         linecolor="0.8",
-        annot_kws={"size": 10},
+        annot_kws={"size": FONT_SIZES["annotation"]},
         cbar=False,
         vmin=-np.log(0.05),
         vmax=-np.log(1e-100),
     )
     for lb in ax.get_xticklabels():
         lb.set_rotation(45)
+        lb.set_ha("right")
     ax.tick_params(axis="y", rotation=0.9)
-    ax.set_title("Algorithm comparison")
-    plt.tight_layout()
+
+    apply_moabb_style(
+        ax,
+        title="Algorithm comparison",
+        subtitle="Significance matrix (effect size and p-values)",
+        grid_axis="none",
+    )
+    fig.subplots_adjust(top=0.85, bottom=0.18)
     return fig
 
 
@@ -895,7 +1066,7 @@ def meta_analysis_plot(stats_df, alg1, alg2):  # noqa: C901
         log.warning("Dataset names are too similar, turning off name shortening")
         simplify = False
     ci = []
-    fig = plt.figure()
+    fig = plt.figure(figsize=(11, 9.5))
     gs = gridspec.GridSpec(1, 5)
     sig_ind = []
     pvals = []
@@ -927,9 +1098,11 @@ def meta_analysis_plot(stats_df, alg1, alg2):  # noqa: C901
         _min = _min if (_min < (v - ci[-1])) else (v - ci[-1])
         _max = _max if (_max > (v + ci[-1])) else (v + ci[-1])
         ax.plot(
-            np.array([v - ci[-1], v + ci[-1]]), np.ones((2,)) * (ind + 1), c="tab:grey"
+            np.array([v - ci[-1], v + ci[-1]]),
+            np.ones((2,)) * (ind + 1),
+            c=MOABB_LIGHT_BLUE,
         )
-    _range = max(abs(_min), abs(_max))
+    _range = max(abs(_min), abs(_max)) * 1.25  # extra breathing room
     ax.set_xlim((0 - _range, 0 + _range))
     final_effect = combine_effects(df_fw["smd"], df_fw["nsub"])
     ax.scatter(
@@ -937,15 +1110,15 @@ def meta_analysis_plot(stats_df, alg1, alg2):  # noqa: C901
         np.arange(len(dsets) + 1),
         s=np.array([50] + [30] * len(dsets)),
         marker="D",
-        c=["k"] + ["tab:grey"] * len(dsets),
+        c=[MOABB_NAVY] + [MOABB_LIGHT_BLUE] * len(dsets),
     )
     for i, p in zip(sig_ind, pvals):
         m, s = _marker(p)
-        ax.scatter(df_fw["smd"].iloc[i], i + 1.4, s=s, marker=m, color="r")
+        ax.scatter(df_fw["smd"].iloc[i], i + 1.4, s=s, marker=m, color=MOABB_CORAL)
     # pvalues axis stuf
     pval_ax.set_xlim([-0.1, 0.1])
     pval_ax.grid(False)
-    pval_ax.set_title("p-value", fontdict={"fontsize": 10})
+    pval_ax.set_title("p-value", fontdict={"fontsize": FONT_SIZES["annotation"]})
     pval_ax.set_xticks([])
     for spine in pval_ax.spines.values():
         spine.set_visible(False)
@@ -956,46 +1129,63 @@ def meta_analysis_plot(stats_df, alg1, alg2):  # noqa: C901
             horizontalalignment="center",
             verticalalignment="center",
             s="{:.2e}".format(p),
-            fontsize=8,
+            fontsize=FONT_SIZES["source"],
+            color=MOABB_DARK_TEXT,
         )
     if final_effect > 0:
         p = combine_pvalues(df_fw["p"], df_fw["nsub"])
         if p < 0.05:
             m, s = _marker(p)
-            ax.scatter([final_effect], [-0.4], s=s, marker=m, c="r")
+            ax.scatter([final_effect], [-0.4], s=s, marker=m, c=MOABB_CORAL)
             pval_ax.text(
                 0,
                 0,
                 horizontalalignment="center",
                 verticalalignment="center",
                 s="{:.2e}".format(p),
-                fontsize=8,
+                fontsize=FONT_SIZES["source"],
+                color=MOABB_DARK_TEXT,
             )
     else:
         p = combine_pvalues(df_bk["p"], df_bk["nsub"])
         if p < 0.05:
             m, s = _marker(p)
-            ax.scatter([final_effect], [-0.4], s=s, marker=m, c="r")
+            ax.scatter([final_effect], [-0.4], s=s, marker=m, c=MOABB_CORAL)
             pval_ax.text(
                 0,
                 0,
                 horizontalalignment="center",
                 verticalalignment="center",
                 s="{:.2e}".format(p),
-                fontsize=8,
+                fontsize=FONT_SIZES["source"],
+                color=MOABB_DARK_TEXT,
             )
 
-    ax.grid(False)
-    ax.spines["top"].set_visible(False)
-    ax.spines["right"].set_visible(False)
-    ax.axvline(0, linestyle="--", c="k")
-    ax.axhline(0.5, linestyle="-", linewidth=3, c="k")
-    title = "< {} better{}\n{}{} better >".format(
-        alg2, " " * (45 - len(alg2)), " " * (45 - len(alg1)), alg1
-    )
-    ax.set_title(title, ha="left", ma="right", loc="left")
+    ax.axvline(0, linestyle="--", c=GRID_COLOR)
+    ax.axhline(0.5, linestyle="-", linewidth=3, c=MOABB_NAVY)
     ax.set_xlabel("Standardized Mean Difference")
-    fig.tight_layout()
+
+    apply_moabb_style(
+        ax,
+        title=f"{alg1} vs {alg2}",
+        subtitle="",
+        grid_axis="none",
+    )
+    fig.subplots_adjust(top=0.85, bottom=0.08)
+
+    # Place the "< alg2 better | alg1 better >" subtitle centered on x=0
+    # so the "|" visually aligns with the zero-effect dashed line.
+    x_center = ax.transData.transform((0, 0))[0]
+    x_fig = fig.transFigure.inverted().transform((x_center, 0))[0]
+    fig.text(
+        x_fig,
+        0.89,
+        "\u2190 {} better  |  {} better \u2192".format(alg2, alg1),
+        fontsize=FONT_SIZES["subtitle"],
+        color=GRID_COLOR,
+        ha="center",
+        va="top",
+    )
 
     return fig
 
