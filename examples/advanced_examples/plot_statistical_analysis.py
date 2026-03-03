@@ -35,8 +35,7 @@ import moabb
 import moabb.analysis.plotting as moabb_plt
 from moabb.analysis.chance_level import (
     adjusted_chance_level,
-    get_chance_levels,
-    theoretical_chance_level,
+    chance_levels_from_dataframe,
 )
 from moabb.analysis.meta_analysis import (  # noqa: E501
     compute_dataset_statistics,
@@ -133,7 +132,8 @@ results = evaluation.process(pipelines)
 
 n_classes = len(paradigm.used_events(dataset))
 print(f"Number of classes (from paradigm): {n_classes}")
-print(f"Theoretical chance level: {theoretical_chance_level(n_classes):.2f}")
+# theoretical chance level: 1 / n_classes
+print(f"Theoretical chance level: {1.0 / n_classes:.2f}")
 
 # Adjusted chance level for 144 test trials at alpha=0.05
 # (BNCI2014_001 has 144 trials per class per session)
@@ -144,22 +144,18 @@ print(
 )
 
 ###############################################################################
-# The convenience function :func:`get_chance_levels` extracts the number of
-# classes and trial counts directly from the dataset objects. By passing
-# ``paradigm=paradigm``, the function uses the paradigm-filtered class count
-# (e.g. 2 for LeftRightImagery) rather than the dataset's native 4 classes.
-# This ensures that the adjusted chance level is computed with the correct
-# binomial parameters.
+# The convenience function :func:`chance_levels_from_dataframe` reads
+# ``n_samples_test`` and ``n_classes`` directly from the results DataFrame,
+# so no dataset objects are needed.
 
-chance_levels = get_chance_levels(datasets, alpha=[0.05, 0.01, 0.001], paradigm=paradigm)
+chance_levels = chance_levels_from_dataframe(results, alpha=[0.05, 0.01, 0.001])
 
 print("\nChance levels:")
 for name, levels in chance_levels.items():
     print(f"  {name}:")
     print(f"    Theoretical: {levels['theoretical']:.2f}")
-    if "adjusted" in levels:
-        for alpha, threshold in sorted(levels["adjusted"].items()):
-            print(f"    Adjusted (alpha={alpha}): {threshold:.4f}")
+    for alpha, threshold in sorted(levels["adjusted"].items()):
+        print(f"    Adjusted (alpha={alpha}): {threshold:.4f}")
 
 ##############################################################################
 # MOABB Plotting with Chance Levels

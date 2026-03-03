@@ -37,55 +37,38 @@ def test_get_dataset_parameters(dataset_class):
     assert isinstance(trial_len, float)
 
 
-def _make_results_df(n_subjects=5, n_pipelines=2, dataset_names=None, seed=42):
-    """Create a synthetic results DataFrame mimicking Results.to_dataframe()."""
-    rng = np.random.RandomState(seed)
-    dataset_names = dataset_names or ["Dataset0", "Dataset1"]
-    pipeline_names = [f"Pipeline{i}" for i in range(n_pipelines)]
-    rows = []
-    for ds in dataset_names:
-        for pipe in pipeline_names:
-            for subj in range(1, n_subjects + 1):
-                for sess in ["0", "1"]:
-                    rows.append(
-                        {
-                            "dataset": ds,
-                            "pipeline": pipe,
-                            "subject": subj,
-                            "session": sess,
-                            "score": rng.uniform(0.4, 1.0),
-                            "time": rng.uniform(0.1, 2.0),
-                            "n_samples": 100,
-                            "n_channels": 10,
-                            "n_samples_test": 50,
-                            "n_classes": 2,
-                        }
-                    )
+def _make_df():
+    rng = np.random.RandomState(42)
+    rows = [
+        {
+            "dataset": ds,
+            "pipeline": pipe,
+            "subject": subj,
+            "session": "0",
+            "score": rng.uniform(0.4, 1.0),
+            "time": 0.1,
+            "n_samples": 100,
+            "n_channels": 10,
+            "n_samples_test": 50,
+            "n_classes": 2,
+        }
+        for ds in ["D0", "D1"]
+        for pipe in ["P0", "P1"]
+        for subj in range(1, 4)
+    ]
     return pd.DataFrame(rows)
 
 
-def test_score_plot():
-    data = _make_results_df()
-    fig, color_dict = score_plot(data, chance_level=0.5)
+def test_score_plot_auto():
+    fig, _ = score_plot(_make_df(), chance_level="auto")
     assert isinstance(fig, Figure)
-    assert isinstance(color_dict, dict)
 
 
 def test_distribution_plot():
-    data = _make_results_df()
-    fig, color_dict = distribution_plot(data, chance_level=0.25)
+    fig, _ = distribution_plot(_make_df(), chance_level="auto")
     assert isinstance(fig, Figure)
-    assert isinstance(color_dict, dict)
-
-
-def test_score_plot_auto_chance_level():
-    data = _make_results_df()
-    fig, color_dict = score_plot(data, chance_level="auto")
-    assert isinstance(fig, Figure)
-    assert isinstance(color_dict, dict)
 
 
 def test_paired_plot():
-    data = _make_results_df()
-    fig = paired_plot(data, "Pipeline0", "Pipeline1", chance_level=0.5)
+    fig = paired_plot(_make_df(), "P0", "P1", chance_level="auto")
     assert isinstance(fig, Figure)

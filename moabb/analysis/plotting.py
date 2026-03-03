@@ -62,7 +62,7 @@ def _resolve_chance_levels(data, chance_level):
         - ``"auto"``: compute from ``n_samples_test`` and ``n_classes``
           columns in the DataFrame (requires MOABB >= 1.2 results).
         - dict: either ``{dataset_name: float}`` or the output of
-          :func:`get_chance_levels` with ``{dataset_name: {'theoretical': float, ...}}``.
+          :func:`chance_levels_from_dataframe` with ``{dataset_name: {'theoretical': float, ...}}``.
 
     Returns
     -------
@@ -426,7 +426,7 @@ def score_plot(data, pipelines=None, orientation="vertical", chance_level=None):
         - ``float`` : uniform chance level for all datasets.
         - ``dict`` : per-dataset chance levels. Can be a simple
           ``{dataset_name: float}`` mapping or the output of
-          :func:`~moabb.analysis.chance_level.get_chance_levels`.
+          :func:`~moabb.analysis.chance_level.chance_levels_from_dataframe`.
           When the dict includes ``'adjusted'`` entries, adjusted
           significance threshold lines are also drawn.
 
@@ -522,7 +522,7 @@ def distribution_plot(
         - ``float`` : uniform chance level for all datasets.
         - ``dict`` : per-dataset chance levels. Can be a simple
           ``{dataset_name: float}`` mapping or the output of
-          :func:`~moabb.analysis.chance_level.get_chance_levels`.
+          :func:`~moabb.analysis.chance_level.chance_levels_from_dataframe`.
           When the dict includes ``'adjusted'`` entries, adjusted
           significance threshold lines are also drawn.
     figsize : tuple of (float, float) | None
