@@ -5,25 +5,29 @@ from __future__ import annotations
 import re
 
 
-def _match_int(s, default=None):
+_RAISE = object()  # sentinel distinct from None
+
+
+def _match_int(s, default=_RAISE):
     """Match the first integer in a string.
 
     Parameters
     ----------
     s : str
         String to search for an integer.
-    default : int or None, optional
-        Default value to return if no integer is found. If None and no
-        integer is found, raises AssertionError.
+    default : int, None, or _RAISE, optional
+        Value to return if no integer is found.  The default sentinel
+        ``_RAISE`` causes an ``AssertionError``; any other value
+        (including ``None``) is returned as-is.
 
     Returns
     -------
-    int
-        The first integer found in the string, or default if not found.
+    int or default
+        The first integer found in the string, or *default* if not found.
     """
     match = re.search(r"(\d+)", str(s))
     if match is None:
-        if default is not None:
+        if default is not _RAISE:
             return default
         raise AssertionError(f"Cannot parse number from '{s}'")
     return int(match.group(1))

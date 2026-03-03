@@ -132,6 +132,29 @@ class TestGetChanceLevels:
         assert adj[0.01] > adj[0.05]
         assert adj[0.001] > adj[0.01]
 
+    def test_paradigm_overrides_dataset_classes(self):
+        summary = {"#Trials / class": "144", "#Classes": "4"}
+        ds = self._make_mock_dataset(
+            "BNCI2014_001",
+            {"left_hand": 1, "right_hand": 2, "feet": 3, "tongue": 4},
+            summary_table=summary,
+            paradigm="imagery",
+        )
+
+        class MockLeftRightParadigm:
+            def used_events(self, dataset):
+                return {
+                    "left_hand": dataset.event_id["left_hand"],
+                    "right_hand": dataset.event_id["right_hand"],
+                }
+
+        levels = get_chance_levels([ds], alpha=0.05, paradigm=MockLeftRightParadigm())
+
+        assert levels["BNCI2014_001"]["theoretical"] == 0.5
+        assert levels["BNCI2014_001"]["adjusted"][0.05] == adjusted_chance_level(
+            2, 288, 0.05
+        )
+
     def test_no_summary_table_warns(self):
         ds = self._make_mock_dataset("NoTable", {"a": 1, "b": 2})
         levels = get_chance_levels([ds], alpha=0.05)

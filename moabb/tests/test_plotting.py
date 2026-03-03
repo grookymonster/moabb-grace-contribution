@@ -233,6 +233,52 @@ class TestPairedPlot:
         # min chance level is 0.25 -> 25%
         assert ax.get_xlim()[0] == pytest.approx(25, abs=5)
 
+    def test_crosshair_lines_present(self):
+        data = _make_results_df(pipeline_names=["Alg1", "Alg2"])
+        fig = paired_plot(data, "Alg1", "Alg2", chance_level=0.25)
+        ax = fig.axes[0]
+        # At least 3 Line2D objects: diagonal + horizontal + vertical crosshair
+        from matplotlib.lines import Line2D
+
+        lines = [c for c in ax.get_children() if isinstance(c, Line2D)]
+        assert len(lines) >= 3
+
+    def test_shaded_band_with_adjusted_levels(self):
+        data = _make_results_df(
+            pipeline_names=["Alg1", "Alg2"],
+            dataset_names=["DS1", "DS2"],
+        )
+        chance = {
+            "DS1": {"theoretical": 0.5, "adjusted": {0.05: 0.6}},
+            "DS2": {"theoretical": 0.25, "adjusted": {0.05: 0.35}},
+        }
+        fig = paired_plot(data, "Alg1", "Alg2", chance_level=chance)
+        ax = fig.axes[0]
+        from matplotlib.patches import Patch, Rectangle
+
+        patches = [
+            c
+            for c in ax.get_children()
+            if isinstance(c, (Patch, Rectangle)) and c.get_alpha() is not None
+            and c.get_alpha() < 0.15
+        ]
+        # Should have at least 2 shaded patches (axhspan + axvspan)
+        assert len(patches) >= 2
+
+    def test_no_band_without_adjusted_levels(self):
+        data = _make_results_df(pipeline_names=["Alg1", "Alg2"])
+        fig = paired_plot(data, "Alg1", "Alg2", chance_level=0.25)
+        ax = fig.axes[0]
+        from matplotlib.patches import Patch, Rectangle
+
+        patches = [
+            c
+            for c in ax.get_children()
+            if isinstance(c, (Patch, Rectangle)) and c.get_alpha() is not None
+            and c.get_alpha() < 0.15
+        ]
+        assert len(patches) == 0
+
 
 class TestMoabbStyle:
     def test_moabb_palette_length(self):

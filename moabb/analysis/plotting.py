@@ -6,6 +6,7 @@ from typing import Any, Literal, Sequence
 
 import matplotlib.gridspec as gridspec
 import matplotlib.pyplot as plt
+import matplotlib.transforms as mtransforms
 import numpy as np
 import pandas as pd
 import seaborn as sea
@@ -418,7 +419,7 @@ def score_plot(data, pipelines=None, orientation="vertical", chance_level=None):
         subtitle="Individual pipeline scores across datasets",
     )
     style_legend(ax)
-    fig.subplots_adjust(top=0.85, bottom=0.08)
+    fig.subplots_adjust(top=0.85, bottom=0.14)
 
     return fig, color_dict
 
@@ -551,7 +552,7 @@ def distribution_plot(
         subtitle="Violin density with individual data points",
     )
     style_legend(ax)
-    fig.subplots_adjust(top=0.85, bottom=0.08)
+    fig.subplots_adjust(top=0.85, bottom=0.14)
     return fig, color_dict
 
 
@@ -793,7 +794,7 @@ def codecarbon_plot(
             grid_axis="both",
         )
 
-    fig.subplots_adjust(top=0.85, bottom=0.08)
+    fig.subplots_adjust(top=0.85, bottom=0.14)
     return fig
 
 
@@ -880,6 +881,71 @@ def emissions_summary(data, order_list=None, pipelines=None):
     return summary
 
 
+def _draw_paired_chance_region(ax, theoretical, adjusted, min_chance):
+    """Draw chance level crosshair and significance band on a paired plot.
+
+    Parameters
+    ----------
+    ax : matplotlib.axes.Axes
+    theoretical : dict[str, float]
+        Per-dataset theoretical chance levels (already in percentage).
+    adjusted : dict[str, dict[float, float]] or None
+        Per-dataset adjusted levels ``{dataset: {alpha: threshold}}``.
+    min_chance : float
+        Minimum theoretical chance level in percentage (used for crosshair).
+    """
+    # Draw crosshair at theoretical chance level
+    ax.axhline(min_chance, linestyle="--", color=_CHANCE_COLOR, linewidth=1.2, alpha=0.5)
+    ax.axvline(min_chance, linestyle="--", color=_CHANCE_COLOR, linewidth=1.2, alpha=0.5)
+
+    # Draw shaded band if adjusted significance thresholds are available
+    if adjusted:
+        # Find the maximum adjusted threshold at alpha=0.05 across datasets
+        max_adj = None
+        for ds_levels in adjusted.values():
+            if 0.05 in ds_levels:
+                val = ds_levels[0.05] * 100  # convert to percentage
+                if max_adj is None or val > max_adj:
+                    max_adj = val
+        if max_adj is not None:
+            ax.axhspan(
+                ax.get_ylim()[0], max_adj,
+                color=_CHANCE_COLOR, alpha=0.06, zorder=0,
+            )
+            ax.axvspan(
+                ax.get_xlim()[0], max_adj,
+                color=_CHANCE_COLOR, alpha=0.06, zorder=0,
+            )
+
+    # Annotate at the top-right edge of the shaded band
+    if adjusted and max_adj is not None:
+        pct = f"{max_adj:.1f}%"
+        label = f"Chance by chance ({pct}, p<0.05) \u2014 Combrisson & Jerbi (2015)"
+        ax.annotate(
+            label,
+            xy=(1, max_adj),
+            xycoords=("axes fraction", "data"),
+            xytext=(-8, 6),
+            textcoords="offset points",
+            va="bottom",
+            ha="right",
+            **_CHANCE_ANNOT_KW,
+        )
+    else:
+        pct = f"{min_chance:.0f}%"
+        label = f"Chance level ({pct}) \u2014 Combrisson & Jerbi (2015)"
+        ax.annotate(
+            label,
+            xy=(1, min_chance),
+            xycoords=("axes fraction", "data"),
+            xytext=(-8, 6),
+            textcoords="offset points",
+            va="bottom",
+            ha="right",
+            **_CHANCE_ANNOT_KW,
+        )
+
+
 def paired_plot(data, alg1, alg2, chance_level=None):
     """Generate a figure with a paired plot.
 
@@ -897,7 +963,9 @@ def paired_plot(data, alg1, alg2, chance_level=None):
         - ``None`` : defaults to 0.5.
         - ``float`` : uniform chance level.
         - ``dict`` : per-dataset levels (the minimum value across datasets
-          is used for axis limits).
+          is used for axis limits).  When adjusted significance thresholds
+          are included, a shaded band marks the "not significantly above
+          chance" region.
 
     Returns
     -------
@@ -907,7 +975,7 @@ def paired_plot(data, alg1, alg2, chance_level=None):
     data = collapse_session_scores(data)
     data = data[data.pipeline.isin([alg1, alg2])]
 
-    theoretical, _ = _resolve_chance_levels(data, chance_level)
+    theoretical, adjusted = _resolve_chance_levels(data, chance_level)
     min_chance = min(theoretical.values()) if theoretical else 0.5
 
     # Display scores as percentages
@@ -931,9 +999,10 @@ def paired_plot(data, alg1, alg2, chance_level=None):
         s=50,
         zorder=3,
     )
-    ax.plot([0, 100], [0, 100], ls="--", c=GRID_COLOR, linewidth=1)
+    ax.plot([min_chance, 100], [min_chance, 100], ls="--", c=GRID_COLOR, linewidth=1)
     ax.set_xlim([min_chance, 100])
     ax.set_ylim([min_chance, 100])
+    _draw_paired_chance_region(ax, theoretical, adjusted, min_chance)
     ax.set_xlabel(f"{alg1} (%)", fontsize=FONT_SIZES["axis_label"])
     ax.set_ylabel(f"{alg2} (%)", fontsize=FONT_SIZES["axis_label"])
 
@@ -943,7 +1012,7 @@ def paired_plot(data, alg1, alg2, chance_level=None):
         subtitle="Paired comparison across subjects",
         grid_axis="both",
     )
-    fig.subplots_adjust(top=0.85, bottom=0.08)
+    fig.subplots_adjust(top=0.85, bottom=0.14)
     return fig
 
 
@@ -1066,8 +1135,9 @@ def meta_analysis_plot(stats_df, alg1, alg2):  # noqa: C901
         log.warning("Dataset names are too similar, turning off name shortening")
         simplify = False
     ci = []
-    fig = plt.figure(figsize=(11, 9.5))
-    gs = gridspec.GridSpec(1, 5)
+    fig_height = max(5.5, 1.2 * (len(dsets) + 2.5))
+    fig = plt.figure(figsize=(11, fig_height))
+    gs = gridspec.GridSpec(1, 5, width_ratios=[1, 1, 1, 1, 0.65], wspace=0.06)
     sig_ind = []
     pvals = []
     ax = fig.add_subplot(gs[0, :-1])
@@ -1118,7 +1188,8 @@ def meta_analysis_plot(stats_df, alg1, alg2):  # noqa: C901
     # pvalues axis stuf
     pval_ax.set_xlim([-0.1, 0.1])
     pval_ax.grid(False)
-    pval_ax.set_title("p-value", fontdict={"fontsize": FONT_SIZES["annotation"]})
+    pval_fontsize = FONT_SIZES["tick_label"] + 2
+    pval_ax.set_title("p-value", fontdict={"fontsize": FONT_SIZES["annotation"] + 2})
     pval_ax.set_xticks([])
     for spine in pval_ax.spines.values():
         spine.set_visible(False)
@@ -1129,7 +1200,7 @@ def meta_analysis_plot(stats_df, alg1, alg2):  # noqa: C901
             horizontalalignment="center",
             verticalalignment="center",
             s="{:.2e}".format(p),
-            fontsize=FONT_SIZES["source"],
+            fontsize=pval_fontsize,
             color=MOABB_DARK_TEXT,
         )
     if final_effect > 0:
@@ -1143,7 +1214,7 @@ def meta_analysis_plot(stats_df, alg1, alg2):  # noqa: C901
                 horizontalalignment="center",
                 verticalalignment="center",
                 s="{:.2e}".format(p),
-                fontsize=FONT_SIZES["source"],
+                fontsize=pval_fontsize,
                 color=MOABB_DARK_TEXT,
             )
     else:
@@ -1157,13 +1228,15 @@ def meta_analysis_plot(stats_df, alg1, alg2):  # noqa: C901
                 horizontalalignment="center",
                 verticalalignment="center",
                 s="{:.2e}".format(p),
-                fontsize=FONT_SIZES["source"],
+                fontsize=pval_fontsize,
                 color=MOABB_DARK_TEXT,
             )
 
     ax.axvline(0, linestyle="--", c=GRID_COLOR)
     ax.axhline(0.5, linestyle="-", linewidth=3, c=MOABB_NAVY)
-    ax.set_xlabel("Standardized Mean Difference")
+    xaxis_fontsize = FONT_SIZES["axis_label"] + 3
+    ax.set_xlabel("Standardized Mean Difference", fontsize=xaxis_fontsize)
+    ax.tick_params(axis="x", labelsize=FONT_SIZES["tick_label"] + 2)
 
     apply_moabb_style(
         ax,
@@ -1171,20 +1244,53 @@ def meta_analysis_plot(stats_df, alg1, alg2):  # noqa: C901
         subtitle="",
         grid_axis="none",
     )
-    fig.subplots_adjust(top=0.85, bottom=0.08)
+    fig.subplots_adjust(top=0.85, bottom=0.16)
 
-    # Place the "< alg2 better | alg1 better >" subtitle centered on x=0
-    # so the "|" visually aligns with the zero-effect dashed line.
-    x_center = ax.transData.transform((0, 0))[0]
-    x_fig = fig.transFigure.inverted().transform((x_center, 0))[0]
-    fig.text(
-        x_fig,
-        0.89,
-        "\u2190 {} better  |  {} better \u2192".format(alg2, alg1),
-        fontsize=FONT_SIZES["subtitle"],
+    # Draw comparison caption anchored to x=0 so "|" is exactly on the zero line.
+    # Split into three text artists to keep center stable regardless of name length.
+    y_caption = 0.99
+    gap_pts = 8.0
+    caption_fontsize = FONT_SIZES["subtitle"] - 1
+    base_transform = mtransforms.blended_transform_factory(ax.transData, ax.transAxes)
+    left_transform = base_transform + mtransforms.ScaledTranslation(
+        -gap_pts / 72.0, 0.0, fig.dpi_scale_trans
+    )
+    right_transform = base_transform + mtransforms.ScaledTranslation(
+        gap_pts / 72.0, 0.0, fig.dpi_scale_trans
+    )
+
+    ax.text(
+        0,
+        y_caption,
+        f"< {alg2} better",
+        fontsize=caption_fontsize,
+        color=GRID_COLOR,
+        ha="right",
+        va="bottom",
+        transform=left_transform,
+        clip_on=False,
+    )
+    ax.text(
+        0,
+        y_caption,
+        "|",
+        fontsize=caption_fontsize + 1,
         color=GRID_COLOR,
         ha="center",
-        va="top",
+        va="bottom",
+        transform=base_transform,
+        clip_on=False,
+    )
+    ax.text(
+        0,
+        y_caption,
+        f"{alg1} better >",
+        fontsize=caption_fontsize,
+        color=GRID_COLOR,
+        ha="left",
+        va="bottom",
+        transform=right_transform,
+        clip_on=False,
     )
 
     return fig

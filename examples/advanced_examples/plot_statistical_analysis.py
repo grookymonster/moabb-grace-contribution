@@ -1,18 +1,20 @@
 """
-===============================================
+================================================
 Statistical Analysis and Chance Level Assessment
-===============================================
+================================================
 
 The MOABB codebase comes with convenience plotting utilities and some
 statistical testing. This tutorial focuses on what those exactly are and how
 they can be used.
 
 In addition, we demonstrate how to compute and visualize statistically
-adjusted chance levels based on the binomial test, following Combrisson &
-Jerbi (2015). A classifier can exceed the theoretical chance level
-(1/n_classes) purely by chance when the number of test samples is small.
-The adjusted chance level accounts for this by computing the minimum
-accuracy that significantly exceeds chance at a given significance level.
+adjusted chance levels following Combrisson & Jerbi (2015). The theoretical
+chance level (100/c %) only holds for infinite sample sizes. With finite
+test samples, classifiers can exceed this threshold purely by chance — an
+effect that grows stronger as the sample size decreases. The adjusted chance
+level, derived from the inverse survival function of the binomial
+distribution, gives the minimum accuracy needed to claim statistically
+significant decoding at a given alpha level.
 
 """
 
@@ -33,6 +35,7 @@ import moabb
 import moabb.analysis.plotting as moabb_plt
 from moabb.analysis.chance_level import (
     adjusted_chance_level,
+    get_chance_levels,
     theoretical_chance_level,
 )
 from moabb.analysis.meta_analysis import (  # noqa: E501
@@ -105,14 +108,24 @@ results = evaluation.process(pipelines)
 # Chance Level Computation
 # -------------------------
 #
-# Before looking at the plots, we compute the chance levels for our dataset.
-# The theoretical chance level for a 2-class problem is 0.5, but with a
-# finite number of test samples a classifier can exceed this purely by chance.
+# The theoretical chance level for a *c*-class problem is 100/*c* (e.g. 50%
+# for 2 classes). However, this threshold assumes an **infinite** number of
+# test samples. In practice, with a finite number of trials, a classifier
+# can exceed the theoretical chance level purely by chance — especially when
+# the sample size is small.
 #
-# Following Combrisson & Jerbi (2015), we compute the adjusted chance level
-# using the inverse survival function of the binomial distribution. This tells
-# us the minimum accuracy needed to significantly exceed chance at a given
-# alpha level.
+# Combrisson & Jerbi (2015) demonstrated that classifiers applied to pure
+# Gaussian noise can yield accuracies well above the theoretical chance
+# level when the number of test samples is limited. For example, with only
+# 40 observations in a 2-class problem, a decoding accuracy of 70% can
+# occur by chance alone, far above the 50% theoretical threshold.
+#
+# To address this, they proposed computing a **statistically adjusted
+# chance level** using the inverse survival function of the binomial
+# cumulative distribution. This gives the minimum accuracy required to
+# claim that decoding significantly exceeds chance at a given significance
+# level *alpha*. Stricter alpha values (e.g. 0.001 vs 0.05) require higher
+# accuracy to assert significance.
 #
 # Note that the number of classes depends on the **paradigm**, not the raw
 # dataset. BNCI2014_001 has 4 motor imagery classes, but LeftRightImagery
@@ -131,25 +144,24 @@ print(
 )
 
 ###############################################################################
-# We can compute adjusted chance levels at multiple significance thresholds.
-# Stricter alpha values require higher accuracy to claim statistical
-# significance.
+# The convenience function :func:`get_chance_levels` extracts the number of
+# classes and trial counts directly from the dataset objects. By passing
+# ``paradigm=paradigm``, the function uses the paradigm-filtered class count
+# (e.g. 2 for LeftRightImagery) rather than the dataset's native 4 classes.
+# This ensures that the adjusted chance level is computed with the correct
+# binomial parameters.
 
-chance_levels = {
-    dataset.__class__.__name__: {
-        "theoretical": theoretical_chance_level(n_classes),
-        "adjusted": {
-            alpha: adjusted_chance_level(n_classes, n_test_trials, alpha)
-            for alpha in [0.05, 0.01, 0.001]
-        },
-    }
-}
+chance_levels = get_chance_levels(
+    datasets, alpha=[0.05, 0.01, 0.001], paradigm=paradigm
+)
 
-print(f"\nChance levels for {dataset.__class__.__name__}:")
+print("\nChance levels:")
 for name, levels in chance_levels.items():
-    print(f"  Theoretical: {levels['theoretical']:.2f}")
-    for alpha, threshold in sorted(levels["adjusted"].items()):
-        print(f"  Adjusted (alpha={alpha}): {threshold:.4f}")
+    print(f"  {name}:")
+    print(f"    Theoretical: {levels['theoretical']:.2f}")
+    if "adjusted" in levels:
+        for alpha, threshold in sorted(levels["adjusted"].items()):
+            print(f"    Adjusted (alpha={alpha}): {threshold:.4f}")
 
 ##############################################################################
 # MOABB Plotting with Chance Levels
@@ -183,7 +195,9 @@ plt.show()
 #
 # For a comparison of two algorithms, the ``paired_plot`` shows performance
 # of one versus the other. When ``chance_level`` is provided, the axis limits
-# are adjusted accordingly instead of being hardcoded at 0.5.
+# are adjusted accordingly and dashed crosshair lines mark the theoretical
+# chance level. When adjusted significance thresholds are included, a shaded
+# band highlights the region that is not significantly above chance.
 
 fig = moabb_plt.paired_plot(results, "CSP+LDA", "RG+LDA", chance_level=chance_levels)
 plt.show()
