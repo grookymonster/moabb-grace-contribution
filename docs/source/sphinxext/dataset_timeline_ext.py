@@ -16,6 +16,7 @@ To regenerate *all* SVGs (timelines + viz), run (from the repo root)::
 """
 
 import csv
+import functools
 import inspect
 import json
 import math
@@ -66,26 +67,22 @@ _DATASET_PAGEVIEWS_CACHE_SRC = None
 # ---------------------------------------------------------------------------
 
 _CC_ICONS_DIR = os.path.join(os.path.dirname(__file__), "..", "_static", "icons", "cc")
-_CC_ICON_CACHE = {}
 
 
+@functools.lru_cache(maxsize=None)
 def _cc_icon_svg(icon_key, size=16):
     """Return an inline ``<svg>`` element for a Creative Commons icon.
 
-    Reads the SVG file from ``_static/icons/cc/<icon_key>.svg`` (cached after
-    first load) and injects ``width``/``height``/``aria-hidden`` attributes so
-    it can be embedded inline.
+    Reads the SVG file from ``_static/icons/cc/<icon_key>.svg`` (cached via
+    ``lru_cache``) and injects ``width``/``height``/``aria-hidden`` attributes
+    so it can be embedded inline.
     """
-    if icon_key in _CC_ICON_CACHE:
-        svg = _CC_ICON_CACHE[icon_key]
-    else:
-        svg_path = os.path.join(_CC_ICONS_DIR, f"{icon_key}.svg")
-        try:
-            with open(svg_path, "r") as fh:
-                svg = fh.read().strip()
-        except FileNotFoundError:
-            svg = ""
-        _CC_ICON_CACHE[icon_key] = svg
+    svg_path = os.path.join(_CC_ICONS_DIR, f"{icon_key}.svg")
+    try:
+        with open(svg_path, "r") as fh:
+            svg = fh.read().strip()
+    except FileNotFoundError:
+        return ""
     if not svg:
         return ""
     # Inject width/height/aria-hidden into the opening <svg> tag.
@@ -161,14 +158,9 @@ def _normalize_license(raw):
     key = raw.strip().lower().replace(" ", "-")
     if key in _LICENSE_INFO:
         return key
-    # Try alias lookup using the lowered (but space-preserved) form.
+    # Try alias lookup: space-preserved form first, then hyphenated form.
     alias_key = raw.strip().lower()
-    if alias_key in _LICENSE_ALIASES:
-        return _LICENSE_ALIASES[alias_key]
-    # Try replacing spaces with hyphens for alias lookup as well.
-    if key in _LICENSE_ALIASES:
-        return _LICENSE_ALIASES[key]
-    return key if key in _LICENSE_INFO else None
+    return _LICENSE_ALIASES.get(alias_key) or _LICENSE_ALIASES.get(key)
 
 
 def _is_concrete_dataset(obj):
@@ -1360,11 +1352,7 @@ def _make_header_html(
     license_raw = info.get("license")
     license_key = _normalize_license(license_raw)
     if license_key:
-        license_entry = _LICENSE_INFO.get(license_key)
-        if license_entry is None:
-            # Unrecognized license — show raw text
-            license_entry = (escape(license_raw), None, [])
-        display_name, license_url, icon_keys = license_entry
+        display_name, license_url, icon_keys = _LICENSE_INFO[license_key]
         icons_html = "".join(_cc_icon_svg(k) for k in icon_keys)
         if license_url:
             chips.append(
