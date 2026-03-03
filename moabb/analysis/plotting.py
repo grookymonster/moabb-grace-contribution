@@ -423,10 +423,11 @@ def score_plot(data, pipelines=None, orientation="vertical", chance_level=None):
         ax.set_ylim([0, 100])
         ax.set_ylabel("Score (%)")
 
-    _draw_chance_lines(ax, theoretical, datasets_order, orientation,
-                       adjusted=adjusted)
-    if adjusted:
-        _draw_adjusted_chance_lines(ax, adjusted, datasets_order, orientation)
+    if chance_level is not None:
+        _draw_chance_lines(ax, theoretical, datasets_order, orientation,
+                           adjusted=adjusted)
+        if adjusted:
+            _draw_adjusted_chance_lines(ax, adjusted, datasets_order, orientation)
 
     handles, labels = ax.get_legend_handles_labels()
     color_dict = _extract_color_dict(handles, labels)
@@ -546,10 +547,11 @@ def distribution_plot(
         ax.set_ylim([0, 100])
         ax.set_ylabel("Score (%)")
 
-    _draw_chance_lines(ax, theoretical, datasets_order, orientation,
-                       adjusted=adjusted)
-    if adjusted:
-        _draw_adjusted_chance_lines(ax, adjusted, datasets_order, orientation)
+    if chance_level is not None:
+        _draw_chance_lines(ax, theoretical, datasets_order, orientation,
+                           adjusted=adjusted)
+        if adjusted:
+            _draw_adjusted_chance_lines(ax, adjusted, datasets_order, orientation)
 
     # Deduplicate legend entries (violin + strip create duplicates)
     handles, labels = ax.get_legend_handles_labels()
@@ -1021,7 +1023,8 @@ def paired_plot(data, alg1, alg2, chance_level=None):
     ax.plot([min_chance, 100], [min_chance, 100], ls="--", c=GRID_COLOR, linewidth=1)
     ax.set_xlim([min_chance, 100])
     ax.set_ylim([min_chance, 100])
-    _draw_paired_chance_region(ax, theoretical, adjusted, min_chance)
+    if chance_level is not None:
+        _draw_paired_chance_region(ax, theoretical, adjusted, min_chance)
     ax.set_xlabel(f"{alg1} (%)", fontsize=FONT_SIZES["axis_label"])
     ax.set_ylabel(f"{alg2} (%)", fontsize=FONT_SIZES["axis_label"])
 
