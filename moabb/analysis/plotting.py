@@ -50,37 +50,16 @@ _ALPHA_LINE_STYLES = {
 
 
 def _resolve_chance_levels(data, chance_level):
-    """Resolve the chance_level parameter to a per-dataset mapping.
-
-    Parameters
-    ----------
-    data : DataFrame
-        Results dataframe with a 'dataset' column.
-    chance_level : None, float, "auto", or dict
-        - None: defaults to 0.5 for all datasets (backward compat).
-        - float: uniform chance level for all datasets.
-        - ``"auto"``: compute from ``n_samples_test`` and ``n_classes``
-          columns in the DataFrame (requires MOABB >= 1.2 results).
-        - dict: either ``{dataset_name: float}`` or the output of
-          :func:`chance_levels_from_dataframe` with ``{dataset_name: {'theoretical': float, ...}}``.
-
-    Returns
-    -------
-    theoretical : dict[str, float]
-        Mapping of dataset name to theoretical chance level.
-    adjusted : dict[str, dict[float, float]] or None
-        Mapping of dataset name to ``{alpha: adjusted_level}``, or None.
-    """
+    """Resolve chance_level to per-dataset (theoretical, adjusted) dicts."""
     datasets = data["dataset"].unique()
 
     if chance_level is None:
         return {d: 0.5 for d in datasets}, None
 
-    if isinstance(chance_level, str) and chance_level == "auto":
+    if chance_level == "auto":
         from moabb.analysis.chance_level import chance_levels_from_dataframe
 
-        levels = chance_levels_from_dataframe(data)
-        return _resolve_chance_levels(data, levels)
+        return _resolve_chance_levels(data, chance_levels_from_dataframe(data))
 
     if isinstance(chance_level, (int, float)):
         return {d: float(chance_level) for d in datasets}, None
@@ -90,20 +69,18 @@ def _resolve_chance_levels(data, chance_level):
         adjusted = {}
         for d in datasets:
             val = chance_level.get(d)
-            if val is None:
-                theoretical[d] = 0.5
-            elif isinstance(val, (int, float)):
-                theoretical[d] = float(val)
-            elif isinstance(val, dict):
+            if isinstance(val, dict):
                 theoretical[d] = val.get("theoretical", 0.5)
                 if "adjusted" in val:
                     adjusted[d] = val["adjusted"]
+            elif isinstance(val, (int, float)):
+                theoretical[d] = float(val)
             else:
                 theoretical[d] = 0.5
         return theoretical, adjusted if adjusted else None
 
     raise TypeError(
-        f"chance_level must be None, a float, 'auto', or a dict, got {type(chance_level)}"
+        f"chance_level must be None, float, 'auto', or dict, got {type(chance_level)}"
     )
 
 
@@ -135,26 +112,15 @@ _MOABB_SIGNIFICANCE_CMAP.set_over(color=MOABB_CORAL)
 
 
 def _max_adjusted_threshold(adjusted, alpha=0.05):
-    """Return the maximum adjusted threshold across datasets for *alpha*.
-
-    Returns None if no datasets have an adjusted level at *alpha*.
-    """
+    """Max adjusted threshold across datasets for *alpha*, or None."""
     if not adjusted:
         return None
-    max_val = None
-    for ds_levels in adjusted.values():
-        if alpha in ds_levels:
-            val = ds_levels[alpha]
-            if max_val is None or val > max_val:
-                max_val = val
-    return max_val
+    vals = [lv[alpha] for lv in adjusted.values() if alpha in lv]
+    return max(vals) if vals else None
 
 
 def _to_percentage(data, theoretical, adjusted):
-    """Convert scores, theoretical, and adjusted levels to percentages.
-
-    Returns copies — the originals are not mutated.
-    """
+    """Convert scores and chance levels to percentages (returns copies)."""
     data = data.copy()
     data["score"] = data["score"] * 100
     theoretical = {k: v * 100 for k, v in theoretical.items()}
@@ -1039,14 +1005,8 @@ def paired_plot(data, alg1, alg2, chance_level=None):
 
     theoretical, adjusted = _resolve_chance_levels(data, chance_level)
     min_chance = min(theoretical.values()) if theoretical else 0.5
-
-    # Convert to percentages
-    min_chance = min_chance * 100
-    theoretical = {k: v * 100 for k, v in theoretical.items()}
-    if adjusted:
-        adjusted = {
-            k: {a: v * 100 for a, v in alphas.items()} for k, alphas in adjusted.items()
-        }
+    min_chance *= 100
+    _, theoretical, adjusted = _to_percentage(data, theoretical, adjusted)
 
     data = data.pivot_table(
         values="score", columns="pipeline", index=["subject", "dataset"]
