@@ -210,12 +210,12 @@ def _draw_chance_lines(ax, chance_levels, datasets, orientation, adjusted=None):
     else:
         ax.annotate(
             label,
-            xy=(1, max_adj),
+            xy=(0, max_adj),
             xycoords=("axes fraction", "data"),
-            xytext=(-8, 6),
+            xytext=(8, 6),
             textcoords="offset points",
             va="bottom",
-            ha="right",
+            ha="left",
             **_CHANCE_ANNOT_KW,
         )
 

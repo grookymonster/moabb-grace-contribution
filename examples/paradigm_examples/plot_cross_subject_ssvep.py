@@ -43,16 +43,14 @@ moabb.set_log_level("info")
 # Loading Dataset
 # ---------------
 #
-# We will load the data from the first 2 subjects of the ``SSVEP_Exo`` dataset
-# and compare two algorithms on this set. One of the algorithms could only
+# We will load the data from all 12 subjects of the ``SSVEP_Exo`` dataset
+# and compare four algorithms on this set. One of the algorithms could only
 # process class associated with a stimulation frequency, we will thus drop
 # the resting class. As the resting class is the last defined class, picking
 # the first three classes (out of four) allows to focus only on the stimulation
 # frequency.
 
-n_subject = 2
 dataset = Kalunga2016()
-dataset.subject_list = dataset.subject_list[:n_subject]
 interval = dataset.interval
 
 ###############################################################################
@@ -75,9 +73,9 @@ paradigm_fb = FilterBankSSVEP(filters=None, n_classes=3)
 
 ###############################################################################
 # Classes are defined by the frequency of the stimulation, here we use
-# the first two frequencies of the dataset, 13 and 17 Hz.
+# the first three frequencies of the dataset, 13, 17, and 21 Hz.
 # The evaluation function uses a LabelEncoder, transforming them
-# to 0 and 1
+# to 0, 1, and 2.
 
 freqs = paradigm.used_events(dataset)
 
@@ -122,7 +120,7 @@ pipelines_MSET_CCA["MSET_CCA"] = make_pipeline(SSVEP_MsetCCA())
 # will not run again the evaluation unless a parameter has changed. Results can
 # be overwritten if necessary.
 
-overwrite = False  # set to True if we want to overwrite cached results
+overwrite = True  # set to True if we want to overwrite cached results
 
 evaluation = CrossSubjectEvaluation(
     paradigm=paradigm, datasets=dataset, overwrite=overwrite
