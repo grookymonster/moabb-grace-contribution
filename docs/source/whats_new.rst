@@ -19,6 +19,7 @@ Version 1.5  (Source - GitHub)
 
 Enhancements
 ~~~~~~~~~~~~
+- Add :meth:`~moabb.datasets.Stieger2021.get_trial_info` and :meth:`~moabb.datasets.Stieger2021.suggest_interval` methods to help users choose an optimal epoch interval for variable-length trials, and preserve per-trial ``triallength`` metadata through BIDS conversion via annotation extras (:gh:`816`)
 - Redesign dataset API pages with a structured snapshot card, visual summary blocks, HED-tag visualization, benchmark highlights, citation/public API cards, and responsive mobile improvements (:gh:`1000` by `Bruno Aristimunha`_)
 - Add GA4 pageview metrics and popularity ranking to dataset documentation cards, with inline sparkline charts showing 90-day traffic trends (by `Bruno Aristimunha`_)
 - Polish API reference page with color-coded concept highlights, section breaks, table styling, and scoped CSS to avoid affecting other pages (by `Bruno Aristimunha`_)
@@ -80,6 +81,8 @@ Requirements
 
 Bugs
 ~~~~
+- Fix trial acceptance condition in :class:`moabb.datasets.Stieger2021` that allowed epochs
+  to extend beyond actual motor imagery duration into adjacent trials' resting periods (:gh:`816`)
 - Fix DOI escaping in "See DOI" fallback link on dataset citation cards (:gh:`1000` by `Bruno Aristimunha`_)
 - Prefer paper DOI over data DOI in dataset citation card when both are available (:gh:`1000` by `Bruno Aristimunha`_)
 - Fix timeline SVG card artifact caused by link styling on dataset pages (by `Bruno Aristimunha`_)

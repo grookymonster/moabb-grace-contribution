@@ -26,6 +26,7 @@ from typing import TYPE_CHECKING, Dict, Type
 
 import mne
 import mne_bids
+import pandas as pd
 from numpy import load as np_load
 from numpy import save as np_save
 
@@ -2398,6 +2399,11 @@ class BIDSInterfaceRawEDF(BIDSInterfaceBase):
                 'Encountered data in "double" format',
                 RuntimeWarning,
             )
+            # Save annotation extras before write_raw_bids (which may
+            # strip them).  We patch events.tsv afterwards.
+            ann_extras = getattr(raw.annotations, "extras", None)
+            has_extras = ann_extras is not None and any(ann_extras)
+
             mne_bids.write_raw_bids(
                 raw,
                 bids_path,
@@ -2407,6 +2413,26 @@ class BIDSInterfaceRawEDF(BIDSInterfaceBase):
                 overwrite=False,
                 verbose=self.verbose,
             )
+
+            # Append per-event metadata from annotation extras (e.g.
+            # triallength for Stieger2021) as extra columns in events.tsv.
+            if has_extras:
+                events_path = bids_path.copy().update(suffix="events", extension=".tsv")
+                events_fpath = events_path.fpath
+                if events_fpath.exists():
+                    df = pd.read_csv(str(events_fpath), sep="\t")
+                    extras_df = pd.DataFrame(ann_extras)
+                    if len(extras_df) == len(df):
+                        for col in extras_df.columns:
+                            df[col] = extras_df[col]
+                        df.to_csv(str(events_fpath), sep="\t", index=False, na_rep="n/a")
+                    else:
+                        log.warning(
+                            "Annotation extras length (%d) does not match "
+                            "events.tsv rows (%d); skipping extras.",
+                            len(extras_df),
+                            len(df),
+                        )
 
         # Post-write enrichment: update EEG sidecar with metadata fields
         if metadata is not None:
