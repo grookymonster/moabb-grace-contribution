@@ -667,18 +667,17 @@ class Stieger2021(BaseDataset):
 
         info = self.get_trial_info(subjects=subjects)
 
-        all_lengths = np.concatenate(
-            [
-                sess_info["triallengths"]
-                for subj_info in info.values()
-                for sess_info in subj_info.values()
-                if len(sess_info["triallengths"]) > 0
-            ]
-        )
+        lengths_list = [
+            sess_info["triallengths"]
+            for subj_info in info.values()
+            for sess_info in subj_info.values()
+            if len(sess_info["triallengths"]) > 0
+        ]
 
-        if len(all_lengths) == 0:
+        if len(lengths_list) == 0:
             raise ValueError("No artifact-free trials found for the requested subjects.")
 
+        all_lengths = np.concatenate(lengths_list)
         # The quantile at (1 - keep_ratio) gives the tmax that keeps
         # at least keep_ratio fraction of trials.
         tmax = float(np.quantile(all_lengths, 1 - keep_ratio))
