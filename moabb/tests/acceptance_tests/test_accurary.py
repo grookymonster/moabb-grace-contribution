@@ -85,7 +85,9 @@ def test_decoding_performance_stable(dataset_class):
         paradigm=paradigm, datasets=[dataset], overwrite=True, random_state=random_state
     )
     results = evaluation.process({"mdm": pipeline})
-    results.drop(columns=["time", "n_samples_test", "n_classes"], inplace=True)
+    results.drop(
+        columns=["time", "n_samples_test", "n_classes"], inplace=True, errors="ignore"
+    )
     results["score"] = results["score"].astype(np.float32)
     results["samples"] = results["samples"].astype(int)
     results["subject"] = results["subject"].astype(int)
