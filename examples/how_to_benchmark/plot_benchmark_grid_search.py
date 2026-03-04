@@ -19,7 +19,6 @@ import matplotlib.pyplot as plt
 from moabb import benchmark, set_log_level
 from moabb.analysis.chance_level import chance_by_chance
 from moabb.analysis.plotting import score_plot
-from moabb.datasets import Zhou2016
 from moabb.paradigms import LeftRightImagery
 
 
