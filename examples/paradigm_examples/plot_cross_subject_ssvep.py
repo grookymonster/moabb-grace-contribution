@@ -28,7 +28,7 @@ from sklearn.pipeline import make_pipeline
 
 import moabb
 import moabb.analysis.plotting as moabb_plt
-from moabb.analysis.chance_level import get_chance_levels
+from moabb.analysis.chance_level import chance_by_chance
 from moabb.datasets import Kalunga2016
 from moabb.evaluations import CrossSubjectEvaluation
 from moabb.paradigms import SSVEP, FilterBankSSVEP
@@ -166,7 +166,7 @@ results = pd.concat([results, results_fb, results_TRCA, results_MSET_CCA])
 # annotations. The 3-class SSVEP paradigm has a theoretical chance level
 # of 33.3%.
 
-chance_levels = get_chance_levels([dataset], alpha=[0.05, 0.01], paradigm=paradigm)
+chance_levels = chance_by_chance(results, alpha=[0.05, 0.01])
 
 fig, _ = moabb_plt.score_plot(results, chance_level=chance_levels)
 plt.show()

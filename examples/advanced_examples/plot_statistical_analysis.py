@@ -35,7 +35,7 @@ import moabb
 import moabb.analysis.plotting as moabb_plt
 from moabb.analysis.chance_level import (
     adjusted_chance_level,
-    chance_levels_from_dataframe,
+    chance_by_chance,
 )
 from moabb.analysis.meta_analysis import (  # noqa: E501
     compute_dataset_statistics,
@@ -144,11 +144,11 @@ print(
 )
 
 ###############################################################################
-# The convenience function :func:`chance_levels_from_dataframe` reads
+# The convenience function :func:`chance_by_chance` reads
 # ``n_samples_test`` and ``n_classes`` directly from the results DataFrame,
 # so no dataset objects are needed.
 
-chance_levels = chance_levels_from_dataframe(results, alpha=[0.05, 0.01, 0.001])
+chance_levels = chance_by_chance(results, alpha=[0.05, 0.01, 0.001])
 
 print("\nChance levels:")
 for name, levels in chance_levels.items():

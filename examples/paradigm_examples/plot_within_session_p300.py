@@ -30,7 +30,7 @@ from sklearn.pipeline import make_pipeline
 
 import moabb
 import moabb.analysis.plotting as moabb_plt
-from moabb.analysis.chance_level import get_chance_levels
+from moabb.analysis.chance_level import chance_by_chance
 from moabb.datasets import BNCI2014_009
 from moabb.evaluations import WithinSessionEvaluation
 from moabb.paradigms import P300
@@ -100,7 +100,7 @@ results = evaluation.process(pipelines)
 # annotations. The P300 paradigm has 2 classes (Target / NonTarget) with
 # a theoretical chance level of 50%.
 
-chance_levels = get_chance_levels(datasets, alpha=[0.05, 0.01], paradigm=paradigm)
+chance_levels = chance_by_chance(results, alpha=[0.05, 0.01])
 
 fig, _ = moabb_plt.score_plot(results, chance_level=chance_levels)
 plt.show()

@@ -16,7 +16,7 @@ to easily scale to many datasets.
 import matplotlib.pyplot as plt
 
 from moabb import benchmark, set_log_level
-from moabb.analysis.chance_level import get_chance_levels
+from moabb.analysis.chance_level import chance_by_chance
 from moabb.analysis.plotting import score_plot
 from moabb.datasets import Zhou2016
 from moabb.paradigms import LeftRightImagery
@@ -125,7 +125,7 @@ results = benchmark(
 ###############################################################################
 # Compute chance levels for the dataset used in the benchmark.
 
-chance_levels = get_chance_levels([Zhou2016()], alpha=[0.05, 0.01], paradigm=paradigm)
+chance_levels = chance_by_chance(results, alpha=[0.05, 0.01])
 
 score_plot(results, chance_level=chance_levels)
 plt.show()

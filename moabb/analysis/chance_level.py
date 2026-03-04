@@ -16,7 +16,7 @@ def adjusted_chance_level(n_classes: int, n_trials: int, alpha: float = 0.05) ->
     return binom.isf(alpha, n_trials, 1.0 / n_classes) / n_trials
 
 
-def chance_levels_from_dataframe(
+def chance_by_chance(
     data,
     alpha: float | list[float] = 0.05,
 ) -> dict[str, dict[str, Any]]:

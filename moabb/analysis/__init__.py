@@ -8,7 +8,7 @@ from mne.utils import _open_lock
 from moabb.analysis import plotting as plt
 from moabb.analysis.chance_level import (  # noqa: F401
     adjusted_chance_level,
-    chance_levels_from_dataframe,
+    chance_by_chance,
 )
 from moabb.analysis.meta_analysis import (  # noqa: E501
     compute_dataset_statistics,
