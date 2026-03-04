@@ -479,7 +479,7 @@
 <li class="toctree-l2"><a class="reference internal" href="plot_riemannian_artifact_rejection.html">Riemannian Artifact Rejection as a Pre-processing Step</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_select_electrodes_resample.html">Select Electrodes and Resampling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_sliding_estimator.html">Time-Resolved Decoding with SlidingEstimator</a></li>
-<li class="toctree-l2"><a class="reference internal" href="plot_statistical_analysis.html">Statistical Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot_statistical_analysis.html">Statistical Analysis and Chance Level Assessment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_use_an_X_y_dataset.html">Using X y data (epoched data) instead of continuous signal</a></li>
 </ul>
 </details></li>
@@ -583,6 +583,7 @@ and to embed EEG specific code inside sklearn pipelines.</p>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html#sklearn.preprocessing.StandardScaler" title="sklearn.preprocessing.StandardScaler" class="sphx-glr-backref-module-sklearn-preprocessing sphx-glr-backref-type-py-class"><span class="n">StandardScaler</span></a>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">moabb</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">moabb.analysis.chance_level</span><span class="w"> </span><span class="kn">import</span> <span class="n">chance_by_chance</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">moabb.analysis.meta_analysis</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>  <span class="c1"># noqa: E501</span>
     <span class="n">compute_dataset_statistics</span><span class="p">,</span>
     <span class="n">find_significant_differences</span><span class="p">,</span>
@@ -681,7 +682,7 @@ ROC-AUC metric.</p>
 /home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/sklearn/linear_model/_sag.py:348: ConvergenceWarning: The max_iter was reached which means the coef_ did not converge
   warnings.warn(
 
-BNCI2014-009-CrossSession:  33%|███▎      | 1/3 [00:21&lt;00:42, 21.05s/it]/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/sklearn/linear_model/_logistic.py:1221: UserWarning: l1_ratio parameter is only used when penalty is &#39;elasticnet&#39;. Got (penalty=l2)
+BNCI2014-009-CrossSession:  33%|███▎      | 1/3 [00:21&lt;00:42, 21.40s/it]/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/sklearn/linear_model/_logistic.py:1221: UserWarning: l1_ratio parameter is only used when penalty is &#39;elasticnet&#39;. Got (penalty=l2)
   warnings.warn(
 /home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/sklearn/linear_model/_sag.py:348: ConvergenceWarning: The max_iter was reached which means the coef_ did not converge
   warnings.warn(
@@ -694,7 +695,7 @@ BNCI2014-009-CrossSession:  33%|███▎      | 1/3 [00:21&lt;00:42, 21.05s/
 /home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/sklearn/linear_model/_sag.py:348: ConvergenceWarning: The max_iter was reached which means the coef_ did not converge
   warnings.warn(
 
-BNCI2014-009-CrossSession:  67%|██████▋   | 2/3 [00:42&lt;00:21, 21.08s/it]/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/sklearn/linear_model/_logistic.py:1221: UserWarning: l1_ratio parameter is only used when penalty is &#39;elasticnet&#39;. Got (penalty=l2)
+BNCI2014-009-CrossSession:  67%|██████▋   | 2/3 [00:42&lt;00:20, 20.99s/it]/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/sklearn/linear_model/_logistic.py:1221: UserWarning: l1_ratio parameter is only used when penalty is &#39;elasticnet&#39;. Got (penalty=l2)
   warnings.warn(
 /home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/sklearn/linear_model/_sag.py:348: ConvergenceWarning: The max_iter was reached which means the coef_ did not converge
   warnings.warn(
@@ -707,8 +708,8 @@ BNCI2014-009-CrossSession:  67%|██████▋   | 2/3 [00:42&lt;00:21, 2
 /home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/sklearn/linear_model/_sag.py:348: ConvergenceWarning: The max_iter was reached which means the coef_ did not converge
   warnings.warn(
 
-BNCI2014-009-CrossSession: 100%|██████████| 3/3 [01:03&lt;00:00, 21.36s/it]
-BNCI2014-009-CrossSession: 100%|██████████| 3/3 [01:03&lt;00:00, 21.28s/it]
+BNCI2014-009-CrossSession: 100%|██████████| 3/3 [01:03&lt;00:00, 21.31s/it]
+BNCI2014-009-CrossSession: 100%|██████████| 3/3 [01:03&lt;00:00, 21.26s/it]
 </pre></div>
 </div>
 </section>
@@ -750,7 +751,7 @@ then apply a logistic regression.</p>
 /home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/sklearn/linear_model/_sag.py:348: ConvergenceWarning: The max_iter was reached which means the coef_ did not converge
   warnings.warn(
 
-BNCI2014-009-CrossSession:  33%|███▎      | 1/3 [00:15&lt;00:31, 15.70s/it]/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/sklearn/linear_model/_logistic.py:1221: UserWarning: l1_ratio parameter is only used when penalty is &#39;elasticnet&#39;. Got (penalty=l2)
+BNCI2014-009-CrossSession:  33%|███▎      | 1/3 [00:16&lt;00:32, 16.11s/it]/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/sklearn/linear_model/_logistic.py:1221: UserWarning: l1_ratio parameter is only used when penalty is &#39;elasticnet&#39;. Got (penalty=l2)
   warnings.warn(
 /home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/sklearn/linear_model/_sag.py:348: ConvergenceWarning: The max_iter was reached which means the coef_ did not converge
   warnings.warn(
@@ -763,7 +764,7 @@ BNCI2014-009-CrossSession:  33%|███▎      | 1/3 [00:15&lt;00:31, 15.70s/
 /home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/sklearn/linear_model/_sag.py:348: ConvergenceWarning: The max_iter was reached which means the coef_ did not converge
   warnings.warn(
 
-BNCI2014-009-CrossSession:  67%|██████▋   | 2/3 [00:32&lt;00:16, 16.22s/it]/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/sklearn/linear_model/_logistic.py:1221: UserWarning: l1_ratio parameter is only used when penalty is &#39;elasticnet&#39;. Got (penalty=l2)
+BNCI2014-009-CrossSession:  67%|██████▋   | 2/3 [00:32&lt;00:16, 16.36s/it]/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/sklearn/linear_model/_logistic.py:1221: UserWarning: l1_ratio parameter is only used when penalty is &#39;elasticnet&#39;. Got (penalty=l2)
   warnings.warn(
 /home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/sklearn/linear_model/_sag.py:348: ConvergenceWarning: The max_iter was reached which means the coef_ did not converge
   warnings.warn(
@@ -776,8 +777,8 @@ BNCI2014-009-CrossSession:  67%|██████▋   | 2/3 [00:32&lt;00:16, 1
 /home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/sklearn/linear_model/_sag.py:348: ConvergenceWarning: The max_iter was reached which means the coef_ did not converge
   warnings.warn(
 
-BNCI2014-009-CrossSession: 100%|██████████| 3/3 [00:49&lt;00:00, 16.61s/it]
-BNCI2014-009-CrossSession: 100%|██████████| 3/3 [00:49&lt;00:00, 16.45s/it]
+BNCI2014-009-CrossSession: 100%|██████████| 3/3 [00:50&lt;00:00, 16.83s/it]
+BNCI2014-009-CrossSession: 100%|██████████| 3/3 [00:50&lt;00:00, 16.68s/it]
 </pre></div>
 </div>
 </section>
@@ -808,22 +809,22 @@ on the tangent space and classified with a logistic regression.</p>
 /home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/sklearn/linear_model/_logistic.py:1221: UserWarning: l1_ratio parameter is only used when penalty is &#39;elasticnet&#39;. Got (penalty=l2)
   warnings.warn(
 
-BNCI2014-009-CrossSession:  33%|███▎      | 1/3 [00:12&lt;00:24, 12.40s/it]/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/sklearn/linear_model/_logistic.py:1221: UserWarning: l1_ratio parameter is only used when penalty is &#39;elasticnet&#39;. Got (penalty=l2)
+BNCI2014-009-CrossSession:  33%|███▎      | 1/3 [00:11&lt;00:22, 11.35s/it]/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/sklearn/linear_model/_logistic.py:1221: UserWarning: l1_ratio parameter is only used when penalty is &#39;elasticnet&#39;. Got (penalty=l2)
   warnings.warn(
 /home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/sklearn/linear_model/_logistic.py:1221: UserWarning: l1_ratio parameter is only used when penalty is &#39;elasticnet&#39;. Got (penalty=l2)
   warnings.warn(
 /home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/sklearn/linear_model/_logistic.py:1221: UserWarning: l1_ratio parameter is only used when penalty is &#39;elasticnet&#39;. Got (penalty=l2)
   warnings.warn(
 
-BNCI2014-009-CrossSession:  67%|██████▋   | 2/3 [00:23&lt;00:11, 11.83s/it]/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/sklearn/linear_model/_logistic.py:1221: UserWarning: l1_ratio parameter is only used when penalty is &#39;elasticnet&#39;. Got (penalty=l2)
+BNCI2014-009-CrossSession:  67%|██████▋   | 2/3 [00:22&lt;00:11, 11.50s/it]/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/sklearn/linear_model/_logistic.py:1221: UserWarning: l1_ratio parameter is only used when penalty is &#39;elasticnet&#39;. Got (penalty=l2)
   warnings.warn(
 /home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/sklearn/linear_model/_logistic.py:1221: UserWarning: l1_ratio parameter is only used when penalty is &#39;elasticnet&#39;. Got (penalty=l2)
   warnings.warn(
 /home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/sklearn/linear_model/_logistic.py:1221: UserWarning: l1_ratio parameter is only used when penalty is &#39;elasticnet&#39;. Got (penalty=l2)
   warnings.warn(
 
-BNCI2014-009-CrossSession: 100%|██████████| 3/3 [00:35&lt;00:00, 11.57s/it]
-BNCI2014-009-CrossSession: 100%|██████████| 3/3 [00:35&lt;00:00, 11.69s/it]
+BNCI2014-009-CrossSession: 100%|██████████| 3/3 [00:34&lt;00:00, 11.71s/it]
+BNCI2014-009-CrossSession: 100%|██████████| 3/3 [00:34&lt;00:00, 11.64s/it]
 </pre></div>
 </div>
 </section>
@@ -836,10 +837,12 @@ results.</p>
 </pre></div>
 </div>
 <p>We could compare the Euclidean and Riemannian performance using a <cite>paired_plot</cite></p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="../../generated/moabb.analysis.plotting.paired_plot.html#moabb.analysis.plotting.paired_plot" title="moabb.analysis.plotting.paired_plot" class="sphx-glr-backref-module-moabb-analysis-plotting sphx-glr-backref-type-py-function"><span class="n">paired_plot</span></a><span class="p">(</span><span class="n">all_res</span><span class="p">,</span> <span class="s2">&quot;XDAWN LR&quot;</span><span class="p">,</span> <span class="s2">&quot;RG LR&quot;</span><span class="p">)</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">chance_levels</span></a> <span class="o">=</span> <span class="n">chance_by_chance</span><span class="p">(</span><span class="n">all_res</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="p">[</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">])</span>
+
+<a href="../../generated/moabb.analysis.plotting.paired_plot.html#moabb.analysis.plotting.paired_plot" title="moabb.analysis.plotting.paired_plot" class="sphx-glr-backref-module-moabb-analysis-plotting sphx-glr-backref-type-py-function"><span class="n">paired_plot</span></a><span class="p">(</span><span class="n">all_res</span><span class="p">,</span> <span class="s2">&quot;XDAWN LR&quot;</span><span class="p">,</span> <span class="s2">&quot;RG LR&quot;</span><span class="p">,</span> <span class="n">chance_level</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">chance_levels</span></a><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_mne_and_scikit_estimators_001.png" srcset="../../_images/sphx_glr_plot_mne_and_scikit_estimators_001.png" alt="plot mne and scikit estimators" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 1100x850 with 1 Axes&gt;
+<img src="../../_images/sphx_glr_plot_mne_and_scikit_estimators_001.png" srcset="../../_images/sphx_glr_plot_mne_and_scikit_estimators_001.png" alt="plot mne and scikit estimators" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 1100x950 with 1 Axes&gt;
 </pre></div>
 </div>
 <p>All the results could be compared and statistical analysis could highlight the
@@ -850,7 +853,7 @@ differences between pipelines.</p>
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.show.html#matplotlib.pyplot.show" title="matplotlib.pyplot.show" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_mne_and_scikit_estimators_002.png" srcset="../../_images/sphx_glr_plot_mne_and_scikit_estimators_002.png" alt="Algorithm comparison" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (2 minutes 34.717 seconds)</p>
+<img src="../../_images/sphx_glr_plot_mne_and_scikit_estimators_002.png" srcset="../../_images/sphx_glr_plot_mne_and_scikit_estimators_002.png" alt="plot mne and scikit estimators" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (2 minutes 35.444 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-advanced-examples-plot-mne-and-scikit-estimators-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/b9f56e19f2500dad10214cc29a2a24e4/plot_mne_and_scikit_estimators.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_mne_and_scikit_estimators.ipynb</span></code></a></p>

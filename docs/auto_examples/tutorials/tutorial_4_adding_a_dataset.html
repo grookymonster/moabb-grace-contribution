@@ -479,7 +479,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_riemannian_artifact_rejection.html">Riemannian Artifact Rejection as a Pre-processing Step</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_select_electrodes_resample.html">Select Electrodes and Resampling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_sliding_estimator.html">Time-Resolved Decoding with SlidingEstimator</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_statistical_analysis.html">Statistical Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_statistical_analysis.html">Statistical Analysis and Chance Level Assessment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_use_an_X_y_dataset.html">Using X y data (epoched data) instead of continuous signal</a></li>
 </ul>
 </details></li>
@@ -726,16 +726,16 @@ The rest of the code follows the steps described in the previous tutorials.</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>ExampleDataset-WithinSession:   0%|          | 0/3 [00:00&lt;?, ?it/s]
-ExampleDataset-WithinSession:  33%|███▎      | 1/3 [00:00&lt;00:00,  4.75it/s]
-ExampleDataset-WithinSession:  67%|██████▋   | 2/3 [00:00&lt;00:00,  4.22it/s]
-ExampleDataset-WithinSession: 100%|██████████| 3/3 [00:00&lt;00:00,  4.45it/s]
-ExampleDataset-WithinSession: 100%|██████████| 3/3 [00:00&lt;00:00,  4.43it/s]
-   score      time  ...  pipeline                  codecarbon_task_name
-0    1.0  0.017066  ...       MDM  0cae0ccd-2494-4131-a4a0-81fc144b26c3
-1    1.0  0.017258  ...       MDM  f720fe40-e378-4f13-94db-37c7d2bd4210
-2    1.0  0.017420  ...       MDM  edfe19e1-7fed-4130-bd4b-999c77021d51
+ExampleDataset-WithinSession:  33%|███▎      | 1/3 [00:00&lt;00:00,  4.62it/s]
+ExampleDataset-WithinSession:  67%|██████▋   | 2/3 [00:00&lt;00:00,  4.65it/s]
+ExampleDataset-WithinSession: 100%|██████████| 3/3 [00:00&lt;00:00,  4.66it/s]
+ExampleDataset-WithinSession: 100%|██████████| 3/3 [00:00&lt;00:00,  4.65it/s]
+   score      time  ...  samples_test  n_classes
+0    1.0  0.017066  ...           NaN        NaN
+1    1.0  0.017258  ...           NaN        NaN
+2    1.0  0.017420  ...           NaN        NaN
 
-[3 rows x 11 columns]
+[3 rows x 13 columns]
 </pre></div>
 </div>
 </section>
@@ -810,7 +810,7 @@ It auto-discovers subjects and sessions from the BIDS directory structure:</p>
 <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">X</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">labels</span></a><span class="p">,</span> <span class="n">meta</span> <span class="o">=</span> <a href="../../generated/moabb.paradigms.base.BaseProcessing.html#moabb.paradigms.base.BaseProcessing.get_data" title="moabb.paradigms.base.BaseProcessing.get_data" class="sphx-glr-backref-module-moabb-paradigms-base sphx-glr-backref-type-py-method"><span class="n">paradigm</span><span class="o">.</span><span class="n">get_data</span></a><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="n">dataset</span><span class="p">,</span> <span class="n">subjects</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 1.536 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 1.576 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-tutorials-tutorial-4-adding-a-dataset-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/46d014244b321e934a890e079a5f0042/tutorial_4_adding_a_dataset.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">tutorial_4_adding_a_dataset.ipynb</span></code></a></p>

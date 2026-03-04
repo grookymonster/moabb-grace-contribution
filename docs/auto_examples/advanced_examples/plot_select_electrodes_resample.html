@@ -479,7 +479,7 @@
 <li class="toctree-l2"><a class="reference internal" href="plot_riemannian_artifact_rejection.html">Riemannian Artifact Rejection as a Pre-processing Step</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Select Electrodes and Resampling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_sliding_estimator.html">Time-Resolved Decoding with SlidingEstimator</a></li>
-<li class="toctree-l2"><a class="reference internal" href="plot_statistical_analysis.html">Statistical Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot_statistical_analysis.html">Statistical Analysis and Chance Level Assessment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_use_an_X_y_dataset.html">Using X y data (epoched data) instead of continuous signal</a></li>
 </ul>
 </details></li>
@@ -573,6 +573,7 @@ This tutorial demonstrates how to use this functionality.</p>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.pipeline</span><span class="w"> </span><span class="kn">import</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.pipeline.make_pipeline.html#sklearn.pipeline.make_pipeline" title="sklearn.pipeline.make_pipeline" class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-function"><span class="n">make_pipeline</span></a>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">moabb.analysis.plotting</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">moabb_plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">moabb.analysis.chance_level</span><span class="w"> </span><span class="kn">import</span> <span class="n">chance_by_chance</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">moabb.datasets</span><span class="w"> </span><span class="kn">import</span> <a href="../../generated/moabb.datasets.BNCI2014_001.html#moabb.datasets.BNCI2014_001" title="moabb.datasets.BNCI2014_001" class="sphx-glr-backref-module-moabb-datasets sphx-glr-backref-type-py-class"><span class="n">BNCI2014_001</span></a><span class="p">,</span> <a href="../../generated/moabb.datasets.Zhou2016.html#moabb.datasets.Zhou2016" title="moabb.datasets.Zhou2016" class="sphx-glr-backref-module-moabb-datasets sphx-glr-backref-type-py-class"><span class="n">Zhou2016</span></a>
 <span class="kn">from</span><span class="w"> </span><span class="nn">moabb.datasets.utils</span><span class="w"> </span><span class="kn">import</span> <a href="../../generated/moabb.datasets.utils.find_intersecting_channels.html#moabb.datasets.utils.find_intersecting_channels" title="moabb.datasets.utils.find_intersecting_channels" class="sphx-glr-backref-module-moabb-datasets-utils sphx-glr-backref-type-py-function"><span class="n">find_intersecting_channels</span></a>
 <span class="kn">from</span><span class="w"> </span><span class="nn">moabb.evaluations</span><span class="w"> </span><span class="kn">import</span> <a href="../../generated/moabb.evaluations.WithinSessionEvaluation.html#moabb.evaluations.WithinSessionEvaluation" title="moabb.evaluations.WithinSessionEvaluation" class="sphx-glr-backref-module-moabb-evaluations sphx-glr-backref-type-py-class"><span class="n">WithinSessionEvaluation</span></a>
@@ -612,22 +613,22 @@ a sampling rate of 200 Hz.</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Zhou2016-WithinSession:   0%|          | 0/2 [00:00&lt;?, ?it/s]
-Zhou2016-WithinSession:  50%|█████     | 1/2 [00:57&lt;00:57, 57.52s/it]
-Zhou2016-WithinSession: 100%|██████████| 2/2 [01:55&lt;00:00, 57.52s/it]
-Zhou2016-WithinSession: 100%|██████████| 2/2 [01:55&lt;00:00, 57.52s/it]
+Zhou2016-WithinSession:  50%|█████     | 1/2 [00:57&lt;00:57, 57.70s/it]
+Zhou2016-WithinSession: 100%|██████████| 2/2 [01:54&lt;00:00, 57.43s/it]
+Zhou2016-WithinSession: 100%|██████████| 2/2 [01:54&lt;00:00, 57.47s/it]
 
 BNCI2014-001-WithinSession:   0%|          | 0/2 [00:00&lt;?, ?it/s]
-BNCI2014-001-WithinSession:  50%|█████     | 1/2 [00:40&lt;00:40, 40.15s/it]
-BNCI2014-001-WithinSession: 100%|██████████| 2/2 [01:20&lt;00:00, 40.23s/it]
-BNCI2014-001-WithinSession: 100%|██████████| 2/2 [01:20&lt;00:00, 40.22s/it]
+BNCI2014-001-WithinSession:  50%|█████     | 1/2 [00:40&lt;00:40, 40.26s/it]
+BNCI2014-001-WithinSession: 100%|██████████| 2/2 [01:20&lt;00:00, 40.20s/it]
+BNCI2014-001-WithinSession: 100%|██████████| 2/2 [01:20&lt;00:00, 40.21s/it]
       score      time  ...  pipeline                  codecarbon_task_name
-0  0.851263  0.048897  ...     ts+lr  5ccb153f-92aa-449d-8cf6-e06f40e7c875
-1  0.902000  0.045474  ...     ts+lr  775c9cde-6900-4005-9919-8167112fbea6
-2  0.950000  0.049897  ...     ts+lr  e45aca74-fbd7-4133-bae6-f9e6363f66f1
-3  0.916000  0.043799  ...     ts+lr  682179ed-ea56-4ed3-8db3-8aeb89984348
-4  0.819753  0.046936  ...     ts+lr  12782349-7fa1-4c71-86b4-52b920e56ce1
+0  0.838636  0.048839  ...     ts+lr  820b79ab-903b-4f83-9178-081b019b75bf
+1  0.878000  0.045940  ...     ts+lr  1d7d8aa8-7fab-4783-aebd-4342173471b0
+2  0.942000  0.052914  ...     ts+lr  e761a179-1153-419c-9ed4-5944e232c5bf
+3  0.938000  0.052122  ...     ts+lr  26165b41-28fc-477b-b7c1-93b57f1fe2c5
+4  0.844444  0.042782  ...     ts+lr  88cfb52e-8657-4d94-9263-1f224362bffd
 
-[5 rows x 11 columns]
+[5 rows x 13 columns]
 </pre></div>
 </div>
 </section>
@@ -646,22 +647,22 @@ as well as the list of datasets with valid channels.</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Zhou2016-WithinSession:   0%|          | 0/2 [00:00&lt;?, ?it/s]
-Zhou2016-WithinSession:  50%|█████     | 1/2 [00:57&lt;00:57, 57.13s/it]
-Zhou2016-WithinSession: 100%|██████████| 2/2 [01:54&lt;00:00, 57.09s/it]
-Zhou2016-WithinSession: 100%|██████████| 2/2 [01:54&lt;00:00, 57.10s/it]
+Zhou2016-WithinSession:  50%|█████     | 1/2 [00:57&lt;00:57, 57.15s/it]
+Zhou2016-WithinSession: 100%|██████████| 2/2 [01:53&lt;00:00, 56.93s/it]
+Zhou2016-WithinSession: 100%|██████████| 2/2 [01:53&lt;00:00, 56.96s/it]
 
 BNCI2014-001-WithinSession:   0%|          | 0/2 [00:00&lt;?, ?it/s]
-BNCI2014-001-WithinSession:  50%|█████     | 1/2 [00:40&lt;00:40, 40.68s/it]
-BNCI2014-001-WithinSession: 100%|██████████| 2/2 [01:20&lt;00:00, 39.94s/it]
-BNCI2014-001-WithinSession: 100%|██████████| 2/2 [01:20&lt;00:00, 40.05s/it]
+BNCI2014-001-WithinSession:  50%|█████     | 1/2 [00:40&lt;00:40, 40.92s/it]
+BNCI2014-001-WithinSession: 100%|██████████| 2/2 [01:20&lt;00:00, 40.09s/it]
+BNCI2014-001-WithinSession: 100%|██████████| 2/2 [01:20&lt;00:00, 40.21s/it]
       score      time  ...  pipeline                  codecarbon_task_name
-0  0.851263  0.045022  ...     ts+lr  b7ae53f7-974e-414e-ae61-fe43df518d46
-1  0.918000  0.054053  ...     ts+lr  219fe794-00a9-43d4-a4dd-a0b837700f1f
-2  0.944000  0.037604  ...     ts+lr  1042157a-2b48-4864-b038-ad9ae58c7140
-3  0.922000  0.038323  ...     ts+lr  5a7bb44e-ee2f-4651-9346-1b9c2039aa11
-4  0.819753  0.036307  ...     ts+lr  4d3bdd80-5a1a-4f9e-81bf-317bbb527ebd
+0  0.836616  0.050443  ...     ts+lr  89e2e850-6063-4aeb-9a2b-260bca20451b
+1  0.922000  0.056613  ...     ts+lr  e50aaaec-de9d-41f7-94dc-08731a16c146
+2  0.948000  0.039669  ...     ts+lr  85c5b05a-7e51-4b70-921a-138ba05626de
+3  0.924000  0.037908  ...     ts+lr  6882f25d-d366-4994-94cd-15e43ef92310
+4  0.807407  0.036802  ...     ts+lr  881bc750-fb8e-4487-a86f-89bd8a541fcc
 
-[5 rows x 11 columns]
+[5 rows x 13 columns]
 </pre></div>
 </div>
 </section>
@@ -669,11 +670,13 @@ BNCI2014-001-WithinSession: 100%|██████████| 2/2 [01:20&lt;0
 <h2>Plot Results<a class="headerlink" href="#plot-results" title="Link to this heading">#</a></h2>
 <p>Compare the obtained results with the two pipelines, CSP+LDA and logistic
 regression computed in the tangent space of the covariance matrices.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="matplotlib.figure.Figure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fig</span></a> <span class="o">=</span> <a href="../../generated/moabb.analysis.plotting.paired_plot.html#moabb.analysis.plotting.paired_plot" title="moabb.analysis.plotting.paired_plot" class="sphx-glr-backref-module-moabb-analysis-plotting sphx-glr-backref-type-py-function"><span class="n">moabb_plt</span><span class="o">.</span><span class="n">paired_plot</span></a><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="s2">&quot;csp+lda&quot;</span><span class="p">,</span> <span class="s2">&quot;ts+lr&quot;</span><span class="p">)</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">chance_levels</span></a> <span class="o">=</span> <span class="n">chance_by_chance</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="p">[</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">])</span>
+
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="matplotlib.figure.Figure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fig</span></a> <span class="o">=</span> <a href="../../generated/moabb.analysis.plotting.paired_plot.html#moabb.analysis.plotting.paired_plot" title="moabb.analysis.plotting.paired_plot" class="sphx-glr-backref-module-moabb-analysis-plotting sphx-glr-backref-type-py-function"><span class="n">moabb_plt</span><span class="o">.</span><span class="n">paired_plot</span></a><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="s2">&quot;csp+lda&quot;</span><span class="p">,</span> <span class="s2">&quot;ts+lr&quot;</span><span class="p">,</span> <span class="n">chance_level</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">chance_levels</span></a><span class="p">)</span>
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.show.html#matplotlib.pyplot.show" title="matplotlib.pyplot.show" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_select_electrodes_resample_001.png" srcset="../../_images/sphx_glr_plot_select_electrodes_resample_001.png" alt="plot select electrodes resample" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (6 minutes 38.200 seconds)</p>
+<img src="../../_images/sphx_glr_plot_select_electrodes_resample_001.png" srcset="../../_images/sphx_glr_plot_select_electrodes_resample_001.png" alt="plot select electrodes resample" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (6 minutes 38.253 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-advanced-examples-plot-select-electrodes-resample-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/657e87726c4d308a5b176dbb4277773e/plot_select_electrodes_resample.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_select_electrodes_resample.ipynb</span></code></a></p>

@@ -479,7 +479,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_riemannian_artifact_rejection.html">Riemannian Artifact Rejection as a Pre-processing Step</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_select_electrodes_resample.html">Select Electrodes and Resampling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_sliding_estimator.html">Time-Resolved Decoding with SlidingEstimator</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_statistical_analysis.html">Statistical Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_statistical_analysis.html">Statistical Analysis and Chance Level Assessment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_use_an_X_y_dataset.html">Using X y data (epoched data) instead of continuous signal</a></li>
 </ul>
 </details></li>
@@ -574,13 +574,14 @@ We will compare four pipelines :</p>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyriemann.estimation</span><span class="w"> </span><span class="kn">import</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.base.TransformerMixin.html#sklearn.base.TransformerMixin" title="sklearn.base.TransformerMixin" class="sphx-glr-backref-module-sklearn-base sphx-glr-backref-type-py-class"><span class="n">Covariances</span></a>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyriemann.tangentspace</span><span class="w"> </span><span class="kn">import</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.base.TransformerMixin.html#sklearn.base.TransformerMixin" title="sklearn.base.TransformerMixin" class="sphx-glr-backref-module-sklearn-base sphx-glr-backref-type-py-class"><span class="n">TangentSpace</span></a>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html#sklearn.linear_model.LogisticRegression" title="sklearn.linear_model.LogisticRegression" class="sphx-glr-backref-module-sklearn-linear_model sphx-glr-backref-type-py-class"><span class="n">LogisticRegression</span></a>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.pipeline</span><span class="w"> </span><span class="kn">import</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.pipeline.make_pipeline.html#sklearn.pipeline.make_pipeline" title="sklearn.pipeline.make_pipeline" class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-function"><span class="n">make_pipeline</span></a>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">moabb</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">moabb.analysis.plotting</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">moabb_plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">moabb.analysis.chance_level</span><span class="w"> </span><span class="kn">import</span> <span class="n">chance_by_chance</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">moabb.datasets</span><span class="w"> </span><span class="kn">import</span> <a href="../../generated/moabb.datasets.Kalunga2016.html#moabb.datasets.Kalunga2016" title="moabb.datasets.Kalunga2016" class="sphx-glr-backref-module-moabb-datasets sphx-glr-backref-type-py-class"><span class="n">Kalunga2016</span></a>
 <span class="kn">from</span><span class="w"> </span><span class="nn">moabb.evaluations</span><span class="w"> </span><span class="kn">import</span> <a href="../../generated/moabb.evaluations.CrossSubjectEvaluation.html#moabb.evaluations.CrossSubjectEvaluation" title="moabb.evaluations.CrossSubjectEvaluation" class="sphx-glr-backref-module-moabb-evaluations sphx-glr-backref-type-py-class"><span class="n">CrossSubjectEvaluation</span></a>
 <span class="kn">from</span><span class="w"> </span><span class="nn">moabb.paradigms</span><span class="w"> </span><span class="kn">import</span> <a href="../../generated/moabb.paradigms.SSVEP.html#moabb.paradigms.SSVEP" title="moabb.paradigms.SSVEP" class="sphx-glr-backref-module-moabb-paradigms sphx-glr-backref-type-py-class"><span class="n">SSVEP</span></a><span class="p">,</span> <a href="../../generated/moabb.paradigms.FilterBankSSVEP.html#moabb.paradigms.FilterBankSSVEP" title="moabb.paradigms.FilterBankSSVEP" class="sphx-glr-backref-module-moabb-paradigms sphx-glr-backref-type-py-class"><span class="n">FilterBankSSVEP</span></a>
@@ -594,15 +595,13 @@ We will compare four pipelines :</p>
 </div>
 <section id="loading-dataset">
 <h2>Loading Dataset<a class="headerlink" href="#loading-dataset" title="Link to this heading">#</a></h2>
-<p>We will load the data from the first 2 subjects of the <code class="docutils literal notranslate"><span class="pre">SSVEP_Exo</span></code> dataset
-and compare two algorithms on this set. One of the algorithms could only
+<p>We will load the data from all 12 subjects of the <code class="docutils literal notranslate"><span class="pre">SSVEP_Exo</span></code> dataset
+and compare four algorithms on this set. One of the algorithms could only
 process class associated with a stimulation frequency, we will thus drop
 the resting class. As the resting class is the last defined class, picking
 the first three classes (out of four) allows to focus only on the stimulation
 frequency.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">n_subject</span></a> <span class="o">=</span> <span class="mi">2</span>
-<a href="../../generated/moabb.datasets.Kalunga2016.html#moabb.datasets.Kalunga2016" title="moabb.datasets.Kalunga2016" class="sphx-glr-backref-module-moabb-datasets sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dataset</span></a> <span class="o">=</span> <a href="../../generated/moabb.datasets.Kalunga2016.html#moabb.datasets.Kalunga2016" title="moabb.datasets.Kalunga2016" class="sphx-glr-backref-module-moabb-datasets sphx-glr-backref-type-py-class"><span class="n">Kalunga2016</span></a><span class="p">()</span>
-<a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dataset</span><span class="o">.</span><span class="n">subject_list</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dataset</span><span class="o">.</span><span class="n">subject_list</span></a><span class="p">[:</span><a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">n_subject</span></a><span class="p">]</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="../../generated/moabb.datasets.Kalunga2016.html#moabb.datasets.Kalunga2016" title="moabb.datasets.Kalunga2016" class="sphx-glr-backref-module-moabb-datasets sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dataset</span></a> <span class="o">=</span> <a href="../../generated/moabb.datasets.Kalunga2016.html#moabb.datasets.Kalunga2016" title="moabb.datasets.Kalunga2016" class="sphx-glr-backref-module-moabb-datasets sphx-glr-backref-type-py-class"><span class="n">Kalunga2016</span></a><span class="p">()</span>
 <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">interval</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dataset</span><span class="o">.</span><span class="n">interval</span></a>
 </pre></div>
 </div>
@@ -624,9 +623,9 @@ class, as used in the filterbank motor imagery paradigms.</p>
 </pre></div>
 </div>
 <p>Classes are defined by the frequency of the stimulation, here we use
-the first two frequencies of the dataset, 13 and 17 Hz.
+the first three frequencies of the dataset, 13, 17, and 21 Hz.
 The evaluation function uses a LabelEncoder, transforming them
-to 0 and 1</p>
+to 0, 1, and 2.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">freqs</span></a> <span class="o">=</span> <a href="../../generated/moabb.paradigms.SSVEP.html#moabb.paradigms.SSVEP" title="moabb.paradigms.SSVEP" class="sphx-glr-backref-module-moabb-paradigms sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">paradigm</span></a><span class="o">.</span><span class="n">used_events</span><span class="p">(</span><a href="../../generated/moabb.datasets.Kalunga2016.html#moabb.datasets.Kalunga2016" title="moabb.datasets.Kalunga2016" class="sphx-glr-backref-module-moabb-datasets sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dataset</span></a><span class="p">)</span>
 </pre></div>
 </div>
@@ -667,12 +666,364 @@ each subject / session of the dataset, and for each pipeline.</p>
 <p>Results are saved into the database, so that if you add a new pipeline, it
 will not run again the evaluation unless a parameter has changed. Results can
 be overwritten if necessary.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/functions.html#bool" title="builtins.bool" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">overwrite</span></a> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># set to True if we want to overwrite cached results</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/functions.html#bool" title="builtins.bool" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">overwrite</span></a> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># set to True if we want to overwrite cached results</span>
 
 <a href="../../generated/moabb.evaluations.CrossSubjectEvaluation.html#moabb.evaluations.CrossSubjectEvaluation" title="moabb.evaluations.CrossSubjectEvaluation" class="sphx-glr-backref-module-moabb-evaluations sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">evaluation</span></a> <span class="o">=</span> <a href="../../generated/moabb.evaluations.CrossSubjectEvaluation.html#moabb.evaluations.CrossSubjectEvaluation" title="moabb.evaluations.CrossSubjectEvaluation" class="sphx-glr-backref-module-moabb-evaluations sphx-glr-backref-type-py-class"><span class="n">CrossSubjectEvaluation</span></a><span class="p">(</span>
     <a href="../../generated/moabb.paradigms.SSVEP.html#moabb.paradigms.SSVEP" title="moabb.paradigms.SSVEP" class="sphx-glr-backref-module-moabb-paradigms sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">paradigm</span></a><span class="o">=</span><a href="../../generated/moabb.paradigms.SSVEP.html#moabb.paradigms.SSVEP" title="moabb.paradigms.SSVEP" class="sphx-glr-backref-module-moabb-paradigms sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">paradigm</span></a><span class="p">,</span> <span class="n">datasets</span><span class="o">=</span><a href="../../generated/moabb.datasets.Kalunga2016.html#moabb.datasets.Kalunga2016" title="moabb.datasets.Kalunga2016" class="sphx-glr-backref-module-moabb-datasets sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dataset</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/functions.html#bool" title="builtins.bool" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">overwrite</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/functions.html#bool" title="builtins.bool" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">overwrite</span></a>
 <span class="p">)</span>
 <span class="n">results</span> <span class="o">=</span> <a href="../../generated/moabb.evaluations.base.BaseEvaluation.html#moabb.evaluations.base.BaseEvaluation.process" title="moabb.evaluations.base.BaseEvaluation.process" class="sphx-glr-backref-module-moabb-evaluations-base sphx-glr-backref-type-py-method"><span class="n">evaluation</span><span class="o">.</span><span class="n">process</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pipelines</span></a><span class="p">)</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+
+  0%|                                              | 0.00/2.29M [00:00&lt;?, ?B/s]
+  1%|▏                                    | 12.3k/2.29M [00:00&lt;00:24, 91.9kB/s]
+  2%|▋                                     | 41.0k/2.29M [00:00&lt;00:11, 190kB/s]
+  4%|█▌                                    | 95.2k/2.29M [00:00&lt;00:06, 336kB/s]
+  7%|██▊                                    | 167k/2.29M [00:00&lt;00:04, 476kB/s]
+ 16%|██████▏                               | 371k/2.29M [00:00&lt;00:01, 1.01MB/s]
+ 32%|████████████▎                         | 740k/2.29M [00:00&lt;00:00, 1.88MB/s]
+ 66%|████████████████████████▎            | 1.51M/2.29M [00:00&lt;00:00, 3.71MB/s]
+  0%|                                              | 0.00/2.29M [00:00&lt;?, ?B/s]
+100%|█████████████████████████████████████| 2.29M/2.29M [00:00&lt;00:00, 10.8GB/s]
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+
+  0%|                                              | 0.00/2.06M [00:00&lt;?, ?B/s]
+  2%|▋                                     | 39.9k/2.06M [00:00&lt;00:09, 203kB/s]
+ 10%|███▉                                   | 205k/2.06M [00:00&lt;00:03, 579kB/s]
+ 28%|██████████▋                           | 579k/2.06M [00:00&lt;00:00, 1.53MB/s]
+ 53%|███████████████████▌                 | 1.09M/2.06M [00:00&lt;00:00, 2.60MB/s]
+  0%|                                              | 0.00/2.06M [00:00&lt;?, ?B/s]
+100%|█████████████████████████████████████| 2.06M/2.06M [00:00&lt;00:00, 6.65GB/s]
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+
+  0%|                                              | 0.00/2.12M [00:00&lt;?, ?B/s]
+  2%|▋                                     | 39.9k/2.12M [00:00&lt;00:10, 205kB/s]
+  9%|███▌                                   | 194k/2.12M [00:00&lt;00:02, 767kB/s]
+ 16%|█████▉                                | 335k/2.12M [00:00&lt;00:01, 1.01MB/s]
+ 30%|███████████▍                          | 640k/2.12M [00:00&lt;00:00, 1.72MB/s]
+ 67%|████████████████████████▊            | 1.42M/2.12M [00:00&lt;00:00, 3.76MB/s]
+  0%|                                              | 0.00/2.12M [00:00&lt;?, ?B/s]
+100%|█████████████████████████████████████| 2.12M/2.12M [00:00&lt;00:00, 9.84GB/s]
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+
+  0%|                                              | 0.00/2.47M [00:00&lt;?, ?B/s]
+  0%|▏                                    | 12.3k/2.47M [00:00&lt;00:26, 91.7kB/s]
+  2%|▌                                     | 37.9k/2.47M [00:00&lt;00:14, 174kB/s]
+  4%|█▍                                    | 92.2k/2.47M [00:00&lt;00:07, 325kB/s]
+  8%|███▏                                   | 199k/2.47M [00:00&lt;00:03, 593kB/s]
+ 17%|██████▋                               | 431k/2.47M [00:00&lt;00:01, 1.18MB/s]
+ 36%|█████████████▋                        | 889k/2.47M [00:00&lt;00:00, 2.27MB/s]
+ 73%|███████████████████████████          | 1.81M/2.47M [00:00&lt;00:00, 4.42MB/s]
+  0%|                                              | 0.00/2.47M [00:00&lt;?, ?B/s]
+100%|█████████████████████████████████████| 2.47M/2.47M [00:00&lt;00:00, 20.7GB/s]
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+
+  0%|                                              | 0.00/2.71M [00:00&lt;?, ?B/s]
+  0%|                                     | 1.02k/2.71M [00:00&lt;08:25, 5.36kB/s]
+  4%|█▎                                    | 95.2k/2.71M [00:00&lt;00:07, 345kB/s]
+  9%|███▎                                   | 233k/2.71M [00:00&lt;00:04, 595kB/s]
+ 23%|████████▊                             | 628k/2.71M [00:00&lt;00:01, 1.58MB/s]
+ 48%|█████████████████▉                   | 1.32M/2.71M [00:00&lt;00:00, 3.14MB/s]
+ 94%|██████████████████████████████████▊  | 2.55M/2.71M [00:00&lt;00:00, 5.88MB/s]
+  0%|                                              | 0.00/2.71M [00:00&lt;?, ?B/s]
+100%|█████████████████████████████████████| 2.71M/2.71M [00:00&lt;00:00, 22.9GB/s]
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+
+  0%|                                              | 0.00/2.33M [00:00&lt;?, ?B/s]
+  1%|▏                                     | 13.3k/2.33M [00:00&lt;00:20, 114kB/s]
+  4%|█▌                                    | 94.2k/2.33M [00:00&lt;00:06, 323kB/s]
+ 10%|███▉                                   | 233k/2.33M [00:00&lt;00:03, 685kB/s]
+ 24%|█████████                             | 553k/2.33M [00:00&lt;00:01, 1.50MB/s]
+ 33%|████████████▍                         | 765k/2.33M [00:00&lt;00:00, 1.70MB/s]
+ 63%|███████████████████████▏             | 1.46M/2.33M [00:00&lt;00:00, 3.33MB/s]
+  0%|                                              | 0.00/2.33M [00:00&lt;?, ?B/s]
+100%|█████████████████████████████████████| 2.33M/2.33M [00:00&lt;00:00, 9.30GB/s]
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+
+  0%|                                              | 0.00/2.27M [00:00&lt;?, ?B/s]
+  1%|▏                                     | 12.3k/2.27M [00:00&lt;00:22, 101kB/s]
+  4%|█▌                                    | 96.3k/2.27M [00:00&lt;00:06, 328kB/s]
+ 14%|█████▎                                 | 310k/2.27M [00:00&lt;00:02, 937kB/s]
+ 30%|███████████▍                          | 681k/2.27M [00:00&lt;00:00, 1.84MB/s]
+ 51%|██████████████████▋                  | 1.15M/2.27M [00:00&lt;00:00, 2.74MB/s]
+  0%|                                              | 0.00/2.27M [00:00&lt;?, ?B/s]
+100%|█████████████████████████████████████| 2.27M/2.27M [00:00&lt;00:00, 11.5GB/s]
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+
+  0%|                                              | 0.00/1.99M [00:00&lt;?, ?B/s]
+  1%|▏                                    | 12.3k/1.99M [00:00&lt;00:20, 96.7kB/s]
+  2%|▊                                     | 41.0k/1.99M [00:00&lt;00:09, 195kB/s]
+  5%|█▊                                    | 96.3k/1.99M [00:00&lt;00:05, 346kB/s]
+  9%|███▎                                   | 172k/1.99M [00:00&lt;00:03, 498kB/s]
+ 18%|███████                                | 358k/1.99M [00:00&lt;00:01, 969kB/s]
+ 37%|██████████████▏                       | 744k/1.99M [00:00&lt;00:00, 1.92MB/s]
+ 77%|████████████████████████████▍        | 1.53M/1.99M [00:00&lt;00:00, 3.79MB/s]
+  0%|                                              | 0.00/1.99M [00:00&lt;?, ?B/s]
+100%|█████████████████████████████████████| 1.99M/1.99M [00:00&lt;00:00, 8.34GB/s]
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+
+  0%|                                              | 0.00/2.98M [00:00&lt;?, ?B/s]
+  1%|▍                                     | 37.9k/2.98M [00:00&lt;00:15, 193kB/s]
+  5%|█▊                                     | 136k/2.98M [00:00&lt;00:07, 375kB/s]
+ 13%|█████                                 | 396k/2.98M [00:00&lt;00:02, 1.04MB/s]
+ 29%|██████████▊                           | 850k/2.98M [00:00&lt;00:01, 2.09MB/s]
+ 56%|████████████████████▋                | 1.67M/2.98M [00:00&lt;00:00, 3.92MB/s]
+  0%|                                              | 0.00/2.98M [00:00&lt;?, ?B/s]
+100%|█████████████████████████████████████| 2.98M/2.98M [00:00&lt;00:00, 15.5GB/s]
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+
+  0%|                                              | 0.00/2.72M [00:00&lt;?, ?B/s]
+  2%|▌                                     | 41.0k/2.72M [00:00&lt;00:12, 211kB/s]
+  7%|██▊                                    | 193k/2.72M [00:00&lt;00:03, 660kB/s]
+ 16%|██████                                | 433k/2.72M [00:00&lt;00:02, 1.07MB/s]
+ 36%|█████████████▌                        | 968k/2.72M [00:00&lt;00:00, 2.32MB/s]
+ 73%|███████████████████████████          | 1.99M/2.72M [00:00&lt;00:00, 4.66MB/s]
+  0%|                                              | 0.00/2.72M [00:00&lt;?, ?B/s]
+100%|█████████████████████████████████████| 2.72M/2.72M [00:00&lt;00:00, 13.8GB/s]
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+
+  0%|                                              | 0.00/2.74M [00:00&lt;?, ?B/s]
+  1%|▌                                     | 41.0k/2.74M [00:00&lt;00:12, 209kB/s]
+  6%|██▎                                    | 160k/2.74M [00:00&lt;00:04, 621kB/s]
+ 16%|█████▉                                | 427k/2.74M [00:00&lt;00:02, 1.03MB/s]
+ 35%|█████████████▎                        | 958k/2.74M [00:00&lt;00:00, 2.24MB/s]
+ 71%|██████████████████████████▏          | 1.94M/2.74M [00:00&lt;00:00, 4.41MB/s]
+  0%|                                              | 0.00/2.74M [00:00&lt;?, ?B/s]
+100%|█████████████████████████████████████| 2.74M/2.74M [00:00&lt;00:00, 13.3GB/s]
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+
+  0%|                                              | 0.00/2.74M [00:00&lt;?, ?B/s]
+  0%|▏                                     | 12.3k/2.74M [00:00&lt;00:26, 101kB/s]
+  3%|█▎                                    | 95.2k/2.74M [00:00&lt;00:08, 327kB/s]
+ 11%|████▎                                  | 306k/2.74M [00:00&lt;00:02, 930kB/s]
+ 27%|██████████▏                           | 731k/2.74M [00:00&lt;00:00, 2.01MB/s]
+ 48%|█████████████████▉                   | 1.33M/2.74M [00:00&lt;00:00, 3.26MB/s]
+ 83%|██████████████████████████████▌      | 2.26M/2.74M [00:00&lt;00:00, 5.17MB/s]
+  0%|                                              | 0.00/2.74M [00:00&lt;?, ?B/s]
+100%|█████████████████████████████████████| 2.74M/2.74M [00:00&lt;00:00, 15.5GB/s]
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+
+  0%|                                              | 0.00/2.73M [00:00&lt;?, ?B/s]
+  2%|▌                                     | 41.0k/2.73M [00:00&lt;00:12, 214kB/s]
+  8%|██▉                                    | 209k/2.73M [00:00&lt;00:04, 606kB/s]
+ 24%|█████████▎                            | 667k/2.73M [00:00&lt;00:01, 1.82MB/s]
+ 46%|████████████████▉                    | 1.25M/2.73M [00:00&lt;00:00, 3.03MB/s]
+  0%|                                              | 0.00/2.73M [00:00&lt;?, ?B/s]
+100%|█████████████████████████████████████| 2.73M/2.73M [00:00&lt;00:00, 15.0GB/s]
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+
+  0%|                                              | 0.00/3.97M [00:00&lt;?, ?B/s]
+  0%|                                      | 11.3k/3.97M [00:00&lt;00:36, 110kB/s]
+  1%|▍                                     | 41.0k/3.97M [00:00&lt;00:18, 216kB/s]
+  2%|▉                                     | 95.2k/3.97M [00:00&lt;00:10, 360kB/s]
+  5%|██                                     | 211k/3.97M [00:00&lt;00:05, 666kB/s]
+ 11%|████                                  | 426k/3.97M [00:00&lt;00:02, 1.19MB/s]
+ 22%|████████▍                             | 884k/3.97M [00:00&lt;00:01, 2.31MB/s]
+ 45%|████████████████▊                    | 1.80M/3.97M [00:00&lt;00:00, 4.49MB/s]
+ 91%|█████████████████████████████████▊   | 3.63M/3.97M [00:00&lt;00:00, 8.77MB/s]
+  0%|                                              | 0.00/3.97M [00:00&lt;?, ?B/s]
+100%|█████████████████████████████████████| 3.97M/3.97M [00:00&lt;00:00, 26.0GB/s]
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+
+  0%|                                              | 0.00/2.72M [00:00&lt;?, ?B/s]
+  2%|▌                                     | 41.0k/2.72M [00:00&lt;00:12, 210kB/s]
+  7%|██▉                                    | 204k/2.72M [00:00&lt;00:04, 578kB/s]
+ 21%|███████▊                              | 563k/2.72M [00:00&lt;00:01, 1.49MB/s]
+ 41%|███████████████▏                     | 1.12M/2.72M [00:00&lt;00:00, 2.72MB/s]
+ 91%|█████████████████████████████████▋   | 2.48M/2.72M [00:00&lt;00:00, 6.00MB/s]
+  0%|                                              | 0.00/2.72M [00:00&lt;?, ?B/s]
+100%|█████████████████████████████████████| 2.72M/2.72M [00:00&lt;00:00, 23.4GB/s]
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+
+  0%|                                              | 0.00/2.82M [00:00&lt;?, ?B/s]
+  1%|▌                                     | 41.0k/2.82M [00:00&lt;00:13, 209kB/s]
+  6%|██▏                                    | 161k/2.82M [00:00&lt;00:05, 447kB/s]
+ 16%|██████                                | 447k/2.82M [00:00&lt;00:02, 1.17MB/s]
+ 34%|████████████▉                         | 957k/2.82M [00:00&lt;00:00, 2.35MB/s]
+ 64%|███████████████████████▌             | 1.79M/2.82M [00:00&lt;00:00, 3.27MB/s]
+  0%|                                              | 0.00/2.82M [00:00&lt;?, ?B/s]
+100%|█████████████████████████████████████| 2.82M/2.82M [00:00&lt;00:00, 9.33GB/s]
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+
+  0%|                                              | 0.00/2.77M [00:00&lt;?, ?B/s]
+  0%|▏                                    | 12.3k/2.77M [00:00&lt;00:27, 99.3kB/s]
+  3%|█▎                                    | 92.2k/2.77M [00:00&lt;00:08, 314kB/s]
+ 12%|████▋                                 | 345k/2.77M [00:00&lt;00:02, 1.06MB/s]
+ 28%|██████████▌                           | 773k/2.77M [00:00&lt;00:00, 2.10MB/s]
+ 41%|███████████████▎                     | 1.14M/2.77M [00:00&lt;00:00, 2.61MB/s]
+ 78%|████████████████████████████▋        | 2.15M/2.77M [00:00&lt;00:00, 4.94MB/s]
+  0%|                                              | 0.00/2.77M [00:00&lt;?, ?B/s]
+100%|█████████████████████████████████████| 2.77M/2.77M [00:00&lt;00:00, 14.8GB/s]
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+
+  0%|                                              | 0.00/2.72M [00:00&lt;?, ?B/s]
+  1%|▎                                     | 20.5k/2.72M [00:00&lt;00:13, 205kB/s]
+  4%|█▎                                    | 95.2k/2.72M [00:00&lt;00:07, 334kB/s]
+ 10%|███▊                                   | 268k/2.72M [00:00&lt;00:02, 822kB/s]
+ 21%|████████                              | 579k/2.72M [00:00&lt;00:01, 1.58MB/s]
+ 41%|███████████████▏                     | 1.11M/2.72M [00:00&lt;00:00, 2.79MB/s]
+ 76%|████████████████████████████▏        | 2.07M/2.72M [00:00&lt;00:00, 4.93MB/s]
+  0%|                                              | 0.00/2.72M [00:00&lt;?, ?B/s]
+100%|█████████████████████████████████████| 2.72M/2.72M [00:00&lt;00:00, 11.2GB/s]
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+
+  0%|                                              | 0.00/2.75M [00:00&lt;?, ?B/s]
+  1%|▌                                     | 41.0k/2.75M [00:00&lt;00:12, 210kB/s]
+  6%|██▍                                    | 170k/2.75M [00:00&lt;00:03, 666kB/s]
+ 14%|█████▎                                | 388k/2.75M [00:00&lt;00:01, 1.24MB/s]
+ 27%|██████████                            | 733k/2.75M [00:00&lt;00:01, 2.01MB/s]
+ 47%|█████████████████▍                   | 1.30M/2.75M [00:00&lt;00:00, 3.23MB/s]
+ 84%|███████████████████████████████      | 2.32M/2.75M [00:00&lt;00:00, 5.46MB/s]
+  0%|                                              | 0.00/2.75M [00:00&lt;?, ?B/s]
+100%|█████████████████████████████████████| 2.75M/2.75M [00:00&lt;00:00, 13.0GB/s]
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+
+  0%|                                              | 0.00/3.26M [00:00&lt;?, ?B/s]
+  1%|▍                                     | 41.0k/3.26M [00:00&lt;00:15, 207kB/s]
+  5%|█▊                                     | 156k/3.26M [00:00&lt;00:05, 602kB/s]
+ 10%|███▊                                   | 319k/3.26M [00:00&lt;00:02, 990kB/s]
+ 19%|███████▍                              | 636k/3.26M [00:00&lt;00:01, 1.75MB/s]
+ 35%|████████████▉                        | 1.14M/3.26M [00:00&lt;00:00, 2.83MB/s]
+ 65%|███████████████████████▉             | 2.11M/3.26M [00:00&lt;00:00, 5.04MB/s]
+  0%|                                              | 0.00/3.26M [00:00&lt;?, ?B/s]
+100%|█████████████████████████████████████| 3.26M/3.26M [00:00&lt;00:00, 13.4GB/s]
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+
+  0%|                                              | 0.00/3.33M [00:00&lt;?, ?B/s]
+  0%|▏                                    | 12.3k/3.33M [00:00&lt;00:35, 93.8kB/s]
+  1%|▍                                     | 41.0k/3.33M [00:00&lt;00:17, 192kB/s]
+  3%|█                                     | 96.3k/3.33M [00:00&lt;00:09, 343kB/s]
+  6%|██▍                                    | 210k/3.33M [00:00&lt;00:04, 635kB/s]
+ 13%|████▉                                 | 430k/3.33M [00:00&lt;00:02, 1.17MB/s]
+ 27%|██████████▏                           | 888k/3.33M [00:00&lt;00:01, 2.28MB/s]
+ 54%|████████████████████                 | 1.80M/3.33M [00:00&lt;00:00, 4.45MB/s]
+  0%|                                              | 0.00/3.33M [00:00&lt;?, ?B/s]
+100%|█████████████████████████████████████| 3.33M/3.33M [00:00&lt;00:00, 15.9GB/s]
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+
+  0%|                                              | 0.00/3.23M [00:00&lt;?, ?B/s]
+  0%|▏                                    | 11.3k/3.23M [00:00&lt;00:34, 93.9kB/s]
+  3%|█                                     | 89.1k/3.23M [00:00&lt;00:08, 387kB/s]
+  6%|██▍                                    | 202k/3.23M [00:00&lt;00:05, 558kB/s]
+ 17%|██████▎                               | 538k/3.23M [00:00&lt;00:01, 1.44MB/s]
+ 35%|████████████▊                        | 1.12M/3.23M [00:00&lt;00:00, 2.81MB/s]
+ 66%|████████████████████████▍            | 2.13M/3.23M [00:00&lt;00:00, 5.05MB/s]
+  0%|                                              | 0.00/3.23M [00:00&lt;?, ?B/s]
+100%|█████████████████████████████████████| 3.23M/3.23M [00:00&lt;00:00, 15.5GB/s]
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+
+  0%|                                              | 0.00/6.92M [00:00&lt;?, ?B/s]
+  0%|                                     | 12.3k/6.92M [00:00&lt;01:13, 94.1kB/s]
+  1%|▍                                     | 82.9k/6.92M [00:00&lt;00:19, 344kB/s]
+  3%|█▏                                     | 208k/6.92M [00:00&lt;00:11, 568kB/s]
+  6%|██▍                                   | 445k/6.92M [00:00&lt;00:06, 1.01MB/s]
+ 11%|████▏                                 | 771k/6.92M [00:00&lt;00:03, 1.64MB/s]
+ 22%|████████▏                            | 1.53M/6.92M [00:00&lt;00:01, 3.36MB/s]
+ 43%|███████████████▊                     | 2.95M/6.92M [00:00&lt;00:00, 6.51MB/s]
+ 84%|███████████████████████████████▏     | 5.85M/6.92M [00:00&lt;00:00, 13.1MB/s]
+  0%|                                              | 0.00/6.92M [00:00&lt;?, ?B/s]
+100%|█████████████████████████████████████| 6.92M/6.92M [00:00&lt;00:00, 29.1GB/s]
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+  warnings.warn(
+
+  0%|                                              | 0.00/5.35M [00:00&lt;?, ?B/s]
+  0%|                                     | 12.3k/5.35M [00:00&lt;00:56, 93.9kB/s]
+  2%|▌                                     | 82.9k/5.35M [00:00&lt;00:19, 275kB/s]
+  4%|█▋                                     | 223k/5.35M [00:00&lt;00:08, 576kB/s]
+  7%|██▊                                    | 379k/5.35M [00:00&lt;00:05, 866kB/s]
+ 15%|█████▋                                | 798k/5.35M [00:00&lt;00:02, 1.85MB/s]
+ 29%|██████████▌                          | 1.53M/5.35M [00:00&lt;00:01, 3.49MB/s]
+ 53%|███████████████████▌                 | 2.84M/5.35M [00:00&lt;00:00, 6.34MB/s]
+ 97%|████████████████████████████████████ | 5.21M/5.35M [00:00&lt;00:00, 11.5MB/s]
+  0%|                                              | 0.00/5.35M [00:00&lt;?, ?B/s]
+100%|█████████████████████████████████████| 5.35M/5.35M [00:00&lt;00:00, 29.8GB/s]
+
+Kalunga2016-CrossSubject:   0%|          | 0/12 [00:00&lt;?, ?it/s]
+Kalunga2016-CrossSubject:   8%|▊         | 1/12 [00:01&lt;00:19,  1.81s/it]
+Kalunga2016-CrossSubject:  17%|█▋        | 2/12 [00:03&lt;00:18,  1.81s/it]
+Kalunga2016-CrossSubject:  25%|██▌       | 3/12 [00:05&lt;00:16,  1.80s/it]
+Kalunga2016-CrossSubject:  33%|███▎      | 4/12 [00:07&lt;00:14,  1.80s/it]
+Kalunga2016-CrossSubject:  42%|████▏     | 5/12 [00:09&lt;00:12,  1.80s/it]
+Kalunga2016-CrossSubject:  50%|█████     | 6/12 [00:10&lt;00:10,  1.80s/it]
+Kalunga2016-CrossSubject:  58%|█████▊    | 7/12 [00:12&lt;00:09,  1.84s/it]
+Kalunga2016-CrossSubject:  67%|██████▋   | 8/12 [00:14&lt;00:07,  1.84s/it]
+Kalunga2016-CrossSubject:  75%|███████▌  | 9/12 [00:16&lt;00:05,  1.82s/it]
+Kalunga2016-CrossSubject:  83%|████████▎ | 10/12 [00:18&lt;00:03,  1.92s/it]
+Kalunga2016-CrossSubject:  92%|█████████▏| 11/12 [00:20&lt;00:01,  1.89s/it]
+Kalunga2016-CrossSubject: 100%|██████████| 12/12 [00:22&lt;00:00,  1.93s/it]
+Kalunga2016-CrossSubject: 100%|██████████| 12/12 [00:22&lt;00:00,  1.86s/it]
 </pre></div>
 </div>
 <p>Filter bank processing, determine the filter automatically from the
@@ -683,11 +1034,43 @@ stimulation frequency values of events.</p>
 <span class="n">results_fb</span> <span class="o">=</span> <a href="../../generated/moabb.evaluations.base.BaseEvaluation.html#moabb.evaluations.base.BaseEvaluation.process" title="moabb.evaluations.base.BaseEvaluation.process" class="sphx-glr-backref-module-moabb-evaluations-base sphx-glr-backref-type-py-method"><span class="n">evaluation_fb</span><span class="o">.</span><span class="n">process</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pipelines_fb</span></a><span class="p">)</span>
 </pre></div>
 </div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Kalunga2016-CrossSubject:   0%|          | 0/12 [00:00&lt;?, ?it/s]
+Kalunga2016-CrossSubject:   8%|▊         | 1/12 [00:01&lt;00:21,  1.95s/it]
+Kalunga2016-CrossSubject:  17%|█▋        | 2/12 [00:03&lt;00:19,  1.95s/it]
+Kalunga2016-CrossSubject:  25%|██▌       | 3/12 [00:05&lt;00:17,  1.96s/it]
+Kalunga2016-CrossSubject:  33%|███▎      | 4/12 [00:07&lt;00:15,  1.95s/it]
+Kalunga2016-CrossSubject:  42%|████▏     | 5/12 [00:09&lt;00:13,  1.95s/it]
+Kalunga2016-CrossSubject:  50%|█████     | 6/12 [00:11&lt;00:11,  1.96s/it]
+Kalunga2016-CrossSubject:  58%|█████▊    | 7/12 [00:13&lt;00:09,  1.97s/it]
+Kalunga2016-CrossSubject:  67%|██████▋   | 8/12 [00:15&lt;00:07,  1.96s/it]
+Kalunga2016-CrossSubject:  75%|███████▌  | 9/12 [00:17&lt;00:05,  2.00s/it]
+Kalunga2016-CrossSubject:  83%|████████▎ | 10/12 [00:19&lt;00:03,  1.99s/it]
+Kalunga2016-CrossSubject:  92%|█████████▏| 11/12 [00:21&lt;00:01,  1.98s/it]
+Kalunga2016-CrossSubject: 100%|██████████| 12/12 [00:23&lt;00:00,  1.96s/it]
+Kalunga2016-CrossSubject: 100%|██████████| 12/12 [00:23&lt;00:00,  1.97s/it]
+</pre></div>
+</div>
 <p>TRCA processing also relies on filter bank that is automatically designed.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="../../generated/moabb.evaluations.CrossSubjectEvaluation.html#moabb.evaluations.CrossSubjectEvaluation" title="moabb.evaluations.CrossSubjectEvaluation" class="sphx-glr-backref-module-moabb-evaluations sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">evaluation_TRCA</span></a> <span class="o">=</span> <a href="../../generated/moabb.evaluations.CrossSubjectEvaluation.html#moabb.evaluations.CrossSubjectEvaluation" title="moabb.evaluations.CrossSubjectEvaluation" class="sphx-glr-backref-module-moabb-evaluations sphx-glr-backref-type-py-class"><span class="n">CrossSubjectEvaluation</span></a><span class="p">(</span>
     <a href="../../generated/moabb.paradigms.SSVEP.html#moabb.paradigms.SSVEP" title="moabb.paradigms.SSVEP" class="sphx-glr-backref-module-moabb-paradigms sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">paradigm</span></a><span class="o">=</span><a href="../../generated/moabb.paradigms.SSVEP.html#moabb.paradigms.SSVEP" title="moabb.paradigms.SSVEP" class="sphx-glr-backref-module-moabb-paradigms sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">paradigm_TRCA</span></a><span class="p">,</span> <span class="n">datasets</span><span class="o">=</span><a href="../../generated/moabb.datasets.Kalunga2016.html#moabb.datasets.Kalunga2016" title="moabb.datasets.Kalunga2016" class="sphx-glr-backref-module-moabb-datasets sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dataset</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/functions.html#bool" title="builtins.bool" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">overwrite</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/functions.html#bool" title="builtins.bool" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">overwrite</span></a>
 <span class="p">)</span>
 <span class="n">results_TRCA</span> <span class="o">=</span> <a href="../../generated/moabb.evaluations.base.BaseEvaluation.html#moabb.evaluations.base.BaseEvaluation.process" title="moabb.evaluations.base.BaseEvaluation.process" class="sphx-glr-backref-module-moabb-evaluations-base sphx-glr-backref-type-py-method"><span class="n">evaluation_TRCA</span><span class="o">.</span><span class="n">process</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pipelines_TRCA</span></a><span class="p">)</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Kalunga2016-CrossSubject:   0%|          | 0/12 [00:00&lt;?, ?it/s]
+Kalunga2016-CrossSubject:   8%|▊         | 1/12 [00:32&lt;05:57, 32.47s/it]
+Kalunga2016-CrossSubject:  17%|█▋        | 2/12 [01:05&lt;05:25, 32.53s/it]
+Kalunga2016-CrossSubject:  25%|██▌       | 3/12 [01:37&lt;04:51, 32.41s/it]
+Kalunga2016-CrossSubject:  33%|███▎      | 4/12 [02:09&lt;04:19, 32.38s/it]
+Kalunga2016-CrossSubject:  42%|████▏     | 5/12 [02:42&lt;03:46, 32.38s/it]
+Kalunga2016-CrossSubject:  50%|█████     | 6/12 [03:14&lt;03:13, 32.30s/it]
+Kalunga2016-CrossSubject:  58%|█████▊    | 7/12 [03:45&lt;02:39, 31.88s/it]
+Kalunga2016-CrossSubject:  67%|██████▋   | 8/12 [04:17&lt;02:07, 31.98s/it]
+Kalunga2016-CrossSubject:  75%|███████▌  | 9/12 [04:49&lt;01:36, 32.03s/it]
+Kalunga2016-CrossSubject:  83%|████████▎ | 10/12 [05:19&lt;01:02, 31.31s/it]
+Kalunga2016-CrossSubject:  92%|█████████▏| 11/12 [05:51&lt;00:31, 31.65s/it]
+Kalunga2016-CrossSubject: 100%|██████████| 12/12 [06:20&lt;00:00, 30.72s/it]
+Kalunga2016-CrossSubject: 100%|██████████| 12/12 [06:20&lt;00:00, 31.69s/it]
 </pre></div>
 </div>
 <p>MsetCCA processing</p>
@@ -697,6 +1080,22 @@ stimulation frequency values of events.</p>
 <span class="n">results_MSET_CCA</span> <span class="o">=</span> <a href="../../generated/moabb.evaluations.base.BaseEvaluation.html#moabb.evaluations.base.BaseEvaluation.process" title="moabb.evaluations.base.BaseEvaluation.process" class="sphx-glr-backref-module-moabb-evaluations-base sphx-glr-backref-type-py-method"><span class="n">evaluation_MSET_CCA</span><span class="o">.</span><span class="n">process</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pipelines_MSET_CCA</span></a><span class="p">)</span>
 </pre></div>
 </div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Kalunga2016-CrossSubject:   0%|          | 0/12 [00:00&lt;?, ?it/s]
+Kalunga2016-CrossSubject:   8%|▊         | 1/12 [00:03&lt;00:41,  3.73s/it]
+Kalunga2016-CrossSubject:  17%|█▋        | 2/12 [00:07&lt;00:37,  3.78s/it]
+Kalunga2016-CrossSubject:  25%|██▌       | 3/12 [00:11&lt;00:33,  3.77s/it]
+Kalunga2016-CrossSubject:  33%|███▎      | 4/12 [00:15&lt;00:30,  3.75s/it]
+Kalunga2016-CrossSubject:  42%|████▏     | 5/12 [00:18&lt;00:26,  3.76s/it]
+Kalunga2016-CrossSubject:  50%|█████     | 6/12 [00:22&lt;00:22,  3.73s/it]
+Kalunga2016-CrossSubject:  58%|█████▊    | 7/12 [00:26&lt;00:18,  3.71s/it]
+Kalunga2016-CrossSubject:  67%|██████▋   | 8/12 [00:29&lt;00:14,  3.70s/it]
+Kalunga2016-CrossSubject:  75%|███████▌  | 9/12 [00:33&lt;00:11,  3.71s/it]
+Kalunga2016-CrossSubject:  83%|████████▎ | 10/12 [00:37&lt;00:07,  3.67s/it]
+Kalunga2016-CrossSubject:  92%|█████████▏| 11/12 [00:40&lt;00:03,  3.71s/it]
+Kalunga2016-CrossSubject: 100%|██████████| 12/12 [00:44&lt;00:00,  3.65s/it]
+Kalunga2016-CrossSubject: 100%|██████████| 12/12 [00:44&lt;00:00,  3.70s/it]
+</pre></div>
+</div>
 <p>After processing the four, we simply concatenate the results.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">results</span><span class="p">,</span> <span class="n">results_fb</span><span class="p">,</span> <span class="n">results_TRCA</span><span class="p">,</span> <span class="n">results_MSET_CCA</span><span class="p">])</span>
 </pre></div>
@@ -704,25 +1103,20 @@ stimulation frequency values of events.</p>
 </section>
 <section id="plot-results">
 <h2>Plot Results<a class="headerlink" href="#plot-results" title="Link to this heading">#</a></h2>
-<p>Here we display the results as stripplot, with a pointplot for error bar.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="matplotlib.figure.Figure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fig</span></a><span class="p">,</span> <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html#matplotlib.axes.Axes" title="matplotlib.axes.Axes" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ax</span></a> <span class="o">=</span> <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib.pyplot.subplots" title="matplotlib.pyplot.subplots" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span></a><span class="p">(</span><span class="n">facecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">stripplot</span><span class="p">(</span>
-    <span class="n">data</span><span class="o">=</span><span class="n">results</span><span class="p">,</span>
-    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;score&quot;</span><span class="p">,</span>
-    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;pipeline&quot;</span><span class="p">,</span>
-    <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html#matplotlib.axes.Axes" title="matplotlib.axes.Axes" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ax</span></a><span class="o">=</span><a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html#matplotlib.axes.Axes" title="matplotlib.axes.Axes" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ax</span></a><span class="p">,</span>
-    <span class="n">jitter</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-    <span class="n">zorder</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-    <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;Set1&quot;</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">pointplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">results</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;score&quot;</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;pipeline&quot;</span><span class="p">,</span> <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html#matplotlib.axes.Axes" title="matplotlib.axes.Axes" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ax</span></a><span class="o">=</span><a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html#matplotlib.axes.Axes" title="matplotlib.axes.Axes" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ax</span></a><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;Set1&quot;</span><span class="p">)</span>
-<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.set_ylabel.html#matplotlib.axes.Axes.set_ylabel" title="matplotlib.axes.Axes.set_ylabel" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-method"><span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span></a><span class="p">(</span><span class="s2">&quot;Accuracy&quot;</span><span class="p">)</span>
-<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.set_ylim.html#matplotlib.axes.Axes.set_ylim" title="matplotlib.axes.Axes.set_ylim" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-method"><span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span></a><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">)</span>
+<p>Here we display the results using the MOABB score plot with chance level
+annotations. The 3-class SSVEP paradigm has a theoretical chance level
+of 33.3%.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">chance_levels</span></a> <span class="o">=</span> <span class="n">chance_by_chance</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="p">[</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">])</span>
+
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="matplotlib.figure.Figure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fig</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">_</span></a> <span class="o">=</span> <a href="../../generated/moabb.analysis.plotting.score_plot.html#moabb.analysis.plotting.score_plot" title="moabb.analysis.plotting.score_plot" class="sphx-glr-backref-module-moabb-analysis-plotting sphx-glr-backref-type-py-function"><span class="n">moabb_plt</span><span class="o">.</span><span class="n">score_plot</span></a><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">chance_level</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">chance_levels</span></a><span class="p">)</span>
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.show.html#matplotlib.pyplot.show" title="matplotlib.pyplot.show" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_cross_subject_ssvep_001.png" srcset="../../_images/sphx_glr_plot_cross_subject_ssvep_001.png" alt="plot cross subject ssvep" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 2.697 seconds)</p>
+<img src="../../_images/sphx_glr_plot_cross_subject_ssvep_001.png" srcset="../../_images/sphx_glr_plot_cross_subject_ssvep_001.png" alt="plot cross subject ssvep" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/moabb/moabb/moabb/analysis/plotting.py:420: UserWarning: The palette list has more values (6) than needed (4), which may not be intended.
+  sea.stripplot(
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (8 minutes 46.969 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-paradigm-examples-plot-cross-subject-ssvep-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/a4e70780cba83241d5102b821a19c363/plot_cross_subject_ssvep.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_cross_subject_ssvep.ipynb</span></code></a></p>

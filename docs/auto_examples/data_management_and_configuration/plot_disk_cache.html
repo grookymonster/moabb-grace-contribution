@@ -479,7 +479,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_riemannian_artifact_rejection.html">Riemannian Artifact Rejection as a Pre-processing Step</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_select_electrodes_resample.html">Select Electrodes and Resampling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_sliding_estimator.html">Time-Resolved Decoding with SlidingEstimator</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_statistical_analysis.html">Statistical Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_statistical_analysis.html">Statistical Analysis and Chance Level Assessment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_use_an_X_y_dataset.html">Using X y data (epoched data) instead of continuous signal</a></li>
 </ul>
 </details></li>
@@ -675,6 +675,28 @@ in the <code class="docutils literal notranslate"><span class="pre">cache_config
 <a href="https://docs.python.org/3/library/stdtypes.html#tuple" title="builtins.tuple" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">_</span></a> <span class="o">=</span> <a href="../../generated/moabb.paradigms.base.BaseProcessing.html#moabb.paradigms.base.BaseProcessing.get_data" title="moabb.paradigms.base.BaseProcessing.get_data" class="sphx-glr-backref-module-moabb-paradigms-base sphx-glr-backref-type-py-method"><span class="n">paradigm</span><span class="o">.</span><span class="n">get_data</span></a><span class="p">(</span><a href="../../generated/moabb.datasets.Zhou2016.html#moabb.datasets.Zhou2016" title="moabb.datasets.Zhou2016" class="sphx-glr-backref-module-moabb-datasets sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dataset</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">cache_config</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">cache_config</span></a><span class="p">)</span>
 </pre></div>
 </div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-03-04 22:04:51,329 INFO MainThread moabb.datasets.bids_interface Attempting to retrieve cache of &#39;Zhou2016&#39; sub-1 suffix-array desc-2189063...
+2026-03-04 22:04:51,609 INFO MainThread moabb.datasets.bids_interface No cache found at /tmp/tmpg45347ln/MNE-BIDS-zhou2016/code.
+2026-03-04 22:04:51,659 INFO MainThread moabb.datasets.bids_interface Attempting to retrieve cache of &#39;Zhou2016&#39; sub-1 suffix-epo desc-5e1b379...
+2026-03-04 22:04:51,810 INFO MainThread moabb.datasets.bids_interface No cache found at /tmp/tmpg45347ln/MNE-BIDS-zhou2016/code.
+2026-03-04 22:04:51,810 INFO MainThread moabb.datasets.bids_interface Attempting to retrieve cache of &#39;Zhou2016&#39; sub-1 suffix-eeg desc-f81a9fd...
+2026-03-04 22:04:51,814 INFO MainThread moabb.datasets.bids_interface No cache found at /tmp/tmpg45347ln/MNE-BIDS-zhou2016/code.
+2026-03-04 22:04:51,815 INFO MainThread moabb.datasets.bids_interface Attempting to retrieve cache of &#39;Zhou2016&#39; sub-1 suffix-eeg desc-1dac875...
+2026-03-04 22:04:51,819 INFO MainThread moabb.datasets.bids_interface No cache found at /tmp/tmpg45347ln/MNE-BIDS-zhou2016/code.
+2026-03-04 22:04:52,939 INFO MainThread moabb.datasets.bids_interface Starting caching &#39;Zhou2016&#39; sub-1 suffix-eeg desc-f81a9fd
+/home/runner/work/moabb/moabb/moabb/datasets/bids_interface.py:2245: RuntimeWarning: The `doi` field in dataset_description should be of the form `doi:&lt;insert_doi&gt;`
+  mne_bids.make_dataset_description(
+2026-03-04 22:04:53,410 INFO MainThread moabb.datasets.bids_interface Finished caching &#39;Zhou2016&#39; sub-1 suffix-eeg desc-f81a9fd to disk.
+2026-03-04 22:04:53,510 INFO MainThread moabb.datasets.bids_interface Starting caching &#39;Zhou2016&#39; sub-1 suffix-epo desc-5e1b379
+/home/runner/work/moabb/moabb/moabb/datasets/bids_interface.py:2245: RuntimeWarning: The `doi` field in dataset_description should be of the form `doi:&lt;insert_doi&gt;`
+  mne_bids.make_dataset_description(
+2026-03-04 22:04:53,955 INFO MainThread moabb.datasets.bids_interface Finished caching &#39;Zhou2016&#39; sub-1 suffix-epo desc-5e1b379 to disk.
+2026-03-04 22:04:54,007 INFO MainThread moabb.datasets.bids_interface Starting caching &#39;Zhou2016&#39; sub-1 suffix-array desc-2189063
+/home/runner/work/moabb/moabb/moabb/datasets/bids_interface.py:2245: RuntimeWarning: The `doi` field in dataset_description should be of the form `doi:&lt;insert_doi&gt;`
+  mne_bids.make_dataset_description(
+2026-03-04 22:04:54,536 INFO MainThread moabb.datasets.bids_interface Finished caching &#39;Zhou2016&#39; sub-1 suffix-array desc-2189063 to disk.
+</pre></div>
+</div>
 </section>
 <section id="time-comparison">
 <h2>Time comparison<a class="headerlink" href="#time-comparison" title="Link to this heading">#</a></h2>
@@ -699,6 +721,10 @@ number of missing steps.</p>
 <a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">t_array</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/time.html#time.time" title="time.time" class="sphx-glr-backref-module-time sphx-glr-backref-type-py-function"><span class="n">time</span><span class="o">.</span><span class="n">time</span></a><span class="p">()</span> <span class="o">-</span> <a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">t0</span></a>
 </pre></div>
 </div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-03-04 22:04:54,592 INFO MainThread moabb.datasets.bids_interface Attempting to retrieve cache of &#39;Zhou2016&#39; sub-1 suffix-array desc-2189063...
+2026-03-04 22:04:54,976 INFO MainThread moabb.datasets.bids_interface Finished reading cache of &#39;Zhou2016&#39; sub-1 suffix-array desc-2189063
+</pre></div>
+</div>
 <p>Using epochs cache:</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">cache_config</span></a> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
     <span class="n">use</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -715,6 +741,12 @@ number of missing steps.</p>
 <a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">t_epochs</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/time.html#time.time" title="time.time" class="sphx-glr-backref-module-time sphx-glr-backref-type-py-function"><span class="n">time</span><span class="o">.</span><span class="n">time</span></a><span class="p">()</span> <span class="o">-</span> <a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">t0</span></a>
 </pre></div>
 </div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-03-04 22:04:55,033 INFO MainThread moabb.datasets.bids_interface Starting erasing cache of &#39;Zhou2016&#39; sub-1 suffix-array desc-2189063...
+2026-03-04 22:04:55,431 INFO MainThread moabb.datasets.bids_interface Finished erasing cache of &#39;Zhou2016&#39; sub-1 suffix-array desc-2189063.
+2026-03-04 22:04:55,466 INFO MainThread moabb.datasets.bids_interface Attempting to retrieve cache of &#39;Zhou2016&#39; sub-1 suffix-epo desc-5e1b379...
+2026-03-04 22:04:55,790 INFO MainThread moabb.datasets.bids_interface Finished reading cache of &#39;Zhou2016&#39; sub-1 suffix-epo desc-5e1b379
+</pre></div>
+</div>
 <p>Using raw cache:</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">cache_config</span></a> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
     <span class="n">use</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -729,6 +761,44 @@ number of missing steps.</p>
 <a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">t0</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/time.html#time.time" title="time.time" class="sphx-glr-backref-module-time sphx-glr-backref-type-py-function"><span class="n">time</span><span class="o">.</span><span class="n">time</span></a><span class="p">()</span>
 <a href="https://docs.python.org/3/library/stdtypes.html#tuple" title="builtins.tuple" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">_</span></a> <span class="o">=</span> <a href="../../generated/moabb.paradigms.base.BaseProcessing.html#moabb.paradigms.base.BaseProcessing.get_data" title="moabb.paradigms.base.BaseProcessing.get_data" class="sphx-glr-backref-module-moabb-paradigms-base sphx-glr-backref-type-py-method"><span class="n">paradigm</span><span class="o">.</span><span class="n">get_data</span></a><span class="p">(</span><a href="../../generated/moabb.datasets.Zhou2016.html#moabb.datasets.Zhou2016" title="moabb.datasets.Zhou2016" class="sphx-glr-backref-module-moabb-datasets sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dataset</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">cache_config</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">cache_config</span></a><span class="p">)</span>
 <a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">t_raw</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/time.html#time.time" title="time.time" class="sphx-glr-backref-module-time sphx-glr-backref-type-py-function"><span class="n">time</span><span class="o">.</span><span class="n">time</span></a><span class="p">()</span> <span class="o">-</span> <a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">t0</span></a>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-03-04 22:04:55,873 INFO MainThread moabb.datasets.bids_interface Starting erasing cache of &#39;Zhou2016&#39; sub-1 suffix-array desc-2189063...
+2026-03-04 22:04:56,106 INFO MainThread moabb.datasets.bids_interface Finished erasing cache of &#39;Zhou2016&#39; sub-1 suffix-array desc-2189063.
+2026-03-04 22:04:56,139 INFO MainThread moabb.datasets.bids_interface Starting erasing cache of &#39;Zhou2016&#39; sub-1 suffix-epo desc-5e1b379...
+2026-03-04 22:04:56,437 INFO MainThread moabb.datasets.bids_interface Finished erasing cache of &#39;Zhou2016&#39; sub-1 suffix-epo desc-5e1b379.
+2026-03-04 22:04:56,437 INFO MainThread moabb.datasets.bids_interface Attempting to retrieve cache of &#39;Zhou2016&#39; sub-1 suffix-eeg desc-f81a9fd...
+/home/runner/work/moabb/moabb/moabb/datasets/bids_interface.py:2328: RuntimeWarning: Unable to map the following column(s) to to MNE:
+group: healthy
+species: homo sapiens
+bci_experience: experienced
+  raw = mne_bids.read_raw_bids(
+/home/runner/work/moabb/moabb/moabb/datasets/bids_interface.py:2328: RuntimeWarning: Unable to map the following column(s) to to MNE:
+group: healthy
+species: homo sapiens
+bci_experience: experienced
+  raw = mne_bids.read_raw_bids(
+/home/runner/work/moabb/moabb/moabb/datasets/bids_interface.py:2328: RuntimeWarning: Unable to map the following column(s) to to MNE:
+group: healthy
+species: homo sapiens
+bci_experience: experienced
+  raw = mne_bids.read_raw_bids(
+/home/runner/work/moabb/moabb/moabb/datasets/bids_interface.py:2328: RuntimeWarning: Unable to map the following column(s) to to MNE:
+group: healthy
+species: homo sapiens
+bci_experience: experienced
+  raw = mne_bids.read_raw_bids(
+/home/runner/work/moabb/moabb/moabb/datasets/bids_interface.py:2328: RuntimeWarning: Unable to map the following column(s) to to MNE:
+group: healthy
+species: homo sapiens
+bci_experience: experienced
+  raw = mne_bids.read_raw_bids(
+/home/runner/work/moabb/moabb/moabb/datasets/bids_interface.py:2328: RuntimeWarning: Unable to map the following column(s) to to MNE:
+group: healthy
+species: homo sapiens
+bci_experience: experienced
+  raw = mne_bids.read_raw_bids(
+2026-03-04 22:04:56,591 INFO MainThread moabb.datasets.bids_interface Finished reading cache of &#39;Zhou2016&#39; sub-1 suffix-eeg desc-f81a9fd
 </pre></div>
 </div>
 <p>Using no cache:</p>
@@ -754,10 +824,10 @@ number of missing steps.</p>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Without cache: </span><span class="si">{</span><a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">t_nocache</span></a><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Using array cache: 0.42 seconds
-Using epochs cache: 0.82 seconds
-Using raw cache: 0.96 seconds
-Without cache: 0.87 seconds
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Using array cache: 0.44 seconds
+Using epochs cache: 0.84 seconds
+Using raw cache: 0.97 seconds
+Without cache: 0.88 seconds
 </pre></div>
 </div>
 <p>As you can see, using a raw cache is more than 5 times faster than
@@ -811,7 +881,7 @@ to decode the description key.</p></li>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/shutil.html#shutil.rmtree" title="shutil.rmtree" class="sphx-glr-backref-module-shutil sphx-glr-backref-type-py-function"><span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/pathlib.html#pathlib.PosixPath" title="pathlib.PosixPath" class="sphx-glr-backref-module-pathlib sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">temp_dir</span></a><span class="p">)</span>
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 6.570 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 8.555 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-data-management-and-configuration-plot-disk-cache-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/b843884d191ec86afaa081573b87c5dc/plot_disk_cache.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_disk_cache.ipynb</span></code></a></p>
