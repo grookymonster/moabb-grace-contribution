@@ -20,13 +20,13 @@ def chance_by_chance(
     data,
     alpha: float | list[float] = 0.05,
 ) -> dict[str, dict[str, Any]]:
-    """Compute chance levels from ``n_samples_test`` and ``n_classes`` columns."""
+    """Compute chance levels from ``samples_test`` and ``n_classes`` columns."""
     if isinstance(alpha, (int, float)):
         alpha = [alpha]
     result = {}
     for dname, grp in data.groupby("dataset"):
         n_classes = int(grp["n_classes"].iloc[0])
-        n_trials = int(grp["n_samples_test"].iloc[0])
+        n_trials = int(grp["samples_test"].iloc[0])
         result[dname] = {
             # theoretical chance level: 1 / n_classes
             "theoretical": 1.0 / n_classes,

@@ -49,7 +49,7 @@ def _make_df():
             "time": 0.1,
             "n_samples": 100,
             "n_channels": 10,
-            "n_samples_test": 50,
+            "samples_test": 50,
             "n_classes": 2,
         }
         for ds in ["D0", "D1"]

@@ -18,7 +18,7 @@ def test_chance_by_chance():
     data = pd.DataFrame(
         {
             "dataset": ["A", "A", "B", "B"],
-            "n_samples_test": [50, 50, 100, 100],
+            "samples_test": [50, 50, 100, 100],
             "n_classes": [2, 2, 4, 4],
         }
     )

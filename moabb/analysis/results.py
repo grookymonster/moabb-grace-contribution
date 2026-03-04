@@ -270,7 +270,11 @@ class Results:
                         ).astype(str)
                     df_list.append(df)
 
-        return pd.concat(df_list, ignore_index=True)
+        result = pd.concat(df_list, ignore_index=True)
+        for col in ("samples_test", "n_classes"):
+            if col not in result.columns:
+                result[col] = np.nan
+        return result
 
     def not_yet_computed(self, pipelines, dataset, subj, process_pipeline):
         """Check if a results is missing.
