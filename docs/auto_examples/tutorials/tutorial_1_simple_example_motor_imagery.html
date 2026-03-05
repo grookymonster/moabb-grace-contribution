@@ -644,7 +644,7 @@ paradigm (note that BNCI2014_001 is in it)</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><a href="../../generated/moabb.paradigms.base.BaseProcessing.html#moabb.paradigms.base.BaseProcessing.datasets" title="moabb.paradigms.base.BaseProcessing.datasets" class="sphx-glr-backref-module-moabb-paradigms-base sphx-glr-backref-type-py-property"><span class="n">paradigm</span><span class="o">.</span><span class="n">datasets</span></a><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[&lt;moabb.datasets.bnci.bnci_2014.BNCI2014_001 object at 0x7f61e8830580&gt;, &lt;moabb.datasets.bnci.bnci_2014.BNCI2014_004 object at 0x7f61e8830610&gt;, &lt;moabb.datasets.beetl.Beetl2021_A object at 0x7f61e8830670&gt;, &lt;moabb.datasets.beetl.Beetl2021_B object at 0x7f61e8830430&gt;, &lt;moabb.datasets.gigadb.Cho2017 object at 0x7f61e88709d0&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023 object at 0x7f61e8870940&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023A object at 0x7f61e8870550&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023B object at 0x7f61e8870ee0&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023C object at 0x7f61e88706a0&gt;, &lt;moabb.datasets.mpi_mi.GrosseWentrup2009 object at 0x7f61e8870850&gt;, &lt;moabb.datasets.Lee2019.Lee2019_MI object at 0x7f61e8870580&gt;, &lt;moabb.datasets.liu2024.Liu2024 object at 0x7f61e8870220&gt;, &lt;moabb.datasets.physionet_mi.PhysionetMI object at 0x7f61e88704c0&gt;, &lt;moabb.datasets.schirrmeister2017.Schirrmeister2017 object at 0x7f61e8870520&gt;, &lt;moabb.datasets.bbci_eeg_fnirs.Shin2017A object at 0x7f61e8870460&gt;, &lt;moabb.datasets.stieger2021.Stieger2021 object at 0x7f61e88702b0&gt;, &lt;moabb.datasets.Weibo2014.Weibo2014 object at 0x7f61e8870250&gt;, &lt;moabb.datasets.Zhou2016.Zhou2016 object at 0x7f61e8870640&gt;]
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[&lt;moabb.datasets.bnci.bnci_2014.BNCI2014_001 object at 0x7fb8311f8550&gt;, &lt;moabb.datasets.bnci.bnci_2014.BNCI2014_004 object at 0x7fb8311f87c0&gt;, &lt;moabb.datasets.beetl.Beetl2021_A object at 0x7fb8311f8850&gt;, &lt;moabb.datasets.beetl.Beetl2021_B object at 0x7fb8311f85e0&gt;, &lt;moabb.datasets.gigadb.Cho2017 object at 0x7fb83123c970&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023 object at 0x7fb83123cbb0&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023A object at 0x7fb83123c4f0&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023B object at 0x7fb83123caf0&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023C object at 0x7fb83123c640&gt;, &lt;moabb.datasets.mpi_mi.GrosseWentrup2009 object at 0x7fb83123c7f0&gt;, &lt;moabb.datasets.Lee2019.Lee2019_MI object at 0x7fb83123c520&gt;, &lt;moabb.datasets.liu2024.Liu2024 object at 0x7fb83123c1c0&gt;, &lt;moabb.datasets.physionet_mi.PhysionetMI object at 0x7fb83123c460&gt;, &lt;moabb.datasets.schirrmeister2017.Schirrmeister2017 object at 0x7fb83123c4c0&gt;, &lt;moabb.datasets.bbci_eeg_fnirs.Shin2017A object at 0x7fb83123c400&gt;, &lt;moabb.datasets.stieger2021.Stieger2021 object at 0x7fb83123c250&gt;, &lt;moabb.datasets.Weibo2014.Weibo2014 object at 0x7fb83123c1f0&gt;, &lt;moabb.datasets.Zhou2016.Zhou2016 object at 0x7fb83123c5e0&gt;]
 </pre></div>
 </div>
 <p>The data from a list of subjects could be preprocessed and return as a 3D
@@ -690,18 +690,18 @@ partition and the remaining one as testing partition.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">results</span> <span class="o">=</span> <a href="../../generated/moabb.evaluations.base.BaseEvaluation.html#moabb.evaluations.base.BaseEvaluation.process" title="moabb.evaluations.base.BaseEvaluation.process" class="sphx-glr-backref-module-moabb-evaluations-base sphx-glr-backref-type-py-method"><span class="n">evaluation</span><span class="o">.</span><span class="n">process</span></a><span class="p">({</span><span class="s2">&quot;csp+lda&quot;</span><span class="p">:</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html#sklearn.pipeline.Pipeline" title="sklearn.pipeline.Pipeline" class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pipeline</span></a><span class="p">})</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>BNCI2014-001-WithinSession:   0%|          | 0/3 [00:00&lt;?, ?it/s][codecarbon WARNING @ 21:54:56] Multiple instances of codecarbon are allowed to run at the same time.
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>BNCI2014-001-WithinSession:   0%|          | 0/3 [00:00&lt;?, ?it/s][codecarbon WARNING @ 23:35:30] Multiple instances of codecarbon are allowed to run at the same time.
 
-BNCI2014-001-WithinSession:  33%|███▎      | 1/3 [00:22&lt;00:45, 22.85s/it]
-BNCI2014-001-WithinSession:  67%|██████▋   | 2/3 [00:44&lt;00:22, 22.14s/it]
-BNCI2014-001-WithinSession: 100%|██████████| 3/3 [01:06&lt;00:00, 21.90s/it]
-BNCI2014-001-WithinSession: 100%|██████████| 3/3 [01:06&lt;00:00, 22.04s/it]
-2026-03-04 21:56:00,044 INFO MainThread moabb.evaluations.base csp+lda | BNCI2014-001 | 1 | 0train: Score 0.940
-2026-03-04 21:56:00,165 INFO MainThread moabb.evaluations.base csp+lda | BNCI2014-001 | 1 | 1test: Score 0.951
-2026-03-04 21:56:00,290 INFO MainThread moabb.evaluations.base csp+lda | BNCI2014-001 | 2 | 0train: Score 0.635
-2026-03-04 21:56:00,412 INFO MainThread moabb.evaluations.base csp+lda | BNCI2014-001 | 2 | 1test: Score 0.597
-2026-03-04 21:56:00,534 INFO MainThread moabb.evaluations.base csp+lda | BNCI2014-001 | 3 | 0train: Score 0.994
-2026-03-04 21:56:00,656 INFO MainThread moabb.evaluations.base csp+lda | BNCI2014-001 | 3 | 1test: Score 0.998
+BNCI2014-001-WithinSession:  33%|███▎      | 1/3 [00:22&lt;00:45, 22.88s/it]
+BNCI2014-001-WithinSession:  67%|██████▋   | 2/3 [00:44&lt;00:22, 22.18s/it]
+BNCI2014-001-WithinSession: 100%|██████████| 3/3 [01:06&lt;00:00, 21.88s/it]
+BNCI2014-001-WithinSession: 100%|██████████| 3/3 [01:06&lt;00:00, 22.03s/it]
+2026-03-04 23:36:34,254 INFO MainThread moabb.evaluations.base csp+lda | BNCI2014-001 | 1 | 0train: Score 0.933
+2026-03-04 23:36:34,372 INFO MainThread moabb.evaluations.base csp+lda | BNCI2014-001 | 1 | 1test: Score 0.947
+2026-03-04 23:36:34,491 INFO MainThread moabb.evaluations.base csp+lda | BNCI2014-001 | 2 | 0train: Score 0.669
+2026-03-04 23:36:34,610 INFO MainThread moabb.evaluations.base csp+lda | BNCI2014-001 | 2 | 1test: Score 0.657
+2026-03-04 23:36:34,728 INFO MainThread moabb.evaluations.base csp+lda | BNCI2014-001 | 3 | 0train: Score 0.990
+2026-03-04 23:36:34,846 INFO MainThread moabb.evaluations.base csp+lda | BNCI2014-001 | 3 | 1test: Score 0.995
 </pre></div>
 </div>
 <p>The results are stored in locally, to avoid recomputing the results each time.
@@ -729,11 +729,11 @@ strings for its labeling. This is why we create the field ‘subj’.</p>
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.show.html#matplotlib.pyplot.show" title="matplotlib.pyplot.show" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_tutorial_1_simple_example_motor_imagery_001.png" srcset="../../_images/sphx_glr_tutorial_1_simple_example_motor_imagery_001.png" alt="tutorial 1 simple example motor imagery" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-03-04 21:56:00,917 INFO MainThread matplotlib.category Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
-2026-03-04 21:56:00,921 INFO MainThread matplotlib.category Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+<img src="../../_images/sphx_glr_tutorial_1_simple_example_motor_imagery_001.png" srcset="../../_images/sphx_glr_tutorial_1_simple_example_motor_imagery_001.png" alt="tutorial 1 simple example motor imagery" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-03-04 23:36:35,101 INFO MainThread matplotlib.category Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2026-03-04 23:36:35,104 INFO MainThread matplotlib.category Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (1 minutes 15.564 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (1 minutes 15.170 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-tutorials-tutorial-1-simple-example-motor-imagery-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/b5e20655a202770c185990e75afbe3cd/tutorial_1_simple_example_motor_imagery.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">tutorial_1_simple_example_motor_imagery.ipynb</span></code></a></p>
