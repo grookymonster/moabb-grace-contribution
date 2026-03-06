@@ -41,7 +41,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=b627ab03" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=d694e5f0" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-2.0.4/b-3.0.2/b-html5-3.0.2/datatables.min.css" />
   
   <!-- So that users can add custom icons -->
@@ -494,6 +494,7 @@
 <li class="toctree-l1"><a class="reference internal" href="moabb.datasets.RomaniBF2025ERP.html">moabb.datasets.RomaniBF2025ERP</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moabb.datasets.Kojima2024A.html">moabb.datasets.Kojima2024A</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moabb.datasets.Kojima2024B.html">moabb.datasets.Kojima2024B</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.datasets.Lee2021Mobile_ERP.html">moabb.datasets.Lee2021Mobile_ERP</a></li>
 </ul>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="moabb.datasets.Kalunga2016.html">moabb.datasets.Kalunga2016</a></li>
@@ -503,6 +504,14 @@
 <li class="toctree-l1"><a class="reference internal" href="moabb.datasets.MAMEM2.html">moabb.datasets.MAMEM2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moabb.datasets.MAMEM3.html">moabb.datasets.MAMEM3</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moabb.datasets.Lee2019_SSVEP.html">moabb.datasets.Lee2019_SSVEP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.datasets.Chen2017SingleFlicker.html">moabb.datasets.Chen2017SingleFlicker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.datasets.Dong2023.html">moabb.datasets.Dong2023</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.datasets.Han2024Fatigue.html">moabb.datasets.Han2024Fatigue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.datasets.Kim2025BetaRange.html">moabb.datasets.Kim2025BetaRange</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.datasets.Lee2021Mobile_SSVEP.html">moabb.datasets.Lee2021Mobile_SSVEP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.datasets.Liu2020BETA.html">moabb.datasets.Liu2020BETA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.datasets.Liu2022EldBETA.html">moabb.datasets.Liu2022EldBETA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.datasets.Wang2021Combined.html">moabb.datasets.Wang2021Combined</a></li>
 </ul>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="moabb.datasets.Thielen2015.html">moabb.datasets.Thielen2015</a></li>
@@ -695,7 +704,8 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="moabb.datasets.ErpCore2021_LRP">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">ErpCore2021_LRP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subjects</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sessions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/erpcore2021.py#L789-L872"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.ErpCore2021_LRP" title="Link to this definition">#</a></dt>
-<dd><div class="ds-card" role="region" aria-label="ErpCore2021_LRP dataset overview">
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ErpCore2021</span></code></p>
+<div class="ds-card" role="region" aria-label="ErpCore2021_LRP dataset overview">
   <a class="ds-card-source" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/erpcore2021.py#L789-L872" target="_blank" rel="noopener">[source]</a>
   <div class="ds-card-head">
     <p class="ds-card-kicker">Dataset Snapshot</p>
@@ -715,16 +725,16 @@
       <span class="ds-chip ds-chip-muted">1.0 s trials</span>
       <a class="ds-chip ds-chip-license" href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener" title="CC BY 4.0"><svg width="16" height="16" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" fill="currentColor"><path d="M14.972 0c4.196 0 7.769 1.465 10.715 4.393A14.426 14.426 0 0128.9 9.228C29.633 11.04 30 12.964 30 15c0 2.054-.363 3.978-1.085 5.772a13.77 13.77 0 01-3.2 4.754 15.417 15.417 0 01-4.983 3.322A14.932 14.932 0 0114.973 30c-1.982 0-3.88-.38-5.692-1.14a15.087 15.087 0 01-4.875-3.293c-1.437-1.437-2.531-3.058-3.281-4.862A14.71 14.71 0 010 15c0-1.982.38-3.888 1.138-5.719a15.062 15.062 0 013.308-4.915C7.303 1.456 10.812 0 14.972 0zm.055 2.706c-3.429 0-6.313 1.196-8.652 3.589a12.896 12.896 0 00-2.72 4.031 11.814 11.814 0 00-.95 4.675c0 1.607.316 3.156.95 4.646a12.428 12.428 0 002.72 3.992 12.362 12.362 0 003.99 2.679c1.483.616 3.037.924 4.662.924 1.607 0 3.164-.312 4.675-.937a12.954 12.954 0 004.084-2.705c2.339-2.286 3.508-5.152 3.508-8.6 0-1.66-.304-3.231-.91-4.713a11.994 11.994 0 00-2.651-3.965c-2.412-2.41-5.314-3.616-8.706-3.616zm-.188 9.803l-2.01 1.045c-.215-.445-.477-.758-.79-.937-.312-.178-.602-.268-.87-.268-1.34 0-2.01.884-2.01 2.652 0 .803.17 1.446.509 1.928.34.482.84.724 1.5.724.876 0 1.492-.43 1.85-1.286l1.847.937a4.407 4.407 0 01-1.634 1.728c-.696.42-1.464.63-2.303.63-1.34 0-2.42-.41-3.242-1.233-.821-.82-1.232-1.964-1.232-3.428 0-1.428.416-2.562 1.246-3.401.83-.84 1.879-1.26 3.147-1.26 1.858 0 3.188.723 3.992 2.17zm8.652 0l-1.983 1.045c-.214-.445-.478-.758-.79-.937-.313-.178-.613-.268-.897-.268-1.34 0-2.01.884-2.01 2.652 0 .803.17 1.446.51 1.928.338.482.838.724 1.5.724.874 0 1.49-.43 1.847-1.286l1.875.937a4.606 4.606 0 01-1.66 1.728c-.696.42-1.455.63-2.277.63-1.357 0-2.441-.41-3.253-1.233-.814-.82-1.22-1.964-1.22-3.428 0-1.428.415-2.562 1.246-3.401.83-.84 1.879-1.26 3.147-1.26 1.857 0 3.18.723 3.965 2.17z"/></svg><svg width="16" height="16" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" fill="currentColor"><path d="M14.973 0c4.213 0 7.768 1.446 10.66 4.34C28.544 7.25 30 10.803 30 15c0 4.215-1.43 7.723-4.287 10.526C22.678 28.51 19.098 30 14.973 30c-4.054 0-7.571-1.474-10.553-4.42C1.474 22.633 0 19.107 0 15S1.474 7.34 4.42 4.34C7.313 1.446 10.83 0 14.973 0zm.054 2.706c-3.41 0-6.295 1.196-8.652 3.589-2.447 2.5-3.67 5.402-3.67 8.706 0 3.321 1.214 6.196 3.642 8.624 2.429 2.429 5.322 3.642 8.679 3.642 3.339 0 6.25-1.222 8.732-3.67 2.358-2.267 3.536-5.133 3.536-8.598 0-3.41-1.197-6.311-3.589-8.705-2.392-2.392-5.285-3.588-8.678-3.588zm4.018 8.57v6.134H17.33v7.286h-4.66V17.41h-1.714v-6.134a.93.93 0 01.28-.683.933.933 0 01.684-.281h6.161c.25 0 .474.093.67.28a.912.912 0 01.294.684zM12.91 7.42c0-1.41.696-2.116 2.09-2.116s2.09.705 2.09 2.116c0 1.393-.697 2.09-2.09 2.09-1.393 0-2.09-.697-2.09-2.09z"/></svg>CC BY 4.0</a>
   </div>
-  <div class="ds-views-line" title="Google Analytics 4 page views"><div class="ds-views-main"><div class="ds-views-head"><span class="ds-views-label">Page Views</span><span class="ds-views-updated">Updated: 2026-03-04 UTC</span></div><div class="ds-views-metrics"><span>30d: <strong>5</strong></span><span class="ds-provenance-sep">·</span><span>all-time: <strong>35</strong></span></div><div class="ds-views-rank">#68 of 88 · Top 78% most viewed</div></div><div class="ds-views-spark-wrap"><svg class="ds-views-spark" viewBox="0 0 110 28" role="img" aria-label="Weekly page views over the last 12 weeks"><path class="ds-views-spark-area" d="M 2.00 26.00 L 2.00 26.00 L 11.64 18.00 L 21.27 26.00 L 30.91 26.00 L 40.55 26.00 L 50.18 26.00 L 59.82 18.00 L 69.45 10.00 L 79.09 18.00 L 88.73 18.00 L 98.36 2.00 L 108.00 26.00 L 108.00 26.00 Z"></path><polyline class="ds-views-spark-line" points="2.00,26.00 11.64,18.00 21.27,26.00 30.91,26.00 40.55,26.00 50.18,26.00 59.82,18.00 69.45,10.00 79.09,18.00 88.73,18.00 98.36,2.00 108.00,26.00"></polyline></svg></div></div>
   <p class="ds-class-line"><span class="ds-class-line-label">Class Labels:</span> Target, NonTarget</p>
   <div class="ds-actions">
-      <button class="ds-btn ds-btn-primary ds-btn-toggle" type="button" aria-controls="ds-quickstart-erpcore2021_lrp" aria-expanded="false" onclick="var el=document.getElementById('ds-quickstart-erpcore2021_lrp');if(el){el.open=!el.open;this.setAttribute('aria-expanded',el.open?'true':'false');}">Quickstart</button>
+      <button id="ds-quickstart-btn-erpcore2021_lrp" class="ds-btn ds-btn-primary ds-btn-toggle" type="button" aria-controls="ds-quickstart-erpcore2021_lrp" aria-expanded="false" onclick="var el=document.getElementById('ds-quickstart-erpcore2021_lrp');if(el){var expanded=this.getAttribute('aria-expanded')==='true';var next=!expanded;this.setAttribute('aria-expanded',next?'true':'false');el.hidden=!next;el.setAttribute('aria-hidden',next?'false':'true');}">Quickstart</button>
       <a class="ds-btn" href="https://doi.org/10.1016%2Fj.neuroimage.2020.117465" target="_blank" rel="noopener">Read Paper</a>
       <a class="ds-btn" href="../dataset_summary.html#p300-erp">Compare Similar</a>
       <a class="ds-btn" href="https://github.com/NeuroTechX/moabb/issues/new?title=%5BDataset%5D%20Issue%20with%20ErpCore2021_LRP&amp;body=%23%23%20Dataset%0A%0A-%20%2A%2ADataset%20ID%3A%2A%2A%20ErpCore2021_LRP%0A%0A%23%23%20Issue%20Description%0A%0APlease%20describe%20the%20issue%20you%20encountered%20with%20this%20dataset%3A%0A%0A%23%23%20Steps%20to%20Reproduce%0A%0A1.%20%0A2.%20%0A3.%20%0A%0A%23%23%20Expected%20Behavior%0A%0A%0A%23%23%20Additional%20Context%0A%0A&amp;labels=dataset" target="_blank" rel="noopener">Report Issue</a>
   </div>
-  <details id="ds-quickstart-erpcore2021_lrp" class="ds-quickstart">
-  <summary class="ds-quickstart-summary">Toggle quickstart code</summary>
+  <div class="ds-overview-teaser"><p class="ds-overview-title">Overview</p><p class="ds-overview-text">LRP events of the ERP CORE dataset by Kappenman et al. 2020.</p><p class="ds-overview-text">Datasets from the article</p><p class="ds-overview-text"><strong>Dataset Description</strong></p><p class="ds-overview-text">The ERP CORE dataset includes data from 40 neurotypical young adults (25 female, 15 male; Mean years of age = 21.5, SD = 2.87, Range 18–30; 38 right handed) from the University of California. Each participant had native English competence and normal color perception, normal or corrected-to-normal vision, and no history of neurological injury or disease (as indicated by self-report). They participated in six 10-minutes optimized experiments designed to measure seven widely used ERP components: N170, Mismatch Negativity (MMN), N2pc, N400, P3, Lateralized Readiness Potential (LRP), and Error-Related Negativity (ERN). These experiments were conducted to standardize ERP paradigms and protocols across studies.</p><div class="ds-overview-full"><p><strong>Experimental procedure</strong>: A central arrowhead pointing to the left or right was flanked on both sides by arrowheads that pointed in the same direction (congruent trials) or the opposite direction (incongruent trials). Participants indicated the direction of the central arrowhead on each trial with a left- or right-hand buttonpress.</p>
+<p>The continuous EEG was recorded using a Biosemi ActiveTwo recording system with active electrodes (Biosemi B.V., Amsterdam, the Netherlands). Recording from 30 scalp electrodes, mounted in an elastic cap and placed according to the International 10/20 System (FP1, F3, F7, FC3, C3, C5, P3, P7, P9, PO7, PO3, O1, Oz, Pz, CPz, FP2, Fz, F4, F8, FC4, FCz, Cz, C4, C6, P4, P8, P10, PO8, PO4, O2; see Supplementary Fig. S1). The common mode sense (CMS) electrode was located at PO1, and the driven right leg (DRL) electrode was located at PO2. The horizontal electrooculogram (HEOG) was recorded from electrodes placed lateral to the external canthus of each eye. The vertical electrooculogram (VEOG) was recorded from an electrode placed below the right eye. Signals were incidentally also recorded from 37 other sites, but these sites were not monitored during the recording and are not included in the ERP CORE data set. All signals were low-pass filtered using a fifth order sinc filter with a half-power cutoff at 204.8 Hz and then digitized at 1024 Hz with 24 bits of resolution. The signals were recorded in single-ended mode (i.e., measuring the voltage between the active and ground electrodes without the use of a reference), and referencing was performed offline.</p></div><div class="ds-overview-actions"><button class="ds-overview-toggle" type="button" aria-expanded="false" aria-controls="ds-overview-erpcore2021_lrp" onclick="var el=this.closest('.ds-overview-teaser');el.classList.toggle('ds-expanded');var exp=el.classList.contains('ds-expanded');this.setAttribute('aria-expanded',exp?'true':'false');this.textContent=exp?'Show less ▴':'Show more ▾';">Show more ▾</button><a class="ds-overview-tab-link" href="#ds-overview-erpcore2021_lrp" onclick="event.preventDefault();var tab=document.querySelector('.ds-doc-tabs .sd-tab-label');if(tab){tab.click();}var target=document.getElementById('ds-overview-erpcore2021_lrp');if(target){target.scrollIntoView({behavior:'smooth',block:'start'});}">Open in Overview tab →</a></div></div>
+  <div id="ds-quickstart-erpcore2021_lrp" class="ds-quickstart" role="region" aria-labelledby="ds-quickstart-btn-erpcore2021_lrp" aria-hidden="true" hidden>
   <div class="ds-quickstart-code"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">moabb.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">ErpCore2021_LRP</span>
 
 <span class="n">dataset</span> <span class="o">=</span> <span class="n">ErpCore2021_LRP</span><span class="p">()</span>
@@ -732,12 +742,12 @@
 <span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
-</details>
+</div>
 
-  <div class="ds-citation-impact"><p class="ds-citation-title">Citation & Impact</p><ul><li><span>Paper DOI</span><a href="https://doi.org/10.1016%2Fj.neuroimage.2020.117465" target="_blank" rel="noopener">10.1016/j.neuroimage.2020.117465</a></li>
+  <div class="ds-citation-impact"><p class="ds-citation-title">Citation &amp; Impact</p><ul><li><span>Paper DOI</span><a href="https://doi.org/10.1016%2Fj.neuroimage.2020.117465" target="_blank" rel="noopener">10.1016/j.neuroimage.2020.117465</a></li>
       <li><span>Citations</span><strong class="ds-citation-count" data-doi="10.1016/j.neuroimage.2020.117465">Loading…</strong></li>
       <li><span>Public API</span><span class="ds-citation-links"><a href="https://api.crossref.org/works/10.1016/j.neuroimage.2020.117465" target="_blank" rel="noopener">Crossref</a>&nbsp;|&nbsp;<a href="https://api.openalex.org/works/https%3A%2F%2Fdoi.org%2F10.1016%2Fj.neuroimage.2020.117465" target="_blank" rel="noopener">OpenAlex</a></span></li>
-      <li><span>PapersWithCode</span><a href="https://paperswithcode.com/dataset/erpcore2021-lrp-moabb-1" target="_blank" rel="noopener">Dataset page</a></li></ul>
+      <li class="ds-pv-row"><span>Page Views</span><div class="ds-pv-detail"><div class="ds-pv-body"><div class="ds-pv-metrics">30d: <strong>5</strong> <span class="ds-provenance-sep">·</span> all-time: <strong>35</strong></div><div class="ds-pv-rank">#64 of 88 · Top 73% most viewed</div><div class="ds-pv-updated">Updated: 2026-03-06 UTC</div></div><div class="ds-pv-spark" aria-label="Page views trend (last 12 weeks)"><svg class="ds-views-spark" viewBox="0 0 110 28" role="img" aria-label="Weekly page views over the last 12 weeks"><path class="ds-views-spark-area" d="M 2.00 26.00 L 2.00 18.00 L 11.64 26.00 L 21.27 26.00 L 30.91 26.00 L 40.55 26.00 L 50.18 18.00 L 59.82 26.00 L 69.45 10.00 L 79.09 18.00 L 88.73 18.00 L 98.36 2.00 L 108.00 26.00 L 108.00 26.00 Z"></path><polyline class="ds-views-spark-line" points="2.00,18.00 11.64,26.00 21.27,26.00 30.91,26.00 40.55,26.00 50.18,18.00 59.82,26.00 69.45,10.00 79.09,18.00 88.73,18.00 98.36,2.00 108.00,26.00"></polyline></svg></div></div></li></ul>
 <script>
 (function () {
   if (window.__moabbCitationCountsInit) return;
@@ -829,11 +839,11 @@ Channel Summary</div>
 </div>
 </div>
 </div>
-<p class="timeline-disclaimer">This diagram is automatically generated from MOABB metadata. Please consult the original publication to confirm the experimental protocol details.</p><div class="sd-tab-set docutils">
+<p class="timeline-disclaimer">This diagram is automatically generated from MOABB metadata. Please consult the original publication to confirm the experimental protocol details.</p><div class="sd-tab-set ds-doc-tabs docutils">
 <input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
 <label class="sd-tab-label" for="sd-tab-item-0">
 Overview</label><div class="sd-tab-content docutils">
-<p>LRP events of the ERP CORE dataset by Kappenman et al. 2020.</p>
+<p id="ds-overview-erpcore2021-lrp">LRP events of the ERP CORE dataset by Kappenman et al. 2020.</p>
 <p>Datasets <a class="reference internal" href="#r0dbf49d9380e-1" id="id1">[1]</a> from the article <a class="reference internal" href="#r0dbf49d9380e-2" id="id2">[2]</a>.</p>
 <p><strong>Dataset Description</strong></p>
 <p>The ERP CORE dataset includes data from 40 neurotypical young adults
@@ -927,6 +937,141 @@ Metadata</label><div class="sd-tab-content docutils">
 <dd><p>Initialize function for the BaseDataset.</p>
 </dd></dl>
 
+<dl class="py property">
+<dt class="sig sig-object py" id="moabb.datasets.ErpCore2021_LRP.all_subjects">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">all_subjects</span></span><a class="headerlink" href="#moabb.datasets.ErpCore2021_LRP.all_subjects" title="Link to this definition">#</a></dt>
+<dd><p>Full list of subjects available in this dataset (unfiltered).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="moabb.datasets.ErpCore2021_LRP.convert_to_bids">
+<span class="sig-name descname"><span class="pre">convert_to_bids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subjects</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'EDF'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/base.py#L949-L1039"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.ErpCore2021_LRP.convert_to_bids" title="Link to this definition">#</a></dt>
+<dd><p>Convert the dataset to BIDS format.</p>
+<p>Saves the raw EEG data in a BIDS-compliant directory structure.
+Unlike the caching mechanism (see <code class="xref py py-class docutils literal notranslate"><span class="pre">CacheConfig</span></code>), the files
+produced here do <strong>not</strong> contain a processing-pipeline hash
+(<code class="docutils literal notranslate"><span class="pre">desc-&lt;hash&gt;</span></code>) in their names, making the output a clean,
+shareable BIDS dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> | </em><em>Path</em><em> | </em><em>None</em>) – Directory under which the BIDS dataset will be written.
+If <code class="docutils literal notranslate"><span class="pre">None</span></code> the default MNE data directory is used (same default
+as the rest of MOABB).</p></li>
+<li><p><strong>subjects</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em> | </em><em>None</em>) – Subject numbers to convert.  If <code class="docutils literal notranslate"><span class="pre">None</span></code>, all subjects in
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">subject_list</span></code> are converted.</p></li>
+<li><p><strong>overwrite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, existing BIDS files for a subject are removed before
+saving.  Default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The file format for the raw EEG data.  Supported values are
+<code class="docutils literal notranslate"><span class="pre">&quot;EDF&quot;</span></code> (default), <code class="docutils literal notranslate"><span class="pre">&quot;BrainVision&quot;</span></code>, and <code class="docutils literal notranslate"><span class="pre">&quot;EEGLAB&quot;</span></code>.</p></li>
+<li><p><strong>verbose</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> | </em><em>None</em>) – Verbosity level forwarded to MNE/MNE-BIDS.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>bids_root</strong> – Path to the root of the written BIDS dataset.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.14)">pathlib.Path</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">moabb.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">AlexMI</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dataset</span> <span class="o">=</span> <span class="n">AlexMI</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bids_root</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">convert_to_bids</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s1">&#39;/tmp/bids&#39;</span><span class="p">,</span> <span class="n">subjects</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">CacheConfig</span></code></dt><dd><p>Cache configuration for <a class="reference internal" href="#moabb.datasets.ErpCore2021_LRP.get_data" title="moabb.datasets.ErpCore2021_LRP.get_data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_data()</span></code></a>.</p>
+</dd>
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">moabb.datasets.bids_interface.get_bids_root</span></code></dt><dd><p>Return the BIDS root path.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Notes</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 1.5.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="moabb.datasets.ErpCore2021_LRP.data_path">
+<span class="sig-name descname"><span class="pre">data_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subject</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/erpcore2021.py#L199-L246"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.ErpCore2021_LRP.data_path" title="Link to this definition">#</a></dt>
+<dd><p>Return the data BIDS paths of a single subject.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>subject</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The subject number to fetch data for.</p></li>
+<li><p><strong>path</strong> (<em>None</em><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Location of where to look for the data storing location. If None,
+the environment variable or config parameter MNE_(dataset) is used.
+If it doesn’t exist, the “~/mne_data” directory is used. If the
+dataset is not found under the given path, the data
+will be automatically downloaded to the specified folder.</p></li>
+<li><p><strong>force_update</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Force update of the dataset even if a local copy exists.</p></li>
+<li><p><strong>update_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em> | </em><em>None</em>) – If True, set the MNE_DATASETS_(dataset)_PATH in mne-python config
+to the given path.
+If None, the user is prompted.</p></li>
+<li><p><strong>verbose</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, or </em><em>None</em>) – If not None, override default verbose level (see mne.verbose()).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list containing the BIDSPath object for the subject’s data file.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="moabb.datasets.ErpCore2021_LRP.download">
+<span class="sig-name descname"><span class="pre">download</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subject_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accept</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/base.py#L888-L947"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.ErpCore2021_LRP.download" title="Link to this definition">#</a></dt>
+<dd><p>Download all data from the dataset.</p>
+<p>This function is only useful to download all the dataset at once.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>subject_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em> | </em><em>None</em>) – List of subjects id to download, if None all subjects
+are downloaded.</p></li>
+<li><p><strong>path</strong> (<em>None</em><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Location of where to look for the data storing location.
+If None, the environment variable or config parameter
+<code class="docutils literal notranslate"><span class="pre">MNE_DATASETS_(dataset)_PATH</span></code> is used. If it doesn’t exist, the
+“~/mne_data” directory is used. If the dataset
+is not found under the given path, the data
+will be automatically downloaded to the specified folder.</p></li>
+<li><p><strong>force_update</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Force update of the dataset even if a local copy exists.</p></li>
+<li><p><strong>update_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em> | </em><em>None</em>) – If True, set the MNE_DATASETS_(dataset)_PATH in mne-python
+config to the given path. If None, the user is prompted.</p></li>
+<li><p><strong>accept</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Accept licence term to download the data, if any. Default: False</p></li>
+<li><p><strong>verbose</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, or </em><em>None</em>) – If not None, override default verbose level
+(see <a class="reference external" href="https://mne.tools/stable/generated/mne.verbose.html#mne.verbose" title="(in MNE v1.11)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mne.verbose()</span></code></a>).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="moabb.datasets.ErpCore2021_LRP.download_by_subject">
+<span class="sig-name descname"><span class="pre">download_by_subject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subject</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/erpcore2021.py#L248-L295"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.ErpCore2021_LRP.download_by_subject" title="Link to this definition">#</a></dt>
+<dd><p>Download and extract the dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>subject</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The subject number to download the dataset for.</p></li>
+<li><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> | </em><em>None</em>) – The path to the directory where the dataset should be downloaded.
+If None, the default directory is used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>path</strong> – The dataset path.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="moabb.datasets.ErpCore2021_LRP.encode_event">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">encode_event</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">row</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/erpcore2021.py#L802-L821"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.ErpCore2021_LRP.encode_event" title="Link to this definition">#</a></dt>
@@ -959,6 +1104,170 @@ Metadata</label><div class="sd-tab-content docutils">
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)">tuple</a></p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="moabb.datasets.ErpCore2021_LRP.events_path">
+<span class="sig-name descname"><span class="pre">events_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subject</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/erpcore2021.py#L297-L318"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.ErpCore2021_LRP.events_path" title="Link to this definition">#</a></dt>
+<dd><p>Get the path to the events file for a given subject.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>subject</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – The subject number for which to get the events file path.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The path to the events file.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="moabb.datasets.ErpCore2021_LRP.get_additional_metadata">
+<span class="sig-name descname"><span class="pre">get_additional_metadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subject</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">run</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">DataFrame</span></span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/base.py#L1196-L1222"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.ErpCore2021_LRP.get_additional_metadata" title="Link to this definition">#</a></dt>
+<dd><p>Load additional metadata for a specific subject, session, and run.</p>
+<p>This method is intended to be overridden by subclasses to provide
+additional metadata specific to the dataset. The metadata is typically
+loaded from an <cite>events.tsv</cite> file or similar data source.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>subject</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The identifier for the subject.</p></li>
+<li><p><strong>session</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The identifier for the session.</p></li>
+<li><p><strong>run</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The identifier for the run.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A DataFrame containing the additional metadata if available,
+otherwise None.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None | pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="moabb.datasets.ErpCore2021_LRP.get_block_repetition">
+<span class="sig-name descname"><span class="pre">get_block_repetition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">paradigm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subjects</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repetition_list</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/base.py#L761-L800"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.ErpCore2021_LRP.get_block_repetition" title="Link to this definition">#</a></dt>
+<dd><p>Select data for all provided subjects, blocks and repetitions.</p>
+<p>subject -&gt; session -&gt; run -&gt; block -&gt; repetition</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">BaseDataset.get_data</span></code></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>subjects</strong> (<em>List</em><em> of </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – List of subject number</p></li>
+<li><p><strong>block_list</strong> (<em>List</em><em> of </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – List of block number</p></li>
+<li><p><strong>repetition_list</strong> (<em>List</em><em> of </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – List of repetition number inside a block</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>data</strong> – dict containing the raw data</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="moabb.datasets.ErpCore2021_LRP.get_data">
+<span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subjects</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">process_pipeline</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/base.py#L802-L886"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.ErpCore2021_LRP.get_data" title="Link to this definition">#</a></dt>
+<dd><p>Return the data corresponding to a list of subjects.</p>
+<p>The returned data is a dictionary with the following structure:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;subject_id&#39;</span> <span class="p">:</span>
+            <span class="p">{</span><span class="s1">&#39;session_id&#39;</span><span class="p">:</span>
+                <span class="p">{</span><span class="s1">&#39;run_id&#39;</span><span class="p">:</span> <span class="n">run</span><span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+</pre></div>
+</div>
+<p>subjects are on top, then we have sessions, then runs.
+A sessions is a recording done in a single day, without removing the
+EEG cap. A session is constitued of at least one run. A run is a single
+contiguous recording. Some dataset break session in multiple runs.</p>
+<p>Processing steps can optionally be applied to the data using the
+<code class="docutils literal notranslate"><span class="pre">*_pipeline</span></code> arguments. These pipelines are applied in the
+following order: <code class="docutils literal notranslate"><span class="pre">raw_pipeline</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">epochs_pipeline</span></code> -&gt;
+<code class="docutils literal notranslate"><span class="pre">array_pipeline</span></code>. If a <code class="docutils literal notranslate"><span class="pre">*_pipeline</span></code> argument is <code class="docutils literal notranslate"><span class="pre">None</span></code>,
+the step will be skipped. Therefore, the <code class="docutils literal notranslate"><span class="pre">array_pipeline</span></code> may
+either receive a <a class="reference external" href="https://mne.tools/stable/generated/mne.io.Raw.html#mne.io.Raw" title="(in MNE v1.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">mne.io.Raw</span></code></a> or a <a class="reference external" href="https://mne.tools/stable/generated/mne.Epochs.html#mne.Epochs" title="(in MNE v1.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">mne.Epochs</span></code></a> object
+as input depending on whether <code class="docutils literal notranslate"><span class="pre">epochs_pipeline</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code> or not.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>subjects</strong> (<em>List</em><em> of </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – List of subject number</p></li>
+<li><p><strong>cache_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a><em> | </em><a class="reference internal" href="moabb.datasets.base.CacheConfig.html#moabb.datasets.base.CacheConfig" title="moabb.datasets.base.CacheConfig"><em>CacheConfig</em></a>) – Configuration for caching of datasets. See <code class="docutils literal notranslate"><span class="pre">CacheConfig</span></code>
+for details.</p></li>
+<li><p><strong>process_pipeline</strong> (<em>Pipeline</em><em> | </em><em>None</em>) – Optional processing pipeline to apply to the data.
+To generate an adequate pipeline, we recommend using
+<code class="xref py py-func docutils literal notranslate"><span class="pre">moabb.utils.make_process_pipelines()</span></code>.
+This pipeline will receive <a class="reference external" href="https://mne.tools/stable/generated/mne.io.BaseRaw.html#mne.io.BaseRaw" title="(in MNE v1.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">mne.io.BaseRaw</span></code></a> objects.
+The steps names of this pipeline should be elements of <code class="xref py py-class docutils literal notranslate"><span class="pre">StepType</span></code>.
+According to their name, the steps should either return a
+<a class="reference external" href="https://mne.tools/stable/generated/mne.io.BaseRaw.html#mne.io.BaseRaw" title="(in MNE v1.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">mne.io.BaseRaw</span></code></a>, a <a class="reference external" href="https://mne.tools/stable/generated/mne.Epochs.html#mne.Epochs" title="(in MNE v1.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">mne.Epochs</span></code></a>, or a <code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.ndarray()</span></code>.
+This pipeline must be “fixed” because it will not be trained,
+i.e. no call to <code class="docutils literal notranslate"><span class="pre">fit</span></code> will be made.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>data</strong> – dict containing the raw data</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="moabb.datasets.ErpCore2021_LRP.handle_events_reading">
+<span class="sig-name descname"><span class="pre">handle_events_reading</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">events_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raw</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/erpcore2021.py#L320-L353"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.ErpCore2021_LRP.handle_events_reading" title="Link to this definition">#</a></dt>
+<dd><p>Read associated events.tsv and populate raw with annotations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>events_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The path to the events file.</p></li>
+<li><p><strong>raw</strong> (<a class="reference external" href="https://mne.tools/stable/generated/mne.io.Raw.html#mne.io.Raw" title="(in MNE v1.11)"><em>mne.io.Raw</em></a>) – The raw EEG data object.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The updated raw EEG data object with annotations.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://mne.tools/stable/generated/mne.io.Raw.html#mne.io.Raw" title="(in MNE v1.11)">mne.io.Raw</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="moabb.datasets.ErpCore2021_LRP.metadata">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">metadata</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">DatasetMetadata</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/../../../../.local/share/uv/python/cpython-3.10-linux-x86_64-gnu/lib/python3.10/functools.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.ErpCore2021_LRP.metadata" title="Link to this definition">#</a></dt>
+<dd><p>Return structured metadata for this dataset.</p>
+<p>Returns the DatasetMetadata object from the centralized catalog,
+or None if metadata is not available for this dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The metadata object containing acquisition parameters,
+participant demographics, experiment details, and documentation.
+Returns None if no metadata is registered for this dataset.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>DatasetMetadata | None</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">moabb.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">BNCI2014_001</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dataset</span> <span class="o">=</span> <span class="n">BNCI2014_001</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dataset</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">participants</span><span class="o">.</span><span class="n">n_subjects</span>
+<span class="go">9</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dataset</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">acquisition</span><span class="o">.</span><span class="n">sampling_rate</span>
+<span class="go">250.0</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </dd></dl>

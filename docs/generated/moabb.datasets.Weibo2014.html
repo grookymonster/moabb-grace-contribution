@@ -41,7 +41,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=b627ab03" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=d694e5f0" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-2.0.4/b-3.0.2/b-html5-3.0.2/datatables.min.css" />
   
   <!-- So that users can add custom icons -->
@@ -494,6 +494,7 @@
 <li class="toctree-l1"><a class="reference internal" href="moabb.datasets.RomaniBF2025ERP.html">moabb.datasets.RomaniBF2025ERP</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moabb.datasets.Kojima2024A.html">moabb.datasets.Kojima2024A</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moabb.datasets.Kojima2024B.html">moabb.datasets.Kojima2024B</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.datasets.Lee2021Mobile_ERP.html">moabb.datasets.Lee2021Mobile_ERP</a></li>
 </ul>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="moabb.datasets.Kalunga2016.html">moabb.datasets.Kalunga2016</a></li>
@@ -503,6 +504,14 @@
 <li class="toctree-l1"><a class="reference internal" href="moabb.datasets.MAMEM2.html">moabb.datasets.MAMEM2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moabb.datasets.MAMEM3.html">moabb.datasets.MAMEM3</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moabb.datasets.Lee2019_SSVEP.html">moabb.datasets.Lee2019_SSVEP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.datasets.Chen2017SingleFlicker.html">moabb.datasets.Chen2017SingleFlicker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.datasets.Dong2023.html">moabb.datasets.Dong2023</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.datasets.Han2024Fatigue.html">moabb.datasets.Han2024Fatigue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.datasets.Kim2025BetaRange.html">moabb.datasets.Kim2025BetaRange</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.datasets.Lee2021Mobile_SSVEP.html">moabb.datasets.Lee2021Mobile_SSVEP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.datasets.Liu2020BETA.html">moabb.datasets.Liu2020BETA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.datasets.Liu2022EldBETA.html">moabb.datasets.Liu2022EldBETA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.datasets.Wang2021Combined.html">moabb.datasets.Wang2021Combined</a></li>
 </ul>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="moabb.datasets.Thielen2015.html">moabb.datasets.Thielen2015</a></li>
@@ -695,7 +704,8 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="moabb.datasets.Weibo2014">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">Weibo2014</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subjects</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sessions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/Weibo2014.py#L80-L429"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Weibo2014" title="Link to this definition">#</a></dt>
-<dd><div class="ds-card" role="region" aria-label="Weibo2014 dataset overview">
+<dd><p>Bases: <a class="reference internal" href="moabb.datasets.base.BaseDataset.html#moabb.datasets.base.BaseDataset" title="moabb.datasets.base.BaseDataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseDataset</span></code></a></p>
+<div class="ds-card" role="region" aria-label="Weibo2014 dataset overview">
   <a class="ds-card-source" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/Weibo2014.py#L80-L429" target="_blank" rel="noopener">[source]</a>
   <div class="ds-card-head">
     <p class="ds-card-kicker">Dataset Snapshot</p>
@@ -715,16 +725,15 @@
       <span class="ds-chip ds-chip-muted">8.0 s trials</span>
       <a class="ds-chip ds-chip-license" href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank" rel="noopener" title="CC0 1.0"><svg width="16" height="16" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" fill="currentColor"><path d="M14.972 0c4.196 0 7.769 1.465 10.715 4.393A14.426 14.426 0 0128.9 9.228C29.633 11.04 30 12.964 30 15c0 2.054-.363 3.978-1.085 5.772a13.77 13.77 0 01-3.2 4.754 15.417 15.417 0 01-4.983 3.322A14.932 14.932 0 0114.973 30c-1.982 0-3.88-.38-5.692-1.14a15.087 15.087 0 01-4.875-3.293c-1.437-1.437-2.531-3.058-3.281-4.862A14.71 14.71 0 010 15c0-1.982.38-3.888 1.138-5.719a15.062 15.062 0 013.308-4.915C7.303 1.456 10.812 0 14.972 0zm.055 2.706c-3.429 0-6.313 1.196-8.652 3.589a12.896 12.896 0 00-2.72 4.031 11.814 11.814 0 00-.95 4.675c0 1.607.316 3.156.95 4.646a12.428 12.428 0 002.72 3.992 12.362 12.362 0 003.99 2.679c1.483.616 3.037.924 4.662.924 1.607 0 3.164-.312 4.675-.937a12.954 12.954 0 004.084-2.705c2.339-2.286 3.508-5.152 3.508-8.6 0-1.66-.304-3.231-.91-4.713a11.994 11.994 0 00-2.651-3.965c-2.412-2.41-5.314-3.616-8.706-3.616zm-.188 9.803l-2.01 1.045c-.215-.445-.477-.758-.79-.937-.312-.178-.602-.268-.87-.268-1.34 0-2.01.884-2.01 2.652 0 .803.17 1.446.509 1.928.34.482.84.724 1.5.724.876 0 1.492-.43 1.85-1.286l1.847.937a4.407 4.407 0 01-1.634 1.728c-.696.42-1.464.63-2.303.63-1.34 0-2.42-.41-3.242-1.233-.821-.82-1.232-1.964-1.232-3.428 0-1.428.416-2.562 1.246-3.401.83-.84 1.879-1.26 3.147-1.26 1.858 0 3.188.723 3.992 2.17zm8.652 0l-1.983 1.045c-.214-.445-.478-.758-.79-.937-.313-.178-.613-.268-.897-.268-1.34 0-2.01.884-2.01 2.652 0 .803.17 1.446.51 1.928.338.482.838.724 1.5.724.874 0 1.49-.43 1.847-1.286l1.875.937a4.606 4.606 0 01-1.66 1.728c-.696.42-1.455.63-2.277.63-1.357 0-2.441-.41-3.253-1.233-.814-.82-1.22-1.964-1.22-3.428 0-1.428.415-2.562 1.246-3.401.83-.84 1.879-1.26 3.147-1.26 1.857 0 3.18.723 3.965 2.17z"/></svg><svg width="16" height="16" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" fill="currentColor"><path d="M4.443 4.36C7.3 1.447 10.807 0 14.97 0c4.196 0 7.777 1.462 10.725 4.39a14.365 14.365 0 013.214 4.843C29.639 11.037 30 12.964 30 15c0 2.055-.36 3.984-1.093 5.788-.714 1.785-1.781 3.362-3.193 4.737a15.399 15.399 0 01-4.978 3.32A14.972 14.972 0 0114.969 30c-1.983 0-3.883-.374-5.705-1.125-1.804-.767-3.428-1.869-4.874-3.298-1.428-1.446-2.516-3.069-3.266-4.873A14.701 14.701 0 010 15c0-1.982.374-3.882 1.124-5.704a15.224 15.224 0 013.32-4.937zM23.73 6.312C21.319 3.903 18.424 2.7 15.03 2.7c-3.429 0-6.316 1.2-8.655 3.591a13.054 13.054 0 00-2.731 4.044A11.899 11.899 0 002.7 15c0 1.607.32 3.154.945 4.653a12.806 12.806 0 002.73 3.992 12.651 12.651 0 003.993 2.68c1.482.607 3.038.913 4.663.913 1.608 0 3.154-.31 4.654-.935a12.9 12.9 0 004.097-2.71C26.12 21.307 27.3 18.447 27.3 15c0-1.66-.306-3.234-.914-4.716a12.033 12.033 0 00-2.657-3.97zM8.802 15c0-3.961 1.246-8.634 6.198-8.634s6.197 4.673 6.197 8.634c0 3.962-1.245 8.634-6.197 8.634-4.953 0-6.198-4.672-6.198-8.634zm6.755-5.305A2.291 2.291 0 0015 9.622c-2.547 0-2.668 3.633-2.668 5.377 0 .562.014 1.313.116 2.08l3.298-6.06c.342-.592.168-1.016-.19-1.324zM17.668 15c0-.683-.025-1.654-.2-2.584l-3.686 6.366c-.514.772-.157 1.209.41 1.45.05.02.105.037.157.052l.095.031c.172.043.356.064.557.064 2.546 0 2.667-3.634 2.667-5.379z"/></svg>CC0 1.0</a>
   </div>
-  <div class="ds-views-line" title="Google Analytics 4 page views"><div class="ds-views-main"><div class="ds-views-head"><span class="ds-views-label">Page Views</span><span class="ds-views-updated">Updated: 2026-03-04 UTC</span></div><div class="ds-views-metrics"><span>30d: <strong>65</strong></span><span class="ds-provenance-sep">·</span><span>all-time: <strong>865</strong></span></div><div class="ds-views-rank">#11 of 88 · Top 13% most viewed</div></div><div class="ds-views-spark-wrap"><svg class="ds-views-spark" viewBox="0 0 110 28" role="img" aria-label="Weekly page views over the last 12 weeks"><path class="ds-views-spark-area" d="M 2.00 26.00 L 2.00 15.71 L 11.64 22.57 L 21.27 22.57 L 30.91 12.29 L 40.55 7.71 L 50.18 10.00 L 59.82 12.29 L 69.45 13.43 L 79.09 2.00 L 88.73 15.71 L 98.36 5.43 L 108.00 15.71 L 108.00 26.00 Z"></path><polyline class="ds-views-spark-line" points="2.00,15.71 11.64,22.57 21.27,22.57 30.91,12.29 40.55,7.71 50.18,10.00 59.82,12.29 69.45,13.43 79.09,2.00 88.73,15.71 98.36,5.43 108.00,15.71"></polyline></svg></div></div>
   <p class="ds-class-line"><span class="ds-class-line-label">Class Labels:</span> left_hand, right_hand, hands, feet, left_hand_right_foot, right_hand_left_foot, rest</p>
   <div class="ds-actions">
-      <button class="ds-btn ds-btn-primary ds-btn-toggle" type="button" aria-controls="ds-quickstart-weibo2014" aria-expanded="false" onclick="var el=document.getElementById('ds-quickstart-weibo2014');if(el){el.open=!el.open;this.setAttribute('aria-expanded',el.open?'true':'false');}">Quickstart</button>
+      <button id="ds-quickstart-btn-weibo2014" class="ds-btn ds-btn-primary ds-btn-toggle" type="button" aria-controls="ds-quickstart-weibo2014" aria-expanded="false" onclick="var el=document.getElementById('ds-quickstart-weibo2014');if(el){var expanded=this.getAttribute('aria-expanded')==='true';var next=!expanded;this.setAttribute('aria-expanded',next?'true':'false');el.hidden=!next;el.setAttribute('aria-hidden',next?'false':'true');}">Quickstart</button>
       <a class="ds-btn" href="https://doi.org/10.1371%2Fjournal.pone.0114853" target="_blank" rel="noopener">Read Paper</a>
       <a class="ds-btn" href="../dataset_summary.html#motor-imagery">Compare Similar</a>
       <a class="ds-btn" href="https://github.com/NeuroTechX/moabb/issues/new?title=%5BDataset%5D%20Issue%20with%20Weibo2014&amp;body=%23%23%20Dataset%0A%0A-%20%2A%2ADataset%20ID%3A%2A%2A%20Weibo2014%0A%0A%23%23%20Issue%20Description%0A%0APlease%20describe%20the%20issue%20you%20encountered%20with%20this%20dataset%3A%0A%0A%23%23%20Steps%20to%20Reproduce%0A%0A1.%20%0A2.%20%0A3.%20%0A%0A%23%23%20Expected%20Behavior%0A%0A%0A%23%23%20Additional%20Context%0A%0A&amp;labels=dataset" target="_blank" rel="noopener">Report Issue</a>
   </div>
-  <details id="ds-quickstart-weibo2014" class="ds-quickstart">
-  <summary class="ds-quickstart-summary">Toggle quickstart code</summary>
+  <div class="ds-overview-teaser"><p class="ds-overview-title">Overview</p><p class="ds-overview-text">Motor Imagery dataset from Weibo et al 2014.</p><p class="ds-overview-text">Dataset from the article <em>Evaluation of EEG oscillatory patterns and cognitive process during simple and compound limb motor imagery</em></p><p class="ds-overview-text">It contains data recorded on 10 subjects, with 60 electrodes.</p><p class="ds-overview-text">This dataset was used to investigate the differences of the EEG patterns between simple limb motor imagery and compound limb motor imagery. Seven kinds of mental tasks have been designed, involving three tasks of simple limb motor imagery (left hand, right hand, feet), three tasks of compound limb motor imagery combining hand with hand/foot (both hands, left hand combined with right foot, right hand combined with left foot) and rest state.</p><p class="ds-overview-text">At the beginning of each trial (8 seconds), a white circle appeared at the center of the monitor. After 2 seconds, a red circle (preparation cue) appeared for 1 second to remind the subjects of paying attention to the character indication next. Then red circle disappeared and character indication (‘Left Hand’, ‘Left Hand &amp; Right Foot’, et al) was presented on the screen for 4 seconds, during which the participants were asked to perform kinesthetic motor imagery rather than a visual type of imagery while avoiding any muscle movement. After 7 seconds, ‘Rest’ was presented for 1 second before next trial (Fig. 1(a)). The experiments were divided into 9 sections, involving 8 sections consisting of 60 trials each for six kinds of MI tasks (10 trials for each MI task in one section) and one section consisting of 80 trials for rest state. The sequence of six MI tasks was randomized. Intersection break was about 5 to 10 minutes.</p><div class="ds-overview-actions"><a class="ds-overview-tab-link" href="#ds-overview-weibo2014" onclick="event.preventDefault();var tab=document.querySelector('.ds-doc-tabs .sd-tab-label');if(tab){tab.click();}var target=document.getElementById('ds-overview-weibo2014');if(target){target.scrollIntoView({behavior:'smooth',block:'start'});}">Open in Overview tab →</a></div></div>
+  <div id="ds-quickstart-weibo2014" class="ds-quickstart" role="region" aria-labelledby="ds-quickstart-btn-weibo2014" aria-hidden="true" hidden>
   <div class="ds-quickstart-code"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">moabb.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">Weibo2014</span>
 
 <span class="n">dataset</span> <span class="o">=</span> <span class="n">Weibo2014</span><span class="p">()</span>
@@ -732,15 +741,15 @@
 <span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
-</details>
+</div>
   <div class="ds-benchmark-context"><div class="ds-benchmark-head"><p class="ds-benchmark-title">Benchmark Context</p><span class="ds-eval-pill">WithinSession</span></div><p class="ds-benchmark-summary">Included in 3 MOABB benchmark table(s). Scores are across available pipelines (WithinSession accuracy).</p><p class="ds-benchmark-meta"><span><strong>Sample frame:</strong> 10 subjects × 1 sessions</span></p><ul><li><span>MI left vs right <em>19 pipelines</em></span><strong class="ds-bench-stats">Max 85.29 · Median 78.41 · Mean 74.74 · Std 9.12</strong></li>
       <li><span>MI all classes <em>16 pipelines</em></span><strong class="ds-bench-stats">Max 63.89 · Median 41.77 · Mean 43.27 · Std 15.19</strong></li>
       <li><span>MI right hand vs feet <em>16 pipelines</em></span><strong class="ds-bench-stats">Max 93.25 · Median 88.52 · Mean 81.74 · Std 12.17</strong></li></ul></div>
-  <div class="ds-citation-impact"><p class="ds-citation-title">Citation & Impact</p><ul><li><span>Paper DOI</span><a href="https://doi.org/10.1371%2Fjournal.pone.0114853" target="_blank" rel="noopener">10.1371/journal.pone.0114853</a></li>
+  <div class="ds-citation-impact"><p class="ds-citation-title">Citation &amp; Impact</p><ul><li><span>Paper DOI</span><a href="https://doi.org/10.1371%2Fjournal.pone.0114853" target="_blank" rel="noopener">10.1371/journal.pone.0114853</a></li>
       <li><span>Citations</span><strong class="ds-citation-count" data-doi="10.1371/journal.pone.0114853">Loading…</strong></li>
       <li><span>Public API</span><span class="ds-citation-links"><a href="https://api.crossref.org/works/10.1371/journal.pone.0114853" target="_blank" rel="noopener">Crossref</a>&nbsp;|&nbsp;<a href="https://api.openalex.org/works/https%3A%2F%2Fdoi.org%2F10.1371%2Fjournal.pone.0114853" target="_blank" rel="noopener">OpenAlex</a></span></li>
-      <li><span>PapersWithCode</span><a href="https://paperswithcode.com/dataset/weibo2014-moabb-1" target="_blank" rel="noopener">Dataset page</a></li>
-      <li><span>MOABB tables</span><strong>3 (WithinSession)</strong></li></ul>
+      <li><span>MOABB tables</span><strong>3 (WithinSession)</strong></li>
+      <li class="ds-pv-row"><span>Page Views</span><div class="ds-pv-detail"><div class="ds-pv-body"><div class="ds-pv-metrics">30d: <strong>59</strong> <span class="ds-provenance-sep">·</span> all-time: <strong>861</strong></div><div class="ds-pv-rank">#11 of 88 · Top 13% most viewed</div><div class="ds-pv-updated">Updated: 2026-03-06 UTC</div></div><div class="ds-pv-spark" aria-label="Page views trend (last 12 weeks)"><svg class="ds-views-spark" viewBox="0 0 110 28" role="img" aria-label="Weekly page views over the last 12 weeks"><path class="ds-views-spark-area" d="M 2.00 26.00 L 2.00 14.00 L 11.64 22.40 L 21.27 22.40 L 30.91 9.20 L 40.55 2.00 L 50.18 8.00 L 59.82 18.80 L 69.45 2.00 L 79.09 12.80 L 88.73 8.00 L 98.36 11.60 L 108.00 14.00 L 108.00 26.00 Z"></path><polyline class="ds-views-spark-line" points="2.00,14.00 11.64,22.40 21.27,22.40 30.91,9.20 40.55,2.00 50.18,8.00 59.82,18.80 69.45,2.00 79.09,12.80 88.73,8.00 98.36,11.60 108.00,14.00"></polyline></svg></div></div></li></ul>
 <script>
 (function () {
   if (window.__moabbCitationCountsInit) return;
@@ -872,12 +881,11 @@ Channel Summary</div>
 </div>
 </div>
 </div>
-<p class="timeline-disclaimer">This diagram is automatically generated from MOABB metadata. Please consult the original publication to confirm the experimental protocol details.</p><div class="sd-tab-set docutils">
+<p class="timeline-disclaimer">This diagram is automatically generated from MOABB metadata. Please consult the original publication to confirm the experimental protocol details.</p><div class="sd-tab-set ds-doc-tabs docutils">
 <input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
 <label class="sd-tab-label" for="sd-tab-item-0">
 Overview</label><div class="sd-tab-content docutils">
-<p><strong>PapersWithCode leaderboard:</strong> <a class="reference external" href="https://paperswithcode.com/dataset/weibo2014-moabb">https://paperswithcode.com/dataset/weibo2014-moabb</a></p>
-<p>Motor Imagery dataset from Weibo et al 2014.</p>
+<p id="ds-overview-weibo2014">Motor Imagery dataset from Weibo et al 2014.</p>
 <p>Dataset from the article <em>Evaluation of EEG oscillatory patterns and
 cognitive process during simple and compound limb motor imagery</em> <a class="reference internal" href="#rdba38df6f4f0-1" id="id1">[1]</a>.</p>
 <p>It contains data recorded on 10 subjects, with 60 electrodes.</p>
@@ -1010,6 +1018,64 @@ Metadata</label><div class="sd-tab-content docutils">
 <dd><p>Initialize function for the BaseDataset.</p>
 </dd></dl>
 
+<dl class="py property">
+<dt class="sig sig-object py" id="moabb.datasets.Weibo2014.all_subjects">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">all_subjects</span></span><a class="headerlink" href="#moabb.datasets.Weibo2014.all_subjects" title="Link to this definition">#</a></dt>
+<dd><p>Full list of subjects available in this dataset (unfiltered).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="moabb.datasets.Weibo2014.convert_to_bids">
+<span class="sig-name descname"><span class="pre">convert_to_bids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subjects</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'EDF'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/base.py#L949-L1039"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Weibo2014.convert_to_bids" title="Link to this definition">#</a></dt>
+<dd><p>Convert the dataset to BIDS format.</p>
+<p>Saves the raw EEG data in a BIDS-compliant directory structure.
+Unlike the caching mechanism (see <code class="xref py py-class docutils literal notranslate"><span class="pre">CacheConfig</span></code>), the files
+produced here do <strong>not</strong> contain a processing-pipeline hash
+(<code class="docutils literal notranslate"><span class="pre">desc-&lt;hash&gt;</span></code>) in their names, making the output a clean,
+shareable BIDS dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> | </em><em>Path</em><em> | </em><em>None</em>) – Directory under which the BIDS dataset will be written.
+If <code class="docutils literal notranslate"><span class="pre">None</span></code> the default MNE data directory is used (same default
+as the rest of MOABB).</p></li>
+<li><p><strong>subjects</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em> | </em><em>None</em>) – Subject numbers to convert.  If <code class="docutils literal notranslate"><span class="pre">None</span></code>, all subjects in
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">subject_list</span></code> are converted.</p></li>
+<li><p><strong>overwrite</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, existing BIDS files for a subject are removed before
+saving.  Default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>format</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The file format for the raw EEG data.  Supported values are
+<code class="docutils literal notranslate"><span class="pre">&quot;EDF&quot;</span></code> (default), <code class="docutils literal notranslate"><span class="pre">&quot;BrainVision&quot;</span></code>, and <code class="docutils literal notranslate"><span class="pre">&quot;EEGLAB&quot;</span></code>.</p></li>
+<li><p><strong>verbose</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> | </em><em>None</em>) – Verbosity level forwarded to MNE/MNE-BIDS.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>bids_root</strong> – Path to the root of the written BIDS dataset.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.14)">pathlib.Path</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">moabb.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">AlexMI</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dataset</span> <span class="o">=</span> <span class="n">AlexMI</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bids_root</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">convert_to_bids</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s1">&#39;/tmp/bids&#39;</span><span class="p">,</span> <span class="n">subjects</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">CacheConfig</span></code></dt><dd><p>Cache configuration for <a class="reference internal" href="#moabb.datasets.Weibo2014.get_data" title="moabb.datasets.Weibo2014.get_data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_data()</span></code></a>.</p>
+</dd>
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">moabb.datasets.bids_interface.get_bids_root</span></code></dt><dd><p>Return the BIDS root path.</p>
+</dd>
+</dl>
+</div>
+<p class="rubric">Notes</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 1.5.</span></p>
+</div>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="moabb.datasets.Weibo2014.data_path">
 <span class="sig-name descname"><span class="pre">data_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subject</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/Weibo2014.py#L420-L429"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Weibo2014.data_path" title="Link to this definition">#</a></dt>
@@ -1039,6 +1105,160 @@ list of length one, for compatibility.</p>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)">list</a> of <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="moabb.datasets.Weibo2014.download">
+<span class="sig-name descname"><span class="pre">download</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subject_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">accept</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/base.py#L888-L947"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Weibo2014.download" title="Link to this definition">#</a></dt>
+<dd><p>Download all data from the dataset.</p>
+<p>This function is only useful to download all the dataset at once.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>subject_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em> of </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em> | </em><em>None</em>) – List of subjects id to download, if None all subjects
+are downloaded.</p></li>
+<li><p><strong>path</strong> (<em>None</em><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Location of where to look for the data storing location.
+If None, the environment variable or config parameter
+<code class="docutils literal notranslate"><span class="pre">MNE_DATASETS_(dataset)_PATH</span></code> is used. If it doesn’t exist, the
+“~/mne_data” directory is used. If the dataset
+is not found under the given path, the data
+will be automatically downloaded to the specified folder.</p></li>
+<li><p><strong>force_update</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Force update of the dataset even if a local copy exists.</p></li>
+<li><p><strong>update_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em> | </em><em>None</em>) – If True, set the MNE_DATASETS_(dataset)_PATH in mne-python
+config to the given path. If None, the user is prompted.</p></li>
+<li><p><strong>accept</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a>) – Accept licence term to download the data, if any. Default: False</p></li>
+<li><p><strong>verbose</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, or </em><em>None</em>) – If not None, override default verbose level
+(see <a class="reference external" href="https://mne.tools/stable/generated/mne.verbose.html#mne.verbose" title="(in MNE v1.11)"><code class="xref py py-func docutils literal notranslate"><span class="pre">mne.verbose()</span></code></a>).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="moabb.datasets.Weibo2014.get_additional_metadata">
+<span class="sig-name descname"><span class="pre">get_additional_metadata</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subject</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">session</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">run</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">DataFrame</span></span></span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/base.py#L1196-L1222"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Weibo2014.get_additional_metadata" title="Link to this definition">#</a></dt>
+<dd><p>Load additional metadata for a specific subject, session, and run.</p>
+<p>This method is intended to be overridden by subclasses to provide
+additional metadata specific to the dataset. The metadata is typically
+loaded from an <cite>events.tsv</cite> file or similar data source.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>subject</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The identifier for the subject.</p></li>
+<li><p><strong>session</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The identifier for the session.</p></li>
+<li><p><strong>run</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The identifier for the run.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A DataFrame containing the additional metadata if available,
+otherwise None.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None | pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="moabb.datasets.Weibo2014.get_block_repetition">
+<span class="sig-name descname"><span class="pre">get_block_repetition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">paradigm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subjects</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">repetition_list</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/base.py#L761-L800"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Weibo2014.get_block_repetition" title="Link to this definition">#</a></dt>
+<dd><p>Select data for all provided subjects, blocks and repetitions.</p>
+<p>subject -&gt; session -&gt; run -&gt; block -&gt; repetition</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">BaseDataset.get_data</span></code></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>subjects</strong> (<em>List</em><em> of </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – List of subject number</p></li>
+<li><p><strong>block_list</strong> (<em>List</em><em> of </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – List of block number</p></li>
+<li><p><strong>repetition_list</strong> (<em>List</em><em> of </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – List of repetition number inside a block</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>data</strong> – dict containing the raw data</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="moabb.datasets.Weibo2014.get_data">
+<span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subjects</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">process_pipeline</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/base.py#L802-L886"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Weibo2014.get_data" title="Link to this definition">#</a></dt>
+<dd><p>Return the data corresponding to a list of subjects.</p>
+<p>The returned data is a dictionary with the following structure:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;subject_id&#39;</span> <span class="p">:</span>
+            <span class="p">{</span><span class="s1">&#39;session_id&#39;</span><span class="p">:</span>
+                <span class="p">{</span><span class="s1">&#39;run_id&#39;</span><span class="p">:</span> <span class="n">run</span><span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+</pre></div>
+</div>
+<p>subjects are on top, then we have sessions, then runs.
+A sessions is a recording done in a single day, without removing the
+EEG cap. A session is constitued of at least one run. A run is a single
+contiguous recording. Some dataset break session in multiple runs.</p>
+<p>Processing steps can optionally be applied to the data using the
+<code class="docutils literal notranslate"><span class="pre">*_pipeline</span></code> arguments. These pipelines are applied in the
+following order: <code class="docutils literal notranslate"><span class="pre">raw_pipeline</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">epochs_pipeline</span></code> -&gt;
+<code class="docutils literal notranslate"><span class="pre">array_pipeline</span></code>. If a <code class="docutils literal notranslate"><span class="pre">*_pipeline</span></code> argument is <code class="docutils literal notranslate"><span class="pre">None</span></code>,
+the step will be skipped. Therefore, the <code class="docutils literal notranslate"><span class="pre">array_pipeline</span></code> may
+either receive a <a class="reference external" href="https://mne.tools/stable/generated/mne.io.Raw.html#mne.io.Raw" title="(in MNE v1.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">mne.io.Raw</span></code></a> or a <a class="reference external" href="https://mne.tools/stable/generated/mne.Epochs.html#mne.Epochs" title="(in MNE v1.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">mne.Epochs</span></code></a> object
+as input depending on whether <code class="docutils literal notranslate"><span class="pre">epochs_pipeline</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code> or not.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>subjects</strong> (<em>List</em><em> of </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – List of subject number</p></li>
+<li><p><strong>cache_config</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a><em> | </em><a class="reference internal" href="moabb.datasets.base.CacheConfig.html#moabb.datasets.base.CacheConfig" title="moabb.datasets.base.CacheConfig"><em>CacheConfig</em></a>) – Configuration for caching of datasets. See <code class="docutils literal notranslate"><span class="pre">CacheConfig</span></code>
+for details.</p></li>
+<li><p><strong>process_pipeline</strong> (<em>Pipeline</em><em> | </em><em>None</em>) – Optional processing pipeline to apply to the data.
+To generate an adequate pipeline, we recommend using
+<code class="xref py py-func docutils literal notranslate"><span class="pre">moabb.utils.make_process_pipelines()</span></code>.
+This pipeline will receive <a class="reference external" href="https://mne.tools/stable/generated/mne.io.BaseRaw.html#mne.io.BaseRaw" title="(in MNE v1.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">mne.io.BaseRaw</span></code></a> objects.
+The steps names of this pipeline should be elements of <code class="xref py py-class docutils literal notranslate"><span class="pre">StepType</span></code>.
+According to their name, the steps should either return a
+<a class="reference external" href="https://mne.tools/stable/generated/mne.io.BaseRaw.html#mne.io.BaseRaw" title="(in MNE v1.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">mne.io.BaseRaw</span></code></a>, a <a class="reference external" href="https://mne.tools/stable/generated/mne.Epochs.html#mne.Epochs" title="(in MNE v1.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">mne.Epochs</span></code></a>, or a <code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.ndarray()</span></code>.
+This pipeline must be “fixed” because it will not be trained,
+i.e. no call to <code class="docutils literal notranslate"><span class="pre">fit</span></code> will be made.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>data</strong> – dict containing the raw data</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="moabb.datasets.Weibo2014.metadata">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">metadata</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">DatasetMetadata</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.14)"><span class="pre">None</span></a></em><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/../../../../.local/share/uv/python/cpython-3.10-linux-x86_64-gnu/lib/python3.10/functools.py"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Weibo2014.metadata" title="Link to this definition">#</a></dt>
+<dd><p>Return structured metadata for this dataset.</p>
+<p>Returns the DatasetMetadata object from the centralized catalog,
+or None if metadata is not available for this dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The metadata object containing acquisition parameters,
+participant demographics, experiment details, and documentation.
+Returns None if no metadata is registered for this dataset.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>DatasetMetadata | None</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">moabb.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">BNCI2014_001</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dataset</span> <span class="o">=</span> <span class="n">BNCI2014_001</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dataset</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">participants</span><span class="o">.</span><span class="n">n_subjects</span>
+<span class="go">9</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dataset</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">acquisition</span><span class="o">.</span><span class="n">sampling_rate</span>
+<span class="go">250.0</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </dd></dl>
