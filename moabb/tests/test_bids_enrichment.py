@@ -1663,8 +1663,9 @@ class TestUpdateEventsJsonWithHed:
         bp, json_path = self._make_bids_path(tmp_path, content)
         hed_tags = {
             "left_hand": (
-                "(Sensory-event, Experimental-stimulus, Visual-presentation), "
-                "(Agent-action, (Imagine, (Move, (Left, Hand))))"
+                "(Sensory-event, Experimental-stimulus, Visual-presentation, "
+                "(Leftward, Arrow)), "
+                "(Agent-action, (Imagine, Move, (Left, Hand)))"
             )
         }
         _update_events_json_sidecar(bp, hed_tags, None)
