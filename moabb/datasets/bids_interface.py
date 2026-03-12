@@ -351,38 +351,23 @@ _PARADIGM_COG_ATLAS = {
 # Maps (paradigm, event_name) → HED tag string using HED schema 8.4.0.
 
 # Shared sensory prefix for MI events where the specific visual stimulus is
-# unknown — only the Agent-action part distinguishes the event.
+# unknown — datasets that use arrows or other cues override via hed_tags
+# in their ExperimentMetadata.
 _MI_SENSORY = "(Sensory-event, Experimental-stimulus, Visual-presentation)"
 
 _PARADIGM_HED_TAGS = {
     # ── Motor Imagery ──
     # Each MI stimulus event decomposes into two top-level groups per HED
     # annotation semantics (Rules 2b/2e/2f):
-    #   1. Sensory-event — what the participant sees (with specific visual
-    #      content such as arrow direction when known).
+    #   1. Sensory-event — what the participant sees (generic here; datasets
+    #      with known cue types override via ExperimentMetadata.hed_tags).
     #   2. (Agent-action, (Imagine, Move, ...)) — what the participant does.
     "imagery": {
-        # Common MI events — directional arrow cues per Kay's review
-        "left_hand": (
-            "(Sensory-event, Experimental-stimulus, Visual-presentation, "
-            "(Leftward, Arrow)), "
-            "(Agent-action, (Imagine, Move, (Left, Hand)))"
-        ),
-        "right_hand": (
-            "(Sensory-event, Experimental-stimulus, Visual-presentation, "
-            "(Rightward, Arrow)), "
-            "(Agent-action, (Imagine, Move, (Right, Hand)))"
-        ),
-        "feet": (
-            "(Sensory-event, Experimental-stimulus, Visual-presentation, "
-            "(Downward, Arrow)), "
-            "(Agent-action, (Imagine, Move, Foot))"
-        ),
-        "tongue": (
-            "(Sensory-event, Experimental-stimulus, Visual-presentation, "
-            "(Upward, Arrow)), "
-            "(Agent-action, (Imagine, Move, Tongue))"
-        ),
+        # Common MI events — generic sensory prefix (no arrow assumption)
+        "left_hand": f"{_MI_SENSORY}, (Agent-action, (Imagine, Move, (Left, Hand)))",
+        "right_hand": f"{_MI_SENSORY}, (Agent-action, (Imagine, Move, (Right, Hand)))",
+        "feet": f"{_MI_SENSORY}, (Agent-action, (Imagine, Move, Foot))",
+        "tongue": f"{_MI_SENSORY}, (Agent-action, (Imagine, Move, Tongue))",
         "both_hand": f"{_MI_SENSORY}, (Agent-action, (Imagine, Move, Hand))",
         "hands": f"{_MI_SENSORY}, (Agent-action, (Imagine, Move, Hand))",
         "rest": "Sensory-event, Experimental-stimulus, Visual-presentation, Rest",
