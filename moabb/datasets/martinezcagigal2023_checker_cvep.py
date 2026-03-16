@@ -1,5 +1,5 @@
+import logging
 import tempfile
-import traceback
 import zipfile
 from datetime import timezone
 from glob import glob
@@ -20,6 +20,9 @@ from moabb.datasets.metadata.schema import (
 )
 from moabb.datasets.utils import add_stim_channel_epoch, add_stim_channel_trial
 from moabb.utils import _handle_deprecated_kwargs
+
+
+log = logging.getLogger(__name__)
 
 
 MARTINEZCAGIGAL2023_CHECKER_URL = "https://uvadoc.uva.es/handle/10324/70973"
@@ -222,14 +225,14 @@ class MartinezCagigal2023Checker(BaseDataset):
                 train_paths = glob(f"{tempdir}/{user}/{cond}/*_calib*")
                 for j, train_path in enumerate(train_paths):
                     try:
-                        print(f"> Loading {user}, cond {cond}, train {j + 1}")
+                        log.info(f"Loading {user}, cond {cond}, train {j + 1}")
                         sessions[session_name][f"{j + 1}train"] = (
                             self._convert_to_mne_format(train_path)
                         )
                     except Exception:
-                        print(
-                            f"[EXCEPTION] Cannot convert signal {train_path}."
-                            f" More information: {traceback.format_exc()}"
+                        log.error(  # was print(), now uses proper logging
+                            f"Cannot convert signal {train_path}.",
+                            exc_info=True,
                         )
                 n = len(train_paths)
 
@@ -244,14 +247,14 @@ class MartinezCagigal2023Checker(BaseDataset):
                 assert len(test_paths) == len(true_labels)
                 for j, test_path in enumerate(test_paths):
                     try:
-                        print(f"> Loading {user}, cond {cond}, test {j+n+1}")
+                        log.info(f"Loading {user}, cond {cond}, test {j+n+1}")
                         sessions[session_name][f"{j + n + 1}test"] = (
                             self._convert_to_mne_format(test_path, true_labels[j])
                         )
                     except Exception:
-                        print(
-                            f"[EXCEPTION] Cannot convert signal {test_path}."
-                            f" More information: {traceback.format_exc()}"
+                        log.error(  # was print(), now uses proper logging
+                            f"Cannot convert signal {test_path}.",
+                            exc_info=True,
                         )
 
         return sessions
@@ -376,7 +379,19 @@ class MartinezCagigal2023Checker(BaseDataset):
             first_trial_onsets.append(trial_onsets_samples[first_onset_idx])
         first_trial_onsets = np.array(first_trial_onsets)
 
-        # Add trial-level stimulus channel (offset=200)
+        # Add trial-level annotations so trial identity survives BIDS export.
+        # SetRawAnnotations transfers extras by sample position to the first
+        # bit event of each trial, which then appear as columns in events.tsv.
+        trial_onsets_sec = first_trial_onsets / sampling_freq
+        trial_annotations = mne.Annotations(
+            onset=trial_onsets_sec,
+            duration=[0.0] * len(trial_onsets_sec),
+            description=["_trial_meta"] * len(trial_onsets_sec),
+        )
+        trial_annotations.extras = [{"trial_id": int(lbl)} for lbl in trial_labels]
+        raw_data.set_annotations(raw_data.annotations + trial_annotations)
+
+        # The stim_trial channel is kept for backward compat with paradigm code.
         raw_data = add_stim_channel_trial(
             raw_data, first_trial_onsets, trial_labels, offset=200
         )

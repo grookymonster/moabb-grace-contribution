@@ -24,6 +24,7 @@ from moabb.datasets.bids_interface import (
     _FORMAT_EXTENSION_MAP,
     StepType,
     _BIDSInterfaceRawEDFNoDesc,
+    _enrich_raw_info_from_metadata,
     _interface_map,
     get_bids_root,
 )
@@ -600,6 +601,15 @@ class BaseDataset(metaclass=MetaclassDataset):
         Defines what sort of dataset this is
 
     doi: DOI for dataset, optional (for now)
+
+    return_all_modalities : bool | dict, optional
+        Controls which channel types are retained when data is picked:
+
+        - ``False`` (default): only EEG channels are kept.
+        - ``True``: all channels except stim are kept.
+        - ``dict``: keyword arguments forwarded to :func:`mne.pick_types`,
+          e.g. ``dict(eeg=True, eog=True)`` keeps EEG and EOG channels.
+          ``stim`` is always forced to ``False``.
     """
 
     _summary_table: dict[str, Any]
@@ -617,6 +627,7 @@ class BaseDataset(metaclass=MetaclassDataset):
         *,
         selected_subjects=None,
         selected_sessions=None,
+        return_all_modalities=False,
     ):
         """Initialize function for the BaseDataset."""
         try:
@@ -637,6 +648,8 @@ class BaseDataset(metaclass=MetaclassDataset):
                 f"of its code {code!r}. "
                 "See moabb.datasets.base.is_abbrev for more information."
             )
+
+        self.return_all_modalities = return_all_modalities
 
         self._all_subjects = list(subjects)
         if selected_subjects is not None:
@@ -1064,6 +1077,12 @@ class BaseDataset(metaclass=MetaclassDataset):
             if len(cached_steps) == 0:  # last option: we don't use cache
                 sessions_data = self._get_single_subject_data(subject)
                 assert sessions_data is not None  # should not happen
+                # Enrich raw.info from METADATA (sex, hand, age, line_freq)
+                metadata = getattr(self, "METADATA", None)
+                if metadata is not None:
+                    for runs in sessions_data.values():
+                        for raw in runs.values():
+                            _enrich_raw_info_from_metadata(raw, metadata, subject)
             else:
                 cache_type = cached_steps[-1][0]
                 interface = _interface_map[cache_type](
@@ -1426,6 +1445,7 @@ class LocalBIDSDataset(BaseBIDSDataset):
         paradigm,
         doi=None,
         unit_factor=1e6,
+        return_all_modalities=False,
     ):
         self.bids_root = bids_root
         self.path_search_params = path_search_params
@@ -1461,6 +1481,7 @@ class LocalBIDSDataset(BaseBIDSDataset):
             paradigm,
             doi,
             unit_factor,
+            return_all_modalities=return_all_modalities,
         )
 
     def _download_subject(self, subject, path, force_update, update_path, verbose):

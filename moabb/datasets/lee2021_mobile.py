@@ -15,10 +15,12 @@ from .metadata.schema import (
     AcquisitionMetadata,
     AuxiliaryChannelsMetadata,
     BCIApplicationMetadata,
+    CrossValidationMetadata,
     DatasetMetadata,
     DocumentationMetadata,
     ExperimentMetadata,
     ParticipantMetadata,
+    SignalProcessingMetadata,
     Tags,
 )
 
@@ -69,9 +71,9 @@ class Lee2021Mobile(BaseDataset):
 
     METADATA = DatasetMetadata(
         acquisition=AcquisitionMetadata(
-            sampling_rate=500.0,
-            n_channels=32,
-            channel_types={"eeg": 32},
+            sampling_rate=100.0,
+            n_channels=73,
+            channel_types={"eeg": 73},
             montage="standard_1005",
             hardware="BrainAmp (Brain Product GmbH)",
             line_freq=60.0,
@@ -87,14 +89,15 @@ class Lee2021Mobile(BaseDataset):
             ),
         ),
         participants=ParticipantMetadata(
-            n_subjects=24,
+            n_subjects=23,
             health_status="healthy",
-            gender={"male": 14, "female": 10},
+            gender={"male": 13, "female": 10},
             age_mean=24.5,
             age_min=19,
             age_max=32,
             age_std=2.9,
             # Per-subject demographics from BIDS participants.tsv
+            # Subject 24 excluded: no SSVEP data on OSF
             ages=[
                 28,
                 24,
@@ -119,7 +122,6 @@ class Lee2021Mobile(BaseDataset):
                 24,
                 21,
                 25,
-                23,
             ],
             sexes=[
                 "female",
@@ -145,11 +147,11 @@ class Lee2021Mobile(BaseDataset):
                 "male",
                 "female",
                 "male",
-                "female",
             ],
         ),
         experiment=ExperimentMetadata(
             paradigm="ssvep",
+            events={"5.45": 11, "8.57": 12, "12.0": 13},
             n_classes=3,
             trial_duration=5.0,
             stimulus_type="visual flicker",
@@ -184,9 +186,24 @@ class Lee2021Mobile(BaseDataset):
             ],
             keywords=["SSVEP", "ERP", "mobile BCI", "ear-EEG", "locomotion"],
         ),
+        signal_processing=SignalProcessingMetadata(
+            classifiers=["rLDA", "CCA"],
+            feature_extraction=["power_over_time_intervals", "CCA"],
+            frequency_bands={
+                "delta": [0.5, 3.5],
+                "theta": [3.5, 7.5],
+                "alpha": [7.5, 12.5],
+                "beta": [12.5, 30.0],
+            },
+            spatial_filters=None,
+        ),
+        cross_validation=CrossValidationMetadata(
+            cv_method="holdout",
+            evaluation_type=["within_subject"],
+        ),
         bci_application=BCIApplicationMetadata(
-            environment="mobile",
-            online_feedback=False,
+            applications=["mobile_BCI"],
+            environment="treadmill",
         ),
         tags=Tags(
             pathology=["healthy"],
@@ -215,6 +232,8 @@ class Lee2021Mobile(BaseDataset):
         paradigm,
         subjects=None,
         sessions=None,
+        *,
+        return_all_modalities=False,
     ):
         if paradigm.lower() == "ssvep":
             code_suffix = "SSVEP"
@@ -222,19 +241,21 @@ class Lee2021Mobile(BaseDataset):
             interval = [0, 5]
             paradigm_type = "ssvep"
             n_sessions = 4  # ses-02 through ses-05 (variable per subject)
+            subject_list = list(range(1, 24))  # 23 subjects; sub-24 has no SSVEP data
         elif paradigm.lower() in ("erp", "p300"):
             code_suffix = "ERP"
             events = {"Target": 2, "NonTarget": 1}
             interval = [0, 1.0]
             paradigm_type = "p300"
             n_sessions = 5  # ses-01 through ses-05
+            subject_list = list(range(1, 25))  # 24 subjects
         else:
             raise ValueError(f"Unknown paradigm '{paradigm}'. Use 'ssvep' or 'erp'.")
 
         self._task_name = code_suffix
 
         super().__init__(
-            subjects=list(range(1, 25)),
+            subjects=subject_list,
             sessions_per_subject=n_sessions,
             events=events,
             code=f"Lee2021Mobile-{code_suffix}",
@@ -243,6 +264,7 @@ class Lee2021Mobile(BaseDataset):
             doi="10.1038/s41597-021-01094-4",
             selected_subjects=subjects,
             selected_sessions=sessions,
+            return_all_modalities=return_all_modalities,
         )
 
     def _get_single_subject_data(self, subject):
@@ -385,9 +407,9 @@ class Lee2021Mobile_ERP(Lee2021Mobile):
 
     METADATA = DatasetMetadata(
         acquisition=AcquisitionMetadata(
-            sampling_rate=500.0,
-            n_channels=32,
-            channel_types={"eeg": 32},
+            sampling_rate=100.0,
+            n_channels=73,
+            channel_types={"eeg": 73},
             montage="standard_1005",
             hardware="BrainAmp (Brain Product GmbH)",
             line_freq=60.0,
@@ -465,6 +487,7 @@ class Lee2021Mobile_ERP(Lee2021Mobile):
         ),
         experiment=ExperimentMetadata(
             paradigm="p300",
+            events={"Target": 2, "NonTarget": 1},
             n_classes=2,
             trial_duration=1.0,
             stimulus_type="visual oddball",
