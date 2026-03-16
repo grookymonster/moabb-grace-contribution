@@ -37,6 +37,7 @@ from moabb.analysis.style import (
     MOABB_PURPLE,
     MOABB_SKY,
     MOABB_TEAL,
+    _DEFAULT_SOURCE,
 )
 
 
@@ -66,11 +67,8 @@ def _check_plotly():
 # with system fallbacks.  Matches the matplotlib "serif" choice.
 _FONT_FAMILY = "Georgia, Cambria, 'Times New Roman', serif"
 
-_DEFAULT_SOURCE = (
-    "Generated using MOABB v{version}"
-    " \u2014 Chevallier et al. (2024)"
-    " doi:10.48550/arXiv.2404.15319"
-)
+# Semantic color order for interactive plots: navy, coral, teal, purple, amber, sky.
+_PLOT_PALETTE = [MOABB_NAVY, MOABB_CORAL, MOABB_TEAL, MOABB_PURPLE, MOABB_AMBER, MOABB_SKY]
 
 # Subtle background tint — avoids the clinical pure-white look
 _PAPER_BG = "#FAFBFC"
@@ -245,6 +243,72 @@ class NeuralSignatureData:
 
 
 # ---------------------------------------------------------------------------
+# Shared computation helpers
+# ---------------------------------------------------------------------------
+
+
+def _compute_evokeds_and_sems(
+    epochs: mne.Epochs,
+    event_names: list[str],
+) -> tuple[dict, dict, dict]:
+    """Compute evoked averages and 95% CI SEMs per event.
+
+    Returns ``(evokeds, sems, n_trials)`` dicts keyed by event name.
+    """
+    evokeds: dict[str, np.ndarray] = {}
+    sems: dict[str, np.ndarray] = {}
+    n_trials: dict[str, int] = {}
+    for name in event_names:
+        if name not in epochs.event_id:
+            continue
+        ep = epochs[name]
+        n = len(ep)
+        n_trials[name] = n
+        if n == 0:
+            continue
+        evk = ep.average()
+        evokeds[name] = evk.data
+        if n > 1:
+            std = np.std(ep.get_data(), axis=0, ddof=1)
+            sems[name] = std / np.sqrt(n) * 1.96
+        else:
+            sems[name] = np.zeros_like(evk.data)
+    return evokeds, sems, n_trials
+
+
+def _compute_psd_per_event(
+    epochs: mne.Epochs,
+    event_names: list[str],
+    fmin: float = 1,
+    fmax: float = 50,
+    n_fft: int | None = None,
+) -> tuple[dict, np.ndarray | None, dict]:
+    """Compute mean PSD per event via Welch's method.
+
+    Returns ``(psd_data, freqs, n_trials)`` where *psd_data* maps event
+    names to 1-D arrays averaged over epochs and channels.
+    """
+    if n_fft is None:
+        n_fft = len(epochs.times)
+    psd_data: dict[str, np.ndarray] = {}
+    n_trials: dict[str, int] = {}
+    freqs = None
+    for name in event_names:
+        if name not in epochs.event_id:
+            continue
+        ep = epochs[name]
+        n_trials[name] = len(ep)
+        if len(ep) == 0:
+            continue
+        spectrum = ep.compute_psd(
+            method="welch", fmin=fmin, fmax=fmax, n_fft=n_fft, verbose=False
+        )
+        psd_data[name] = spectrum.get_data().mean(axis=0).mean(axis=0)
+        freqs = spectrum.freqs
+    return psd_data, freqs, n_trials
+
+
+# ---------------------------------------------------------------------------
 # Paradigm-specific computation functions
 # ---------------------------------------------------------------------------
 
@@ -288,22 +352,7 @@ def compute_erp_signature(
     if not event_names:
         event_names = list(epochs.event_id.keys())[:2]
 
-    evokeds = {}
-    sems = {}
-    n_trials = {}
-    for name in event_names:
-        if name not in epochs.event_id:
-            continue
-        ep = epochs[name]
-        evk = ep.average()
-        evokeds[name] = evk.data  # (n_channels, n_times)
-        n = len(ep)
-        n_trials[name] = n
-        if n > 1:
-            std = np.std(ep.get_data(), axis=0, ddof=1)
-            sems[name] = std / np.sqrt(n) * 1.96
-        else:
-            sems[name] = np.zeros_like(evk.data)
+    evokeds, sems, n_trials = _compute_evokeds_and_sems(epochs, event_names)
 
     return NeuralSignatureData(
         paradigm="p300",
@@ -627,37 +676,12 @@ def compute_cvep_signature(
     if event_names is None:
         event_names = list(epochs.event_id.keys())
 
-    evokeds = {}
-    sems = {}
-    psd_data = {}
-    n_trials = {}
-    freqs = None
-
-    n_times = len(epochs.times)
-    n_fft = n_times  # full epoch for max frequency resolution
-
-    for name in event_names:
-        if name not in epochs.event_id:
-            continue
-        ep = epochs[name]
-        n_trials[name] = len(ep)
-        if len(ep) == 0:
-            continue
-
-        evk = ep.average()
-        evokeds[name] = evk.data
-        if len(ep) > 1:
-            std = np.std(ep.get_data(), axis=0, ddof=1)
-            sems[name] = std / np.sqrt(len(ep)) * 1.96
-        else:
-            sems[name] = np.zeros_like(evk.data)
-
-        spectrum = ep.compute_psd(
-            method="welch", fmin=1, fmax=50, n_fft=n_fft, verbose=False
-        )
-        psd = spectrum.get_data().mean(axis=0).mean(axis=0)
-        freqs = spectrum.freqs
-        psd_data[name] = psd
+    evokeds, sems, n_trials_evk = _compute_evokeds_and_sems(epochs, event_names)
+    psd_data, freqs, n_trials_psd = _compute_psd_per_event(
+        epochs, event_names, fmin=1, fmax=50,
+    )
+    # Merge trial counts (evoked loop may have seen different events)
+    n_trials = {**n_trials_psd, **n_trials_evk}
 
     return NeuralSignatureData(
         paradigm="cvep",
@@ -724,34 +748,17 @@ def compute_rstate_signature(
         "gamma": (30, 45),
     }
 
-    psd_data = {}
+    psd_data, freqs, n_trials = _compute_psd_per_event(
+        epochs, event_names, fmin=1, fmax=50,
+    )
+
+    # Compute relative band powers from the PSD
     band_powers = {}
-    n_trials = {}
-    freqs = None
-
-    n_times = len(epochs.times)
-    n_fft = n_times  # full epoch for max frequency resolution
-
-    for name in event_names:
-        if name not in epochs.event_id:
-            continue
-        ep = epochs[name]
-        n_trials[name] = len(ep)
-        if len(ep) == 0:
-            continue
-
-        spectrum = ep.compute_psd(
-            method="welch", fmin=1, fmax=50, n_fft=n_fft, verbose=False
-        )
-        psd = spectrum.get_data().mean(axis=0).mean(axis=0)  # avg epochs & channels
-        freqs = spectrum.freqs
-        psd_data[name] = psd
-
-        # Band power (relative)
+    for name, psd in psd_data.items():
         total_power = np.trapezoid(psd, freqs)
         bp = {}
-        for band_name, (fmin, fmax) in bands.items():
-            mask = (freqs >= fmin) & (freqs <= fmax)
+        for band_name, (f_lo, f_hi) in bands.items():
+            mask = (freqs >= f_lo) & (freqs <= f_hi)
             bp[band_name] = np.trapezoid(psd[mask], freqs[mask]) / total_power * 100
         band_powers[name] = bp
 
@@ -1148,9 +1155,6 @@ def plot_erp_interactive(
     ch_names = sig.metadata["ch_names"]
     n_trials = sig.metadata["n_trials"]
 
-    # Semantic colors: first event = navy, second = coral, then cycle
-    palette = [MOABB_NAVY, MOABB_CORAL, MOABB_TEAL, MOABB_PURPLE, MOABB_AMBER]
-
     fig = _make_figure()
 
     buttons = []
@@ -1162,7 +1166,7 @@ def plot_erp_interactive(
         for ev_i, name in enumerate(active_events):
             evk = sig.data["evokeds"][name][ch_i] * 1e6
             sem = sig.data["sems"][name][ch_i] * 1e6
-            color = palette[ev_i % len(palette)]
+            color = _PLOT_PALETTE[ev_i % len(_PLOT_PALETTE)]
             n_t = n_trials.get(name, "?")
             visible = ch_i == channel_idx
 
@@ -1328,7 +1332,7 @@ def plot_erd_ers_interactive(
 
     # Mu/beta band reference lines
     for ev_i in range(n_events):
-        for band_freq, label in [(8, "\u03bc"), (13, "\u03b2")]:
+        for band_freq in (8, 13):
             fig.add_hline(
                 y=band_freq, line_dash="dot",
                 line_color="rgba(47, 62, 92, 0.25)", line_width=0.8,
@@ -1388,8 +1392,6 @@ def plot_ssvep_interactive(
     stim_freqs = sig.data["stimulus_frequencies"]
     event_names = sig.data["event_names"]
     n_trials = sig.metadata["n_trials"]
-    palette = [MOABB_NAVY, MOABB_CORAL, MOABB_TEAL, MOABB_PURPLE, MOABB_AMBER, MOABB_SKY]
-
     fig = _make_figure()
 
     for ev_i, name in enumerate(event_names):
@@ -1398,7 +1400,7 @@ def plot_ssvep_interactive(
         psd = sig.data["psd"][name]
         n_t = n_trials.get(name, "?")
         snr_val = sig.data["snr"].get(name, None)
-        color = palette[ev_i % len(palette)]
+        color = _PLOT_PALETTE[ev_i % len(_PLOT_PALETTE)]
 
         label = f"{name} Hz  n={n_t}"
         if snr_val is not None and snr_val > 0:
@@ -1474,13 +1476,11 @@ def plot_cvep_interactive(
     event_names = [e for e in sig.data["event_names"] if e in sig.data["evokeds"]]
     ch_names = sig.metadata["ch_names"]
     n_trials = sig.metadata["n_trials"]
-    palette = [MOABB_NAVY, MOABB_CORAL, MOABB_TEAL, MOABB_PURPLE, MOABB_AMBER]
-
     fig = make_subplots(
         rows=2, cols=1,
         subplot_titles=[
-            f"<b>Evoked Response</b>",
-            f"<b>Power Spectrum</b>",
+            "<b>Evoked Response</b>",
+            "<b>Power Spectrum</b>",
         ],
         vertical_spacing=0.18,
         row_heights=[0.6, 0.4],
@@ -1489,7 +1489,7 @@ def plot_cvep_interactive(
 
     times_ms = sig.data["times"] * 1000
     for ev_i, name in enumerate(event_names):
-        color = palette[ev_i % len(palette)]
+        color = _PLOT_PALETTE[ev_i % len(_PLOT_PALETTE)]
         n_t = n_trials.get(name, "?")
         ch_i = min(channel_idx, sig.data["evokeds"][name].shape[0] - 1)
 
@@ -1550,7 +1550,6 @@ def plot_rstate_interactive(
 
     event_names = [e for e in sig.data["event_names"] if e in sig.data["psd"]]
     n_trials = sig.metadata["n_trials"]
-    palette = [MOABB_NAVY, MOABB_CORAL, MOABB_TEAL, MOABB_PURPLE, MOABB_AMBER]
 
     fig = make_subplots(
         rows=1, cols=2,
@@ -1568,7 +1567,7 @@ def plot_rstate_interactive(
     band_labels = [b.capitalize() for b in band_names]
 
     for ev_i, name in enumerate(event_names):
-        color = palette[ev_i % len(palette)]
+        color = _PLOT_PALETTE[ev_i % len(_PLOT_PALETTE)]
         n_t = n_trials.get(name, "?")
 
         fig.add_trace(go.Scatter(
@@ -1609,15 +1608,11 @@ def plot_rstate_interactive(
 # ---------------------------------------------------------------------------
 
 _PARADIGM_HANDLERS = {
-    "imagery": ("MotorImagery", compute_erd_ers_signature, plot_erd_ers_interactive),
-    "p300": ("P300", compute_erp_signature, plot_erp_interactive),
-    "ssvep": ("SSVEP", compute_ssvep_signature, plot_ssvep_interactive),
-    "cvep": ("CVEP", compute_cvep_signature, plot_cvep_interactive),
-    "rstate": (
-        "RestingStateToP300Adapter",
-        compute_rstate_signature,
-        plot_rstate_interactive,
-    ),
+    "imagery": (compute_erd_ers_signature, plot_erd_ers_interactive),
+    "p300": (compute_erp_signature, plot_erp_interactive),
+    "ssvep": (compute_ssvep_signature, plot_ssvep_interactive),
+    "cvep": (compute_cvep_signature, plot_cvep_interactive),
+    "rstate": (compute_rstate_signature, plot_rstate_interactive),
 }
 
 
@@ -1631,38 +1626,86 @@ def _get_paradigm_instance(paradigm_name: str, dataset=None):
         RestingStateToP300Adapter,
     )
 
-    _paradigm_classes = {
-        "imagery": MotorImagery,
-        "p300": P300,
-        "ssvep": SSVEP,
-        "cvep": CVEP,
-        "rstate": RestingStateToP300Adapter,
+    _paradigm_factories = {
+        "imagery": lambda _ds: MotorImagery(n_classes=2, resample=128),
+        "p300": lambda _ds: P300(),
+        "ssvep": lambda _ds: SSVEP(n_classes=2, resample=256),
+        "cvep": lambda _ds: CVEP(n_classes=2, resample=256),
+        "rstate": lambda ds: RestingStateToP300Adapter(
+            events=(
+                list(ds.event_id.keys())
+                if ds is not None and hasattr(ds, "event_id")
+                else None
+            )
+        ),
     }
-    cls = _paradigm_classes.get(paradigm_name)
-    if cls is None:
+    factory = _paradigm_factories.get(paradigm_name)
+    if factory is None:
         raise ValueError(
             f"Unknown paradigm {paradigm_name!r}. "
-            f"Supported: {list(_paradigm_classes)}"
+            f"Supported: {list(_paradigm_factories)}"
         )
-
-    if paradigm_name == "imagery":
-        return cls(n_classes=2, resample=128)
-    elif paradigm_name == "ssvep":
-        return cls(n_classes=2, resample=256)
-    elif paradigm_name == "cvep":
-        return cls(n_classes=2, resample=256)
-    elif paradigm_name == "rstate":
-        events = None
-        if dataset is not None and hasattr(dataset, "event_id"):
-            events = list(dataset.event_id.keys())
-        return cls(events=events)
-    else:
-        return cls()
+    return factory(dataset)
 
 
 # ---------------------------------------------------------------------------
 # High-level API
 # ---------------------------------------------------------------------------
+
+
+def _load_and_compute(
+    dataset,
+    subjects: list[int],
+    compute_fn,
+    plot_fn,
+    *,
+    collect_per_subject: bool = False,
+) -> tuple["NeuralSignatureData | None", "go.Figure | None", dict]:
+    """Load epochs, compute grand-average signature, and plot.
+
+    Returns ``(sig, fig, per_subject_epochs)`` where *per_subject_epochs*
+    is non-empty only when *collect_per_subject* is True.
+    """
+    paradigm_name = dataset.paradigm
+    paradigm = _get_paradigm_instance(paradigm_name, dataset)
+    ds_name = dataset.__class__.__name__
+    code = dataset.code
+
+    per_subject_epochs: dict = {}
+    grand_epochs = None
+
+    for subj in subjects:
+        log.info("Loading subject %s for %s", subj, ds_name)
+        try:
+            epochs, _, _ = paradigm.get_data(
+                dataset, [subj], return_epochs=True
+            )
+        except Exception as exc:
+            log.warning("Failed to load subject %s: %s", subj, exc)
+            continue
+        if collect_per_subject:
+            per_subject_epochs[subj] = epochs
+        if grand_epochs is None:
+            grand_epochs = epochs
+        else:
+            try:
+                grand_epochs = mne.concatenate_epochs(
+                    [grand_epochs, epochs], verbose=False
+                )
+            except Exception:
+                log.warning("Cannot concatenate epochs for subject %s", subj)
+
+    if grand_epochs is None or len(grand_epochs) == 0:
+        return None, None, per_subject_epochs
+
+    log.info("Computing grand-average signature for %s", ds_name)
+    sig = compute_fn(grand_epochs)
+    sig.dataset_name = ds_name
+    sig.dataset_code = code
+    _relabel_signature(sig, _build_event_label_map(dataset))
+
+    fig = plot_fn(sig)
+    return sig, fig, per_subject_epochs
 
 
 def generate_neural_signature(
@@ -1706,51 +1749,18 @@ def generate_neural_signature(
             f"Supported: {list(_PARADIGM_HANDLERS)}"
         )
 
-    _, compute_fn, plot_fn = _PARADIGM_HANDLERS[paradigm_name]
-    paradigm = _get_paradigm_instance(paradigm_name, dataset)
-
+    compute_fn, plot_fn = _PARADIGM_HANDLERS[paradigm_name]
     code = dataset.code
     ds_name = dataset.__class__.__name__
     generated = []
 
-    # ---- Collect per-subject epochs ----
-    all_evokeds_per_subject = {}
-    grand_epochs = None
-
-    for subj in subjects:
-        log.info("Loading subject %s for %s", subj, ds_name)
-        try:
-            epochs, _, _ = paradigm.get_data(
-                dataset, [subj], return_epochs=True
-            )
-        except Exception as exc:
-            log.warning("Failed to load subject %s: %s", subj, exc)
-            continue
-        all_evokeds_per_subject[subj] = epochs
-        if grand_epochs is None:
-            grand_epochs = epochs
-        else:
-            try:
-                grand_epochs = mne.concatenate_epochs(
-                    [grand_epochs, epochs], verbose=False
-                )
-            except Exception:
-                log.warning("Cannot concatenate epochs for subject %s", subj)
-
-    if grand_epochs is None or len(grand_epochs) == 0:
+    sig, fig, all_evokeds_per_subject = _load_and_compute(
+        dataset, subjects, compute_fn, plot_fn, collect_per_subject=True,
+    )
+    if sig is None:
         log.warning("No valid epochs for %s, skipping.", ds_name)
         return generated
 
-    # ---- Grand average ----
-    log.info("Computing grand-average signature for %s", ds_name)
-    label_map = _build_event_label_map(dataset)
-
-    sig = compute_fn(grand_epochs)
-    sig.dataset_name = ds_name
-    sig.dataset_code = code
-    _relabel_signature(sig, label_map)
-
-    fig = plot_fn(sig)
     metrics = compute_metrics(sig)
     metrics_html = _build_metrics_table(metrics, sig.signature_type)
 
@@ -1816,7 +1826,6 @@ def _make_per_channel_figure(sig, paradigm_name):
     n_ch = min(len(ch_names), 16)
     ncols = min(4, n_ch)
     nrows = (n_ch + ncols - 1) // ncols
-    palette = [MOABB_NAVY, MOABB_CORAL, MOABB_TEAL, MOABB_PURPLE, MOABB_AMBER]
 
     fig = make_subplots(
         rows=nrows, cols=ncols,
@@ -1840,7 +1849,7 @@ def _make_per_channel_figure(sig, paradigm_name):
                 continue
             fig.add_trace(go.Scatter(
                 x=times_ms, y=evk[ch_i] * 1e6, mode="lines",
-                name=name, line=dict(color=palette[ev_i % len(palette)], width=1.5),
+                name=name, line=dict(color=_PLOT_PALETTE[ev_i % len(_PLOT_PALETTE)], width=1.5),
                 showlegend=(ch_i == 0), legendgroup=name,
             ), row=row, col=col)
 
@@ -1857,7 +1866,6 @@ def _make_per_subject_figure(
 
     _check_plotly()
     fig = _make_figure()
-    palette = [MOABB_NAVY, MOABB_TEAL, MOABB_SKY, MOABB_PURPLE, MOABB_AMBER, MOABB_CORAL]
 
     for i, (subj, epochs) in enumerate(subjects_epochs.items()):
         try:
@@ -1867,7 +1875,7 @@ def _make_per_subject_figure(
         except Exception:
             continue
 
-        color = palette[i % len(palette)]
+        color = _PLOT_PALETTE[i % len(_PLOT_PALETTE)]
 
         if paradigm_name in ("p300", "cvep"):
             event_names = [
@@ -1941,37 +1949,10 @@ def neural_signature_html(
     if paradigm_name not in _PARADIGM_HANDLERS:
         raise ValueError(f"Unsupported paradigm {paradigm_name!r}")
 
-    _, compute_fn, plot_fn = _PARADIGM_HANDLERS[paradigm_name]
-    paradigm = _get_paradigm_instance(paradigm_name, dataset)
+    compute_fn, plot_fn = _PARADIGM_HANDLERS[paradigm_name]
 
-    ds_name = dataset.__class__.__name__
-    code = dataset.code
-
-    grand_epochs = None
-    for subj in subjects:
-        try:
-            epochs, _, _ = paradigm.get_data(
-                dataset, [subj], return_epochs=True
-            )
-        except Exception:
-            continue
-        if grand_epochs is None:
-            grand_epochs = epochs
-        else:
-            try:
-                grand_epochs = mne.concatenate_epochs(
-                    [grand_epochs, epochs], verbose=False
-                )
-            except Exception:
-                pass
-
-    if grand_epochs is None or len(grand_epochs) == 0:
+    sig, fig, _ = _load_and_compute(dataset, subjects, compute_fn, plot_fn)
+    if sig is None:
         return {}
 
-    sig = compute_fn(grand_epochs)
-    sig.dataset_name = ds_name
-    sig.dataset_code = code
-    _relabel_signature(sig, _build_event_label_map(dataset))
-
-    fig = plot_fn(sig)
     return {"grand_average": fig.to_html(include_plotlyjs=True)}

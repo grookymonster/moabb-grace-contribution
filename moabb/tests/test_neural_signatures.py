@@ -425,6 +425,6 @@ class TestParadigmDispatch:
         from moabb.analysis.neural_signatures import _PARADIGM_HANDLERS
 
         for name, handler in _PARADIGM_HANDLERS.items():
-            assert len(handler) == 3, f"Handler for {name} should be 3-tuple"
-            assert callable(handler[1]), f"compute_fn for {name} not callable"
-            assert callable(handler[2]), f"plot_fn for {name} not callable"
+            assert len(handler) == 2, f"Handler for {name} should be 2-tuple"
+            assert callable(handler[0]), f"compute_fn for {name} not callable"
+            assert callable(handler[1]), f"plot_fn for {name} not callable"
