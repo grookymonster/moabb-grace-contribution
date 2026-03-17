@@ -1115,12 +1115,67 @@ def _build_metrics_table(metrics: dict[str, Any], sig_type: str) -> str:
     )
 
 
+def _build_head_svg(ch_names: list[str], active_ch: str | None = None) -> str:
+    """Build an inline SVG scalp diagram with electrode positions."""
+    positions = _get_montage_xy(ch_names)
+    if not positions:
+        return ""
+
+    size = 120
+    cx, cy = size / 2, size / 2
+    r = size * 0.38  # head radius
+
+    parts = [
+        f'<svg viewBox="0 0 {size} {size}" '
+        f'width="{size}" height="{size}" '
+        f'xmlns="http://www.w3.org/2000/svg" '
+        f'style="display:block">',
+        # Head
+        f'<circle cx="{cx}" cy="{cy}" r="{r}" '
+        f'fill="#FAFBFC" stroke="{MOABB_NAVY}" stroke-width="1.5"/>',
+        # Nose
+        f'<polygon points="{cx-4},{cy-r} {cx},{cy-r-8} {cx+4},{cy-r}" '
+        f'fill="none" stroke="{MOABB_NAVY}" stroke-width="1.5"/>',
+        # Left ear
+        f'<path d="M{cx-r},{cy-6} Q{cx-r-5},{cy} {cx-r},{cy+6}" '
+        f'fill="none" stroke="{MOABB_NAVY}" stroke-width="1.5"/>',
+        # Right ear
+        f'<path d="M{cx+r},{cy-6} Q{cx+r+5},{cy} {cx+r},{cy+6}" '
+        f'fill="none" stroke="{MOABB_NAVY}" stroke-width="1.5"/>',
+    ]
+
+    # Electrode dots — note: montage y is nose-up, SVG y is down
+    for ch, (nx, ny) in positions.items():
+        px = cx + nx * r * 0.82
+        py = cy - ny * r * 0.82  # flip y
+        is_active = ch == active_ch
+        dot_r = 5 if is_active else 2.5
+        color = MOABB_CORAL if is_active else MOABB_NAVY
+        opacity = "1" if is_active else "0.35"
+        parts.append(
+            f'<circle cx="{px:.1f}" cy="{py:.1f}" r="{dot_r}" '
+            f'fill="{color}" opacity="{opacity}" '
+            f'data-ch="{ch}"/>'
+        )
+        if is_active:
+            parts.append(
+                f'<text x="{px:.1f}" y="{py + 10:.1f}" '
+                f'text-anchor="middle" fill="{MOABB_CORAL}" '
+                f'font-size="9" font-weight="700" '
+                f'font-family="Georgia,serif">{ch}</text>'
+            )
+
+    parts.append("</svg>")
+    return "\n".join(parts)
+
+
 def _wrap_branded_html(
     plotly_div: str,
     title: str,
     subtitle: str,
     metrics_html: str,
     ds_name: str,
+    head_svg: str = "",
 ) -> str:
     """Wrap a Plotly div in a branded MOABB HTML page."""
     source = _DEFAULT_SOURCE.format(version=moabb.__version__)
@@ -1242,6 +1297,25 @@ def _wrap_branded_html(
     color: var(--grid);
     font-style: italic;
   }}
+  /* ---- Head inset below chart ---- */
+  .head-inset {{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 8px;
+    padding: 10px 16px;
+    background: var(--card-bg);
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }}
+  .head-inset .head-label {{
+    font-size: 11px;
+    color: var(--grid);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }}
 </style>
 </head>
 <body>
@@ -1253,7 +1327,10 @@ def _wrap_branded_html(
     <div class="subtitle">{subtitle}</div>
   </div>
   <div class="content">
-    <div class="chart-card">{plotly_div}</div>
+    <div>
+      <div class="chart-card">{plotly_div}</div>
+      {f'<div class="head-inset"><span class="head-label">Electrode</span>{head_svg}</div>' if head_svg else ''}
+    </div>
     <div class="metrics-card">
       <h2>Objective Metrics</h2>
       {metrics_html}
@@ -1373,9 +1450,8 @@ def plot_erp_interactive(
         yaxis_title="Amplitude (\u00b5V)",
         hovermode="x unified",
         height=480,
-        margin=dict(t=100, b=60, l=72, r=100),
+        margin=dict(t=100, b=60, l=72, r=24),
     )
-    _add_head_inset(fig, ch_names, active_idx=channel_idx)
 
     return fig
 
@@ -1418,8 +1494,6 @@ def plot_erd_ers_interactive(
 
     total_trials = sum(n_trials.get(e, 0) for e in event_names)
 
-    # Reserve right 18% of figure width for head inset + colorbar
-    _heatmap_right = 0.78
     fig = make_subplots(
         rows=1, cols=n_events,
         subplot_titles=[
@@ -1429,18 +1503,8 @@ def plot_erd_ers_interactive(
         ],
         shared_yaxes=True,
         horizontal_spacing=0.06,
-        column_widths=[1] * n_events,
     )
     fig.update_layout(template=get_plotly_template())
-    # Squeeze heatmap columns into left portion
-    col_width = _heatmap_right / n_events
-    gap = 0.02
-    for i in range(1, n_events + 1):
-        x0 = (i - 1) * col_width + gap
-        x1 = i * col_width - gap
-        fig.update_layout(**{
-            f"xaxis{i if i > 1 else ''}": dict(domain=[x0, x1]),
-        })
 
     # Global symmetric color range from the 95th percentile
     all_values = [sig.data["tfr"][n] for n in event_names]
@@ -1461,9 +1525,7 @@ def plot_erd_ers_interactive(
                 colorscale=colorscale, zmin=-vmax, zmax=vmax,
                 colorbar=dict(
                     title=dict(text="ERD/ERS (%)", font=dict(size=11)),
-                    thickness=12, len=0.3,
-                    y=0.95, yanchor="top",
-                    x=0.90, xanchor="center",
+                    thickness=12, len=0.85,
                     tickfont=dict(size=10),
                     outlinewidth=0,
                 ) if ev_i == n_events - 1 else None,
@@ -1476,23 +1538,8 @@ def plot_erd_ers_interactive(
             row=1, col=ev_i + 1,
         )
 
-    # Add head inset in the right-side space (vertically centered with heatmaps)
-    n_head_traces = _add_head_inset(
-        fig, ch_names, active_idx=0,
-        xdomain=(0.83, 0.99), ydomain=(0.10, 0.60),
-    )
-    # n_events heatmap traces + 1 "all dots" trace + n_head_traces highlight traces
-    # The highlight traces start at index (n_events + 1)
-    head_start = n_events + 1  # skip heatmaps + all-dots trace
-
-    # Channel slider — update heatmap z-data AND head highlight visibility
+    # Channel slider
     if len(ch_names) > 1:
-        for ch_i, step in enumerate(steps):
-            vis = [True] * n_events  # heatmaps always visible
-            vis.append(True)  # all-dots trace always visible
-            vis.extend(i == ch_i for i in range(n_head_traces))
-            step["args"] = [{"z": step["args"][0]["z"], "visible": vis}]
-
         fig.update_layout(sliders=[dict(
             active=0,
             currentvalue=dict(
@@ -1532,7 +1579,7 @@ def plot_erd_ers_interactive(
         ),
     )
     fig.update_layout(
-        height=520, margin=dict(t=110, b=80, l=72, r=20),
+        height=500, margin=dict(t=110, b=80, l=72, r=80),
     )
     for i in range(1, n_events + 1):
         fig.update_xaxes(title_text="Time (s)", row=1, col=i)
@@ -1695,9 +1742,8 @@ def plot_cvep_interactive(
     )
     fig.update_layout(
         height=640, hovermode="x unified",
-        margin=dict(t=110, b=60, l=72, r=100),
+        margin=dict(t=110, b=60, l=72, r=24),
     )
-    _add_head_inset(fig, ch_names, active_idx=channel_idx)
     return fig
 
 
@@ -1968,7 +2014,14 @@ def generate_neural_signature(
         include_plotlyjs="cdn", full_html=False,
         config={"displayModeBar": True, "displaylogo": False},
     )
-    html = _wrap_branded_html(plotly_div, title, subtitle, metrics_html, ds_name)
+    # Build head SVG for channel-based paradigms
+    head_svg = ""
+    ch_names = sig.metadata.get("ch_names", [])
+    if ch_names and paradigm_name in ("imagery", "p300", "cvep"):
+        head_svg = _build_head_svg(ch_names, active_ch=ch_names[0])
+    html = _wrap_branded_html(
+        plotly_div, title, subtitle, metrics_html, ds_name, head_svg=head_svg,
+    )
     path = output_dir / f"{code}_grand_average.html"
     path.write_text(html, encoding="utf-8")
     generated.append(path)
