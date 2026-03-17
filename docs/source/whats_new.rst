@@ -68,6 +68,9 @@ Enhancements
 - Add adjusted chance levels, distribution plot, and restyle analysis plots with colorblind-friendly palette (:gh:`1019` by `Bruno Aristimunha`_)
 - Enrich documentation metadata for Hinss2021, ErpCore2021 (all 7 variants), Schirrmeister2017, MartinezCagigal2023 (Checker + Pary), and Rodrigues2017 with investigators, institution, country, ethics approval, funding, contact info, acknowledgements, and citation instructions extracted from published papers. All 83 datasets now have ``investigators`` populated (:gh:`1017` by `Bruno Aristimunha`_)
 - Add ``return_all_modalities`` keyword-only parameter to :class:`moabb.datasets.base.BaseDataset` and 30+ multi-modal dataset subclasses, allowing users to retain non-EEG channels (EOG, EMG, ECG, misc) when loading data. Accepts ``True`` (all non-stim channels), or a ``dict`` of :func:`mne.pick_types` keyword arguments for fine-grained control (e.g. ``dict(eeg=True, eog=True)``). The setting is respected through the preprocessing pipeline (:class:`moabb.datasets.preprocessing.RawToEpochs`) and BIDS conversion so non-EEG channels survive epoching and export. Add shared ``pick_channels_for_modalities()`` helper to :mod:`moabb.datasets.utils` (:gh:`966`, :gh:`1030` by `Bruno Aristimunha`_)
+- Add new :mod:`moabb.analysis.neural_signatures` module with interactive Plotly-based neural signature visualizations for all five BCI paradigms: Motor Imagery ERD/ERS topomaps, P300/ERP waveforms, SSVEP power spectra and SNR, c-VEP evoked responses with PSD, and Resting State band power distributions. Public API: :func:`~moabb.analysis.neural_signatures.generate_neural_signature`, :func:`~moabb.analysis.neural_signatures.neural_signature_html`, :func:`~moabb.analysis.neural_signatures.get_plotly_template`, :func:`~moabb.analysis.neural_signatures.get_plotly_colorscale`. Produces standalone HTML reports with MOABB branding, interactive SVG head diagrams, electrode selection, and per-subject views (:gh:`1039` by `Bruno Aristimunha`_)
+- Add ``generate_figures`` parameter to :meth:`~moabb.datasets.base.BaseDataset.convert_to_bids` for optional neural signature generation into ``{bids_root}/derivatives/neural_signatures/`` during BIDS export (:gh:`1039` by `Bruno Aristimunha`_)
+- Conditionally export :func:`~moabb.analysis.neural_signatures.generate_neural_signature` and :func:`~moabb.analysis.neural_signatures.neural_signature_html` from :mod:`moabb.analysis` when ``plotly`` is installed (:gh:`1039` by `Bruno Aristimunha`_)
 
 API changes
 ~~~~~~~~~~~
@@ -89,6 +92,7 @@ Requirements
 - Added ``filelock`` as a core dependency to fix missing import errors in utils (:gh:`959` by `Mateusz Naklicki`_).
 - Temporarily track ``pyriemann`` from GitHub source (``master``) to use new ``PotatoField`` capabilities introduced in pyRiemann PR #423 (:gh:`1011` by `Bruno Aristimunha`_)
 - Add type hints to :class:`moabb.evaluations.base.BaseEvaluation` and all concrete evaluation classes (:gh:`732` by `Sarthak Tayal`_)
+- Add ``plotly>=5.18.0`` as optional ``interactive`` dependency (``pip install moabb[interactive]``), included in ``moabb[all]`` (:gh:`1039` by `Bruno Aristimunha`_)
 
 Bugs
 ~~~~
@@ -177,6 +181,7 @@ Code health
 - Add a compile smoke test (``moabb/tests/test_compilation.py``) that validates syntax for all Python files under ``moabb/`` using ``py_compile`` (:gh:`960` by `Bruno Aristimunha`_)
 - Add persistent DOI resolution cache (``moabb/tests/doi_cache.json``) for ``test_doi_validation.py`` to avoid network requests on every test run, reducing DOI test time from ~9 minutes to <1 second. Refresh with ``--update-doi-cache`` (:gh:`996` by `Bruno Aristimunha`_)
 - Fix ``UtilEvaluation`` test class not discovered by pytest: renamed to ``TestUtilEvaluation`` and replaced ``self.skipTest`` (unittest-only) with ``pytest.skip`` (:gh:`1005` by `Bruno Aristimunha`_)
+- Add 282 parametrized tests in ``moabb/tests/test_neural_signatures.py`` covering all five paradigms, HTML generation, template/colorscale utilities, and edge cases for the :mod:`moabb.analysis.neural_signatures` module (:gh:`1039` by `Bruno Aristimunha`_)
 
 Version 1.4.3 (Stable - PyPi)
 -------------------------------
