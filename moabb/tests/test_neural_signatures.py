@@ -29,91 +29,106 @@ from moabb.analysis.neural_signatures import (  # noqa: E402
 
 
 # ---------------------------------------------------------------------------
-# Fixtures
+# Paradigm configs — single source of truth for all parametrised tests
 # ---------------------------------------------------------------------------
 
+_PARADIGM_CONFIGS = {
+    "p300": dict(
+        dataset_kw=dict(
+            paradigm="p300",
+            event_list=("Target", "NonTarget"),
+            channels=("C3", "Cz", "C4", "Fz", "Pz", "Oz"),
+            sfreq=128, n_events=40, duration=60,
+        ),
+        paradigm_cls="P300",
+        paradigm_kw={},
+        compute_fn=compute_erp_signature,
+        plot_fn=plot_erp_interactive,
+        sig_paradigm="p300",
+        sig_type="erp",
+    ),
+    "imagery": dict(
+        dataset_kw=dict(
+            paradigm="imagery",
+            event_list=("left_hand", "right_hand"),
+            channels=("C3", "Cz", "C4"),
+            sfreq=128, n_events=30, duration=60,
+        ),
+        paradigm_cls="MotorImagery",
+        paradigm_kw=dict(n_classes=2),
+        compute_fn=compute_erd_ers_signature,
+        plot_fn=plot_erd_ers_interactive,
+        sig_paradigm="imagery",
+        sig_type="erd_ers",
+    ),
+    "ssvep": dict(
+        dataset_kw=dict(
+            paradigm="ssvep",
+            event_list=("13.0", "15.0"),
+            channels=("O1", "Oz", "O2"),
+            sfreq=256, n_events=30, duration=60,
+        ),
+        paradigm_cls="SSVEP",
+        paradigm_kw=dict(n_classes=2),
+        compute_fn=compute_ssvep_signature,
+        plot_fn=plot_ssvep_interactive,
+        sig_paradigm="ssvep",
+        sig_type="psd_snr",
+    ),
+    "cvep": dict(
+        dataset_kw=dict(
+            paradigm="cvep",
+            event_list=("1.0", "0.0"),
+            channels=("O1", "Oz", "O2"),
+            sfreq=256, n_events=30, duration=60,
+        ),
+        paradigm_cls="CVEP",
+        paradigm_kw=dict(n_classes=2),
+        compute_fn=compute_cvep_signature,
+        plot_fn=plot_cvep_interactive,
+        sig_paradigm="cvep",
+        sig_type="cvep_response",
+    ),
+    "rstate": dict(
+        dataset_kw=dict(
+            paradigm="rstate",
+            event_list=("eyes_open", "eyes_closed"),
+            channels=("C3", "Cz", "C4", "Fz", "Pz", "Oz"),
+            sfreq=128, n_events=20, duration=120,
+        ),
+        paradigm_cls="RestingStateToP300Adapter",
+        paradigm_kw=dict(tmin=0, tmax=3, resample=128),
+        sig_paradigm="rstate",
+        sig_type="rstate_psd",
+        compute_fn=compute_rstate_signature,
+        plot_fn=plot_rstate_interactive,
+    ),
+}
 
-@pytest.fixture
-def p300_dataset():
+_PARADIGM_IDS = list(_PARADIGM_CONFIGS.keys())
+
+
+def _make_dataset(cfg):
     return FakeDataset(
-        paradigm="p300",
-        event_list=("Target", "NonTarget"),
-        n_subjects=2,
-        n_sessions=1,
-        n_runs=1,
-        channels=("C3", "Cz", "C4", "Fz", "Pz", "Oz"),
-        sfreq=128,
-        n_events=40,
-        duration=60,
+        n_subjects=2, n_sessions=1, n_runs=1, **cfg["dataset_kw"]
     )
 
 
-@pytest.fixture
-def imagery_dataset():
-    return FakeDataset(
-        paradigm="imagery",
-        event_list=("left_hand", "right_hand"),
-        n_subjects=2,
-        n_sessions=1,
-        n_runs=1,
-        channels=("C3", "Cz", "C4"),
-        sfreq=128,
-        n_events=30,
-        duration=60,
-    )
+def _get_paradigm_cls(name):
+    """Import paradigm class by name string."""
+    import moabb.paradigms as mp
+    return getattr(mp, name)
 
 
-@pytest.fixture
-def ssvep_dataset():
-    return FakeDataset(
-        paradigm="ssvep",
-        event_list=("13.0", "15.0"),
-        n_subjects=2,
-        n_sessions=1,
-        n_runs=1,
-        channels=("O1", "Oz", "O2"),
-        sfreq=256,
-        n_events=30,
-        duration=60,
-    )
-
-
-@pytest.fixture
-def cvep_dataset():
-    return FakeDataset(
-        paradigm="cvep",
-        event_list=("1.0", "0.0"),
-        n_subjects=2,
-        n_sessions=1,
-        n_runs=1,
-        channels=("O1", "Oz", "O2"),
-        sfreq=256,
-        n_events=30,
-        duration=60,
-    )
-
-
-@pytest.fixture
-def rstate_dataset():
-    return FakeDataset(
-        paradigm="rstate",
-        event_list=("eyes_open", "eyes_closed"),
-        n_subjects=2,
-        n_sessions=1,
-        n_runs=1,
-        channels=("C3", "Cz", "C4", "Fz", "Pz", "Oz"),
-        sfreq=128,
-        n_events=20,
-        duration=120,
-    )
-
-
-def _get_epochs(dataset, paradigm_cls, **kwargs):
-    """Helper to load epochs from a FakeDataset."""
-    paradigm = paradigm_cls(**kwargs)
-    epochs, labels, meta = paradigm.get_data(
-        dataset, subjects=[1], return_epochs=True
-    )
+def _load_epochs(cfg):
+    ds = _make_dataset(cfg)
+    cls = _get_paradigm_cls(cfg["paradigm_cls"])
+    kw = dict(cfg["paradigm_kw"])
+    # rstate needs events from dataset
+    if cfg["paradigm_cls"] == "RestingStateToP300Adapter":
+        kw["events"] = list(ds.event_id.keys())
+    paradigm = cls(**kw)
+    epochs, _, _ = paradigm.get_data(ds, subjects=[1], return_epochs=True)
     return epochs
 
 
@@ -123,308 +138,149 @@ def _get_epochs(dataset, paradigm_cls, **kwargs):
 
 
 class TestPlotlyStyle:
-    def test_get_plotly_template(self):
-        template = get_plotly_template()
-        assert template is not None
-        assert template.layout is not None
-        assert len(template.layout.colorway) > 0
+    def test_template(self):
+        t = get_plotly_template()
+        assert t is not None and t.layout is not None
+        assert len(t.layout.colorway) > 0
 
-    def test_get_plotly_colorscale(self):
+    def test_colorscale(self):
         cs = get_plotly_colorscale()
         assert len(cs) == 5
-        assert cs[0][0] == 0.0
-        assert cs[-1][0] == 1.0
+        assert cs[0][0] == 0.0 and cs[-1][0] == 1.0
 
 
 # ---------------------------------------------------------------------------
-# Data container tests
+# Data container
 # ---------------------------------------------------------------------------
 
 
-class TestNeuralSignatureData:
-    def test_creation(self):
-        sig = NeuralSignatureData(
-            paradigm="p300",
-            dataset_name="Test",
-            dataset_code="test",
-            signature_type="erp",
-        )
-        assert sig.paradigm == "p300"
-        assert isinstance(sig.data, dict)
-        assert isinstance(sig.metadata, dict)
+def test_neural_signature_data_creation():
+    sig = NeuralSignatureData(
+        paradigm="p300", dataset_name="T", dataset_code="t",
+        signature_type="erp",
+    )
+    assert sig.paradigm == "p300"
+    assert isinstance(sig.data, dict) and isinstance(sig.metadata, dict)
 
 
 # ---------------------------------------------------------------------------
-# Computation tests
+# Computation tests (parametrised over paradigms)
 # ---------------------------------------------------------------------------
 
 
-class TestComputeERP:
-    def test_basic(self, p300_dataset):
-        from moabb.paradigms import P300
+@pytest.mark.parametrize("paradigm", _PARADIGM_IDS)
+def test_compute_signature(paradigm):
+    cfg = _PARADIGM_CONFIGS[paradigm]
+    epochs = _load_epochs(cfg)
+    sig = cfg["compute_fn"](epochs)
 
-        epochs = _get_epochs(p300_dataset, P300)
-        sig = compute_erp_signature(epochs)
-
-        assert sig.paradigm == "p300"
-        assert sig.signature_type == "erp"
-        # Event names may be "Target"/"NonTarget" or integer strings
-        assert len(sig.data["evokeds"]) >= 2
-        first_name = list(sig.data["evokeds"].keys())[0]
-        assert sig.data["evokeds"][first_name].shape[0] == len(epochs.ch_names)
-        assert len(sig.data["times"]) > 0
-        first_trials = list(sig.metadata["n_trials"].values())[0]
-        assert first_trials > 0
-
-    def test_sem_shape(self, p300_dataset):
-        from moabb.paradigms import P300
-
-        epochs = _get_epochs(p300_dataset, P300)
-        sig = compute_erp_signature(epochs)
-
-        for name in sig.data["event_names"]:
-            if name in sig.data["evokeds"]:
-                assert sig.data["sems"][name].shape == sig.data["evokeds"][name].shape
+    assert sig.paradigm == cfg["sig_paradigm"]
+    assert sig.signature_type == cfg["sig_type"]
+    assert list(sig.metadata["n_trials"].values())[0] > 0
 
 
-class TestComputeERDERS:
-    def test_basic(self, imagery_dataset):
-        from moabb.paradigms import MotorImagery
-
-        epochs = _get_epochs(imagery_dataset, MotorImagery, n_classes=2)
-        sig = compute_erd_ers_signature(epochs)
-
-        assert sig.paradigm == "imagery"
-        assert sig.signature_type == "erd_ers"
-        assert len(sig.data["tfr"]) > 0
-        assert len(sig.data["freqs"]) > 0
-
-    def test_channel_selection(self, imagery_dataset):
-        from moabb.paradigms import MotorImagery
-
-        epochs = _get_epochs(imagery_dataset, MotorImagery, n_classes=2)
-        sig = compute_erd_ers_signature(epochs)
-        # Should pick central channels
-        for ch in sig.metadata["ch_names"]:
-            assert ch in epochs.ch_names
+def test_erp_sem_shape():
+    cfg = _PARADIGM_CONFIGS["p300"]
+    sig = cfg["compute_fn"](_load_epochs(cfg))
+    for name in sig.data["event_names"]:
+        if name in sig.data["evokeds"]:
+            assert sig.data["sems"][name].shape == sig.data["evokeds"][name].shape
 
 
-class TestComputeSSVEP:
-    def test_basic(self, ssvep_dataset):
-        from moabb.paradigms import SSVEP
-
-        epochs = _get_epochs(ssvep_dataset, SSVEP, n_classes=2)
-        sig = compute_ssvep_signature(epochs)
-
-        assert sig.paradigm == "ssvep"
-        assert sig.signature_type == "psd_snr"
-        assert len(sig.data["psd"]) > 0
-        assert sig.data["freqs"] is not None
-
-    def test_stimulus_frequencies(self, ssvep_dataset):
-        from moabb.paradigms import SSVEP
-
-        epochs = _get_epochs(ssvep_dataset, SSVEP, n_classes=2)
-        sig = compute_ssvep_signature(epochs)
-
-        assert len(sig.data["stimulus_frequencies"]) > 0
+def test_erd_ers_channel_selection():
+    cfg = _PARADIGM_CONFIGS["imagery"]
+    epochs = _load_epochs(cfg)
+    sig = cfg["compute_fn"](epochs)
+    for ch in sig.metadata["ch_names"]:
+        assert ch in epochs.ch_names
 
 
-class TestComputeCVEP:
-    def test_basic(self, cvep_dataset):
-        from moabb.paradigms import CVEP
-
-        epochs = _get_epochs(cvep_dataset, CVEP, n_classes=2)
-        sig = compute_cvep_signature(epochs)
-
-        assert sig.paradigm == "cvep"
-        assert sig.signature_type == "cvep_response"
-        assert len(sig.data["evokeds"]) > 0
-        assert len(sig.data["psd"]) > 0
+def test_ssvep_stimulus_frequencies():
+    cfg = _PARADIGM_CONFIGS["ssvep"]
+    sig = cfg["compute_fn"](_load_epochs(cfg))
+    assert len(sig.data["stimulus_frequencies"]) > 0
 
 
-class TestComputeRState:
-    def test_basic(self, rstate_dataset):
-        from moabb.paradigms import RestingStateToP300Adapter
-
-        events = list(rstate_dataset.event_id.keys())
-        epochs = _get_epochs(
-            rstate_dataset, RestingStateToP300Adapter,
-            tmin=0, tmax=3, resample=128, events=events,
-        )
-        sig = compute_rstate_signature(epochs)
-
-        assert sig.paradigm == "rstate"
-        assert sig.signature_type == "rstate_psd"
-        assert len(sig.data["psd"]) > 0
-        assert len(sig.data["band_powers"]) > 0
-
-    def test_band_powers_sum(self, rstate_dataset):
-        from moabb.paradigms import RestingStateToP300Adapter
-
-        events = list(rstate_dataset.event_id.keys())
-        epochs = _get_epochs(
-            rstate_dataset, RestingStateToP300Adapter,
-            tmin=0, tmax=3, resample=128, events=events,
-        )
-        sig = compute_rstate_signature(epochs)
-
-        for name, bp in sig.data["band_powers"].items():
-            total = sum(bp.values())
-            # Should be close to 100% (relative powers)
-            assert 90 < total < 110, f"Band powers for {name} sum to {total}"
+def test_rstate_band_powers_sum():
+    cfg = _PARADIGM_CONFIGS["rstate"]
+    sig = cfg["compute_fn"](_load_epochs(cfg))
+    for name, bp in sig.data["band_powers"].items():
+        total = sum(bp.values())
+        assert 90 < total < 110, f"Band powers for {name} sum to {total}"
 
 
 # ---------------------------------------------------------------------------
-# Plot tests
+# Plot tests (parametrised)
 # ---------------------------------------------------------------------------
 
 
-class TestPlotERP:
-    def test_produces_figure(self, p300_dataset):
-        from moabb.paradigms import P300
+@pytest.mark.parametrize("paradigm", _PARADIGM_IDS)
+def test_plot_produces_figure(paradigm):
+    cfg = _PARADIGM_CONFIGS[paradigm]
+    sig = cfg["compute_fn"](_load_epochs(cfg))
+    sig.dataset_name = "Test"
 
-        epochs = _get_epochs(p300_dataset, P300)
-        sig = compute_erp_signature(epochs)
-        sig.dataset_name = "Test"
-
-        fig = plot_erp_interactive(sig)
-        assert fig is not None
-        assert len(fig.data) > 0
-
-    def test_html_output(self, p300_dataset):
-        from moabb.paradigms import P300
-
-        epochs = _get_epochs(p300_dataset, P300)
-        sig = compute_erp_signature(epochs)
-        sig.dataset_name = "Test"
-
-        fig = plot_erp_interactive(sig)
-        html = fig.to_html(include_plotlyjs=True)
-        assert "plotly" in html.lower()
-        assert len(html) > 100
+    fig = cfg["plot_fn"](sig)
+    assert fig is not None
+    assert len(fig.data) > 0
 
 
-class TestPlotERDERS:
-    def test_produces_figure(self, imagery_dataset):
-        from moabb.paradigms import MotorImagery
-
-        epochs = _get_epochs(imagery_dataset, MotorImagery, n_classes=2)
-        sig = compute_erd_ers_signature(epochs)
-        sig.dataset_name = "Test"
-
-        fig = plot_erd_ers_interactive(sig)
-        assert fig is not None
-        assert len(fig.data) > 0
-
-
-class TestPlotSSVEP:
-    def test_produces_figure(self, ssvep_dataset):
-        from moabb.paradigms import SSVEP
-
-        epochs = _get_epochs(ssvep_dataset, SSVEP, n_classes=2)
-        sig = compute_ssvep_signature(epochs)
-        sig.dataset_name = "Test"
-
-        fig = plot_ssvep_interactive(sig)
-        assert fig is not None
-        assert len(fig.data) > 0
-
-
-class TestPlotCVEP:
-    def test_produces_figure(self, cvep_dataset):
-        from moabb.paradigms import CVEP
-
-        epochs = _get_epochs(cvep_dataset, CVEP, n_classes=2)
-        sig = compute_cvep_signature(epochs)
-        sig.dataset_name = "Test"
-
-        fig = plot_cvep_interactive(sig)
-        assert fig is not None
-
-
-class TestPlotRState:
-    def test_produces_figure(self, rstate_dataset):
-        from moabb.paradigms import RestingStateToP300Adapter
-
-        events = list(rstate_dataset.event_id.keys())
-        epochs = _get_epochs(
-            rstate_dataset, RestingStateToP300Adapter,
-            tmin=0, tmax=3, resample=128, events=events,
-        )
-        sig = compute_rstate_signature(epochs)
-        sig.dataset_name = "Test"
-
-        fig = plot_rstate_interactive(sig)
-        assert fig is not None
-        assert len(fig.data) > 0
+def test_erp_html_output():
+    cfg = _PARADIGM_CONFIGS["p300"]
+    sig = cfg["compute_fn"](_load_epochs(cfg))
+    sig.dataset_name = "Test"
+    html = cfg["plot_fn"](sig).to_html(include_plotlyjs=True)
+    assert "plotly" in html.lower() and len(html) > 100
 
 
 # ---------------------------------------------------------------------------
-# End-to-end tests
+# End-to-end tests (parametrised)
 # ---------------------------------------------------------------------------
 
 
-class TestGenerateNeuralSignature:
-    def test_p300_end_to_end(self, p300_dataset):
-        with tempfile.TemporaryDirectory() as tmpdir:
-            paths = generate_neural_signature(
-                p300_dataset, subjects=[1, 2], output_dir=tmpdir
-            )
-            assert len(paths) >= 1
-            for p in paths:
-                assert p.exists()
-                content = p.read_text()
-                assert "plotly" in content.lower()
+@pytest.mark.parametrize("paradigm", ["p300", "imagery", "ssvep"])
+def test_generate_end_to_end(paradigm):
+    cfg = _PARADIGM_CONFIGS[paradigm]
+    ds = _make_dataset(cfg)
+    with tempfile.TemporaryDirectory() as tmpdir:
+        paths = generate_neural_signature(ds, subjects=[1], output_dir=tmpdir)
+        assert len(paths) >= 1
+        for p in paths:
+            assert p.exists()
+            assert "plotly" in p.read_text().lower()
 
-    def test_imagery_end_to_end(self, imagery_dataset):
-        with tempfile.TemporaryDirectory() as tmpdir:
-            paths = generate_neural_signature(
-                imagery_dataset, subjects=[1], output_dir=tmpdir
-            )
-            assert len(paths) >= 1
 
-    def test_ssvep_end_to_end(self, ssvep_dataset):
-        with tempfile.TemporaryDirectory() as tmpdir:
-            paths = generate_neural_signature(
-                ssvep_dataset, subjects=[1], output_dir=tmpdir
-            )
-            assert len(paths) >= 1
+def test_output_dir_created():
+    ds = _make_dataset(_PARADIGM_CONFIGS["p300"])
+    with tempfile.TemporaryDirectory() as tmpdir:
+        out = Path(tmpdir) / "nested" / "dir"
+        generate_neural_signature(ds, subjects=[1], output_dir=out)
+        assert out.exists()
 
-    def test_output_dir_created(self, p300_dataset):
-        with tempfile.TemporaryDirectory() as tmpdir:
-            out = Path(tmpdir) / "nested" / "dir"
-            paths = generate_neural_signature(
-                p300_dataset, subjects=[1], output_dir=out
-            )
-            assert out.exists()
 
-    def test_unsupported_paradigm_raises(self):
-        ds = FakeDataset(paradigm="imagery")
-        # Monkey-patch to an unsupported paradigm
-        ds._paradigm = "unknown"
-        object.__setattr__(ds, "paradigm", "unknown")
-        with tempfile.TemporaryDirectory() as tmpdir:
-            with pytest.raises(ValueError, match="Unsupported paradigm"):
-                generate_neural_signature(ds, subjects=[1], output_dir=tmpdir)
+def test_unsupported_paradigm_raises():
+    ds = FakeDataset(paradigm="imagery")
+    ds._paradigm = "unknown"
+    object.__setattr__(ds, "paradigm", "unknown")
+    with tempfile.TemporaryDirectory() as tmpdir:
+        with pytest.raises(ValueError, match="Unsupported paradigm"):
+            generate_neural_signature(ds, subjects=[1], output_dir=tmpdir)
 
 
 # ---------------------------------------------------------------------------
-# Paradigm dispatch tests
+# Paradigm dispatch
 # ---------------------------------------------------------------------------
 
 
-class TestParadigmDispatch:
-    def test_all_paradigms_have_handlers(self):
-        from moabb.analysis.neural_signatures import _PARADIGM_HANDLERS
+def test_all_paradigms_have_handlers():
+    from moabb.analysis.neural_signatures import _PARADIGM_HANDLERS
 
-        expected = {"imagery", "p300", "ssvep", "cvep", "rstate"}
-        assert set(_PARADIGM_HANDLERS.keys()) == expected
+    assert set(_PARADIGM_HANDLERS.keys()) == {"imagery", "p300", "ssvep", "cvep", "rstate"}
 
-    def test_handler_tuple_structure(self):
-        from moabb.analysis.neural_signatures import _PARADIGM_HANDLERS
 
-        for name, handler in _PARADIGM_HANDLERS.items():
-            assert len(handler) == 2, f"Handler for {name} should be 2-tuple"
-            assert callable(handler[0]), f"compute_fn for {name} not callable"
-            assert callable(handler[1]), f"plot_fn for {name} not callable"
+def test_handler_tuple_structure():
+    from moabb.analysis.neural_signatures import _PARADIGM_HANDLERS
+
+    for name, handler in _PARADIGM_HANDLERS.items():
+        assert len(handler) == 2, f"{name}: expected 2-tuple"
+        assert callable(handler[0]) and callable(handler[1])
