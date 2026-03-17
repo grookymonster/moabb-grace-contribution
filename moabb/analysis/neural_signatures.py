@@ -432,7 +432,12 @@ def compute_erd_ers_signature(
     if freqs is None:
         freqs = np.arange(2, 36, 1.0)
     if baseline is None:
-        baseline = (epochs.times[0], 0.0)
+        t0 = epochs.times[0]
+        if t0 < 0:
+            baseline = (t0, 0.0)
+        else:
+            # Absolute times (MOABB convention) — use first 0.5s as baseline
+            baseline = (t0, t0 + 0.5)
 
     central_chs = _select_central_channels(epochs.ch_names)
     picks = mne.pick_channels(epochs.ch_names, central_chs, ordered=True)
@@ -1627,7 +1632,7 @@ def _get_paradigm_instance(paradigm_name: str, dataset=None):
     )
 
     _paradigm_factories = {
-        "imagery": lambda _ds: MotorImagery(n_classes=2, resample=128),
+        "imagery": lambda _ds: MotorImagery(n_classes=2, fmin=1, fmax=45, resample=128),
         "p300": lambda _ds: P300(),
         "ssvep": lambda _ds: SSVEP(n_classes=2, resample=256),
         "cvep": lambda _ds: CVEP(n_classes=2, resample=256),
@@ -1670,6 +1675,14 @@ def _load_and_compute(
     paradigm = _get_paradigm_instance(paradigm_name, dataset)
     ds_name = dataset.__class__.__name__
     code = dataset.code
+
+    # Widen the dataset interval to include a pre-stimulus baseline
+    _BASELINE_MARGIN = 0.5  # seconds before the task interval
+    _task_onset = None
+    if hasattr(dataset, "interval") and dataset.interval is not None:
+        orig = dataset.interval
+        _task_onset = orig[0]
+        dataset.interval = [orig[0] - _BASELINE_MARGIN, orig[1]]
 
     per_subject_epochs: dict = {}
     grand_epochs = None
@@ -1877,7 +1890,24 @@ def _make_per_subject_figure(
 
         color = _PLOT_PALETTE[i % len(_PLOT_PALETTE)]
 
-        if paradigm_name in ("p300", "cvep"):
+        if paradigm_name == "imagery":
+            event_names = [
+                e for e in sig.data.get("event_names", [])
+                if e in sig.data.get("tfr", {})
+            ]
+            if not event_names:
+                continue
+            # Show mu-band (8-13 Hz) mean power over time per subject
+            freqs = sig.data["freqs"]
+            mu_mask = (freqs >= 8) & (freqs <= 13)
+            tfr = sig.data["tfr"][event_names[0]]  # (ch, freq, time)
+            mu_power = tfr[:, mu_mask, :].mean(axis=(0, 1))
+            fig.add_trace(go.Scatter(
+                x=sig.data["times"], y=mu_power,
+                mode="lines", name=f"Sub {subj}",
+                line=dict(color=color, width=1.5), opacity=0.7,
+            ))
+        elif paradigm_name in ("p300", "cvep"):
             event_names = [
                 e for e in sig.data.get("event_names", [])
                 if e in sig.data.get("evokeds", {})
@@ -1910,7 +1940,12 @@ def _make_per_subject_figure(
     )
     fig.update_layout(hovermode="x unified")
 
-    if paradigm_name in ("p300", "cvep"):
+    if paradigm_name == "imagery":
+        fig.update_layout(
+            xaxis_title="Time (s)",
+            yaxis_title="Mu-band (8\u201313 Hz) Power",
+        )
+    elif paradigm_name in ("p300", "cvep"):
         fig.update_layout(xaxis_title="Time (ms)", yaxis_title="Amplitude (\u00b5V)")
         fig.add_vline(x=0, line_dash="dash", line_color=MOABB_NAVY,
                       line_width=1, opacity=0.4)
