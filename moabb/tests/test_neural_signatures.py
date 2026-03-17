@@ -221,7 +221,7 @@ def test_erp_html_output():
     assert "plotly" in html.lower() and len(html) > 100
 
 
-@pytest.mark.parametrize("paradigm", ["p300", "imagery", "ssvep"])
+@pytest.mark.parametrize("paradigm", _PARADIGM_IDS)
 def test_generate_end_to_end(paradigm):
     cfg = _PARADIGM_CONFIGS[paradigm]
     ds = _make_dataset(cfg)
@@ -268,3 +268,15 @@ def test_handler_tuple_structure():
     for name, handler in _PARADIGM_HANDLERS.items():
         assert len(handler) == 2, f"{name}: expected 2-tuple"
         assert callable(handler[0]) and callable(handler[1])
+
+
+@pytest.mark.parametrize("paradigm", _PARADIGM_IDS)
+def test_head_svg_present_all_paradigms(paradigm):
+    """Regression: head SVG diagram must appear for every paradigm."""
+    cfg = _PARADIGM_CONFIGS[paradigm]
+    ds = _make_dataset(cfg)
+    with tempfile.TemporaryDirectory() as tmpdir:
+        paths = generate_neural_signature(ds, subjects=[1], output_dir=tmpdir)
+        assert len(paths) >= 1
+        html = paths[0].read_text()
+        assert 'id="head-svg"' in html, f"head SVG missing for {paradigm}"

@@ -958,16 +958,18 @@ def _build_head_svg(ch_names: list[str], active_ch: str | None = None) -> str:
 
 
 def _build_head_js(ch_names: list[str]) -> str:
-    """Return JS to sync the SVG head with the Plotly channel slider."""
+    """Return JS to sync the SVG head with the Plotly channel selector."""
     if not ch_names:
         return ""
     return f"""<script>
 (function() {{
   var chNames = {list(ch_names)};
+  var chSet = new Set(chNames);
   var CORAL = "{MOABB_CORAL}";
   var NAVY  = "{MOABB_NAVY}";
 
   function highlightElectrode(name) {{
+    if (!chSet.has(name)) return;
     chNames.forEach(function(ch) {{
       var el = document.getElementById("elec-" + ch);
       if (!el) return;
@@ -991,6 +993,11 @@ def _build_head_js(ch_names: list[str]) -> str:
     plot.on("plotly_sliderchange", function(e) {{
       if (e && e.step && e.step.label) {{
         highlightElectrode(e.step.label);
+      }}
+    }});
+    plot.on("plotly_buttonclicked", function(e) {{
+      if (e && e.button && e.button.label) {{
+        highlightElectrode(e.button.label);
       }}
     }});
   }}
@@ -1742,7 +1749,7 @@ def generate_neural_signature(
     head_svg = ""
     head_js = ""
     ch_names = sig.metadata.get("ch_names", [])
-    if ch_names and paradigm_name in ("imagery", "p300", "cvep"):
+    if ch_names:
         head_svg = _build_head_svg(ch_names, active_ch=ch_names[0])
         head_js = _build_head_js(ch_names)
     html = _wrap_branded_html(
