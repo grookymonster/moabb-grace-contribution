@@ -605,6 +605,7 @@ def compute_erd_ers_signature(
     event_names: list[str] | None = None,
     freqs: np.ndarray | None = None,
     baseline: tuple[float, float] | None = None,
+    task_onset: float | None = None,
 ) -> NeuralSignatureData:
     """Compute ERD/ERS time-frequency maps for motor imagery.
 
@@ -622,8 +623,12 @@ def compute_erd_ers_signature(
         Frequencies for TFR.  Defaults to 2-36 Hz in 1 Hz steps
         (matching the MNE ERDS tutorial range).
     baseline : tuple or None
-        Baseline interval ``(tmin, tmax)`` in seconds.  Defaults to
-        ``(epochs.tmin, 0)``.
+        Baseline interval ``(tmin, tmax)`` in seconds.
+    task_onset : float or None
+        Absolute time (in epoch coordinates) at which the task starts.
+        Used to derive baseline when *baseline* is ``None``.  For
+        example, if the dataset interval is ``[2, 6]`` and the epoch
+        was widened to ``[1, 6]``, *task_onset* is ``2.0``.
 
     Returns
     -------
@@ -652,10 +657,15 @@ def compute_erd_ers_signature(
     if baseline is None:
         t0 = epochs.times[0]
         if t0 < 0:
+            # Standard: epochs have pre-stimulus period (negative times)
             baseline = (t0, 0.0)
+        elif task_onset is not None and t0 < task_onset:
+            # Widened interval: epoch starts before task onset
+            # e.g. epoch [1.0 .. 6.0] with task_onset=2.0 → baseline (1.0, 2.0)
+            baseline = (t0, task_onset)
         else:
-            # Absolute times (MOABB convention) — use first 0.5s as baseline
-            baseline = (t0, t0 + 0.5)
+            # No pre-task rest available — use first 0.5 s as pseudo-baseline
+            baseline = (t0, t0 + min(0.5, (epochs.times[-1] - t0) * 0.1))
 
     central_chs = _select_motor_channels(epochs)
     picks = mne.pick_channels(epochs.ch_names, central_chs, ordered=True)
@@ -2005,13 +2015,22 @@ def _load_and_compute(
     ds_name = dataset.__class__.__name__
     code = dataset.code
 
-    # Widen the dataset interval to include a pre-stimulus baseline
-    _BASELINE_MARGIN = 0.5  # seconds before the task interval
-    _task_onset = None
+    # Widen the dataset interval to include a pre-stimulus baseline.
+    # If the interval starts at t>0 (e.g. [2, 6]), the 0..t window is
+    # a rest period we can borrow from.  We take up to 1 s but never
+    # more than the available rest duration.  If the interval already
+    # starts at 0, we prepend a fixed 0.5 s margin.
+    _task_onset = None  # absolute time of the original interval start
     if hasattr(dataset, "interval") and dataset.interval is not None:
         orig = dataset.interval
         _task_onset = orig[0]
-        dataset.interval = [orig[0] - _BASELINE_MARGIN, orig[1]]
+        if orig[0] > 0:
+            # Rest period available before task — use up to 1 s of it
+            margin = min(orig[0], 1.0)
+        else:
+            # Interval already at 0 — prepend a small fixed margin
+            margin = 0.5
+        dataset.interval = [orig[0] - margin, orig[1]]
 
     per_subject_epochs: dict = {}
     grand_epochs = None
@@ -2041,7 +2060,11 @@ def _load_and_compute(
         return None, None, per_subject_epochs
 
     log.info("Computing grand-average signature for %s", ds_name)
-    sig = compute_fn(grand_epochs)
+    # Pass task_onset to ERD/ERS so it can set a precise baseline
+    kwargs = {}
+    if _task_onset is not None and compute_fn is compute_erd_ers_signature:
+        kwargs["task_onset"] = _task_onset
+    sig = compute_fn(grand_epochs, **kwargs)
     sig.dataset_name = ds_name
     sig.dataset_code = code
     _relabel_signature(sig, _build_event_label_map(dataset))
