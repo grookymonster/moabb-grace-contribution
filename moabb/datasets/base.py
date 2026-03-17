@@ -1069,9 +1069,7 @@ class BaseDataset(metaclass=MetaclassDataset):
                 )
 
                 fig_dir = bids_root / "derivatives" / "neural_signatures"
-                generate_neural_signature(
-                    self, subjects=subjects, output_dir=fig_dir
-                )
+                generate_neural_signature(self, subjects=subjects, output_dir=fig_dir)
             except ImportError:
                 log.warning(
                     "plotly not installed, skipping figure generation. "
