@@ -1168,18 +1168,81 @@ def _format_metric_value(key: str, val) -> str:
     return str(val)
 
 
+_GITHUB_BASE = "https://github.com/NeuroTechX/moabb/blob/develop"
+_SRC_FILE = "moabb/analysis/neural_signatures.py"
+
+# Map metric suffix → (code snippet, line hint in compute_metrics)
+_METRIC_CODE: dict[str, str] = {
+    "peak_amplitude_uV":
+        "mean_evk = (evk * 1e6).mean(axis=0)\n"
+        "peak = mean_evk[np.argmax(np.abs(mean_evk))]",
+    "peak_latency_ms":
+        "peak_idx = np.argmax(np.abs(mean_evk))\n"
+        "latency = times[peak_idx] * 1000",
+    "mean_amplitude_uV":
+        "np.mean(evk * 1e6, axis=(0,1))",
+    "rms_uV":
+        "np.sqrt(np.mean(mean_evk**2))",
+    "n_trials":
+        "len(epochs[event_name])",
+    "max_erd_pct":
+        "np.min(tfr.mean(axis=0)) * 100\n"
+        "# baseline-corrected percentage change",
+    "max_ers_pct":
+        "np.max(tfr.mean(axis=0)) * 100",
+    "erd_peak_freq_hz":
+        "freqs[np.argmin(mean_tfr)]",
+    "mu_band_erd_pct":
+        "mean_tfr[(freqs>=8)&(freqs<=13), :].mean()\n"
+        "# mu band: 8-13 Hz",
+    "beta_band_erd_pct":
+        "mean_tfr[(freqs>=13)&(freqs<=30), :].mean()\n"
+        "# beta band: 13-30 Hz",
+    "snr":
+        "psd[target_freq] / mean_noise[target_freq]\n"
+        "# convolution-kernel SNR (MNE method)",
+    "peak_power":
+        "np.max(psd)  # Welch PSD",
+    "peak_freq_hz":
+        "freqs[np.argmax(psd)]",
+    "alpha_peak_hz":
+        "alpha_freqs[np.argmax(psd[8-13 Hz])]",
+}
+# Band-power metrics for resting state
+for _band in ("delta", "theta", "alpha", "beta", "gamma"):
+    _METRIC_CODE[f"{_band}_pct"] = (
+        f"np.trapezoid(psd[{_band}], freqs) /\n"
+        f"np.trapezoid(psd[1-50Hz], freqs) * 100"
+    )
+
+
+def _metric_tooltip(metric_suffix: str) -> str:
+    """Return an HTML title attribute with the code snippet for a metric."""
+    code = _METRIC_CODE.get(metric_suffix, "")
+    if not code:
+        return ""
+    # Escape HTML entities for the title attribute
+    escaped = code.replace("&", "&amp;").replace('"', "&quot;").replace("<", "&lt;")
+    return f' title="{escaped}"'
+
+
 def _build_metrics_table(metrics: dict[str, Any], sig_type: str) -> str:
     """Build a clean HTML metrics table for the branded HTML wrapper."""
     if not metrics:
         return ""
 
+    src_url = f"{_GITHUB_BASE}/{_SRC_FILE}"
+
     # Group metrics by event/condition name (first token before _)
-    groups: dict[str, list[tuple[str, str]]] = {}
+    groups: dict[str, list[tuple[str, str, str]]] = {}
     for k, v in metrics.items():
         parts = k.split("_", 1)
         group = parts[0] if len(parts) > 1 else "General"
-        label = parts[1].replace("_", " ").title() if len(parts) > 1 else k
-        groups.setdefault(group, []).append((label, _format_metric_value(k, v)))
+        suffix = parts[1] if len(parts) > 1 else k
+        label = suffix.replace("_", " ").title()
+        groups.setdefault(group, []).append(
+            (label, _format_metric_value(k, v), suffix)
+        )
 
     rows = []
     for group_name, items in groups.items():
@@ -1188,18 +1251,28 @@ def _build_metrics_table(metrics: dict[str, Any], sig_type: str) -> str:
             f'color:{MOABB_NAVY};border-bottom:1px solid {MOABB_NAVY};'
             f'font-size:12px;letter-spacing:0.5px">{group_name}</td></tr>'
         )
-        for label, val in items:
+        for label, val, suffix in items:
+            tip = _metric_tooltip(suffix)
             rows.append(
-                f'<tr><td style="padding:3px 12px 3px 0;color:{GRID_COLOR};'
+                f'<tr class="metric-row"{tip}>'
+                f'<td style="padding:3px 12px 3px 0;color:{GRID_COLOR};'
                 f'font-size:11px">{label}</td>'
                 f'<td style="padding:3px 0;font-weight:600;'
                 f'color:{MOABB_DARK_TEXT};font-size:11px;text-align:right">'
                 f'{val}</td></tr>'
             )
 
+    src_link = (
+        f'<div style="margin-top:12px;text-align:right">'
+        f'<a href="{src_url}" target="_blank" '
+        f'style="font-size:10px;color:{GRID_COLOR};text-decoration:none;'
+        f'border-bottom:1px dotted {GRID_COLOR}">'
+        f'View source: compute_metrics()</a></div>'
+    )
+
     return (
         '<table style="border-collapse:collapse;font-family:Georgia,serif;'
-        'width:100%">' + "".join(rows) + "</table>"
+        'width:100%">' + "".join(rows) + "</table>" + src_link
     )
 
 
@@ -1316,6 +1389,10 @@ def _wrap_branded_html(
     """Wrap a Plotly div in a branded MOABB HTML page."""
     source = _DEFAULT_SOURCE.format(version=moabb.__version__)
 
+    head_block = (
+        f'<div class="head-inset">{head_svg}</div>' if head_svg else ""
+    )
+
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1332,8 +1409,10 @@ def _wrap_branded_html(
     --amber: {MOABB_AMBER};
     --dark-text: {MOABB_DARK_TEXT};
     --grid: {GRID_COLOR};
-    --bg: #FAFBFC;
+    --bg: #F4F6F8;
     --card-bg: #FFFFFF;
+    --card-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --radius: 8px;
   }}
   * {{ margin: 0; padding: 0; box-sizing: border-box; }}
   body {{
@@ -1343,121 +1422,146 @@ def _wrap_branded_html(
     -webkit-font-smoothing: antialiased;
   }}
   .page {{
-    max-width: 1280px;
+    max-width: 1340px;
     margin: 0 auto;
-    padding: 0 24px 48px;
+    padding: 0 28px 56px;
   }}
-  /* ---- Accent bar (Economist signature) ---- */
-  .accent-bar {{
-    height: 4px;
-    background: var(--navy);
-    margin-bottom: 0;
-  }}
-  .accent-pip {{
-    width: 40px;
-    height: 3px;
-    background: var(--teal);
-    margin-bottom: 24px;
-  }}
+  /* ---- Top bar ---- */
+  .top-bar {{ display: flex; height: 5px; }}
+  .top-bar .teal {{ width: 60px; background: var(--teal); }}
+  .top-bar .navy {{ flex: 1; background: var(--navy); }}
   /* ---- Header ---- */
   .header {{
-    padding: 32px 0 20px;
+    padding: 24px 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }}
-  .header h1 {{
-    font-size: 26px;
+  .header-left {{
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }}
+  .head-inset {{
+    flex-shrink: 0;
+    width: 76px; height: 76px;
+    background: var(--card-bg);
+    border-radius: 50%;
+    padding: 6px;
+    box-shadow: var(--card-shadow);
+  }}
+  .header-text h1 {{
+    font-size: 24px;
     font-weight: 700;
     color: var(--dark-text);
     line-height: 1.2;
     letter-spacing: -0.3px;
-    margin-bottom: 6px;
   }}
-  .header .subtitle {{
-    font-size: 15px;
+  .header-text .subtitle {{
+    font-size: 13px;
     color: var(--grid);
-    font-weight: 400;
-    line-height: 1.4;
+    margin-top: 4px;
+    line-height: 1.5;
   }}
-  /* ---- Main grid ---- */
+  .badge {{
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 14px;
+    background: rgba(27,158,119,0.08);
+    border: 1px solid rgba(27,158,119,0.2);
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--teal);
+    white-space: nowrap;
+  }}
+  .badge::before {{
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--teal);
+    border-radius: 50%;
+  }}
+  /* ---- Layout ---- */
   .content {{
     display: grid;
-    grid-template-columns: 1fr 280px;
-    gap: 24px;
+    grid-template-columns: 1fr 300px;
+    gap: 20px;
     align-items: start;
   }}
-  @media (max-width: 900px) {{
+  @media (max-width: 960px) {{
     .content {{ grid-template-columns: 1fr; }}
   }}
-  /* ---- Chart card ---- */
   .chart-card {{
     background: var(--card-bg);
-    border-radius: 6px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    border-radius: var(--radius);
+    box-shadow: var(--card-shadow);
     overflow: hidden;
   }}
-  .chart-card .plotly-graph-div {{
-    width: 100% !important;
-  }}
-  /* ---- Metrics sidebar ---- */
+  .chart-card .plotly-graph-div {{ width: 100% !important; }}
+  /* ---- Sidebar ---- */
   .metrics-card {{
     background: var(--card-bg);
-    border-radius: 6px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    border-radius: var(--radius);
+    box-shadow: var(--card-shadow);
     padding: 20px;
     position: sticky;
     top: 16px;
+    max-height: 85vh;
+    overflow-y: auto;
+  }}
+  .metrics-card::-webkit-scrollbar {{ width: 4px; }}
+  .metrics-card::-webkit-scrollbar-thumb {{
+    background: var(--grid); border-radius: 2px; opacity: 0.3;
   }}
   .metrics-card h2 {{
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
     color: var(--navy);
     text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 12px;
+    letter-spacing: 1.2px;
+    margin-bottom: 14px;
     padding-bottom: 8px;
     border-bottom: 2px solid var(--navy);
   }}
   .metrics-card h2::after {{
     content: '';
     display: block;
-    width: 24px;
-    height: 2px;
+    width: 28px; height: 2px;
     background: var(--teal);
-    margin-top: 2px;
+    margin-top: 3px;
+  }}
+  .metric-row {{
+    cursor: help;
+    transition: background 0.15s;
+  }}
+  .metric-row:hover {{
+    background: rgba(27,158,119,0.06);
   }}
   /* ---- Footer ---- */
   .source {{
-    margin-top: 24px;
-    padding-top: 12px;
-    border-top: 1px solid #E0E4E8;
+    margin-top: 28px;
+    padding-top: 14px;
+    border-top: 1px solid #DFE3E8;
     font-size: 11px;
     color: var(--grid);
     font-style: italic;
-  }}
-  /* ---- Header with head inset ---- */
-  .header-row {{
-    display: flex;
-    align-items: center;
-    gap: 20px;
-  }}
-  .head-inset {{
-    flex-shrink: 0;
-    width: 90px;
-    height: 90px;
+    text-align: center;
   }}
 </style>
 </head>
 <body>
 <div class="page">
-  <div class="accent-bar"></div>
-  <div class="accent-pip"></div>
+  <div class="top-bar"><div class="teal"></div><div class="navy"></div></div>
   <div class="header">
-    <div class="header-row">
-      {f'<div class="head-inset">{head_svg}</div>' if head_svg else ''}
-      <div>
+    <div class="header-left">
+      {head_block}
+      <div class="header-text">
         <h1>{title}</h1>
         <div class="subtitle">{subtitle}</div>
       </div>
     </div>
+    <div class="badge">{ds_name}</div>
   </div>
   <div class="content">
     <div class="chart-card">{plotly_div}</div>
