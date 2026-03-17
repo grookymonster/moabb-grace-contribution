@@ -170,6 +170,146 @@ def _hex_to_rgba(hex_color: str, alpha: float) -> str:
     return f"rgba({r}, {g}, {b}, {alpha})"
 
 
+def _get_montage_xy(ch_names: list[str]) -> dict[str, tuple[float, float]]:
+    """Return normalised 2-D (x, y) positions for *ch_names* from 10-20."""
+    montage = mne.channels.make_standard_montage("standard_1020")
+    pos_3d = montage.get_positions()["ch_pos"]
+    # Collect raw x, y for channels present in the montage
+    raw: dict[str, tuple[float, float]] = {}
+    for ch in ch_names:
+        if ch in pos_3d:
+            raw[ch] = (pos_3d[ch][0], pos_3d[ch][1])
+    if not raw:
+        return {}
+    xs = [v[0] for v in raw.values()]
+    ys = [v[1] for v in raw.values()]
+    # Normalise to head-radius (use the full montage extent)
+    all_xy = np.array([[pos_3d[c][0], pos_3d[c][1]]
+                       for c in montage.ch_names if c in pos_3d])
+    cx, cy = all_xy[:, 0].mean(), all_xy[:, 1].mean()
+    radius = np.max(np.sqrt((all_xy[:, 0] - cx) ** 2 + (all_xy[:, 1] - cy) ** 2))
+    if radius == 0:
+        radius = 1.0
+    return {ch: ((x - cx) / radius, (y - cy) / radius) for ch, (x, y) in raw.items()}
+
+
+def _add_head_inset(
+    fig,
+    ch_names: list[str],
+    active_idx: int = 0,
+    xdomain: tuple[float, float] = (0.88, 1.0),
+    ydomain: tuple[float, float] = (0.0, 0.18),
+    ax_id: int = 99,
+) -> int:
+    """Draw a small scalp head with interactive electrode dots.
+
+    Uses a secondary axes so that electrode highlights can be toggled
+    by the channel slider.  Returns the number of highlight traces added
+    (one per channel) so the caller can wire up visibility.
+
+    Parameters
+    ----------
+    fig : plotly.graph_objects.Figure
+    ch_names : list of str
+        Channels to plot.
+    active_idx : int
+        Index of the initially active channel.
+    xdomain, ydomain : tuple
+        Paper-coordinate domain for the inset axes.
+    ax_id : int
+        Axis number suffix for the secondary axes.
+
+    Returns
+    -------
+    int
+        Number of highlight traces appended (== len(ch_names)).
+    """
+    import plotly.graph_objects as go
+
+    positions = _get_montage_xy(ch_names)
+    if not positions:
+        return 0
+
+    xax = f"x{ax_id}"
+    yax = f"y{ax_id}"
+    xref = f"x{ax_id}"
+    yref = f"y{ax_id}"
+
+    # Add hidden secondary axes in the corner
+    fig.update_layout(**{
+        f"xaxis{ax_id}": dict(
+            domain=list(xdomain), anchor=yax.replace("y", "y"),
+            range=[-1.4, 1.4], showgrid=False, zeroline=False,
+            showticklabels=False, showline=False,
+        ),
+        f"yaxis{ax_id}": dict(
+            domain=list(ydomain), anchor=xax.replace("x", "x"),
+            range=[-1.4, 1.4], showgrid=False, zeroline=False,
+            showticklabels=False, showline=False,
+            scaleanchor=xax, scaleratio=1,
+        ),
+    })
+
+    # Head outline
+    fig.add_shape(
+        type="circle", xref=xref, yref=yref,
+        x0=-1, y0=-1, x1=1, y1=1,
+        line=dict(color=MOABB_NAVY, width=1.5),
+        fillcolor="rgba(250,251,252,0.9)",
+    )
+    # Nose
+    fig.add_shape(
+        type="path", xref=xref, yref=yref,
+        path="M -0.12 1.0 L 0 1.22 L 0.12 1.0",
+        line=dict(color=MOABB_NAVY, width=1.5),
+    )
+    # Ears
+    for s in (-1, 1):
+        fig.add_shape(
+            type="path", xref=xref, yref=yref,
+            path=f"M {s*1.0} -0.25 Q {s*1.22} 0 {s*1.0} 0.25",
+            line=dict(color=MOABB_NAVY, width=1.5),
+        )
+
+    # All electrode dots (always visible, small navy)
+    all_x = [positions[ch][0] * 0.85 for ch in ch_names if ch in positions]
+    all_y = [positions[ch][1] * 0.85 for ch in ch_names if ch in positions]
+    all_labels = [ch for ch in ch_names if ch in positions]
+    fig.add_trace(go.Scatter(
+        x=all_x, y=all_y, mode="markers",
+        marker=dict(size=6, color=MOABB_NAVY, opacity=0.35),
+        hoverinfo="text", hovertext=all_labels,
+        showlegend=False,
+        xaxis=xax, yaxis=yax,
+    ))
+
+    # Per-channel highlight traces (one per channel, toggled by slider)
+    for ch_i, ch in enumerate(ch_names):
+        if ch not in positions:
+            # Still add a dummy trace to keep indexing consistent
+            fig.add_trace(go.Scatter(
+                x=[0], y=[0], mode="markers",
+                marker=dict(size=0, opacity=0),
+                hoverinfo="skip", showlegend=False,
+                visible=False, xaxis=xax, yaxis=yax,
+            ))
+            continue
+        px, py = positions[ch][0] * 0.85, positions[ch][1] * 0.85
+        fig.add_trace(go.Scatter(
+            x=[px], y=[py], mode="markers+text",
+            marker=dict(size=18, color=MOABB_CORAL, symbol="circle",
+                        line=dict(width=2.5, color="white")),
+            text=[f"<b>{ch}</b>"], textposition="bottom center",
+            textfont=dict(size=11, color=MOABB_CORAL, family=_FONT_FAMILY),
+            hoverinfo="text", hovertext=ch,
+            showlegend=False,
+            visible=(ch_i == active_idx),
+            xaxis=xax, yaxis=yax,
+        ))
+
+    return len(ch_names)
+
+
 def _build_event_label_map(dataset) -> dict[str, str]:
     """Build a mapping from integer-string event codes to readable names.
 
@@ -1233,8 +1373,9 @@ def plot_erp_interactive(
         yaxis_title="Amplitude (\u00b5V)",
         hovermode="x unified",
         height=480,
-        margin=dict(t=100, b=60, l=72, r=24),
+        margin=dict(t=100, b=60, l=72, r=100),
     )
+    _add_head_inset(fig, ch_names, active_idx=channel_idx)
 
     return fig
 
@@ -1277,6 +1418,8 @@ def plot_erd_ers_interactive(
 
     total_trials = sum(n_trials.get(e, 0) for e in event_names)
 
+    # Reserve right 18% of figure width for head inset + colorbar
+    _heatmap_right = 0.78
     fig = make_subplots(
         rows=1, cols=n_events,
         subplot_titles=[
@@ -1286,8 +1429,18 @@ def plot_erd_ers_interactive(
         ],
         shared_yaxes=True,
         horizontal_spacing=0.06,
+        column_widths=[1] * n_events,
     )
     fig.update_layout(template=get_plotly_template())
+    # Squeeze heatmap columns into left portion
+    col_width = _heatmap_right / n_events
+    gap = 0.02
+    for i in range(1, n_events + 1):
+        x0 = (i - 1) * col_width + gap
+        x1 = i * col_width - gap
+        fig.update_layout(**{
+            f"xaxis{i if i > 1 else ''}": dict(domain=[x0, x1]),
+        })
 
     # Global symmetric color range from the 95th percentile
     all_values = [sig.data["tfr"][n] for n in event_names]
@@ -1308,7 +1461,9 @@ def plot_erd_ers_interactive(
                 colorscale=colorscale, zmin=-vmax, zmax=vmax,
                 colorbar=dict(
                     title=dict(text="ERD/ERS (%)", font=dict(size=11)),
-                    thickness=12, len=0.85,
+                    thickness=12, len=0.3,
+                    y=0.95, yanchor="top",
+                    x=0.90, xanchor="center",
                     tickfont=dict(size=10),
                     outlinewidth=0,
                 ) if ev_i == n_events - 1 else None,
@@ -1321,8 +1476,23 @@ def plot_erd_ers_interactive(
             row=1, col=ev_i + 1,
         )
 
-    # Channel slider
+    # Add head inset in the right-side space (vertically centered with heatmaps)
+    n_head_traces = _add_head_inset(
+        fig, ch_names, active_idx=0,
+        xdomain=(0.83, 0.99), ydomain=(0.10, 0.60),
+    )
+    # n_events heatmap traces + 1 "all dots" trace + n_head_traces highlight traces
+    # The highlight traces start at index (n_events + 1)
+    head_start = n_events + 1  # skip heatmaps + all-dots trace
+
+    # Channel slider — update heatmap z-data AND head highlight visibility
     if len(ch_names) > 1:
+        for ch_i, step in enumerate(steps):
+            vis = [True] * n_events  # heatmaps always visible
+            vis.append(True)  # all-dots trace always visible
+            vis.extend(i == ch_i for i in range(n_head_traces))
+            step["args"] = [{"z": step["args"][0]["z"], "visible": vis}]
+
         fig.update_layout(sliders=[dict(
             active=0,
             currentvalue=dict(
@@ -1362,7 +1532,7 @@ def plot_erd_ers_interactive(
         ),
     )
     fig.update_layout(
-        height=500, margin=dict(t=110, b=80, l=72, r=80),
+        height=520, margin=dict(t=110, b=80, l=72, r=20),
     )
     for i in range(1, n_events + 1):
         fig.update_xaxes(title_text="Time (s)", row=1, col=i)
@@ -1525,8 +1695,9 @@ def plot_cvep_interactive(
     )
     fig.update_layout(
         height=640, hovermode="x unified",
-        margin=dict(t=110, b=60, l=72, r=24),
+        margin=dict(t=110, b=60, l=72, r=100),
     )
+    _add_head_inset(fig, ch_names, active_idx=channel_idx)
     return fig
 
 
