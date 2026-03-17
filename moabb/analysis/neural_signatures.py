@@ -170,24 +170,45 @@ def _hex_to_rgba(hex_color: str, alpha: float) -> str:
     return f"rgba({r}, {g}, {b}, {alpha})"
 
 
-def _get_montage_xy(ch_names: list[str]) -> dict[str, tuple[float, float]]:
-    """Return normalised 2-D (x, y) positions for *ch_names* from 10-20."""
-    montage = mne.channels.make_standard_montage("standard_1020")
-    pos_3d = montage.get_positions()["ch_pos"]
-    # Collect raw x, y for channels present in the montage
+def _get_montage_xy(
+    ch_names: list[str],
+    epochs: "mne.Epochs | None" = None,
+) -> dict[str, tuple[float, float]]:
+    """Return normalised 2-D (x, y) positions for *ch_names*.
+
+    Tries the epochs' own montage first (handles custom/non-standard names),
+    then falls back to the standard 10-20 montage.
+    """
+    pos_3d: dict[str, np.ndarray] = {}
+
+    # Try epochs' own montage first
+    if epochs is not None:
+        try:
+            montage = epochs.get_montage()
+            if montage is not None:
+                pos_3d = montage.get_positions()["ch_pos"]
+        except Exception:
+            pass
+
+    # Fall back to standard 10-20
+    if not any(ch in pos_3d for ch in ch_names):
+        montage = mne.channels.make_standard_montage("standard_1020")
+        pos_3d = montage.get_positions()["ch_pos"]
+
     raw: dict[str, tuple[float, float]] = {}
     for ch in ch_names:
         if ch in pos_3d:
-            raw[ch] = (pos_3d[ch][0], pos_3d[ch][1])
+            raw[ch] = (float(pos_3d[ch][0]), float(pos_3d[ch][1]))
     if not raw:
         return {}
-    xs = [v[0] for v in raw.values()]
-    ys = [v[1] for v in raw.values()]
-    # Normalise to head-radius (use the full montage extent)
+
+    # Normalise to head-radius using the full montage extent
     all_xy = np.array([[pos_3d[c][0], pos_3d[c][1]]
-                       for c in montage.ch_names if c in pos_3d])
-    cx, cy = all_xy[:, 0].mean(), all_xy[:, 1].mean()
-    radius = np.max(np.sqrt((all_xy[:, 0] - cx) ** 2 + (all_xy[:, 1] - cy) ** 2))
+                       for c in pos_3d if c in pos_3d])
+    cx, cy = float(all_xy[:, 0].mean()), float(all_xy[:, 1].mean())
+    radius = float(np.max(np.sqrt(
+        (all_xy[:, 0] - cx) ** 2 + (all_xy[:, 1] - cy) ** 2
+    )))
     if radius == 0:
         radius = 1.0
     return {ch: ((x - cx) / radius, (y - cy) / radius) for ch, (x, y) in raw.items()}
@@ -513,13 +534,70 @@ def compute_erp_signature(
     )
 
 
-def _select_central_channels(ch_names: list[str]) -> list[str]:
-    """Pick the best available central channels for motor imagery."""
-    preferred = ["C3", "C4", "Cz", "C1", "C2", "FC3", "FC4", "CP3", "CP4"]
-    selected = [ch for ch in preferred if ch in ch_names]
-    if not selected:
-        selected = ch_names[:min(3, len(ch_names))]
-    return selected
+def _select_motor_channels(
+    epochs: mne.Epochs,
+    max_channels: int | None = None,
+) -> list[str]:
+    """Select sensorimotor channels available in *epochs*.
+
+    Strategy (in priority order):
+    1. Use electrode coordinates from the epochs' montage to pick channels
+       closest to the central sensorimotor strip (C3/Cz/C4 region).
+    2. Fall back to matching well-known label patterns.
+    3. Use all available channels if nothing else works.
+
+    Parameters
+    ----------
+    epochs : mne.Epochs
+        Epochs with channel info.
+    max_channels : int or None
+        Cap on the number of channels returned. ``None`` adapts
+        based on the total number of channels.
+    """
+    ch_names = epochs.ch_names
+    n_total = len(ch_names)
+
+    if max_channels is None:
+        if n_total <= 5:
+            max_channels = n_total
+        elif n_total <= 16:
+            max_channels = min(9, n_total)
+        elif n_total <= 32:
+            max_channels = 9
+        else:
+            max_channels = 12
+
+    # --- Strategy 1: coordinate-based (most robust) ---
+    try:
+        montage = epochs.get_montage()
+        if montage is not None:
+            pos = montage.get_positions()["ch_pos"]
+            # Sensorimotor target: near x≈0, y≈0 (vertex / central strip)
+            dists = {}
+            for ch in ch_names:
+                if ch in pos:
+                    x, y, _z = pos[ch]
+                    # Distance to central strip (x=0 midline weighted less,
+                    # so lateral motor channels C3/C4 are included)
+                    dists[ch] = x ** 2 + (y * 1.5) ** 2
+            if dists:
+                ranked = sorted(dists, key=dists.get)
+                return ranked[:max_channels]
+    except Exception:
+        pass
+
+    # --- Strategy 2: label-based matching ---
+    _MOTOR_LABELS = [
+        "C3", "C4", "Cz", "C1", "C2", "C5", "C6",
+        "FC3", "FC4", "FCz", "FC1", "FC2", "FC5", "FC6",
+        "CP3", "CP4", "CPz", "CP1", "CP2", "CP5", "CP6",
+    ]
+    selected = [ch for ch in _MOTOR_LABELS if ch in ch_names]
+    if selected:
+        return selected[:max_channels]
+
+    # --- Strategy 3: all channels ---
+    return ch_names[:max_channels]
 
 
 def compute_erd_ers_signature(
@@ -579,7 +657,7 @@ def compute_erd_ers_signature(
             # Absolute times (MOABB convention) — use first 0.5s as baseline
             baseline = (t0, t0 + 0.5)
 
-    central_chs = _select_central_channels(epochs.ch_names)
+    central_chs = _select_motor_channels(epochs)
     picks = mne.pick_channels(epochs.ch_names, central_chs, ordered=True)
 
     tfr_data = {}
