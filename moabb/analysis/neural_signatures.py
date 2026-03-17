@@ -71,8 +71,7 @@ _FONT_FAMILY = "Georgia, Cambria, 'Times New Roman', serif"
 _PLOT_PALETTE = [MOABB_NAVY, MOABB_CORAL, MOABB_TEAL, MOABB_PURPLE, MOABB_AMBER, MOABB_SKY]
 
 # Subtle background tint — avoids the clinical pure-white look
-_PAPER_BG = "#FAFBFC"
-_PLOT_BG = "#FAFBFC"
+_BG_TINT = "#FAFBFC"
 
 # Lighter grid that won't compete with heatmaps
 _GRID_LIGHT = "rgba(117, 141, 153, 0.18)"
@@ -102,8 +101,8 @@ def get_plotly_template():
             pad=dict(b=12),
         ),
         colorway=MOABB_PALETTE,
-        paper_bgcolor=_PAPER_BG,
-        plot_bgcolor=_PLOT_BG,
+        paper_bgcolor=_BG_TINT,
+        plot_bgcolor=_BG_TINT,
         margin=dict(l=72, r=24, t=80, b=64),
         xaxis=dict(
             showgrid=False,
@@ -214,123 +213,6 @@ def _get_montage_xy(
     return {ch: ((x - cx) / radius, (y - cy) / radius) for ch, (x, y) in raw.items()}
 
 
-def _add_head_inset(
-    fig,
-    ch_names: list[str],
-    active_idx: int = 0,
-    xdomain: tuple[float, float] = (0.88, 1.0),
-    ydomain: tuple[float, float] = (0.0, 0.18),
-    ax_id: int = 99,
-) -> int:
-    """Draw a small scalp head with interactive electrode dots.
-
-    Uses a secondary axes so that electrode highlights can be toggled
-    by the channel slider.  Returns the number of highlight traces added
-    (one per channel) so the caller can wire up visibility.
-
-    Parameters
-    ----------
-    fig : plotly.graph_objects.Figure
-    ch_names : list of str
-        Channels to plot.
-    active_idx : int
-        Index of the initially active channel.
-    xdomain, ydomain : tuple
-        Paper-coordinate domain for the inset axes.
-    ax_id : int
-        Axis number suffix for the secondary axes.
-
-    Returns
-    -------
-    int
-        Number of highlight traces appended (== len(ch_names)).
-    """
-    import plotly.graph_objects as go
-
-    positions = _get_montage_xy(ch_names)
-    if not positions:
-        return 0
-
-    xax = f"x{ax_id}"
-    yax = f"y{ax_id}"
-    xref = f"x{ax_id}"
-    yref = f"y{ax_id}"
-
-    # Add hidden secondary axes in the corner
-    fig.update_layout(**{
-        f"xaxis{ax_id}": dict(
-            domain=list(xdomain), anchor=yax.replace("y", "y"),
-            range=[-1.4, 1.4], showgrid=False, zeroline=False,
-            showticklabels=False, showline=False,
-        ),
-        f"yaxis{ax_id}": dict(
-            domain=list(ydomain), anchor=xax.replace("x", "x"),
-            range=[-1.4, 1.4], showgrid=False, zeroline=False,
-            showticklabels=False, showline=False,
-            scaleanchor=xax, scaleratio=1,
-        ),
-    })
-
-    # Head outline
-    fig.add_shape(
-        type="circle", xref=xref, yref=yref,
-        x0=-1, y0=-1, x1=1, y1=1,
-        line=dict(color=MOABB_NAVY, width=1.5),
-        fillcolor="rgba(250,251,252,0.9)",
-    )
-    # Nose
-    fig.add_shape(
-        type="path", xref=xref, yref=yref,
-        path="M -0.12 1.0 L 0 1.22 L 0.12 1.0",
-        line=dict(color=MOABB_NAVY, width=1.5),
-    )
-    # Ears
-    for s in (-1, 1):
-        fig.add_shape(
-            type="path", xref=xref, yref=yref,
-            path=f"M {s*1.0} -0.25 Q {s*1.22} 0 {s*1.0} 0.25",
-            line=dict(color=MOABB_NAVY, width=1.5),
-        )
-
-    # All electrode dots (always visible, small navy)
-    all_x = [positions[ch][0] * 0.85 for ch in ch_names if ch in positions]
-    all_y = [positions[ch][1] * 0.85 for ch in ch_names if ch in positions]
-    all_labels = [ch for ch in ch_names if ch in positions]
-    fig.add_trace(go.Scatter(
-        x=all_x, y=all_y, mode="markers",
-        marker=dict(size=6, color=MOABB_NAVY, opacity=0.35),
-        hoverinfo="text", hovertext=all_labels,
-        showlegend=False,
-        xaxis=xax, yaxis=yax,
-    ))
-
-    # Per-channel highlight traces (one per channel, toggled by slider)
-    for ch_i, ch in enumerate(ch_names):
-        if ch not in positions:
-            # Still add a dummy trace to keep indexing consistent
-            fig.add_trace(go.Scatter(
-                x=[0], y=[0], mode="markers",
-                marker=dict(size=0, opacity=0),
-                hoverinfo="skip", showlegend=False,
-                visible=False, xaxis=xax, yaxis=yax,
-            ))
-            continue
-        px, py = positions[ch][0] * 0.85, positions[ch][1] * 0.85
-        fig.add_trace(go.Scatter(
-            x=[px], y=[py], mode="markers+text",
-            marker=dict(size=18, color=MOABB_CORAL, symbol="circle",
-                        line=dict(width=2.5, color="white")),
-            text=[f"<b>{ch}</b>"], textposition="bottom center",
-            textfont=dict(size=11, color=MOABB_CORAL, family=_FONT_FAMILY),
-            hoverinfo="text", hovertext=ch,
-            showlegend=False,
-            visible=(ch_i == active_idx),
-            xaxis=xax, yaxis=yax,
-        ))
-
-    return len(ch_names)
-
-
 def _build_event_label_map(dataset) -> dict[str, str]:
     """Build a mapping from integer-string event codes to readable names.
 
@@ -366,18 +248,9 @@ def _relabel_signature(sig: "NeuralSignatureData", label_map: dict[str, str]):
     def _remap_dict(d: dict) -> dict:
         return {display_map.get(k, k): v for k, v in d.items()}
 
-    if "evokeds" in sig.data:
-        sig.data["evokeds"] = _remap_dict(sig.data["evokeds"])
-    if "sems" in sig.data:
-        sig.data["sems"] = _remap_dict(sig.data["sems"])
-    if "tfr" in sig.data:
-        sig.data["tfr"] = _remap_dict(sig.data["tfr"])
-    if "psd" in sig.data and isinstance(sig.data["psd"], dict):
-        sig.data["psd"] = _remap_dict(sig.data["psd"])
-    if "snr" in sig.data:
-        sig.data["snr"] = _remap_dict(sig.data["snr"])
-    if "band_powers" in sig.data:
-        sig.data["band_powers"] = _remap_dict(sig.data["band_powers"])
+    for key in ("evokeds", "sems", "tfr", "psd", "snr", "band_powers"):
+        if key in sig.data and isinstance(sig.data[key], dict):
+            sig.data[key] = _remap_dict(sig.data[key])
     if "event_names" in sig.data:
         sig.data["event_names"] = [
             display_map.get(e, e) for e in sig.data["event_names"]
@@ -493,20 +366,6 @@ def compute_erp_signature(
     Returns
     -------
     NeuralSignatureData
-
-    See Also
-    --------
-    :func:`plot_erp_interactive` : Plot the computed ERP signature.
-    :func:`generate_neural_signature` : High-level entry point.
-
-    Notes
-    -----
-    Follows the evoked-response approach described in the MNE
-    visualization tutorial [1]_.
-
-    References
-    ----------
-    .. [1] https://mne.tools/stable/auto_tutorials/evoked/20_visualize_evoked.html
     """
     if event_names is None:
         event_names = [e for e in ["Target", "NonTarget"] if e in epochs.event_id]
@@ -633,22 +492,6 @@ def compute_erd_ers_signature(
     Returns
     -------
     NeuralSignatureData
-
-    See Also
-    --------
-    :func:`plot_erd_ers_interactive` : Plot the computed ERD/ERS maps.
-    :func:`generate_neural_signature` : High-level entry point.
-
-    Notes
-    -----
-    ``n_cycles`` is set to ``freqs`` (one cycle per Hz), matching the
-    MNE ERDS tutorial [1]_.  Baseline correction uses ``mode="percent"``
-    so that values represent percentage change from baseline
-    (negative = ERD, positive = ERS).
-
-    References
-    ----------
-    .. [1] https://mne.tools/stable/auto_examples/time_frequency/time_frequency_erds.html
     """
     if event_names is None:
         event_names = list(epochs.event_id.keys())
@@ -748,10 +591,6 @@ def _snr_spectrum(
     -------
     ndarray, same shape as *psd*
         SNR values (ratio, not dB).
-
-    References
-    ----------
-    .. [1] https://mne.tools/stable/auto_tutorials/time-freq/50_ssvep.html
     """
     averaging_kernel = np.concatenate((
         np.ones(noise_n_neighbor_freqs),
@@ -792,22 +631,6 @@ def compute_ssvep_signature(
     Returns
     -------
     NeuralSignatureData
-
-    See Also
-    --------
-    :func:`plot_ssvep_interactive` : Plot the computed SSVEP spectrum.
-    :func:`generate_neural_signature` : High-level entry point.
-
-    Notes
-    -----
-    Follows the MNE SSVEP tutorial approach [1]_: a single boxcar
-    window with ``n_fft`` equal to the epoch length for maximum
-    frequency resolution, and SNR computed via a symmetric convolution
-    kernel that skips immediately adjacent frequency bins.
-
-    References
-    ----------
-    .. [1] https://mne.tools/stable/auto_tutorials/time-freq/50_ssvep.html
     """
     event_names = list(epochs.event_id.keys())
 
@@ -900,11 +723,6 @@ def compute_cvep_signature(
     Returns
     -------
     NeuralSignatureData
-
-    See Also
-    --------
-    :func:`plot_cvep_interactive` : Plot the computed c-VEP signature.
-    :func:`generate_neural_signature` : High-level entry point.
     """
     if event_names is None:
         event_names = list(epochs.event_id.keys())
@@ -953,22 +771,6 @@ def compute_rstate_signature(
     Returns
     -------
     NeuralSignatureData
-
-    See Also
-    --------
-    :func:`plot_rstate_interactive` : Plot the computed resting state signature.
-    :func:`generate_neural_signature` : High-level entry point.
-
-    Notes
-    -----
-    Band power is computed as relative power (percentage of total
-    1-50 Hz power) in delta (1-4), theta (4-8), alpha (8-13),
-    beta (13-30), and gamma (30-45) bands.  Follows the global
-    field power approach described in the MNE tutorial [1]_.
-
-    References
-    ----------
-    .. [1] https://mne.tools/stable/auto_examples/time_frequency/time_frequency_global_field_power.html
     """
     if event_names is None:
         event_names = list(epochs.event_id.keys())
@@ -1207,13 +1009,9 @@ _METRIC_CODE: dict[str, str] = {
         "freqs[np.argmax(psd)]",
     "alpha_peak_hz":
         "alpha_freqs[np.argmax(psd[8-13 Hz])]",
+    **{f"{b}_pct": f"trapezoid(psd[{b}], freqs) / trapezoid(psd[1-50Hz], freqs) * 100"
+       for b in ("delta", "theta", "alpha", "beta", "gamma")},
 }
-# Band-power metrics for resting state
-for _band in ("delta", "theta", "alpha", "beta", "gamma"):
-    _METRIC_CODE[f"{_band}_pct"] = (
-        f"np.trapezoid(psd[{_band}], freqs) /\n"
-        f"np.trapezoid(psd[1-50Hz], freqs) * 100"
-    )
 
 
 def _metric_tooltip(metric_suffix: str) -> str:
@@ -1404,9 +1202,7 @@ def _wrap_branded_html(
   :root {{
     --navy: {MOABB_NAVY};
     --teal: {MOABB_TEAL};
-    --sky: {MOABB_SKY};
     --coral: {MOABB_CORAL};
-    --amber: {MOABB_AMBER};
     --dark-text: {MOABB_DARK_TEXT};
     --grid: {GRID_COLOR};
     --bg: #F4F6F8;
@@ -1599,9 +1395,6 @@ def plot_erp_interactive(
     -------
     plotly.graph_objects.Figure
 
-    See Also
-    --------
-    :func:`compute_erp_signature` : Compute the data for this plot.
     """
     import plotly.graph_objects as go
 
@@ -1705,9 +1498,6 @@ def plot_erd_ers_interactive(
     -------
     plotly.graph_objects.Figure
 
-    See Also
-    --------
-    :func:`compute_erd_ers_signature` : Compute the data for this plot.
     """
     import plotly.graph_objects as go
     from plotly.subplots import make_subplots
@@ -1828,9 +1618,6 @@ def plot_ssvep_interactive(
     -------
     plotly.graph_objects.Figure
 
-    See Also
-    --------
-    :func:`compute_ssvep_signature` : Compute the data for this plot.
     """
     import plotly.graph_objects as go
 
@@ -1912,9 +1699,6 @@ def plot_cvep_interactive(
     -------
     plotly.graph_objects.Figure
 
-    See Also
-    --------
-    :func:`compute_cvep_signature` : Compute the data for this plot.
     """
     import plotly.graph_objects as go
     from plotly.subplots import make_subplots
@@ -1987,9 +1771,6 @@ def plot_rstate_interactive(
     -------
     plotly.graph_objects.Figure
 
-    See Also
-    --------
-    :func:`compute_rstate_signature` : Compute the data for this plot.
     """
     import plotly.graph_objects as go
     from plotly.subplots import make_subplots
@@ -2356,48 +2137,32 @@ def _make_per_subject_figure(
 
         color = _PLOT_PALETTE[i % len(_PLOT_PALETTE)]
 
+        # Resolve x/y data depending on paradigm
+        data_key = {"imagery": "tfr", "p300": "evokeds", "cvep": "evokeds"}.get(
+            paradigm_name, "psd"
+        )
+        event_names = [
+            e for e in sig.data.get("event_names", [])
+            if e in sig.data.get(data_key, {})
+        ]
+        if not event_names:
+            continue
+
         if paradigm_name == "imagery":
-            event_names = [
-                e for e in sig.data.get("event_names", [])
-                if e in sig.data.get("tfr", {})
-            ]
-            if not event_names:
-                continue
-            # Show mu-band (8-13 Hz) mean power over time per subject
             freqs = sig.data["freqs"]
             mu_mask = (freqs >= 8) & (freqs <= 13)
-            tfr = sig.data["tfr"][event_names[0]]  # (ch, freq, time)
-            mu_power = tfr[:, mu_mask, :].mean(axis=(0, 1))
-            fig.add_trace(go.Scatter(
-                x=sig.data["times"], y=mu_power,
-                mode="lines", name=f"Sub {subj}",
-                line=dict(color=color, width=1.5), opacity=0.7,
-            ))
+            tfr = sig.data["tfr"][event_names[0]]
+            x, y = sig.data["times"], tfr[:, mu_mask, :].mean(axis=(0, 1))
         elif paradigm_name in ("p300", "cvep"):
-            event_names = [
-                e for e in sig.data.get("event_names", [])
-                if e in sig.data.get("evokeds", {})
-            ]
-            if not event_names:
-                continue
             evk = sig.data["evokeds"][event_names[0]]
-            fig.add_trace(go.Scatter(
-                x=sig.data["times"] * 1000, y=evk.mean(axis=0) * 1e6,
-                mode="lines", name=f"Sub {subj}",
-                line=dict(color=color, width=1.5), opacity=0.7,
-            ))
-        elif paradigm_name in ("ssvep", "rstate"):
-            event_names = [
-                e for e in sig.data.get("event_names", [])
-                if e in sig.data.get("psd", {})
-            ]
-            if not event_names:
-                continue
-            fig.add_trace(go.Scatter(
-                x=sig.data["freqs"], y=sig.data["psd"][event_names[0]],
-                mode="lines", name=f"Sub {subj}",
-                line=dict(color=color, width=1.5), opacity=0.7,
-            ))
+            x, y = sig.data["times"] * 1000, evk.mean(axis=0) * 1e6
+        else:  # ssvep, rstate
+            x, y = sig.data["freqs"], sig.data["psd"][event_names[0]]
+
+        fig.add_trace(go.Scatter(
+            x=x, y=y, mode="lines", name=f"Sub {subj}",
+            line=dict(color=color, width=1.5), opacity=0.7,
+        ))
 
     _add_branding(
         fig,
