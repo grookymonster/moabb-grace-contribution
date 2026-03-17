@@ -21,7 +21,11 @@ import logging
 import warnings
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any
+from typing import TYPE_CHECKING, Any
+
+
+if TYPE_CHECKING:
+    import plotly.graph_objects as go
 
 import mne
 import numpy as np
@@ -1215,8 +1219,6 @@ def plot_erd_ers_interactive(
         fig = _make_figure()
         fig.update_layout(title="No ERD/ERS data available")
         return fig
-
-    total_trials = sum(n_trials.get(e, 0) for e in event_names)
 
     fig = make_subplots(
         rows=1,
