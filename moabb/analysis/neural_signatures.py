@@ -1116,57 +1116,104 @@ def _build_metrics_table(metrics: dict[str, Any], sig_type: str) -> str:
 
 
 def _build_head_svg(ch_names: list[str], active_ch: str | None = None) -> str:
-    """Build an inline SVG scalp diagram with electrode positions."""
+    """Build an inline SVG scalp diagram with electrode positions.
+
+    Each electrode dot gets ``id="elec-{ch}"`` and ``data-ch="{ch}"``
+    so that JavaScript can update the active highlight when the Plotly
+    channel slider moves.
+    """
     positions = _get_montage_xy(ch_names)
     if not positions:
         return ""
 
-    size = 120
+    size = 100
     cx, cy = size / 2, size / 2
-    r = size * 0.38  # head radius
+    r = size * 0.38
 
     parts = [
-        f'<svg viewBox="0 0 {size} {size}" '
-        f'width="{size}" height="{size}" '
+        f'<svg id="head-svg" viewBox="0 0 {size} {size}" '
         f'xmlns="http://www.w3.org/2000/svg" '
-        f'style="display:block">',
-        # Head
+        f'style="display:block;width:100%;height:100%">',
         f'<circle cx="{cx}" cy="{cy}" r="{r}" '
         f'fill="#FAFBFC" stroke="{MOABB_NAVY}" stroke-width="1.5"/>',
-        # Nose
-        f'<polygon points="{cx-4},{cy-r} {cx},{cy-r-8} {cx+4},{cy-r}" '
+        f'<polygon points="{cx-4},{cy-r} {cx},{cy-r-7} {cx+4},{cy-r}" '
         f'fill="none" stroke="{MOABB_NAVY}" stroke-width="1.5"/>',
-        # Left ear
-        f'<path d="M{cx-r},{cy-6} Q{cx-r-5},{cy} {cx-r},{cy+6}" '
+        f'<path d="M{cx-r},{cy-5} Q{cx-r-4},{cy} {cx-r},{cy+5}" '
         f'fill="none" stroke="{MOABB_NAVY}" stroke-width="1.5"/>',
-        # Right ear
-        f'<path d="M{cx+r},{cy-6} Q{cx+r+5},{cy} {cx+r},{cy+6}" '
+        f'<path d="M{cx+r},{cy-5} Q{cx+r+4},{cy} {cx+r},{cy+5}" '
         f'fill="none" stroke="{MOABB_NAVY}" stroke-width="1.5"/>',
     ]
 
-    # Electrode dots — note: montage y is nose-up, SVG y is down
+    active_ch = active_ch or (ch_names[0] if ch_names else None)
     for ch, (nx, ny) in positions.items():
         px = cx + nx * r * 0.82
-        py = cy - ny * r * 0.82  # flip y
+        py = cy - ny * r * 0.82
         is_active = ch == active_ch
-        dot_r = 5 if is_active else 2.5
-        color = MOABB_CORAL if is_active else MOABB_NAVY
-        opacity = "1" if is_active else "0.35"
         parts.append(
-            f'<circle cx="{px:.1f}" cy="{py:.1f}" r="{dot_r}" '
-            f'fill="{color}" opacity="{opacity}" '
-            f'data-ch="{ch}"/>'
+            f'<circle id="elec-{ch}" cx="{px:.1f}" cy="{py:.1f}" '
+            f'r="{"5" if is_active else "2.5"}" '
+            f'fill="{MOABB_CORAL if is_active else MOABB_NAVY}" '
+            f'opacity="{"1" if is_active else "0.35"}" '
+            f'data-ch="{ch}" data-cx="{px:.1f}" data-cy="{py:.1f}"/>'
         )
-        if is_active:
-            parts.append(
-                f'<text x="{px:.1f}" y="{py + 10:.1f}" '
-                f'text-anchor="middle" fill="{MOABB_CORAL}" '
-                f'font-size="9" font-weight="700" '
-                f'font-family="Georgia,serif">{ch}</text>'
-            )
+
+    # Active label (updated by JS)
+    if active_ch and active_ch in positions:
+        apx = cx + positions[active_ch][0] * r * 0.82
+        apy = cy - positions[active_ch][1] * r * 0.82
+        parts.append(
+            f'<text id="elec-label" x="{apx:.1f}" y="{apy + 10:.1f}" '
+            f'text-anchor="middle" fill="{MOABB_CORAL}" '
+            f'font-size="8" font-weight="700" '
+            f'font-family="Georgia,serif">{active_ch}</text>'
+        )
 
     parts.append("</svg>")
     return "\n".join(parts)
+
+
+def _build_head_js(ch_names: list[str]) -> str:
+    """Return a <script> that syncs the SVG head with the Plotly slider."""
+    if not ch_names:
+        return ""
+    return f"""<script>
+(function() {{
+  var chNames = {list(ch_names)};
+  var CORAL = "{MOABB_CORAL}";
+  var NAVY  = "{MOABB_NAVY}";
+
+  function highlightElectrode(name) {{
+    chNames.forEach(function(ch) {{
+      var el = document.getElementById("elec-" + ch);
+      if (!el) return;
+      var active = (ch === name);
+      el.setAttribute("r", active ? "5" : "2.5");
+      el.setAttribute("fill", active ? CORAL : NAVY);
+      el.setAttribute("opacity", active ? "1" : "0.35");
+    }});
+    var lbl = document.getElementById("elec-label");
+    var dot = document.getElementById("elec-" + name);
+    if (lbl && dot) {{
+      lbl.textContent = name;
+      lbl.setAttribute("x", dot.getAttribute("data-cx"));
+      lbl.setAttribute("y", String(parseFloat(dot.getAttribute("data-cy")) + 10));
+    }}
+  }}
+
+  // Wait for Plotly to finish rendering, then bind to slider event
+  function bind() {{
+    var plot = document.querySelector(".js-plotly-plot");
+    if (!plot || !plot.on) {{ setTimeout(bind, 200); return; }}
+    plot.on("plotly_sliderchange", function(e) {{
+      if (e && e.step && e.step.label) {{
+        highlightElectrode(e.step.label);
+      }}
+    }});
+  }}
+  if (document.readyState === "complete") bind();
+  else window.addEventListener("load", bind);
+}})();
+</script>"""
 
 
 def _wrap_branded_html(
@@ -1176,6 +1223,7 @@ def _wrap_branded_html(
     metrics_html: str,
     ds_name: str,
     head_svg: str = "",
+    head_js: str = "",
 ) -> str:
     """Wrap a Plotly div in a branded MOABB HTML page."""
     source = _DEFAULT_SOURCE.format(version=moabb.__version__)
@@ -1297,24 +1345,16 @@ def _wrap_branded_html(
     color: var(--grid);
     font-style: italic;
   }}
-  /* ---- Head inset below chart ---- */
-  .head-inset {{
+  /* ---- Header with head inset ---- */
+  .header-row {{
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin-top: 8px;
-    padding: 10px 16px;
-    background: var(--card-bg);
-    border-radius: 6px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    gap: 20px;
   }}
-  .head-inset .head-label {{
-    font-size: 11px;
-    color: var(--grid);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    white-space: nowrap;
+  .head-inset {{
+    flex-shrink: 0;
+    width: 90px;
+    height: 90px;
   }}
 </style>
 </head>
@@ -1323,20 +1363,23 @@ def _wrap_branded_html(
   <div class="accent-bar"></div>
   <div class="accent-pip"></div>
   <div class="header">
-    <h1>{title}</h1>
-    <div class="subtitle">{subtitle}</div>
+    <div class="header-row">
+      {f'<div class="head-inset">{head_svg}</div>' if head_svg else ''}
+      <div>
+        <h1>{title}</h1>
+        <div class="subtitle">{subtitle}</div>
+      </div>
+    </div>
   </div>
   <div class="content">
-    <div>
-      <div class="chart-card">{plotly_div}</div>
-      {f'<div class="head-inset"><span class="head-label">Electrode</span>{head_svg}</div>' if head_svg else ''}
-    </div>
+    <div class="chart-card">{plotly_div}</div>
     <div class="metrics-card">
       <h2>Objective Metrics</h2>
       {metrics_html}
     </div>
   </div>
   <div class="source">{source}</div>
+  {head_js}
 </div>
 </body>
 </html>"""
@@ -1569,17 +1612,8 @@ def plot_erd_ers_interactive(
             row=1, col=ev_i + 1,
         )
 
-    _add_branding(
-        fig,
-        title=f"ERD/ERS Time-Frequency \u2014 {sig.dataset_name}",
-        subtitle=(
-            f"Grand average \u00b7 {total_trials} trials "
-            f"\u00b7 Channels: {', '.join(ch_names)} "
-            f"\u00b7 Baseline-corrected percentage change"
-        ),
-    )
     fig.update_layout(
-        height=500, margin=dict(t=110, b=80, l=72, r=80),
+        height=700, margin=dict(t=40, b=80, l=72, r=80),
     )
     for i in range(1, n_events + 1):
         fig.update_xaxes(title_text="Time (s)", row=1, col=i)
@@ -2014,13 +2048,16 @@ def generate_neural_signature(
         include_plotlyjs="cdn", full_html=False,
         config={"displayModeBar": True, "displaylogo": False},
     )
-    # Build head SVG for channel-based paradigms
+    # Build head SVG + JS for channel-based paradigms
     head_svg = ""
+    head_js = ""
     ch_names = sig.metadata.get("ch_names", [])
     if ch_names and paradigm_name in ("imagery", "p300", "cvep"):
         head_svg = _build_head_svg(ch_names, active_ch=ch_names[0])
+        head_js = _build_head_js(ch_names)
     html = _wrap_branded_html(
-        plotly_div, title, subtitle, metrics_html, ds_name, head_svg=head_svg,
+        plotly_div, title, subtitle, metrics_html, ds_name,
+        head_svg=head_svg, head_js=head_js,
     )
     path = output_dir / f"{code}_grand_average.html"
     path.write_text(html, encoding="utf-8")
