@@ -27,11 +27,6 @@ from moabb.analysis.neural_signatures import (  # noqa: E402
     plot_ssvep_interactive,
 )
 
-
-# ---------------------------------------------------------------------------
-# Paradigm configs — single source of truth for all parametrised tests
-# ---------------------------------------------------------------------------
-
 _PARADIGM_CONFIGS = {
     "p300": dict(
         dataset_kw=dict(
@@ -107,18 +102,15 @@ _PARADIGM_CONFIGS = {
 
 _PARADIGM_IDS = list(_PARADIGM_CONFIGS.keys())
 
-
 def _make_dataset(cfg):
     return FakeDataset(
         n_subjects=2, n_sessions=1, n_runs=1, **cfg["dataset_kw"]
     )
 
-
 def _get_paradigm_cls(name):
     """Import paradigm class by name string."""
     import moabb.paradigms as mp
     return getattr(mp, name)
-
 
 def _load_epochs(cfg):
     ds = _make_dataset(cfg)
@@ -131,12 +123,6 @@ def _load_epochs(cfg):
     epochs, _, _ = paradigm.get_data(ds, subjects=[1], return_epochs=True)
     return epochs
 
-
-# ---------------------------------------------------------------------------
-# Style tests
-# ---------------------------------------------------------------------------
-
-
 class TestPlotlyStyle:
     def test_template(self):
         t = get_plotly_template()
@@ -148,12 +134,6 @@ class TestPlotlyStyle:
         assert len(cs) == 5
         assert cs[0][0] == 0.0 and cs[-1][0] == 1.0
 
-
-# ---------------------------------------------------------------------------
-# Data container
-# ---------------------------------------------------------------------------
-
-
 def test_neural_signature_data_creation():
     sig = NeuralSignatureData(
         paradigm="p300", dataset_name="T", dataset_code="t",
@@ -161,12 +141,6 @@ def test_neural_signature_data_creation():
     )
     assert sig.paradigm == "p300"
     assert isinstance(sig.data, dict) and isinstance(sig.metadata, dict)
-
-
-# ---------------------------------------------------------------------------
-# Computation tests (parametrised over paradigms)
-# ---------------------------------------------------------------------------
-
 
 @pytest.mark.parametrize("paradigm", _PARADIGM_IDS)
 def test_compute_signature(paradigm):
@@ -178,14 +152,12 @@ def test_compute_signature(paradigm):
     assert sig.signature_type == cfg["sig_type"]
     assert list(sig.metadata["n_trials"].values())[0] > 0
 
-
 def test_erp_sem_shape():
     cfg = _PARADIGM_CONFIGS["p300"]
     sig = cfg["compute_fn"](_load_epochs(cfg))
     for name in sig.data["event_names"]:
         if name in sig.data["evokeds"]:
             assert sig.data["sems"][name].shape == sig.data["evokeds"][name].shape
-
 
 def test_erd_ers_channel_selection():
     cfg = _PARADIGM_CONFIGS["imagery"]
@@ -194,12 +166,10 @@ def test_erd_ers_channel_selection():
     for ch in sig.metadata["ch_names"]:
         assert ch in epochs.ch_names
 
-
 def test_ssvep_stimulus_frequencies():
     cfg = _PARADIGM_CONFIGS["ssvep"]
     sig = cfg["compute_fn"](_load_epochs(cfg))
     assert len(sig.data["stimulus_frequencies"]) > 0
-
 
 def test_rstate_band_powers_sum():
     cfg = _PARADIGM_CONFIGS["rstate"]
@@ -207,12 +177,6 @@ def test_rstate_band_powers_sum():
     for name, bp in sig.data["band_powers"].items():
         total = sum(bp.values())
         assert 90 < total < 110, f"Band powers for {name} sum to {total}"
-
-
-# ---------------------------------------------------------------------------
-# Plot tests (parametrised)
-# ---------------------------------------------------------------------------
-
 
 @pytest.mark.parametrize("paradigm", _PARADIGM_IDS)
 def test_plot_produces_figure(paradigm):
@@ -224,19 +188,12 @@ def test_plot_produces_figure(paradigm):
     assert fig is not None
     assert len(fig.data) > 0
 
-
 def test_erp_html_output():
     cfg = _PARADIGM_CONFIGS["p300"]
     sig = cfg["compute_fn"](_load_epochs(cfg))
     sig.dataset_name = "Test"
     html = cfg["plot_fn"](sig).to_html(include_plotlyjs=True)
     assert "plotly" in html.lower() and len(html) > 100
-
-
-# ---------------------------------------------------------------------------
-# End-to-end tests (parametrised)
-# ---------------------------------------------------------------------------
-
 
 @pytest.mark.parametrize("paradigm", ["p300", "imagery", "ssvep"])
 def test_generate_end_to_end(paradigm):
@@ -249,14 +206,12 @@ def test_generate_end_to_end(paradigm):
             assert p.exists()
             assert "plotly" in p.read_text().lower()
 
-
 def test_output_dir_created():
     ds = _make_dataset(_PARADIGM_CONFIGS["p300"])
     with tempfile.TemporaryDirectory() as tmpdir:
         out = Path(tmpdir) / "nested" / "dir"
         generate_neural_signature(ds, subjects=[1], output_dir=out)
         assert out.exists()
-
 
 def test_unsupported_paradigm_raises():
     ds = FakeDataset(paradigm="imagery")
@@ -266,17 +221,10 @@ def test_unsupported_paradigm_raises():
         with pytest.raises(ValueError, match="Unsupported paradigm"):
             generate_neural_signature(ds, subjects=[1], output_dir=tmpdir)
 
-
-# ---------------------------------------------------------------------------
-# Paradigm dispatch
-# ---------------------------------------------------------------------------
-
-
 def test_all_paradigms_have_handlers():
     from moabb.analysis.neural_signatures import _PARADIGM_HANDLERS
 
     assert set(_PARADIGM_HANDLERS.keys()) == {"imagery", "p300", "ssvep", "cvep", "rstate"}
-
 
 def test_handler_tuple_structure():
     from moabb.analysis.neural_signatures import _PARADIGM_HANDLERS
