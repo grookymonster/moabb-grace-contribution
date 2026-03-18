@@ -4,7 +4,7 @@ Citing MOABB and related publications
 If you use MOABB in your experiments, please cite this library when
 publishing a paper to increase the visibility of open science initiatives:
 
--  Aristimunha, B., Carrara, I., Guetschel, P., Sedlar, S., Rodrigues, P., Sosulski, J., Narayanan, D., Bjareholt, E., Barthelemy, Q., Schirrmeister, R. T., Kobler, R., Kalunga, E., Darmet, L., Gregoire, C., Abdul Hussain, A., Gatti, R., Goncharenko, V., Andreev, A., Thielen, J., Moreau, T., Roy, Y., Jayaram, V., Barachant, A., & Chevallier, S. (2025). Mother of all BCI Benchmarks (Version 1.4.3). Zenodo. `10.5281/zenodo.10034223 <https://doi.org/10.5281/zenodo.10034223>`__
+-  Aristimunha, B., Carrara, I., Guetschel, P., Sedlar, S., Rodrigues, P., Sosulski, J., Narayanan, D., Bjareholt, E., Barthelemy, Q., Schirrmeister, R. T., Kobler, R., Kalunga, E., Darmet, L., Gregoire, C., Abdul Hussain, A., Gatti, R., Goncharenko, V., Andreev, A., Thielen, J., Moreau, T., Roy, Y., Jayaram, V., Barachant, A., Chevallier, S., & Hajhassani, D. (2026). Mother of all BCI Benchmarks (Version 1.5.0). Zenodo. `10.5281/zenodo.10034223 <https://doi.org/10.5281/zenodo.10034223>`__
 
 and here is the Bibtex version:
 
@@ -34,11 +34,12 @@ and here is the Bibtex version:
 	                      Roy, Yannick and
 	                      Jayaram, Vinay and
 	                      Barachant, Alexandre and
-                      Chevallier, Sylvain},
+                      Chevallier, Sylvain and
+                      Hajhassani, Davoud},
             title        = {Mother of all BCI Benchmarks},
-            year         = 2025,
+            year         = 2026,
             publisher    = {Zenodo},
-            version      = {1.4.3},
+            version      = {1.5.0},
             url = {https://github.com/NeuroTechX/moabb},
             doi = {10.5281/zenodo.10034223},
     }

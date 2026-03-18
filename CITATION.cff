@@ -82,7 +82,7 @@ authors:
   given-names: "Davoud"
   orcid: "https://orcid.org/0009-0008-6674-5546"
 title: "Mother of all BCI Benchmarks"
-version: 1.4.3
+version: 1.5.0
 doi: 10.5281/zenodo.10034223
-date-released: 2025-12-12
+date-released: 2026-03-18
 url: "https://github.com/NeuroTechX/moabb"
