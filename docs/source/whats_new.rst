@@ -42,7 +42,7 @@ Version 1.5.0  (Stable - PyPi)
 
 Enhancements
 ~~~~~~~~~~~~
-- Add 9 new dataset adapters (8 SSVEP and 1 ERP) covering 357+ subjects: :class:`moabb.datasets.Liu2020BETA` (70 subjects, 40-class JFPM), :class:`moabb.datasets.Liu2022EldBETA` (100 elderly subjects, 9-class, BIDS/GDF format), :class:`moabb.datasets.Kim2025BetaRange` (40 subjects, 40-class beta-range), :class:`moabb.datasets.Dong2023` (59 subjects, 40-class), :class:`moabb.datasets.Lee2021Mobile_SSVEP` and :class:`moabb.datasets.Lee2021Mobile_ERP` (24 subjects, mobile BCI), :class:`moabb.datasets.Chen2017SingleFlicker` (12 subjects, spatial SSVEP), :class:`moabb.datasets.Wang2021Combined` (8 subjects, combined SSVEP), and :class:`moabb.datasets.Han2024Fatigue` (24 subjects, fatigue study with low/high frequency paradigms). Add shared utilities ``build_raw_from_epochs``, ``TSINGHUA_64CH_NAMES``, and ``FIGSHARE_DL_URL`` to :mod:`moabb.datasets.utils` (by `Bruno Aristimunha`_)
+- Add 9 new dataset adapters (8 SSVEP and 1 ERP) covering 357+ subjects: :class:`moabb.datasets.Liu2020BETA` (70 subjects, 40-class JFPM), :class:`moabb.datasets.Liu2022EldBETA` (100 elderly subjects, 9-class, BIDS/GDF format), :class:`moabb.datasets.Kim2025BetaRange` (40 subjects, 40-class beta-range), :class:`moabb.datasets.Dong2023` (59 subjects, 40-class), :class:`moabb.datasets.Lee2021Mobile_SSVEP` and :class:`moabb.datasets.Lee2021Mobile_ERP` (24 subjects, mobile BCI), :class:`moabb.datasets.Chen2017SingleFlicker` (12 subjects, spatial SSVEP), :class:`moabb.datasets.Wang2021Combined` (8 subjects, combined SSVEP), and :class:`moabb.datasets.Han2024Fatigue` (24 subjects, fatigue study with low/high frequency paradigms). Add shared utilities ``build_raw_from_epochs``, ``TSINGHUA_64CH_NAMES``, and ``FIGSHARE_DL_URL`` to ``moabb.datasets.utils`` (by `Bruno Aristimunha`_)
 - Add 17 new motor imagery dataset adapters covering 345+ subjects: :class:`moabb.datasets.Tavakolan2017`, :class:`moabb.datasets.Zhang2017`, :class:`moabb.datasets.Forenzo2023`, :class:`moabb.datasets.Zhou2020`, :class:`moabb.datasets.Jeong2020`, :class:`moabb.datasets.Kaya2018`, :class:`moabb.datasets.Kumar2024`, :class:`moabb.datasets.Rozado2015`, :class:`moabb.datasets.Brandl2020`, :class:`moabb.datasets.Ma2020`, :class:`moabb.datasets.Wairagkar2018`, :class:`moabb.datasets.Wu2020`, :class:`moabb.datasets.Yang2025`, :class:`moabb.datasets.Chang2025`, :class:`moabb.datasets.HefmiIch2025`, :class:`moabb.datasets.TrianaGuzman2024`, :class:`moabb.datasets.Yi2025`, and :class:`moabb.datasets.Zuo2025` (by `Bruno Aristimunha`_)
 - Add :class:`moabb.datasets.GuttmannFlury2025_MI`, :class:`moabb.datasets.GuttmannFlury2025_ME`, :class:`moabb.datasets.GuttmannFlury2025_SSVEP`, and :class:`moabb.datasets.GuttmannFlury2025_P300` multi-paradigm dataset adapters with Zenodo re-hosted data (by `Bruno Aristimunha`_)
 - Add :class:`moabb.datasets.Liu2025` visual imagery dataset adapter (62 subjects) with Zenodo re-hosted data, and fix :class:`moabb.datasets.Zhou2020` download path (by `Bruno Aristimunha`_)
@@ -69,7 +69,7 @@ Enhancements
 - Extend scoring configuration to accept lists of metric callables, scorer objects, and tuple kwargs (e.g., `needs_proba`/`needs_threshold`) for multi-metric evaluations (:gh:`948` by `Ethan Davis`_ and `Bruno Aristimunha`_)
 - Implement :class:`moabb.evaluations.WithinSubjectSplitter` for k-fold cross-validation within each subject across all sessions (by `Bruno Aristimunha`_)
 - Add ``cv_class`` and ``cv_kwargs`` parameters to all evaluation classes (WithinSessionEvaluation, CrossSessionEvaluation, CrossSubjectEvaluation) for custom cross-validation strategies (:gh:`963` by `Bruno Aristimunha`_)
-- Implement :class:`moabb.evaluations.splitters.LearningCurveSplitter` as a dedicated sklearn-compatible cross-validator for learning curves, enabling learning curve analysis with any evaluation type (:gh:`963` by `Bruno Aristimunha`_)
+- Implement ``LearningCurveSplitter`` as a dedicated sklearn-compatible cross-validator for learning curves, enabling learning curve analysis with any evaluation type (:gh:`963` by `Bruno Aristimunha`_)
 - Flattened parallel evaluation: CV folds are now evaluated in parallel within each dataset via ``_process_parallel()``, replacing per-fold sequential evaluation while preserving per-dataset scheduling (by `Bruno Aristimunha`_)
 - Auto-generate dataset documentation admonitions (Participants, Equipment, Preprocessing, Data Access, Experimental Protocol) from class-level ``METADATA`` when missing, while preserving manually written sections (:gh:`960` by `Bruno Aristimunha`_)
 - Add a "Report an Issue on GitHub" feedback section to all dataset docstrings so users can easily report dataset problems (:gh:`982` by `Bruno Aristimunha`_)
@@ -79,7 +79,7 @@ Enhancements
 - Add tutorial on time-resolved decoding with :class:`mne.decoding.SlidingEstimator`, showing how to evaluate per-time-point AUC across subjects as an alternative to pseudo-online evaluation (:gh:`718` by `Bruno Aristimunha`_)
 - Add advanced tutorial on Riemannian Artifact Rejection (Riemannian Potato and Potato Field) as a pre-processing step using pipeline surgery (by `Davoud Hajhassani`_ and `Bruno Aristimunha`_)
 - Simplify the Riemannian Artifact Rejection tutorial by using pyRiemann's enhanced ``PotatoField`` API (per-potato metrics and configurable p-value combination), and refresh the 2D potato visualization to better match the pyRiemann reference (:gh:`1011` by `Bruno Aristimunha`_)
-- Add pipeline surgery methods (``find_steps``, ``insert_step``, ``remove_step``) to :class:`moabb.datasets.preprocessing.FixedPipeline` for easier pipeline manipulation (by `Davoud Hajhassani`_ and `Bruno Aristimunha`_)
+- Add pipeline surgery methods (``find_steps``, ``insert_step``, ``remove_step``) to ``FixedPipeline`` for easier pipeline manipulation (by `Davoud Hajhassani`_ and `Bruno Aristimunha`_)
 - Add license metadata to all datasets with known licenses, covering BNCI, BrainInvaders, ErpCore2021, Castillos, MartinezCagigal2023, Beetl2021, Kojima2024, Dreyer2023, and many others (:gh:`989` by `Bruno Aristimunha`_)
 - Add parametrized test ``test_all_datasets_have_license`` to ensure all datasets declare a license in their documentation metadata (:gh:`989` by `Bruno Aristimunha`_)
 - Add and correct ``license`` and ``repository`` fields in ``DocumentationMetadata`` across all datasets against upstream sources; standardize all license strings to SPDX identifiers; correct DOIs for BNCI2014_002 and MAMEM1/2/3 datasets (by `Katelyn Begany`_)
@@ -91,10 +91,10 @@ Enhancements
 - Add license chip with official Creative Commons SVG icons to dataset documentation pages, showing license type with inline icons and links to license deeds (:gh:`1015` by `Bruno Aristimunha`_)
 - Add adjusted chance levels, distribution plot, and restyle analysis plots with colorblind-friendly palette (:gh:`1019` by `Bruno Aristimunha`_)
 - Enrich documentation metadata for Hinss2021, ErpCore2021 (all 7 variants), Schirrmeister2017, MartinezCagigal2023 (Checker + Pary), and Rodrigues2017 with investigators, institution, country, ethics approval, funding, contact info, acknowledgements, and citation instructions extracted from published papers. All 83 datasets now have ``investigators`` populated (:gh:`1017` by `Bruno Aristimunha`_)
-- Add ``return_all_modalities`` keyword-only parameter to :class:`moabb.datasets.base.BaseDataset` and 30+ multi-modal dataset subclasses, allowing users to retain non-EEG channels (EOG, EMG, ECG, misc) when loading data. Accepts ``True`` (all non-stim channels), or a ``dict`` of :func:`mne.pick_types` keyword arguments for fine-grained control (e.g. ``dict(eeg=True, eog=True)``). The setting is respected through the preprocessing pipeline (:class:`moabb.datasets.preprocessing.RawToEpochs`) and BIDS conversion so non-EEG channels survive epoching and export. Add shared ``pick_channels_for_modalities()`` helper to :mod:`moabb.datasets.utils` (:gh:`966`, :gh:`1030` by `Bruno Aristimunha`_)
-- Add new :mod:`moabb.analysis.neural_signatures` module with interactive Plotly-based neural signature visualizations for all five BCI paradigms: Motor Imagery ERD/ERS topomaps, P300/ERP waveforms, SSVEP power spectra and SNR, c-VEP evoked responses with PSD, and Resting State band power distributions. Public API: :func:`~moabb.analysis.neural_signatures.generate_neural_signature`, :func:`~moabb.analysis.neural_signatures.neural_signature_html`, :func:`~moabb.analysis.neural_signatures.get_plotly_template`, :func:`~moabb.analysis.neural_signatures.get_plotly_colorscale`. Produces standalone HTML reports with MOABB branding, interactive SVG head diagrams, electrode selection, and per-subject views (:gh:`1039` by `Bruno Aristimunha`_)
+- Add ``return_all_modalities`` keyword-only parameter to :class:`moabb.datasets.base.BaseDataset` and 30+ multi-modal dataset subclasses, allowing users to retain non-EEG channels (EOG, EMG, ECG, misc) when loading data. Accepts ``True`` (all non-stim channels), or a ``dict`` of :func:`mne.pick_types` keyword arguments for fine-grained control (e.g. ``dict(eeg=True, eog=True)``). The setting is respected through the preprocessing pipeline (``RawToEpochs``) and BIDS conversion so non-EEG channels survive epoching and export. Add shared ``pick_channels_for_modalities()`` helper to ``moabb.datasets.utils`` (:gh:`966`, :gh:`1030` by `Bruno Aristimunha`_)
+- Add new ``moabb.analysis.neural_signatures`` module with interactive Plotly-based neural signature visualizations for all five BCI paradigms: Motor Imagery ERD/ERS topomaps, P300/ERP waveforms, SSVEP power spectra and SNR, c-VEP evoked responses with PSD, and Resting State band power distributions. Public API: ``generate_neural_signature``, ``neural_signature_html``, ``get_plotly_template``, ``get_plotly_colorscale``. Produces standalone HTML reports with MOABB branding, interactive SVG head diagrams, electrode selection, and per-subject views (:gh:`1039` by `Bruno Aristimunha`_)
 - Add ``generate_figures`` parameter to :meth:`~moabb.datasets.base.BaseDataset.convert_to_bids` for optional neural signature generation into ``{bids_root}/derivatives/neural_signatures/`` during BIDS export (:gh:`1039` by `Bruno Aristimunha`_)
-- Conditionally export :func:`~moabb.analysis.neural_signatures.generate_neural_signature` and :func:`~moabb.analysis.neural_signatures.neural_signature_html` from :mod:`moabb.analysis` when ``plotly`` is installed (:gh:`1039` by `Bruno Aristimunha`_)
+- Conditionally export ``generate_neural_signature`` and ``neural_signature_html`` from ``moabb.analysis`` when ``plotly`` is installed (:gh:`1039` by `Bruno Aristimunha`_)
 
 API changes
 ~~~~~~~~~~~
@@ -108,13 +108,13 @@ API changes
 - Added four new BNCI P300/ERP dataset classes: :class:`moabb.datasets.BNCI2015_009` (AMUSE), :class:`moabb.datasets.BNCI2015_010` (RSVP), :class:`moabb.datasets.BNCI2015_012` (PASS2D), and :class:`moabb.datasets.BNCI2015_013` (ErrP) (by `Bruno Aristimunha`_).
 - Removed ``data_size`` and ``n_perms`` parameters from :class:`moabb.evaluations.WithinSessionEvaluation`. Use ``cv_class=LearningCurveSplitter`` with ``cv_kwargs=dict(data_size=..., n_perms=...)`` instead (:gh:`963` by `Bruno Aristimunha`_)
 - Learning curve results now automatically include "data_size" and "permutation" columns when using ``LearningCurveSplitter`` (:gh:`963` by `Bruno Aristimunha`_)
-- Replace wildcard imports with explicit class imports in :mod:`moabb.paradigms` (:gh:`1004` by `Bruno Aristimunha`_)
+- Replace wildcard imports with explicit class imports in ``moabb.paradigms`` (:gh:`1004` by `Bruno Aristimunha`_)
 
 Requirements
 ~~~~~~~~~~~~
 - Allows CodeCarbon environment variables or a configuration file to be defined in the home directory or the current working directory (:gh:`866` by `Ethan Davis`_).
 - Added ``filelock`` as a core dependency to fix missing import errors in utils (:gh:`959` by `Mateusz Naklicki`_).
-- Temporarily track ``pyriemann`` from GitHub source (``master``) to use new ``PotatoField`` capabilities introduced in pyRiemann PR #423 (:gh:`1011` by `Bruno Aristimunha`_)
+- Switch ``pyriemann`` dependency from GitHub source back to PyPI (``>=0.7``). The Riemannian Artifact Rejection tutorial still requires ``pyriemann`` from source for ``PotatoField`` features and is no longer auto-executed during doc builds (:gh:`1011` by `Bruno Aristimunha`_)
 - Add type hints to :class:`moabb.evaluations.base.BaseEvaluation` and all concrete evaluation classes (:gh:`732` by `Sarthak Tayal`_)
 - Add ``plotly>=5.18.0`` as optional ``interactive`` dependency (``pip install moabb[interactive]``), included in ``moabb[all]`` (:gh:`1039` by `Bruno Aristimunha`_)
 
@@ -146,7 +146,7 @@ Bugs
 - Fix pandas ``ArrowStringArray`` shuffle warning by converting ``.unique()`` results to numpy arrays in splitters, avoiding issues with newer pandas versions (:gh:`963` by `Bruno Aristimunha`_)
 - Fix crash in :class:`moabb.datasets.Huebner2017` when regex match on vhdr filenames returns ``None`` (:gh:`1036` by `Sarthak Tayal`_)
 - Replace production ``assert`` statements with proper ``ValueError`` / ``TypeError`` exceptions across analysis, pipelines, paradigms, and datasets modules (:gh:`1036` by `Sarthak Tayal`_)
-- Fix silent pipeline name collision in :func:`moabb.pipelines.utils.create_pipeline_from_config` by raising ``ValueError`` on duplicate names (:gh:`1036` by `Sarthak Tayal`_)
+- Fix silent pipeline name collision in ``moabb.pipelines.utils.create_pipeline_from_config`` by raising ``ValueError`` on duplicate names (:gh:`1036` by `Sarthak Tayal`_)
 - Replace bare ``print()`` calls with proper logging in :class:`moabb.datasets.MartinezCagigal2023Checker` (:gh:`1036` by `Sarthak Tayal`_)
 - ``LearningCurveSplitter`` now skips training splits that collapse to a single class (e.g., with very small ``data_size``) and emits a ``RuntimeWarning`` instead of producing NaN results (:gh:`963` by `Bruno Aristimunha`_)
 - Fix double µV-to-V conversion in BNCI2003-004 and BNCI2015-006: data loaded in microvolts was labeled as volts without unit conversion, causing a second scaling during EDF export via ``mne_bids`` (by `Bruno Aristimunha`_)
@@ -154,7 +154,7 @@ Bugs
 - Fix wrong channel names in Riemannian Artifact Rejection tutorial that caused ``pick()`` to fail on BNCI2014-009 (by `Bruno Aristimunha`_)
 - Fix :class:`moabb.datasets.RomaniBF2025ERP` to follow MOABB nomenclature pattern by using dynamic folder name ``MNE-{code}-data`` instead of hardcoded folder name. Automatically migrates legacy folder ``BrainForm-BIDS-eeg-dataset`` to new nomenclature for backward compatibility (by `Bruno Aristimunha`_)
 - Move BIDS cache lock file from the BIDS subject folder to the ``code/`` folder for BIDS validator compliance. Lock files are now written per-session as ``code/sub-{subject}_ses-{session}_desc-{hash}_lockfile.json``. Backward compatibility is preserved for caches created with the old location (:gh:`986` by `Pierre Guetschel`_ and `Bruno Aristimunha`_)
-- Fixed ``erase()`` in :class:`moabb.datasets.bids_interface.BIDSInterfaceBase` to handle multi-session datasets correctly by using per-session ``rm()`` calls instead of a single subject-level call, which previously caused a ``RuntimeError`` when looking up ``scans.tsv`` across multiple sessions (:gh:`986` by `Pierre Guetschel`_ and `Bruno Aristimunha`_)
+- Fixed ``erase()`` in ``BIDSInterfaceBase`` to handle multi-session datasets correctly by using per-session ``rm()`` calls instead of a single subject-level call, which previously caused a ``RuntimeError`` when looking up ``scans.tsv`` across multiple sessions (:gh:`986` by `Pierre Guetschel`_ and `Bruno Aristimunha`_)
 - Fix ``MOABB_RESULTS`` default path to respect ``MNE_DATA`` configuration instead of hardcoding ``~/mne_data``, and fix docs CI cache to use workspace-relative ``MNE_DATA`` path and cache ``~/.mne`` config directory (by `Bruno Aristimunha`_)
 - Fix :class:`moabb.datasets.RomaniBF2025ERP` ``get_data()`` failing with description merge error when adding stim channel, causing sessions to be silently dropped (:gh:`991` by `Bruno Aristimunha`_)
 - Fix docs CI cache: set ``MNE_DATA`` env var and persist ``~/.mne`` config directory so dataset paths survive cache restore (by `Bruno Aristimunha`_)
@@ -174,10 +174,10 @@ Bugs
 - Fix ``write_raw_bids`` overwrite error for multi-session datasets by detecting when a subject already exists in ``participants.tsv`` and setting ``overwrite=True`` for subsequent sessions (by `Bruno Aristimunha`_)
 - Fix :class:`moabb.datasets.Ofner2017` generic channel names (``eeg-0`` .. ``eeg-60``) in subject 1 execution GDF files by mapping them to correct 10-20 montage labels (by `Bruno Aristimunha`_)
 - Fix :class:`moabb.datasets.Wang2021Combined` segfault during BIDS conversion by switching from ``mne.io.read_raw_ant`` to ``mne.io.read_raw_cnt``, avoiding a crash in the ANT reader's C library (libEep) on macOS (by `Bruno Aristimunha`_)
-- Fix brittle channel picking in :class:`moabb.datasets.bids_interface.BIDSInterfaceRawEDF` that enumerated every MNE channel type keyword; replaced with stim-exclusion approach (:gh:`1030` by `Bruno Aristimunha`_)
+- Fix brittle channel picking in ``BIDSInterfaceRawEDF`` that enumerated every MNE channel type keyword; replaced with stim-exclusion approach (:gh:`1030` by `Bruno Aristimunha`_)
 - Fix ``set_montage`` crash in :class:`moabb.datasets.Thielen2015` when ``return_all_modalities=True`` by retyping ANA/EXG channels to ``misc`` (:gh:`1030` by `Bruno Aristimunha`_)
 - Fix duplicate stim channels and dead CPz reference channel in :class:`moabb.datasets.Liu2024` when ``return_all_modalities=True`` (:gh:`1030` by `Bruno Aristimunha`_)
-- Fix :class:`moabb.datasets.preprocessing.RawToEpochs` silently stripping all non-EEG channels regardless of ``return_all_modalities`` setting (:gh:`1030` by `Bruno Aristimunha`_)
+- Fix ``RawToEpochs`` silently stripping all non-EEG channels regardless of ``return_all_modalities`` setting (:gh:`1030` by `Bruno Aristimunha`_)
 - Fix HED annotation semantics for Motor Imagery events per expert review: decompose each MI event into separate ``(Sensory-event, Experimental-stimulus, Visual-presentation)`` and ``(Agent-action, ...)`` top-level groups per HED Rules 2b/2e/2f, remove conflated ``Cue`` + ``Experimental-stimulus`` roles, fix SSVEP ``rest`` tag to ``Experiment-structure``, and extract shared ``_MI_SENSORY`` constant to reduce tag duplication. Revert arrow-specific cues from paradigm-level HED defaults to generic sensory prefix, and add per-dataset ``hed_tags`` overrides for the 6 datasets that actually use arrow cues (BNCI2014-001, BNCI2014-004, Lee2019_MI, Zhou2016, Shin2017A, GrosseWentrup2009) (:gh:`1035` by `Bruno Aristimunha`_)
 
 Code health
@@ -208,7 +208,7 @@ Code health
 - Add a compile smoke test (``moabb/tests/test_compilation.py``) that validates syntax for all Python files under ``moabb/`` using ``py_compile`` (:gh:`960` by `Bruno Aristimunha`_)
 - Add persistent DOI resolution cache (``moabb/tests/doi_cache.json``) for ``test_doi_validation.py`` to avoid network requests on every test run, reducing DOI test time from ~9 minutes to <1 second. Refresh with ``--update-doi-cache`` (:gh:`996` by `Bruno Aristimunha`_)
 - Fix ``UtilEvaluation`` test class not discovered by pytest: renamed to ``TestUtilEvaluation`` and replaced ``self.skipTest`` (unittest-only) with ``pytest.skip`` (:gh:`1005` by `Bruno Aristimunha`_)
-- Add 282 parametrized tests in ``moabb/tests/test_neural_signatures.py`` covering all five paradigms, HTML generation, template/colorscale utilities, and edge cases for the :mod:`moabb.analysis.neural_signatures` module (:gh:`1039` by `Bruno Aristimunha`_)
+- Add 282 parametrized tests in ``moabb/tests/test_neural_signatures.py`` covering all five paradigms, HTML generation, template/colorscale utilities, and edge cases for the ``moabb.analysis.neural_signatures`` module (:gh:`1039` by `Bruno Aristimunha`_)
 
 Version 1.4.3 (Stable - PyPi)
 -------------------------------
@@ -217,7 +217,7 @@ Enhancements
 ~~~~~~~~~~~~
 - Add “Open in Colab” buttons for gallery examples (:gh:`853` by `Bruno Aristimunha`_)
 - Refresh docs homepage design and citation visibility (:gh:`853` by `Bruno Aristimunha`_)
-- Add :class:`moabb.datasets.preprocessing.FixedPipeline` and :func:`moabb.datasets.preprocessing.make_fixed_pipeline` to avoid scikit-learn unfitted pipeline warnings (:gh:`850` by `Bruno Aristimunha`_)
+- Add ``FixedPipeline`` and ``moabb.datasets.preprocessing.make_fixed_pipeline`` to avoid scikit-learn unfitted pipeline warnings (:gh:`850` by `Bruno Aristimunha`_)
 
 API changes
 ~~~~~~~~~~~
@@ -249,7 +249,7 @@ Bugs
 ~~~~
 - Fixes the management of include/exclude datasets in :func:`moabb.benchmark`, adds additional verifications (:gh:`834` by `Anton Andreev`_)
 - Fixing pagination issue with figshare (:gh:`839` by `Bruno Aristimunha`_)
-- Fixes :class:`moabb.datasets.preprocessing.SetRawAnnotations` in case no STIM channel is present (:gh:`838` by `Pierre Guetschel`_ and `Simon Kojima`_)
+- Fixes ``SetRawAnnotations`` in case no STIM channel is present (:gh:`838` by `Pierre Guetschel`_ and `Simon Kojima`_)
 
 API changes
 ~~~~~~~~~~~
@@ -291,9 +291,9 @@ Enhancements
 - Adding :class:`moabb.evaluations.splitters.CrossSessionSplitter` (:gh:`720` by `Bruna Lopes`_ and `Bruno Aristimunha`_)
 - Adding :class:`moabb.datasets.base.BaseBIDSDataset` and :class:`moabb.datasets.base.LocalBIDSDataset` (:gh:`724` by `Pierre Guetschel`_)
 - Adding :func:`moabb.analysis.plotting.dataset_bubble_plot` plus the corresponding tutorial (:gh:`753` by `Pierre Guetschel`_)
-- Adding :func:`moabb.datasets.utils.plot_all_datasets` and update the tutorial (:gh:`758` by `Pierre Guetschel`_)
+- Adding ``moabb.datasets.utils.plot_all_datasets`` and update the tutorial (:gh:`758` by `Pierre Guetschel`_)
 - Improve the dataset model cards in each API page (:gh:`765` by `Pierre Guetschel`_)
-- Refactor :class:`moabb.evaluation.CrossSessionEvaluation`, :class:`moabb.evaluation.CrossSubjectEvaluation` and  :class:`moabb.evaluation.WithinSessionEvaluation` to use the new splitter classes (:gh:`769` by `Bruno Aristimunha`_)
+- Refactor :class:`moabb.evaluations.CrossSessionEvaluation`, :class:`moabb.evaluations.CrossSubjectEvaluation` and  :class:`moabb.evaluations.WithinSessionEvaluation` to use the new splitter classes (:gh:`769` by `Bruno Aristimunha`_)
 - Adding tutorial on using mne-features (:gh:`762` by `Alexander de Ranitz`_, `Luuk Neervens`_, `Charlynn van Osch`_ and `Bruno Aristimunha`_)
 - Creating tutorial to expose the pre-processing steps (:gh:`771` by `Bruno Aristimunha`_)
 - Add function to auto-generate tables for the paper results documentation page (:gh:`785` by `Lucas Heck`_)
@@ -396,7 +396,7 @@ Enhancements
 - Update Braindecode dependency to 0.8 (:gh:`542` by `Pierre Guetschel`_)
 - Improve transform function of AugmentedDataset (:gh:`541` by `Quentin Barthelemy`_)
 - Add new paper results website (:gh:`556` by `Bruno Aristimunha`_)
-- Move cVEP common functions to :mod:`moabb.datasets.utils` (:gh:`564` :gh:`557` by `Pierre Guetschel`_)
+- Move cVEP common functions to ``moabb.datasets.utils`` (:gh:`564` :gh:`557` by `Pierre Guetschel`_)
 - Normalize c-VEP description tables (:gh:`562` :gh:`566` by `Pierre Guetschel`_ and `Bruno Aristimunha`_)
 - Update citation in README (:gh:`573` by `Igor Carrara`_)
 - Update pyRiemann dependency (:gh:`577` by `Gregoire Cattan`_)
@@ -427,7 +427,7 @@ Bugs
 - Updating the parameters of the SSVEP_TRCA method (:gh:`589` by `Bruno Aristimunha`_)
 - Fix and updating the parameters for the benchmark function (:gh:`588` by `Bruno Aristimunha`_)
 - Fix result table display (:gh:`599` by `Sylvain Chevallier`_)
-- Fix :class:`moabb.datasets.preprocessing.SetRawAnnotations` setting incorrect annotations when the dataset's interval does not start at 0 (:gh:`607` by `Pierre Guetschel`_)
+- Fix ``SetRawAnnotations`` setting incorrect annotations when the dataset's interval does not start at 0 (:gh:`607` by `Pierre Guetschel`_)
 - Fix download link for GigaDB Cho2017 and Lee2019 datasets (:gh:`621` by `Anton Andreev`_)
 
 
@@ -455,7 +455,7 @@ Enhancements
 - Speeding the augmentation method by 400% with NumPy vectorization  (:gh:`419` by `Bruno Aristimunha`_)
 - Add possibility to convert datasets to BIDS, plus `example <examples/example_bids_conversion.py>`__ (PR :gh:`408`, PR :gh:`391` by `Pierre Guetschel`_ and `Bruno Aristimunha`_)
 - Allow caching intermediate processing steps on disk, plus `example <examples/example_disk_cache.py>`__ (PR :gh:`408`, issue :gh:`385` by `Pierre Guetschel`_)
-- Restructure the paradigms and datasets to move all preprocessing steps to :mod:`moabb.datasets.preprocessing` and as sklearn pipelines (PR :gh:`408` by `Pierre Guetschel`_)
+- Restructure the paradigms and datasets to move all preprocessing steps to ``moabb.datasets.preprocessing`` and as sklearn pipelines (PR :gh:`408` by `Pierre Guetschel`_)
 - Add :func:`moabb.paradigms.FixedIntervalWindowsProcessing` and :func:`moabb.paradigms.FilterBankFixedIntervalWindowsProcessing`, plus `example <examples/example_fixed_interval_windows.py>`__ (PR :gh:`408`, issue :gh:`424` by `Pierre Guetschel`_)
 - Define :func:`moabb.paradigms.base.BaseProcessing`, common parent to :func:`moabb.paradigms.base.BaseParadigm` and :func:`moabb.paradigms.BaseFixedIntervalWindowsProcessing` (PR :gh:`408` by `Pierre Guetschel`_)
 - Allow passing a fixed processing pipeline to :func:`moabb.paradigms.base.BaseProcessing.get_data` and cache its result on disk (PR :gh:`408`, issue :gh:`367` by `Pierre Guetschel`_)
@@ -469,7 +469,7 @@ Enhancements
 - Add ``moabb.utils.depreciated_alias`` decorator (:gh:`455` by `Pierre Guetschel`_)
 - Rename many dataset class names to standardize and deprecate old names (:gh:`455` by `Pierre Guetschel`_)
 - Change many dataset codes to match the class names (:gh:`455` by `Pierre Guetschel`_)
-- Add :obj:`moabb.datasets.compound_dataset.utils.compound_dataset_list`  (:gh:`455` by `Pierre Guetschel`_)
+- Add ``moabb.datasets.compound_dataset.utils.compound_dataset_list``  (:gh:`455` by `Pierre Guetschel`_)
 - Add c-VEP paradigm and Thielen2021 c-VEP dataset (:gh:`463` by `Jordy Thielen`_)
 - Add option to plot scores vertically. (:gh:`417` by `Sara Sedlar`_)
 - Change naming scheme for runs and sessions to align to BIDS standard (:gh:`471` by `Pierre Guetschel`_)
@@ -489,27 +489,27 @@ Bugs
 - Save parameters of :func:`moabb.datasets.PhysionetMI` (:gh:`403` by `Pierre Guetschel`_)
 - Fixing issue with parallel evaluation (:gh:`401` by `Bruno Aristimunha`_ and `Igor Carrara`_)
 - Fixing SSLError from BCI competition IV (:gh:`404` by `Bruno Aristimunha`_)
-- Fixing :func:`moabb.datasets.bnci.MNEBNCI.data_path` that returned the data itself instead of paths (:gh:`412` by `Pierre Guetschel`_)
-- Adding :func:`moabb.datasets.fake` in the init file to use in braindecode object (:gh:`414` by `Bruno Aristimunha`_)
+- Fixing ``moabb.datasets.bnci.MNEBNCI.data_path`` that returned the data itself instead of paths (:gh:`412` by `Pierre Guetschel`_)
+- Adding ``moabb.datasets.fake`` in the init file to use in braindecode object (:gh:`414` by `Bruno Aristimunha`_)
 - Fixing the parallel download issue when the dataset have the same directory (:gh:`421` by `Sara Sedlar`_)
 - Fixing fixes the problem with the annotation loading for the P300 datasets Sosulski2019, Huebner2017 and Huebner2018 (:gh:`396` by `Sara Sedlar`_)
 - Removing the print in the dataset list (:gh:`423` by `Bruno Aristimunha`_)
-- Fixing bug in :func:`moabb.pipeline.utils_pytorch.BraindecodeDatasetLoader` where incorrect y was used in transform calls (:gh:`426` by `Gabriel Schwartz`_)
-- Fixing one test in :func:`moabb.pipeline.utils_pytorch.BraindecodeDatasetLoader` (:gh:`426` by `Bruno Aristimunha`_)
+- Fixing bug in ``moabb.pipelines.utils_pytorch.BraindecodeDatasetLoader`` where incorrect y was used in transform calls (:gh:`426` by `Gabriel Schwartz`_)
+- Fixing one test in ``moabb.pipelines.utils_pytorch.BraindecodeDatasetLoader`` (:gh:`426` by `Bruno Aristimunha`_)
 - Fix :func:`moabb.benchmark` overwriting ``include_datasets`` list (:gh:`408` by `Pierre Guetschel`_)
 - Fix :func:`moabb.paradigms.base.BaseParadigm` using attributes before defining them  (PR :gh:`408`, issue :gh:`425` by `Pierre Guetschel`_)
-- Fix :func:`moabb.paradigms.FakeImageryParadigm`, :func:`moabb.paradigms.FakeP300Paradigm` and :func:`moabb.paradigms.FakeSSVEPParadigm` ``is_valid`` methods to only accept the correct datasets (PR :gh:`408` by `Pierre Guetschel`_)
+- Fix ``FakeImageryParadigm``, ``FakeP300Paradigm`` and ``FakeSSVEPParadigm`` ``is_valid`` methods to only accept the correct datasets (PR :gh:`408` by `Pierre Guetschel`_)
 - Fix ``dataset_list`` construction, which could be empty due to bad import order (PR :gh:`449` by `Thomas Moreau`_).
 - Fixing dataset downloader from servers with non-http (PR :gh:`433` by `Sara Sedlar`_)
 - Fix ``dataset_list`` to include deprecated datasets (PR :gh:`464` by `Bruno Aristimunha`_)
-- Fixed bug in :func:`moabb.analysis.results.get_string_rep` to handle addresses such as 0x__0A as well (PR :gh:`468` by `Anton Andreev`_)
+- Fixed bug in ``moabb.analysis.results.get_string_rep`` to handle addresses such as 0x__0A as well (PR :gh:`468` by `Anton Andreev`_)
 - Moving the ``moabb.evaluations.grid_search`` to inside the base evaluation (:gh:`487` by `Bruno Aristimunha`_)
 - Removing joblib Parallel (:gh:`488` by `Igor Carrara`_)
 - Fix case when events specified via ``raw.annotations`` but no events (:gh:`491` by `Pierre Guetschel`_)
 - Fix bug in downloading Shin2017A dataset (:gh:`493` by `Igor Carrara`_)
 - Fix the cropped option in the dataset preprocessing (:gh:`502` by `Bruno Aristimunha`_)
 - Fix bug in :func:`moabb.datasets.utils.dataset_search` with missing cvep paradigm (:gh:`557` by `Jordy Thielen`_)
-- Fix mistakes in :func:`moabb.datasets.thielen2021` considering wrong docs and hardcoded trial stim channel (:gh:`557` by `Jordy Thielen`_)
+- Fix mistakes in ``moabb.datasets.thielen2021`` considering wrong docs and hardcoded trial stim channel (:gh:`557` by `Jordy Thielen`_)
 
 API changes
 ~~~~~~~~~~~
@@ -700,7 +700,7 @@ Enhancements
 - Use MNE epoch in evaluation (:gh:`192` by `Sylvain Chevallier`_)
 - Allow changing of storage location (:gh:`192` by `Divyesh Narayanan`_ and `Sylvain Chevallier`_)
 - Deploy docs on moabb.github.io (:gh:`196` by `Sylvain Chevallier`_)
-- Broadening subject_list type for :func:`moabb.datasets.BaseDataset` (:gh:`198` by `Sylvain Chevallier`_)
+- Broadening subject_list type for :class:`moabb.datasets.BaseDataset` (:gh:`198` by `Sylvain Chevallier`_)
 - Adding this what's new (:gh:`200` by `Sylvain Chevallier`_)
 - Improving cache usage and save computation time in CI (:gh:`200` by `Sylvain Chevallier`_)
 - Rewrite Lee2019 to add P300 and SSVEP datasets (:gh:`217` by `Pierre Guetschel`_)
