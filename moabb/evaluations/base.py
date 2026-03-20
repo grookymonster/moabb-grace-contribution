@@ -105,13 +105,21 @@ def _evaluate_fold(
 
     Parameters
     ----------
-    X, y, metadata : array-like / DataFrame
-        Full data, labels, and metadata.
+    X : :class:`numpy.ndarray` or :class:`mne.Epochs`
+        Full data.
+    y : :class:`numpy.ndarray`
+        Labels.
+    metadata : :class:`pandas.DataFrame`
+        Metadata.
     config : dict
         Evaluation-wide settings (scoring, error_score, random_state, etc.).
-    dataset, pipeline_name, pipeline : BaseDataset / str / estimator
-        Dataset, pipeline name, and sklearn pipeline.
-    train_idx, test_idx : array-like
+    dataset : :class:`~moabb.datasets.base.BaseDataset`
+        Dataset instance.
+    pipeline_name : str
+        Pipeline name.
+    pipeline : :class:`sklearn.base.BaseEstimator`
+        Sklearn pipeline.
+    train_idx, test_idx : :class:`numpy.ndarray`
         Indices for train/test split.
     subject, session : int|str, str
         Subject and session identifiers.
@@ -261,53 +269,61 @@ class BaseEvaluation(ABC):
     datasets : list of :class:`~moabb.datasets.base.BaseDataset`
         The list of dataset to run the evaluation. If none, the list of
         compatible dataset will be retrieved from the paradigm instance.
-    random_state: int, RandomState instance, default=None
+    random_state : int or None
         If not None, can guarantee same seed for shuffling examples.
-    n_jobs: int, default=1
-        Number of jobs for fitting of pipeline.
-    overwrite: bool, default=False
-        If true, overwrite the results.
-    error_score: "raise" or numeric, default="raise"
+        Defaults to ``None``.
+    n_jobs : int
+        Number of jobs for fitting of pipeline. Defaults to ``1``.
+    overwrite : bool
+        If true, overwrite the results. Defaults to ``False``.
+    error_score : str or float
         Value to assign to the score if an error occurs in estimator fitting. If set to
-        ‘raise’, the error is raised.
-    suffix: str
+        ``’raise’``, the error is raised. Defaults to ``"raise"``.
+    suffix : str
         Suffix for the results file.
-    hdf5_path: str
+    hdf5_path : str
         Specific path for storing the results.
-    additional_columns: None
+    additional_columns : None
         Adding information to results.
-    return_epochs: bool, default=False
-        use MNE epoch to train pipelines.
-    return_raws: bool, default=False
-        use MNE raw to train pipelines.
-    mne_labels: bool, default=False
-        if returning MNE epoch, use original dataset label if True
-    n_splits: int, default=None
+    return_epochs : bool
+        Use MNE epoch to train pipelines. Defaults to ``False``.
+    return_raws : bool
+        Use MNE raw to train pipelines. Defaults to ``False``.
+    mne_labels : bool
+        If returning MNE epoch, use original dataset label if True.
+        Defaults to ``False``.
+    n_splits : int or None
         Number of splits for cross-validation. If None, the number of splits
-        is equal to the number of subjects.
-    cv_class: type, default=None
-        Optional cross-validation class to override the evaluation's default
-        splitter behavior.
-    cv_kwargs: dict, default=None
+        is equal to the number of subjects. Defaults to ``None``.
+    cv_class : type or None
+        Optional cross-validation class to override the evaluation’s default
+        splitter behavior. Defaults to ``None``.
+    cv_kwargs : dict or None
         Keyword arguments passed to cv_class when constructing the splitter.
-    save_model: bool, default=False
-        Save model after training, for each fold of cross-validation if needed
-    cache_config: bool, default=None
+        Defaults to ``None``.
+    save_model : bool
+        Save model after training, for each fold of cross-validation if needed.
+        Defaults to ``False``.
+    cache_config : :class:`~moabb.datasets.base.CacheConfig` or None
         Configuration for caching of datasets. See :class:`moabb.datasets.base.CacheConfig` for details.
-    optuna:bool, default=False
+        Defaults to ``None``.
+    optuna : bool
         If optuna is enable it will change the GridSearch to a RandomizedGridSearch with 15 minutes of cut off time.
-        This option is compatible with list of entries of type None, bool, int, float and string
-    time_out: default=60*15
-        Cut off time for the optuna search expressed in seconds, the default value is 15 minutes.
-        Only used with optuna equal to True.
-    verbose: bool, str, int, default=None
+        This option is compatible with list of entries of type None, bool, int, float and string.
+        Defaults to ``False``.
+    time_out : int
+        Cut off time for the optuna search expressed in seconds.
+        Only used with optuna equal to True. Defaults to ``60*15`` (15 minutes).
+    verbose : bool, str, int, or None
         If not None, override the default MOABB logging level used by this evaluation
-        (see :func:`moabb.utils.verbose` for more information on how this is handled).
+        (see ``moabb.utils.verbose`` for more information on how this is handled).
         If used, it should be passed as a keyword-argument only.
-    codecarbon_config: dict of CodeCarbon parameters, default=dict(save_to_file=False, log_level="error")
+        Defaults to ``None``.
+    codecarbon_config : dict or None
         Allow CodeCarbon script level configurations.
         Can use combination of CodeCarbon environment variable and configuration files.
         See CodeCarbon developer documentation for more information.
+        Defaults to ``dict(save_to_file=False, log_level="error")``.
 
     Notes
     -----
@@ -482,9 +498,9 @@ class BaseEvaluation(ABC):
 
         Returns
         -------
-        X : array-like or Epochs
+        X : :class:`numpy.ndarray` or :class:`mne.Epochs`
             The loaded data.
-        y : array-like
+        y : :class:`numpy.ndarray`
             The labels.
         metadata : DataFrame
             The metadata.
@@ -1097,7 +1113,7 @@ class BaseEvaluation(ABC):
 
         Parameters
         ----------
-        dataset : dataset instance
+        dataset : :class:`~moabb.datasets.base.BaseDataset`
             The dataset to verify.
         """
 
@@ -1109,7 +1125,7 @@ class BaseEvaluation(ABC):
 
         Parameters
         ----------
-        dataset : dataset instance
+        dataset : :class:`~moabb.datasets.base.BaseDataset`
             The dataset to check.
 
         Returns

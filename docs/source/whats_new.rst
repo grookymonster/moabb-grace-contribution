@@ -700,7 +700,7 @@ Enhancements
 - Use MNE epoch in evaluation (:gh:`192` by `Sylvain Chevallier`_)
 - Allow changing of storage location (:gh:`192` by `Divyesh Narayanan`_ and `Sylvain Chevallier`_)
 - Deploy docs on moabb.github.io (:gh:`196` by `Sylvain Chevallier`_)
-- Broadening subject_list type for :class:`moabb.datasets.BaseDataset` (:gh:`198` by `Sylvain Chevallier`_)
+- Broadening subject_list type for :class:`moabb.datasets.base.BaseDataset` (:gh:`198` by `Sylvain Chevallier`_)
 - Adding this what's new (:gh:`200` by `Sylvain Chevallier`_)
 - Improving cache usage and save computation time in CI (:gh:`200` by `Sylvain Chevallier`_)
 - Rewrite Lee2019 to add P300 and SSVEP datasets (:gh:`217` by `Pierre Guetschel`_)

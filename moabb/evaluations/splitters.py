@@ -44,17 +44,20 @@ class WithinSessionSplitter(BaseCrossValidator):
 
     Parameters
     ----------
-    n_folds : int, default=5
-        Number of folds. Must be at least 2. If
-    shuffle : bool, default=True
+    n_folds : int
+        Number of folds. Must be at least 2. Defaults to ``5``.
+    shuffle : bool
         Whether to shuffle each class's samples before splitting into batches.
         Note that the samples within each split will not be shuffled.
-    random_state: int, RandomState instance or None, default=None
+        Defaults to ``True``.
+    random_state : int or None
         Controls the randomness of splits. Only used when `shuffle` is True.
         Pass an int for reproducible output across multiple function calls.
-    cv_class: cross-validation class, default=StratifiedKFold
+        Defaults to ``None``.
+    cv_class : type
         Inner cross-validation strategy for splitting the sessions.
-    cv_kwargs: dict
+        Defaults to ``StratifiedKFold``.
+    cv_kwargs : dict
         Additional arguments to pass to the inner cross-validation strategy.
 
     """
@@ -181,17 +184,20 @@ class WithinSubjectSplitter(BaseCrossValidator):
 
     Parameters
     ----------
-    n_folds : int, default=5
-        Number of folds. Must be at least 2.
-    shuffle : bool, default=True
+    n_folds : int
+        Number of folds. Must be at least 2. Defaults to ``5``.
+    shuffle : bool
         Whether to shuffle each class's samples before splitting into batches.
         Note that the samples within each split will not be shuffled.
-    random_state: int, RandomState instance or None, default=None
+        Defaults to ``True``.
+    random_state : int or None
         Controls the randomness of splits. Only used when `shuffle` is True.
         Pass an int for reproducible output across multiple function calls.
-    cv_class: cross-validation class, default=StratifiedKFold
+        Defaults to ``None``.
+    cv_class : type
         Inner cross-validation strategy for splitting within each subject.
-    cv_kwargs: dict
+        Defaults to ``StratifiedKFold``.
+    cv_kwargs : dict
         Additional arguments to pass to the inner cross-validation strategy.
 
     """
@@ -317,17 +323,20 @@ class CrossSessionSplitter(BaseCrossValidator):
 
     Parameters
     ----------
-    cv_class: cross-validation class, default=LeaveOneGroupOut
+    cv_class : type
         Inner cross-validation strategy for splitting the sessions of one subject.
         LeaveOneGroupOut is the most common default.
-    shuffle: bool, default=False
+        Defaults to ``LeaveOneGroupOut``.
+    shuffle : bool
         Whether to shuffle the session order for each subject. It can only be
         used when changing the `cv_class` to a class compatible with `shuffle`.
-    random_state: int, RandomState instance or None, default=None
+        Defaults to ``False``.
+    random_state : int or None
         Controls the randomness of the inner cross-validation when `shuffle` is True.
         Pass an int for reproducible output across multiple function calls.
         For `cv_class` accepting `random_state`, they are provided with a shared rng.
-    cv_kwargs: dict
+        Defaults to ``None``.
+    cv_kwargs : dict
         Additional arguments to pass to the inner cross-validation strategy.
 
     Yields
@@ -493,13 +502,15 @@ class CrossSubjectSplitter(BaseCrossValidator):
 
     Parameters
     ----------
-    cv_class: cross-validation class, default=LeaveOneGroupOut
+    cv_class : type
         Cross-validation strategy for splitting the subjects between train and test sets.
         By default, use LeaveOneGroupOut, which keeps one subject as a test.
-    random_state: int, RandomState instance or None, default=None
+        Defaults to ``LeaveOneGroupOut``.
+    random_state : int or None
         Controls the randomness of the cross-validation.
         Pass an int for reproducible output across multiple calls.
-    cv_kwargs: dict
+        Defaults to ``None``.
+    cv_kwargs : dict
         Additional arguments to pass to the inner cross-validation strategy.
 
     Yields
@@ -587,13 +598,16 @@ class CrossDatasetSplitter(BaseCrossValidator):
 
     Parameters
     ----------
-    cv_class: cross-validation class, default=LeaveOneGroupOut
+    cv_class : type
         Cross-validation strategy for splitting train/test dataset groups.
-    group_column: str, default="dataset"
+        Defaults to ``LeaveOneGroupOut``.
+    group_column : str
         Column name in metadata used as grouping key.
-    random_state: int, RandomState instance or None, default=None
+        Defaults to ``"dataset"``.
+    random_state : int or None
         Controls randomness for ``cv_class`` when supported.
-    cv_kwargs: dict
+        Defaults to ``None``.
+    cv_kwargs : dict
         Additional arguments passed to ``cv_class``.
 
     Yields
@@ -689,16 +703,17 @@ class LearningCurveSplitter(GroupsConsumerMixin, BaseCrossValidator):
         (array of sizes). For 'ratio', values should be floats between 0 and 1
         representing the fraction of training data to use. For 'per_class',
         values should be integers representing the number of samples per class.
-    n_perms : int or array-like
+    n_perms : int or list
         Number of permutations per data_size value. If an int, the same number
         of permutations is used for all data sizes. If an array, it should have
         the same length as data_size['value'] and values should be monotonically
         decreasing (more permutations for smaller data sizes).
-    test_size : float, default=0.2
-        Fraction of data to use for testing.
-    random_state : int, RandomState instance, or None, default=None
+    test_size : float
+        Fraction of data to use for testing. Defaults to ``0.2``.
+    random_state : int or None
         Controls the randomness of the permutations. Pass an int for
         reproducible output across multiple function calls.
+        Defaults to ``None``.
 
     Attributes
     ----------
@@ -803,11 +818,11 @@ class LearningCurveSplitter(GroupsConsumerMixin, BaseCrossValidator):
 
         Parameters
         ----------
-        X : array-like, optional
+        X : object
             Ignored.
-        y : array-like, optional
+        y : object
             Ignored.
-        groups : array-like, optional
+        groups : object
             Ignored.
 
         Returns
@@ -823,7 +838,7 @@ class LearningCurveSplitter(GroupsConsumerMixin, BaseCrossValidator):
 
         Parameters
         ----------
-        y : array-like
+        y : :class:`numpy.ndarray`
             Target labels for the training set.
 
         Returns
@@ -867,13 +882,13 @@ class LearningCurveSplitter(GroupsConsumerMixin, BaseCrossValidator):
 
         Parameters
         ----------
-        X : array-like of shape (n_samples, n_features)
-            Training data.
-        y : array-like of shape (n_samples,)
-            Target labels.
-        groups : array-like of shape (n_samples,), optional
-            Group labels. If provided, splits are made on groups (no group
-            appears in both train and test).
+        X : :class:`numpy.ndarray`
+            Training data, of shape ``(n_samples, n_features)``.
+        y : :class:`numpy.ndarray`
+            Target labels, of shape ``(n_samples,)``.
+        groups : :class:`numpy.ndarray` or None
+            Group labels, of shape ``(n_samples,)``. If provided, splits are
+            made on groups (no group appears in both train and test).
 
         Yields
         ------

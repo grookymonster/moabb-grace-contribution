@@ -1454,7 +1454,7 @@ class LocalBIDSDataset(BaseBIDSDataset):
         Unique identifier for the dataset. for compatibility reasons,
         it should start with ``"LocalBIDSDataset"``
     unit_factor : float
-        Factor to convert units to microvolts (default: 1e6).
+        Factor to convert units to microvolts. Defaults to ``1e6``.
     """
 
     def __init__(

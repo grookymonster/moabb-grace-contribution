@@ -197,34 +197,37 @@ class BaseProcessing(metaclass=MoabbMetaClass):
 
     Parameters
     ----------
-    filters: list of list (defaults [[7, 35]])
-        bank of bandpass filter to apply.
-    tmin: float (default 0.0)
+    filters : list of list
+        Bank of bandpass filter to apply. Defaults to ``[[7, 35]]``.
+    tmin : float
         Start time (in second) of the epoch, relative to the dataset specific
         task interval e.g. tmin = 1 would mean the epoch will start 1 second
         after the beginning of the task as defined by the dataset.
-    tmax: float | None, (default None)
+        Defaults to ``0.0``.
+    tmax : float or None
         End time (in second) of the epoch, relative to the beginning of the
         dataset specific task interval. tmax = 5 would mean the epoch will end
         5 second after the beginning of the task as defined in the dataset. If
-        None, use the dataset value.
-    baseline: None | tuple of length 2
-            The time interval to consider as “baseline” when applying baseline
-            correction. If None, do not apply baseline correction.
-            If a tuple (a, b), the interval is between a and b (in seconds),
-            including the endpoints.
-            Correction is applied by computing the mean of the baseline period
-            and subtracting it from the data (see mne.Epochs)
-    channels: list of str | None (default None)
-        list of channel to select. If None, use all EEG channels available in
-        the dataset.
-    resample: float | None (default None)
+        None, use the dataset value. Defaults to ``None``.
+    baseline : None or tuple of length 2
+        The time interval to consider as “baseline” when applying baseline
+        correction. If None, do not apply baseline correction.
+        If a tuple (a, b), the interval is between a and b (in seconds),
+        including the endpoints.
+        Correction is applied by computing the mean of the baseline period
+        and subtracting it from the data (see mne.Epochs).
+    channels : list of str or None
+        List of channel to select. If None, use all EEG channels available in
+        the dataset. Defaults to ``None``.
+    resample : float or None
         If not None, resample the eeg data with the sampling rate provided.
-    overlap: float | None (default None)
+        Defaults to ``None``.
+    overlap : float or None
         Overlap percentage (0-100) for the sliding window approach used in
         pseudo-online evaluation. If None, no overlap is applied. When overlap
         is used, windows may cross event boundaries; such windows are kept and
         labeled using a majority vote over the events they cover.
+        Defaults to ``None``.
     """
 
     def __init__(
@@ -269,7 +272,7 @@ class BaseProcessing(metaclass=MoabbMetaClass):
 
         Parameters
         ----------
-        dataset : dataset instance
+        dataset : :class:`~moabb.datasets.base.BaseDataset`
             The dataset to verify.
         """
         pass
@@ -283,7 +286,7 @@ class BaseProcessing(metaclass=MoabbMetaClass):
 
         Parameters
         ----------
-        dataset : dataset instance
+        dataset : :class:`~moabb.datasets.base.BaseDataset`
             The dataset corresponding to the raw file. mainly use to access
             dataset specific information.
         """
@@ -305,12 +308,15 @@ class BaseProcessing(metaclass=MoabbMetaClass):
         ----------
         dataset : BaseDataset
             The dataset instance.
-        return_epochs : bool, default is False
+        return_epochs : bool
             Specify if needed to return epochs instead of ndarray.
-        return_raws : bool, default is False
+            Defaults to ``False``.
+        return_raws : bool
             Specify if needed to return raws instead of ndarray.
-        postprocess_pipeline : :class:`sklearn.pipeline.Pipeline` | None, default is None
+            Defaults to ``False``.
+        postprocess_pipeline : :class:`sklearn.pipeline.Pipeline` or None
             Optional pipeline to apply to the data after the preprocessing.
+            Defaults to ``None``.
             This pipeline will either receive :class:`mne.io.BaseRaw`, :class:`mne.Epochs`
             or :class:`numpy.ndarray` as input, depending on the values of ``return_epochs``
             and ``return_raws``.
@@ -419,9 +425,9 @@ class BaseProcessing(metaclass=MoabbMetaClass):
 
         Parameters
         ----------
-        dataset:
+        dataset : :class:`~moabb.datasets.base.BaseDataset`
             A dataset instance.
-        subjects: List of int
+        subjects : list of int
             List of subject number
         return_epochs: boolean
             This flag specifies whether to return only the data array or the
@@ -702,13 +708,13 @@ class BaseProcessing(metaclass=MoabbMetaClass):
 
         Parameters
         ----------
-        datasets: List[BaseDataset]
-            A dataset instance.
-        shift: List[BaseDataset]
+        datasets : list of :class:`~moabb.datasets.base.BaseDataset`
+            List of dataset instances.
+        shift : float
             Shift the sampling frequency by this value
             E.g.: if sampling=128 and shift=-0.5, then it returns 127.5 Hz
-        channel_merge_strategy: str (default: 'intersect')
-            Accepts two values:
+        channel_merge_strategy : str
+            Accepts two values (defaults to ``'intersect'``):
             - 'intersect': keep only channels common to all datasets
             - 'union': keep all channels from all datasets, removing duplicate
         ignore: List[string]
@@ -758,12 +764,14 @@ class BaseParadigm(BaseProcessing):
     Parameters
     ----------
 
-    events: List of str | None (default None)
-        events to use for epoching. If None, default to all events defined in
-        the dataset.
+    events : list of str or None
+        Events to use for epoching. If None, default to all events defined in
+        the dataset. Defaults to ``None``.
 
-    scorer: sklearn-compatible string or a compatible sklearn scorer | None (default None)
+    scorer : str, callable, or None
+        Sklearn-compatible string or a compatible sklearn scorer.
         If None, and n_classes==2 use the roc_auc, else use accuracy.
+        Defaults to ``None``.
     """
 
     def __init__(

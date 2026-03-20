@@ -137,10 +137,11 @@ def benchmark(  # noqa: C901
     n_jobs : int
         Number of threads to use for running parallel jobs.
 
-    n_splits : int or None, default=None
+    n_splits : int or None
         This parameter only works for CrossSubjectEvaluation. It defines the
         number of splits to be done in the cross-validation. If None,
         the number of splits is equal to the number of subjects in the dataset.
+        Defaults to ``None``.
 
     plot : bool
         Plot results after computing.
@@ -161,9 +162,10 @@ def benchmark(  # noqa: C901
     optuna : bool
         Enable Optuna for the hyperparameter search.
 
-    codecarbon_config : dict, default=None
+    codecarbon_config : dict or None
         Configuration dictionary for CodeCarbon emissions tracking.
-        If None, uses CodeCarbon defaults. Available options include:
+        If None, uses CodeCarbon defaults. Defaults to ``None``.
+        Available options include:
         - save_to_file (bool): Save emissions to CSV file
         - log_level (str): Logging level ('debug', 'info', 'warning', 'error')
         - save_to_api (bool): Send data to CodeCarbon API

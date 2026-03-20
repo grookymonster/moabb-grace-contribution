@@ -383,16 +383,17 @@ def score_plot(data, pipelines=None, orientation="vertical", chance_level=None):
         Output of ``Results.to_dataframe()``.
     pipelines : list of str | None
         Pipelines to include in this plot.
-    orientation : str, default="vertical"
+    orientation : str
         Plot orientation, one of ``["vertical", "v", "horizontal", "h"]``.
-    chance_level : None, float, or dict, default=None
-        Chance level to display on the plot.
+        Defaults to ``"vertical"``.
+    chance_level : None, float, or dict
+        Chance level to display on the plot. Defaults to ``None``.
 
         - ``None`` : defaults to 0.5 for all datasets (backward compatible).
         - ``float`` : uniform chance level for all datasets.
         - ``dict`` : per-dataset chance levels. Can be a simple
           ``{dataset_name: float}`` mapping or the output of
-          :func:`~moabb.analysis.chance_level.chance_by_chance`.
+          ``chance_by_chance``.
           When the dict includes ``'adjusted'`` entries, adjusted
           significance threshold lines are also drawn.
 
@@ -479,16 +480,17 @@ def distribution_plot(
         Output of ``Results.to_dataframe()``.
     pipelines : list of str | None
         Pipelines to include in this plot.
-    orientation : str, default="vertical"
+    orientation : str
         Plot orientation, one of ``["vertical", "v", "horizontal", "h"]``.
-    chance_level : None, float, or dict, default=None
-        Chance level to display on the plot.
+        Defaults to ``"vertical"``.
+    chance_level : None, float, or dict
+        Chance level to display on the plot. Defaults to ``None``.
 
         - ``None`` : defaults to 0.5 for all datasets.
         - ``float`` : uniform chance level for all datasets.
         - ``dict`` : per-dataset chance levels. Can be a simple
           ``{dataset_name: float}`` mapping or the output of
-          :func:`~moabb.analysis.chance_level.chance_by_chance`.
+          ``chance_by_chance``.
           When the dict includes ``'adjusted'`` entries, adjusted
           significance threshold lines are also drawn.
     figsize : tuple of (float, float) | None
@@ -606,16 +608,20 @@ def codecarbon_plot(
     data : :class:`pandas.DataFrame`
         Output of Results.to_dataframe() containing benchmark results.
         Should include 'carbon_emission' and 'score' columns for enhanced analysis.
-    order_list : list of str | None, default=None
+    order_list : list of str or None
         Order of pipelines to include in the plot. If None, uses default order.
-    pipelines : list of str | None, default=None
+        Defaults to ``None``.
+    pipelines : list of str or None
         Specific pipelines to include in the plot. If None, includes all pipelines.
-    country : str, default=""
+        Defaults to ``None``.
+    country : str
         Country name to include in plot titles for geographic context.
-    include_efficiency : bool, default=False
+        Defaults to ``""``.
+    include_efficiency : bool
         If True, adds subplot showing energy efficiency (score per kg CO2).
         Highlights pipelines with best accuracy-to-emissions ratio.
-    include_power_vs_score : bool, default=False
+        Defaults to ``False``.
+    include_power_vs_score : bool
         If True, adds subplot showing accuracy vs emissions scatter plot.
         Useful for identifying Pareto-optimal pipelines balancing performance
         and sustainability.
@@ -839,10 +845,10 @@ def emissions_summary(data, order_list=None, pipelines=None):
     data : :class:`pandas.DataFrame`
         Output of Results.to_dataframe() containing benchmark results.
         Must include 'carbon_emission' and 'score' columns.
-    order_list : list of str | None, default=None
-        Order of pipelines to include in the summary.
-    pipelines : list of str | None, default=None
-        Specific pipelines to include in the summary.
+    order_list : list of str or None
+        Order of pipelines to include in the summary. Defaults to ``None``.
+    pipelines : list of str or None
+        Specific pipelines to include in the summary. Defaults to ``None``.
 
     Returns
     -------
@@ -985,8 +991,9 @@ def paired_plot(data, alg1, alg2, chance_level=None):
         Name of a member of column ``data.pipeline``.
     alg2 : str
         Name of a member of column ``data.pipeline``.
-    chance_level : None, float, or dict, default=None
+    chance_level : None, float, or dict
         Chance level used to set axis limits and draw reference lines.
+        Defaults to ``None``.
 
         - ``None`` : defaults to 0.5.
         - ``float`` : uniform chance level.
@@ -1531,8 +1538,9 @@ def dataset_bubble_plot(
         Whether to display the dataset title in the center of the plot.
     legend: bool
         Whether to display the legend.
-    legend_position: tuple[float, float] | None, default=None
+    legend_position : tuple[float, float] or None
         Coordinates of the bottom left corner of the legend.
+        Defaults to ``None``.
         If None, the legend is placed at the bottom right of the plot.
     fontsize: int
         Font size of the legend text.

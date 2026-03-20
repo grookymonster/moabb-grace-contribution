@@ -230,11 +230,11 @@ def add_stim_channel_trial(raw, onsets, labels, offset=200, ch_name="stim_trial"
         The onsets of the trials in sample numbers.
     labels: List | np.ndarray
         The labels of the trials.
-    offset: int (default: 200)
+    offset : int
         The integer value to start markers with. For instance, if 200, then label 0 will be marker 200, label 1
-        will be marker 201, etc.
-    ch_name: str (default: "stim_trial")
-        The name of the added stimulus channel.
+        will be marker 201, etc. Defaults to ``200``.
+    ch_name : str
+        The name of the added stimulus channel. Defaults to ``"stim_trial"``.
 
     Returns
     -------
@@ -279,17 +279,18 @@ def add_stim_channel_epoch(
         The onsets of the trials in sample numbers.
     labels: List | np.ndarray
         The labels of the trials.
-    codes: np.ndarray (default: None)
-        The codebook containing each presented code of shape (nr_bits, nr_codes), sampled at the presentation rate.
-        If None, the labels information is used directly.
-    presentation_rate: int (default: None):
+    codes : np.ndarray or None
+        The codebook containing each presented code, of shape ``(nr_bits, nr_codes)``,
+        sampled at the presentation rate.
+        If None, the labels information is used directly. Defaults to ``None``.
+    presentation_rate : int or None
         The presentation rate (e.g., frame rate) at which the codes were presented in Hz.
-        If None, the raw object's sampling frequency is used.
-    offset: int (default: 100)
+        If None, the raw object's sampling frequency is used. Defaults to ``None``.
+    offset : int
         The integer value to start markers with. For instance, if 100, then label 0 will be marker 100, label 1
-        will be marker 101, etc.
-    ch_name: str (default: "stim_epoch")
-        The name of the added stimulus channel.
+        will be marker 101, etc. Defaults to ``100``.
+    ch_name : str
+        The name of the added stimulus channel. Defaults to ``"stim_epoch"``.
 
     Returns
     -------
@@ -472,25 +473,28 @@ def build_raw_from_epochs(
 
     Parameters
     ----------
-    data : ndarray, shape (n_trials, n_channels, n_samples)
-        Epoched EEG data (in original units, e.g. microvolts).
+    data : ndarray
+        Epoched EEG data (in original units, e.g. microvolts),
+        of shape ``(n_trials, n_channels, n_samples)``.
     ch_names : list of str
         EEG channel names (without "stim").
     sfreq : float
         Sampling frequency in Hz.
-    event_ids : ndarray, shape (n_trials,)
-        Integer event code for each trial.
+    event_ids : ndarray
+        Integer event code for each trial, of shape ``(n_trials,)``.
     montage_name : str
         Name of a standard MNE montage (e.g. "standard_1005", "biosemi32").
-    ch_types : list of str | None
+    ch_types : list of str or None
         Channel types for each signal channel in ``ch_names``. If None, all
         channels are treated as ``"eeg"``.
     scale : float
-        Scale factor to convert data to Volts (default 1e-6 for microvolts).
+        Scale factor to convert data to Volts. Defaults to ``1e-6``
+        (for microvolts).
     buffer_samples : int
-        Number of zero-padding samples between trials (default 50).
+        Number of zero-padding samples between trials. Defaults to ``50``.
     onset_sample : int
-        Sample index within each epoch to place the event marker (default 0).
+        Sample index within each epoch to place the event marker.
+        Defaults to ``0``.
 
     Returns
     -------
@@ -658,8 +662,9 @@ class _BubbleChart:
         ----------
         area : array-like
             Area of the bubbles.
-        bubble_spacing : float, default: 0
+        bubble_spacing : float
             Minimal spacing between bubbles after collapsing.
+            Defaults to ``0``.
 
         Notes
         -----
@@ -708,8 +713,8 @@ class _BubbleChart:
 
         Parameters
         ----------
-        n_iterations : int, default: 50
-            Number of moves to perform.
+        n_iterations : int
+            Number of moves to perform. Defaults to ``50``.
         """
         for _i in range(n_iterations):
             moves = 0
