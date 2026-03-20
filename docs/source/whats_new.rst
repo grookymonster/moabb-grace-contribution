@@ -47,8 +47,8 @@ Enhancements
 - Add :class:`moabb.datasets.GuttmannFlury2025_MI`, :class:`moabb.datasets.GuttmannFlury2025_ME`, :class:`moabb.datasets.GuttmannFlury2025_SSVEP`, and :class:`moabb.datasets.GuttmannFlury2025_P300` multi-paradigm dataset adapters with Zenodo re-hosted data (by `Bruno Aristimunha`_)
 - Add :class:`moabb.datasets.Liu2025` visual imagery dataset adapter (62 subjects) with Zenodo re-hosted data, and fix :class:`moabb.datasets.Zhou2020` download path (by `Bruno Aristimunha`_)
 - Add :class:`moabb.datasets.Gao2026` visual imagery dataset adapter (25 subjects) (by `Bruno Aristimunha`_)
-- Add 20 :class:`moabb.datasets.Mainsah2025` (BigP3BCI) P300 dataset adapters (studies A-S2, ~305 subjects from PhysioNet) (by `Bruno Aristimunha`_)
-- Add 7 new P300/ERP dataset adapters: :class:`moabb.datasets.Simoes2020` (15 ASD subjects, Zenodo re-hosted from Kaggle), :class:`moabb.datasets.Speier2017` (13 subjects, RSVP), :class:`moabb.datasets.Chailloux2020` (15 subjects), :class:`moabb.datasets.Guger2009` (4 subjects), :class:`moabb.datasets.McCann2015` (10 subjects, auditory), :class:`moabb.datasets.LeBlanc2024_A` and :class:`moabb.datasets.LeBlanc2024_B` (20 subjects each, hybrid paradigm) (by `Bruno Aristimunha`_)
+- Add 20 :class:`moabb.datasets.mainsah2025.Mainsah2025` (BigP3BCI) P300 dataset adapters (studies A-S2, ~305 subjects from PhysioNet) (by `Bruno Aristimunha`_)
+- Add 3 new P300/ERP dataset adapters: :class:`moabb.datasets.Simoes2020` (15 ASD subjects, Zenodo re-hosted from Kaggle), :class:`moabb.datasets.Speier2017` (13 subjects, RSVP), :class:`moabb.datasets.Chailloux2020` (15 subjects) (by `Bruno Aristimunha`_)
 - Add :meth:`~moabb.datasets.Stieger2021.get_trial_info` and :meth:`~moabb.datasets.Stieger2021.suggest_interval` methods to help users choose an optimal epoch interval for variable-length trials, and preserve per-trial ``triallength`` metadata through BIDS conversion via annotation extras (:gh:`816`)
 - Redesign dataset API pages with a structured snapshot card, visual summary blocks, HED-tag visualization, benchmark highlights, citation/public API cards, and responsive mobile improvements (:gh:`1000` by `Bruno Aristimunha`_)
 - Add GA4 pageview metrics and popularity ranking to dataset documentation cards, with inline sparkline charts showing 90-day traffic trends (by `Bruno Aristimunha`_)
@@ -144,7 +144,7 @@ Bugs
 - Fix copytree FileExistsError in BrainInvaders2013a download by adding dirs_exist_ok=True (by `Bruno Aristimunha`_)
 - Ensure optional additional scoring columns in evaluation results (:gh:`957` by `Ethan Davis`_)
 - Fix pandas ``ArrowStringArray`` shuffle warning by converting ``.unique()`` results to numpy arrays in splitters, avoiding issues with newer pandas versions (:gh:`963` by `Bruno Aristimunha`_)
-- Fix crash in :class:`moabb.datasets.Huebner2022` when regex match on vhdr filenames returns ``None`` (:gh:`1036` by `Sarthak Tayal`_)
+- Fix crash in :class:`moabb.datasets.Huebner2017` when regex match on vhdr filenames returns ``None`` (:gh:`1036` by `Sarthak Tayal`_)
 - Replace production ``assert`` statements with proper ``ValueError`` / ``TypeError`` exceptions across analysis, pipelines, paradigms, and datasets modules (:gh:`1036` by `Sarthak Tayal`_)
 - Fix silent pipeline name collision in :func:`moabb.pipelines.utils.create_pipeline_from_config` by raising ``ValueError`` on duplicate names (:gh:`1036` by `Sarthak Tayal`_)
 - Replace bare ``print()`` calls with proper logging in :class:`moabb.datasets.MartinezCagigal2023Checker` (:gh:`1036` by `Sarthak Tayal`_)
@@ -264,7 +264,7 @@ Enhancements
 - Update to pyRiemann 0.9 and numpy 2.0 for improved compatibility (:gh:`789` by `Gregoire Cattan`_ and `Bruno Aristimunha`_)
 - Adding :class:`moabb.datasets.Kojima2024A` (:gh:`807` by `Simon Kojima`_)
 - Adding :class:`moabb.datasets.Kojima2024B` (:gh:`806` by `Simon Kojima`_)
-- Add new dataset :class:`moabb.datasets.BNCI2003_IVa` dataset (:gh:`811` by `Griffin Keeler`_)
+- Add new dataset :class:`moabb.datasets.BNCI2003_004` dataset (:gh:`811` by `Griffin Keeler`_)
 - Added the ability to feed pipelines using a list of dictionaries in :func:`moabb.benchmark` (:gh:`826` by `Anton Andreev`_)
 
 Bugs
@@ -332,7 +332,7 @@ Enhancements
 - Adding :class:`moabb.evaluations.splitters.WithinSessionSplitter` (:gh:`664` by `Bruna Lopes_`)
 - Update version of pyRiemann to 0.7 (:gh:`671` by `Gregoire Cattan`_)
 - Add columns definitions in the datasets doc (:gh:`672` by `Pierre Guetschel`_)
-- Add ERP CORE datasets :class:`moabb.datasets.ErpCore2021` dataset (:gh:`627` by `Taha Habib`_)
+- Add ERP CORE datasets :class:`moabb.datasets.erpcore2021.ErpCore2021` dataset (:gh:`627` by `Taha Habib`_)
 - Update paths of BIDS cache to better follow the standards. Cache created in previous MOABB versions should still be compatible (:gh:`707` by `Pierre Guetschel`_)
 
 Bugs
@@ -350,7 +350,7 @@ Bugs
 - Change the way of creating the path to the folder (:gh:`697` by `Sebastien Velut`_)
 - Fixing bug with braindecode and moabb datasets EPFLP300 (:gh:`696` by `Bruno Aristimunha`_)
 - Fixing the dataset details for bids conversion (:gh:`698` by `Bruno Aristimunha`_)
-- Fixing unit issue and lack of montage with :class:`moabb.datasets.Rodrigues2017`, :class:`moabb.datasets.Rodrigues2017`, :class:`moabb.datasets.BaseCastillos2023`,  :class:`moabb.datasets.BaseCastillos2023`,  :class:`moabb.datasets.Huebner2018`,  :class:`moabb.datasets.Cattan2019_PHMD`, :class:`moabb.datasets.Ofner2017`  (:gh:`700`  `Bruno Aristimunha`_)
+- Fixing unit issue and lack of montage with :class:`moabb.datasets.Rodrigues2017`, :class:`moabb.datasets.Rodrigues2017`, :class:`moabb.datasets.castillos2023.BaseCastillos2023`,  :class:`moabb.datasets.castillos2023.BaseCastillos2023`,  :class:`moabb.datasets.Huebner2018`,  :class:`moabb.datasets.Cattan2019_PHMD`, :class:`moabb.datasets.Ofner2017`  (:gh:`700`  `Bruno Aristimunha`_)
 - Fix t-test permutation tests (:gh:`684` and :gh:`709` by `Gregoire Cattan`_, `Anton Andreev`_, `Marco Congedo`_ and `Bruno Aristimunha`_)
 
 
@@ -466,7 +466,7 @@ Enhancements
 - Add methods ``make_processing_pipelines`` and ``make_labels_pipeline`` to :class:`moabb.paradigms.base.BaseProcessing` (:gh:`447` by `Pierre Guetschel`_)
 - Pipelines' digests are now computed from the whole processing+classification pipeline (:gh:`447` by `Pierre Guetschel`_)
 - Update all dataset codes to remove white spaces and underscores (:gh:`448` by `Pierre Guetschel`_)
-- Add :func:`moabb.utils.depreciated_alias` decorator (:gh:`455` by `Pierre Guetschel`_)
+- Add ``moabb.utils.depreciated_alias`` decorator (:gh:`455` by `Pierre Guetschel`_)
 - Rename many dataset class names to standardize and deprecate old names (:gh:`455` by `Pierre Guetschel`_)
 - Change many dataset codes to match the class names (:gh:`455` by `Pierre Guetschel`_)
 - Add :obj:`moabb.datasets.compound_dataset.utils.compound_dataset_list`  (:gh:`455` by `Pierre Guetschel`_)
@@ -503,7 +503,7 @@ Bugs
 - Fixing dataset downloader from servers with non-http (PR :gh:`433` by `Sara Sedlar`_)
 - Fix ``dataset_list`` to include deprecated datasets (PR :gh:`464` by `Bruno Aristimunha`_)
 - Fixed bug in :func:`moabb.analysis.results.get_string_rep` to handle addresses such as 0x__0A as well (PR :gh:`468` by `Anton Andreev`_)
-- Moving the :func:`moabb.evualation.grid_search` to inside the base evaluation (:gh:`487` by `Bruno Aristimunha`_)
+- Moving the ``moabb.evaluations.grid_search`` to inside the base evaluation (:gh:`487` by `Bruno Aristimunha`_)
 - Removing joblib Parallel (:gh:`488` by `Igor Carrara`_)
 - Fix case when events specified via ``raw.annotations`` but no events (:gh:`491` by `Pierre Guetschel`_)
 - Fix bug in downloading Shin2017A dataset (:gh:`493` by `Igor Carrara`_)

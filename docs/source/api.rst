@@ -84,6 +84,7 @@ Motor Imagery Datasets
     Chang2025
     Forenzo2023
     Gao2026
+    GuttmannFlury2025_ME
     GuttmannFlury2025_MI
     HefmiIch2025
     Jeong2020
@@ -261,6 +262,16 @@ Utilities
     base.BaseBIDSDataset
     base.LocalBIDSDataset
     base.CacheConfig
+    bnci.base.MNEBNCI
+    bnci.base.BNCIBaseDataset
+    erpcore2021.ErpCore2021
+    mainsah2025.Mainsah2025
+    lee2024.Lee2024
+    Lee2019.Lee2019
+    castillos2023.BaseCastillos2023
+    ssvep_mamem.BaseMAMEM
+    lee2021_mobile.Lee2021Mobile
+    bbci_eeg_fnirs.BaseShin2017
     fake.FakeDataset
     fake.FakeVirtualRealityDataset
 

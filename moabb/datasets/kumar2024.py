@@ -481,7 +481,7 @@ class Kumar2024(BaseDataset):
 
         Parameters
         ----------
-        sess_dir : Path
+        sess_dir : pathlib.Path
             Directory containing GDF files for one session.
 
         Returns

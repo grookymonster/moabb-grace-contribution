@@ -1683,12 +1683,12 @@ def generate_neural_signature(
         A MOABB dataset instance.
     subjects : list of int or None
         Subject IDs.  ``None`` uses all subjects.
-    output_dir : str, Path, or None
+    output_dir : str, pathlib.Path, or None
         Output directory.  Defaults to ``./neural_signatures/``.
 
     Returns
     -------
-    list of Path
+    list of pathlib.Path
         Paths to the generated HTML files.
     """
     _check_plotly()

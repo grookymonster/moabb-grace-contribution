@@ -5,7 +5,7 @@ import shutil
 import warnings
 import zipfile as z
 from pathlib import Path
-from typing import Any, Dict, Tuple
+from typing import Any
 from zipfile import BadZipFile
 
 import mne
@@ -408,17 +408,17 @@ class Liu2024(BaseDataset):
 
         return subject_paths
 
-    def encoding(self, events_df: pd.DataFrame) -> Tuple[np.array, Dict[int, str], set]:
+    def encoding(self, events_df):
         """Encode the columns 'value' and 'trial_type' into a single event type.
 
         Parameters
         ----------
-        events_df : pd.DataFrame
+        events_df : :class:`pandas.DataFrame`
             DataFrame containing the events information.
 
         Returns
         -------
-        np.ndarray
+        :class:`numpy.ndarray`
             Array of encoded event types.
         dict
             Mapping from event codes to event names.
@@ -604,14 +604,14 @@ class Liu2024(BaseDataset):
         ----------
         raw : mne.io.Raw
             The raw data.
-        event_category : np.ndarray
+        event_category : :class:`numpy.ndarray`
             The event categories.
         stim_values : set
             Set of STI channel values to select triggers for.
 
         Returns
         -------
-        events : np.ndarray
+        events : :class:`numpy.ndarray`
             The created events array.
         """
         sti_data = raw.copy().pick("STI").get_data().flatten()

@@ -424,7 +424,7 @@ class _Dreyer2023Base(BaseDataset):
 
         Returns
         -------
-        DataFrame
+        :class:`pandas.DataFrame`
             A DataFrame containing the demographic information of the subjects.
         """
         path = Path(dl.get_dataset_path(self.code, path)) / (f"MNE-{self.code}-data")

@@ -173,7 +173,7 @@ def benchmark(  # noqa: C901
 
     Returns
     -------
-    eval_results: DataFrame
+    eval_results: :class:`pandas.DataFrame`
         Results of benchmark for all considered paradigms
 
     Notes
@@ -371,12 +371,12 @@ def _combine_paradigms(prdgm_results):
 
     Parameters
     ----------
-    prdgm_results: dict of DataFrame
+    prdgm_results: dict of :class:`pandas.DataFrame`
         Results of benchmark for all considered paradigms
 
     Returns
     -------
-    eval_results: dict of DataFrame
+    eval_results: dict of :class:`pandas.DataFrame`
         Results with filterbank and direct paradigms combined
     """
     eval_results = prdgm_results.copy()
@@ -395,9 +395,9 @@ def _save_results(eval_results, output, plot):
 
     Parameters
     ----------
-    eval_results: dict of DataFrame
+    eval_results: dict of :class:`pandas.DataFrame`
         Results of benchmark for all considered paradigms
-    output: str or Path
+    output: str or pathlib.Path
         Folder to store the analysis results
     plot: bool
         Plot results after computing

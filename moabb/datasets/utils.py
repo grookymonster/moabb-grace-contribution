@@ -379,7 +379,7 @@ def bids_metainfo(bids_path: Path) -> dict:
 
     Parameters
     ----------
-    bids_path : Path
+    bids_path : pathlib.Path
         The path to the BIDS dataset.
     """
     json_data = {}
@@ -588,7 +588,7 @@ def download_and_extract_subject_zip(
         Direct download URL for the ZIP file.
     sign : str
         Dataset code passed to :func:`dl.data_dl` (e.g., ``"Wu2020"``).
-    extract_dir : Path | str
+    extract_dir : pathlib.Path | str
         Directory to extract ZIP contents into.
     path : str | None
         Download path passed to :func:`dl.data_dl`.
@@ -617,9 +617,9 @@ def extract_rar(rar_path, dest_dir):
 
     Parameters
     ----------
-    rar_path : str or Path
+    rar_path : str or pathlib.Path
         Path to the RAR archive.
-    dest_dir : str or Path
+    dest_dir : str or pathlib.Path
         Directory to extract files into.
     """
     dest_dir = Path(dest_dir)
@@ -890,7 +890,7 @@ def plot_datasets_grid(
 
     Returns
     -------
-    fig: Figure
+    fig: :class:`matplotlib.figure.Figure`
         Pyplot handle
     """
     plotter = _GridDatasetPlotter(
@@ -941,7 +941,7 @@ def plot_datasets_cluster(
 
     Returns
     -------
-    fig: Figure
+    fig: :class:`matplotlib.figure.Figure`
         Pyplot handle
     """
     plotter = _ClusterDatasetPlotter(

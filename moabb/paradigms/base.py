@@ -309,12 +309,12 @@ class BaseProcessing(metaclass=MoabbMetaClass):
             Specify if needed to return epochs instead of ndarray.
         return_raws : bool, default is False
             Specify if needed to return raws instead of ndarray.
-        postprocess_pipeline : Pipeline | None, default is None
+        postprocess_pipeline : :class:`sklearn.pipeline.Pipeline` | None, default is None
             Optional pipeline to apply to the data after the preprocessing.
             This pipeline will either receive :class:`mne.io.BaseRaw`, :class:`mne.Epochs`
-            or :func:`np.ndarray` as input, depending on the values of ``return_epochs``
+            or :class:`numpy.ndarray` as input, depending on the values of ``return_epochs``
             and ``return_raws``.
-            This pipeline must return an ``np.ndarray``.
+            This pipeline must return a :class:`numpy.ndarray`.
             This pipeline must be "fixed" because it will not be trained,
             i.e. no call to ``fit`` will be made.
         """
@@ -429,19 +429,19 @@ class BaseProcessing(metaclass=MoabbMetaClass):
         return_raws: boolean
             To return raw files and events, to ensure compatibility with braindecode.
             Mutually exclusive with return_epochs
-        cache_config: dict | CacheConfig
-            Configuration for caching of datasets. See :class:`moabb.datasets.base.CacheConfig` for details.
-        postprocess_pipeline: Pipeline | None
+        cache_config: dict | :class:`~moabb.datasets.base.CacheConfig`
+            Configuration for caching of datasets. See :class:`~moabb.datasets.base.CacheConfig` for details.
+        postprocess_pipeline: :class:`sklearn.pipeline.Pipeline` | None
             Optional pipeline to apply to the data after the preprocessing.
             This pipeline will either receive :class:`mne.io.BaseRaw`, :class:`mne.Epochs`
-            or :func:`np.ndarray` as input, depending on the values of ``return_epochs``
+            or :class:`numpy.ndarray` as input, depending on the values of ``return_epochs``
             and ``return_raws``.
-            This pipeline must return an ``np.ndarray``.
+            This pipeline must return a :class:`numpy.ndarray`.
             This pipeline must be "fixed" because it will not be trained,
             i.e. no call to ``fit`` will be made.
-        process_pipelines: Pipeline | None
+        process_pipelines: :class:`sklearn.pipeline.Pipeline` | None
             Optional pipeline to apply to the data after the preprocessing.
-            You must set the ``return_epochs`` and ``return_raws` parameters
+            You must set the ``return_epochs`` and ``return_raws`` parameters
             accordingly, i.e., if your custom pipeline returns raw objects,
             you must also set ``return_raws=True``, otherwise you will get unexpected results.
             Only use it if you know what you are doing.
@@ -456,13 +456,13 @@ class BaseProcessing(metaclass=MoabbMetaClass):
 
         Returns
         -------
-        X : Union[np.ndarray, mne.Epochs]
+        X : :class:`numpy.ndarray` | :class:`mne.Epochs`
             the data that will be used as features for the model
-            Note: if return_epochs=True,  this is mne.Epochs
-            if return_epochs=False, this is np.ndarray
-        labels: np.ndarray
+            Note: if return_epochs=True, this is :class:`mne.Epochs`;
+            if return_epochs=False, this is :class:`numpy.ndarray`.
+        labels: :class:`numpy.ndarray`
             the labels for training / evaluating the model
-        metadata: pd.DataFrame
+        metadata: :class:`pandas.DataFrame`
             A dataframe containing the metadata.
         """
 

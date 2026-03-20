@@ -243,7 +243,7 @@ class WithinSubjectSplitter(BaseCrossValidator):
 
         Parameters
         ----------
-        metadata: pd.DataFrame
+        metadata: :class:`pandas.DataFrame`
             The metadata containing the subject and session information.
 
         Returns
@@ -392,7 +392,7 @@ class CrossSessionSplitter(BaseCrossValidator):
 
         Parameters
         ----------
-        metadata: pd.DataFrame
+        metadata: :class:`pandas.DataFrame`
             The metadata containing the subject and session information.
 
         Returns
@@ -540,7 +540,7 @@ class CrossSubjectSplitter(BaseCrossValidator):
 
         Parameters
         ----------
-        metadata: pd.DataFrame
+        metadata: :class:`pandas.DataFrame`
             The metadata containing the subject and session information.
 
         Returns

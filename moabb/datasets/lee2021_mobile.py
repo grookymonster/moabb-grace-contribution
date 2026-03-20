@@ -393,7 +393,7 @@ class Lee2021Mobile(BaseDataset):
 class Lee2021Mobile_SSVEP(Lee2021Mobile):
     """SSVEP paradigm of the Mobile BCI dataset.
 
-    See :class:`Lee2021Mobile` for full documentation.
+    See :class:`~moabb.datasets.lee2021_mobile.Lee2021Mobile` for full documentation.
     """
 
     __init__ = partialmethod(Lee2021Mobile.__init__, "SSVEP")
@@ -402,7 +402,7 @@ class Lee2021Mobile_SSVEP(Lee2021Mobile):
 class Lee2021Mobile_ERP(Lee2021Mobile):
     """ERP paradigm of the Mobile BCI dataset.
 
-    See :class:`Lee2021Mobile` for full documentation.
+    See :class:`~moabb.datasets.lee2021_mobile.Lee2021Mobile` for full documentation.
     """
 
     METADATA = DatasetMetadata(

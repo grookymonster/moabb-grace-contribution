@@ -256,9 +256,9 @@ class BaseEvaluation(ABC):
 
     Parameters
     ----------
-    paradigm : Paradigm instance
+    paradigm : :class:`~moabb.paradigms.base.BaseParadigm`
         The paradigm to use.
-    datasets : List of Dataset instance
+    datasets : list of :class:`~moabb.datasets.base.BaseDataset`
         The list of dataset to run the evaluation. If none, the list of
         compatible dataset will be retrieved from the paradigm instance.
     random_state: int, RandomState instance, default=None
@@ -473,9 +473,9 @@ class BaseEvaluation(ABC):
             The dataset to load.
         run_pipes : dict
             Pipelines to run (used to check epoch requirements).
-        process_pipeline : Pipeline
+        process_pipeline : :class:`sklearn.pipeline.Pipeline`
             The processing pipeline.
-        postprocess_pipeline : Pipeline | None
+        postprocess_pipeline : :class:`sklearn.pipeline.Pipeline` | None
             Optional post-processing pipeline.
         subjects : list | None
             List of subjects to load. If None, loads all subjects.
@@ -872,7 +872,7 @@ class BaseEvaluation(ABC):
         pipelines: dict[str, BaseEstimator],
         param_grid: Optional[dict[str, dict]] = None,
         postprocess_pipeline: Optional[BaseEstimator] = None,
-    ) -> pd.DataFrame:
+    ):
         """Runs all pipelines on all datasets.
 
         This function will apply all provided pipelines and return a dataframe
@@ -884,18 +884,18 @@ class BaseEvaluation(ABC):
             A dict containing the sklearn pipeline to evaluate.
         param_grid : dict of str
             The key of the dictionary must be the same as the associated pipeline.
-        postprocess_pipeline: Pipeline | None
+        postprocess_pipeline: :class:`sklearn.pipeline.Pipeline` | None
             Optional pipeline to apply to the data after the preprocessing.
             This pipeline will either receive :class:`mne.io.BaseRaw`, :class:`mne.Epochs`
-            or :func:`np.ndarray` as input, depending on the values of ``return_epochs``
+            or :class:`numpy.ndarray` as input, depending on the values of ``return_epochs``
             and ``return_raws``.
-            This pipeline must return an ``np.ndarray``.
+            This pipeline must return a :class:`numpy.ndarray`.
             This pipeline must be "fixed" because it will not be trained,
             i.e. no call to ``fit`` will be made.
 
         Returns
         -------
-        results: pd.DataFrame
+        results: :class:`pandas.DataFrame`
             A dataframe containing the results.
         """
 
