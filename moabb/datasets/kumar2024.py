@@ -344,7 +344,7 @@ class Kumar2024(BaseDataset):
 
         Returns
         -------
-        Path
+        extract_dir : :class:`pathlib.Path`
             Path to the extracted dataset root directory.
         """
         if subject not in self.subject_list:

@@ -896,8 +896,8 @@ class BaseEvaluation(ABC):
 
         Parameters
         ----------
-        pipelines : dict of pipeline instance.
-            A dict containing the sklearn pipeline to evaluate.
+        pipelines : dict
+            A dict of pipeline instances containing the sklearn pipelines to evaluate.
         param_grid : dict of str
             The key of the dictionary must be the same as the associated pipeline.
         postprocess_pipeline: :class:`sklearn.pipeline.Pipeline` | None

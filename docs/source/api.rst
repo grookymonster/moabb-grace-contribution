@@ -272,6 +272,10 @@ Utilities
     ssvep_mamem.BaseMAMEM
     lee2021_mobile.Lee2021Mobile
     bbci_eeg_fnirs.BaseShin2017
+    dreyer2023._Dreyer2023Base
+    huebner_llp._BaseVisualMatrixSpellerDataset
+    compound_dataset.base.CompoundDataset
+    compound_dataset.bi_illiteracy._base_bi_il
     fake.FakeDataset
     fake.FakeVirtualRealityDataset
 

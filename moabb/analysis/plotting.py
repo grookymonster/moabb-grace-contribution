@@ -1514,7 +1514,7 @@ def dataset_bubble_plot(
 
     Parameters
     ----------
-    dataset: Dataset
+    dataset: :class:`~moabb.datasets.base.BaseDataset`
         Dataset to plot
     center: tuple[float, float]
         Coordinates of the center of the plot

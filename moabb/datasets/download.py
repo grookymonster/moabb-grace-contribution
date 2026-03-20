@@ -281,7 +281,7 @@ def fs_get_file_list(article_id, version=None):
     ----------
     article_id : str or int
         Figshare article ID
-    version : str or id, default is None
+    version : str or int, default is None
         Figshare article version. If None, selects the most recent version.
 
     Returns

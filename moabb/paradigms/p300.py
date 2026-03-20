@@ -111,8 +111,8 @@ class P300(BaseP300):
     fmax: float (default 24)
         cutoff frequency (Hz) for the low pass filter.
 
-    events: List of str (default ["Target", "NonTarget"])
-        event to use for epoching.
+    events : list of str
+        Event to use for epoching. Defaults to ``["Target", "NonTarget"]``.
     """
 
     def __init__(

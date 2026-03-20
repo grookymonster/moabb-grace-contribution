@@ -565,42 +565,37 @@ class MetaclassDataset(abc.ABCMeta):
 class BaseDataset(metaclass=MetaclassDataset):
     """Abstract Moabb BaseDataset.
 
-    Parameters required for all datasets
+    Parameters required for all datasets.
 
-    parameters
+    Parameters
     ----------
-    subjects: List of int
-        List of subject number (or tuple or numpy array)
+    subjects : list of int
+        List of subject number (or tuple or numpy array).
 
-    sessions_per_subject: int
-        Number of sessions per subject (if varying, take minimum)
+    sessions_per_subject : int
+        Number of sessions per subject (if varying, take minimum).
 
-    events: dict of strings
+    events : dict of str
         String codes for events matched with labels in the stim channel.
-        Currently imagery codes codes can include:
-        - left_hand
-        - right_hand
-        - hands
-        - feet
-        - rest
-        - left_hand_right_foot
-        - right_hand_left_foot
-        - tongue
-        - navigation
-        - subtraction
-        - word_ass (for word association)
+        Currently imagery codes can include:
+        ``left_hand``, ``right_hand``, ``hands``, ``feet``, ``rest``,
+        ``left_hand_right_foot``, ``right_hand_left_foot``, ``tongue``,
+        ``navigation``, ``subtraction``, ``word_ass`` (for word association).
 
-    code: string
+    code : str
         Unique identifier for dataset, used in all plots.
         The code should be in CamelCase.
 
-    interval: list with 2 entries
-        Imagery interval as defined in the dataset description
+    interval : list
+        Imagery interval as defined in the dataset description,
+        with 2 entries.
 
-    paradigm: ['p300','imagery', 'ssvep']
-        Defines what sort of dataset this is
+    paradigm : str
+        Defines what sort of dataset this is.
+        One of ``'p300'``, ``'imagery'``, or ``'ssvep'``.
 
-    doi: DOI for dataset, optional (for now)
+    doi : str, optional
+        DOI for the dataset.
 
     return_all_modalities : bool | dict, optional
         Controls which channel types are retained when data is picked:
