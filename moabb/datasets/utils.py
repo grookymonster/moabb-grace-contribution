@@ -48,10 +48,11 @@ def _init_dataset():
         if issubclass(ds[1], BaseDataset):
             dataset_list.append(ds[1])
 
+    deprecated_names = list(zip(*aliases_list))[0] if aliases_list else ()
     dataset_class = {
         dataset.__name__: dataset
         for dataset in dataset_list
-        if dataset.__name__ not in list(zip(*aliases_list))[0]
+        if dataset.__name__ not in deprecated_names
     }
 
     dataset_dict.update(dataset_class)
@@ -99,7 +100,7 @@ def dataset_search(  # noqa: C901
     if not dataset_dict:
         _init_dataset()
 
-    deprecated_names, _, _ = zip(*aliases_list)
+    deprecated_names = list(zip(*aliases_list))[0] if aliases_list else ()
 
     channels = set(channels)
     out_data = []

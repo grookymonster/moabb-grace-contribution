@@ -15,7 +15,6 @@ from moabb.datasets.metadata.schema import (
     PreprocessingMetadata,
     Tags,
 )
-from moabb.utils import depreciated_alias
 
 from . import download as dl
 from .base import BaseDataset
@@ -24,7 +23,6 @@ from .base import BaseDataset
 HEADMOUNTED_URL = "https://zenodo.org/record/2617085/files/"
 
 
-@depreciated_alias("HeadMountedDisplay", "1.1")
 class Cattan2019_PHMD(BaseDataset):
     """Passive Head Mounted Display with Music Listening dataset [1]_.
 
