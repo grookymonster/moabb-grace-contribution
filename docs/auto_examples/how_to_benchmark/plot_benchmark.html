@@ -12,7 +12,7 @@
     <link rel="icon" sizes="144x144" href="../../_static/favicon-144.png" type="image/png">
     <link rel="mask-icon" href="../../_static/favicon_mask-icon.svg" color="#222832" type="image/svg+xml">
     <link rel="apple-touch-icon" sizes="500x500" href="../../_static/favicon-500.png" type="image/png">
-    <title>Benchmarking with MOABB &#8212; moabb 1.4.3-dev documentation</title>
+    <title>Benchmarking with MOABB &#8212; moabb 1.5.0-dev documentation</title>
   
   
   
@@ -52,7 +52,7 @@
 
     <script src="../../_static/jquery.js?v=5d32c60e"></script>
     <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-    <script src="../../_static/documentation_options.js?v=1c0077db"></script>
+    <script src="../../_static/documentation_options.js?v=1a7a66bb"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -84,7 +84,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="1.4.3" />
+  <meta name="docsearch:version" content="1.5.0" />
 
   </head>
   
@@ -152,8 +152,8 @@
     
     
     
-    <img src="../../_static/moabb_light.svg" class="logo__image only-light" alt="moabb 1.4.3-dev documentation - Home"/>
-    <img src="../../_static/moabb_dark.svg" class="logo__image only-dark pst-js-only" alt="moabb 1.4.3-dev documentation - Home"/>
+    <img src="../../_static/moabb_light.svg" class="logo__image only-light" alt="moabb 1.5.0-dev documentation - Home"/>
+    <img src="../../_static/moabb_dark.svg" class="logo__image only-dark pst-js-only" alt="moabb 1.5.0-dev documentation - Home"/>
   
   
 </a></div>
@@ -476,11 +476,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_phmd_ml_spectrum.html">Spectral analysis of the trials</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_pre_processing_steps.html">Playing with the pre-processing steps</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_pseudoonline.html">Pseudo-Online Motor Imagery with Sliding Window</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_riemannian_artifact_rejection.html">Riemannian Artifact Rejection as a Pre-processing Step</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_select_electrodes_resample.html">Select Electrodes and Resampling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_sliding_estimator.html">Time-Resolved Decoding with SlidingEstimator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_statistical_analysis.html">Statistical Analysis and Chance Level Assessment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_use_an_X_y_dataset.html">Using X y data (epoched data) instead of continuous signal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced_examples/riemannian_artifact_rejection.html">Riemannian Artifact Rejection as a Pre-processing Step</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../learning_curve/index.html">Evaluation with learning curve</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -649,6 +649,7 @@ Dreyer2023B
 Dreyer2023C
 Forenzo2023
 GrosseWentrup2009
+GuttmannFlury2025-ME
 GuttmannFlury2025-MI
 HefmiIch2025
 Kaya2018
@@ -697,12 +698,12 @@ error-level logging to minimize overhead.</p>
 </pre></div>
 </div>
 <p>This will log detailed emissions data during the benchmark run.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">results</span> <span class="o">=</span> <a href="../../generated/moabb.benchmark.html#moabb.benchmark" title="moabb.benchmark" class="sphx-glr-backref-module-moabb sphx-glr-backref-type-py-function"><span class="n">benchmark</span></a><span class="p">(</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">results</span></a> <span class="o">=</span> <a href="../../generated/moabb.benchmark.html#moabb.benchmark" title="moabb.benchmark" class="sphx-glr-backref-module-moabb sphx-glr-backref-type-py-function"><span class="n">benchmark</span></a><span class="p">(</span>
     <span class="n">pipelines</span><span class="o">=</span><span class="s2">&quot;./sample_pipelines/&quot;</span><span class="p">,</span>
     <span class="n">evaluations</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;WithinSession&quot;</span><span class="p">],</span>
     <span class="n">paradigms</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;LeftRightImagery&quot;</span><span class="p">],</span>
     <span class="n">include_datasets</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Zhou2016&quot;</span><span class="p">],</span>
-    <span class="n">results</span><span class="o">=</span><span class="s2">&quot;./results/&quot;</span><span class="p">,</span>
+    <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">results</span></a><span class="o">=</span><span class="s2">&quot;./results/&quot;</span><span class="p">,</span>
     <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">output</span><span class="o">=</span><span class="s2">&quot;./benchmark/&quot;</span><span class="p">,</span>
     <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;benchmark&quot;</span><span class="p">,</span>
@@ -715,25 +716,25 @@ Datasets considered for LeftRightImagery paradigm [&#39;Zhou2016&#39;]
 /home/runner/work/moabb/moabb/moabb/analysis/results.py:192: H5pyDeprecationWarning: Creating a dataset without passing data or dtype is deprecated. Pass an explicit dtype. Using dtype=&#39;f4&#39; will keep the current default behaviour.
   dset.create_dataset(
     dataset     evaluation          pipeline  avg score  carbon emission
-0  Zhou2016  WithinSession  Tangent Space LR   0.941601         0.323970
-1  Zhou2016  WithinSession         CSP + SVM   0.932315         0.314627
+0  Zhou2016  WithinSession  Tangent Space LR   0.941601         0.359745
+1  Zhou2016  WithinSession         CSP + SVM   0.932315         0.346060
 </pre></div>
 </div>
 <p>Benchmark prints a summary of the results. Detailed results are saved in a
 pandas dataframe, and can be used to generate figures. The analysis &amp; figures
 are saved in the <code class="docutils literal notranslate"><span class="pre">benchmark</span></code> folder.</p>
 <p>Compute chance levels for the dataset used in the benchmark.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">chance_levels</span></a> <span class="o">=</span> <span class="n">chance_by_chance</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="p">[</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">])</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">chance_levels</span></a> <span class="o">=</span> <span class="n">chance_by_chance</span><span class="p">(</span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">results</span></a><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="p">[</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">])</span>
 
-<a href="../../generated/moabb.analysis.plotting.score_plot.html#moabb.analysis.plotting.score_plot" title="moabb.analysis.plotting.score_plot" class="sphx-glr-backref-module-moabb-analysis-plotting sphx-glr-backref-type-py-function"><span class="n">score_plot</span></a><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">chance_level</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">chance_levels</span></a><span class="p">)</span>
+<a href="../../generated/moabb.analysis.plotting.score_plot.html#moabb.analysis.plotting.score_plot" title="moabb.analysis.plotting.score_plot" class="sphx-glr-backref-module-moabb-analysis-plotting sphx-glr-backref-type-py-function"><span class="n">score_plot</span></a><span class="p">(</span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">results</span></a><span class="p">,</span> <span class="n">chance_level</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">chance_levels</span></a><span class="p">)</span>
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.show.html#matplotlib.pyplot.show" title="matplotlib.pyplot.show" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_benchmark_001.png" srcset="../../_images/sphx_glr_plot_benchmark_001.png" alt="plot benchmark" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/moabb/moabb/moabb/analysis/plotting.py:420: UserWarning: The palette list has more values (6) than needed (2), which may not be intended.
+<img src="../../_images/sphx_glr_plot_benchmark_001.png" srcset="../../_images/sphx_glr_plot_benchmark_001.png" alt="plot benchmark" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/moabb/moabb/moabb/analysis/plotting.py:421: UserWarning: The palette list has more values (6) than needed (2), which may not be intended.
   sea.stripplot(
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (1 minutes 41.036 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (1 minutes 41.252 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-how-to-benchmark-plot-benchmark-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/dd1d96e7a121ed07731e7e4772c2d143/plot_benchmark.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_benchmark.ipynb</span></code></a></p>

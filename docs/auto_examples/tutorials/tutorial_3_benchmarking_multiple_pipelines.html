@@ -12,7 +12,7 @@
     <link rel="icon" sizes="144x144" href="../../_static/favicon-144.png" type="image/png">
     <link rel="mask-icon" href="../../_static/favicon_mask-icon.svg" color="#222832" type="image/svg+xml">
     <link rel="apple-touch-icon" sizes="500x500" href="../../_static/favicon-500.png" type="image/png">
-    <title>Tutorial 3: Benchmarking multiple pipelines &#8212; moabb 1.4.3-dev documentation</title>
+    <title>Tutorial 3: Benchmarking multiple pipelines &#8212; moabb 1.5.0-dev documentation</title>
   
   
   
@@ -52,7 +52,7 @@
 
     <script src="../../_static/jquery.js?v=5d32c60e"></script>
     <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-    <script src="../../_static/documentation_options.js?v=1c0077db"></script>
+    <script src="../../_static/documentation_options.js?v=1a7a66bb"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -84,7 +84,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="1.4.3" />
+  <meta name="docsearch:version" content="1.5.0" />
 
   </head>
   
@@ -152,8 +152,8 @@
     
     
     
-    <img src="../../_static/moabb_light.svg" class="logo__image only-light" alt="moabb 1.4.3-dev documentation - Home"/>
-    <img src="../../_static/moabb_dark.svg" class="logo__image only-dark pst-js-only" alt="moabb 1.4.3-dev documentation - Home"/>
+    <img src="../../_static/moabb_light.svg" class="logo__image only-light" alt="moabb 1.5.0-dev documentation - Home"/>
+    <img src="../../_static/moabb_dark.svg" class="logo__image only-dark pst-js-only" alt="moabb 1.5.0-dev documentation - Home"/>
   
   
 </a></div>
@@ -476,11 +476,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_phmd_ml_spectrum.html">Spectral analysis of the trials</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_pre_processing_steps.html">Playing with the pre-processing steps</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_pseudoonline.html">Pseudo-Online Motor Imagery with Sliding Window</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_riemannian_artifact_rejection.html">Riemannian Artifact Rejection as a Pre-processing Step</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_select_electrodes_resample.html">Select Electrodes and Resampling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_sliding_estimator.html">Time-Resolved Decoding with SlidingEstimator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_statistical_analysis.html">Statistical Analysis and Chance Level Assessment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_use_an_X_y_dataset.html">Using X y data (epoched data) instead of continuous signal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced_examples/riemannian_artifact_rejection.html">Riemannian Artifact Rejection as a Pre-processing Step</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../learning_curve/index.html">Evaluation with learning curve</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -569,12 +569,12 @@ classification score of not one but three classification pipelines.</p>
 <span class="kn">import</span><span class="w"> </span><span class="nn">mne</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mne.decoding</span><span class="w"> </span><span class="kn">import</span> <a href="https://mne.tools/stable/generated/mne.decoding.CSP.html#mne.decoding.CSP" title="mne.decoding.CSP" class="sphx-glr-backref-module-mne-decoding sphx-glr-backref-type-py-class"><span class="n">CSP</span></a>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyriemann.classification</span><span class="w"> </span><span class="kn">import</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html#sklearn.base.BaseEstimator" title="sklearn.base.BaseEstimator" class="sphx-glr-backref-module-sklearn-base sphx-glr-backref-type-py-class"><span class="n">MDM</span></a>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyriemann.estimation</span><span class="w"> </span><span class="kn">import</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.base.TransformerMixin.html#sklearn.base.TransformerMixin" title="sklearn.base.TransformerMixin" class="sphx-glr-backref-module-sklearn-base sphx-glr-backref-type-py-class"><span class="n">Covariances</span></a>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyriemann.tangentspace</span><span class="w"> </span><span class="kn">import</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.base.TransformerMixin.html#sklearn.base.TransformerMixin" title="sklearn.base.TransformerMixin" class="sphx-glr-backref-module-sklearn-base sphx-glr-backref-type-py-class"><span class="n">TangentSpace</span></a>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.discriminant_analysis</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearDiscriminantAnalysis</span> <span class="k">as</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.discriminant_analysis.LinearDiscriminantAnalysis.html#sklearn.discriminant_analysis.LinearDiscriminantAnalysis" title="sklearn.discriminant_analysis.LinearDiscriminantAnalysis" class="sphx-glr-backref-module-sklearn-discriminant_analysis sphx-glr-backref-type-py-class"><span class="n">LDA</span></a>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.pipeline</span><span class="w"> </span><span class="kn">import</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.pipeline.make_pipeline.html#sklearn.pipeline.make_pipeline" title="sklearn.pipeline.make_pipeline" class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-function"><span class="n">make_pipeline</span></a>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.svm</span><span class="w"> </span><span class="kn">import</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html#sklearn.svm.SVC" title="sklearn.svm.SVC" class="sphx-glr-backref-module-sklearn-svm sphx-glr-backref-type-py-class"><span class="n">SVC</span></a>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyriemann.classification</span><span class="w"> </span><span class="kn">import</span> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html#sklearn.base.BaseEstimator" title="sklearn.base.BaseEstimator" class="sphx-glr-backref-module-sklearn-base sphx-glr-backref-type-py-class"><span class="n">MDM</span></a>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyriemann.estimation</span><span class="w"> </span><span class="kn">import</span> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.base.TransformerMixin.html#sklearn.base.TransformerMixin" title="sklearn.base.TransformerMixin" class="sphx-glr-backref-module-sklearn-base sphx-glr-backref-type-py-class"><span class="n">Covariances</span></a>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyriemann.tangentspace</span><span class="w"> </span><span class="kn">import</span> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.base.TransformerMixin.html#sklearn.base.TransformerMixin" title="sklearn.base.TransformerMixin" class="sphx-glr-backref-module-sklearn-base sphx-glr-backref-type-py-class"><span class="n">TangentSpace</span></a>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.discriminant_analysis</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearDiscriminantAnalysis</span> <span class="k">as</span> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.discriminant_analysis.LinearDiscriminantAnalysis.html#sklearn.discriminant_analysis.LinearDiscriminantAnalysis" title="sklearn.discriminant_analysis.LinearDiscriminantAnalysis" class="sphx-glr-backref-module-sklearn-discriminant_analysis sphx-glr-backref-type-py-class"><span class="n">LDA</span></a>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.pipeline</span><span class="w"> </span><span class="kn">import</span> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.make_pipeline.html#sklearn.pipeline.make_pipeline" title="sklearn.pipeline.make_pipeline" class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-function"><span class="n">make_pipeline</span></a>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.svm</span><span class="w"> </span><span class="kn">import</span> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html#sklearn.svm.SVC" title="sklearn.svm.SVC" class="sphx-glr-backref-module-sklearn-svm sphx-glr-backref-type-py-class"><span class="n">SVC</span></a>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">moabb</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">moabb.datasets</span><span class="w"> </span><span class="kn">import</span> <a href="../../generated/moabb.datasets.BNCI2014_001.html#moabb.datasets.BNCI2014_001" title="moabb.datasets.BNCI2014_001" class="sphx-glr-backref-module-moabb-datasets sphx-glr-backref-type-py-class"><span class="n">BNCI2014_001</span></a><span class="p">,</span> <a href="../../generated/moabb.datasets.Zhou2016.html#moabb.datasets.Zhou2016" title="moabb.datasets.Zhou2016" class="sphx-glr-backref-module-moabb-datasets sphx-glr-backref-type-py-class"><span class="n">Zhou2016</span></a>
@@ -596,11 +596,11 @@ other two pipelines rely on Riemannian geometry, using an SVM classification
 in the tangent space of the covariance matrices estimated from the EEG or a
 MDM classifier that works directly on covariance matrices.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pipelines</span></a> <span class="o">=</span> <span class="p">{}</span>
-<a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pipelines</span></a><span class="p">[</span><span class="s2">&quot;csp+lda&quot;</span><span class="p">]</span> <span class="o">=</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.pipeline.make_pipeline.html#sklearn.pipeline.make_pipeline" title="sklearn.pipeline.make_pipeline" class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-function"><span class="n">make_pipeline</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.decoding.CSP.html#mne.decoding.CSP" title="mne.decoding.CSP" class="sphx-glr-backref-module-mne-decoding sphx-glr-backref-type-py-class"><span class="n">CSP</span></a><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">8</span><span class="p">),</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.discriminant_analysis.LinearDiscriminantAnalysis.html#sklearn.discriminant_analysis.LinearDiscriminantAnalysis" title="sklearn.discriminant_analysis.LinearDiscriminantAnalysis" class="sphx-glr-backref-module-sklearn-discriminant_analysis sphx-glr-backref-type-py-class"><span class="n">LDA</span></a><span class="p">())</span>
-<a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pipelines</span></a><span class="p">[</span><span class="s2">&quot;tgsp+svm&quot;</span><span class="p">]</span> <span class="o">=</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.pipeline.make_pipeline.html#sklearn.pipeline.make_pipeline" title="sklearn.pipeline.make_pipeline" class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-function"><span class="n">make_pipeline</span></a><span class="p">(</span>
-    <a href="http://scikit-learn.org/stable/modules/generated/sklearn.base.TransformerMixin.html#sklearn.base.TransformerMixin" title="sklearn.base.TransformerMixin" class="sphx-glr-backref-module-sklearn-base sphx-glr-backref-type-py-class"><span class="n">Covariances</span></a><span class="p">(</span><span class="s2">&quot;oas&quot;</span><span class="p">),</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.base.TransformerMixin.html#sklearn.base.TransformerMixin" title="sklearn.base.TransformerMixin" class="sphx-glr-backref-module-sklearn-base sphx-glr-backref-type-py-class"><span class="n">TangentSpace</span></a><span class="p">(</span><span class="n">metric</span><span class="o">=</span><span class="s2">&quot;riemann&quot;</span><span class="p">),</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html#sklearn.svm.SVC" title="sklearn.svm.SVC" class="sphx-glr-backref-module-sklearn-svm sphx-glr-backref-type-py-class"><span class="n">SVC</span></a><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">)</span>
+<a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pipelines</span></a><span class="p">[</span><span class="s2">&quot;csp+lda&quot;</span><span class="p">]</span> <span class="o">=</span> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.make_pipeline.html#sklearn.pipeline.make_pipeline" title="sklearn.pipeline.make_pipeline" class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-function"><span class="n">make_pipeline</span></a><span class="p">(</span><a href="https://mne.tools/stable/generated/mne.decoding.CSP.html#mne.decoding.CSP" title="mne.decoding.CSP" class="sphx-glr-backref-module-mne-decoding sphx-glr-backref-type-py-class"><span class="n">CSP</span></a><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">8</span><span class="p">),</span> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.discriminant_analysis.LinearDiscriminantAnalysis.html#sklearn.discriminant_analysis.LinearDiscriminantAnalysis" title="sklearn.discriminant_analysis.LinearDiscriminantAnalysis" class="sphx-glr-backref-module-sklearn-discriminant_analysis sphx-glr-backref-type-py-class"><span class="n">LDA</span></a><span class="p">())</span>
+<a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pipelines</span></a><span class="p">[</span><span class="s2">&quot;tgsp+svm&quot;</span><span class="p">]</span> <span class="o">=</span> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.make_pipeline.html#sklearn.pipeline.make_pipeline" title="sklearn.pipeline.make_pipeline" class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-function"><span class="n">make_pipeline</span></a><span class="p">(</span>
+    <a href="https://scikit-learn.org/stable/modules/generated/sklearn.base.TransformerMixin.html#sklearn.base.TransformerMixin" title="sklearn.base.TransformerMixin" class="sphx-glr-backref-module-sklearn-base sphx-glr-backref-type-py-class"><span class="n">Covariances</span></a><span class="p">(</span><span class="s2">&quot;oas&quot;</span><span class="p">),</span> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.base.TransformerMixin.html#sklearn.base.TransformerMixin" title="sklearn.base.TransformerMixin" class="sphx-glr-backref-module-sklearn-base sphx-glr-backref-type-py-class"><span class="n">TangentSpace</span></a><span class="p">(</span><span class="n">metric</span><span class="o">=</span><span class="s2">&quot;riemann&quot;</span><span class="p">),</span> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html#sklearn.svm.SVC" title="sklearn.svm.SVC" class="sphx-glr-backref-module-sklearn-svm sphx-glr-backref-type-py-class"><span class="n">SVC</span></a><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">)</span>
 <span class="p">)</span>
-<a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pipelines</span></a><span class="p">[</span><span class="s2">&quot;MDM&quot;</span><span class="p">]</span> <span class="o">=</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.pipeline.make_pipeline.html#sklearn.pipeline.make_pipeline" title="sklearn.pipeline.make_pipeline" class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-function"><span class="n">make_pipeline</span></a><span class="p">(</span><a href="http://scikit-learn.org/stable/modules/generated/sklearn.base.TransformerMixin.html#sklearn.base.TransformerMixin" title="sklearn.base.TransformerMixin" class="sphx-glr-backref-module-sklearn-base sphx-glr-backref-type-py-class"><span class="n">Covariances</span></a><span class="p">(</span><span class="s2">&quot;oas&quot;</span><span class="p">),</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html#sklearn.base.BaseEstimator" title="sklearn.base.BaseEstimator" class="sphx-glr-backref-module-sklearn-base sphx-glr-backref-type-py-class"><span class="n">MDM</span></a><span class="p">(</span><span class="n">metric</span><span class="o">=</span><span class="s2">&quot;riemann&quot;</span><span class="p">))</span>
+<a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pipelines</span></a><span class="p">[</span><span class="s2">&quot;MDM&quot;</span><span class="p">]</span> <span class="o">=</span> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.make_pipeline.html#sklearn.pipeline.make_pipeline" title="sklearn.pipeline.make_pipeline" class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-function"><span class="n">make_pipeline</span></a><span class="p">(</span><a href="https://scikit-learn.org/stable/modules/generated/sklearn.base.TransformerMixin.html#sklearn.base.TransformerMixin" title="sklearn.base.TransformerMixin" class="sphx-glr-backref-module-sklearn-base sphx-glr-backref-type-py-class"><span class="n">Covariances</span></a><span class="p">(</span><span class="s2">&quot;oas&quot;</span><span class="p">),</span> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html#sklearn.base.BaseEstimator" title="sklearn.base.BaseEstimator" class="sphx-glr-backref-module-sklearn-base sphx-glr-backref-type-py-class"><span class="n">MDM</span></a><span class="p">(</span><span class="n">metric</span><span class="o">=</span><span class="s2">&quot;riemann&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
 <p>The following lines go exactly as in the previous tutorial, where we end up
@@ -613,46 +613,46 @@ obtaining a pandas dataframe containing the results of the evaluation.</p>
 <a href="../../generated/moabb.evaluations.WithinSessionEvaluation.html#moabb.evaluations.WithinSessionEvaluation" title="moabb.evaluations.WithinSessionEvaluation" class="sphx-glr-backref-module-moabb-evaluations sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">evaluation</span></a> <span class="o">=</span> <a href="../../generated/moabb.evaluations.WithinSessionEvaluation.html#moabb.evaluations.WithinSessionEvaluation" title="moabb.evaluations.WithinSessionEvaluation" class="sphx-glr-backref-module-moabb-evaluations sphx-glr-backref-type-py-class"><span class="n">WithinSessionEvaluation</span></a><span class="p">(</span>
     <a href="../../generated/moabb.paradigms.LeftRightImagery.html#moabb.paradigms.LeftRightImagery" title="moabb.paradigms.LeftRightImagery" class="sphx-glr-backref-module-moabb-paradigms sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">paradigm</span></a><span class="o">=</span><a href="../../generated/moabb.paradigms.LeftRightImagery.html#moabb.paradigms.LeftRightImagery" title="moabb.paradigms.LeftRightImagery" class="sphx-glr-backref-module-moabb-paradigms sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">paradigm</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">datasets</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">datasets</span></a><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span>
 <span class="p">)</span>
-<span class="n">results</span> <span class="o">=</span> <a href="../../generated/moabb.evaluations.base.BaseEvaluation.html#moabb.evaluations.base.BaseEvaluation.process" title="moabb.evaluations.base.BaseEvaluation.process" class="sphx-glr-backref-module-moabb-evaluations-base sphx-glr-backref-type-py-method"><span class="n">evaluation</span><span class="o">.</span><span class="n">process</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pipelines</span></a><span class="p">)</span>
+<a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">results</span></a> <span class="o">=</span> <a href="../../generated/moabb.evaluations.base.BaseEvaluation.html#moabb.evaluations.base.BaseEvaluation.process" title="moabb.evaluations.base.BaseEvaluation.process" class="sphx-glr-backref-module-moabb-evaluations-base sphx-glr-backref-type-py-method"><span class="n">evaluation</span><span class="o">.</span><span class="n">process</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pipelines</span></a><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[codecarbon WARNING @ 14:31:47] Multiple instances of codecarbon are allowed to run at the same time.
-2026-03-20 14:36:37,787 INFO MainThread moabb.evaluations.base csp+lda | BNCI2014-001 | 2 | 1test: Score 0.626
-2026-03-20 14:36:37,787 INFO MainThread moabb.evaluations.base tgsp+svm | BNCI2014-001 | 2 | 1test: Score 0.671
-2026-03-20 14:36:37,787 INFO MainThread moabb.evaluations.base MDM | BNCI2014-001 | 2 | 1test: Score 0.546
-2026-03-20 14:36:37,787 INFO MainThread moabb.evaluations.base csp+lda | BNCI2014-001 | 2 | 0train: Score 0.629
-2026-03-20 14:36:37,787 INFO MainThread moabb.evaluations.base tgsp+svm | BNCI2014-001 | 2 | 0train: Score 0.703
-2026-03-20 14:36:37,787 INFO MainThread moabb.evaluations.base MDM | BNCI2014-001 | 2 | 0train: Score 0.627
-2026-03-20 14:36:37,787 INFO MainThread moabb.evaluations.base csp+lda | BNCI2014-001 | 1 | 1test: Score 0.955
-2026-03-20 14:36:37,787 INFO MainThread moabb.evaluations.base tgsp+svm | BNCI2014-001 | 1 | 1test: Score 0.954
-2026-03-20 14:36:37,787 INFO MainThread moabb.evaluations.base MDM | BNCI2014-001 | 1 | 1test: Score 0.956
-2026-03-20 14:36:37,787 INFO MainThread moabb.evaluations.base csp+lda | BNCI2014-001 | 1 | 0train: Score 0.926
-2026-03-20 14:36:37,787 INFO MainThread moabb.evaluations.base tgsp+svm | BNCI2014-001 | 1 | 0train: Score 0.958
-2026-03-20 14:36:37,787 INFO MainThread moabb.evaluations.base MDM | BNCI2014-001 | 1 | 0train: Score 0.944
-2026-03-20 14:36:37,787 INFO MainThread moabb.evaluations.base csp+lda | BNCI2014-001 | 3 | 0train: Score 0.991
-2026-03-20 14:36:37,787 INFO MainThread moabb.evaluations.base tgsp+svm | BNCI2014-001 | 3 | 0train: Score 0.993
-2026-03-20 14:36:37,787 INFO MainThread moabb.evaluations.base MDM | BNCI2014-001 | 3 | 0train: Score 0.987
-2026-03-20 14:36:37,787 INFO MainThread moabb.evaluations.base csp+lda | BNCI2014-001 | 3 | 1test: Score 0.996
-2026-03-20 14:36:37,787 INFO MainThread moabb.evaluations.base tgsp+svm | BNCI2014-001 | 3 | 1test: Score 1.000
-2026-03-20 14:36:37,787 INFO MainThread moabb.evaluations.base MDM | BNCI2014-001 | 3 | 1test: Score 0.994
-2026-03-20 14:41:23,616 INFO MainThread moabb.evaluations.base tgsp+svm | Zhou2016 | 2 | 2: Score 0.888
-2026-03-20 14:41:23,616 INFO MainThread moabb.evaluations.base MDM | Zhou2016 | 2 | 2: Score 0.898
-2026-03-20 14:41:23,616 INFO MainThread moabb.evaluations.base tgsp+svm | Zhou2016 | 2 | 0: Score 0.920
-2026-03-20 14:41:23,616 INFO MainThread moabb.evaluations.base MDM | Zhou2016 | 2 | 0: Score 0.908
-2026-03-20 14:41:23,616 INFO MainThread moabb.evaluations.base tgsp+svm | Zhou2016 | 2 | 1: Score 0.800
-2026-03-20 14:41:23,616 INFO MainThread moabb.evaluations.base MDM | Zhou2016 | 2 | 1: Score 0.773
-2026-03-20 14:41:23,616 INFO MainThread moabb.evaluations.base tgsp+svm | Zhou2016 | 1 | 1: Score 0.920
-2026-03-20 14:41:23,616 INFO MainThread moabb.evaluations.base MDM | Zhou2016 | 1 | 1: Score 0.896
-2026-03-20 14:41:23,616 INFO MainThread moabb.evaluations.base tgsp+svm | Zhou2016 | 1 | 2: Score 0.952
-2026-03-20 14:41:23,616 INFO MainThread moabb.evaluations.base MDM | Zhou2016 | 1 | 2: Score 0.960
-2026-03-20 14:41:23,616 INFO MainThread moabb.evaluations.base tgsp+svm | Zhou2016 | 1 | 0: Score 0.904
-2026-03-20 14:41:23,616 INFO MainThread moabb.evaluations.base MDM | Zhou2016 | 1 | 0: Score 0.832
-2026-03-20 14:41:23,616 INFO MainThread moabb.evaluations.base tgsp+svm | Zhou2016 | 3 | 0: Score 0.992
-2026-03-20 14:41:23,616 INFO MainThread moabb.evaluations.base MDM | Zhou2016 | 3 | 0: Score 0.960
-2026-03-20 14:41:23,616 INFO MainThread moabb.evaluations.base tgsp+svm | Zhou2016 | 3 | 2: Score 1.000
-2026-03-20 14:41:23,616 INFO MainThread moabb.evaluations.base MDM | Zhou2016 | 3 | 2: Score 0.928
-2026-03-20 14:41:23,616 INFO MainThread moabb.evaluations.base tgsp+svm | Zhou2016 | 3 | 1: Score 0.988
-2026-03-20 14:41:23,616 INFO MainThread moabb.evaluations.base MDM | Zhou2016 | 3 | 1: Score 0.902
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[codecarbon WARNING @ 19:50:46] Multiple instances of codecarbon are allowed to run at the same time.
+2026-03-21 19:55:35,394 INFO MainThread moabb.evaluations.base csp+lda | BNCI2014-001 | 1 | 0train: Score 0.920
+2026-03-21 19:55:35,394 INFO MainThread moabb.evaluations.base tgsp+svm | BNCI2014-001 | 1 | 0train: Score 0.917
+2026-03-21 19:55:35,394 INFO MainThread moabb.evaluations.base MDM | BNCI2014-001 | 1 | 0train: Score 0.939
+2026-03-21 19:55:35,394 INFO MainThread moabb.evaluations.base csp+lda | BNCI2014-001 | 1 | 1test: Score 0.944
+2026-03-21 19:55:35,394 INFO MainThread moabb.evaluations.base tgsp+svm | BNCI2014-001 | 1 | 1test: Score 0.956
+2026-03-21 19:55:35,394 INFO MainThread moabb.evaluations.base MDM | BNCI2014-001 | 1 | 1test: Score 0.918
+2026-03-21 19:55:35,394 INFO MainThread moabb.evaluations.base csp+lda | BNCI2014-001 | 2 | 1test: Score 0.604
+2026-03-21 19:55:35,394 INFO MainThread moabb.evaluations.base tgsp+svm | BNCI2014-001 | 2 | 1test: Score 0.609
+2026-03-21 19:55:35,394 INFO MainThread moabb.evaluations.base MDM | BNCI2014-001 | 2 | 1test: Score 0.524
+2026-03-21 19:55:35,394 INFO MainThread moabb.evaluations.base csp+lda | BNCI2014-001 | 2 | 0train: Score 0.696
+2026-03-21 19:55:35,394 INFO MainThread moabb.evaluations.base tgsp+svm | BNCI2014-001 | 2 | 0train: Score 0.734
+2026-03-21 19:55:35,394 INFO MainThread moabb.evaluations.base MDM | BNCI2014-001 | 2 | 0train: Score 0.622
+2026-03-21 19:55:35,394 INFO MainThread moabb.evaluations.base csp+lda | BNCI2014-001 | 3 | 0train: Score 0.990
+2026-03-21 19:55:35,394 INFO MainThread moabb.evaluations.base tgsp+svm | BNCI2014-001 | 3 | 0train: Score 0.986
+2026-03-21 19:55:35,394 INFO MainThread moabb.evaluations.base MDM | BNCI2014-001 | 3 | 0train: Score 0.980
+2026-03-21 19:55:35,394 INFO MainThread moabb.evaluations.base csp+lda | BNCI2014-001 | 3 | 1test: Score 0.993
+2026-03-21 19:55:35,394 INFO MainThread moabb.evaluations.base tgsp+svm | BNCI2014-001 | 3 | 1test: Score 0.997
+2026-03-21 19:55:35,394 INFO MainThread moabb.evaluations.base MDM | BNCI2014-001 | 3 | 1test: Score 0.991
+2026-03-21 20:00:20,482 INFO MainThread moabb.evaluations.base tgsp+svm | Zhou2016 | 1 | 2: Score 0.954
+2026-03-21 20:00:20,482 INFO MainThread moabb.evaluations.base MDM | Zhou2016 | 1 | 2: Score 0.960
+2026-03-21 20:00:20,482 INFO MainThread moabb.evaluations.base tgsp+svm | Zhou2016 | 1 | 0: Score 0.922
+2026-03-21 20:00:20,482 INFO MainThread moabb.evaluations.base MDM | Zhou2016 | 1 | 0: Score 0.815
+2026-03-21 20:00:20,482 INFO MainThread moabb.evaluations.base tgsp+svm | Zhou2016 | 1 | 1: Score 0.888
+2026-03-21 20:00:20,482 INFO MainThread moabb.evaluations.base MDM | Zhou2016 | 1 | 1: Score 0.890
+2026-03-21 20:00:20,482 INFO MainThread moabb.evaluations.base tgsp+svm | Zhou2016 | 2 | 2: Score 0.884
+2026-03-21 20:00:20,482 INFO MainThread moabb.evaluations.base MDM | Zhou2016 | 2 | 2: Score 0.898
+2026-03-21 20:00:20,482 INFO MainThread moabb.evaluations.base tgsp+svm | Zhou2016 | 2 | 0: Score 0.908
+2026-03-21 20:00:20,482 INFO MainThread moabb.evaluations.base MDM | Zhou2016 | 2 | 0: Score 0.870
+2026-03-21 20:00:20,482 INFO MainThread moabb.evaluations.base tgsp+svm | Zhou2016 | 2 | 1: Score 0.805
+2026-03-21 20:00:20,482 INFO MainThread moabb.evaluations.base MDM | Zhou2016 | 2 | 1: Score 0.723
+2026-03-21 20:00:20,482 INFO MainThread moabb.evaluations.base tgsp+svm | Zhou2016 | 3 | 2: Score 0.998
+2026-03-21 20:00:20,482 INFO MainThread moabb.evaluations.base MDM | Zhou2016 | 3 | 2: Score 0.948
+2026-03-21 20:00:20,482 INFO MainThread moabb.evaluations.base tgsp+svm | Zhou2016 | 3 | 0: Score 0.992
+2026-03-21 20:00:20,482 INFO MainThread moabb.evaluations.base MDM | Zhou2016 | 3 | 0: Score 0.954
+2026-03-21 20:00:20,482 INFO MainThread moabb.evaluations.base tgsp+svm | Zhou2016 | 3 | 1: Score 0.998
+2026-03-21 20:00:20,482 INFO MainThread moabb.evaluations.base MDM | Zhou2016 | 3 | 1: Score 0.898
 </pre></div>
 </div>
 <p>As <cite>overwrite</cite> is set to False, the results from the previous tutorial are reused and
@@ -663,7 +663,7 @@ The results are saved in ~/mne_data/results if the parameter <cite>hdf5_path</ci
 <h2>Plotting Results<a class="headerlink" href="#plotting-results" title="Link to this heading">#</a></h2>
 <p>The following plot shows a comparison of the three classification pipelines
 for each subject of each dataset.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="p">[</span><span class="s2">&quot;subj&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">resi</span><span class="p">)</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">resi</span> <span class="ow">in</span> <span class="n">results</span><span class="p">[</span><span class="s2">&quot;subject&quot;</span><span class="p">]]</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">results</span></a><span class="p">[</span><span class="s2">&quot;subj&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">resi</span><span class="p">)</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">resi</span> <span class="ow">in</span> <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">results</span></a><span class="p">[</span><span class="s2">&quot;subject&quot;</span><span class="p">]]</span>
 <span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span>
     <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">,</span>
     <span class="n">x</span><span class="o">=</span><span class="s2">&quot;score&quot;</span><span class="p">,</span>
@@ -672,18 +672,18 @@ for each subject of each dataset.</p>
     <span class="n">col</span><span class="o">=</span><span class="s2">&quot;dataset&quot;</span><span class="p">,</span>
     <span class="n">height</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
     <span class="n">aspect</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-    <span class="n">data</span><span class="o">=</span><span class="n">results</span><span class="p">,</span>
+    <span class="n">data</span><span class="o">=</span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">results</span></a><span class="p">,</span>
     <span class="n">orient</span><span class="o">=</span><span class="s2">&quot;h&quot;</span><span class="p">,</span>
     <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;viridis&quot;</span><span class="p">,</span>
 <span class="p">)</span>
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.show.html#matplotlib.pyplot.show" title="matplotlib.pyplot.show" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_tutorial_3_benchmarking_multiple_pipelines_001.png" srcset="../../_images/sphx_glr_tutorial_3_benchmarking_multiple_pipelines_001.png" alt="dataset = BNCI2014-001, dataset = Zhou2016" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-03-20 14:41:24,327 INFO MainThread matplotlib.category Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
-2026-03-20 14:41:24,333 INFO MainThread matplotlib.category Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+<img src="../../_images/sphx_glr_tutorial_3_benchmarking_multiple_pipelines_001.png" srcset="../../_images/sphx_glr_tutorial_3_benchmarking_multiple_pipelines_001.png" alt="dataset = BNCI2014-001, dataset = Zhou2016" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-03-21 20:00:21,183 INFO MainThread matplotlib.category Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2026-03-21 20:00:21,188 INFO MainThread matplotlib.category Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (9 minutes 49.418 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (9 minutes 46.648 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-tutorials-tutorial-3-benchmarking-multiple-pipelines-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/b1ef6679c42641a93a2c91dca426f94f/tutorial_3_benchmarking_multiple_pipelines.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">tutorial_3_benchmarking_multiple_pipelines.ipynb</span></code></a></p>

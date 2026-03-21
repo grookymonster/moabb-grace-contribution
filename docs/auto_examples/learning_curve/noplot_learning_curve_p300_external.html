@@ -12,7 +12,7 @@
     <link rel="icon" sizes="144x144" href="../../_static/favicon-144.png" type="image/png">
     <link rel="mask-icon" href="../../_static/favicon_mask-icon.svg" color="#222832" type="image/svg+xml">
     <link rel="apple-touch-icon" sizes="500x500" href="../../_static/favicon-500.png" type="image/png">
-    <title>Within Session P300 with Learning Curve &#8212; moabb 1.4.3-dev documentation</title>
+    <title>Within Session P300 with Learning Curve &#8212; moabb 1.5.0-dev documentation</title>
   
   
   
@@ -52,7 +52,7 @@
 
     <script src="../../_static/jquery.js?v=5d32c60e"></script>
     <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-    <script src="../../_static/documentation_options.js?v=1c0077db"></script>
+    <script src="../../_static/documentation_options.js?v=1a7a66bb"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -84,7 +84,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="1.4.3" />
+  <meta name="docsearch:version" content="1.5.0" />
 
   </head>
   
@@ -152,8 +152,8 @@
     
     
     
-    <img src="../../_static/moabb_light.svg" class="logo__image only-light" alt="moabb 1.4.3-dev documentation - Home"/>
-    <img src="../../_static/moabb_dark.svg" class="logo__image only-dark pst-js-only" alt="moabb 1.4.3-dev documentation - Home"/>
+    <img src="../../_static/moabb_light.svg" class="logo__image only-light" alt="moabb 1.5.0-dev documentation - Home"/>
+    <img src="../../_static/moabb_dark.svg" class="logo__image only-dark pst-js-only" alt="moabb 1.5.0-dev documentation - Home"/>
   
   
 </a></div>
@@ -476,11 +476,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_phmd_ml_spectrum.html">Spectral analysis of the trials</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_pre_processing_steps.html">Playing with the pre-processing steps</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_pseudoonline.html">Pseudo-Online Motor Imagery with Sliding Window</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_riemannian_artifact_rejection.html">Riemannian Artifact Rejection as a Pre-processing Step</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_select_electrodes_resample.html">Select Electrodes and Resampling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_sliding_estimator.html">Time-Resolved Decoding with SlidingEstimator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_statistical_analysis.html">Statistical Analysis and Chance Level Assessment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_use_an_X_y_dataset.html">Using X y data (epoched data) instead of continuous signal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced_examples/riemannian_artifact_rejection.html">Riemannian Artifact Rejection as a Pre-processing Step</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Evaluation with learning curve</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
@@ -579,8 +579,8 @@ Additionally, we will evaluate external code. Make sure to have tdlda installed
 <span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyriemann.estimation</span><span class="w"> </span><span class="kn">import</span> <span class="n">XdawnCovariances</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyriemann.tangentspace</span><span class="w"> </span><span class="kn">import</span> <span class="n">TangentSpace</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.discriminant_analysis</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearDiscriminantAnalysis</span> <span class="k">as</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.discriminant_analysis.LinearDiscriminantAnalysis.html#sklearn.discriminant_analysis.LinearDiscriminantAnalysis" title="sklearn.discriminant_analysis.LinearDiscriminantAnalysis" class="sphx-glr-backref-module-sklearn-discriminant_analysis sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">LDA</span></a>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.pipeline</span><span class="w"> </span><span class="kn">import</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.pipeline.make_pipeline.html#sklearn.pipeline.make_pipeline" title="sklearn.pipeline.make_pipeline" class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-function"><span class="n">make_pipeline</span></a>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.discriminant_analysis</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearDiscriminantAnalysis</span> <span class="k">as</span> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.discriminant_analysis.LinearDiscriminantAnalysis.html#sklearn.discriminant_analysis.LinearDiscriminantAnalysis" title="sklearn.discriminant_analysis.LinearDiscriminantAnalysis" class="sphx-glr-backref-module-sklearn-discriminant_analysis sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">LDA</span></a>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.pipeline</span><span class="w"> </span><span class="kn">import</span> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.make_pipeline.html#sklearn.pipeline.make_pipeline" title="sklearn.pipeline.make_pipeline" class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-function"><span class="n">make_pipeline</span></a>
 <span class="kn">from</span><span class="w"> </span><span class="nn">tdlda</span><span class="w"> </span><span class="kn">import</span> <span class="n">TimeDecoupledLda</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">tdlda</span><span class="w"> </span><span class="kn">import</span> <span class="n">Vectorizer</span> <span class="k">as</span> <span class="n">JumpingMeansVectorizer</span>
 
@@ -610,10 +610,10 @@ Additionally, we will evaluate external code. Make sure to have tdlda installed
 <span class="n">labels_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Target&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;NonTarget&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
 
 <span class="c1"># Riemannian geometry based classification</span>
-<span class="n">pipelines</span><span class="p">[</span><span class="s2">&quot;RG+LDA&quot;</span><span class="p">]</span> <span class="o">=</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.pipeline.make_pipeline.html#sklearn.pipeline.make_pipeline" title="sklearn.pipeline.make_pipeline" class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-function"><span class="n">make_pipeline</span></a><span class="p">(</span>
+<span class="n">pipelines</span><span class="p">[</span><span class="s2">&quot;RG+LDA&quot;</span><span class="p">]</span> <span class="o">=</span> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.make_pipeline.html#sklearn.pipeline.make_pipeline" title="sklearn.pipeline.make_pipeline" class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-function"><span class="n">make_pipeline</span></a><span class="p">(</span>
     <span class="n">XdawnCovariances</span><span class="p">(</span><span class="n">nfilter</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">estimator</span><span class="o">=</span><span class="s2">&quot;lwf&quot;</span><span class="p">,</span> <span class="n">xdawn_estimator</span><span class="o">=</span><span class="s2">&quot;scm&quot;</span><span class="p">),</span>
     <span class="n">TangentSpace</span><span class="p">(),</span>
-    <a href="http://scikit-learn.org/stable/modules/generated/sklearn.discriminant_analysis.LinearDiscriminantAnalysis.html#sklearn.discriminant_analysis.LinearDiscriminantAnalysis" title="sklearn.discriminant_analysis.LinearDiscriminantAnalysis" class="sphx-glr-backref-module-sklearn-discriminant_analysis sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">LDA</span></a><span class="p">(</span><span class="n">solver</span><span class="o">=</span><span class="s2">&quot;lsqr&quot;</span><span class="p">,</span> <span class="n">shrinkage</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">),</span>
+    <a href="https://scikit-learn.org/stable/modules/generated/sklearn.discriminant_analysis.LinearDiscriminantAnalysis.html#sklearn.discriminant_analysis.LinearDiscriminantAnalysis" title="sklearn.discriminant_analysis.LinearDiscriminantAnalysis" class="sphx-glr-backref-module-sklearn-discriminant_analysis sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">LDA</span></a><span class="p">(</span><span class="n">solver</span><span class="o">=</span><span class="s2">&quot;lsqr&quot;</span><span class="p">,</span> <span class="n">shrinkage</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">),</span>
 <span class="p">)</span>
 
 <span class="c1"># Simple LDA pipeline using averaged feature values in certain time intervals</span>
@@ -633,14 +633,14 @@ Additionally, we will evaluate external code. Make sure to have tdlda installed
     <span class="n">fs</span><span class="o">=</span><span class="n">processing_sampling_rate</span><span class="p">,</span> <span class="n">jumping_mean_ivals</span><span class="o">=</span><span class="n">jumping_mean_ivals</span>
 <span class="p">)</span>
 
-<span class="n">pipelines</span><span class="p">[</span><span class="s2">&quot;JM+LDA&quot;</span><span class="p">]</span> <span class="o">=</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.pipeline.make_pipeline.html#sklearn.pipeline.make_pipeline" title="sklearn.pipeline.make_pipeline" class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-function"><span class="n">make_pipeline</span></a><span class="p">(</span><span class="n">jmv</span><span class="p">,</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.discriminant_analysis.LinearDiscriminantAnalysis.html#sklearn.discriminant_analysis.LinearDiscriminantAnalysis" title="sklearn.discriminant_analysis.LinearDiscriminantAnalysis" class="sphx-glr-backref-module-sklearn-discriminant_analysis sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">LDA</span></a><span class="p">(</span><span class="n">solver</span><span class="o">=</span><span class="s2">&quot;lsqr&quot;</span><span class="p">,</span> <span class="n">shrinkage</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">))</span>
+<span class="n">pipelines</span><span class="p">[</span><span class="s2">&quot;JM+LDA&quot;</span><span class="p">]</span> <span class="o">=</span> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.make_pipeline.html#sklearn.pipeline.make_pipeline" title="sklearn.pipeline.make_pipeline" class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-function"><span class="n">make_pipeline</span></a><span class="p">(</span><span class="n">jmv</span><span class="p">,</span> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.discriminant_analysis.LinearDiscriminantAnalysis.html#sklearn.discriminant_analysis.LinearDiscriminantAnalysis" title="sklearn.discriminant_analysis.LinearDiscriminantAnalysis" class="sphx-glr-backref-module-sklearn-discriminant_analysis sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">LDA</span></a><span class="p">(</span><span class="n">solver</span><span class="o">=</span><span class="s2">&quot;lsqr&quot;</span><span class="p">,</span> <span class="n">shrinkage</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">))</span>
 
 <span class="c1"># Time-decoupled Covariance classifier, needs information about number of</span>
 <span class="c1"># channels and time intervals</span>
 <span class="n">c</span> <span class="o">=</span> <span class="n">TimeDecoupledLda</span><span class="p">(</span><span class="n">N_channels</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">N_times</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="c1"># TD-LDA needs to know about the used jumping means intervals</span>
 <span class="n">c</span><span class="o">.</span><span class="n">preproc</span> <span class="o">=</span> <span class="n">jmv</span>
-<span class="n">pipelines</span><span class="p">[</span><span class="s2">&quot;JM+TD-LDA&quot;</span><span class="p">]</span> <span class="o">=</span> <a href="http://scikit-learn.org/stable/modules/generated/sklearn.pipeline.make_pipeline.html#sklearn.pipeline.make_pipeline" title="sklearn.pipeline.make_pipeline" class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-function"><span class="n">make_pipeline</span></a><span class="p">(</span><span class="n">jmv</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+<span class="n">pipelines</span><span class="p">[</span><span class="s2">&quot;JM+TD-LDA&quot;</span><span class="p">]</span> <span class="o">=</span> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.make_pipeline.html#sklearn.pipeline.make_pipeline" title="sklearn.pipeline.make_pipeline" class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-function"><span class="n">make_pipeline</span></a><span class="p">(</span><span class="n">jmv</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>

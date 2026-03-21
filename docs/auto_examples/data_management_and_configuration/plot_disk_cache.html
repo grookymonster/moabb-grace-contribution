@@ -12,7 +12,7 @@
     <link rel="icon" sizes="144x144" href="../../_static/favicon-144.png" type="image/png">
     <link rel="mask-icon" href="../../_static/favicon_mask-icon.svg" color="#222832" type="image/svg+xml">
     <link rel="apple-touch-icon" sizes="500x500" href="../../_static/favicon-500.png" type="image/png">
-    <title>Cache on disk intermediate data processing states &#8212; moabb 1.4.3-dev documentation</title>
+    <title>Cache on disk intermediate data processing states &#8212; moabb 1.5.0-dev documentation</title>
   
   
   
@@ -52,7 +52,7 @@
 
     <script src="../../_static/jquery.js?v=5d32c60e"></script>
     <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-    <script src="../../_static/documentation_options.js?v=1c0077db"></script>
+    <script src="../../_static/documentation_options.js?v=1a7a66bb"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -84,7 +84,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="1.4.3" />
+  <meta name="docsearch:version" content="1.5.0" />
 
   </head>
   
@@ -152,8 +152,8 @@
     
     
     
-    <img src="../../_static/moabb_light.svg" class="logo__image only-light" alt="moabb 1.4.3-dev documentation - Home"/>
-    <img src="../../_static/moabb_dark.svg" class="logo__image only-dark pst-js-only" alt="moabb 1.4.3-dev documentation - Home"/>
+    <img src="../../_static/moabb_light.svg" class="logo__image only-light" alt="moabb 1.5.0-dev documentation - Home"/>
+    <img src="../../_static/moabb_dark.svg" class="logo__image only-dark pst-js-only" alt="moabb 1.5.0-dev documentation - Home"/>
   
   
 </a></div>
@@ -476,11 +476,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_phmd_ml_spectrum.html">Spectral analysis of the trials</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_pre_processing_steps.html">Playing with the pre-processing steps</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_pseudoonline.html">Pseudo-Online Motor Imagery with Sliding Window</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_riemannian_artifact_rejection.html">Riemannian Artifact Rejection as a Pre-processing Step</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_select_electrodes_resample.html">Select Electrodes and Resampling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_sliding_estimator.html">Time-Resolved Decoding with SlidingEstimator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_statistical_analysis.html">Statistical Analysis and Chance Level Assessment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../advanced_examples/plot_use_an_X_y_dataset.html">Using X y data (epoched data) instead of continuous signal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../advanced_examples/riemannian_artifact_rejection.html">Riemannian Artifact Rejection as a Pre-processing Step</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../learning_curve/index.html">Evaluation with learning curve</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -675,20 +675,20 @@ in the <code class="docutils literal notranslate"><span class="pre">cache_config
 <a href="https://docs.python.org/3/library/stdtypes.html#tuple" title="builtins.tuple" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">_</span></a> <span class="o">=</span> <a href="../../generated/moabb.paradigms.base.BaseProcessing.html#moabb.paradigms.base.BaseProcessing.get_data" title="moabb.paradigms.base.BaseProcessing.get_data" class="sphx-glr-backref-module-moabb-paradigms-base sphx-glr-backref-type-py-method"><span class="n">paradigm</span><span class="o">.</span><span class="n">get_data</span></a><span class="p">(</span><a href="../../generated/moabb.datasets.Zhou2016.html#moabb.datasets.Zhou2016" title="moabb.datasets.Zhou2016" class="sphx-glr-backref-module-moabb-datasets sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dataset</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">subjects</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">cache_config</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">cache_config</span></a><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-03-20 14:51:27,536 INFO MainThread moabb.datasets.bids_interface Attempting to retrieve cache of &#39;Zhou2016&#39; sub-1 suffix-array desc-a816813...
-2026-03-20 14:51:27,803 INFO MainThread moabb.datasets.bids_interface No cache found at /tmp/tmp1s_v4egs/MNE-BIDS-zhou2016/code.
-2026-03-20 14:51:27,852 INFO MainThread moabb.datasets.bids_interface Attempting to retrieve cache of &#39;Zhou2016&#39; sub-1 suffix-epo desc-b9aa26a...
-2026-03-20 14:51:27,992 INFO MainThread moabb.datasets.bids_interface No cache found at /tmp/tmp1s_v4egs/MNE-BIDS-zhou2016/code.
-2026-03-20 14:51:27,992 INFO MainThread moabb.datasets.bids_interface Attempting to retrieve cache of &#39;Zhou2016&#39; sub-1 suffix-eeg desc-f81a9fd...
-2026-03-20 14:51:27,996 INFO MainThread moabb.datasets.bids_interface No cache found at /tmp/tmp1s_v4egs/MNE-BIDS-zhou2016/code.
-2026-03-20 14:51:27,997 INFO MainThread moabb.datasets.bids_interface Attempting to retrieve cache of &#39;Zhou2016&#39; sub-1 suffix-eeg desc-1dac875...
-2026-03-20 14:51:28,001 INFO MainThread moabb.datasets.bids_interface No cache found at /tmp/tmp1s_v4egs/MNE-BIDS-zhou2016/code.
-2026-03-20 14:51:29,062 INFO MainThread moabb.datasets.bids_interface Starting caching &#39;Zhou2016&#39; sub-1 suffix-eeg desc-f81a9fd
-2026-03-20 14:51:29,515 INFO MainThread moabb.datasets.bids_interface Finished caching &#39;Zhou2016&#39; sub-1 suffix-eeg desc-f81a9fd to disk.
-2026-03-20 14:51:29,614 INFO MainThread moabb.datasets.bids_interface Starting caching &#39;Zhou2016&#39; sub-1 suffix-epo desc-b9aa26a
-2026-03-20 14:51:30,068 INFO MainThread moabb.datasets.bids_interface Finished caching &#39;Zhou2016&#39; sub-1 suffix-epo desc-b9aa26a to disk.
-2026-03-20 14:51:30,121 INFO MainThread moabb.datasets.bids_interface Starting caching &#39;Zhou2016&#39; sub-1 suffix-array desc-a816813
-2026-03-20 14:51:30,653 INFO MainThread moabb.datasets.bids_interface Finished caching &#39;Zhou2016&#39; sub-1 suffix-array desc-a816813 to disk.
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-03-21 20:10:05,397 INFO MainThread moabb.datasets.bids_interface Attempting to retrieve cache of &#39;Zhou2016&#39; sub-1 suffix-array desc-a816813...
+2026-03-21 20:10:05,662 INFO MainThread moabb.datasets.bids_interface No cache found at /tmp/tmpc_sdatfp/MNE-BIDS-zhou2016/code.
+2026-03-21 20:10:05,702 INFO MainThread moabb.datasets.bids_interface Attempting to retrieve cache of &#39;Zhou2016&#39; sub-1 suffix-epo desc-b9aa26a...
+2026-03-21 20:10:05,840 INFO MainThread moabb.datasets.bids_interface No cache found at /tmp/tmpc_sdatfp/MNE-BIDS-zhou2016/code.
+2026-03-21 20:10:05,840 INFO MainThread moabb.datasets.bids_interface Attempting to retrieve cache of &#39;Zhou2016&#39; sub-1 suffix-eeg desc-f81a9fd...
+2026-03-21 20:10:05,844 INFO MainThread moabb.datasets.bids_interface No cache found at /tmp/tmpc_sdatfp/MNE-BIDS-zhou2016/code.
+2026-03-21 20:10:05,845 INFO MainThread moabb.datasets.bids_interface Attempting to retrieve cache of &#39;Zhou2016&#39; sub-1 suffix-eeg desc-1dac875...
+2026-03-21 20:10:05,849 INFO MainThread moabb.datasets.bids_interface No cache found at /tmp/tmpc_sdatfp/MNE-BIDS-zhou2016/code.
+2026-03-21 20:10:06,874 INFO MainThread moabb.datasets.bids_interface Starting caching &#39;Zhou2016&#39; sub-1 suffix-eeg desc-f81a9fd
+2026-03-21 20:10:07,317 INFO MainThread moabb.datasets.bids_interface Finished caching &#39;Zhou2016&#39; sub-1 suffix-eeg desc-f81a9fd to disk.
+2026-03-21 20:10:07,466 INFO MainThread moabb.datasets.bids_interface Starting caching &#39;Zhou2016&#39; sub-1 suffix-epo desc-b9aa26a
+2026-03-21 20:10:07,913 INFO MainThread moabb.datasets.bids_interface Finished caching &#39;Zhou2016&#39; sub-1 suffix-epo desc-b9aa26a to disk.
+2026-03-21 20:10:07,964 INFO MainThread moabb.datasets.bids_interface Starting caching &#39;Zhou2016&#39; sub-1 suffix-array desc-a816813
+2026-03-21 20:10:08,496 INFO MainThread moabb.datasets.bids_interface Finished caching &#39;Zhou2016&#39; sub-1 suffix-array desc-a816813 to disk.
 </pre></div>
 </div>
 </section>
@@ -715,8 +715,8 @@ number of missing steps.</p>
 <a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">t_array</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/time.html#time.time" title="time.time" class="sphx-glr-backref-module-time sphx-glr-backref-type-py-function"><span class="n">time</span><span class="o">.</span><span class="n">time</span></a><span class="p">()</span> <span class="o">-</span> <a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">t0</span></a>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-03-20 14:51:30,710 INFO MainThread moabb.datasets.bids_interface Attempting to retrieve cache of &#39;Zhou2016&#39; sub-1 suffix-array desc-a816813...
-2026-03-20 14:51:31,083 INFO MainThread moabb.datasets.bids_interface Finished reading cache of &#39;Zhou2016&#39; sub-1 suffix-array desc-a816813
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-03-21 20:10:08,552 INFO MainThread moabb.datasets.bids_interface Attempting to retrieve cache of &#39;Zhou2016&#39; sub-1 suffix-array desc-a816813...
+2026-03-21 20:10:08,929 INFO MainThread moabb.datasets.bids_interface Finished reading cache of &#39;Zhou2016&#39; sub-1 suffix-array desc-a816813
 </pre></div>
 </div>
 <p>Using epochs cache:</p>
@@ -735,10 +735,10 @@ number of missing steps.</p>
 <a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">t_epochs</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/time.html#time.time" title="time.time" class="sphx-glr-backref-module-time sphx-glr-backref-type-py-function"><span class="n">time</span><span class="o">.</span><span class="n">time</span></a><span class="p">()</span> <span class="o">-</span> <a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">t0</span></a>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-03-20 14:51:31,140 INFO MainThread moabb.datasets.bids_interface Starting erasing cache of &#39;Zhou2016&#39; sub-1 suffix-array desc-a816813...
-2026-03-20 14:51:31,540 INFO MainThread moabb.datasets.bids_interface Finished erasing cache of &#39;Zhou2016&#39; sub-1 suffix-array desc-a816813.
-2026-03-20 14:51:31,574 INFO MainThread moabb.datasets.bids_interface Attempting to retrieve cache of &#39;Zhou2016&#39; sub-1 suffix-epo desc-b9aa26a...
-2026-03-20 14:51:31,894 INFO MainThread moabb.datasets.bids_interface Finished reading cache of &#39;Zhou2016&#39; sub-1 suffix-epo desc-b9aa26a
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-03-21 20:10:08,986 INFO MainThread moabb.datasets.bids_interface Starting erasing cache of &#39;Zhou2016&#39; sub-1 suffix-array desc-a816813...
+2026-03-21 20:10:09,389 INFO MainThread moabb.datasets.bids_interface Finished erasing cache of &#39;Zhou2016&#39; sub-1 suffix-array desc-a816813.
+2026-03-21 20:10:09,423 INFO MainThread moabb.datasets.bids_interface Attempting to retrieve cache of &#39;Zhou2016&#39; sub-1 suffix-epo desc-b9aa26a...
+2026-03-21 20:10:09,744 INFO MainThread moabb.datasets.bids_interface Finished reading cache of &#39;Zhou2016&#39; sub-1 suffix-epo desc-b9aa26a
 </pre></div>
 </div>
 <p>Using raw cache:</p>
@@ -757,11 +757,11 @@ number of missing steps.</p>
 <a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">t_raw</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/time.html#time.time" title="time.time" class="sphx-glr-backref-module-time sphx-glr-backref-type-py-function"><span class="n">time</span><span class="o">.</span><span class="n">time</span></a><span class="p">()</span> <span class="o">-</span> <a href="https://docs.python.org/3/library/functions.html#float" title="builtins.float" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">t0</span></a>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-03-20 14:51:31,974 INFO MainThread moabb.datasets.bids_interface Starting erasing cache of &#39;Zhou2016&#39; sub-1 suffix-array desc-a816813...
-2026-03-20 14:51:32,204 INFO MainThread moabb.datasets.bids_interface Finished erasing cache of &#39;Zhou2016&#39; sub-1 suffix-array desc-a816813.
-2026-03-20 14:51:32,238 INFO MainThread moabb.datasets.bids_interface Starting erasing cache of &#39;Zhou2016&#39; sub-1 suffix-epo desc-b9aa26a...
-2026-03-20 14:51:32,536 INFO MainThread moabb.datasets.bids_interface Finished erasing cache of &#39;Zhou2016&#39; sub-1 suffix-epo desc-b9aa26a.
-2026-03-20 14:51:32,537 INFO MainThread moabb.datasets.bids_interface Attempting to retrieve cache of &#39;Zhou2016&#39; sub-1 suffix-eeg desc-f81a9fd...
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-03-21 20:10:09,822 INFO MainThread moabb.datasets.bids_interface Starting erasing cache of &#39;Zhou2016&#39; sub-1 suffix-array desc-a816813...
+2026-03-21 20:10:10,050 INFO MainThread moabb.datasets.bids_interface Finished erasing cache of &#39;Zhou2016&#39; sub-1 suffix-array desc-a816813.
+2026-03-21 20:10:10,084 INFO MainThread moabb.datasets.bids_interface Starting erasing cache of &#39;Zhou2016&#39; sub-1 suffix-epo desc-b9aa26a...
+2026-03-21 20:10:10,381 INFO MainThread moabb.datasets.bids_interface Finished erasing cache of &#39;Zhou2016&#39; sub-1 suffix-epo desc-b9aa26a.
+2026-03-21 20:10:10,382 INFO MainThread moabb.datasets.bids_interface Attempting to retrieve cache of &#39;Zhou2016&#39; sub-1 suffix-eeg desc-f81a9fd...
 /home/runner/work/moabb/moabb/moabb/datasets/bids_interface.py:2564: RuntimeWarning: Unable to map the following column(s) to to MNE:
 group: healthy
 species: homo sapiens
@@ -792,7 +792,7 @@ group: healthy
 species: homo sapiens
 bci_experience: experienced
   raw = mne_bids.read_raw_bids(
-2026-03-20 14:51:32,689 INFO MainThread moabb.datasets.bids_interface Finished reading cache of &#39;Zhou2016&#39; sub-1 suffix-eeg desc-f81a9fd
+2026-03-21 20:10:10,535 INFO MainThread moabb.datasets.bids_interface Finished reading cache of &#39;Zhou2016&#39; sub-1 suffix-eeg desc-f81a9fd
 </pre></div>
 </div>
 <p>Using no cache:</p>
@@ -819,9 +819,9 @@ bci_experience: experienced
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Using array cache: 0.43 seconds
-Using epochs cache: 0.83 seconds
+Using epochs cache: 0.84 seconds
 Using raw cache: 0.96 seconds
-Without cache: 0.85 seconds
+Without cache: 0.82 seconds
 </pre></div>
 </div>
 <p>As you can see, using a raw cache is more than 5 times faster than
@@ -875,7 +875,7 @@ to decode the description key.</p></li>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/shutil.html#shutil.rmtree" title="shutil.rmtree" class="sphx-glr-backref-module-shutil sphx-glr-backref-type-py-function"><span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/pathlib.html#pathlib.PosixPath" title="pathlib.PosixPath" class="sphx-glr-backref-module-pathlib sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">temp_dir</span></a><span class="p">)</span>
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 8.525 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 8.472 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-data-management-and-configuration-plot-disk-cache-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/b843884d191ec86afaa081573b87c5dc/plot_disk_cache.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_disk_cache.ipynb</span></code></a></p>
