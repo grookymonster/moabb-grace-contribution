@@ -60,6 +60,12 @@ authors:
 - family-names: "Thielen"
   given-names: "Jordy"
   orcid: "https://orcid.org/0000-0002-6264-0367"
+- family-names: "Hajhassani"
+  given-names: "Davoud"
+  orcid: "https://orcid.org/0009-0008-6674-5546"
+- family-names: "Begany"
+  given-names: "Katelyn"
+  orcid: "https://orcid.org/0000-0003-0454-0592"
 - family-names: "Moreau"
   given-names: "Thomas"
   orcid: "https://orcid.org/0000-0002-1523-3419"
@@ -72,17 +78,11 @@ authors:
 - family-names: "Barachant"
   given-names: "Alexandre"
   orcid: "https://orcid.org/0000-0001-8202-6287"
-- family-names: "Begany"
-  given-names: "Katelyn"
-  orcid: "https://orcid.org/0000-0003-0454-0592"
 - family-names: "Chevallier"
   given-names: "Sylvain"
   orcid: "https://orcid.org/0000-0003-3027-8241"
-- family-names: "Hajhassani"
-  given-names: "Davoud"
-  orcid: "https://orcid.org/0009-0008-6674-5546"
 title: "Mother of all BCI Benchmarks"
-version: 1.4.3
+version: 1.5.0
 doi: 10.5281/zenodo.10034223
-date-released: 2025-12-12
+date-released: 2026-03-18
 url: "https://github.com/NeuroTechX/moabb"

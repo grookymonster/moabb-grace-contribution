@@ -191,10 +191,10 @@ def set_download_dir(path):
     Parameters
     ----------
     path : None | str
-    The new storage location, if it does not exist, a warning is raised and the
-    path is created
-    If None, and MNE_DATA config does not exist, a warning is raised and the
-    storage location is set to the MNE default directory
+        The new storage location. If it does not exist, a warning is raised
+        and the path is created. If None and MNE_DATA config does not exist,
+        a warning is raised and the storage location is set to the MNE
+        default directory.
     """
     if path is None:
         if get_config("MNE_DATA") is None:

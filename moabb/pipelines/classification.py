@@ -280,24 +280,27 @@ class SSVEP_CCA(BaseEstimator, ClassifierMixin):
 
     Parameters
     ----------
-    n_harmonics : int, default=3
+    n_harmonics : int
         Number of harmonics :math:`N_h` to include in the reference signal.
         Higher values capture more harmonic components of the SSVEP response.
-    freq_map : dict | None, default=None
+        Defaults to ``3``.
+    freq_map : dict or None
         Optional explicit mapping ``{class_label: stimulus_frequency_hz}``.
         If None, frequencies are inferred from ``X.event_id`` and event codes.
+        Defaults to ``None``.
 
     Attributes
     ----------
-    classes_ : ndarray of shape (n_classes,)
-        Class labels in the same label space as ``y``.
+    classes_ : numpy.ndarray
+        Class labels in the same label space as ``y``,
+        of shape ``(n_classes,)``.
     freqs_ : list of str
         List of stimulus frequencies extracted from training data.
     one_hot_ : dict
         Mapping from class labels to class indices.
     slen_ : float
         Signal length in seconds.
-    le_ : LabelEncoder
+    le_ : :class:`sklearn.preprocessing.LabelEncoder`
         Fitted label encoder for frequency strings.
     Yf : dict
         Dictionary mapping class labels to reference signals
@@ -334,16 +337,17 @@ class SSVEP_CCA(BaseEstimator, ClassifierMixin):
 
         Parameters
         ----------
-        X : MNE Epochs
+        X : :class:`mne.Epochs`
             The training data as MNE Epochs object.
-        y : ndarray of shape (n_trials,)
-            Label vector with frequency strings for each trial.
+        y : numpy.ndarray
+            Label vector with frequency strings for each trial,
+            of shape ``(n_trials,)``.
         sample_weight : Unused,
             Only for compatibility with scikit-learn
 
         Returns
         -------
-        self: SSVEP_CCA object
+        self : ``SSVEP_CCA``
             Instance of classifier.
         """
         if not isinstance(X, BaseEpochs):
@@ -370,7 +374,7 @@ class SSVEP_CCA(BaseEstimator, ClassifierMixin):
 
         Parameters
         ----------
-        X : MNE Epochs
+        X : :class:`mne.Epochs`
             The data to predict as MNE Epochs object.
 
         Returns
@@ -394,13 +398,14 @@ class SSVEP_CCA(BaseEstimator, ClassifierMixin):
 
         Parameters
         ----------
-        X : MNE Epochs
+        X : :class:`mne.Epochs`
             The data to predict as MNE Epochs object.
 
         Returns
         -------
-        proba : ndarray of shape (n_trials, n_classes)
-            probability of each class for each trial.
+        proba : numpy.ndarray
+            Probability of each class for each trial,
+            of shape ``(n_trials, n_classes)``.
         """
         check_is_fitted(
             self,
@@ -500,17 +505,19 @@ class SSVEP_TRCA(BaseEstimator, ClassifierMixin):
 
     Parameters
     ----------
-    n_fbands : int, default=5
+    n_fbands : int
         Number of sub-bands :math:`N_m` for the filter bank decomposition.
         Each sub-band captures different harmonic components of the SSVEP.
+        Defaults to ``5``.
 
-    is_ensemble : bool, default=True
+    is_ensemble : bool
         If True, use ensemble TRCA which combines spatial filters from all
         stimulus frequencies for improved robustness. If False, use only
-        the class-specific spatial filter.
+        the class-specific spatial filter. Defaults to ``True``.
 
-    method : str, default='original'
-        Method for computing the inter-trial covariance matrix :math:`\\mathbf{S}`:
+    method : str
+        Method for computing the inter-trial covariance matrix :math:`\\mathbf{S}`.
+        Defaults to ``'original'``.
 
         - ``'original'``: Euclidean mean as in the original paper [1]_.
         - ``'riemann'``: Geodesic (Riemannian) mean, more robust to outliers
@@ -518,8 +525,9 @@ class SSVEP_TRCA(BaseEstimator, ClassifierMixin):
         - ``'logeuclid'``: Log-Euclidean mean, a computationally stable
           alternative to the Riemannian mean.
 
-    estimator : str, default='scm'
-        Covariance estimator for regularization. Options include:
+    estimator : str
+        Covariance estimator for regularization. Defaults to ``'scm'``.
+        Options include:
 
         - ``'scm'``: Sample covariance matrix (no regularization, as in [1]_).
         - ``'lwf'``: Ledoit-Wolf shrinkage estimator.
@@ -528,20 +536,25 @@ class SSVEP_TRCA(BaseEstimator, ClassifierMixin):
 
     Attributes
     ----------
-    fb_coefs : list of float, length n_fbands
-        Sub-band weights :math:`a^{(m)} = m^{-1.25} + 0.25` for filter bank fusion.
-    classes_ : ndarray of shape (n_classes,)
-        Encoded class labels extracted at fit time.
+    fb_coefs : list of float
+        Sub-band weights :math:`a^{(m)} = m^{-1.25} + 0.25` for filter bank fusion,
+        of length ``n_fbands``.
+    classes_ : numpy.ndarray
+        Encoded class labels extracted at fit time,
+        of shape ``(n_classes,)``.
     n_classes : int
         Number of unique stimulus frequencies/classes.
-    templates_ : ndarray of shape (n_classes, n_fbands, n_channels, n_samples)
-        Average templates :math:`\\bar{\\mathbf{X}}_n^{(m)}` for each class and sub-band.
-    weights_ : ndarray of shape (n_fbands, n_classes, n_channels)
-        Spatial filter weights :math:`\\mathbf{w}_n^{(m)}` for each sub-band and class.
+    templates_ : numpy.ndarray
+        Average templates :math:`\\bar{\\mathbf{X}}_n^{(m)}` for each class and sub-band,
+        of shape ``(n_classes, n_fbands, n_channels, n_samples)``.
+    weights_ : numpy.ndarray
+        Spatial filter weights :math:`\\mathbf{w}_n^{(m)}` for each sub-band and class,
+        of shape ``(n_fbands, n_classes, n_channels)``.
     freqs_ : list of str
         List of stimulus frequencies from training data.
-    peaks_ : ndarray of shape (n_classes,)
-        Numeric frequency values for filter bank design.
+    peaks_ : numpy.ndarray
+        Numeric frequency values for filter bank design,
+        of shape ``(n_classes,)``.
     sfreq_ : float
         Sampling frequency of the training data.
 
@@ -686,14 +699,14 @@ class SSVEP_TRCA(BaseEstimator, ClassifierMixin):
 
         Parameters
         ----------
-        X: ndarray of shape (n_trials, n_channels, n_samples)
-            Training data
+        X : numpy.ndarray
+            Training data, of shape ``(n_trials, n_channels, n_samples)``.
 
         Returns
         -------
-        W: ndarray of shape (n_channels)
+        W : numpy.ndarray
             Weight coefficients for electrodes which can be used as
-            a spatial filter.
+            a spatial filter, of shape ``(n_channels,)``.
         """
 
         if self.method == "original":
@@ -720,17 +733,17 @@ class SSVEP_TRCA(BaseEstimator, ClassifierMixin):
 
         Parameters
         ----------
-        X : MNE Epochs
+        X : :class:`mne.Epochs`
             Training data. Trials are grouped by class, divided in n_fbands bands by
             the filterbank approach and then used to calculate weight vectors and
             templates for each class and band.
 
-        y : ndarray of shape (n_trials,)
-            Label vector in respect to X.
+        y : numpy.ndarray
+            Label vector in respect to X, of shape ``(n_trials,)``.
 
         Returns
         -------
-        self: CCA object
+        self : ``CCA``
             Instance of classifier.
         """
         if not isinstance(X, BaseEpochs):
@@ -782,7 +795,7 @@ class SSVEP_TRCA(BaseEstimator, ClassifierMixin):
 
         Parameters
         ----------
-        X : MNE Epochs
+        X : :class:`mne.Epochs`
             Testing data. This will be divided in self.n_fbands using the filterbank approach,
             then it will be transformed by the different spatial filters and compared to the
             previously fit templates according to the selected method for analysis (ensemble or
@@ -792,8 +805,8 @@ class SSVEP_TRCA(BaseEstimator, ClassifierMixin):
 
         Returns
         -------
-        y_pred : ndarray of shape (n_trials,)
-            Prediction vector in respect to X.
+        y_pred : numpy.ndarray
+            Prediction vector in respect to X, of shape ``(n_trials,)``.
         """
 
         # Check is fit had been called
@@ -867,8 +880,9 @@ class SSVEP_TRCA(BaseEstimator, ClassifierMixin):
 
         Parameters
         ----------
-        X : ndarray of shape (n_trials, n_channels, n_samples)
-            Testing data. This will be divided in self.n_fbands using the filter-bank approach,
+        X : numpy.ndarray
+            Testing data, of shape ``(n_trials, n_channels, n_samples)``.
+            This will be divided in self.n_fbands using the filter-bank approach,
             then it will be transformed by the different spatial filters and compared to the
             previously fit templates according to the selected method for analysis (ensemble or
             not). Finally, correlation scores for all sub-bands of each class will be combined,
@@ -877,8 +891,8 @@ class SSVEP_TRCA(BaseEstimator, ClassifierMixin):
 
         Returns
         -------
-        y_pred : ndarray of shape (n_trials,)
-            Prediction vector in respect to X.
+        y_pred : numpy.ndarray
+            Prediction vector in respect to X, of shape ``(n_trials,)``.
         """
 
         # Check is fit had been called
@@ -947,7 +961,8 @@ def _whitening(X):
 
     Parameters
     ----------
-    X: ndarray of shape (n_channels, n_samples)
+    X : numpy.ndarray
+        EEG signal data, of shape ``(n_channels, n_samples)``.
     """
     n_channels, n_samples = X.shape
     X_white = X.copy()
@@ -1052,24 +1067,26 @@ class SSVEP_MsetCCA(BaseEstimator, ClassifierMixin):
 
     Parameters
     ----------
-    n_filters : int, default=1
+    n_filters : int
         Number of spatial filters (eigenvectors) to extract from the MAXVAR
         solution. Corresponds to the dimensionality of the learned reference signals.
         Higher values may capture more variance but risk overfitting.
+        Defaults to ``1``.
 
-    n_jobs : int, default=1
+    n_jobs : int
         Number of parallel jobs for whitening computation.
-        Use ``-1`` to use all available cores.
+        Use ``-1`` to use all available cores. Defaults to ``1``.
 
     Attributes
     ----------
-    classes_ : ndarray of shape (n_classes,)
-        Class labels in the same label space as ``y``.
+    classes_ : numpy.ndarray
+        Class labels in the same label space as ``y``,
+        of shape ``(n_classes,)``.
     freqs_ : list of str
         List of stimulus frequency labels from training data.
     one_hot_ : dict
         Mapping from class labels to class indices.
-    le_ : LabelEncoder
+    le_ : :class:`sklearn.preprocessing.LabelEncoder`
         Fitted label encoder for frequency strings.
     Ym : dict
         Dictionary mapping encoded class labels to optimized reference signals
@@ -1109,15 +1126,15 @@ class SSVEP_MsetCCA(BaseEstimator, ClassifierMixin):
 
         Parameters
         ----------
-        X : MNE Epochs
+        X : :class:`mne.Epochs`
             The training data as MNE Epochs object.
 
-        y : np.ndarray of shape (n_trials,)
-            The target labels for each trial.
+        y : numpy.ndarray
+            The target labels for each trial, of shape ``(n_trials,)``.
 
         Returns
         -------
-        self: SSVEP_MsetCCA object
+        self : ``SSVEP_MsetCCA``
             Instance of classifier.
         """
         if not isinstance(X, BaseEpochs):
@@ -1211,7 +1228,7 @@ class SSVEP_MsetCCA(BaseEstimator, ClassifierMixin):
 
         Parameters
         ----------
-        X : MNE Epochs
+        X : :class:`mne.Epochs`
             The data to predict as MNE Epochs object.
 
         Returns
@@ -1243,13 +1260,14 @@ class SSVEP_MsetCCA(BaseEstimator, ClassifierMixin):
 
         Parameters
         ----------
-        X : MNE Epochs
+        X : :class:`mne.Epochs`
             The data to predict as MNE Epochs object.
 
         Returns
         -------
-        P : ndarray of shape (n_trials, n_classes)
-            Probability of each class for each trial.
+        P : numpy.ndarray
+            Probability of each class for each trial,
+            of shape ``(n_trials, n_classes)``.
         """
 
         # Check is fit had been called
@@ -1305,17 +1323,18 @@ class SSVEP_itCCA(BaseEstimator, ClassifierMixin):
 
     Attributes
     ----------
-    classes_ : ndarray of shape (n_classes,)
-        Class labels in the same label space as ``y``.
+    classes_ : numpy.ndarray
+        Class labels in the same label space as ``y``,
+        of shape ``(n_classes,)``.
     freqs_ : list of str
         List of stimulus frequencies from training data.
     one_hot_ : dict
         Mapping from class labels to class indices.
-    le_ : LabelEncoder
+    le_ : :class:`sklearn.preprocessing.LabelEncoder`
         Fitted label encoder.
     templates_ : dict
-        Dictionary mapping frequency strings to averaged templates
-        of shape ``(n_channels, n_times)``.
+        Dictionary mapping frequency strings to averaged templates,
+        each of shape ``(n_channels, n_times)``.
 
     References
     ----------
@@ -1341,10 +1360,11 @@ class SSVEP_itCCA(BaseEstimator, ClassifierMixin):
 
         Parameters
         ----------
-        X : MNE Epochs
+        X : :class:`mne.Epochs`
             Training data as MNE Epochs object.
-        y : ndarray of shape (n_trials,)
-            Label vector with frequency strings for each trial.
+        y : numpy.ndarray
+            Label vector with frequency strings for each trial,
+            of shape ``(n_trials,)``.
         sample_weight : Unused
             Only for compatibility with scikit-learn.
 
@@ -1377,7 +1397,7 @@ class SSVEP_itCCA(BaseEstimator, ClassifierMixin):
 
         Parameters
         ----------
-        X : MNE Epochs
+        X : :class:`mne.Epochs`
             Test data as MNE Epochs object.
 
         Returns
@@ -1400,13 +1420,14 @@ class SSVEP_itCCA(BaseEstimator, ClassifierMixin):
 
         Parameters
         ----------
-        X : MNE Epochs
+        X : :class:`mne.Epochs`
             Test data as MNE Epochs object.
 
         Returns
         -------
-        P : ndarray of shape (n_trials, n_classes)
-            Probability of each class for each trial.
+        P : numpy.ndarray
+            Probability of each class for each trial,
+            of shape ``(n_trials, n_classes)``.
         """
         check_is_fitted(self, ["freqs_", "classes_", "one_hot_", "le_", "templates_"])
         scores = _score_matrix_from_trials(
@@ -1462,21 +1483,24 @@ class SSVEP_eCCA(BaseEstimator, ClassifierMixin):
 
     Parameters
     ----------
-    n_harmonics : int, default=3
+    n_harmonics : int
         Number of harmonics for sinusoidal reference signal generation.
-    freq_map : dict | None, default=None
+        Defaults to ``3``.
+    freq_map : dict or None
         Optional explicit mapping ``{class_label: stimulus_frequency_hz}``.
         If None, frequencies are inferred from ``X.event_id`` and event codes.
+        Defaults to ``None``.
 
     Attributes
     ----------
-    classes_ : ndarray of shape (n_classes,)
-        Class labels in the same label space as ``y``.
+    classes_ : numpy.ndarray
+        Class labels in the same label space as ``y``,
+        of shape ``(n_classes,)``.
     freqs_ : list of str
         Stimulus frequencies from training data.
     one_hot_ : dict
         Mapping from class labels to class indices.
-    le_ : LabelEncoder
+    le_ : :class:`sklearn.preprocessing.LabelEncoder`
         Fitted label encoder.
     slen_ : float
         Signal length in seconds.
@@ -1516,10 +1540,11 @@ class SSVEP_eCCA(BaseEstimator, ClassifierMixin):
 
         Parameters
         ----------
-        X : MNE Epochs
+        X : :class:`mne.Epochs`
             Training data as MNE Epochs object.
-        y : ndarray of shape (n_trials,)
-            Label vector with frequency strings for each trial.
+        y : numpy.ndarray
+            Label vector with frequency strings for each trial,
+            of shape ``(n_trials,)``.
         sample_weight : Unused
             Only for compatibility with scikit-learn.
 
@@ -1565,7 +1590,7 @@ class SSVEP_eCCA(BaseEstimator, ClassifierMixin):
 
         Parameters
         ----------
-        X : MNE Epochs
+        X : :class:`mne.Epochs`
             Test data as MNE Epochs object.
 
         Returns
@@ -1601,13 +1626,14 @@ class SSVEP_eCCA(BaseEstimator, ClassifierMixin):
 
         Parameters
         ----------
-        X : MNE Epochs
+        X : :class:`mne.Epochs`
             Test data as MNE Epochs object.
 
         Returns
         -------
-        P : ndarray of shape (n_trials, n_classes)
-            Probability of each class for each trial.
+        P : numpy.ndarray
+            Probability of each class for each trial,
+            of shape ``(n_trials, n_classes)``.
         """
         check_is_fitted(
             self,
@@ -1659,25 +1685,32 @@ class SSVEP_TRCA_R(BaseEstimator, ClassifierMixin):
 
     Parameters
     ----------
-    n_fbands : int, default=5
+    n_fbands : int
         Number of sub-bands for the filter bank decomposition.
-    n_harmonics : int, default=3
+        Defaults to ``5``.
+    n_harmonics : int
         Number of harmonics for sinusoidal reference generation.
-    is_ensemble : bool, default=True
+        Defaults to ``3``.
+    is_ensemble : bool
         If True, use ensemble TRCA with combined spatial filters.
-    method : str, default='original'
+        Defaults to ``True``.
+    method : str
         Covariance estimation method: 'original', 'riemann', or 'logeuclid'.
-    estimator : str, default='scm'
+        Defaults to ``'original'``.
+    estimator : str
         Covariance estimator: 'scm', 'lwf', 'oas', or 'schaefer'.
+        Defaults to ``'scm'``.
 
     Attributes
     ----------
-    classes_ : ndarray of shape (n_classes,)
-        Encoded class labels.
-    templates_ : ndarray of shape (n_classes, n_fbands, n_channels, n_samples)
-        Average templates for each class and sub-band.
-    weights_ : ndarray of shape (n_fbands, n_classes, n_channels)
-        Spatial filter weights for each sub-band and class.
+    classes_ : numpy.ndarray
+        Encoded class labels, of shape ``(n_classes,)``.
+    templates_ : numpy.ndarray
+        Average templates for each class and sub-band,
+        of shape ``(n_classes, n_fbands, n_channels, n_samples)``.
+    weights_ : numpy.ndarray
+        Spatial filter weights for each sub-band and class,
+        of shape ``(n_fbands, n_classes, n_channels)``.
 
     References
     ----------
@@ -1724,12 +1757,15 @@ class SSVEP_TRCA_R(BaseEstimator, ClassifierMixin):
 
         Parameters
         ----------
-        X : ndarray of shape (..., n_channels, n_samples)
-        Y : ndarray of shape (2*n_harmonics, n_samples)
+        X : numpy.ndarray
+            Input data, of shape ``(..., n_channels, n_samples)``.
+        Y : ndarray
+            Reference signals, of shape ``(2*n_harmonics, n_samples)``.
 
         Returns
         -------
-        X_proj : same shape as X
+        X_proj : numpy.ndarray
+            Projected data, same shape as X.
         """
         YtY_inv = np.linalg.inv(Y @ Y.T)
         P = Y.T @ YtY_inv @ Y  # (n_samples, n_samples)
@@ -1765,10 +1801,11 @@ class SSVEP_TRCA_R(BaseEstimator, ClassifierMixin):
 
         Parameters
         ----------
-        X : MNE Epochs
+        X : :class:`mne.Epochs`
             Training data as MNE Epochs object.
-        y : ndarray of shape (n_trials,)
-            Label vector with frequency strings for each trial.
+        y : numpy.ndarray
+            Label vector with frequency strings for each trial,
+            of shape ``(n_trials,)``.
 
         Returns
         -------
@@ -1818,7 +1855,7 @@ class SSVEP_TRCA_R(BaseEstimator, ClassifierMixin):
 
         Parameters
         ----------
-        X : MNE Epochs
+        X : :class:`mne.Epochs`
             Test data as MNE Epochs object.
 
         Returns
@@ -1871,13 +1908,13 @@ class SSVEP_TRCA_R(BaseEstimator, ClassifierMixin):
 
         Parameters
         ----------
-        X : MNE Epochs
+        X : :class:`mne.Epochs`
             Test data as MNE Epochs object.
 
         Returns
         -------
-        y_pred : ndarray of shape (n_trials, n_classes)
-            Probabilities per class.
+        y_pred : numpy.ndarray
+            Probabilities per class, of shape ``(n_trials, n_classes)``.
         """
         check_is_fitted(
             self,
@@ -1946,21 +1983,26 @@ class SSVEP_SSCOR(BaseEstimator, ClassifierMixin):
 
     Parameters
     ----------
-    n_fbands : int, default=5
+    n_fbands : int
         Number of sub-bands for filter bank decomposition.
-    is_ensemble : bool, default=True
+        Defaults to ``5``.
+    is_ensemble : bool
         If True, use ensemble approach combining spatial filters from all classes.
-    estimator : str, default='scm'
+        Defaults to ``True``.
+    estimator : str
         Covariance estimator: 'scm', 'lwf', 'oas', or 'schaefer'.
+        Defaults to ``'scm'``.
 
     Attributes
     ----------
-    classes_ : ndarray of shape (n_classes,)
-        Encoded class labels.
-    templates_ : ndarray of shape (n_classes, n_fbands, n_channels, n_samples)
-        Average templates.
-    weights_ : ndarray of shape (n_fbands, n_classes, n_channels)
-        Spatial filter weights.
+    classes_ : numpy.ndarray
+        Encoded class labels, of shape ``(n_classes,)``.
+    templates_ : numpy.ndarray
+        Average templates,
+        of shape ``(n_classes, n_fbands, n_channels, n_samples)``.
+    weights_ : numpy.ndarray
+        Spatial filter weights,
+        of shape ``(n_fbands, n_classes, n_channels)``.
 
     References
     ----------
@@ -1998,12 +2040,15 @@ class SSVEP_SSCOR(BaseEstimator, ClassifierMixin):
 
         Parameters
         ----------
-        data : ndarray of shape (n_trials, n_channels, n_samples)
+        data : ndarray
+            Input data, of shape ``(n_trials, n_channels, n_samples)``.
 
         Returns
         -------
-        w_best : ndarray of shape (n_channels,)
-        W : ndarray of shape (n_channels, n_channels)
+        w_best : ndarray
+            Best spatial filter, of shape ``(n_channels,)``.
+        W : ndarray
+            All spatial filters, of shape ``(n_channels, n_channels)``.
         """
         if data.ndim == 2:
             data = data[np.newaxis, ...]
@@ -2040,10 +2085,11 @@ class SSVEP_SSCOR(BaseEstimator, ClassifierMixin):
 
         Parameters
         ----------
-        X : MNE Epochs
+        X : :class:`mne.Epochs`
             Training data as MNE Epochs object.
-        y : ndarray of shape (n_trials,)
-            Label vector with frequency strings for each trial.
+        y : numpy.ndarray
+            Label vector with frequency strings for each trial,
+            of shape ``(n_trials,)``.
 
         Returns
         -------
@@ -2087,7 +2133,7 @@ class SSVEP_SSCOR(BaseEstimator, ClassifierMixin):
 
         Parameters
         ----------
-        X : MNE Epochs
+        X : :class:`mne.Epochs`
             Test data as MNE Epochs object.
 
         Returns
@@ -2140,13 +2186,13 @@ class SSVEP_SSCOR(BaseEstimator, ClassifierMixin):
 
         Parameters
         ----------
-        X : MNE Epochs
+        X : :class:`mne.Epochs`
             Test data as MNE Epochs object.
 
         Returns
         -------
-        y_pred : ndarray of shape (n_trials, n_classes)
-            Probabilities per class.
+        y_pred : numpy.ndarray
+            Probabilities per class, of shape ``(n_trials, n_classes)``.
         """
         check_is_fitted(
             self,
@@ -2223,23 +2269,29 @@ class SSVEP_TDCA(BaseEstimator, ClassifierMixin):
 
     Parameters
     ----------
-    n_fbands : int, default=5
+    n_fbands : int
         Number of sub-bands for filter bank decomposition.
-    n_components : int, default=1
+        Defaults to ``5``.
+    n_components : int
         Number of discriminant components to retain.
-    n_delay : int, default=6
+        Defaults to ``1``.
+    n_delay : int
         Number of temporal delays for data augmentation.
-    is_ensemble : bool, default=True
+        Defaults to ``6``.
+    is_ensemble : bool
         If True, use combined filters from all sub-bands for prediction.
+        Defaults to ``True``.
 
     Attributes
     ----------
-    classes_ : ndarray of shape (n_classes,)
-        Encoded class labels.
-    templates_ : ndarray of shape (n_classes, n_fbands, n_channels * n_delay, n_samples_aug)
-        Templates in the augmented space.
-    weights_ : ndarray of shape (n_fbands, n_components, n_channels * n_delay)
-        Shared spatial filters for each sub-band.
+    classes_ : numpy.ndarray
+        Encoded class labels, of shape ``(n_classes,)``.
+    templates_ : numpy.ndarray
+        Templates in the augmented space,
+        of shape ``(n_classes, n_fbands, n_channels * n_delay, n_samples_aug)``.
+    weights_ : numpy.ndarray
+        Shared spatial filters for each sub-band,
+        of shape ``(n_fbands, n_components, n_channels * n_delay)``.
 
     References
     ----------
@@ -2276,7 +2328,8 @@ class SSVEP_TDCA(BaseEstimator, ClassifierMixin):
 
         Parameters
         ----------
-        X : ndarray of shape (..., n_channels, n_samples)
+        X : numpy.ndarray
+            Input data, of shape ``(..., n_channels, n_samples)``.
 
         Returns
         -------
@@ -2308,10 +2361,11 @@ class SSVEP_TDCA(BaseEstimator, ClassifierMixin):
 
         Parameters
         ----------
-        X : MNE Epochs
+        X : :class:`mne.Epochs`
             Training data as MNE Epochs object.
-        y : ndarray of shape (n_trials,)
-            Label vector with frequency strings for each trial.
+        y : numpy.ndarray
+            Label vector with frequency strings for each trial,
+            of shape ``(n_trials,)``.
 
         Returns
         -------
@@ -2400,7 +2454,7 @@ class SSVEP_TDCA(BaseEstimator, ClassifierMixin):
 
         Parameters
         ----------
-        X : MNE Epochs
+        X : :class:`mne.Epochs`
             Test data as MNE Epochs object.
 
         Returns
@@ -2454,13 +2508,13 @@ class SSVEP_TDCA(BaseEstimator, ClassifierMixin):
 
         Parameters
         ----------
-        X : MNE Epochs
+        X : :class:`mne.Epochs`
             Test data as MNE Epochs object.
 
         Returns
         -------
-        y_pred : ndarray of shape (n_trials, n_classes)
-            Probabilities per class.
+        y_pred : numpy.ndarray
+            Probabilities per class, of shape ``(n_trials, n_classes)``.
         """
         check_is_fitted(
             self,

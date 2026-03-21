@@ -122,7 +122,7 @@ class Gao2026(BaseDataset):
     """Visual imagery EEG dataset from Gao et al 2026.
 
     Dataset from the article *An EEG Dataset for Visual Imagery-Based
-    Brain-Computer Interface* [1]_.
+    Brain-Computer Interface* [1]_. Data hosted on Figshare [2]_.
 
     **Note**: This is a **visual** imagery dataset (not motor imagery).
     Participants imagined visual stimuli across three categories: animals,

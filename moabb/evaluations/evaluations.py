@@ -45,36 +45,39 @@ class WithinSessionEvaluation(BaseEvaluation):
 
     Parameters
     ----------
-    paradigm : Paradigm instance
+    paradigm : :class:`~moabb.paradigms.base.BaseParadigm`
         The paradigm to use.
-    datasets : List of Dataset instance
+    datasets : list of :class:`~moabb.datasets.base.BaseDataset`
         The list of dataset to run the evaluation. If none, the list of
         compatible dataset will be retrieved from the paradigm instance.
-    random_state: int, RandomState instance, default=None
+    random_state : int or None
         If not None, can guarantee same seed for shuffling examples.
-    n_jobs: int, default=1
-        Number of jobs for fitting of pipeline.
-    overwrite: bool, default=False
-        If true, overwrite the results.
-    error_score: "raise" or numeric, default="raise"
+        Defaults to ``None``.
+    n_jobs : int
+        Number of jobs for fitting of pipeline. Defaults to ``1``.
+    overwrite : bool
+        If true, overwrite the results. Defaults to ``False``.
+    error_score : str or float
         Value to assign to the score if an error occurs in estimator fitting. If set to
-        'raise', the error is raised.
-    suffix: str
+        ``'raise'``, the error is raised. Defaults to ``"raise"``.
+    suffix : str
         Suffix for the results file.
-    hdf5_path: str
+    hdf5_path : str
         Specific path for storing the results and models.
-    additional_columns: None
+    additional_columns : None
         Adding information to results.
-    return_epochs: bool, default=False
-        use MNE epoch to train pipelines.
-    return_raws: bool, default=False
-        use MNE raw to train pipelines.
-    mne_labels: bool, default=False
-        if returning MNE epoch, use original dataset label if True
-    cv_class: type, default=None
+    return_epochs : bool
+        Use MNE epoch to train pipelines. Defaults to ``False``.
+    return_raws : bool
+        Use MNE raw to train pipelines. Defaults to ``False``.
+    mne_labels : bool
+        If returning MNE epoch, use original dataset label if True.
+        Defaults to ``False``.
+    cv_class : type or None
         Optional cross-validation class (e.g., LearningCurveSplitter for learning curves).
-    cv_kwargs: dict, default=None
-        Keyword arguments for cv_class.
+        Defaults to ``None``.
+    cv_kwargs : dict or None
+        Keyword arguments for cv_class. Defaults to ``None``.
 
     """
 
@@ -251,36 +254,40 @@ class CrossSessionEvaluation(BaseEvaluation):
 
     Parameters
     ----------
-    paradigm : Paradigm instance
+    paradigm : :class:`~moabb.paradigms.base.BaseParadigm`
         The paradigm to use.
-    datasets : List of Dataset instance
+    datasets : list of :class:`~moabb.datasets.base.BaseDataset`
         The list of dataset to run the evaluation. If none, the list of
         compatible dataset will be retrieved from the paradigm instance.
-    random_state: int, RandomState instance, default=None
+    random_state : int or None
         If not None, can guarantee same seed for shuffling examples.
-    n_jobs: int, default=1
-        Number of jobs for fitting of pipeline.
-    overwrite: bool, default=False
-        If true, overwrite the results.
-    error_score: "raise" or numeric, default="raise"
+        Defaults to ``None``.
+    n_jobs : int
+        Number of jobs for fitting of pipeline. Defaults to ``1``.
+    overwrite : bool
+        If true, overwrite the results. Defaults to ``False``.
+    error_score : str or float
         Value to assign to the score if an error occurs in estimator fitting. If set to
-        'raise', the error is raised.
-    suffix: str
+        ``'raise'``, the error is raised. Defaults to ``"raise"``.
+    suffix : str
         Suffix for the results file.
-    hdf5_path: str
+    hdf5_path : str
         Specific path for storing the results and models.
-    additional_columns: None
+    additional_columns : None
         Adding information to results.
-    return_epochs: bool, default=False
-        use MNE epoch to train pipelines.
-    return_raws: bool, default=False
-        use MNE raw to train pipelines.
-    mne_labels: bool, default=False
-        if returning MNE epoch, use original dataset label if True
-    save_model: bool, default=False
-        Save model after training, for each fold of cross-validation if needed
-    cache_config: bool, default=None
+    return_epochs : bool
+        Use MNE epoch to train pipelines. Defaults to ``False``.
+    return_raws : bool
+        Use MNE raw to train pipelines. Defaults to ``False``.
+    mne_labels : bool
+        If returning MNE epoch, use original dataset label if True.
+        Defaults to ``False``.
+    save_model : bool
+        Save model after training, for each fold of cross-validation if needed.
+        Defaults to ``False``.
+    cache_config : :class:`~moabb.datasets.base.CacheConfig` or None
         Configuration for caching of datasets. See :class:`moabb.datasets.base.CacheConfig` for details.
+        Defaults to ``None``.
 
     Notes
     -----
@@ -418,39 +425,43 @@ class CrossSubjectEvaluation(BaseEvaluation):
 
     Parameters
     ----------
-    paradigm : Paradigm instance
+    paradigm : :class:`~moabb.paradigms.base.BaseParadigm`
         The paradigm to use.
-    datasets : List of Dataset instance
+    datasets : list of :class:`~moabb.datasets.base.BaseDataset`
         The list of dataset to run the evaluation. If none, the list of
         compatible dataset will be retrieved from the paradigm instance.
-    random_state: int, RandomState instance, default=None
+    random_state : int or None
         If not None, can guarantee same seed for shuffling examples.
-    n_jobs: int, default=1
-        Number of jobs for fitting of pipeline.
-    overwrite: bool, default=False
-        If true, overwrite the results.
-    error_score: "raise" or numeric, default="raise"
+        Defaults to ``None``.
+    n_jobs : int
+        Number of jobs for fitting of pipeline. Defaults to ``1``.
+    overwrite : bool
+        If true, overwrite the results. Defaults to ``False``.
+    error_score : str or float
         Value to assign to the score if an error occurs in estimator fitting. If set to
-        'raise', the error is raised.
-    suffix: str
+        ``'raise'``, the error is raised. Defaults to ``"raise"``.
+    suffix : str
         Suffix for the results file.
-    hdf5_path: str
+    hdf5_path : str
         Specific path for storing the results and models.
-    additional_columns: None
+    additional_columns : None
         Adding information to results.
-    return_epochs: bool, default=False
-        use MNE epoch to train pipelines.
-    return_raws: bool, default=False
-        use MNE raw to train pipelines.
-    mne_labels: bool, default=False
-        if returning MNE epoch, use original dataset label if True
-    save_model: bool, default=False
-        Save model after training, for each fold of cross-validation if needed
-    cache_config: bool, default=None
+    return_epochs : bool
+        Use MNE epoch to train pipelines. Defaults to ``False``.
+    return_raws : bool
+        Use MNE raw to train pipelines. Defaults to ``False``.
+    mne_labels : bool
+        If returning MNE epoch, use original dataset label if True.
+        Defaults to ``False``.
+    save_model : bool
+        Save model after training, for each fold of cross-validation if needed.
+        Defaults to ``False``.
+    cache_config : :class:`~moabb.datasets.base.CacheConfig` or None
         Configuration for caching of datasets. See :class:`moabb.datasets.base.CacheConfig` for details.
-    n_splits: int, default=None
+        Defaults to ``None``.
+    n_splits : int or None
         Number of splits for cross-validation. If None, the number of splits
-        is equal to the number of subjects.
+        is equal to the number of subjects. Defaults to ``None``.
 
     Notes
     -----
@@ -622,37 +633,40 @@ class WithinSubjectEvaluation(BaseEvaluation):
 
     Parameters
     ----------
-    paradigm : Paradigm instance
+    paradigm : :class:`~moabb.paradigms.base.BaseParadigm`
         The paradigm to use.
-    datasets : List of Dataset instance
+    datasets : list of :class:`~moabb.datasets.base.BaseDataset`
         The list of dataset to run the evaluation. If none, the list of
         compatible dataset will be retrieved from the paradigm instance.
-    random_state: int, RandomState instance, default=None
+    random_state : int or None
         If not None, can guarantee same seed for shuffling examples.
-    n_jobs: int, default=1
-        Number of jobs for fitting of pipeline.
-    overwrite: bool, default=False
-        If true, overwrite the results.
-    error_score: "raise" or numeric, default="raise"
+        Defaults to ``None``.
+    n_jobs : int
+        Number of jobs for fitting of pipeline. Defaults to ``1``.
+    overwrite : bool
+        If true, overwrite the results. Defaults to ``False``.
+    error_score : str or float
         Value to assign to the score if an error occurs in estimator fitting. If set to
-        'raise', the error is raised.
-    suffix: str
+        ``'raise'``, the error is raised. Defaults to ``"raise"``.
+    suffix : str
         Suffix for the results file.
-    hdf5_path: str
+    hdf5_path : str
         Specific path for storing the results and models.
-    additional_columns: None
+    additional_columns : None
         Adding information to results.
-    return_epochs: bool, default=False
-        use MNE epoch to train pipelines.
-    return_raws: bool, default=False
-        use MNE raw to train pipelines.
-    mne_labels: bool, default=False
-        if returning MNE epoch, use original dataset label if True
-    save_model: bool, default=False
-        Save model after training, for each fold of cross-validation if needed
-    cache_config: bool, default=None
+    return_epochs : bool
+        Use MNE epoch to train pipelines. Defaults to ``False``.
+    return_raws : bool
+        Use MNE raw to train pipelines. Defaults to ``False``.
+    mne_labels : bool
+        If returning MNE epoch, use original dataset label if True.
+        Defaults to ``False``.
+    save_model : bool
+        Save model after training, for each fold of cross-validation if needed.
+        Defaults to ``False``.
+    cache_config : :class:`~moabb.datasets.base.CacheConfig` or None
         Configuration for caching of datasets. See :class:`moabb.datasets.base.CacheConfig`
-        for details.
+        for details. Defaults to ``None``.
     """
 
     _eval_type = "WithinSubject"

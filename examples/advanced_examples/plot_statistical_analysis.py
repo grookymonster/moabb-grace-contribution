@@ -144,7 +144,7 @@ print(
 )
 
 ###############################################################################
-# The convenience function :func:`chance_by_chance` reads
+# The convenience function ``chance_by_chance`` reads
 # ``n_samples_test`` and ``n_classes`` directly from the results DataFrame,
 # so no dataset objects are needed.
 

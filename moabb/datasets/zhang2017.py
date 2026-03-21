@@ -76,7 +76,7 @@ def _bci2000_to_raw(fpath, event_mapping):
 
     Parameters
     ----------
-    fpath : str or Path
+    fpath : str or pathlib.Path
         Path to BCI2000 .dat file.
     event_mapping : dict
         Mapping from integer StimulusCode values to string event names.
@@ -519,7 +519,7 @@ class Zhang2017(BaseDataset):
 
         Parameters
         ----------
-        extract_dir : Path
+        extract_dir : pathlib.Path
             Root directory of extracted archive.
         subject_id : str
             Subject identifier, e.g. 'H1'.

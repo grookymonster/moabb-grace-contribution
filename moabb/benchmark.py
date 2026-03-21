@@ -137,10 +137,11 @@ def benchmark(  # noqa: C901
     n_jobs : int
         Number of threads to use for running parallel jobs.
 
-    n_splits : int or None, default=None
+    n_splits : int or None
         This parameter only works for CrossSubjectEvaluation. It defines the
         number of splits to be done in the cross-validation. If None,
         the number of splits is equal to the number of subjects in the dataset.
+        Defaults to ``None``.
 
     plot : bool
         Plot results after computing.
@@ -161,9 +162,10 @@ def benchmark(  # noqa: C901
     optuna : bool
         Enable Optuna for the hyperparameter search.
 
-    codecarbon_config : dict, default=None
+    codecarbon_config : dict or None
         Configuration dictionary for CodeCarbon emissions tracking.
-        If None, uses CodeCarbon defaults. Available options include:
+        If None, uses CodeCarbon defaults. Defaults to ``None``.
+        Available options include:
         - save_to_file (bool): Save emissions to CSV file
         - log_level (str): Logging level ('debug', 'info', 'warning', 'error')
         - save_to_api (bool): Send data to CodeCarbon API
@@ -173,7 +175,7 @@ def benchmark(  # noqa: C901
 
     Returns
     -------
-    eval_results: DataFrame
+    eval_results: :class:`pandas.DataFrame`
         Results of benchmark for all considered paradigms
 
     Notes
@@ -371,12 +373,12 @@ def _combine_paradigms(prdgm_results):
 
     Parameters
     ----------
-    prdgm_results: dict of DataFrame
+    prdgm_results: dict of :class:`pandas.DataFrame`
         Results of benchmark for all considered paradigms
 
     Returns
     -------
-    eval_results: dict of DataFrame
+    eval_results: dict of :class:`pandas.DataFrame`
         Results with filterbank and direct paradigms combined
     """
     eval_results = prdgm_results.copy()
@@ -395,9 +397,9 @@ def _save_results(eval_results, output, plot):
 
     Parameters
     ----------
-    eval_results: dict of DataFrame
+    eval_results: dict of :class:`pandas.DataFrame`
         Results of benchmark for all considered paradigms
-    output: str or Path
+    output: str or pathlib.Path
         Folder to store the analysis results
     plot: bool
         Plot results after computing

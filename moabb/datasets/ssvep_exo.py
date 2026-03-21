@@ -16,7 +16,6 @@ from moabb.datasets.metadata.schema import (
     SignalProcessingMetadata,
     Tags,
 )
-from moabb.utils import depreciated_alias
 
 from . import download as dl
 from .base import BaseDataset
@@ -25,7 +24,6 @@ from .base import BaseDataset
 SSVEPEXO_URL = "https://zenodo.org/record/2392979/files/"
 
 
-@depreciated_alias("SSVEPExo", "1.1")
 class Kalunga2016(BaseDataset):
     """SSVEP Exo dataset.
 

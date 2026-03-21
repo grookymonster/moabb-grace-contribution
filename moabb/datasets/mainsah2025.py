@@ -265,7 +265,7 @@ def _get_manifest_path():
 
 
 class Mainsah2025(BaseDataset):
-    """Base class for the BigP3BCI dataset by Mainsah et al. 2025.
+    """Base class for the BigP3BCI dataset by Mainsah et al. 2025 [1]_.
 
     BigP3BCI is the largest publicly available P300-based BCI dataset,
     containing EEG data from approximately 267 participants across 20
@@ -279,6 +279,7 @@ class Mainsah2025(BaseDataset):
     participants with ALS.
 
     Each EDF+ file corresponds to one spelling block and contains:
+
     - EEG channels (``EEG_<electrode>`` labels)
     - Stimulus marker channels: ``StimulusBegin`` (0/1 onset flag),
       ``StimulusType`` (0=NonTarget, 1=Target)
