@@ -363,7 +363,7 @@ class ErpCore2021(BaseDataset):
 
         Parameters
         ----------
-        row : pd.Series
+        row : :class:`pandas.Series`
             A row of the events DataFrame.
 
         Returns
@@ -373,13 +373,13 @@ class ErpCore2021(BaseDataset):
         """
 
     @abstractmethod
-    def encoding(self, events_df: pd.DataFrame):
+    def encoding(self, events_df):
         """
         Encode the column value in the events DataFrame.
 
         Parameters
         ----------
-        events_df : DataFrame
+        events_df : :class:`pandas.DataFrame`
             DataFrame containing the events information.
 
         Returns

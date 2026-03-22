@@ -489,7 +489,7 @@ class Kojima2024A(BaseDataset):
         Returns
         -------
         list
-            A list containing the Path object for the subject's data file.
+            A list containing the ``pathlib.Path`` object for the subject's data file.
         """
 
         if subject not in self.subject_list:

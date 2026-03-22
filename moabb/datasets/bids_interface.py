@@ -899,7 +899,7 @@ def _update_participants_tsv(root, subject, metadata, raw=None):
 
     Parameters
     ----------
-    root : Path
+    root : pathlib.Path
         Root of the BIDS dataset.
     subject : int
         MOABB subject number (1-based).
@@ -1278,7 +1278,7 @@ def _update_dataset_description_extra(root, metadata):
 
     Parameters
     ----------
-    root : Path
+    root : pathlib.Path
         Root of the BIDS dataset.
     metadata : DatasetMetadata
         The dataset metadata.
@@ -1345,7 +1345,7 @@ def _write_metadata_yaml(root, dataset):
 
     Parameters
     ----------
-    root : Path
+    root : pathlib.Path
         Root of the BIDS dataset.
     dataset : BaseDataset
         The MOABB dataset instance.
@@ -2178,7 +2178,7 @@ def get_bids_root(code, path=None):
 
     Returns
     -------
-    root : Path
+    root : pathlib.Path
         Path to the root of the BIDS structure.
     """
 

@@ -23,6 +23,19 @@ import moabb  # noqa
 sys.path.insert(0, os.path.abspath("../"))
 sys.path.insert(0, os.path.abspath("../../"))
 
+# Check that the imported moabb matches the local source tree.
+_local_init = op.join(op.dirname(__file__), "..", "..", "moabb", "__init__.py")
+if op.isfile(_local_init):
+    import re as _re
+
+    with open(_local_init) as _f:
+        _match = _re.search(r'^__version__\s*=\s*["\']([^"\']+)', _f.read(), _re.M)
+    if _match and _match.group(1) != moabb.__version__:
+        print(
+            f"WARNING: Building docs with moabb v{moabb.__version__} but "
+            f"source tree is v{_match.group(1)}. "
+            f"Run 'pip install -e .' from the project root first."
+        )
 
 matplotlib.use("Agg")
 # -- Project information -----------------------------------------------------
@@ -516,11 +529,39 @@ intersphinx_mapping = {
     "numpy": ("https://docs.scipy.org/doc/numpy/", None),
     "scipy": ("https://docs.scipy.org/doc/scipy/reference", None),
     "matplotlib": ("https://matplotlib.org/", None),
-    "sklearn": ("http://scikit-learn.org/stable", None),
-    "mne": ("http://mne.tools/stable", None),
+    "sklearn": ("https://scikit-learn.org/stable/", None),
+    "mne": ("https://mne.tools/stable/", None),
     "skorch": ("https://skorch.readthedocs.io/en/stable/", None),
     "torch": ("https://pytorch.org/docs/stable/", None),
+    "pandas": ("https://pandas.pydata.org/pandas-docs/stable/", None),
 }
+
+# -- Nitpick: sklearn-inherited docstrings -----------------------------------
+# sklearn generates docstrings at runtime for set_params(), get_params(),
+# set_*_request() (metadata routing) etc.  These use numpydoc conventions
+# (array-like, shape, default=…) that Sphinx nitpicky mode cannot resolve.
+# We cannot fix these at source because the docstrings live in sklearn, not
+# in this project.
+nitpick_ignore_regex = [
+    # sklearn numpydoc conventions used in auto-generated method docstrings
+    (r"py:class", r"default.*"),
+    (r"py:class", r"optional"),
+    (r"py:class", r"shape"),
+    (r"py:class", r"array-like"),
+    (r"py:class", r"n_\w+"),
+    (r"py:class", r"True"),
+    (r"py:class", r"False"),
+    (r"py:class", r"numeric"),
+    (r"py:class", r"RandomState instance"),
+    (r"py:class", r"\d+\.?"),
+    (r"py:class", r"string"),
+    (r"py:class", r"strings"),
+    (r"py:class", r"boolean"),
+    (r"py:class", r"Unused"),
+    (r"py:class", r"ignored"),
+    (r"py:class", r"callable"),
+    (r"py:class", r"length.*"),
+]
 
 # -- Options for sphinx-gallery ----------------------------------------------
 favicons = [

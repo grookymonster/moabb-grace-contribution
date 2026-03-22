@@ -32,7 +32,7 @@ from moabb.datasets.preprocessing import FixedPipeline, SetRawAnnotations
 
 
 if TYPE_CHECKING:
-    from moabb.datasets.metadata import DatasetMetadata
+    pass
 
 
 log = logging.getLogger(__name__)
@@ -565,42 +565,37 @@ class MetaclassDataset(abc.ABCMeta):
 class BaseDataset(metaclass=MetaclassDataset):
     """Abstract Moabb BaseDataset.
 
-    Parameters required for all datasets
+    Parameters required for all datasets.
 
-    parameters
+    Parameters
     ----------
-    subjects: List of int
-        List of subject number (or tuple or numpy array)
+    subjects : list of int
+        List of subject number (or tuple or numpy array).
 
-    sessions_per_subject: int
-        Number of sessions per subject (if varying, take minimum)
+    sessions_per_subject : int
+        Number of sessions per subject (if varying, take minimum).
 
-    events: dict of strings
+    events : dict of str
         String codes for events matched with labels in the stim channel.
-        Currently imagery codes codes can include:
-        - left_hand
-        - right_hand
-        - hands
-        - feet
-        - rest
-        - left_hand_right_foot
-        - right_hand_left_foot
-        - tongue
-        - navigation
-        - subtraction
-        - word_ass (for word association)
+        Currently imagery codes can include:
+        ``left_hand``, ``right_hand``, ``hands``, ``feet``, ``rest``,
+        ``left_hand_right_foot``, ``right_hand_left_foot``, ``tongue``,
+        ``navigation``, ``subtraction``, ``word_ass`` (for word association).
 
-    code: string
+    code : str
         Unique identifier for dataset, used in all plots.
         The code should be in CamelCase.
 
-    interval: list with 2 entries
-        Imagery interval as defined in the dataset description
+    interval : list
+        Imagery interval as defined in the dataset description,
+        with 2 entries.
 
-    paradigm: ['p300','imagery', 'ssvep']
-        Defines what sort of dataset this is
+    paradigm : str
+        Defines what sort of dataset this is.
+        One of ``'p300'``, ``'imagery'``, or ``'ssvep'``.
 
-    doi: DOI for dataset, optional (for now)
+    doi : str, optional
+        DOI for the dataset.
 
     return_all_modalities : bool | dict, optional
         Controls which channel types are retained when data is picked:
@@ -726,7 +721,7 @@ class BaseDataset(metaclass=MetaclassDataset):
         return list(self._all_subjects)
 
     @cached_property
-    def metadata(self) -> "DatasetMetadata | None":
+    def metadata(self):
         """Return structured metadata for this dataset.
 
         Returns the DatasetMetadata object from the centralized catalog,
@@ -734,7 +729,7 @@ class BaseDataset(metaclass=MetaclassDataset):
 
         Returns
         -------
-        DatasetMetadata | None
+        ``DatasetMetadata`` | None
             The metadata object containing acquisition parameters,
             participant demographics, experiment details, and documentation.
             Returns None if no metadata is registered for this dataset.
@@ -776,9 +771,9 @@ class BaseDataset(metaclass=MetaclassDataset):
 
         subject -> session -> run -> block -> repetition
 
-        See also
+        See Also
         --------
-        BaseDataset.get_data
+        get_data
 
         Parameters
         ----------
@@ -846,17 +841,19 @@ class BaseDataset(metaclass=MetaclassDataset):
         ----------
         subjects: List of int
             List of subject number
-        cache_config: dict | CacheConfig
-            Configuration for caching of datasets. See ``CacheConfig``
-            for details.
-        process_pipeline: Pipeline | None
+        cache_config: dict | :class:`~moabb.datasets.base.CacheConfig`
+            Configuration for caching of datasets. See
+            :class:`~moabb.datasets.base.CacheConfig` for details.
+        process_pipeline: :class:`sklearn.pipeline.Pipeline` | None
             Optional processing pipeline to apply to the data.
             To generate an adequate pipeline, we recommend using
-            :func:`moabb.utils.make_process_pipelines`.
+            :func:`moabb.make_process_pipelines`.
             This pipeline will receive :class:`mne.io.BaseRaw` objects.
-            The steps names of this pipeline should be elements of :class:`StepType`.
+            The steps names of this pipeline should be elements of
+            ``StepType``.
             According to their name, the steps should either return a
-            :class:`mne.io.BaseRaw`, a :class:`mne.Epochs`, or a :func:`numpy.ndarray`.
+            :class:`mne.io.BaseRaw`, a :class:`mne.Epochs`, or a
+            :class:`numpy.ndarray`.
             This pipeline must be "fixed" because it will not be trained,
             i.e. no call to ``fit`` will be made.
 
@@ -971,20 +968,20 @@ class BaseDataset(metaclass=MetaclassDataset):
         """Convert the dataset to BIDS format.
 
         Saves the raw EEG data in a BIDS-compliant directory structure.
-        Unlike the caching mechanism (see :class:`CacheConfig`), the files
+        Unlike the caching mechanism (see :class:`~moabb.datasets.base.CacheConfig`), the files
         produced here do **not** contain a processing-pipeline hash
         (``desc-<hash>``) in their names, making the output a clean,
         shareable BIDS dataset.
 
         Parameters
         ----------
-        path : str | Path | None
+        path : str | :class:`~pathlib.Path` | None
             Directory under which the BIDS dataset will be written.
             If ``None`` the default MNE data directory is used (same default
             as the rest of MOABB).
         subjects : list of int | None
             Subject numbers to convert.  If ``None``, all subjects in
-            :attr:`subject_list` are converted.
+            ``subject_list`` are converted.
         overwrite : bool
             If ``True``, existing BIDS files for a subject are removed before
             saving.  Default is ``False``.
@@ -1011,13 +1008,12 @@ class BaseDataset(metaclass=MetaclassDataset):
         >>> dataset = AlexMI()
         >>> bids_root = dataset.convert_to_bids(path='/tmp/bids', subjects=[1])
 
-        See Also
-        --------
-        CacheConfig : Cache configuration for :meth:`get_data`.
-        moabb.datasets.bids_interface.get_bids_root : Return the BIDS root path.
-
         Notes
         -----
+        Use :class:`~moabb.datasets.base.CacheConfig` to configure caching
+        for :meth:`get_data`. Use
+        ``moabb.datasets.bids_interface.get_bids_root`` to get the BIDS root
+        path.
 
         .. versionadded:: 1.5
         """
@@ -1242,9 +1238,7 @@ class BaseDataset(metaclass=MetaclassDataset):
         """  # noqa: E501
         pass
 
-    def get_additional_metadata(
-        self, subject: str, session: str, run: str
-    ) -> None | pd.DataFrame:
+    def get_additional_metadata(self, subject: str, session: str, run: str):
         """
         Load additional metadata for a specific subject, session, and run.
 
@@ -1263,7 +1257,7 @@ class BaseDataset(metaclass=MetaclassDataset):
 
         Returns
         -------
-        None | pd.DataFrame
+        None | :class:`pandas.DataFrame`
             A DataFrame containing the additional metadata if available,
             otherwise None.
         """
@@ -1287,7 +1281,7 @@ class BaseBIDSDataset(BaseDataset):
     """
 
     def _get_path_search_params(self, subject: int | None) -> dict[str, Any]:
-        """Return the kwargs for the :func:`mne_bids.find_matching_paths` function."""
+        """Return the kwargs for the ``mne_bids.find_matching_paths`` function."""
         out = {"extensions": _RAW_EXTENSIONS}
         if subject is not None:
             out["subjects"] = str(subject)
@@ -1297,7 +1291,7 @@ class BaseBIDSDataset(BaseDataset):
         self,
         subject: int,  # pylint: disable=unused-argument
     ) -> dict[str, Any] | None:
-        """Return the ``extra_params`` argument for the :func:`mne_bids.read_raw_bids` function."""
+        """Return the ``extra_params`` argument for the ``mne_bids.read_raw_bids`` function."""
         return None
 
     @staticmethod
@@ -1360,9 +1354,7 @@ class BaseBIDSDataset(BaseDataset):
             data.setdefault(session, {})[run] = raw
         return data
 
-    def get_additional_metadata(
-        self, subject: str, session: str, run: str
-    ) -> None | pd.DataFrame:
+    def get_additional_metadata(self, subject: str, session: str, run: str):
         """
         Load additional metadata for a specific subject, session, and run.
 
@@ -1377,7 +1369,7 @@ class BaseBIDSDataset(BaseDataset):
 
         Returns
         -------
-        None | pd.DataFrame
+        None | :class:`pandas.DataFrame`
             A DataFrame containing the additional metadata if available,
             otherwise None.
         """
@@ -1436,12 +1428,12 @@ class LocalBIDSDataset(BaseBIDSDataset):
 
     Parameters
     ----------
-    bids_root : str | Path
+    bids_root : str | pathlib.Path
         Local path to the root of the BIDS dataset.
     path_search_params : dict[str, Any] | None
-        Additional kwargs for the :func:`mne_bids.find_matching_paths` function.
+        Additional kwargs for the ``mne_bids.find_matching_paths`` function.
     read_extra_params : dict[str, Any] | None
-        Additional kwargs for the :func:`mne_bids.read_raw_bids` function.
+        Additional kwargs for the ``mne_bids.read_raw_bids`` function.
     subjects : list[int] | None
         Optional list of subjects. If None, the subjects are inferred from the dataset.
     sessions_per_subject : int | None
@@ -1458,7 +1450,7 @@ class LocalBIDSDataset(BaseBIDSDataset):
         Unique identifier for the dataset. for compatibility reasons,
         it should start with ``"LocalBIDSDataset"``
     unit_factor : float
-        Factor to convert units to microvolts (default: 1e6).
+        Factor to convert units to microvolts. Defaults to ``1e6``.
     """
 
     def __init__(

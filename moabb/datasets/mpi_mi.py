@@ -20,13 +20,11 @@ from moabb.datasets.metadata.schema import (
     Tags,
 )
 from moabb.datasets.utils import stim_channels_with_selected_ids
-from moabb.utils import depreciated_alias
 
 
 DOWNLOAD_URL = "https://zenodo.org/record/1217449/files/"
 
 
-@depreciated_alias("MunichMI", "1.1")
 class GrosseWentrup2009(BaseDataset):
     """Munich Motor Imagery dataset.
 

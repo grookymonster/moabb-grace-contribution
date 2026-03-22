@@ -42,13 +42,6 @@ from .bnci import (
     BNCI2025_001,
     BNCI2025_002,
 )
-from .braininvaders import VirtualReality  # noqa: F401
-from .braininvaders import bi2012  # noqa: F401
-from .braininvaders import bi2013a  # noqa: F401
-from .braininvaders import bi2014a  # noqa: F401
-from .braininvaders import bi2014b  # noqa: F401
-from .braininvaders import bi2015a  # noqa: F401
-from .braininvaders import bi2015b  # noqa: F401
 from .braininvaders import (
     BI2012,
     BI2013a,
@@ -83,6 +76,7 @@ from .forenzo2023 import Forenzo2023
 from .gao2026 import Gao2026
 from .gigadb import Cho2017
 from .guttmann_flury2025 import (
+    GuttmannFlury2025_ME,
     GuttmannFlury2025_MI,
     GuttmannFlury2025_P300,
     GuttmannFlury2025_SSVEP,
@@ -126,9 +120,7 @@ from .mainsah2025 import (
 )
 from .martinezcagigal2023_checker_cvep import MartinezCagigal2023Checker
 from .martinezcagigal2023_pary_cvep import MartinezCagigal2023Pary
-from .mpi_mi import MunichMI  # noqa: F401
 from .mpi_mi import GrosseWentrup2009
-from .phmd_ml import HeadMountedDisplay  # noqa: F401
 from .phmd_ml import Cattan2019_PHMD
 from .physionet_mi import PhysionetMI
 from .romani_bf2025_erp import RomaniBF2025ERP
@@ -139,7 +131,6 @@ from .sosulski2019 import Sosulski2019
 from .speier2017 import Speier2017
 from .ssvep_chen2017 import Chen2017SingleFlicker
 from .ssvep_dong2023 import Dong2023
-from .ssvep_exo import SSVEPExo  # noqa: F401
 from .ssvep_exo import Kalunga2016
 from .ssvep_han2024 import Han2024Fatigue
 from .ssvep_kim2025 import Kim2025BetaRange
@@ -184,6 +175,16 @@ _REMOVED_DATASETS = {
         "regression task, not a discrete-trial motor imagery paradigm. "
         "The .mat files contain no left/right trial labels."
     ),
+    "bi2012": "bi2012 has been removed. Use BI2012 instead.",
+    "bi2013a": "bi2013a has been removed. Use BI2013a instead.",
+    "bi2014a": "bi2014a has been removed. Use BI2014a instead.",
+    "bi2014b": "bi2014b has been removed. Use BI2014b instead.",
+    "bi2015a": "bi2015a has been removed. Use BI2015a instead.",
+    "bi2015b": "bi2015b has been removed. Use BI2015b instead.",
+    "VirtualReality": "VirtualReality has been removed. Use Cattan2019_VR instead.",
+    "MunichMI": "MunichMI has been removed. Use GrosseWentrup2009 instead.",
+    "HeadMountedDisplay": "HeadMountedDisplay has been removed. Use Cattan2019_PHMD instead.",
+    "SSVEPExo": "SSVEPExo has been removed. Use Kalunga2016 instead.",
 }
 
 

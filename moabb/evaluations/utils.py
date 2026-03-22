@@ -481,9 +481,9 @@ def _score_and_update(res, scorer, model, X, y_true):
         Scorer function that returns a dict of scores.
     model : estimator
         Fitted model to score.
-    X : array-like
+    X : :class:`numpy.ndarray`
         Test features.
-    y_true : array-like
+    y_true : :class:`numpy.ndarray`
         Test labels.
 
     Returns

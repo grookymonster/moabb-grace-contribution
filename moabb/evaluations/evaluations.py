@@ -1,6 +1,5 @@
 import logging
-from copy import deepcopy
-from typing import TYPE_CHECKING, Optional, Union
+from typing import TYPE_CHECKING, Optional
 
 import numpy as np
 from sklearn.base import clone
@@ -17,6 +16,7 @@ from moabb.evaluations.splitters import (
     CrossSessionSplitter,
     CrossSubjectSplitter,
     WithinSessionSplitter,
+    WithinSubjectSplitter,
 )
 
 
@@ -25,23 +25,13 @@ if TYPE_CHECKING:
 
 from moabb.evaluations.utils import (
     _average_scores,
+    _carbonfootprint,
     _create_scorer,
     _update_result_with_scores,
 )
 
 
-try:
-    from codecarbon import EmissionsTracker  # noqa
-
-    _carbonfootprint = True
-except ImportError:
-    _carbonfootprint = False
-
-
 log = logging.getLogger(__name__)
-
-# Numpy ArrayLike is only available starting from Numpy 1.20 and Python 3.8
-Vector = Union[list, tuple, np.ndarray]
 
 
 class WithinSessionEvaluation(BaseEvaluation):
@@ -55,38 +45,55 @@ class WithinSessionEvaluation(BaseEvaluation):
 
     Parameters
     ----------
-    paradigm : Paradigm instance
+    paradigm : :class:`~moabb.paradigms.base.BaseParadigm`
         The paradigm to use.
-    datasets : List of Dataset instance
+    datasets : list of :class:`~moabb.datasets.base.BaseDataset`
         The list of dataset to run the evaluation. If none, the list of
         compatible dataset will be retrieved from the paradigm instance.
-    random_state: int, RandomState instance, default=None
+    random_state : int or None
         If not None, can guarantee same seed for shuffling examples.
-    n_jobs: int, default=1
-        Number of jobs for fitting of pipeline.
-    overwrite: bool, default=False
-        If true, overwrite the results.
-    error_score: "raise" or numeric, default="raise"
+        Defaults to ``None``.
+    n_jobs : int
+        Number of jobs for fitting of pipeline. Defaults to ``1``.
+    overwrite : bool
+        If true, overwrite the results. Defaults to ``False``.
+    error_score : str or float
         Value to assign to the score if an error occurs in estimator fitting. If set to
-        'raise', the error is raised.
-    suffix: str
+        ``'raise'``, the error is raised. Defaults to ``"raise"``.
+    suffix : str
         Suffix for the results file.
-    hdf5_path: str
+    hdf5_path : str
         Specific path for storing the results and models.
-    additional_columns: None
+    additional_columns : None
         Adding information to results.
-    return_epochs: bool, default=False
-        use MNE epoch to train pipelines.
-    return_raws: bool, default=False
-        use MNE raw to train pipelines.
-    mne_labels: bool, default=False
-        if returning MNE epoch, use original dataset label if True
-    cv_class: type, default=None
+    return_epochs : bool
+        Use MNE epoch to train pipelines. Defaults to ``False``.
+    return_raws : bool
+        Use MNE raw to train pipelines. Defaults to ``False``.
+    mne_labels : bool
+        If returning MNE epoch, use original dataset label if True.
+        Defaults to ``False``.
+    cv_class : type or None
         Optional cross-validation class (e.g., LearningCurveSplitter for learning curves).
-    cv_kwargs: dict, default=None
-        Keyword arguments for cv_class.
+        Defaults to ``None``.
+    cv_kwargs : dict or None
+        Keyword arguments for cv_class. Defaults to ``None``.
 
     """
+
+    _eval_type = "WithinSession"
+    _aggregate_folds = True
+
+    def _create_splitter(self):
+        """Create the WithinSessionSplitter for parallel evaluation."""
+        cv_class, cv_kwargs = self._resolve_cv(StratifiedKFold)
+        return WithinSessionSplitter(
+            n_folds=5,
+            shuffle=True,
+            random_state=self.random_state,
+            cv_class=cv_class,
+            **cv_kwargs,
+        )
 
     # flake8: noqa: C901
     def _evaluate(
@@ -115,14 +122,7 @@ class WithinSessionEvaluation(BaseEvaluation):
                 subjects=[subject],
             )
 
-            cv_class, cv_kwargs = self._resolve_cv(StratifiedKFold)
-            self.cv = WithinSessionSplitter(
-                n_folds=5,
-                shuffle=True,
-                random_state=self.random_state,
-                cv_class=cv_class,
-                **cv_kwargs,
-            )
+            self.cv = self._create_splitter()
 
             # iterate over sessions
             for session in np.unique(metadata.session):
@@ -254,42 +254,55 @@ class CrossSessionEvaluation(BaseEvaluation):
 
     Parameters
     ----------
-    paradigm : Paradigm instance
+    paradigm : :class:`~moabb.paradigms.base.BaseParadigm`
         The paradigm to use.
-    datasets : List of Dataset instance
+    datasets : list of :class:`~moabb.datasets.base.BaseDataset`
         The list of dataset to run the evaluation. If none, the list of
         compatible dataset will be retrieved from the paradigm instance.
-    random_state: int, RandomState instance, default=None
+    random_state : int or None
         If not None, can guarantee same seed for shuffling examples.
-    n_jobs: int, default=1
-        Number of jobs for fitting of pipeline.
-    overwrite: bool, default=False
-        If true, overwrite the results.
-    error_score: "raise" or numeric, default="raise"
+        Defaults to ``None``.
+    n_jobs : int
+        Number of jobs for fitting of pipeline. Defaults to ``1``.
+    overwrite : bool
+        If true, overwrite the results. Defaults to ``False``.
+    error_score : str or float
         Value to assign to the score if an error occurs in estimator fitting. If set to
-        'raise', the error is raised.
-    suffix: str
+        ``'raise'``, the error is raised. Defaults to ``"raise"``.
+    suffix : str
         Suffix for the results file.
-    hdf5_path: str
+    hdf5_path : str
         Specific path for storing the results and models.
-    additional_columns: None
+    additional_columns : None
         Adding information to results.
-    return_epochs: bool, default=False
-        use MNE epoch to train pipelines.
-    return_raws: bool, default=False
-        use MNE raw to train pipelines.
-    mne_labels: bool, default=False
-        if returning MNE epoch, use original dataset label if True
-    save_model: bool, default=False
-        Save model after training, for each fold of cross-validation if needed
-    cache_config: bool, default=None
+    return_epochs : bool
+        Use MNE epoch to train pipelines. Defaults to ``False``.
+    return_raws : bool
+        Use MNE raw to train pipelines. Defaults to ``False``.
+    mne_labels : bool
+        If returning MNE epoch, use original dataset label if True.
+        Defaults to ``False``.
+    save_model : bool
+        Save model after training, for each fold of cross-validation if needed.
+        Defaults to ``False``.
+    cache_config : :class:`~moabb.datasets.base.CacheConfig` or None
         Configuration for caching of datasets. See :class:`moabb.datasets.base.CacheConfig` for details.
+        Defaults to ``None``.
 
     Notes
     -----
     .. versionadded:: 1.1.0
        Add save_model and cache_config parameters.
     """
+
+    _eval_type = "CrossSession"
+
+    def _create_splitter(self):
+        """Create the CrossSessionSplitter for parallel evaluation."""
+        cv_class, cv_kwargs = self._resolve_cv(LeaveOneGroupOut)
+        return CrossSessionSplitter(
+            cv_class=cv_class, random_state=self.random_state, **cv_kwargs
+        )
 
     # flake8: noqa: C901
     def evaluate(
@@ -330,10 +343,7 @@ class CrossSessionEvaluation(BaseEvaluation):
 
             for name, clf in run_pipes.items():
                 # we want to store a results per session
-                cv_class, cv_kwargs = self._resolve_cv(LeaveOneGroupOut)
-                self.cv = CrossSessionSplitter(
-                    cv_class=cv_class, random_state=self.random_state, **cv_kwargs
-                )
+                self.cv = self._create_splitter()
                 inner_cv = StratifiedKFold(
                     3, shuffle=True, random_state=self.random_state
                 )
@@ -415,45 +425,67 @@ class CrossSubjectEvaluation(BaseEvaluation):
 
     Parameters
     ----------
-    paradigm : Paradigm instance
+    paradigm : :class:`~moabb.paradigms.base.BaseParadigm`
         The paradigm to use.
-    datasets : List of Dataset instance
+    datasets : list of :class:`~moabb.datasets.base.BaseDataset`
         The list of dataset to run the evaluation. If none, the list of
         compatible dataset will be retrieved from the paradigm instance.
-    random_state: int, RandomState instance, default=None
+    random_state : int or None
         If not None, can guarantee same seed for shuffling examples.
-    n_jobs: int, default=1
-        Number of jobs for fitting of pipeline.
-    overwrite: bool, default=False
-        If true, overwrite the results.
-    error_score: "raise" or numeric, default="raise"
+        Defaults to ``None``.
+    n_jobs : int
+        Number of jobs for fitting of pipeline. Defaults to ``1``.
+    overwrite : bool
+        If true, overwrite the results. Defaults to ``False``.
+    error_score : str or float
         Value to assign to the score if an error occurs in estimator fitting. If set to
-        'raise', the error is raised.
-    suffix: str
+        ``'raise'``, the error is raised. Defaults to ``"raise"``.
+    suffix : str
         Suffix for the results file.
-    hdf5_path: str
+    hdf5_path : str
         Specific path for storing the results and models.
-    additional_columns: None
+    additional_columns : None
         Adding information to results.
-    return_epochs: bool, default=False
-        use MNE epoch to train pipelines.
-    return_raws: bool, default=False
-        use MNE raw to train pipelines.
-    mne_labels: bool, default=False
-        if returning MNE epoch, use original dataset label if True
-    save_model: bool, default=False
-        Save model after training, for each fold of cross-validation if needed
-    cache_config: bool, default=None
+    return_epochs : bool
+        Use MNE epoch to train pipelines. Defaults to ``False``.
+    return_raws : bool
+        Use MNE raw to train pipelines. Defaults to ``False``.
+    mne_labels : bool
+        If returning MNE epoch, use original dataset label if True.
+        Defaults to ``False``.
+    save_model : bool
+        Save model after training, for each fold of cross-validation if needed.
+        Defaults to ``False``.
+    cache_config : :class:`~moabb.datasets.base.CacheConfig` or None
         Configuration for caching of datasets. See :class:`moabb.datasets.base.CacheConfig` for details.
-    n_splits: int, default=None
+        Defaults to ``None``.
+    n_splits : int or None
         Number of splits for cross-validation. If None, the number of splits
-        is equal to the number of subjects.
+        is equal to the number of subjects. Defaults to ``None``.
 
     Notes
     -----
     .. versionadded:: 1.1.0
          Add save_model, cache_config and n_splits parameters
     """
+
+    _eval_type = "CrossSubject"
+    _score_per_session = True
+    _needs_all_subjects = True
+
+    def _create_splitter(self):
+        """Create the CrossSubjectSplitter for parallel evaluation."""
+        if self.n_splits is None:
+            default_class = LeaveOneGroupOut
+            default_kwargs = {}
+        else:
+            default_class = GroupKFold
+            default_kwargs = {"n_splits": self.n_splits}
+
+        cv_class, cv_kwargs = self._resolve_cv(default_class, default_kwargs)
+        return CrossSubjectSplitter(
+            cv_class=cv_class, random_state=self.random_state, **cv_kwargs
+        )
 
     # flake8: noqa: C901
     def evaluate(
@@ -499,22 +531,9 @@ class CrossSubjectEvaluation(BaseEvaluation):
         nchan = self._get_nchan(X)
 
         # perform leave one subject out CV
-        if self.n_splits is None:
-            default_class = LeaveOneGroupOut
-            default_kwargs = {}
-            adjust_subjects = False
-        else:
-            default_class = GroupKFold
-            default_kwargs = {"n_splits": self.n_splits}
-            adjust_subjects = True
-
-        cv_class, cv_kwargs = self._resolve_cv(default_class, default_kwargs)
-        if self.cv_class is None and adjust_subjects:
+        self.cv = self._create_splitter()
+        if self.n_splits is not None and self.cv_class is None:
             n_subjects = self.n_splits
-
-        self.cv = CrossSubjectSplitter(
-            cv_class=cv_class, random_state=self.random_state, **cv_kwargs
-        )
 
         inner_cv = StratifiedKFold(3, shuffle=True, random_state=self.random_state)
 
@@ -541,7 +560,7 @@ class CrossSubjectEvaluation(BaseEvaluation):
                 clf = self._grid_search(
                     param_grid=param_grid, name=name, grid_clf=clf, inner_cv=inner_cv
                 )
-                cvclf = deepcopy(clf)
+                cvclf = clone(clf)
 
                 duration, emissions, task_name = self._fit_cv(
                     cvclf,
@@ -600,3 +619,92 @@ class CrossSubjectEvaluation(BaseEvaluation):
                 f"but {self.__class__.__name__} requires at least 2 subjects"
             )
         return "requirements not met"
+
+
+class WithinSubjectEvaluation(BaseEvaluation):
+    """Within-subject k-fold cross-validation pooling all sessions.
+
+    Pools all sessions of each subject and performs k-fold cross-validation
+    on the combined data. Scores are reported per session within each subject,
+    averaged across folds.
+
+    This differs from WithinSessionEvaluation (k-fold within each session
+    separately) and CrossSessionEvaluation (leave-one-session-out).
+
+    Parameters
+    ----------
+    paradigm : :class:`~moabb.paradigms.base.BaseParadigm`
+        The paradigm to use.
+    datasets : list of :class:`~moabb.datasets.base.BaseDataset`
+        The list of dataset to run the evaluation. If none, the list of
+        compatible dataset will be retrieved from the paradigm instance.
+    random_state : int or None
+        If not None, can guarantee same seed for shuffling examples.
+        Defaults to ``None``.
+    n_jobs : int
+        Number of jobs for fitting of pipeline. Defaults to ``1``.
+    overwrite : bool
+        If true, overwrite the results. Defaults to ``False``.
+    error_score : str or float
+        Value to assign to the score if an error occurs in estimator fitting. If set to
+        ``'raise'``, the error is raised. Defaults to ``"raise"``.
+    suffix : str
+        Suffix for the results file.
+    hdf5_path : str
+        Specific path for storing the results and models.
+    additional_columns : None
+        Adding information to results.
+    return_epochs : bool
+        Use MNE epoch to train pipelines. Defaults to ``False``.
+    return_raws : bool
+        Use MNE raw to train pipelines. Defaults to ``False``.
+    mne_labels : bool
+        If returning MNE epoch, use original dataset label if True.
+        Defaults to ``False``.
+    save_model : bool
+        Save model after training, for each fold of cross-validation if needed.
+        Defaults to ``False``.
+    cache_config : :class:`~moabb.datasets.base.CacheConfig` or None
+        Configuration for caching of datasets. See :class:`moabb.datasets.base.CacheConfig`
+        for details. Defaults to ``None``.
+    """
+
+    _eval_type = "WithinSubject"
+    _aggregate_folds = True
+    _score_per_session = True
+
+    def _create_splitter(self):
+        """Create the WithinSubjectSplitter for parallel evaluation."""
+        cv_class, cv_kwargs = self._resolve_cv(StratifiedKFold)
+        return WithinSubjectSplitter(
+            n_folds=5,
+            shuffle=True,
+            random_state=self.random_state,
+            cv_class=cv_class,
+            **cv_kwargs,
+        )
+
+    def evaluate(
+        self,
+        dataset: "BaseDataset",
+        pipelines: dict,
+        param_grid: Optional[dict],
+        process_pipeline,
+        postprocess_pipeline=None,
+    ):
+        if not self.is_valid(dataset):
+            reason = self._get_incompatibility_reason(dataset)
+            raise AssertionError(
+                f"Dataset '{dataset.code}' is not appropriate for "
+                f"{self.__class__.__name__}: {reason}"
+            )
+        yield from self._evaluate_parallel_dataset(
+            dataset=dataset,
+            pipelines=pipelines,
+            param_grid=param_grid,
+            process_pipeline=process_pipeline,
+            postprocess_pipeline=postprocess_pipeline,
+        )
+
+    def is_valid(self, dataset: "BaseDataset") -> bool:
+        return True

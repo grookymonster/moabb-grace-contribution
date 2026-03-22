@@ -276,7 +276,7 @@ class Zhou2020(BaseDataset):
 
         Parameters
         ----------
-        npz_path : Path
+        npz_path : pathlib.Path
             Path to the .npz file.
         n_eeg : int
             Number of EEG channels (41 for S-subjects, 26 for A-subjects).

@@ -277,8 +277,8 @@ class RomaniBF2025ERP(BaseDataset):
         """
         Initialize the Brainform MOABB dataset.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         data_folder : str, optional
             Path to the Brainform dataset folder. If None, will download
             and extract the dataset to a temporary directory. You can provide the path to the original dataset
@@ -484,8 +484,8 @@ class RomaniBF2025ERP(BaseDataset):
 
         For local datasets, return empty list.
 
-        Parameters:
-        -----------
+        Parameters
+        ----------
         subject : str
             Subject identifier
         path : str

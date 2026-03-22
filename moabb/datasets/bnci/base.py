@@ -637,11 +637,11 @@ class MNEBNCI(BaseDataset):
 
     See Also
     --------
-    BNCI2014_001 : 4-class motor imagery (BCI Competition IV Dataset 2a)
-    BNCI2014_008 : P300 speller for ALS patients
-    BNCI2015_004 : 5-class mental tasks for users with disability
-    BNCI2015_009 : AMUSE auditory spatial P300 paradigm
-    BNCI2015_010 : RSVP gaze-independent visual P300
+    moabb.datasets.BNCI2014_001 : 4-class motor imagery (BCI Competition IV Dataset 2a)
+    moabb.datasets.BNCI2014_008 : P300 speller for ALS patients
+    moabb.datasets.BNCI2015_004 : 5-class mental tasks for users with disability
+    moabb.datasets.BNCI2015_009 : AMUSE auditory spatial P300 paradigm
+    moabb.datasets.BNCI2015_010 : RSVP gaze-independent visual P300
     """
 
     # Dataset collection/publication years for measurement dates

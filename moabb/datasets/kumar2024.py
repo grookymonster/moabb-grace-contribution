@@ -344,7 +344,7 @@ class Kumar2024(BaseDataset):
 
         Returns
         -------
-        Path
+        extract_dir : :class:`pathlib.Path`
             Path to the extracted dataset root directory.
         """
         if subject not in self.subject_list:
@@ -481,7 +481,7 @@ class Kumar2024(BaseDataset):
 
         Parameters
         ----------
-        sess_dir : Path
+        sess_dir : pathlib.Path
             Directory containing GDF files for one session.
 
         Returns

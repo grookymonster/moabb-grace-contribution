@@ -229,7 +229,7 @@ class Test_Datasets:
 
     def test_datasets_init(self, caplog):
         codes = []
-        deprecated_list, _, _ = zip(*aliases_list)
+        deprecated_list = list(zip(*aliases_list))[0] if aliases_list else ()
 
         logger_name = "moabb.datasets.base"
         log_level = "WARNING"
@@ -253,6 +253,7 @@ class Test_Datasets:
         # Check that all codes are unique:
         assert len(codes) == len(set(codes))
 
+    @pytest.mark.skipif(not aliases_list, reason="No deprecated aliases remaining")
     def test_depreciated_datasets_init(self, caplog):
         depreciated_names, _, _ = zip(*aliases_list)
         for ds in db.__dict__.values():
@@ -273,7 +274,7 @@ class Test_Datasets:
     def test_dataset_docstring_table(self):
         # The dataset summary table will be automatically added to the docstring of
         # all the datasets listed in the moabb/datasets/summary_*.csv files.
-        depreciated_names, _, _ = zip(*aliases_list)
+        depreciated_names = list(zip(*aliases_list))[0] if aliases_list else ()
         for ds in dataset_list:
             if "Fake" in ds.__name__:
                 continue
@@ -471,7 +472,7 @@ class Test_Datasets:
     def test_completeness_summary_table(self):
         # The dataset summary table will be automatically added to the docstring of
         # all the datasets listed in the moabb/datasets/summary_*.csv files.
-        depreciated_names, _, _ = zip(*aliases_list)
+        depreciated_names = list(zip(*aliases_list))[0] if aliases_list else ()
         for ds in dataset_list:
             if "Fake" in ds.__name__:
                 continue
