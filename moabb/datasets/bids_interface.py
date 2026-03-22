@@ -794,6 +794,21 @@ def _build_sidecar_enrichment(metadata):
     return entries
 
 
+def _get_dataset_title(dataset):
+    """Extract a human-readable title from the dataset class docstring.
+
+    Returns the first non-empty line of the docstring (without trailing
+    period), falling back to ``dataset.code`` when unavailable.
+    """
+    raw_doc = getattr(type(dataset), "__doc__", "") or ""
+    if raw_doc:
+        for line in raw_doc.splitlines():
+            stripped = line.strip()
+            if stripped:
+                return stripped.rstrip(".")
+    return dataset.code
+
+
 def _build_dataset_description_kwargs(dataset):
     """Build enriched kwargs for ``mne_bids.make_dataset_description``.
 
@@ -808,7 +823,7 @@ def _build_dataset_description_kwargs(dataset):
         Keyword arguments for ``make_dataset_description()``.
     """
     kwargs = dict(
-        name=dataset.code,
+        name=_get_dataset_title(dataset),
         hed_version="8.4.0",
         dataset_type="derivative",
         generated_by=[
@@ -860,13 +875,6 @@ def _build_dataset_description_kwargs(dataset):
             refs.append(doc.associated_paper_doi)
         if refs:
             kwargs["references_and_links"] = refs
-
-        # doi — BIDS requires the format "doi:<value>"
-        if doc.doi:
-            doi_val = doc.doi
-            if not doi_val.startswith("doi:"):
-                doi_val = f"doi:{doi_val}"
-            kwargs["doi"] = doi_val
 
         # acknowledgements
         if doc.acknowledgements:
@@ -1307,6 +1315,13 @@ def _update_dataset_description_extra(root, metadata):
         desc = json.load(f)
 
     changed = False
+
+    # Remove DatasetDOI — NEMAR assigns its own DOI; the source DOI is
+    # preserved in SourceDatasets.
+    if "DatasetDOI" in desc:
+        del desc["DatasetDOI"]
+        changed = True
+
     if keywords and "Keywords" not in desc:
         desc["Keywords"] = keywords
         changed = True
@@ -1421,8 +1436,7 @@ def _build_readme(dataset):
     tags = metadata.tags if metadata else None
 
     # ── Title ──
-    lines.append(dataset.code)
-    lines.append("=" * len(dataset.code))
+    lines.append(f"# {_get_dataset_title(dataset)}")
     lines.append("")
 
     # ── Description from docstring ──
@@ -1449,8 +1463,8 @@ def _build_readme(dataset):
                     lines.append("")
 
     # ── Dataset Overview ──
-    lines.append("Dataset Overview")
-    lines.append("-" * 16)
+    lines.append("## Dataset Overview")
+    lines.append("")
     _kv(lines, "Code", dataset.code)
     _kv(lines, "Paradigm", dataset.paradigm)
     _kv(lines, "DOI", dataset.doi)
@@ -1480,8 +1494,8 @@ def _build_readme(dataset):
 
     # ── Acquisition ──
     if acq:
-        lines.append("Acquisition")
-        lines.append("-" * 11)
+        lines.append("## Acquisition")
+        lines.append("")
         _kv(lines, "Sampling rate", f"{acq.sampling_rate} Hz")
         _kv(lines, "Number of channels", acq.n_channels)
         _kv(lines, "Channel types", _format_dict(acq.channel_types))
@@ -1526,8 +1540,8 @@ def _build_readme(dataset):
 
     # ── Participants ──
     if part:
-        lines.append("Participants")
-        lines.append("-" * 12)
+        lines.append("## Participants")
+        lines.append("")
         _kv(lines, "Number of subjects", part.n_subjects)
         _kv(lines, "Health status", part.health_status)
         _kv(lines, "Clinical population", part.clinical_population)
@@ -1551,8 +1565,8 @@ def _build_readme(dataset):
 
     # ── Experiment ──
     if exp:
-        lines.append("Experimental Protocol")
-        lines.append("-" * 21)
+        lines.append("## Experimental Protocol")
+        lines.append("")
         _kv(lines, "Paradigm", exp.paradigm)
         _kv(lines, "Task type", exp.task_type)
         _kv(lines, "Number of classes", exp.n_classes)
@@ -1592,18 +1606,20 @@ def _build_readme(dataset):
     # ── HED Event Annotations ──
     hed_tags = _build_hed_sidecar_annotations(dataset)
     if hed_tags:
-        lines.append("HED Event Annotations")
-        lines.append("-" * 21)
+        lines.append("## HED Event Annotations")
+        lines.append("")
         lines.append(
-            "  Schema: HED 8.4.0 | " "Browse: https://www.hedtags.org/hed-schema-browser"
+            "Schema: HED 8.4.0 | Browse: https://www.hedtags.org/hed-schema-browser"
         )
         lines.append("")
+        lines.append("```")
         for event_name, tag_str in hed_tags.items():
             elements = _split_hed_top_level(tag_str)
             nodes = [_hed_element_to_tree(e) for e in elements]
             lines.append(f"  {event_name}")
             lines.extend(_render_hed_tree(nodes))
             lines.append("")
+        lines.append("```")
 
     # ── Paradigm-Specific ──
     if ps:
@@ -1625,8 +1641,8 @@ def _build_readme(dataset):
             )
         )
         if has_content:
-            lines.append("Paradigm-Specific Parameters")
-            lines.append("-" * 28)
+            lines.append("## Paradigm-Specific Parameters")
+            lines.append("")
             _kv(lines, "Detected paradigm", ps.detected_paradigm)
             # SSVEP
             _kv(
@@ -1692,8 +1708,8 @@ def _build_readme(dataset):
             )
         )
         if has_content:
-            lines.append("Data Structure")
-            lines.append("-" * 14)
+            lines.append("## Data Structure")
+            lines.append("")
             _kv(lines, "Trials", ds.n_trials)
             _kv(
                 lines,
@@ -1735,8 +1751,8 @@ def _build_readme(dataset):
             )
         )
         if has_content:
-            lines.append("Preprocessing")
-            lines.append("-" * 13)
+            lines.append("## Preprocessing")
+            lines.append("")
             _kv(lines, "Data state", preproc.data_state)
             _kv(lines, "Preprocessing applied", preproc.preprocessing_applied)
             if preproc.preprocessing_steps:
@@ -1783,8 +1799,8 @@ def _build_readme(dataset):
             )
         )
         if has_content:
-            lines.append("Signal Processing")
-            lines.append("-" * 17)
+            lines.append("## Signal Processing")
+            lines.append("")
             if sig.classifiers:
                 _kv(lines, "Classifiers", ", ".join(sig.classifiers))
             if sig.feature_extraction:
@@ -1809,8 +1825,8 @@ def _build_readme(dataset):
             for f in ("cv_method", "cv_folds", "evaluation_type")
         )
         if has_content:
-            lines.append("Cross-Validation")
-            lines.append("-" * 16)
+            lines.append("## Cross-Validation")
+            lines.append("")
             _kv(lines, "Method", cv.cv_method)
             _kv(lines, "Folds", cv.cv_folds)
             if cv.evaluation_type:
@@ -1823,8 +1839,8 @@ def _build_readme(dataset):
             "accuracy_percent": "%",
             "itr_bits_per_min": " bits/min",
         }
-        lines.append("Performance (Original Study)")
-        lines.append("-" * 28)
+        lines.append("## Performance (Original Study)")
+        lines.append("")
         for key, val in perf.items():
             if val is not None:
                 if key == "other_metrics" and isinstance(val, dict):
@@ -1844,8 +1860,8 @@ def _build_readme(dataset):
             for f in ("applications", "environment", "online_feedback")
         )
         if has_content:
-            lines.append("BCI Application")
-            lines.append("-" * 15)
+            lines.append("## BCI Application")
+            lines.append("")
             if bci.applications:
                 _kv(lines, "Applications", ", ".join(bci.applications))
             _kv(lines, "Environment", bci.environment)
@@ -1858,8 +1874,8 @@ def _build_readme(dataset):
             getattr(tags, f, None) is not None for f in ("pathology", "modality", "type")
         )
         if has_content:
-            lines.append("Tags")
-            lines.append("-" * 4)
+            lines.append("## Tags")
+            lines.append("")
             if tags.pathology:
                 _kv(lines, "Pathology", ", ".join(tags.pathology))
             if tags.modality:
@@ -1895,8 +1911,8 @@ def _build_readme(dataset):
             )
         )
         if has_content:
-            lines.append("Documentation")
-            lines.append("-" * 13)
+            lines.append("## Documentation")
+            lines.append("")
             _kv(lines, "Description", doc.description)
             _kv(lines, "DOI", doc.doi)
             _kv(lines, "Associated paper DOI", doc.associated_paper_doi)
@@ -1926,21 +1942,21 @@ def _build_readme(dataset):
     # ── External Links ──
     ext = metadata.external_links if metadata else None
     if ext:
-        lines.append("External Links")
-        lines.append("-" * 14)
+        lines.append("## External Links")
+        lines.append("")
         for name, url in ext.items():
             _kv(lines, name.replace("_", " ").title(), url)
         lines.append("")
 
     # ── Abstract / Methodology ──
     if metadata and metadata.abstract:
-        lines.append("Abstract")
-        lines.append("-" * 8)
+        lines.append("## Abstract")
+        lines.append("")
         lines.append(metadata.abstract)
         lines.append("")
     if metadata and metadata.methodology:
-        lines.append("Methodology")
-        lines.append("-" * 11)
+        lines.append("## Methodology")
+        lines.append("")
         lines.append(metadata.methodology)
         lines.append("")
 
@@ -1948,8 +1964,8 @@ def _build_readme(dataset):
     # Extract references from the original class docstring (not the auto-generated one)
     orig_doc = type(dataset).__doc__ or ""
     refs = _extract_references_from_docstring(orig_doc)
-    lines.append("References")
-    lines.append("-" * 10)
+    lines.append("## References")
+    lines.append("")
     if refs:
         lines.append(refs)
     lines.append(
@@ -1985,7 +2001,7 @@ def _kv(lines, key, value):
     """Append a key-value line if the value is not None or 'n/a'."""
     if value is None or value == "n/a":
         return
-    lines.append(f"  {key}: {value}")
+    lines.append(f"- **{key}**: {value}")
 
 
 def _format_dict(d):
@@ -2491,9 +2507,13 @@ class BIDSInterfaceBase(abc.ABC):
         metadata = getattr(self.dataset, "metadata", None)
         _update_dataset_description_extra(self.root, metadata)
 
-        # Write comprehensive README (after write_raw_bids to overwrite its
-        # boilerplate README with our enriched version)
-        readme_path = Path(self.root) / "README"
+        # Write comprehensive README in Markdown (after write_raw_bids to
+        # overwrite its boilerplate version).  Remove any plain-text README
+        # left by mne_bids to avoid "multiple README" BIDS validation errors.
+        old_readme = Path(self.root) / "README"
+        if old_readme.exists():
+            old_readme.unlink()
+        readme_path = Path(self.root) / "README.md"
         readme_path.write_text(_build_readme(self.dataset), encoding="utf-8")
 
         # Write full metadata as YAML sidecar
@@ -2535,6 +2555,7 @@ class BIDSInterfaceBase(abc.ABC):
 
 _FORMAT_EXTENSION_MAP = {
     "EDF": ".edf",
+    "BDF": ".bdf",
     "BrainVision": ".vhdr",
     "EEGLAB": ".set",
 }
@@ -2620,18 +2641,23 @@ class BIDSInterfaceRawEDF(BIDSInterfaceBase):
         # BIDS events automatically.
 
         # Suppress mne_bids informational warnings about format conversion.
-        # "Converting data files to EDF format" — we explicitly request the
-        # format via self._format, so this is expected.
+        # "Converting data files to EDF/BDF format" — we explicitly request
+        # the format via self._format, so this is expected.
         # "Encountered data in "double" format" — mne_bids internally handles
-        # the float64->float32 downcast for EDF; we cannot pre-convert because
-        # MNE Epochs.save() requires float64 data.
+        # the float64->float32 downcast for EDF/BDF; we cannot pre-convert
+        # because MNE Epochs.save() requires float64 data.
         with warnings.catch_warnings():
             warnings.filterwarnings(
-                "ignore", "Converting data files to EDF", RuntimeWarning
+                "ignore", "Converting data files to (EDF|BDF)", RuntimeWarning
             )
             warnings.filterwarnings(
                 "ignore",
                 'Encountered data in "double" format',
+                RuntimeWarning,
+            )
+            warnings.filterwarnings(
+                "ignore",
+                "BDF format requires equal-length data blocks",
                 RuntimeWarning,
             )
             # Save annotation extras before write_raw_bids (which may

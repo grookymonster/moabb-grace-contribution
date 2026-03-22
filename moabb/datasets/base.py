@@ -990,7 +990,8 @@ class BaseDataset(metaclass=MetaclassDataset):
             saving.  Default is ``False``.
         format : str
             The file format for the raw EEG data.  Supported values are
-            ``"EDF"`` (default), ``"BrainVision"``, and ``"EEGLAB"``.
+            ``"EDF"`` (default), ``"BDF"``, ``"BrainVision"``, and
+            ``"EEGLAB"``.
         verbose : str | None
             Verbosity level forwarded to MNE/MNE-BIDS.
         generate_figures : bool
