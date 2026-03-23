@@ -79,6 +79,7 @@ extensions = [
     "sphinx_gallery.gen_gallery",
     "gh_substitutions",
     "dataset_timeline_ext",
+    "macro_table_ext",
     "myst_parser",
     "numpydoc",
     "sphinx_favicon",
@@ -317,13 +318,33 @@ sitemap_url_scheme = "{link}"
 
 html_css_files = [
     "css/custom.css",
-    "https://cdn.datatables.net/v/dt/dt-2.0.4/b-3.0.2/b-html5-3.0.2/datatables.min.css",
+    "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap",
+    "css/macro-table.css",
+    # DataTables core + extensions (all from CDN)
+    "https://cdn.datatables.net/2.2.0/css/dataTables.dataTables.css",
+    "https://cdn.datatables.net/buttons/3.2.6/css/buttons.dataTables.css",
+    "https://cdn.datatables.net/searchpanes/2.3.5/css/searchPanes.dataTables.css",
+    "https://cdn.datatables.net/select/3.1.3/css/select.dataTables.css",
+    "https://cdn.datatables.net/fixedheader/4.0.6/css/fixedHeader.dataTables.css",
 ]
 
 html_js_files = [
     "https://code.jquery.com/jquery-3.7.1.min.js",
-    "https://cdn.datatables.net/v/dt/dt-2.0.4/b-3.0.2/b-html5-3.0.2/datatables.min.js",
+    # DataTables core
+    "https://cdn.datatables.net/2.2.0/js/dataTables.js",
+    # Buttons (core + HTML5 export + column visibility + print)
+    "https://cdn.datatables.net/buttons/3.2.6/js/dataTables.buttons.js",
+    "https://cdn.datatables.net/buttons/3.2.6/js/buttons.html5.js",
+    "https://cdn.datatables.net/buttons/3.2.6/js/buttons.colVis.js",
+    "https://cdn.datatables.net/buttons/3.2.6/js/buttons.print.js",
+    # SearchPanes + Select (required by SearchPanes)
+    "https://cdn.datatables.net/select/3.1.3/js/dataTables.select.js",
+    "https://cdn.datatables.net/searchpanes/2.3.5/js/dataTables.searchPanes.js",
+    "https://cdn.datatables.net/searchpanes/2.3.5/js/searchPanes.dataTables.js",
+    # FixedHeader (sticky header on scroll)
+    "https://cdn.datatables.net/fixedheader/4.0.6/js/dataTables.fixedHeader.js",
     "js/section-nav-hierarchy.js",
+    "js/macro-table.js",
 ]
 
 # If true, links to the reST sources are added to the pages.

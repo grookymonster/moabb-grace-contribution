@@ -19,7 +19,7 @@ Version 1.6  (Source - GitHub)
 
 Enhancements
 ~~~~~~~~~~~~
-- None yet.
+- Add unified interactive macro table for dataset summary page with 58 metadata columns, SearchPanes filtering, paradigm distribution bar, and CSV export (:gh:`1043`).
 
 API changes
 ~~~~~~~~~~~
