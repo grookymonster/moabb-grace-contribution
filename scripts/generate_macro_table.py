@@ -219,13 +219,6 @@ def _fmt_freq_list(val) -> str:
 # ---------------------------------------------------------------------------
 
 
-# Aliases not recognized by pycountry.countries.lookup()
-_COUNTRY_ALIASES = {
-    "Korea": "KR",
-    "Turkey": "TR",
-}
-
-
 def _normalize_country(raw: str | None) -> str | None:
     """Normalize a country string to ISO 3166-1 alpha-2 code using pycountry."""
     if not raw:
@@ -233,8 +226,6 @@ def _normalize_country(raw: str | None) -> str | None:
     raw = raw.strip()
     if len(raw) == 2:
         return raw.upper()
-    if raw in _COUNTRY_ALIASES:
-        return _COUNTRY_ALIASES[raw]
     try:
         return pycountry.countries.lookup(raw).alpha_2
     except LookupError:
