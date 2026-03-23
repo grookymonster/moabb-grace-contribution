@@ -318,6 +318,7 @@ sitemap_url_scheme = "{link}"
 
 html_css_files = [
     "css/custom.css",
+    "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap",
     "css/macro-table.css",
     # DataTables core + extensions (all from CDN)
     "https://cdn.datatables.net/2.2.0/css/dataTables.dataTables.css",
@@ -325,7 +326,6 @@ html_css_files = [
     "https://cdn.datatables.net/searchpanes/2.3.5/css/searchPanes.dataTables.css",
     "https://cdn.datatables.net/select/3.1.3/css/select.dataTables.css",
     "https://cdn.datatables.net/fixedheader/4.0.6/css/fixedHeader.dataTables.css",
-    "https://cdn.datatables.net/responsive/3.0.8/css/responsive.dataTables.css",
 ]
 
 html_js_files = [
@@ -343,8 +343,6 @@ html_js_files = [
     "https://cdn.datatables.net/searchpanes/2.3.5/js/searchPanes.dataTables.js",
     # FixedHeader (sticky header on scroll)
     "https://cdn.datatables.net/fixedheader/4.0.6/js/dataTables.fixedHeader.js",
-    # Responsive (collapse columns on small screens)
-    "https://cdn.datatables.net/responsive/3.0.8/js/dataTables.responsive.js",
     "js/section-nav-hierarchy.js",
     "js/macro-table.js",
 ]

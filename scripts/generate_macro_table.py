@@ -97,6 +97,7 @@ def catalog_to_dataframe(catalog=None) -> pd.DataFrame:
         tags = meta.tags
         ds = meta.data_structure
         gender = _safe_get(par, "gender")
+        handedness = _safe_get(par, "handedness")
 
         row = {
             # --- Core (visible by default) ---
@@ -141,14 +142,11 @@ def catalog_to_dataframe(catalog=None) -> pd.DataFrame:
                 else ""
             ),
             "handedness": (
-                _safe_get(par, "handedness")
-                if isinstance(_safe_get(par, "handedness"), str)
+                handedness
+                if isinstance(handedness, str)
                 else (
-                    ", ".join(
-                        f"{k}:{v}"
-                        for k, v in (_safe_get(par, "handedness") or {}).items()
-                    )
-                    if isinstance(_safe_get(par, "handedness"), dict)
+                    ", ".join(f"{k}:{v}" for k, v in handedness.items())
+                    if isinstance(handedness, dict)
                     else ""
                 )
             ),
@@ -220,6 +218,34 @@ def _fmt_freq_list(val) -> str:
 # ---------------------------------------------------------------------------
 
 
+_COUNTRY_NAME_TO_CODE = {
+    "USA": "US",
+    "France": "FR",
+    "Germany": "DE",
+    "Austria": "AT",
+    "Italy": "IT",
+    "Spain": "ES",
+    "Switzerland": "CH",
+    "Greece": "GR",
+    "United Kingdom": "GB",
+    "United States": "US",
+    "China": "CN",
+    "Japan": "JP",
+    "South Korea": "KR",
+    "Korea": "KR",
+    "Netherlands": "NL",
+    "Portugal": "PT",
+    "Turkey": "TR",
+    "Mexico": "MX",
+    "Canada": "CA",
+    "Australia": "AU",
+    "Colombia": "CO",
+    "Hong Kong": "HK",
+    "Brazil": "BR",
+    "India": "IN",
+}
+
+
 def _normalize_country(raw: str | None) -> str | None:
     """Normalize a country string to ISO 3166-1 alpha-2 code."""
     if not raw:
@@ -227,34 +253,7 @@ def _normalize_country(raw: str | None) -> str | None:
     raw = raw.strip()
     if len(raw) == 2:
         return raw.upper()
-    # Handle common full names / non-standard codes
-    _COUNTRY_MAP = {
-        "USA": "US",
-        "France": "FR",
-        "Germany": "DE",
-        "Austria": "AT",
-        "Italy": "IT",
-        "Spain": "ES",
-        "Switzerland": "CH",
-        "Greece": "GR",
-        "United Kingdom": "GB",
-        "United States": "US",
-        "China": "CN",
-        "Japan": "JP",
-        "South Korea": "KR",
-        "Korea": "KR",
-        "Netherlands": "NL",
-        "Portugal": "PT",
-        "Turkey": "TR",
-        "Mexico": "MX",
-        "Canada": "CA",
-        "Australia": "AU",
-        "Colombia": "CO",
-        "Hong Kong": "HK",
-        "Brazil": "BR",
-        "India": "IN",
-    }
-    return _COUNTRY_MAP.get(raw, raw.upper()[:2])
+    return _COUNTRY_NAME_TO_CODE.get(raw)
 
 
 def _country_flag(code: str | None) -> str:
@@ -431,6 +430,15 @@ def _health_tag(status: str) -> str:
     )
 
 
+_EXTERNAL_LINK_SVG = (
+    '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" '
+    'stroke="currentColor" stroke-width="2">'
+    '<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>'
+    '<polyline points="15 3 21 3 21 9"/>'
+    '<line x1="10" y1="14" x2="21" y2="3"/></svg>'
+)
+
+
 def _doi_link(doi: str | None) -> str:
     if not doi:
         return ""
@@ -438,12 +446,7 @@ def _doi_link(doi: str | None) -> str:
     return (
         f'<a class="mt-doi" href="{html.escape(url)}" '
         f'target="_blank" rel="noopener">'
-        f'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" '
-        f'stroke="currentColor" stroke-width="2">'
-        f'<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>'
-        f'<polyline points="15 3 21 3 21 9"/>'
-        f'<line x1="10" y1="14" x2="21" y2="3"/></svg>'
-        f" DOI</a>"
+        f"{_EXTERNAL_LINK_SVG} DOI</a>"
     )
 
 
@@ -471,12 +474,7 @@ def _data_url_link(url: str | None) -> str:
     return (
         f'<a class="mt-doi" href="{html.escape(url)}" '
         f'target="_blank" rel="noopener">'
-        f'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" '
-        f'stroke="currentColor" stroke-width="2">'
-        f'<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>'
-        f'<polyline points="15 3 21 3 21 9"/>'
-        f'<line x1="10" y1="14" x2="21" y2="3"/></svg>'
-        f" Link</a>"
+        f"{_EXTERNAL_LINK_SVG} Link</a>"
     )
 
 

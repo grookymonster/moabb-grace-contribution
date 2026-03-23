@@ -7,7 +7,11 @@ that file and replaces the ``<!-- MACRO_TABLE -->`` placeholder in
 ``dataset_summary.rst`` at source-read time.
 """
 
+import logging
 import os
+
+
+logger = logging.getLogger(__name__)
 
 
 def _on_source_read(app, docname, source):
@@ -20,9 +24,10 @@ def _on_source_read(app, docname, source):
 
     html_path = os.path.join(app.srcdir, "_static", "macro_table.html")
     if not os.path.isfile(html_path):
-        app.warn(
+        logger.warning(
             "macro_table_ext: %s not found. "
-            "Run 'python scripts/generate_macro_table.py' first." % html_path
+            "Run 'python scripts/generate_macro_table.py' first.",
+            html_path,
         )
         source[0] = source[0].replace(placeholder, "")
         return
