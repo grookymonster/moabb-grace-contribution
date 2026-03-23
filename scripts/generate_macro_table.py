@@ -16,34 +16,28 @@ import sys
 from pathlib import Path
 
 import pandas as pd
-import pycountry
 
 
-# Ensure the repo root is importable
+# Ensure the repo root and sphinxext dir are importable
 _REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(_REPO_ROOT))
+sys.path.insert(0, str(_REPO_ROOT / "docs" / "source" / "sphinxext"))
+
+from dataset_constants import (  # noqa: E402
+    PARADIGM_COLORS,
+    PARADIGM_LABELS,
+    country_flag,
+    normalize_country,
+    normalize_health,
+)
+
 
 # ---------------------------------------------------------------------------
 # Constants
 # ---------------------------------------------------------------------------
 
-_PARADIGM_LABELS = {
-    "imagery": "Motor Imagery",
-    "p300": "P300 / ERP",
-    "erp": "P300 / ERP",
-    "ssvep": "SSVEP",
-    "cvep": "c-VEP",
-    "rstate": "Resting State",
-}
-
-_PARADIGM_COLORS = {
-    "imagery": "#1565C0",
-    "p300": "#D32F2F",
-    "erp": "#D32F2F",
-    "ssvep": "#2E7D32",
-    "cvep": "#00695C",
-    "rstate": "#546E7A",
-}
+_PARADIGM_LABELS = PARADIGM_LABELS
+_PARADIGM_COLORS = PARADIGM_COLORS
 
 _HEALTH_COLORS = {
     "healthy": "#2E7D32",
@@ -214,29 +208,9 @@ def _fmt_freq_list(val) -> str:
     return str(val)
 
 
-# ---------------------------------------------------------------------------
-# Country flag emoji helper
-# ---------------------------------------------------------------------------
-
-
-def _normalize_country(raw: str | None) -> str | None:
-    """Normalize a country string to ISO 3166-1 alpha-2 code using pycountry."""
-    if not raw:
-        return None
-    raw = raw.strip()
-    if len(raw) == 2:
-        return raw.upper()
-    try:
-        return pycountry.countries.lookup(raw).alpha_2
-    except LookupError:
-        return None
-
-
-def _country_flag(code: str | None) -> str:
-    """Return a flag emoji for an ISO 3166-1 alpha-2 country code."""
-    if not code or len(code) != 2:
-        return ""
-    return "".join(chr(0x1F1E6 + ord(c) - ord("A")) for c in code.upper())
+# Country/health helpers imported from dataset_constants
+_normalize_country = normalize_country
+_country_flag = country_flag
 
 
 # ---------------------------------------------------------------------------
@@ -377,26 +351,11 @@ def _paradigm_tag(paradigm: str) -> str:
     )
 
 
-def _normalize_health(status: str) -> str:
-    """Normalize health status to 'healthy', 'patients', or 'mixed'."""
-    if not status:
-        return ""
-    s = status.lower().strip()
-    if s == "healthy":
-        return "healthy"
-    if "mixed" in s:
-        return "mixed"
-    # Anything else is some form of patient population
-    if "patient" in s or "stroke" in s or "damage" in s or "pain" in s:
-        return "patients"
-    return status
-
-
 def _health_tag(status: str) -> str:
     """Render a health-status tag."""
     if not status:
         return ""
-    normalized = _normalize_health(status)
+    normalized = normalize_health(status)
     color = _HEALTH_COLORS.get(normalized, "#757575")
     # Show original status as tooltip if it differs from normalized
     title = f' title="{html.escape(status)}"' if normalized != status else ""

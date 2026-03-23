@@ -28,24 +28,18 @@ from html import escape
 from urllib.parse import quote
 from urllib.request import Request, urlopen
 
+from dataset_constants import (
+    PARADIGM_COLORS,
+    PARADIGM_LABELS,
+)
+from dataset_constants import country_flag as _country_flag_iso
+from dataset_constants import (
+    normalize_country,
+)
 
-_PARADIGM_LABELS = {
-    "p300": "P300 / ERP",
-    "erp": "P300 / ERP",
-    "imagery": "Motor Imagery",
-    "ssvep": "SSVEP",
-    "cvep": "c-VEP",
-    "rstate": "Resting State",
-}
 
-_PARADIGM_COLORS = {
-    "p300": "#D32F2F",
-    "erp": "#D32F2F",
-    "imagery": "#1565C0",
-    "ssvep": "#2E7D32",
-    "cvep": "#00695C",
-    "rstate": "#546E7A",
-}
+_PARADIGM_LABELS = PARADIGM_LABELS
+_PARADIGM_COLORS = PARADIGM_COLORS
 
 _BENCHMARK_FILES = [
     ("within_session_mi_left_vs_right_hand.csv", "MI left vs right"),
@@ -1222,70 +1216,10 @@ def _make_github_issue_url(cls_name):
     return escape(url, quote=True)
 
 
-_COUNTRY_TO_ISO2 = {
-    "argentina": "AR",
-    "australia": "AU",
-    "austria": "AT",
-    "belgium": "BE",
-    "brazil": "BR",
-    "canada": "CA",
-    "chile": "CL",
-    "china": "CN",
-    "colombia": "CO",
-    "czech republic": "CZ",
-    "czechia": "CZ",
-    "denmark": "DK",
-    "egypt": "EG",
-    "finland": "FI",
-    "france": "FR",
-    "germany": "DE",
-    "greece": "GR",
-    "hungary": "HU",
-    "india": "IN",
-    "iran": "IR",
-    "ireland": "IE",
-    "israel": "IL",
-    "italy": "IT",
-    "japan": "JP",
-    "malaysia": "MY",
-    "mexico": "MX",
-    "netherlands": "NL",
-    "new zealand": "NZ",
-    "norway": "NO",
-    "pakistan": "PK",
-    "poland": "PL",
-    "portugal": "PT",
-    "romania": "RO",
-    "russia": "RU",
-    "saudi arabia": "SA",
-    "singapore": "SG",
-    "south korea": "KR",
-    "korea": "KR",
-    "spain": "ES",
-    "sweden": "SE",
-    "switzerland": "CH",
-    "taiwan": "TW",
-    "thailand": "TH",
-    "turkey": "TR",
-    "uk": "GB",
-    "united kingdom": "GB",
-    "usa": "US",
-    "united states": "US",
-    "vietnam": "VN",
-}
-
-
 def _country_flag(country_str):
     """Return a flag emoji for a country name or ISO 3166-1 alpha-2 code."""
-    if not country_str:
-        return ""
-    key = country_str.strip().lower()
-    # Try direct lookup in name map, then treat input as ISO code
-    iso2 = _COUNTRY_TO_ISO2.get(key, country_str.strip().upper())
-    if len(iso2) != 2 or not iso2.isalpha():
-        return ""
-    # Convert to regional indicator symbols (Unicode flag)
-    return "".join(chr(0x1F1E6 + ord(c) - ord("A")) for c in iso2.upper())
+    iso2 = normalize_country(country_str)
+    return _country_flag_iso(iso2)
 
 
 def _highlight_python(code):
