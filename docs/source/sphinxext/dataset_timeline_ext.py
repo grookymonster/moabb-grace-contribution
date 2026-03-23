@@ -28,14 +28,25 @@ from html import escape
 from urllib.parse import quote
 from urllib.request import Request, urlopen
 
-from dataset_constants import (
-    PARADIGM_COLORS,
-    PARADIGM_LABELS,
-)
-from dataset_constants import country_flag as _country_flag_iso
-from dataset_constants import (
-    normalize_country,
-)
+
+try:
+    from dataset_constants import (
+        PARADIGM_COLORS,
+        PARADIGM_LABELS,
+    )
+    from dataset_constants import country_flag as _country_flag_iso
+    from dataset_constants import (
+        normalize_country,
+    )
+except ImportError:
+    from docs.source.sphinxext.dataset_constants import (
+        PARADIGM_COLORS,
+        PARADIGM_LABELS,
+    )
+    from docs.source.sphinxext.dataset_constants import country_flag as _country_flag_iso
+    from docs.source.sphinxext.dataset_constants import (
+        normalize_country,
+    )
 
 
 _PARADIGM_LABELS = PARADIGM_LABELS
