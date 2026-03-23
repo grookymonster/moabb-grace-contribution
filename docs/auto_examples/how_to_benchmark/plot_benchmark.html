@@ -42,7 +42,13 @@
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=d694e5f0" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-2.0.4/b-3.0.2/b-html5-3.0.2/datatables.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/macro-table.css?v=4c18d17a" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.2.0/css/dataTables.dataTables.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/3.2.6/css/buttons.dataTables.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/searchpanes/2.3.5/css/searchPanes.dataTables.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/3.1.3/css/select.dataTables.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedheader/4.0.6/css/fixedHeader.dataTables.css" />
   
   <!-- So that users can add custom icons -->
   <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -73,8 +79,17 @@
             </script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'auto_examples/how_to_benchmark/plot_benchmark';</script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.datatables.net/v/dt/dt-2.0.4/b-3.0.2/b-html5-3.0.2/datatables.min.js"></script>
+    <script src="https://cdn.datatables.net/2.2.0/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.2.6/js/dataTables.buttons.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.2.6/js/buttons.html5.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.2.6/js/buttons.colVis.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.2.6/js/buttons.print.js"></script>
+    <script src="https://cdn.datatables.net/select/3.1.3/js/dataTables.select.js"></script>
+    <script src="https://cdn.datatables.net/searchpanes/2.3.5/js/dataTables.searchPanes.js"></script>
+    <script src="https://cdn.datatables.net/searchpanes/2.3.5/js/searchPanes.dataTables.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/4.0.6/js/dataTables.fixedHeader.js"></script>
     <script src="../../_static/js/section-nav-hierarchy.js?v=c53969c2"></script>
+    <script src="../../_static/js/macro-table.js?v=c799a707"></script>
     <link rel="canonical" href="https://moabb.neurotechx.com/docs/auto_examples/how_to_benchmark/plot_benchmark.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -713,11 +728,9 @@ error-level logging to minimize overhead.</p>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>The paradigms being run are dict_keys([&#39;LeftRightImagery&#39;])
 Datasets considered for LeftRightImagery paradigm [&#39;Zhou2016&#39;]
-/home/runner/work/moabb/moabb/moabb/analysis/results.py:192: H5pyDeprecationWarning: Creating a dataset without passing data or dtype is deprecated. Pass an explicit dtype. Using dtype=&#39;f4&#39; will keep the current default behaviour.
-  dset.create_dataset(
     dataset     evaluation          pipeline  avg score  carbon emission
-0  Zhou2016  WithinSession  Tangent Space LR   0.941601         0.359745
-1  Zhou2016  WithinSession         CSP + SVM   0.932315         0.346060
+0  Zhou2016  WithinSession  Tangent Space LR   0.941601         0.274938
+1  Zhou2016  WithinSession         CSP + SVM   0.932315         0.181418
 </pre></div>
 </div>
 <p>Benchmark prints a summary of the results. Detailed results are saved in a
@@ -730,11 +743,7 @@ are saved in the <code class="docutils literal notranslate"><span class="pre">be
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.show.html#matplotlib.pyplot.show" title="matplotlib.pyplot.show" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_benchmark_001.png" srcset="../../_images/sphx_glr_plot_benchmark_001.png" alt="plot benchmark" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/moabb/moabb/moabb/analysis/plotting.py:421: UserWarning: The palette list has more values (6) than needed (2), which may not be intended.
-  sea.stripplot(
-</pre></div>
-</div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (1 minutes 41.252 seconds)</p>
+<img src="../../_images/sphx_glr_plot_benchmark_001.png" srcset="../../_images/sphx_glr_plot_benchmark_001.png" alt="plot benchmark" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 20.415 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-how-to-benchmark-plot-benchmark-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/dd1d96e7a121ed07731e7e4772c2d143/plot_benchmark.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_benchmark.ipynb</span></code></a></p>
