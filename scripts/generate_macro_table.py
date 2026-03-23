@@ -16,6 +16,7 @@ import sys
 from pathlib import Path
 
 import pandas as pd
+import pycountry
 
 
 # Ensure the repo root is importable
@@ -218,42 +219,26 @@ def _fmt_freq_list(val) -> str:
 # ---------------------------------------------------------------------------
 
 
-_COUNTRY_NAME_TO_CODE = {
-    "USA": "US",
-    "France": "FR",
-    "Germany": "DE",
-    "Austria": "AT",
-    "Italy": "IT",
-    "Spain": "ES",
-    "Switzerland": "CH",
-    "Greece": "GR",
-    "United Kingdom": "GB",
-    "United States": "US",
-    "China": "CN",
-    "Japan": "JP",
-    "South Korea": "KR",
+# Aliases not recognized by pycountry.countries.lookup()
+_COUNTRY_ALIASES = {
     "Korea": "KR",
-    "Netherlands": "NL",
-    "Portugal": "PT",
     "Turkey": "TR",
-    "Mexico": "MX",
-    "Canada": "CA",
-    "Australia": "AU",
-    "Colombia": "CO",
-    "Hong Kong": "HK",
-    "Brazil": "BR",
-    "India": "IN",
 }
 
 
 def _normalize_country(raw: str | None) -> str | None:
-    """Normalize a country string to ISO 3166-1 alpha-2 code."""
+    """Normalize a country string to ISO 3166-1 alpha-2 code using pycountry."""
     if not raw:
         return None
     raw = raw.strip()
     if len(raw) == 2:
         return raw.upper()
-    return _COUNTRY_NAME_TO_CODE.get(raw)
+    if raw in _COUNTRY_ALIASES:
+        return _COUNTRY_ALIASES[raw]
+    try:
+        return pycountry.countries.lookup(raw).alpha_2
+    except LookupError:
+        return None
 
 
 def _country_flag(code: str | None) -> str:
