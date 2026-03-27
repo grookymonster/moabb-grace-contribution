@@ -701,10 +701,6 @@ select electrodes based on the covariance information</p>
 <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">results</span></a> <span class="o">=</span> <a href="../../generated/moabb.evaluations.base.BaseEvaluation.html#moabb.evaluations.base.BaseEvaluation.process" title="moabb.evaluations.base.BaseEvaluation.process" class="sphx-glr-backref-module-moabb-evaluations-base sphx-glr-backref-type-py-method"><span class="n">evaluation</span><span class="o">.</span><span class="n">process</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pipelines</span></a><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/runner/work/moabb/moabb/moabb/analysis/results.py:192: H5pyDeprecationWarning: Creating a dataset without passing data or dtype is deprecated. Pass an explicit dtype. Using dtype=&#39;f4&#39; will keep the current default behaviour.
-  dset.create_dataset(
-</pre></div>
-</div>
 <p>Here, with the ElSel+Cov+TS+LDA pipeline, we reduce the computation time
 in approximately 8 times to the Cov+ElSel+TS+LDA pipeline.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Averaging the session performance:&quot;</span><span class="p">)</span>
@@ -714,9 +710,9 @@ in approximately 8 times to the Cov+ElSel+TS+LDA pipeline.</p>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Averaging the session performance:
                      score      time
 pipeline
-Cov+ElSel+TS+LDA  0.770303  1.996118
-ElSel+Cov+TS+LDA  0.775472  0.253635
-Xdawn+Cov+TS+LDA  0.658810  0.160702
+Cov+ElSel+TS+LDA  0.770303  1.787338
+ElSel+Cov+TS+LDA  0.775472  0.253505
+Xdawn+Cov+TS+LDA  0.658810  0.150636
 </pre></div>
 </div>
 </section>
@@ -753,7 +749,7 @@ Xdawn+Cov+TS+LDA  0.658810  0.160702
 <li><p>Electrode selection strategy based on covariance matrices demonstrates less variability and typically yields better performance.</p></li>
 <li><p>However, this strategy is more time-consuming compared to the simpler electrode selection based on time epoch data.</p></li>
 </ul>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (1 minutes 1.241 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (1 minutes 0.461 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-advanced-examples-plot-hinss2021-classification-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/5abf5216139378fc86b18e340a1f77b5/plot_hinss2021_classification.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_hinss2021_classification.ipynb</span></code></a></p>
