@@ -31,8 +31,8 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=7f76b32a3354e82990f2" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=7f76b32a3354e82990f2" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
@@ -51,10 +51,10 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedheader/4.0.6/css/fixedHeader.dataTables.css" />
   
   <!-- So that users can add custom icons -->
-  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <script defer src="_static/scripts/fontawesome.js?digest=7f76b32a3354e82990f2"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=7f76b32a3354e82990f2" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=7f76b32a3354e82990f2" />
 
     <script src="_static/jquery.js?v=5d32c60e"></script>
     <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
@@ -68,16 +68,29 @@
     <script>
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){ dataLayer.push(arguments); }
+                gtag('consent', 'default', {
+                    'ad_storage': 'denied',
+                    'ad_user_data': 'denied',
+                    'ad_personalization': 'denied',
+                    'analytics_storage': 'denied'
+                });
                 gtag('js', new Date());
                 gtag('config', 'G-5WJBKDMSTE');
             </script>
     <script>
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){ dataLayer.push(arguments); }
+                gtag('consent', 'default', {
+                    'ad_storage': 'denied',
+                    'ad_user_data': 'denied',
+                    'ad_personalization': 'denied',
+                    'analytics_storage': 'denied'
+                });
                 gtag('js', new Date());
                 gtag('config', 'G-5WJBKDMSTE');
             </script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'whats_new';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.datatables.net/2.2.0/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/buttons/3.2.6/js/dataTables.buttons.js"></script>
@@ -99,15 +112,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="1.5.0" />
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
 
   </head>
-  
-  
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
-
+  <body data-default-mode="light">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
   
   <div id="pst-scroll-pixel-helper"></div>
   
@@ -142,7 +159,7 @@
 </aside>
 
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
 <div class="bd-header__inner bd-page-width">
   <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
     <span class="fa-solid fa-bars"></span>
@@ -502,6 +519,7 @@
 <h3>Enhancements<a class="headerlink" href="#enhancements" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Add unified interactive macro table for dataset summary page with 58 metadata columns, SearchPanes filtering, paradigm distribution bar, and CSV export (<a class="reference external" href="https://github.com/NeuroTechX/moabb/issues/1043">#1043</a>).</p></li>
+<li><p>Add rich HTML repr for preprocessing pipeline transformers: pipelines now render as interactive sklearn diagrams in Jupyter notebooks and sphinx-gallery docs, showing the three-stage flow (Raw, Epochs, Array) with readable step names, event lists, and key parameters instead of raw dict dumps (by <a class="reference external" href="https://github.com/zmunro">Zach Munro</a> and <a class="reference external" href="https://github.com/bruAristimunha">Bruno Aristimunha</a>).</p></li>
 <li><p>Expose <code class="docutils literal notranslate"><span class="pre">motor_imagery</span></code> and <code class="docutils literal notranslate"><span class="pre">mental_arithmetic</span></code> keyword-only parameters on <a class="reference internal" href="generated/moabb.datasets.Shin2017A.html#moabb.datasets.Shin2017A" title="moabb.datasets.Shin2017A"><code class="xref py py-class docutils literal notranslate"><span class="pre">moabb.datasets.Shin2017A</span></code></a> (default: MI=True, MA=False) and <a class="reference internal" href="generated/moabb.datasets.Shin2017B.html#moabb.datasets.Shin2017B" title="moabb.datasets.Shin2017B"><code class="xref py py-class docutils literal notranslate"><span class="pre">moabb.datasets.Shin2017B</span></code></a> (default: MI=False, MA=True), allowing users to load both conditions simultaneously while preserving backward compatibility (by <a class="reference external" href="https://github.com/bruAristimunha">Bruno Aristimunha</a>)</p></li>
 <li><p>Add resting state annotations and EMG channel support to <code class="xref py py-class docutils literal notranslate"><span class="pre">moabb.datasets.Lee2019</span></code> resting state runs for BIDS export compatibility (by <a class="reference external" href="https://github.com/bruAristimunha">Bruno Aristimunha</a>)</p></li>
 <li><p>Skip zip extraction in <code class="xref py py-class docutils literal notranslate"><span class="pre">moabb.datasets.GuttmannFlury2025</span></code> when files are already extracted, with <code class="docutils literal notranslate"><span class="pre">/scratch</span></code> fallback for NFS filesystems on compute nodes (by <a class="reference external" href="https://github.com/bruAristimunha">Bruno Aristimunha</a>)</p></li>
@@ -527,6 +545,7 @@
 <li><p>Fix <a class="reference internal" href="generated/moabb.datasets.Chang2025.html#moabb.datasets.Chang2025" title="moabb.datasets.Chang2025"><code class="xref py py-class docutils literal notranslate"><span class="pre">moabb.datasets.Chang2025</span></code></a> BIDS conversion crash by gracefully skipping subjects with missing directories or <code class="docutils literal notranslate"><span class="pre">.set</span></code> files (by <a class="reference external" href="https://github.com/bruAristimunha">Bruno Aristimunha</a>)</p></li>
 <li><p>Fix <code class="xref py py-class docutils literal notranslate"><span class="pre">moabb.datasets.GuttmannFlury2025</span></code> BIDS export <code class="docutils literal notranslate"><span class="pre">OSError</span></code> by correcting channel types (<code class="docutils literal notranslate"><span class="pre">Trig</span></code> → stim, <code class="docutils literal notranslate"><span class="pre">HEO</span></code>/<code class="docutils literal notranslate"><span class="pre">VEO</span></code> → eog, <code class="docutils literal notranslate"><span class="pre">M1</span></code>/<code class="docutils literal notranslate"><span class="pre">M2</span></code> → misc) so trigger channel values no longer exceed EEG physical range limits (by <a class="reference external" href="https://github.com/bruAristimunha">Bruno Aristimunha</a>)</p></li>
 <li><p>Fix <code class="docutils literal notranslate"><span class="pre">numpy.void.get()</span></code> error in <code class="xref py py-class docutils literal notranslate"><span class="pre">moabb.datasets.Lee2019</span></code> resting state EMG channel handling (by <a class="reference external" href="https://github.com/bruAristimunha">Bruno Aristimunha</a>)</p></li>
+<li><p>Fix <a class="reference internal" href="generated/moabb.datasets.castillos2023.BaseCastillos2023.html#moabb.datasets.castillos2023.BaseCastillos2023" title="moabb.datasets.castillos2023.BaseCastillos2023"><code class="xref py py-class docutils literal notranslate"><span class="pre">moabb.datasets.castillos2023.BaseCastillos2023</span></code></a> extraction check using wrong directory name (<code class="docutils literal notranslate"><span class="pre">4Class-VEP</span></code> instead of <code class="docutils literal notranslate"><span class="pre">4Class-CVEP</span></code>), causing re-extraction on every call, and replace fragile <code class="docutils literal notranslate"><span class="pre">rstrip</span></code> path derivation with proper <code class="docutils literal notranslate"><span class="pre">os.path</span></code> manipulation (by <a class="reference external" href="https://github.com/bruAristimunha">Bruno Aristimunha</a>)</p></li>
 <li><p>Fix data path lookup in <a class="reference internal" href="generated/moabb.datasets.Forenzo2023.html#moabb.datasets.Forenzo2023" title="moabb.datasets.Forenzo2023"><code class="xref py py-class docutils literal notranslate"><span class="pre">moabb.datasets.Forenzo2023</span></code></a> that makes MOABB unable to find the downloaded data (<a class="reference external" href="https://github.com/NeuroTechX/moabb/issues/1048">#1048</a> by <a class="reference external" href="https://github.com/davisethan">Ethan Davis</a>).</p></li>
 </ul>
 </section>
@@ -1419,8 +1438,8 @@ to extend beyond actual motor imagery duration into adjacent trials’ resting p
     class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> On this page
   </div>
-  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
-    <ul class="visible nav section-nav flex-column">
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-6-source-github">Version 1.6  (Source - GitHub)</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#enhancements">Enhancements</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#api-changes">API changes</a></li>
@@ -1567,8 +1586,8 @@ to extend beyond actual motor imagery duration into adjacent trials’ resting p
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+  <script defer src="_static/scripts/bootstrap.js?digest=7f76b32a3354e82990f2"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=7f76b32a3354e82990f2"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -1594,7 +1613,7 @@ to extend beyond actual motor imagery duration into adjacent trials’ resting p
         <div class="footer-item">
 <p class="theme-version">
   <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.17.0.
 </p></div>
       
     </div>

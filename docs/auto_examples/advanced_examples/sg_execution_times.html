@@ -31,8 +31,8 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=7f76b32a3354e82990f2" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=7f76b32a3354e82990f2" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -51,10 +51,10 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedheader/4.0.6/css/fixedHeader.dataTables.css" />
   
   <!-- So that users can add custom icons -->
-  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <script defer src="../../_static/scripts/fontawesome.js?digest=7f76b32a3354e82990f2"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=7f76b32a3354e82990f2" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=7f76b32a3354e82990f2" />
 
     <script src="../../_static/jquery.js?v=5d32c60e"></script>
     <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
@@ -68,16 +68,29 @@
     <script>
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){ dataLayer.push(arguments); }
+                gtag('consent', 'default', {
+                    'ad_storage': 'denied',
+                    'ad_user_data': 'denied',
+                    'ad_personalization': 'denied',
+                    'analytics_storage': 'denied'
+                });
                 gtag('js', new Date());
                 gtag('config', 'G-5WJBKDMSTE');
             </script>
     <script>
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){ dataLayer.push(arguments); }
+                gtag('consent', 'default', {
+                    'ad_storage': 'denied',
+                    'ad_user_data': 'denied',
+                    'ad_personalization': 'denied',
+                    'analytics_storage': 'denied'
+                });
                 gtag('js', new Date());
                 gtag('config', 'G-5WJBKDMSTE');
             </script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'auto_examples/advanced_examples/sg_execution_times';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.datatables.net/2.2.0/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/buttons/3.2.6/js/dataTables.buttons.js"></script>
@@ -98,15 +111,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="1.5.0" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
 
   </head>
-  
-  
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
-
+  <body data-default-mode="light">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
   
   <div id="pst-scroll-pixel-helper"></div>
   
@@ -141,7 +158,7 @@
 </aside>
 
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
 <div class="bd-header__inner bd-page-width">
   <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
     <span class="fa-solid fa-bars"></span>
@@ -488,7 +505,7 @@
   
   <section id="computation-times">
 <span id="sphx-glr-auto-examples-advanced-examples-sg-execution-times"></span><h1>Computation times<a class="headerlink" href="#computation-times" title="Link to this heading">#</a></h1>
-<p><strong>25:28.136</strong> total execution time for 15 files <strong>from auto_examples/advanced_examples</strong>:</p>
+<p><strong>27:26.252</strong> total execution time for 15 files <strong>from auto_examples/advanced_examples</strong>:</p>
 <div class="docutils container">
 <style scoped>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
@@ -510,56 +527,56 @@ $(document).ready( function () {
 </thead>
 <tbody>
 <tr class="row-even"><td><p><a class="reference internal" href="plot_select_electrodes_resample.html#sphx-glr-auto-examples-advanced-examples-plot-select-electrodes-resample-py"><span class="std std-ref">Select Electrodes and Resampling</span></a> (<code class="docutils literal notranslate"><span class="pre">plot_select_electrodes_resample.py</span></code>)</p></td>
-<td><p>10:37.730</p></td>
-<td><p>0.0</p></td>
+<td><p>10:39.599</p></td>
+<td><p>776.3</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="plot_sliding_estimator.html#sphx-glr-auto-examples-advanced-examples-plot-sliding-estimator-py"><span class="std std-ref">Time-Resolved Decoding with SlidingEstimator</span></a> (<code class="docutils literal notranslate"><span class="pre">plot_sliding_estimator.py</span></code>)</p></td>
-<td><p>05:03.298</p></td>
-<td><p>0.0</p></td>
+<td><p>06:54.109</p></td>
+<td><p>712.2</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="plot_mne_and_scikit_estimators.html#sphx-glr-auto-examples-advanced-examples-plot-mne-and-scikit-estimators-py"><span class="std std-ref">MNE Epochs-based pipelines</span></a> (<code class="docutils literal notranslate"><span class="pre">plot_mne_and_scikit_estimators.py</span></code>)</p></td>
-<td><p>02:47.835</p></td>
-<td><p>0.0</p></td>
+<td><p>02:47.377</p></td>
+<td><p>694.0</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="plot_statistical_analysis.html#sphx-glr-auto-examples-advanced-examples-plot-statistical-analysis-py"><span class="std std-ref">Statistical Analysis and Chance Level Assessment</span></a> (<code class="docutils literal notranslate"><span class="pre">plot_statistical_analysis.py</span></code>)</p></td>
-<td><p>01:55.657</p></td>
-<td><p>0.0</p></td>
+<td><p>01:56.110</p></td>
+<td><p>754.9</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="plot_pseudoonline.html#sphx-glr-auto-examples-advanced-examples-plot-pseudoonline-py"><span class="std std-ref">Pseudo-Online Motor Imagery with Sliding Window</span></a> (<code class="docutils literal notranslate"><span class="pre">plot_pseudoonline.py</span></code>)</p></td>
-<td><p>01:19.165</p></td>
-<td><p>0.0</p></td>
+<td><p>01:18.109</p></td>
+<td><p>872.6</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="plot_dreyer_clf_scores_vs_subj_info.html#sphx-glr-auto-examples-advanced-examples-plot-dreyer-clf-scores-vs-subj-info-py"><span class="std std-ref">Examples of analysis of a Dreyer2023 A dataset.</span></a> (<code class="docutils literal notranslate"><span class="pre">plot_dreyer_clf_scores_vs_subj_info.py</span></code>)</p></td>
-<td><p>01:17.855</p></td>
-<td><p>0.0</p></td>
+<td><p>01:17.175</p></td>
+<td><p>2517.8</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="plot_hinss2021_classification.html#sphx-glr-auto-examples-advanced-examples-plot-hinss2021-classification-py"><span class="std std-ref">Hinss2021 classification example</span></a> (<code class="docutils literal notranslate"><span class="pre">plot_hinss2021_classification.py</span></code>)</p></td>
-<td><p>01:00.911</p></td>
-<td><p>0.0</p></td>
+<td><p>01:04.656</p></td>
+<td><p>767.0</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="plot_grid_search_withinsession.html#sphx-glr-auto-examples-advanced-examples-plot-grid-search-withinsession-py"><span class="std std-ref">GridSearch within a session</span></a> (<code class="docutils literal notranslate"><span class="pre">plot_grid_search_withinsession.py</span></code>)</p></td>
-<td><p>00:31.999</p></td>
-<td><p>0.0</p></td>
+<td><p>00:35.509</p></td>
+<td><p>602.8</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="plot_filterbank_csp_vs_csp.html#sphx-glr-auto-examples-advanced-examples-plot-filterbank-csp-vs-csp-py"><span class="std std-ref">FilterBank CSP versus CSP</span></a> (<code class="docutils literal notranslate"><span class="pre">plot_filterbank_csp_vs_csp.py</span></code>)</p></td>
-<td><p>00:20.563</p></td>
-<td><p>0.0</p></td>
+<td><p>00:18.942</p></td>
+<td><p>663.8</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="plot_use_an_X_y_dataset.html#sphx-glr-auto-examples-advanced-examples-plot-use-an-x-y-dataset-py"><span class="std std-ref">Using X y data (epoched data) instead of continuous signal</span></a> (<code class="docutils literal notranslate"><span class="pre">plot_use_an_X_y_dataset.py</span></code>)</p></td>
-<td><p>00:15.725</p></td>
-<td><p>0.0</p></td>
+<td><p>00:16.144</p></td>
+<td><p>323.0</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="plot_pre_processing_steps.html#sphx-glr-auto-examples-advanced-examples-plot-pre-processing-steps-py"><span class="std std-ref">Playing with the pre-processing steps</span></a> (<code class="docutils literal notranslate"><span class="pre">plot_pre_processing_steps.py</span></code>)</p></td>
-<td><p>00:08.823</p></td>
-<td><p>0.0</p></td>
+<td><p>00:08.675</p></td>
+<td><p>626.8</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="plot_dataset_bubbles.html#sphx-glr-auto-examples-advanced-examples-plot-dataset-bubbles-py"><span class="std std-ref">Dataset bubble plot</span></a> (<code class="docutils literal notranslate"><span class="pre">plot_dataset_bubbles.py</span></code>)</p></td>
-<td><p>00:06.396</p></td>
-<td><p>0.0</p></td>
+<td><p>00:05.548</p></td>
+<td><p>332.2</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="plot_phmd_ml_spectrum.html#sphx-glr-auto-examples-advanced-examples-plot-phmd-ml-spectrum-py"><span class="std std-ref">Spectral analysis of the trials</span></a> (<code class="docutils literal notranslate"><span class="pre">plot_phmd_ml_spectrum.py</span></code>)</p></td>
-<td><p>00:02.178</p></td>
-<td><p>0.0</p></td>
+<td><p>00:04.300</p></td>
+<td><p>376.4</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="noplot_mne_features_pipeline.html#sphx-glr-auto-examples-advanced-examples-noplot-mne-features-pipeline-py"><span class="std std-ref">Pipelines using the mne-features library</span></a> (<code class="docutils literal notranslate"><span class="pre">noplot_mne_features_pipeline.py</span></code>)</p></td>
 <td><p>00:00.000</p></td>
@@ -603,8 +620,8 @@ $(document).ready( function () {
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+  <script defer src="../../_static/scripts/bootstrap.js?digest=7f76b32a3354e82990f2"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=7f76b32a3354e82990f2"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -630,7 +647,7 @@ $(document).ready( function () {
         <div class="footer-item">
 <p class="theme-version">
   <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.17.0.
 </p></div>
       
     </div>

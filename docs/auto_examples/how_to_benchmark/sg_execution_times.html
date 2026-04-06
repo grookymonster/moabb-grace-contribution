@@ -31,8 +31,8 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=7f76b32a3354e82990f2" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=7f76b32a3354e82990f2" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -51,10 +51,10 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedheader/4.0.6/css/fixedHeader.dataTables.css" />
   
   <!-- So that users can add custom icons -->
-  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <script defer src="../../_static/scripts/fontawesome.js?digest=7f76b32a3354e82990f2"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=7f76b32a3354e82990f2" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=7f76b32a3354e82990f2" />
 
     <script src="../../_static/jquery.js?v=5d32c60e"></script>
     <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
@@ -68,16 +68,29 @@
     <script>
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){ dataLayer.push(arguments); }
+                gtag('consent', 'default', {
+                    'ad_storage': 'denied',
+                    'ad_user_data': 'denied',
+                    'ad_personalization': 'denied',
+                    'analytics_storage': 'denied'
+                });
                 gtag('js', new Date());
                 gtag('config', 'G-5WJBKDMSTE');
             </script>
     <script>
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){ dataLayer.push(arguments); }
+                gtag('consent', 'default', {
+                    'ad_storage': 'denied',
+                    'ad_user_data': 'denied',
+                    'ad_personalization': 'denied',
+                    'analytics_storage': 'denied'
+                });
                 gtag('js', new Date());
                 gtag('config', 'G-5WJBKDMSTE');
             </script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'auto_examples/how_to_benchmark/sg_execution_times';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.datatables.net/2.2.0/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/buttons/3.2.6/js/dataTables.buttons.js"></script>
@@ -98,15 +111,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="1.5.0" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
 
   </head>
-  
-  
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
-
+  <body data-default-mode="light">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
   
   <div id="pst-scroll-pixel-helper"></div>
   
@@ -141,7 +158,7 @@
 </aside>
 
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
 <div class="bd-header__inner bd-page-width">
   <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
     <span class="fa-solid fa-bars"></span>
@@ -488,7 +505,7 @@
   
   <section id="computation-times">
 <span id="sphx-glr-auto-examples-how-to-benchmark-sg-execution-times"></span><h1>Computation times<a class="headerlink" href="#computation-times" title="Link to this heading">#</a></h1>
-<p><strong>04:57.141</strong> total execution time for 4 files <strong>from auto_examples/how_to_benchmark</strong>:</p>
+<p><strong>04:55.013</strong> total execution time for 4 files <strong>from auto_examples/how_to_benchmark</strong>:</p>
 <div class="docutils container">
 <style scoped>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
@@ -510,16 +527,16 @@ $(document).ready( function () {
 </thead>
 <tbody>
 <tr class="row-even"><td><p><a class="reference internal" href="plot_benchmark_grid_search.html#sphx-glr-auto-examples-how-to-benchmark-plot-benchmark-grid-search-py"><span class="std std-ref">Benchmarking with MOABB with Grid Search</span></a> (<code class="docutils literal notranslate"><span class="pre">plot_benchmark_grid_search.py</span></code>)</p></td>
-<td><p>03:03.089</p></td>
-<td><p>0.0</p></td>
+<td><p>02:55.161</p></td>
+<td><p>530.5</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="plot_benchmark.html#sphx-glr-auto-examples-how-to-benchmark-plot-benchmark-py"><span class="std std-ref">Benchmarking with MOABB</span></a> (<code class="docutils literal notranslate"><span class="pre">plot_benchmark.py</span></code>)</p></td>
-<td><p>01:40.783</p></td>
-<td><p>0.0</p></td>
+<td><p>01:43.572</p></td>
+<td><p>504.6</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="plot_within_session_splitter.html#sphx-glr-auto-examples-how-to-benchmark-plot-within-session-splitter-py"><span class="std std-ref">Tutorial: Within-Session Splitting on Real MI Dataset</span></a> (<code class="docutils literal notranslate"><span class="pre">plot_within_session_splitter.py</span></code>)</p></td>
-<td><p>00:13.269</p></td>
-<td><p>0.0</p></td>
+<td><p>00:16.280</p></td>
+<td><p>724.2</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="noplot_example_codecarbon.html#sphx-glr-auto-examples-how-to-benchmark-noplot-example-codecarbon-py"><span class="std std-ref">Benchmarking with MOABB showing the CO2 footprint</span></a> (<code class="docutils literal notranslate"><span class="pre">noplot_example_codecarbon.py</span></code>)</p></td>
 <td><p>00:00.000</p></td>
@@ -559,8 +576,8 @@ $(document).ready( function () {
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+  <script defer src="../../_static/scripts/bootstrap.js?digest=7f76b32a3354e82990f2"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=7f76b32a3354e82990f2"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -586,7 +603,7 @@ $(document).ready( function () {
         <div class="footer-item">
 <p class="theme-version">
   <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.17.0.
 </p></div>
       
     </div>

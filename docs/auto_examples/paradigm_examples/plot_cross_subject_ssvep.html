@@ -31,8 +31,8 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=7f76b32a3354e82990f2" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=7f76b32a3354e82990f2" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -51,10 +51,10 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedheader/4.0.6/css/fixedHeader.dataTables.css" />
   
   <!-- So that users can add custom icons -->
-  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <script defer src="../../_static/scripts/fontawesome.js?digest=7f76b32a3354e82990f2"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=7f76b32a3354e82990f2" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=7f76b32a3354e82990f2" />
 
     <script src="../../_static/jquery.js?v=5d32c60e"></script>
     <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
@@ -68,16 +68,29 @@
     <script>
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){ dataLayer.push(arguments); }
+                gtag('consent', 'default', {
+                    'ad_storage': 'denied',
+                    'ad_user_data': 'denied',
+                    'ad_personalization': 'denied',
+                    'analytics_storage': 'denied'
+                });
                 gtag('js', new Date());
                 gtag('config', 'G-5WJBKDMSTE');
             </script>
     <script>
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){ dataLayer.push(arguments); }
+                gtag('consent', 'default', {
+                    'ad_storage': 'denied',
+                    'ad_user_data': 'denied',
+                    'ad_personalization': 'denied',
+                    'analytics_storage': 'denied'
+                });
                 gtag('js', new Date());
                 gtag('config', 'G-5WJBKDMSTE');
             </script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'auto_examples/paradigm_examples/plot_cross_subject_ssvep';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.datatables.net/2.2.0/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/buttons/3.2.6/js/dataTables.buttons.js"></script>
@@ -100,15 +113,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="1.5.0" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
 
   </head>
-  
-  
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
-
+  <body data-default-mode="light">
   
   
   <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
   
   <div id="pst-scroll-pixel-helper"></div>
   
@@ -143,7 +160,7 @@
 </aside>
 
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
 <div class="bd-header__inner bd-page-width">
   <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
     <span class="fa-solid fa-bars"></span>
@@ -441,7 +458,14 @@
   </div>
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar"><svg class="pst-icon svg-inline--fa" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
         <div class="sidebar-primary-item">
+
 <nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
@@ -637,12 +661,6 @@ class, as used in the filterbank motor imagery paradigms.</p>
 <a href="../../generated/moabb.paradigms.FilterBankSSVEP.html#moabb.paradigms.FilterBankSSVEP" title="moabb.paradigms.FilterBankSSVEP" class="sphx-glr-backref-module-moabb-paradigms sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">paradigm_fb</span></a> <span class="o">=</span> <a href="../../generated/moabb.paradigms.FilterBankSSVEP.html#moabb.paradigms.FilterBankSSVEP" title="moabb.paradigms.FilterBankSSVEP" class="sphx-glr-backref-module-moabb-paradigms sphx-glr-backref-type-py-class"><span class="n">FilterBankSSVEP</span></a><span class="p">(</span><span class="n">filters</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">n_classes</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-03-30 09:10:41,443 WARNING MainThread moabb.paradigms.ssvep Choosing the first 3 classes from all possible events
-2026-03-30 09:10:41,443 WARNING MainThread moabb.paradigms.ssvep Choosing the first 3 classes from all possible events
-2026-03-30 09:10:41,443 WARNING MainThread moabb.paradigms.ssvep Choosing the first 3 classes from all possible events
-2026-03-30 09:10:41,443 WARNING MainThread moabb.paradigms.ssvep Choosing the first 3 classes from all possible events
-</pre></div>
-</div>
 <p>Classes are defined by the frequency of the stimulation, here we use
 the first three frequencies of the dataset, 13, 17, and 21 Hz.
 The evaluation function uses a LabelEncoder, transforming them
@@ -695,962 +713,388 @@ be overwritten if necessary.</p>
 <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">results</span></a> <span class="o">=</span> <a href="../../generated/moabb.evaluations.base.BaseEvaluation.html#moabb.evaluations.base.BaseEvaluation.process" title="moabb.evaluations.base.BaseEvaluation.process" class="sphx-glr-backref-module-moabb-evaluations-base sphx-glr-backref-type-py-method"><span class="n">evaluation</span><span class="o">.</span><span class="n">process</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pipelines</span></a><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Downloading data from &#39;https://zenodo.org/record/2392979/files/subject04_run1_raw.fif&#39; to file &#39;/home/runner/work/moabb/moabb/mne_data/MNE-ssvepexo-data/zenodo/2392979/subject04_run1_raw.fif&#39;.
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>  0%|                                              | 0.00/2.27M [00:00&lt;?, ?B/s]
+  0%|                                     | 6.14k/2.27M [00:00&lt;00:43, 51.7kB/s]
+  4%|█▋                                    | 98.3k/2.27M [00:00&lt;00:06, 347kB/s]
+ 11%|████▍                                  | 259k/2.27M [00:00&lt;00:03, 586kB/s]
+ 21%|████████▎                              | 484k/2.27M [00:00&lt;00:02, 824kB/s]
+ 34%|█████████████                         | 779k/2.27M [00:00&lt;00:01, 1.32MB/s]
+ 44%|████████████████▌                     | 992k/2.27M [00:00&lt;00:01, 1.24MB/s]
+ 66%|████████████████████████▍            | 1.50M/2.27M [00:01&lt;00:00, 2.09MB/s]
+ 95%|███████████████████████████████████  | 2.15M/2.27M [00:01&lt;00:00, 2.60MB/s]
+  0%|                                              | 0.00/2.27M [00:00&lt;?, ?B/s]
+100%|█████████████████████████████████████| 2.27M/2.27M [00:00&lt;00:00, 10.7GB/s]
+
+  0%|                                              | 0.00/2.13M [00:00&lt;?, ?B/s]
+  1%|▏                                    | 12.3k/2.13M [00:00&lt;00:22, 92.2kB/s]
+  4%|█▋                                    | 95.2k/2.13M [00:00&lt;00:06, 317kB/s]
+  9%|███▌                                   | 194k/2.13M [00:00&lt;00:04, 408kB/s]
+ 15%|█████▉                                 | 325k/2.13M [00:00&lt;00:03, 515kB/s]
+ 21%|████████▏                              | 450k/2.13M [00:00&lt;00:02, 561kB/s]
+ 27%|██████████▍                            | 569k/2.13M [00:01&lt;00:02, 696kB/s]
+ 32%|████████████▍                          | 678k/2.13M [00:01&lt;00:02, 643kB/s]
+ 41%|███████████████▉                       | 868k/2.13M [00:01&lt;00:01, 913kB/s]
+ 48%|██████████████████▎                   | 1.02M/2.13M [00:01&lt;00:01, 866kB/s]
+ 56%|████████████████████▋                | 1.19M/2.13M [00:01&lt;00:00, 1.04MB/s]
+ 62%|███████████████████████▍              | 1.31M/2.13M [00:01&lt;00:00, 882kB/s]
+ 68%|█████████████████████████▊            | 1.45M/2.13M [00:01&lt;00:00, 818kB/s]
+ 78%|████████████████████████████▉        | 1.67M/2.13M [00:02&lt;00:00, 1.10MB/s]
+ 84%|████████████████████████████████      | 1.80M/2.13M [00:02&lt;00:00, 943kB/s]
+ 90%|██████████████████████████████████    | 1.91M/2.13M [00:02&lt;00:00, 815kB/s]
+ 98%|█████████████████████████████████████▏| 2.08M/2.13M [00:02&lt;00:00, 998kB/s]
+  0%|                                              | 0.00/2.13M [00:00&lt;?, ?B/s]
+100%|█████████████████████████████████████| 2.13M/2.13M [00:00&lt;00:00, 6.45GB/s]
 
   0%|                                              | 0.00/2.29M [00:00&lt;?, ?B/s]
-  0%|▏                                    | 10.2k/2.29M [00:00&lt;00:33, 68.8kB/s]
-  2%|▋                                     | 41.0k/2.29M [00:00&lt;00:13, 170kB/s]
-  4%|█▌                                    | 96.3k/2.29M [00:00&lt;00:07, 298kB/s]
-  6%|██▎                                    | 139k/2.29M [00:00&lt;00:06, 323kB/s]
- 10%|███▉                                   | 232k/2.29M [00:00&lt;00:04, 486kB/s]
- 13%|█████▏                                 | 306k/2.29M [00:00&lt;00:03, 529kB/s]
- 18%|██████▊                                | 402k/2.29M [00:00&lt;00:03, 617kB/s]
- 22%|████████▌                              | 501k/2.29M [00:00&lt;00:02, 678kB/s]
- 25%|█████████▉                             | 583k/2.29M [00:01&lt;00:02, 682kB/s]
- 29%|███████████▎                           | 666k/2.29M [00:01&lt;00:02, 684kB/s]
- 32%|████████████▍                          | 734k/2.29M [00:01&lt;00:02, 651kB/s]
- 37%|██████████████▎                        | 843k/2.29M [00:01&lt;00:01, 726kB/s]
- 42%|████████████████▎                      | 957k/2.29M [00:01&lt;00:01, 799kB/s]
- 45%|█████████████████▏                    | 1.04M/2.29M [00:01&lt;00:01, 762kB/s]
- 50%|██████████████████▉                   | 1.14M/2.29M [00:01&lt;00:01, 787kB/s]
- 55%|████████████████████▊                 | 1.26M/2.29M [00:01&lt;00:01, 824kB/s]
- 58%|██████████████████████▏               | 1.34M/2.29M [00:02&lt;00:01, 784kB/s]
- 62%|███████████████████████▌              | 1.42M/2.29M [00:02&lt;00:01, 755kB/s]
- 66%|█████████████████████████▏            | 1.52M/2.29M [00:02&lt;00:00, 777kB/s]
- 72%|███████████████████████████▍          | 1.65M/2.29M [00:02&lt;00:00, 874kB/s]
- 77%|█████████████████████████████▎        | 1.77M/2.29M [00:02&lt;00:00, 900kB/s]
- 81%|██████████████████████████████▊       | 1.86M/2.29M [00:02&lt;00:00, 857kB/s]
- 85%|████████████████████████████████▎     | 1.95M/2.29M [00:02&lt;00:00, 827kB/s]
- 93%|██████████████████████████████████▎  | 2.13M/2.29M [00:02&lt;00:00, 1.03MB/s]
- 98%|████████████████████████████████████▍| 2.26M/2.29M [00:03&lt;00:00, 1.04MB/s]
+  1%|▏                                     | 12.3k/2.29M [00:00&lt;00:21, 106kB/s]
+  4%|█▍                                    | 90.1k/2.29M [00:00&lt;00:05, 396kB/s]
+  7%|██▊                                    | 169k/2.29M [00:00&lt;00:04, 456kB/s]
+ 15%|█████▉                                 | 349k/2.29M [00:00&lt;00:02, 792kB/s]
+ 23%|████████▊                              | 519k/2.29M [00:00&lt;00:01, 915kB/s]
+ 35%|█████████████▍                        | 814k/2.29M [00:00&lt;00:01, 1.32MB/s]
+ 50%|██████████████████▍                  | 1.14M/2.29M [00:00&lt;00:00, 1.60MB/s]
+ 74%|███████████████████████████▎         | 1.70M/2.29M [00:01&lt;00:00, 2.56MB/s]
   0%|                                              | 0.00/2.29M [00:00&lt;?, ?B/s]
-100%|█████████████████████████████████████| 2.29M/2.29M [00:00&lt;00:00, 16.8GB/s]
-SHA256 hash of downloaded file: 0b62acb6716f9f56880391a2b2b58f262e6c80a31719d11f9b0012bfdf164d94
-Use this value as the &#39;known_hash&#39; argument of &#39;pooch.retrieve&#39; to ensure that the file hasn&#39;t changed if it is downloaded again in the future.
-Downloading data from &#39;https://zenodo.org/record/2392979/files/subject04_run2_raw.fif&#39; to file &#39;/home/runner/work/moabb/moabb/mne_data/MNE-ssvepexo-data/zenodo/2392979/subject04_run2_raw.fif&#39;.
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
+100%|█████████████████████████████████████| 2.29M/2.29M [00:00&lt;00:00, 8.17GB/s]
 
   0%|                                              | 0.00/2.06M [00:00&lt;?, ?B/s]
-  0%|                                     | 1.02k/2.06M [00:00&lt;04:52, 7.05kB/s]
-  2%|▊                                     | 41.0k/2.06M [00:00&lt;00:10, 184kB/s]
-  4%|█▋                                    | 90.1k/2.06M [00:00&lt;00:06, 285kB/s]
-  9%|███▍                                   | 181k/2.06M [00:00&lt;00:04, 416kB/s]
- 13%|████▉                                  | 262k/2.06M [00:00&lt;00:03, 502kB/s]
- 20%|███████▋                               | 406k/2.06M [00:00&lt;00:02, 599kB/s]
- 24%|█████████▌                             | 504k/2.06M [00:00&lt;00:02, 662kB/s]
- 28%|██████████▊                            | 570k/2.06M [00:01&lt;00:02, 633kB/s]
- 33%|████████████▉                          | 683k/2.06M [00:01&lt;00:01, 720kB/s]
- 38%|██████████████▊                        | 781k/2.06M [00:01&lt;00:01, 750kB/s]
- 45%|█████████████████▌                     | 929k/2.06M [00:01&lt;00:01, 893kB/s]
- 54%|███████████████████▉                 | 1.11M/2.06M [00:01&lt;00:00, 1.07MB/s]
- 59%|█████████████████████▉               | 1.22M/2.06M [00:01&lt;00:00, 1.02MB/s]
- 64%|████████████████████████▍             | 1.32M/2.06M [00:01&lt;00:00, 976kB/s]
- 70%|██████████████████████████▍           | 1.44M/2.06M [00:01&lt;00:00, 975kB/s]
- 75%|████████████████████████████▎         | 1.53M/2.06M [00:02&lt;00:00, 924kB/s]
- 79%|██████████████████████████████        | 1.63M/2.06M [00:02&lt;00:00, 883kB/s]
- 83%|███████████████████████████████▋      | 1.72M/2.06M [00:02&lt;00:00, 842kB/s]
- 89%|█████████████████████████████████▋    | 1.83M/2.06M [00:02&lt;00:00, 870kB/s]
- 94%|███████████████████████████████████▊  | 1.94M/2.06M [00:02&lt;00:00, 898kB/s]
- 99%|█████████████████████████████████████▋| 2.04M/2.06M [00:02&lt;00:00, 875kB/s]
+  1%|▏                                    | 12.3k/2.06M [00:00&lt;00:22, 92.9kB/s]
+  4%|█▋                                    | 89.1k/2.06M [00:00&lt;00:06, 301kB/s]
+ 12%|████▊                                  | 253k/2.06M [00:00&lt;00:03, 572kB/s]
+ 27%|██████████▍                            | 549k/2.06M [00:00&lt;00:01, 973kB/s]
+ 50%|██████████████████▍                  | 1.02M/2.06M [00:00&lt;00:00, 1.53MB/s]
+ 74%|███████████████████████████▍         | 1.52M/2.06M [00:00&lt;00:00, 2.28MB/s]
   0%|                                              | 0.00/2.06M [00:00&lt;?, ?B/s]
-100%|█████████████████████████████████████| 2.06M/2.06M [00:00&lt;00:00, 16.2GB/s]
-SHA256 hash of downloaded file: cb9013ee0eb75837bdfc5840070130c6e34345b333517243359201eadb8baffc
-Use this value as the &#39;known_hash&#39; argument of &#39;pooch.retrieve&#39; to ensure that the file hasn&#39;t changed if it is downloaded again in the future.
-Downloading data from &#39;https://zenodo.org/record/2392979/files/subject05_run1_raw.fif&#39; to file &#39;/home/runner/work/moabb/moabb/mne_data/MNE-ssvepexo-data/zenodo/2392979/subject05_run1_raw.fif&#39;.
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
+100%|█████████████████████████████████████| 2.06M/2.06M [00:00&lt;00:00, 7.44GB/s]
 
   0%|                                              | 0.00/2.12M [00:00&lt;?, ?B/s]
-  1%|▏                                    | 11.3k/2.12M [00:00&lt;00:26, 78.5kB/s]
-  2%|▋                                     | 41.0k/2.12M [00:00&lt;00:12, 172kB/s]
-  4%|█▋                                    | 91.1k/2.12M [00:00&lt;00:07, 281kB/s]
-  9%|███▎                                   | 181k/2.12M [00:00&lt;00:04, 461kB/s]
- 11%|████▏                                  | 228k/2.12M [00:00&lt;00:04, 442kB/s]
- 13%|█████▏                                 | 285k/2.12M [00:00&lt;00:04, 453kB/s]
- 17%|██████▌                                | 359k/2.12M [00:00&lt;00:03, 510kB/s]
- 22%|████████▌                              | 465k/2.12M [00:00&lt;00:02, 628kB/s]
- 26%|██████████                             | 547k/2.12M [00:01&lt;00:02, 646kB/s]
- 30%|███████████▊                           | 645k/2.12M [00:01&lt;00:02, 701kB/s]
- 36%|█████████████▉                         | 760k/2.12M [00:01&lt;00:01, 783kB/s]
- 42%|████████████████▍                      | 891k/2.12M [00:01&lt;00:01, 878kB/s]
- 47%|██████████████████▏                    | 988k/2.12M [00:01&lt;00:01, 857kB/s]
- 55%|████████████████████▍                | 1.17M/2.12M [00:01&lt;00:00, 1.05MB/s]
- 60%|██████████████████████▏              | 1.27M/2.12M [00:01&lt;00:00, 1.01MB/s]
- 65%|████████████████████████▋             | 1.38M/2.12M [00:01&lt;00:00, 960kB/s]
- 69%|██████████████████████████▍           | 1.47M/2.12M [00:02&lt;00:00, 915kB/s]
- 76%|████████████████████████████▊         | 1.61M/2.12M [00:02&lt;00:00, 986kB/s]
- 81%|██████████████████████████████▉       | 1.72M/2.12M [00:02&lt;00:00, 980kB/s]
- 87%|████████████████████████████████▉     | 1.84M/2.12M [00:02&lt;00:00, 975kB/s]
- 94%|██████████████████████████████████▋  | 1.99M/2.12M [00:02&lt;00:00, 1.05MB/s]
- 99%|████████████████████████████████████▍| 2.09M/2.12M [00:02&lt;00:00, 1.00MB/s]
+  0%|                                     | 1.02k/2.12M [00:00&lt;04:06, 8.60kB/s]
+  4%|█▌                                    | 84.0k/2.12M [00:00&lt;00:06, 299kB/s]
+ 10%|███▋                                   | 202k/2.12M [00:00&lt;00:03, 527kB/s]
+ 18%|███████▏                               | 389k/2.12M [00:00&lt;00:02, 796kB/s]
+ 30%|███████████▎                          | 632k/2.12M [00:00&lt;00:01, 1.23MB/s]
+ 38%|██████████████▌                       | 815k/2.12M [00:00&lt;00:01, 1.27MB/s]
+ 49%|██████████████████▏                  | 1.04M/2.12M [00:01&lt;00:00, 1.34MB/s]
+ 68%|█████████████████████████▎           | 1.45M/2.12M [00:01&lt;00:00, 2.01MB/s]
+ 97%|███████████████████████████████████▉ | 2.06M/2.12M [00:01&lt;00:00, 2.81MB/s]
   0%|                                              | 0.00/2.12M [00:00&lt;?, ?B/s]
-100%|█████████████████████████████████████| 2.12M/2.12M [00:00&lt;00:00, 8.10GB/s]
-SHA256 hash of downloaded file: ce682ca6aedb88a61154f7ef0233ba27ccf59d6c87d58d37cd6bd240743a4bfd
-Use this value as the &#39;known_hash&#39; argument of &#39;pooch.retrieve&#39; to ensure that the file hasn&#39;t changed if it is downloaded again in the future.
-Downloading data from &#39;https://zenodo.org/record/2392979/files/subject05_run2_raw.fif&#39; to file &#39;/home/runner/work/moabb/moabb/mne_data/MNE-ssvepexo-data/zenodo/2392979/subject05_run2_raw.fif&#39;.
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
+100%|█████████████████████████████████████| 2.12M/2.12M [00:00&lt;00:00, 11.0GB/s]
 
   0%|                                              | 0.00/2.47M [00:00&lt;?, ?B/s]
-  0%|▏                                    | 12.3k/2.47M [00:00&lt;00:29, 83.6kB/s]
-  1%|▌                                     | 35.8k/2.47M [00:00&lt;00:16, 145kB/s]
-  4%|█▍                                    | 95.2k/2.47M [00:00&lt;00:07, 300kB/s]
-  7%|██▋                                    | 169k/2.47M [00:00&lt;00:05, 423kB/s]
-  9%|███▌                                   | 229k/2.47M [00:00&lt;00:04, 454kB/s]
- 12%|████▋                                  | 298k/2.47M [00:00&lt;00:04, 495kB/s]
- 16%|██████▍                                | 407k/2.47M [00:00&lt;00:03, 631kB/s]
- 22%|████████▍                              | 537k/2.47M [00:00&lt;00:02, 774kB/s]
- 25%|█████████▊                             | 618k/2.47M [00:01&lt;00:02, 748kB/s]
- 29%|███████████▎                           | 717k/2.47M [00:01&lt;00:02, 773kB/s]
- 32%|████████████▌                          | 799k/2.47M [00:01&lt;00:02, 749kB/s]
- 36%|█████████████▉                         | 881k/2.47M [00:01&lt;00:02, 732kB/s]
- 39%|███████████████                        | 954k/2.47M [00:01&lt;00:02, 698kB/s]
- 42%|████████████████                      | 1.04M/2.47M [00:01&lt;00:02, 714kB/s]
- 45%|█████████████████▏                    | 1.12M/2.47M [00:01&lt;00:01, 680kB/s]
- 50%|███████████████████                   | 1.24M/2.47M [00:01&lt;00:01, 793kB/s]
- 54%|████████████████████▌                 | 1.34M/2.47M [00:02&lt;00:01, 802kB/s]
- 58%|██████████████████████                | 1.44M/2.47M [00:02&lt;00:01, 809kB/s]
- 61%|███████████████████████▎              | 1.52M/2.47M [00:02&lt;00:01, 772kB/s]
- 67%|█████████████████████████▌            | 1.67M/2.47M [00:02&lt;00:00, 910kB/s]
- 71%|███████████████████████████           | 1.76M/2.47M [00:02&lt;00:00, 866kB/s]
- 75%|████████████████████████████▎         | 1.84M/2.47M [00:02&lt;00:00, 827kB/s]
- 78%|█████████████████████████████▌        | 1.93M/2.47M [00:02&lt;00:00, 787kB/s]
- 81%|██████████████████████████████▊       | 2.00M/2.47M [00:02&lt;00:00, 750kB/s]
- 85%|████████████████████████████████▍     | 2.11M/2.47M [00:02&lt;00:00, 781kB/s]
- 91%|██████████████████████████████████▍   | 2.24M/2.47M [00:03&lt;00:00, 877kB/s]
- 95%|████████████████████████████████████▏ | 2.35M/2.47M [00:03&lt;00:00, 902kB/s]
+  0%|▏                                     | 12.3k/2.47M [00:00&lt;00:22, 108kB/s]
+  4%|█▍                                    | 92.2k/2.47M [00:00&lt;00:04, 492kB/s]
+  7%|██▋                                    | 172k/2.47M [00:00&lt;00:05, 440kB/s]
+ 12%|████▌                                  | 292k/2.47M [00:00&lt;00:03, 673kB/s]
+ 17%|██████▍                                | 411k/2.47M [00:00&lt;00:03, 642kB/s]
+ 28%|██████████▋                           | 693k/2.47M [00:00&lt;00:01, 1.19MB/s]
+ 37%|██████████████▏                       | 925k/2.47M [00:00&lt;00:01, 1.49MB/s]
+ 54%|████████████████████                 | 1.34M/2.47M [00:01&lt;00:00, 2.22MB/s]
+ 82%|██████████████████████████████▍      | 2.03M/2.47M [00:01&lt;00:00, 2.80MB/s]
   0%|                                              | 0.00/2.47M [00:00&lt;?, ?B/s]
-100%|█████████████████████████████████████| 2.47M/2.47M [00:00&lt;00:00, 11.3GB/s]
-SHA256 hash of downloaded file: 99ca9e3a9026bd2d2fed57c3d4a36780bc44fcefbe047cf183346db3331b1750
-Use this value as the &#39;known_hash&#39; argument of &#39;pooch.retrieve&#39; to ensure that the file hasn&#39;t changed if it is downloaded again in the future.
-Downloading data from &#39;https://zenodo.org/record/2392979/files/subject06_run1_raw.fif&#39; to file &#39;/home/runner/work/moabb/moabb/mne_data/MNE-ssvepexo-data/zenodo/2392979/subject06_run1_raw.fif&#39;.
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
+100%|█████████████████████████████████████| 2.47M/2.47M [00:00&lt;00:00, 14.7GB/s]
 
   0%|                                              | 0.00/2.71M [00:00&lt;?, ?B/s]
-  0%|▏                                    | 12.3k/2.71M [00:00&lt;00:33, 80.5kB/s]
-  1%|▌                                     | 39.9k/2.71M [00:00&lt;00:16, 161kB/s]
-  4%|█▎                                    | 96.3k/2.71M [00:00&lt;00:08, 296kB/s]
-  6%|██▍                                    | 171k/2.71M [00:00&lt;00:05, 424kB/s]
-  9%|███▋                                   | 253k/2.71M [00:00&lt;00:04, 518kB/s]
- 12%|████▊                                  | 335k/2.71M [00:00&lt;00:04, 576kB/s]
- 16%|██████▏                                | 432k/2.71M [00:00&lt;00:03, 652kB/s]
- 19%|███████▍                               | 514k/2.71M [00:00&lt;00:03, 662kB/s]
- 23%|████████▊                              | 612k/2.71M [00:01&lt;00:02, 705kB/s]
- 26%|█████████▉                             | 694k/2.71M [00:01&lt;00:02, 698kB/s]
- 30%|███████████▋                           | 809k/2.71M [00:01&lt;00:02, 781kB/s]
- 35%|█████████████▌                         | 940k/2.71M [00:01&lt;00:02, 876kB/s]
- 41%|███████████████                      | 1.10M/2.71M [00:01&lt;00:01, 1.02MB/s]
- 44%|████████████████▉                     | 1.21M/2.71M [00:01&lt;00:01, 973kB/s]
- 48%|██████████████████▎                   | 1.30M/2.71M [00:01&lt;00:01, 929kB/s]
- 51%|███████████████████▌                  | 1.40M/2.71M [00:01&lt;00:01, 884kB/s]
- 55%|████████████████████▊                 | 1.49M/2.71M [00:02&lt;00:01, 845kB/s]
- 59%|██████████████████████▎               | 1.59M/2.71M [00:02&lt;00:01, 865kB/s]
- 62%|███████████████████████▋              | 1.69M/2.71M [00:02&lt;00:01, 853kB/s]
- 67%|█████████████████████████▎            | 1.81M/2.71M [00:02&lt;00:01, 886kB/s]
- 70%|██████████████████████████▋           | 1.90M/2.71M [00:02&lt;00:00, 868kB/s]
- 73%|███████████████████████████▉          | 1.99M/2.71M [00:02&lt;00:00, 827kB/s]
- 77%|█████████████████████████████▏        | 2.08M/2.71M [00:02&lt;00:00, 812kB/s]
- 80%|██████████████████████████████▌       | 2.18M/2.71M [00:02&lt;00:00, 816kB/s]
- 88%|████████████████████████████████▋    | 2.40M/2.71M [00:03&lt;00:00, 1.11MB/s]
- 95%|███████████████████████████████████▎ | 2.59M/2.71M [00:03&lt;00:00, 1.27MB/s]
+  0%|▏                                    | 12.3k/2.71M [00:00&lt;00:27, 97.1kB/s]
+  3%|█▎                                    | 93.2k/2.71M [00:00&lt;00:08, 318kB/s]
+  8%|███▏                                   | 218k/2.71M [00:00&lt;00:05, 482kB/s]
+ 17%|██████▋                                | 463k/2.71M [00:00&lt;00:02, 807kB/s]
+ 30%|███████████▎                          | 807k/2.71M [00:00&lt;00:01, 1.17MB/s]
+ 44%|████████████████▎                    | 1.20M/2.71M [00:01&lt;00:01, 1.47MB/s]
+ 62%|██████████████████████▉              | 1.68M/2.71M [00:01&lt;00:00, 2.16MB/s]
+ 80%|█████████████████████████████▋       | 2.18M/2.71M [00:01&lt;00:00, 2.33MB/s]
   0%|                                              | 0.00/2.71M [00:00&lt;?, ?B/s]
-100%|█████████████████████████████████████| 2.71M/2.71M [00:00&lt;00:00, 13.5GB/s]
-SHA256 hash of downloaded file: b2e66e124b9b796f5e24bed990d28841c7a0ab8149737af82a8ff953318179ec
-Use this value as the &#39;known_hash&#39; argument of &#39;pooch.retrieve&#39; to ensure that the file hasn&#39;t changed if it is downloaded again in the future.
-Downloading data from &#39;https://zenodo.org/record/2392979/files/subject06_run2_raw.fif&#39; to file &#39;/home/runner/work/moabb/moabb/mne_data/MNE-ssvepexo-data/zenodo/2392979/subject06_run2_raw.fif&#39;.
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
+100%|█████████████████████████████████████| 2.71M/2.71M [00:00&lt;00:00, 15.4GB/s]
 
   0%|                                              | 0.00/2.33M [00:00&lt;?, ?B/s]
-  1%|▏                                    | 12.3k/2.33M [00:00&lt;00:27, 84.0kB/s]
-  2%|▋                                     | 41.0k/2.33M [00:00&lt;00:13, 169kB/s]
-  4%|█▌                                    | 95.2k/2.33M [00:00&lt;00:07, 294kB/s]
-  5%|██                                     | 126k/2.33M [00:00&lt;00:07, 281kB/s]
-  9%|███▎                                   | 201k/2.33M [00:00&lt;00:05, 405kB/s]
- 11%|████▍                                  | 261k/2.33M [00:00&lt;00:04, 439kB/s]
- 15%|█████▊                                 | 350k/2.33M [00:00&lt;00:03, 540kB/s]
- 18%|███████▏                               | 426k/2.33M [00:00&lt;00:03, 569kB/s]
- 22%|████████▍                              | 504k/2.33M [00:01&lt;00:03, 594kB/s]
- 26%|██████████                             | 602k/2.33M [00:01&lt;00:02, 665kB/s]
- 31%|████████████                           | 717k/2.33M [00:01&lt;00:02, 756kB/s]
- 36%|█████████████▉                         | 831k/2.33M [00:01&lt;00:01, 820kB/s]
- 41%|███████████████▊                       | 946k/2.33M [00:01&lt;00:01, 860kB/s]
- 44%|████████████████▉                     | 1.03M/2.33M [00:01&lt;00:01, 820kB/s]
- 48%|██████████████████▍                   | 1.13M/2.33M [00:01&lt;00:01, 808kB/s]
- 52%|███████████████████▋                  | 1.21M/2.33M [00:01&lt;00:01, 771kB/s]
- 56%|█████████████████████▎                | 1.31M/2.33M [00:02&lt;00:01, 787kB/s]
- 60%|██████████████████████▋               | 1.39M/2.33M [00:02&lt;00:01, 757kB/s]
- 64%|████████████████████████▎             | 1.49M/2.33M [00:02&lt;00:01, 777kB/s]
- 68%|█████████████████████████▊            | 1.58M/2.33M [00:02&lt;00:00, 789kB/s]
- 73%|███████████████████████████▋          | 1.70M/2.33M [00:02&lt;00:00, 842kB/s]
- 77%|█████████████████████████████▏        | 1.78M/2.33M [00:02&lt;00:00, 803kB/s]
- 80%|██████████████████████████████▍       | 1.86M/2.33M [00:02&lt;00:00, 767kB/s]
- 84%|███████████████████████████████▊      | 1.94M/2.33M [00:02&lt;00:00, 739kB/s]
- 88%|█████████████████████████████████▋    | 2.06M/2.33M [00:03&lt;00:00, 806kB/s]
- 93%|███████████████████████████████████▏  | 2.16M/2.33M [00:03&lt;00:00, 807kB/s]
- 98%|█████████████████████████████████████▎| 2.29M/2.33M [00:03&lt;00:00, 895kB/s]
+  1%|▏                                     | 12.3k/2.33M [00:00&lt;00:22, 105kB/s]
+  4%|█▎                                    | 82.9k/2.33M [00:00&lt;00:06, 358kB/s]
+  7%|██▉                                    | 172k/2.33M [00:00&lt;00:04, 467kB/s]
+ 11%|████▍                                  | 264k/2.33M [00:00&lt;00:03, 543kB/s]
+ 17%|██████▋                                | 395k/2.33M [00:00&lt;00:02, 659kB/s]
+ 25%|█████████▉                             | 592k/2.33M [00:00&lt;00:01, 908kB/s]
+ 35%|█████████████▍                        | 821k/2.33M [00:00&lt;00:01, 1.10MB/s]
+ 47%|█████████████████▍                   | 1.10M/2.33M [00:01&lt;00:00, 1.38MB/s]
+ 63%|███████████████████████▏             | 1.46M/2.33M [00:01&lt;00:00, 1.69MB/s]
+ 79%|█████████████████████████████▎       | 1.84M/2.33M [00:01&lt;00:00, 2.18MB/s]
+ 94%|██████████████████████████████████▋  | 2.18M/2.33M [00:01&lt;00:00, 2.27MB/s]
   0%|                                              | 0.00/2.33M [00:00&lt;?, ?B/s]
-100%|█████████████████████████████████████| 2.33M/2.33M [00:00&lt;00:00, 10.7GB/s]
-SHA256 hash of downloaded file: 7022c4ef4650c05e9a04783118dd7e40d9ad022e598a15ae2566298620e6ee8f
-Use this value as the &#39;known_hash&#39; argument of &#39;pooch.retrieve&#39; to ensure that the file hasn&#39;t changed if it is downloaded again in the future.
-Downloading data from &#39;https://zenodo.org/record/2392979/files/subject07_run1_raw.fif&#39; to file &#39;/home/runner/work/moabb/moabb/mne_data/MNE-ssvepexo-data/zenodo/2392979/subject07_run1_raw.fif&#39;.
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
+100%|█████████████████████████████████████| 2.33M/2.33M [00:00&lt;00:00, 8.63GB/s]
 
   0%|                                              | 0.00/2.27M [00:00&lt;?, ?B/s]
-  0%|                                     | 1.02k/2.27M [00:00&lt;05:42, 6.62kB/s]
-  2%|▋                                     | 39.9k/2.27M [00:00&lt;00:12, 174kB/s]
-  4%|█▌                                    | 95.2k/2.27M [00:00&lt;00:07, 300kB/s]
-  6%|██▍                                    | 141k/2.27M [00:00&lt;00:06, 334kB/s]
- 11%|████▎                                  | 251k/2.27M [00:00&lt;00:03, 539kB/s]
- 13%|█████▎                                 | 306k/2.27M [00:00&lt;00:03, 514kB/s]
- 16%|██████▏                                | 358k/2.27M [00:00&lt;00:03, 491kB/s]
- 18%|███████▏                               | 420k/2.27M [00:00&lt;00:03, 498kB/s]
- 23%|████████▉                              | 518k/2.27M [00:01&lt;00:02, 600kB/s]
- 26%|██████████▎                            | 600k/2.27M [00:01&lt;00:02, 625kB/s]
- 33%|████████████▊                          | 746k/2.27M [00:01&lt;00:01, 808kB/s]
- 39%|███████████████                        | 878k/2.27M [00:01&lt;00:01, 898kB/s]
- 43%|████████████████▌                      | 968k/2.27M [00:01&lt;00:01, 855kB/s]
- 46%|█████████████████▌                    | 1.05M/2.27M [00:01&lt;00:01, 814kB/s]
- 53%|████████████████████▏                 | 1.21M/2.27M [00:01&lt;00:01, 952kB/s]
- 58%|██████████████████████                | 1.32M/2.27M [00:01&lt;00:01, 951kB/s]
- 62%|███████████████████████▋              | 1.41M/2.27M [00:02&lt;00:00, 904kB/s]
- 66%|█████████████████████████▏            | 1.51M/2.27M [00:02&lt;00:00, 859kB/s]
- 72%|███████████████████████████▎          | 1.63M/2.27M [00:02&lt;00:00, 916kB/s]
- 78%|████████████████████████████▉        | 1.78M/2.27M [00:02&lt;00:00, 1.01MB/s]
- 86%|███████████████████████████████▊     | 1.96M/2.27M [00:02&lt;00:00, 1.16MB/s]
- 91%|█████████████████████████████████▊   | 2.07M/2.27M [00:02&lt;00:00, 1.10MB/s]
+  1%|▏                                    | 12.3k/2.27M [00:00&lt;00:24, 92.8kB/s]
+  2%|▋                                     | 41.0k/2.27M [00:00&lt;00:11, 193kB/s]
+  8%|███                                    | 176k/2.27M [00:00&lt;00:04, 487kB/s]
+ 13%|█████▏                                 | 305k/2.27M [00:00&lt;00:03, 566kB/s]
+ 21%|████████▎                              | 484k/2.27M [00:00&lt;00:02, 704kB/s]
+ 34%|████████████▉                         | 774k/2.27M [00:00&lt;00:01, 1.20MB/s]
+ 51%|██████████████████▊                  | 1.16M/2.27M [00:01&lt;00:00, 1.49MB/s]
+ 70%|█████████████████████████▉           | 1.60M/2.27M [00:01&lt;00:00, 2.13MB/s]
+ 94%|██████████████████████████████████▋  | 2.13M/2.27M [00:01&lt;00:00, 2.90MB/s]
   0%|                                              | 0.00/2.27M [00:00&lt;?, ?B/s]
-100%|█████████████████████████████████████| 2.27M/2.27M [00:00&lt;00:00, 10.5GB/s]
-SHA256 hash of downloaded file: 199c5ab96fb6830daf637c67a85abb5bfa9c3fdf2e7c5600d9a0ff9a6483c100
-Use this value as the &#39;known_hash&#39; argument of &#39;pooch.retrieve&#39; to ensure that the file hasn&#39;t changed if it is downloaded again in the future.
-Downloading data from &#39;https://zenodo.org/record/2392979/files/subject07_run2_raw.fif&#39; to file &#39;/home/runner/work/moabb/moabb/mne_data/MNE-ssvepexo-data/zenodo/2392979/subject07_run2_raw.fif&#39;.
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
+100%|█████████████████████████████████████| 2.27M/2.27M [00:00&lt;00:00, 13.6GB/s]
 
   0%|                                              | 0.00/1.99M [00:00&lt;?, ?B/s]
-  0%|                                     | 1.02k/1.99M [00:00&lt;04:40, 7.08kB/s]
-  2%|▋                                     | 38.9k/1.99M [00:00&lt;00:11, 176kB/s]
-  4%|█▋                                    | 87.0k/1.99M [00:00&lt;00:06, 277kB/s]
-  7%|██▋                                    | 136k/1.99M [00:00&lt;00:05, 330kB/s]
- 11%|████▍                                  | 223k/1.99M [00:00&lt;00:03, 472kB/s]
- 15%|█████▋                                 | 289k/1.99M [00:00&lt;00:03, 500kB/s]
- 18%|██████▉                                | 354k/1.99M [00:00&lt;00:03, 516kB/s]
- 23%|████████▊                              | 453k/1.99M [00:00&lt;00:02, 614kB/s]
- 28%|███████████                            | 566k/1.99M [00:01&lt;00:01, 713kB/s]
- 34%|█████████████▎                         | 681k/1.99M [00:01&lt;00:01, 787kB/s]
- 40%|███████████████▌                       | 796k/1.99M [00:01&lt;00:01, 840kB/s]
- 46%|█████████████████▊                     | 910k/1.99M [00:01&lt;00:01, 877kB/s]
- 50%|███████████████████▌                   | 998k/1.99M [00:01&lt;00:01, 831kB/s]
- 56%|█████████████████████▍                | 1.12M/1.99M [00:01&lt;00:00, 880kB/s]
- 61%|███████████████████████▎              | 1.22M/1.99M [00:01&lt;00:00, 861kB/s]
- 67%|█████████████████████████▌            | 1.34M/1.99M [00:01&lt;00:00, 889kB/s]
- 72%|███████████████████████████▍          | 1.43M/1.99M [00:02&lt;00:00, 869kB/s]
- 79%|██████████████████████████████▏       | 1.58M/1.99M [00:02&lt;00:00, 976kB/s]
- 88%|████████████████████████████████▋    | 1.76M/1.99M [00:02&lt;00:00, 1.13MB/s]
- 98%|████████████████████████████████████ | 1.94M/1.99M [00:02&lt;00:00, 1.25MB/s]
+  1%|▏                                    | 12.3k/1.99M [00:00&lt;00:20, 95.6kB/s]
+  5%|█▊                                    | 96.3k/1.99M [00:00&lt;00:05, 323kB/s]
+  9%|███▋                                   | 188k/1.99M [00:00&lt;00:04, 396kB/s]
+ 14%|█████▍                                 | 274k/1.99M [00:00&lt;00:04, 414kB/s]
+ 20%|███████▉                               | 404k/1.99M [00:00&lt;00:03, 507kB/s]
+ 26%|█████████▉                             | 508k/1.99M [00:01&lt;00:02, 619kB/s]
+ 33%|████████████▊                          | 654k/1.99M [00:01&lt;00:01, 816kB/s]
+ 42%|████████████████▎                      | 835k/1.99M [00:01&lt;00:01, 856kB/s]
+ 53%|████████████████████                  | 1.05M/1.99M [00:01&lt;00:01, 938kB/s]
+ 60%|██████████████████████▏              | 1.19M/1.99M [00:01&lt;00:00, 1.05MB/s]
+ 71%|██████████████████████████▎          | 1.41M/1.99M [00:01&lt;00:00, 1.31MB/s]
+ 78%|████████████████████████████▉        | 1.56M/1.99M [00:01&lt;00:00, 1.09MB/s]
+ 87%|████████████████████████████████▎    | 1.73M/1.99M [00:02&lt;00:00, 1.24MB/s]
+ 95%|██████████████████████████████████▉  | 1.88M/1.99M [00:02&lt;00:00, 1.05MB/s]
   0%|                                              | 0.00/1.99M [00:00&lt;?, ?B/s]
-100%|█████████████████████████████████████| 1.99M/1.99M [00:00&lt;00:00, 8.07GB/s]
-SHA256 hash of downloaded file: 21b4d5d08f82494f54451124859fd6a7f0bc2fcd1f3428f6a48c3576864a21db
-Use this value as the &#39;known_hash&#39; argument of &#39;pooch.retrieve&#39; to ensure that the file hasn&#39;t changed if it is downloaded again in the future.
-Downloading data from &#39;https://zenodo.org/record/2392979/files/subject07_run3_raw.fif&#39; to file &#39;/home/runner/work/moabb/moabb/mne_data/MNE-ssvepexo-data/zenodo/2392979/subject07_run3_raw.fif&#39;.
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
+100%|█████████████████████████████████████| 1.99M/1.99M [00:00&lt;00:00, 10.6GB/s]
 
   0%|                                              | 0.00/2.98M [00:00&lt;?, ?B/s]
-  0%|▏                                    | 13.3k/2.98M [00:00&lt;00:30, 98.7kB/s]
-  1%|▌                                     | 41.0k/2.98M [00:00&lt;00:16, 174kB/s]
-  3%|█▏                                    | 96.3k/2.98M [00:00&lt;00:09, 304kB/s]
-  4%|█▋                                     | 131k/2.98M [00:00&lt;00:09, 300kB/s]
-  8%|██▉                                    | 226k/2.98M [00:00&lt;00:05, 479kB/s]
- 10%|████                                   | 308k/2.98M [00:00&lt;00:04, 551kB/s]
- 14%|█████▎                                 | 410k/2.98M [00:00&lt;00:03, 648kB/s]
- 16%|██████▏                                | 475k/2.98M [00:00&lt;00:04, 611kB/s]
- 20%|███████▉                               | 606k/2.98M [00:01&lt;00:03, 763kB/s]
- 25%|█████████▋                             | 737k/2.98M [00:01&lt;00:02, 866kB/s]
- 28%|██████████▉                            | 835k/2.98M [00:01&lt;00:02, 853kB/s]
- 31%|████████████                           | 921k/2.98M [00:01&lt;00:02, 814kB/s]
- 34%|████████████▉                         | 1.01M/2.98M [00:01&lt;00:02, 809kB/s]
- 37%|█████████████▉                        | 1.10M/2.98M [00:01&lt;00:02, 773kB/s]
- 41%|███████████████▋                      | 1.23M/2.98M [00:01&lt;00:02, 872kB/s]
- 44%|████████████████▊                     | 1.32M/2.98M [00:01&lt;00:02, 832kB/s]
- 50%|██████████████████▍                  | 1.49M/2.98M [00:02&lt;00:01, 1.02MB/s]
- 53%|████████████████████▎                 | 1.59M/2.98M [00:02&lt;00:01, 970kB/s]
- 58%|█████████████████████▉                | 1.72M/2.98M [00:02&lt;00:01, 999kB/s]
- 63%|███████████████████████▏             | 1.86M/2.98M [00:02&lt;00:01, 1.06MB/s]
- 66%|████████████████████████▍            | 1.97M/2.98M [00:02&lt;00:00, 1.01MB/s]
- 70%|█████████████████████████▉           | 2.09M/2.98M [00:02&lt;00:00, 1.02MB/s]
- 74%|███████████████████████████▉          | 2.20M/2.98M [00:02&lt;00:00, 972kB/s]
- 78%|████████████████████████████▊        | 2.32M/2.98M [00:02&lt;00:00, 1.00MB/s]
- 82%|███████████████████████████████       | 2.44M/2.98M [00:02&lt;00:00, 987kB/s]
- 86%|████████████████████████████████▌     | 2.55M/2.98M [00:03&lt;00:00, 980kB/s]
- 90%|█████████████████████████████████▎   | 2.68M/2.98M [00:03&lt;00:00, 1.02MB/s]
- 95%|███████████████████████████████████▎ | 2.85M/2.98M [00:03&lt;00:00, 1.12MB/s]
- 99%|████████████████████████████████████▋| 2.96M/2.98M [00:03&lt;00:00, 1.07MB/s]
+  0%|▏                                    | 12.3k/2.98M [00:00&lt;00:32, 90.9kB/s]
+  3%|█                                     | 78.8k/2.98M [00:00&lt;00:09, 322kB/s]
+  5%|██▏                                    | 163k/2.98M [00:00&lt;00:06, 431kB/s]
+ 11%|████▍                                  | 340k/2.98M [00:00&lt;00:03, 756kB/s]
+ 17%|██████▊                                | 517k/2.98M [00:00&lt;00:02, 907kB/s]
+ 25%|█████████▌                            | 746k/2.98M [00:00&lt;00:01, 1.15MB/s]
+ 37%|█████████████▋                       | 1.11M/2.98M [00:01&lt;00:01, 1.56MB/s]
+ 50%|██████████████████▌                  | 1.50M/2.98M [00:01&lt;00:00, 1.95MB/s]
+ 67%|████████████████████████▉            | 2.00M/2.98M [00:01&lt;00:00, 2.39MB/s]
+ 87%|████████████████████████████████▏    | 2.59M/2.98M [00:01&lt;00:00, 3.20MB/s]
   0%|                                              | 0.00/2.98M [00:00&lt;?, ?B/s]
-100%|█████████████████████████████████████| 2.98M/2.98M [00:00&lt;00:00, 16.6GB/s]
-SHA256 hash of downloaded file: d8a902974b8c38d2905e1ca6b8ed6befd7d474c3bcc48d383d9a692a69508c22
-Use this value as the &#39;known_hash&#39; argument of &#39;pooch.retrieve&#39; to ensure that the file hasn&#39;t changed if it is downloaded again in the future.
-Downloading data from &#39;https://zenodo.org/record/2392979/files/subject08_run1_raw.fif&#39; to file &#39;/home/runner/work/moabb/moabb/mne_data/MNE-ssvepexo-data/zenodo/2392979/subject08_run1_raw.fif&#39;.
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
+100%|█████████████████████████████████████| 2.98M/2.98M [00:00&lt;00:00, 11.1GB/s]
 
   0%|                                              | 0.00/2.72M [00:00&lt;?, ?B/s]
-  0%|▏                                    | 11.3k/2.72M [00:00&lt;00:34, 77.4kB/s]
-  1%|▌                                     | 35.8k/2.72M [00:00&lt;00:18, 147kB/s]
-  3%|█▎                                    | 92.2k/2.72M [00:00&lt;00:09, 290kB/s]
-  5%|█▊                                     | 125k/2.72M [00:00&lt;00:09, 285kB/s]
-  8%|███▎                                   | 227k/2.72M [00:00&lt;00:05, 490kB/s]
- 11%|████▍                                  | 311k/2.72M [00:00&lt;00:04, 564kB/s]
- 17%|██████▌                                | 459k/2.72M [00:00&lt;00:02, 785kB/s]
- 22%|████████▍                              | 589k/2.72M [00:00&lt;00:02, 884kB/s]
- 28%|██████████▊                           | 769k/2.72M [00:01&lt;00:01, 1.08MB/s]
- 34%|█████████████                         | 933k/2.72M [00:01&lt;00:01, 1.18MB/s]
- 42%|███████████████▎                     | 1.13M/2.72M [00:01&lt;00:01, 1.32MB/s]
- 49%|██████████████████                   | 1.33M/2.72M [00:01&lt;00:00, 1.42MB/s]
- 57%|█████████████████████▏               | 1.55M/2.72M [00:01&lt;00:00, 1.58MB/s]
- 65%|████████████████████████             | 1.77M/2.72M [00:01&lt;00:00, 1.64MB/s]
- 78%|████████████████████████████▉        | 2.13M/2.72M [00:01&lt;00:00, 2.06MB/s]
- 86%|███████████████████████████████▊     | 2.34M/2.72M [00:01&lt;00:00, 1.98MB/s]
+  0%|▏                                     | 12.3k/2.72M [00:00&lt;00:26, 100kB/s]
+  3%|█▎                                    | 91.1k/2.72M [00:00&lt;00:08, 309kB/s]
+  8%|███                                    | 213k/2.72M [00:00&lt;00:04, 614kB/s]
+ 11%|████▎                                  | 299k/2.72M [00:00&lt;00:04, 529kB/s]
+ 15%|██████                                 | 419k/2.72M [00:00&lt;00:03, 703kB/s]
+ 23%|████████▋                             | 620k/2.72M [00:00&lt;00:01, 1.06MB/s]
+ 30%|███████████▎                          | 812k/2.72M [00:01&lt;00:01, 1.03MB/s]
+ 44%|████████████████▎                    | 1.20M/2.72M [00:01&lt;00:00, 1.71MB/s]
+ 56%|████████████████████▋                | 1.52M/2.72M [00:01&lt;00:00, 2.10MB/s]
+ 82%|██████████████████████████████▍      | 2.23M/2.72M [00:01&lt;00:00, 3.44MB/s]
   0%|                                              | 0.00/2.72M [00:00&lt;?, ?B/s]
-100%|█████████████████████████████████████| 2.72M/2.72M [00:00&lt;00:00, 15.5GB/s]
-SHA256 hash of downloaded file: 22047d563a3d14458da1d097133e90774bd11a33610bbce5484f3c9520c54e9a
-Use this value as the &#39;known_hash&#39; argument of &#39;pooch.retrieve&#39; to ensure that the file hasn&#39;t changed if it is downloaded again in the future.
-Downloading data from &#39;https://zenodo.org/record/2392979/files/subject08_run2_raw.fif&#39; to file &#39;/home/runner/work/moabb/moabb/mne_data/MNE-ssvepexo-data/zenodo/2392979/subject08_run2_raw.fif&#39;.
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
+100%|█████████████████████████████████████| 2.72M/2.72M [00:00&lt;00:00, 10.6GB/s]
 
   0%|                                              | 0.00/2.74M [00:00&lt;?, ?B/s]
-  0%|▏                                    | 13.3k/2.74M [00:00&lt;00:28, 94.5kB/s]
-  1%|▍                                     | 35.8k/2.74M [00:00&lt;00:18, 147kB/s]
-  3%|█▏                                    | 87.0k/2.74M [00:00&lt;00:09, 272kB/s]
-  5%|█▉                                     | 132k/2.74M [00:00&lt;00:08, 310kB/s]
-  7%|██▊                                    | 195k/2.74M [00:00&lt;00:06, 386kB/s]
- 10%|███▊                                   | 268k/2.74M [00:00&lt;00:05, 465kB/s]
- 12%|████▋                                  | 333k/2.74M [00:00&lt;00:04, 490kB/s]
- 16%|██████▏                                | 431k/2.74M [00:00&lt;00:03, 594kB/s]
- 19%|███████▌                               | 529k/2.74M [00:01&lt;00:03, 664kB/s]
- 24%|█████████▍                             | 660k/2.74M [00:01&lt;00:02, 797kB/s]
- 27%|██████████▌                            | 741k/2.74M [00:01&lt;00:02, 761kB/s]
- 31%|███████████▉                           | 840k/2.74M [00:01&lt;00:02, 780kB/s]
- 36%|██████████████                         | 987k/2.74M [00:01&lt;00:01, 918kB/s]
- 40%|███████████████                       | 1.09M/2.74M [00:01&lt;00:01, 887kB/s]
- 46%|█████████████████                    | 1.26M/2.74M [00:01&lt;00:01, 1.07MB/s]
- 53%|███████████████████▊                 | 1.46M/2.74M [00:01&lt;00:01, 1.24MB/s]
- 59%|█████████████████████▋               | 1.61M/2.74M [00:02&lt;00:00, 1.24MB/s]
- 63%|███████████████████████▍             | 1.73M/2.74M [00:02&lt;00:00, 1.18MB/s]
- 70%|█████████████████████████▉           | 1.92M/2.74M [00:02&lt;00:00, 1.30MB/s]
- 75%|███████████████████████████▋         | 2.05M/2.74M [00:02&lt;00:00, 1.23MB/s]
- 79%|█████████████████████████████▎       | 2.17M/2.74M [00:02&lt;00:00, 1.17MB/s]
- 84%|██████████████████████████████▉      | 2.29M/2.74M [00:02&lt;00:00, 1.11MB/s]
- 88%|████████████████████████████████▍    | 2.40M/2.74M [00:02&lt;00:00, 1.05MB/s]
- 92%|█████████████████████████████████▉   | 2.51M/2.74M [00:02&lt;00:00, 1.00MB/s]
- 95%|████████████████████████████████████▏ | 2.61M/2.74M [00:03&lt;00:00, 954kB/s]
- 99%|█████████████████████████████████████▌| 2.71M/2.74M [00:03&lt;00:00, 911kB/s]
+  0%|▏                                     | 12.3k/2.74M [00:00&lt;00:26, 104kB/s]
+  3%|█▎                                    | 95.2k/2.74M [00:00&lt;00:08, 327kB/s]
+  8%|███                                    | 211k/2.74M [00:00&lt;00:04, 608kB/s]
+ 12%|████▊                                  | 340k/2.74M [00:00&lt;00:03, 634kB/s]
+ 20%|███████▋                              | 557k/2.74M [00:00&lt;00:02, 1.04MB/s]
+ 32%|████████████                          | 867k/2.74M [00:00&lt;00:01, 1.27MB/s]
+ 44%|████████████████▎                    | 1.21M/2.74M [00:01&lt;00:00, 1.78MB/s]
+ 63%|███████████████████████▏             | 1.71M/2.74M [00:01&lt;00:00, 2.61MB/s]
+ 79%|█████████████████████████████▏       | 2.16M/2.74M [00:01&lt;00:00, 3.09MB/s]
+ 98%|████████████████████████████████████▏| 2.68M/2.74M [00:01&lt;00:00, 3.68MB/s]
   0%|                                              | 0.00/2.74M [00:00&lt;?, ?B/s]
-100%|█████████████████████████████████████| 2.74M/2.74M [00:00&lt;00:00, 14.4GB/s]
-SHA256 hash of downloaded file: 7ed774ba1ffb4d532a4661f9ddb925bd7fabff8f4f31f796f0e6f28bcababd78
-Use this value as the &#39;known_hash&#39; argument of &#39;pooch.retrieve&#39; to ensure that the file hasn&#39;t changed if it is downloaded again in the future.
-Downloading data from &#39;https://zenodo.org/record/2392979/files/subject09_run1_raw.fif&#39; to file &#39;/home/runner/work/moabb/moabb/mne_data/MNE-ssvepexo-data/zenodo/2392979/subject09_run1_raw.fif&#39;.
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
+100%|█████████████████████████████████████| 2.74M/2.74M [00:00&lt;00:00, 17.0GB/s]
 
   0%|                                              | 0.00/2.74M [00:00&lt;?, ?B/s]
-  0%|▏                                    | 12.3k/2.74M [00:00&lt;00:29, 93.3kB/s]
-  1%|▌                                     | 39.9k/2.74M [00:00&lt;00:15, 172kB/s]
-  3%|█▎                                    | 93.2k/2.74M [00:00&lt;00:08, 296kB/s]
-  5%|█▊                                     | 125k/2.74M [00:00&lt;00:09, 285kB/s]
-  8%|███                                    | 213k/2.74M [00:00&lt;00:05, 449kB/s]
- 11%|████▎                                  | 301k/2.74M [00:00&lt;00:04, 549kB/s]
- 15%|█████▊                                 | 409k/2.74M [00:00&lt;00:03, 661kB/s]
- 18%|██████▉                                | 488k/2.74M [00:00&lt;00:03, 664kB/s]
- 23%|█████████                              | 636k/2.74M [00:01&lt;00:02, 842kB/s]
- 29%|███████████▏                           | 782k/2.74M [00:01&lt;00:02, 957kB/s]
- 35%|█████████████▎                        | 963k/2.74M [00:01&lt;00:01, 1.13MB/s]
- 39%|██████████████▌                      | 1.08M/2.74M [00:01&lt;00:01, 1.08MB/s]
- 43%|████████████████                     | 1.19M/2.74M [00:01&lt;00:01, 1.03MB/s]
- 47%|█████████████████▉                    | 1.29M/2.74M [00:01&lt;00:01, 976kB/s]
- 51%|███████████████████▎                  | 1.39M/2.74M [00:01&lt;00:01, 929kB/s]
- 54%|████████████████████▌                 | 1.48M/2.74M [00:01&lt;00:01, 885kB/s]
- 57%|█████████████████████▊                | 1.57M/2.74M [00:02&lt;00:01, 844kB/s]
- 61%|███████████████████████▏              | 1.67M/2.74M [00:02&lt;00:01, 833kB/s]
- 69%|█████████████████████████▍           | 1.88M/2.74M [00:02&lt;00:00, 1.12MB/s]
- 76%|████████████████████████████         | 2.07M/2.74M [00:02&lt;00:00, 1.27MB/s]
- 80%|█████████████████████████████▊       | 2.20M/2.74M [00:02&lt;00:00, 1.20MB/s]
- 85%|███████████████████████████████▍     | 2.32M/2.74M [00:02&lt;00:00, 1.15MB/s]
- 89%|████████████████████████████████▉    | 2.44M/2.74M [00:02&lt;00:00, 1.09MB/s]
- 95%|███████████████████████████████████▏ | 2.60M/2.74M [00:02&lt;00:00, 1.17MB/s]
- 99%|████████████████████████████████████▋| 2.72M/2.74M [00:02&lt;00:00, 1.12MB/s]
+  0%|                                     | 1.02k/2.74M [00:00&lt;07:15, 6.29kB/s]
+  1%|▍                                    | 30.7k/2.74M [00:00&lt;00:27, 98.3kB/s]
+  6%|██▍                                    | 175k/2.74M [00:00&lt;00:06, 402kB/s]
+ 12%|████▊                                  | 340k/2.74M [00:00&lt;00:04, 581kB/s]
+ 21%|████████                               | 566k/2.74M [00:00&lt;00:02, 964kB/s]
+ 26%|██████████▎                            | 722k/2.74M [00:01&lt;00:02, 904kB/s]
+ 42%|███████████████▍                     | 1.15M/2.74M [00:01&lt;00:00, 1.64MB/s]
+ 57%|█████████████████████                | 1.56M/2.74M [00:01&lt;00:00, 2.24MB/s]
+ 74%|███████████████████████████▏         | 2.01M/2.74M [00:01&lt;00:00, 2.83MB/s]
   0%|                                              | 0.00/2.74M [00:00&lt;?, ?B/s]
-100%|█████████████████████████████████████| 2.74M/2.74M [00:00&lt;00:00, 16.9GB/s]
-SHA256 hash of downloaded file: 6702693d029445aa39a0a37adac647ae5ccdff5036ee784e82a6c5b95d3086cb
-Use this value as the &#39;known_hash&#39; argument of &#39;pooch.retrieve&#39; to ensure that the file hasn&#39;t changed if it is downloaded again in the future.
-Downloading data from &#39;https://zenodo.org/record/2392979/files/subject09_run2_raw.fif&#39; to file &#39;/home/runner/work/moabb/moabb/mne_data/MNE-ssvepexo-data/zenodo/2392979/subject09_run2_raw.fif&#39;.
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
+100%|█████████████████████████████████████| 2.74M/2.74M [00:00&lt;00:00, 9.50GB/s]
 
   0%|                                              | 0.00/2.73M [00:00&lt;?, ?B/s]
-  0%|▏                                    | 12.3k/2.73M [00:00&lt;00:29, 91.6kB/s]
-  2%|▌                                     | 41.0k/2.73M [00:00&lt;00:15, 178kB/s]
-  3%|█▎                                    | 95.2k/2.73M [00:00&lt;00:08, 306kB/s]
-  6%|██▏                                    | 156k/2.73M [00:00&lt;00:06, 388kB/s]
-  8%|███                                    | 213k/2.73M [00:00&lt;00:05, 426kB/s]
- 11%|████▎                                  | 302k/2.73M [00:00&lt;00:04, 540kB/s]
- 14%|█████▋                                 | 394k/2.73M [00:00&lt;00:03, 620kB/s]
- 19%|███████▌                               | 525k/2.73M [00:00&lt;00:02, 779kB/s]
- 25%|█████████▌                             | 673k/2.73M [00:01&lt;00:02, 924kB/s]
- 30%|███████████▍                          | 819k/2.73M [00:01&lt;00:01, 1.03MB/s]
- 34%|█████████████▏                         | 923k/2.73M [00:01&lt;00:01, 981kB/s]
- 39%|██████████████▍                      | 1.06M/2.73M [00:01&lt;00:01, 1.05MB/s]
- 43%|███████████████▉                     | 1.18M/2.73M [00:01&lt;00:01, 1.03MB/s]
- 47%|█████████████████▊                    | 1.28M/2.73M [00:01&lt;00:01, 987kB/s]
- 51%|███████████████████▎                  | 1.38M/2.73M [00:01&lt;00:01, 945kB/s]
- 54%|████████████████████▌                 | 1.48M/2.73M [00:01&lt;00:01, 908kB/s]
- 58%|█████████████████████▉                | 1.57M/2.73M [00:02&lt;00:01, 878kB/s]
- 62%|███████████████████████▍              | 1.69M/2.73M [00:02&lt;00:01, 908kB/s]
- 68%|█████████████████████████            | 1.85M/2.73M [00:02&lt;00:00, 1.05MB/s]
- 74%|███████████████████████████▎         | 2.01M/2.73M [00:02&lt;00:00, 1.16MB/s]
- 78%|████████████████████████████▉        | 2.13M/2.73M [00:02&lt;00:00, 1.11MB/s]
- 82%|██████████████████████████████▍      | 2.24M/2.73M [00:02&lt;00:00, 1.06MB/s]
- 86%|███████████████████████████████▉     | 2.36M/2.73M [00:02&lt;00:00, 1.04MB/s]
- 90%|██████████████████████████████████▎   | 2.46M/2.73M [00:02&lt;00:00, 995kB/s]
- 95%|███████████████████████████████████  | 2.59M/2.73M [00:02&lt;00:00, 1.02MB/s]
- 99%|█████████████████████████████████████▍| 2.69M/2.73M [00:03&lt;00:00, 975kB/s]
+  0%|▏                                    | 12.3k/2.73M [00:00&lt;00:30, 90.5kB/s]
+  3%|█▎                                    | 91.1k/2.73M [00:00&lt;00:07, 374kB/s]
+  6%|██▏                                    | 151k/2.73M [00:00&lt;00:06, 378kB/s]
+ 10%|███▊                                   | 263k/2.73M [00:00&lt;00:05, 470kB/s]
+ 16%|██████                                 | 424k/2.73M [00:00&lt;00:03, 759kB/s]
+ 19%|███████▎                               | 511k/2.73M [00:00&lt;00:03, 630kB/s]
+ 25%|█████████▋                             | 677k/2.73M [00:01&lt;00:02, 710kB/s]
+ 31%|████████████                           | 840k/2.73M [00:01&lt;00:02, 751kB/s]
+ 36%|█████████████▉                         | 971k/2.73M [00:01&lt;00:02, 724kB/s]
+ 42%|███████████████▉                      | 1.14M/2.73M [00:01&lt;00:01, 920kB/s]
+ 46%|█████████████████▋                    | 1.27M/2.73M [00:01&lt;00:01, 816kB/s]
+ 53%|████████████████████▏                 | 1.44M/2.73M [00:02&lt;00:01, 847kB/s]
+ 58%|██████████████████████                | 1.58M/2.73M [00:02&lt;00:01, 950kB/s]
+ 65%|████████████████████████▋             | 1.77M/2.73M [00:02&lt;00:00, 957kB/s]
+ 70%|█████████████████████████▊           | 1.91M/2.73M [00:02&lt;00:00, 1.04MB/s]
+ 78%|████████████████████████████▊        | 2.12M/2.73M [00:02&lt;00:00, 1.29MB/s]
+ 83%|██████████████████████████████▊      | 2.27M/2.73M [00:02&lt;00:00, 1.08MB/s]
+ 90%|█████████████████████████████████▏   | 2.45M/2.73M [00:02&lt;00:00, 1.24MB/s]
+ 95%|███████████████████████████████████▏ | 2.59M/2.73M [00:02&lt;00:00, 1.04MB/s]
   0%|                                              | 0.00/2.73M [00:00&lt;?, ?B/s]
-100%|█████████████████████████████████████| 2.73M/2.73M [00:00&lt;00:00, 12.0GB/s]
-SHA256 hash of downloaded file: 4fbcc52be99886160ced7d32d4add4c92f4abe2c83e934e3cdd9311a3a31d65e
-Use this value as the &#39;known_hash&#39; argument of &#39;pooch.retrieve&#39; to ensure that the file hasn&#39;t changed if it is downloaded again in the future.
-Downloading data from &#39;https://zenodo.org/record/2392979/files/subject10_run1_raw.fif&#39; to file &#39;/home/runner/work/moabb/moabb/mne_data/MNE-ssvepexo-data/zenodo/2392979/subject10_run1_raw.fif&#39;.
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
+100%|█████████████████████████████████████| 2.73M/2.73M [00:00&lt;00:00, 8.23GB/s]
 
   0%|                                              | 0.00/3.97M [00:00&lt;?, ?B/s]
-  0%|                                     | 13.3k/3.97M [00:00&lt;00:40, 98.1kB/s]
-  1%|▍                                     | 41.0k/3.97M [00:00&lt;00:22, 173kB/s]
-  2%|▊                                     | 91.1k/3.97M [00:00&lt;00:13, 284kB/s]
-  3%|█▎                                     | 135k/3.97M [00:00&lt;00:12, 318kB/s]
-  5%|██                                     | 215k/3.97M [00:00&lt;00:08, 444kB/s]
-  7%|██▊                                    | 286k/3.97M [00:00&lt;00:07, 495kB/s]
- 10%|███▊                                   | 384k/3.97M [00:00&lt;00:05, 604kB/s]
- 13%|████▉                                  | 499k/3.97M [00:00&lt;00:04, 719kB/s]
- 15%|█████▊                                 | 597k/3.97M [00:01&lt;00:04, 743kB/s]
- 19%|███████▎                               | 744k/3.97M [00:01&lt;00:03, 891kB/s]
- 22%|████████▍                              | 858k/3.97M [00:01&lt;00:03, 907kB/s]
- 24%|█████████▎                             | 949k/3.97M [00:01&lt;00:03, 863kB/s]
- 26%|█████████▉                            | 1.04M/3.97M [00:01&lt;00:03, 822kB/s]
- 28%|██████████▋                           | 1.12M/3.97M [00:01&lt;00:03, 784kB/s]
- 30%|███████████▌                          | 1.20M/3.97M [00:01&lt;00:03, 758kB/s]
- 33%|████████████▌                         | 1.32M/3.97M [00:01&lt;00:03, 816kB/s]
- 36%|█████████████▌                        | 1.41M/3.97M [00:02&lt;00:03, 819kB/s]
- 38%|██████████████▎                       | 1.50M/3.97M [00:02&lt;00:03, 777kB/s]
- 40%|███████████████▎                      | 1.59M/3.97M [00:02&lt;00:03, 783kB/s]
- 42%|████████████████                      | 1.68M/3.97M [00:02&lt;00:03, 754kB/s]
- 45%|████████████████▉                     | 1.77M/3.97M [00:02&lt;00:02, 775kB/s]
- 48%|██████████████████▍                   | 1.92M/3.97M [00:02&lt;00:02, 910kB/s]
- 55%|████████████████████▎                | 2.18M/3.97M [00:02&lt;00:01, 1.30MB/s]
- 59%|██████████████████████               | 2.36M/3.97M [00:02&lt;00:01, 1.36MB/s]
- 70%|█████████████████████████▉           | 2.79M/3.97M [00:03&lt;00:00, 2.03MB/s]
- 82%|██████████████████████████████▍      | 3.26M/3.97M [00:03&lt;00:00, 2.62MB/s]
- 98%|████████████████████████████████████▏| 3.88M/3.97M [00:03&lt;00:00, 3.40MB/s]
+  0%|                                     | 1.02k/3.97M [00:00&lt;08:26, 7.84kB/s]
+  2%|▊                                     | 90.1k/3.97M [00:00&lt;00:09, 393kB/s]
+  4%|█▋                                     | 177k/3.97M [00:00&lt;00:07, 480kB/s]
+  9%|███▍                                   | 349k/3.97M [00:00&lt;00:04, 778kB/s]
+ 14%|█████▎                                 | 544k/3.97M [00:00&lt;00:03, 967kB/s]
+ 25%|█████████▍                            | 985k/3.97M [00:00&lt;00:01, 1.87MB/s]
+ 35%|████████████▉                        | 1.39M/3.97M [00:00&lt;00:01, 2.26MB/s]
+ 52%|███████████████████▏                 | 2.06M/3.97M [00:01&lt;00:00, 3.01MB/s]
+ 75%|███████████████████████████▌         | 2.96M/3.97M [00:01&lt;00:00, 4.50MB/s]
   0%|                                              | 0.00/3.97M [00:00&lt;?, ?B/s]
-100%|█████████████████████████████████████| 3.97M/3.97M [00:00&lt;00:00, 33.6GB/s]
-SHA256 hash of downloaded file: 25c96cf5f24e04cf348be8481a847107e7ff178fc896c2a0285236e53a3b125e
-Use this value as the &#39;known_hash&#39; argument of &#39;pooch.retrieve&#39; to ensure that the file hasn&#39;t changed if it is downloaded again in the future.
-Downloading data from &#39;https://zenodo.org/record/2392979/files/subject10_run2_raw.fif&#39; to file &#39;/home/runner/work/moabb/moabb/mne_data/MNE-ssvepexo-data/zenodo/2392979/subject10_run2_raw.fif&#39;.
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
+100%|█████████████████████████████████████| 3.97M/3.97M [00:00&lt;00:00, 14.2GB/s]
 
   0%|                                              | 0.00/2.72M [00:00&lt;?, ?B/s]
-  0%|▏                                    | 12.3k/2.72M [00:00&lt;00:30, 87.7kB/s]
-  1%|▌                                     | 37.9k/2.72M [00:00&lt;00:16, 158kB/s]
-  3%|█▏                                    | 87.0k/2.72M [00:00&lt;00:09, 271kB/s]
-  6%|██▏                                    | 153k/2.72M [00:00&lt;00:06, 377kB/s]
-  9%|███▍                                   | 241k/2.72M [00:00&lt;00:04, 507kB/s]
- 11%|████▏                                  | 293k/2.72M [00:00&lt;00:05, 462kB/s]
- 13%|█████                                  | 355k/2.72M [00:00&lt;00:04, 481kB/s]
- 18%|██████▉                                | 486k/2.72M [00:00&lt;00:03, 676kB/s]
- 21%|████████▏                              | 568k/2.72M [00:01&lt;00:03, 666kB/s]
- 29%|███████████▏                           | 780k/2.72M [00:01&lt;00:02, 969kB/s]
- 36%|█████████████▋                        | 977k/2.72M [00:01&lt;00:01, 1.17MB/s]
- 40%|██████████████▊                      | 1.09M/2.72M [00:01&lt;00:01, 1.12MB/s]
- 44%|████████████████▍                    | 1.21M/2.72M [00:01&lt;00:01, 1.06MB/s]
- 48%|█████████████████▊                   | 1.31M/2.72M [00:01&lt;00:01, 1.01MB/s]
- 52%|███████████████████▋                  | 1.42M/2.72M [00:01&lt;00:01, 938kB/s]
- 55%|█████████████████████                 | 1.51M/2.72M [00:01&lt;00:01, 898kB/s]
- 59%|██████████████████████▎               | 1.60M/2.72M [00:02&lt;00:01, 855kB/s]
- 62%|███████████████████████▌              | 1.69M/2.72M [00:02&lt;00:01, 817kB/s]
- 65%|████████████████████████▋             | 1.77M/2.72M [00:02&lt;00:01, 778kB/s]
- 68%|█████████████████████████▋            | 1.85M/2.72M [00:02&lt;00:01, 742kB/s]
- 72%|███████████████████████████▌          | 1.97M/2.72M [00:02&lt;00:00, 845kB/s]
- 78%|█████████████████████████████▌        | 2.12M/2.72M [00:02&lt;00:00, 963kB/s]
- 84%|███████████████████████████████      | 2.29M/2.72M [00:02&lt;00:00, 1.08MB/s]
- 88%|████████████████████████████████▌    | 2.39M/2.72M [00:02&lt;00:00, 1.03MB/s]
- 92%|██████████████████████████████████▊   | 2.50M/2.72M [00:03&lt;00:00, 982kB/s]
- 97%|███████████████████████████████████▉ | 2.64M/2.72M [00:03&lt;00:00, 1.06MB/s]
+  0%|                                     | 1.02k/2.72M [00:00&lt;06:03, 7.48kB/s]
+  2%|▋                                     | 45.1k/2.72M [00:00&lt;00:11, 228kB/s]
+  6%|██▎                                    | 160k/2.72M [00:00&lt;00:04, 615kB/s]
+  9%|███▋                                   | 256k/2.72M [00:00&lt;00:04, 553kB/s]
+ 15%|█████▉                                 | 414k/2.72M [00:00&lt;00:02, 844kB/s]
+ 26%|█████████▊                            | 707k/2.72M [00:00&lt;00:01, 1.45MB/s]
+ 37%|█████████████▌                       | 1.00M/2.72M [00:00&lt;00:01, 1.48MB/s]
+ 54%|████████████████████                 | 1.48M/2.72M [00:01&lt;00:00, 2.29MB/s]
+ 68%|█████████████████████████▏           | 1.85M/2.72M [00:01&lt;00:00, 2.67MB/s]
   0%|                                              | 0.00/2.72M [00:00&lt;?, ?B/s]
-100%|█████████████████████████████████████| 2.72M/2.72M [00:00&lt;00:00, 19.3GB/s]
-SHA256 hash of downloaded file: 46c401efa32d18740bb81ddfebe1d175df3fa8398c0410461c841aea8f0c2f68
-Use this value as the &#39;known_hash&#39; argument of &#39;pooch.retrieve&#39; to ensure that the file hasn&#39;t changed if it is downloaded again in the future.
-Downloading data from &#39;https://zenodo.org/record/2392979/files/subject10_run3_raw.fif&#39; to file &#39;/home/runner/work/moabb/moabb/mne_data/MNE-ssvepexo-data/zenodo/2392979/subject10_run3_raw.fif&#39;.
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
+100%|█████████████████████████████████████| 2.72M/2.72M [00:00&lt;00:00, 9.86GB/s]
 
   0%|                                              | 0.00/2.82M [00:00&lt;?, ?B/s]
-  0%|▏                                    | 11.3k/2.82M [00:00&lt;00:38, 72.3kB/s]
-  1%|▌                                     | 41.0k/2.82M [00:00&lt;00:16, 167kB/s]
-  3%|█▏                                    | 90.1k/2.82M [00:00&lt;00:09, 277kB/s]
-  5%|█▊                                     | 130k/2.82M [00:00&lt;00:08, 303kB/s]
-  8%|███                                    | 219k/2.82M [00:00&lt;00:05, 464kB/s]
- 10%|███▊                                   | 275k/2.82M [00:00&lt;00:05, 472kB/s]
- 13%|█████▏                                 | 374k/2.82M [00:00&lt;00:04, 588kB/s]
- 16%|██████▏                                | 444k/2.82M [00:00&lt;00:04, 593kB/s]
- 19%|███████▎                               | 526k/2.82M [00:01&lt;00:03, 620kB/s]
- 23%|████████▊                              | 641k/2.82M [00:01&lt;00:02, 732kB/s]
- 27%|██████████▍                            | 756k/2.82M [00:01&lt;00:02, 805kB/s]
- 31%|████████████                           | 870k/2.82M [00:01&lt;00:02, 858kB/s]
- 34%|█████████████▍                         | 969k/2.82M [00:01&lt;00:02, 850kB/s]
- 38%|██████████████▎                       | 1.07M/2.82M [00:01&lt;00:02, 843kB/s]
- 41%|███████████████▋                      | 1.16M/2.82M [00:01&lt;00:01, 843kB/s]
- 45%|█████████████████▏                    | 1.28M/2.82M [00:01&lt;00:01, 885kB/s]
- 51%|██████████████████▋                  | 1.43M/2.82M [00:02&lt;00:01, 1.00MB/s]
- 54%|████████████████████▌                 | 1.53M/2.82M [00:02&lt;00:01, 955kB/s]
- 58%|██████████████████████                | 1.64M/2.82M [00:02&lt;00:01, 955kB/s]
- 62%|███████████████████████▍              | 1.74M/2.82M [00:02&lt;00:01, 921kB/s]
- 66%|█████████████████████████▏            | 1.87M/2.82M [00:02&lt;00:00, 981kB/s]
- 70%|██████████████████████████▌           | 1.97M/2.82M [00:02&lt;00:00, 936kB/s]
- 73%|███████████████████████████▊          | 2.06M/2.82M [00:02&lt;00:00, 897kB/s]
- 76%|████████████████████████████▉         | 2.15M/2.82M [00:02&lt;00:00, 859kB/s]
- 80%|██████████████████████████████▏       | 2.24M/2.82M [00:02&lt;00:00, 840kB/s]
- 83%|███████████████████████████████▌      | 2.34M/2.82M [00:03&lt;00:00, 840kB/s]
- 86%|████████████████████████████████▋     | 2.43M/2.82M [00:03&lt;00:00, 807kB/s]
- 91%|██████████████████████████████████▋   | 2.57M/2.82M [00:03&lt;00:00, 923kB/s]
- 96%|███████████████████████████████████▋ | 2.72M/2.82M [00:03&lt;00:00, 1.02MB/s]
-2.82MB [00:03, 977kB/s]
+  0%|▏                                    | 11.3k/2.82M [00:00&lt;00:36, 77.2kB/s]
+  3%|█▎                                    | 98.3k/2.82M [00:00&lt;00:08, 336kB/s]
+  5%|██                                     | 152k/2.82M [00:00&lt;00:06, 393kB/s]
+ 12%|████▋                                  | 336k/2.82M [00:00&lt;00:03, 662kB/s]
+ 19%|███████▏                               | 522k/2.82M [00:00&lt;00:02, 787kB/s]
+ 24%|█████████▎                             | 669k/2.82M [00:01&lt;00:02, 779kB/s]
+ 32%|████████████▍                          | 898k/2.82M [00:01&lt;00:02, 920kB/s]
+ 42%|███████████████▍                     | 1.18M/2.82M [00:01&lt;00:01, 1.09MB/s]
+ 50%|██████████████████▍                  | 1.40M/2.82M [00:01&lt;00:01, 1.12MB/s]
+ 57%|█████████████████████                | 1.60M/2.82M [00:01&lt;00:01, 1.09MB/s]
+ 65%|████████████████████████▏            | 1.85M/2.82M [00:01&lt;00:00, 1.15MB/s]
+ 70%|█████████████████████████▉           | 1.98M/2.82M [00:02&lt;00:00, 1.00MB/s]
+ 78%|████████████████████████████▋        | 2.19M/2.82M [00:02&lt;00:00, 1.04MB/s]
+ 85%|███████████████████████████████▌     | 2.40M/2.82M [00:02&lt;00:00, 1.05MB/s]
+ 90%|██████████████████████████████████▎   | 2.55M/2.82M [00:02&lt;00:00, 968kB/s]
+ 97%|█████████████████████████████████████ | 2.75M/2.82M [00:02&lt;00:00, 983kB/s]
   0%|                                              | 0.00/2.82M [00:00&lt;?, ?B/s]
-100%|█████████████████████████████████████| 2.82M/2.82M [00:00&lt;00:00, 15.7GB/s]
-SHA256 hash of downloaded file: fa9049f0270df97f3caaf10f72145d8f2ad5b04af2e30cceae8c4f5222a472b4
-Use this value as the &#39;known_hash&#39; argument of &#39;pooch.retrieve&#39; to ensure that the file hasn&#39;t changed if it is downloaded again in the future.
-Downloading data from &#39;https://zenodo.org/record/2392979/files/subject10_run4_raw.fif&#39; to file &#39;/home/runner/work/moabb/moabb/mne_data/MNE-ssvepexo-data/zenodo/2392979/subject10_run4_raw.fif&#39;.
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
+100%|█████████████████████████████████████| 2.82M/2.82M [00:00&lt;00:00, 11.8GB/s]
 
   0%|                                              | 0.00/2.77M [00:00&lt;?, ?B/s]
-  0%|▏                                    | 12.3k/2.77M [00:00&lt;00:30, 89.7kB/s]
-  1%|▌                                     | 37.9k/2.77M [00:00&lt;00:17, 158kB/s]
-  3%|█▏                                    | 84.0k/2.77M [00:00&lt;00:10, 261kB/s]
-  5%|█▉                                     | 135k/2.77M [00:00&lt;00:08, 327kB/s]
-  7%|██▊                                    | 200k/2.77M [00:00&lt;00:06, 395kB/s]
- 11%|████▏                                  | 294k/2.77M [00:00&lt;00:04, 528kB/s]
- 14%|█████▌                                 | 393k/2.77M [00:00&lt;00:04, 568kB/s]
- 17%|██████▍                                | 459k/2.77M [00:01&lt;00:04, 562kB/s]
- 19%|███████▍                               | 524k/2.77M [00:01&lt;00:04, 558kB/s]
- 22%|████████▊                              | 623k/2.77M [00:01&lt;00:03, 635kB/s]
- 25%|█████████▉                             | 705k/2.77M [00:01&lt;00:03, 650kB/s]
- 29%|███████████▎                           | 803k/2.77M [00:01&lt;00:02, 701kB/s]
- 32%|████████████▍                          | 885k/2.77M [00:01&lt;00:02, 695kB/s]
- 37%|█████████████▉                        | 1.01M/2.77M [00:01&lt;00:02, 815kB/s]
- 40%|███████████████                       | 1.10M/2.77M [00:01&lt;00:02, 776kB/s]
- 43%|████████████████▏                     | 1.18M/2.77M [00:01&lt;00:02, 747kB/s]
- 47%|█████████████████▋                    | 1.29M/2.77M [00:02&lt;00:01, 813kB/s]
- 50%|███████████████████                   | 1.39M/2.77M [00:02&lt;00:01, 814kB/s]
- 55%|████████████████████▊                 | 1.52M/2.77M [00:02&lt;00:01, 891kB/s]
- 58%|██████████████████████▏               | 1.62M/2.77M [00:02&lt;00:01, 872kB/s]
- 62%|███████████████████████▌              | 1.72M/2.77M [00:02&lt;00:01, 849kB/s]
- 65%|████████████████████████▋             | 1.80M/2.77M [00:02&lt;00:01, 808kB/s]
- 70%|██████████████████████████▍           | 1.93M/2.77M [00:02&lt;00:00, 881kB/s]
- 74%|████████████████████████████▎         | 2.06M/2.77M [00:02&lt;00:00, 935kB/s]
- 79%|██████████████████████████████        | 2.19M/2.77M [00:03&lt;00:00, 981kB/s]
- 83%|███████████████████████████████▋      | 2.31M/2.77M [00:03&lt;00:00, 975kB/s]
- 87%|████████████████████████████████▉     | 2.41M/2.77M [00:03&lt;00:00, 929kB/s]
- 90%|██████████████████████████████████▎   | 2.50M/2.77M [00:03&lt;00:00, 881kB/s]
- 94%|███████████████████████████████████▋  | 2.60M/2.77M [00:03&lt;00:00, 874kB/s]
- 97%|████████████████████████████████████▉ | 2.69M/2.77M [00:03&lt;00:00, 833kB/s]
+  0%|▏                                     | 13.3k/2.77M [00:00&lt;00:25, 109kB/s]
+  3%|█▎                                    | 95.2k/2.77M [00:00&lt;00:08, 324kB/s]
+  9%|███▋                                   | 259k/2.77M [00:00&lt;00:04, 580kB/s]
+ 16%|██████▏                                | 435k/2.77M [00:00&lt;00:03, 713kB/s]
+ 23%|████████▋                             | 636k/2.77M [00:00&lt;00:02, 1.01MB/s]
+ 30%|███████████▎                          | 827k/2.77M [00:01&lt;00:01, 1.00MB/s]
+ 40%|██████████████▊                      | 1.11M/2.77M [00:01&lt;00:01, 1.40MB/s]
+ 51%|██████████████████▉                  | 1.42M/2.77M [00:01&lt;00:00, 1.48MB/s]
+ 63%|███████████████████████▏             | 1.74M/2.77M [00:01&lt;00:00, 1.86MB/s]
+ 77%|████████████████████████████▌        | 2.14M/2.77M [00:01&lt;00:00, 1.94MB/s]
+ 91%|█████████████████████████████████▊   | 2.53M/2.77M [00:01&lt;00:00, 2.37MB/s]
   0%|                                              | 0.00/2.77M [00:00&lt;?, ?B/s]
-100%|█████████████████████████████████████| 2.77M/2.77M [00:00&lt;00:00, 23.7GB/s]
-SHA256 hash of downloaded file: e9a7ab3c54ab1f23314b8d20214984747ff54842ce29482cdddf1fc3ad491da4
-Use this value as the &#39;known_hash&#39; argument of &#39;pooch.retrieve&#39; to ensure that the file hasn&#39;t changed if it is downloaded again in the future.
-Downloading data from &#39;https://zenodo.org/record/2392979/files/subject11_run1_raw.fif&#39; to file &#39;/home/runner/work/moabb/moabb/mne_data/MNE-ssvepexo-data/zenodo/2392979/subject11_run1_raw.fif&#39;.
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
+100%|█████████████████████████████████████| 2.77M/2.77M [00:00&lt;00:00, 11.0GB/s]
 
   0%|                                              | 0.00/2.72M [00:00&lt;?, ?B/s]
-  0%|▏                                    | 13.3k/2.72M [00:00&lt;00:32, 83.3kB/s]
-  2%|▌                                     | 41.0k/2.72M [00:00&lt;00:16, 160kB/s]
-  3%|█▏                                    | 87.0k/2.72M [00:00&lt;00:10, 257kB/s]
-  5%|█▊                                     | 125k/2.72M [00:00&lt;00:09, 280kB/s]
-  9%|███▌                                   | 252k/2.72M [00:00&lt;00:04, 556kB/s]
- 13%|████▉                                  | 346k/2.72M [00:00&lt;00:04, 562kB/s]
- 16%|██████▎                                | 436k/2.72M [00:00&lt;00:03, 620kB/s]
- 20%|███████▋                               | 532k/2.72M [00:01&lt;00:03, 664kB/s]
- 22%|████████▌                              | 600k/2.72M [00:01&lt;00:03, 636kB/s]
- 24%|█████████▌                             | 665k/2.72M [00:01&lt;00:03, 609kB/s]
- 27%|██████████▍                            | 729k/2.72M [00:01&lt;00:03, 589kB/s]
- 29%|███████████▍                           | 795k/2.72M [00:01&lt;00:03, 576kB/s]
- 36%|██████████████▏                        | 990k/2.72M [00:01&lt;00:01, 893kB/s]
- 41%|███████████████▋                      | 1.12M/2.72M [00:01&lt;00:01, 954kB/s]
- 45%|█████████████████                     | 1.22M/2.72M [00:01&lt;00:01, 889kB/s]
- 48%|██████████████████▍                   | 1.32M/2.72M [00:02&lt;00:01, 870kB/s]
- 53%|████████████████████                  | 1.43M/2.72M [00:02&lt;00:01, 895kB/s]
- 56%|█████████████████████▍                | 1.53M/2.72M [00:02&lt;00:01, 868kB/s]
- 60%|██████████████████████▊               | 1.63M/2.72M [00:02&lt;00:01, 855kB/s]
- 65%|████████████████████████▊             | 1.78M/2.72M [00:02&lt;00:00, 968kB/s]
- 69%|██████████████████████████▏           | 1.87M/2.72M [00:02&lt;00:00, 923kB/s]
- 74%|████████████████████████████          | 2.00M/2.72M [00:02&lt;00:00, 967kB/s]
- 77%|█████████████████████████████▍        | 2.10M/2.72M [00:02&lt;00:00, 924kB/s]
- 82%|███████████████████████████████▏      | 2.23M/2.72M [00:02&lt;00:00, 976kB/s]
- 88%|████████████████████████████████▌    | 2.40M/2.72M [00:03&lt;00:00, 1.09MB/s]
- 94%|██████████████████████████████████▊  | 2.56M/2.72M [00:03&lt;00:00, 1.17MB/s]
- 98%|████████████████████████████████████▍| 2.68M/2.72M [00:03&lt;00:00, 1.11MB/s]
+  0%|                                     | 1.02k/2.72M [00:00&lt;05:31, 8.19kB/s]
+  4%|█▎                                    | 98.3k/2.72M [00:00&lt;00:07, 349kB/s]
+  9%|███▍                                   | 244k/2.72M [00:00&lt;00:04, 549kB/s]
+ 16%|██████                                 | 424k/2.72M [00:00&lt;00:03, 707kB/s]
+ 25%|█████████▌                             | 670k/2.72M [00:00&lt;00:02, 917kB/s]
+ 40%|██████████████▋                      | 1.08M/2.72M [00:00&lt;00:01, 1.60MB/s]
+ 50%|██████████████████▋                  | 1.37M/2.72M [00:01&lt;00:00, 1.58MB/s]
+ 71%|██████████████████████████▎          | 1.94M/2.72M [00:01&lt;00:00, 2.46MB/s]
+ 94%|██████████████████████████████████▊  | 2.56M/2.72M [00:01&lt;00:00, 3.36MB/s]
   0%|                                              | 0.00/2.72M [00:00&lt;?, ?B/s]
-100%|█████████████████████████████████████| 2.72M/2.72M [00:00&lt;00:00, 13.6GB/s]
-SHA256 hash of downloaded file: 239688db2cde8627edf207a5fb83a39c6891424f1ce5b50ce1220ea94040ffda
-Use this value as the &#39;known_hash&#39; argument of &#39;pooch.retrieve&#39; to ensure that the file hasn&#39;t changed if it is downloaded again in the future.
-Downloading data from &#39;https://zenodo.org/record/2392979/files/subject11_run2_raw.fif&#39; to file &#39;/home/runner/work/moabb/moabb/mne_data/MNE-ssvepexo-data/zenodo/2392979/subject11_run2_raw.fif&#39;.
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
+100%|█████████████████████████████████████| 2.72M/2.72M [00:00&lt;00:00, 10.6GB/s]
 
   0%|                                              | 0.00/2.75M [00:00&lt;?, ?B/s]
-  0%|▏                                    | 12.3k/2.75M [00:00&lt;00:33, 81.1kB/s]
-  1%|▌                                     | 36.9k/2.75M [00:00&lt;00:18, 148kB/s]
-  3%|█▏                                    | 85.0k/2.75M [00:00&lt;00:10, 260kB/s]
-  6%|██▍                                    | 172k/2.75M [00:00&lt;00:05, 441kB/s]
- 10%|███▊                                   | 265k/2.75M [00:00&lt;00:04, 563kB/s]
- 12%|████▌                                  | 324k/2.75M [00:00&lt;00:04, 537kB/s]
- 14%|█████▎                                 | 379k/2.75M [00:00&lt;00:04, 513kB/s]
- 17%|██████▊                                | 477k/2.75M [00:00&lt;00:03, 609kB/s]
- 20%|███████▋                               | 543k/2.75M [00:01&lt;00:03, 591kB/s]
- 24%|█████████▌                             | 674k/2.75M [00:01&lt;00:02, 749kB/s]
- 27%|██████████▋                            | 756k/2.75M [00:01&lt;00:02, 729kB/s]
- 30%|███████████▊                           | 838k/2.75M [00:01&lt;00:02, 716kB/s]
- 35%|█████████████▋                         | 968k/2.75M [00:01&lt;00:02, 828kB/s]
- 40%|███████████████▍                      | 1.12M/2.75M [00:01&lt;00:01, 952kB/s]
- 45%|█████████████████▏                    | 1.25M/2.75M [00:01&lt;00:01, 997kB/s]
- 49%|██████████████████▌                   | 1.35M/2.75M [00:01&lt;00:01, 939kB/s]
- 53%|████████████████████                  | 1.46M/2.75M [00:02&lt;00:01, 938kB/s]
- 56%|█████████████████████▍                | 1.55M/2.75M [00:02&lt;00:01, 893kB/s]
- 62%|██████████████████████▉              | 1.70M/2.75M [00:02&lt;00:01, 1.01MB/s]
- 66%|████████████████████████▉             | 1.81M/2.75M [00:02&lt;00:00, 961kB/s]
- 69%|██████████████████████████▏           | 1.90M/2.75M [00:02&lt;00:00, 916kB/s]
- 73%|███████████████████████████▌          | 2.00M/2.75M [00:02&lt;00:00, 884kB/s]
- 80%|█████████████████████████████▍       | 2.19M/2.75M [00:02&lt;00:00, 1.11MB/s]
- 84%|███████████████████████████████      | 2.31M/2.75M [00:02&lt;00:00, 1.07MB/s]
- 89%|████████████████████████████████▊    | 2.44M/2.75M [00:03&lt;00:00, 1.07MB/s]
- 93%|██████████████████████████████████▌  | 2.57M/2.75M [00:03&lt;00:00, 1.08MB/s]
+  0%|▏                                    | 12.3k/2.75M [00:00&lt;00:28, 95.2kB/s]
+  3%|█▎                                    | 95.2k/2.75M [00:00&lt;00:08, 321kB/s]
+  9%|███▎                                   | 238k/2.75M [00:00&lt;00:04, 524kB/s]
+ 15%|█████▉                                 | 423k/2.75M [00:00&lt;00:03, 701kB/s]
+ 24%|█████████▏                             | 651k/2.75M [00:00&lt;00:02, 980kB/s]
+ 36%|█████████████▋                        | 995k/2.75M [00:01&lt;00:01, 1.38MB/s]
+ 54%|███████████████████▊                 | 1.48M/2.75M [00:01&lt;00:00, 2.17MB/s]
+ 72%|██████████████████████████▊          | 1.99M/2.75M [00:01&lt;00:00, 2.67MB/s]
   0%|                                              | 0.00/2.75M [00:00&lt;?, ?B/s]
-100%|█████████████████████████████████████| 2.75M/2.75M [00:00&lt;00:00, 12.6GB/s]
-SHA256 hash of downloaded file: 17dbfdf278d9f4ea97496e3e6fd1c43521a21ae0ca9dcc7453a8ee8051730cb9
-Use this value as the &#39;known_hash&#39; argument of &#39;pooch.retrieve&#39; to ensure that the file hasn&#39;t changed if it is downloaded again in the future.
-Downloading data from &#39;https://zenodo.org/record/2392979/files/subject12_run1_raw.fif&#39; to file &#39;/home/runner/work/moabb/moabb/mne_data/MNE-ssvepexo-data/zenodo/2392979/subject12_run1_raw.fif&#39;.
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
+100%|█████████████████████████████████████| 2.75M/2.75M [00:00&lt;00:00, 10.3GB/s]
 
   0%|                                              | 0.00/3.26M [00:00&lt;?, ?B/s]
-  0%|▏                                    | 11.3k/3.26M [00:00&lt;00:41, 78.7kB/s]
-  1%|▍                                     | 36.9k/3.26M [00:00&lt;00:20, 155kB/s]
-  3%|█                                     | 86.0k/3.26M [00:00&lt;00:11, 271kB/s]
-  4%|█▌                                     | 135k/3.26M [00:00&lt;00:09, 330kB/s]
-  7%|██▌                                    | 217k/3.26M [00:00&lt;00:06, 462kB/s]
-  8%|███▏                                   | 266k/3.26M [00:00&lt;00:06, 450kB/s]
- 11%|████▏                                  | 351k/3.26M [00:00&lt;00:05, 541kB/s]
- 13%|████▉                                  | 417k/3.26M [00:00&lt;00:05, 548kB/s]
- 16%|██████▎                                | 531k/3.26M [00:01&lt;00:03, 683kB/s]
- 20%|███████▋                               | 646k/3.26M [00:01&lt;00:03, 774kB/s]
- 24%|█████████▍                             | 793k/3.26M [00:01&lt;00:02, 921kB/s]
- 27%|██████████▋                            | 891k/3.26M [00:01&lt;00:02, 896kB/s]
- 32%|███████████▊                         | 1.04M/3.26M [00:01&lt;00:02, 1.01MB/s]
- 36%|█████████████▍                       | 1.19M/3.26M [00:01&lt;00:01, 1.09MB/s]
- 40%|██████████████▊                      | 1.30M/3.26M [00:01&lt;00:01, 1.05MB/s]
- 43%|███████████████▉                     | 1.41M/3.26M [00:01&lt;00:01, 1.00MB/s]
- 47%|█████████████████▎                   | 1.53M/3.26M [00:02&lt;00:01, 1.02MB/s]
- 50%|██████████████████▋                  | 1.64M/3.26M [00:02&lt;00:01, 1.00MB/s]
- 55%|████████████████████▌                | 1.81M/3.26M [00:02&lt;00:01, 1.12MB/s]
- 59%|█████████████████████▊               | 1.92M/3.26M [00:02&lt;00:01, 1.07MB/s]
- 62%|███████████████████████              | 2.03M/3.26M [00:02&lt;00:01, 1.02MB/s]
- 68%|█████████████████████████▏           | 2.22M/3.26M [00:02&lt;00:00, 1.21MB/s]
- 72%|██████████████████████████▌          | 2.34M/3.26M [00:02&lt;00:00, 1.14MB/s]
- 75%|███████████████████████████▊         | 2.45M/3.26M [00:02&lt;00:00, 1.09MB/s]
- 79%|█████████████████████████████        | 2.56M/3.26M [00:02&lt;00:00, 1.05MB/s]
- 82%|██████████████████████████████▎      | 2.67M/3.26M [00:03&lt;00:00, 1.00MB/s]
- 85%|████████████████████████████████▎     | 2.77M/3.26M [00:03&lt;00:00, 960kB/s]
- 88%|█████████████████████████████████▍    | 2.87M/3.26M [00:03&lt;00:00, 921kB/s]
- 91%|██████████████████████████████████▍   | 2.96M/3.26M [00:03&lt;00:00, 883kB/s]
- 93%|███████████████████████████████████▍  | 3.05M/3.26M [00:03&lt;00:00, 849kB/s]
- 97%|████████████████████████████████████▋ | 3.15M/3.26M [00:03&lt;00:00, 856kB/s]
+  0%|▏                                    | 11.3k/3.26M [00:00&lt;00:35, 90.6kB/s]
+  2%|▉                                     | 76.8k/3.26M [00:00&lt;00:09, 327kB/s]
+  5%|██                                     | 175k/3.26M [00:00&lt;00:06, 486kB/s]
+ 11%|████▍                                  | 374k/3.26M [00:00&lt;00:03, 769kB/s]
+ 18%|██████▊                               | 580k/3.26M [00:00&lt;00:02, 1.08MB/s]
+ 32%|███████████▉                         | 1.05M/3.26M [00:00&lt;00:01, 1.71MB/s]
+ 46%|████████████████▉                    | 1.50M/3.26M [00:00&lt;00:00, 2.31MB/s]
+ 68%|█████████████████████████            | 2.21M/3.26M [00:01&lt;00:00, 3.54MB/s]
+ 96%|███████████████████████████████████▌ | 3.13M/3.26M [00:01&lt;00:00, 4.20MB/s]
   0%|                                              | 0.00/3.26M [00:00&lt;?, ?B/s]
-100%|█████████████████████████████████████| 3.26M/3.26M [00:00&lt;00:00, 15.6GB/s]
-SHA256 hash of downloaded file: e864605256819ca15ef57bdd3f0071fc5103952007bb5066bc0bb1f8876a26c8
-Use this value as the &#39;known_hash&#39; argument of &#39;pooch.retrieve&#39; to ensure that the file hasn&#39;t changed if it is downloaded again in the future.
-Downloading data from &#39;https://zenodo.org/record/2392979/files/subject12_run2_raw.fif&#39; to file &#39;/home/runner/work/moabb/moabb/mne_data/MNE-ssvepexo-data/zenodo/2392979/subject12_run2_raw.fif&#39;.
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
+100%|█████████████████████████████████████| 3.26M/3.26M [00:00&lt;00:00, 18.8GB/s]
 
   0%|                                              | 0.00/3.33M [00:00&lt;?, ?B/s]
-  0%|▏                                    | 12.3k/3.33M [00:00&lt;00:35, 93.0kB/s]
-  1%|▍                                     | 41.0k/3.33M [00:00&lt;00:18, 177kB/s]
-  3%|█                                     | 95.2k/3.33M [00:00&lt;00:10, 305kB/s]
-  4%|█▌                                     | 131k/3.33M [00:00&lt;00:10, 307kB/s]
-  7%|██▋                                    | 226k/3.33M [00:00&lt;00:06, 490kB/s]
-  9%|███▎                                   | 286k/3.33M [00:00&lt;00:06, 497kB/s]
- 12%|████▍                                  | 383k/3.33M [00:00&lt;00:04, 606kB/s]
- 13%|█████▎                                 | 449k/3.33M [00:00&lt;00:04, 593kB/s]
- 17%|██████▊                                | 580k/3.33M [00:01&lt;00:03, 760kB/s]
- 20%|███████▋                               | 656k/3.33M [00:01&lt;00:03, 728kB/s]
- 22%|████████▌                              | 730k/3.33M [00:01&lt;00:03, 699kB/s]
- 26%|██████████▏                            | 873k/3.33M [00:01&lt;00:02, 861kB/s]
- 30%|███████████▌                           | 988k/3.33M [00:01&lt;00:02, 899kB/s]
- 33%|████████████▌                         | 1.10M/3.33M [00:01&lt;00:02, 925kB/s]
- 36%|█████████████▋                        | 1.20M/3.33M [00:01&lt;00:02, 900kB/s]
- 40%|███████████████                       | 1.31M/3.33M [00:01&lt;00:02, 922kB/s]
- 42%|████████████████▏                     | 1.41M/3.33M [00:01&lt;00:02, 899kB/s]
- 46%|█████████████████▍                    | 1.53M/3.33M [00:02&lt;00:01, 925kB/s]
- 49%|██████████████████▊                   | 1.64M/3.33M [00:02&lt;00:01, 944kB/s]
- 53%|████████████████████▏                 | 1.77M/3.33M [00:02&lt;00:01, 995kB/s]
- 56%|█████████████████████▍                | 1.87M/3.33M [00:02&lt;00:01, 955kB/s]
- 59%|██████████████████████▍               | 1.97M/3.33M [00:02&lt;00:01, 917kB/s]
- 62%|███████████████████████▌              | 2.06M/3.33M [00:02&lt;00:01, 879kB/s]
- 65%|████████████████████████▌             | 2.15M/3.33M [00:02&lt;00:01, 842kB/s]
- 67%|█████████████████████████▌            | 2.24M/3.33M [00:02&lt;00:01, 808kB/s]
- 70%|██████████████████████████▊           | 2.34M/3.33M [00:03&lt;00:01, 839kB/s]
- 75%|████████████████████████████▍         | 2.49M/3.33M [00:03&lt;00:00, 966kB/s]
- 80%|█████████████████████████████▌       | 2.66M/3.33M [00:03&lt;00:00, 1.10MB/s]
- 83%|██████████████████████████████▊      | 2.77M/3.33M [00:03&lt;00:00, 1.05MB/s]
- 86%|███████████████████████████████▉     | 2.87M/3.33M [00:03&lt;00:00, 1.01MB/s]
- 89%|█████████████████████████████████▉    | 2.97M/3.33M [00:03&lt;00:00, 968kB/s]
- 92%|███████████████████████████████████   | 3.07M/3.33M [00:03&lt;00:00, 929kB/s]
- 96%|████████████████████████████████████▍ | 3.20M/3.33M [00:03&lt;00:00, 972kB/s]
- 99%|█████████████████████████████████████▌| 3.29M/3.33M [00:03&lt;00:00, 934kB/s]
+  0%|▏                                     | 13.3k/3.33M [00:00&lt;00:30, 109kB/s]
+  3%|█                                     | 91.1k/3.33M [00:00&lt;00:10, 309kB/s]
+  6%|██▍                                    | 206k/3.33M [00:00&lt;00:06, 447kB/s]
+ 10%|███▉                                   | 332k/3.33M [00:00&lt;00:04, 663kB/s]
+ 13%|█████                                  | 433k/3.33M [00:00&lt;00:04, 603kB/s]
+ 21%|████████▏                             | 712k/3.33M [00:00&lt;00:02, 1.12MB/s]
+ 32%|███████████▊                         | 1.07M/3.33M [00:01&lt;00:01, 1.74MB/s]
+ 41%|███████████████▏                     | 1.37M/3.33M [00:01&lt;00:01, 1.67MB/s]
+ 64%|███████████████████████▋             | 2.14M/3.33M [00:01&lt;00:00, 3.08MB/s]
+ 84%|███████████████████████████████      | 2.80M/3.33M [00:01&lt;00:00, 3.97MB/s]
   0%|                                              | 0.00/3.33M [00:00&lt;?, ?B/s]
-100%|█████████████████████████████████████| 3.33M/3.33M [00:00&lt;00:00, 27.4GB/s]
-SHA256 hash of downloaded file: 29b8edad256d6fa02769c1f4919970c543ffbbb83fac491a2ec15935e274a37a
-Use this value as the &#39;known_hash&#39; argument of &#39;pooch.retrieve&#39; to ensure that the file hasn&#39;t changed if it is downloaded again in the future.
-Downloading data from &#39;https://zenodo.org/record/2392979/files/subject12_run3_raw.fif&#39; to file &#39;/home/runner/work/moabb/moabb/mne_data/MNE-ssvepexo-data/zenodo/2392979/subject12_run3_raw.fif&#39;.
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
+100%|█████████████████████████████████████| 3.33M/3.33M [00:00&lt;00:00, 19.9GB/s]
 
   0%|                                              | 0.00/3.23M [00:00&lt;?, ?B/s]
-  0%|▏                                    | 13.3k/3.23M [00:00&lt;00:42, 75.6kB/s]
-  1%|▍                                     | 42.0k/3.23M [00:00&lt;00:18, 169kB/s]
-  3%|█                                     | 86.0k/3.23M [00:00&lt;00:12, 256kB/s]
-  5%|█▊                                     | 155k/3.23M [00:00&lt;00:08, 360kB/s]
-  7%|██▋                                    | 222k/3.23M [00:00&lt;00:06, 431kB/s]
-  9%|███▌                                   | 297k/3.23M [00:00&lt;00:05, 497kB/s]
- 11%|████▏                                  | 348k/3.23M [00:00&lt;00:06, 476kB/s]
- 14%|█████▍                                 | 445k/3.23M [00:01&lt;00:04, 581kB/s]
- 17%|██████▌                                | 544k/3.23M [00:01&lt;00:04, 659kB/s]
- 19%|███████▎                               | 610k/3.23M [00:01&lt;00:04, 628kB/s]
- 23%|████████▉                              | 739k/3.23M [00:01&lt;00:03, 766kB/s]
- 26%|██████████                             | 838k/3.23M [00:01&lt;00:03, 785kB/s]
- 30%|███████████▉                           | 985k/3.23M [00:01&lt;00:02, 922kB/s]
- 34%|████████████▋                         | 1.08M/3.23M [00:01&lt;00:02, 888kB/s]
- 38%|██████████████▍                       | 1.23M/3.23M [00:01&lt;00:02, 990kB/s]
- 41%|███████████████▋                      | 1.33M/3.23M [00:01&lt;00:02, 942kB/s]
- 44%|████████████████▊                     | 1.43M/3.23M [00:02&lt;00:01, 906kB/s]
- 49%|██████████████████                   | 1.57M/3.23M [00:02&lt;00:01, 1.00MB/s]
- 52%|███████████████████▋                  | 1.68M/3.23M [00:02&lt;00:01, 958kB/s]
- 55%|████████████████████▊                 | 1.77M/3.23M [00:02&lt;00:01, 910kB/s]
- 58%|█████████████████████▉                | 1.86M/3.23M [00:02&lt;00:01, 867kB/s]
- 60%|██████████████████████▉               | 1.95M/3.23M [00:02&lt;00:01, 826kB/s]
- 65%|████████████████████████▋             | 2.10M/3.23M [00:02&lt;00:01, 950kB/s]
- 68%|█████████████████████████▊            | 2.20M/3.23M [00:02&lt;00:01, 914kB/s]
- 71%|██████████████████████████▉           | 2.29M/3.23M [00:03&lt;00:01, 871kB/s]
- 74%|███████████████████████████▉          | 2.38M/3.23M [00:03&lt;00:01, 834kB/s]
- 77%|█████████████████████████████         | 2.47M/3.23M [00:03&lt;00:00, 830kB/s]
- 81%|██████████████████████████████▌       | 2.60M/3.23M [00:03&lt;00:00, 911kB/s]
- 84%|███████████████████████████████▊      | 2.70M/3.23M [00:03&lt;00:00, 886kB/s]
- 87%|█████████████████████████████████     | 2.82M/3.23M [00:03&lt;00:00, 905kB/s]
- 90%|██████████████████████████████████▎   | 2.91M/3.23M [00:03&lt;00:00, 882kB/s]
- 94%|███████████████████████████████████▌  | 3.03M/3.23M [00:03&lt;00:00, 907kB/s]
- 97%|████████████████████████████████████▊ | 3.13M/3.23M [00:03&lt;00:00, 883kB/s]
+  0%|▏                                    | 11.3k/3.23M [00:00&lt;00:34, 93.0kB/s]
+  3%|█                                     | 90.1k/3.23M [00:00&lt;00:10, 309kB/s]
+  6%|██▎                                    | 187k/3.23M [00:00&lt;00:07, 402kB/s]
+ 10%|███▊                                   | 321k/3.23M [00:00&lt;00:04, 650kB/s]
+ 12%|████▊                                  | 402k/3.23M [00:00&lt;00:05, 553kB/s]
+ 17%|██████▍                                | 534k/3.23M [00:00&lt;00:03, 733kB/s]
+ 22%|████████▍                             | 719k/3.23M [00:01&lt;00:02, 1.02MB/s]
+ 26%|██████████▏                            | 844k/3.23M [00:01&lt;00:02, 861kB/s]
+ 30%|███████████▊                           | 982k/3.23M [00:01&lt;00:02, 982kB/s]
+ 34%|████████████▋                        | 1.11M/3.23M [00:01&lt;00:01, 1.06MB/s]
+ 41%|███████████████▏                     | 1.33M/3.23M [00:01&lt;00:01, 1.07MB/s]
+ 47%|█████████████████▍                   | 1.52M/3.23M [00:01&lt;00:01, 1.28MB/s]
+ 58%|█████████████████████▎               | 1.87M/3.23M [00:01&lt;00:00, 1.46MB/s]
+ 64%|███████████████████████▌             | 2.06M/3.23M [00:02&lt;00:00, 1.30MB/s]
+ 69%|█████████████████████████▋           | 2.24M/3.23M [00:02&lt;00:00, 1.40MB/s]
+ 75%|███████████████████████████▉         | 2.44M/3.23M [00:02&lt;00:00, 1.25MB/s]
+ 81%|█████████████████████████████▊       | 2.61M/3.23M [00:02&lt;00:00, 1.35MB/s]
+ 90%|█████████████████████████████████▎   | 2.91M/3.23M [00:02&lt;00:00, 1.42MB/s]
+ 98%|████████████████████████████████████▍| 3.18M/3.23M [00:02&lt;00:00, 1.69MB/s]
   0%|                                              | 0.00/3.23M [00:00&lt;?, ?B/s]
-100%|█████████████████████████████████████| 3.23M/3.23M [00:00&lt;00:00, 27.2GB/s]
-SHA256 hash of downloaded file: 55d3f197b4aff6c1f96b1f1d7bc54f7eb0d18b89b66dd7b58acaf2ca48489e01
-Use this value as the &#39;known_hash&#39; argument of &#39;pooch.retrieve&#39; to ensure that the file hasn&#39;t changed if it is downloaded again in the future.
-Downloading data from &#39;https://zenodo.org/record/2392979/files/subject12_run4_raw.fif&#39; to file &#39;/home/runner/work/moabb/moabb/mne_data/MNE-ssvepexo-data/zenodo/2392979/subject12_run4_raw.fif&#39;.
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
+100%|█████████████████████████████████████| 3.23M/3.23M [00:00&lt;00:00, 20.1GB/s]
 
   0%|                                              | 0.00/6.92M [00:00&lt;?, ?B/s]
-  0%|                                     | 12.3k/6.92M [00:00&lt;01:28, 77.8kB/s]
-  0%|▏                                     | 30.7k/6.92M [00:00&lt;00:58, 117kB/s]
-  1%|▌                                     | 95.2k/6.92M [00:00&lt;00:23, 297kB/s]
-  3%|▉                                      | 177k/6.92M [00:00&lt;00:15, 443kB/s]
-  4%|█▎                                     | 243k/6.92M [00:00&lt;00:13, 480kB/s]
-  5%|█▉                                     | 346k/6.92M [00:00&lt;00:10, 606kB/s]
-  7%|██▋                                    | 484k/6.92M [00:00&lt;00:08, 780kB/s]
-  9%|███▍                                   | 614k/6.92M [00:00&lt;00:07, 876kB/s]
- 11%|████                                   | 729k/6.92M [00:01&lt;00:06, 899kB/s]
- 12%|████▋                                  | 827k/6.92M [00:01&lt;00:06, 872kB/s]
- 14%|█████▍                                 | 958k/6.92M [00:01&lt;00:06, 934kB/s]
- 15%|█████▉                                | 1.07M/6.92M [00:01&lt;00:06, 933kB/s]
- 17%|██████▍                               | 1.17M/6.92M [00:01&lt;00:06, 898kB/s]
- 18%|██████▉                               | 1.27M/6.92M [00:01&lt;00:06, 873kB/s]
- 20%|███████▍                              | 1.36M/6.92M [00:01&lt;00:06, 830kB/s]
- 21%|████████▏                             | 1.48M/6.92M [00:01&lt;00:06, 892kB/s]
- 23%|████████▋                             | 1.58M/6.92M [00:02&lt;00:06, 866kB/s]
- 24%|█████████▏                            | 1.68M/6.92M [00:02&lt;00:06, 851kB/s]
- 26%|█████████▉                            | 1.81M/6.92M [00:02&lt;00:05, 921kB/s]
- 28%|██████████▋                           | 1.94M/6.92M [00:02&lt;00:05, 971kB/s]
- 30%|███████████▏                         | 2.09M/6.92M [00:02&lt;00:04, 1.05MB/s]
- 32%|████████████                          | 2.19M/6.92M [00:02&lt;00:04, 991kB/s]
- 33%|████████████▌                         | 2.29M/6.92M [00:02&lt;00:04, 940kB/s]
- 35%|█████████████▏                        | 2.41M/6.92M [00:02&lt;00:04, 966kB/s]
- 37%|█████████████▋                       | 2.56M/6.92M [00:03&lt;00:04, 1.04MB/s]
- 39%|██████████████▋                       | 2.67M/6.92M [00:03&lt;00:04, 993kB/s]
- 41%|███████████████▏                     | 2.84M/6.92M [00:03&lt;00:03, 1.12MB/s]
- 43%|███████████████▉                     | 2.99M/6.92M [00:03&lt;00:03, 1.15MB/s]
- 45%|████████████████▌                    | 3.10M/6.92M [00:03&lt;00:03, 1.09MB/s]
- 48%|█████████████████▋                   | 3.31M/6.92M [00:03&lt;00:02, 1.29MB/s]
- 50%|██████████████████▍                  | 3.44M/6.92M [00:03&lt;00:02, 1.22MB/s]
- 52%|███████████████████                  | 3.57M/6.92M [00:03&lt;00:02, 1.16MB/s]
- 53%|███████████████████▋                 | 3.68M/6.92M [00:04&lt;00:02, 1.10MB/s]
- 55%|████████████████████▎                | 3.79M/6.92M [00:04&lt;00:02, 1.05MB/s]
- 56%|█████████████████████▍                | 3.90M/6.92M [00:04&lt;00:03, 994kB/s]
- 58%|█████████████████████▉                | 4.00M/6.92M [00:04&lt;00:03, 946kB/s]
- 59%|██████████████████████▍               | 4.09M/6.92M [00:04&lt;00:03, 900kB/s]
- 60%|██████████████████████▉               | 4.18M/6.92M [00:04&lt;00:03, 855kB/s]
- 63%|███████████████████████▊              | 4.34M/6.92M [00:04&lt;00:02, 996kB/s]
- 65%|███████████████████████▉             | 4.47M/6.92M [00:04&lt;00:02, 1.02MB/s]
- 67%|████████████████████████▋            | 4.62M/6.92M [00:04&lt;00:02, 1.08MB/s]
- 69%|█████████████████████████▋           | 4.80M/6.92M [00:05&lt;00:01, 1.20MB/s]
- 71%|██████████████████████████▎          | 4.92M/6.92M [00:05&lt;00:01, 1.14MB/s]
- 75%|███████████████████████████▊         | 5.21M/6.92M [00:05&lt;00:01, 1.52MB/s]
- 77%|████████████████████████████▋        | 5.36M/6.92M [00:05&lt;00:01, 1.44MB/s]
- 83%|██████████████████████████████▌      | 5.72M/6.92M [00:05&lt;00:00, 1.89MB/s]
- 85%|███████████████████████████████▌     | 5.91M/6.92M [00:05&lt;00:00, 1.79MB/s]
- 90%|█████████████████████████████████▎   | 6.24M/6.92M [00:05&lt;00:00, 2.09MB/s]
- 93%|██████████████████████████████████▍  | 6.45M/6.92M [00:05&lt;00:00, 1.98MB/s]
- 96%|███████████████████████████████████▌ | 6.65M/6.92M [00:06&lt;00:00, 1.18MB/s]
+  0%|                                     | 12.3k/6.92M [00:00&lt;01:13, 93.5kB/s]
+  1%|▌                                     | 96.3k/6.92M [00:00&lt;00:21, 323kB/s]
+  4%|█▌                                     | 269k/6.92M [00:00&lt;00:11, 601kB/s]
+  7%|██▉                                    | 512k/6.92M [00:00&lt;00:07, 868kB/s]
+ 12%|████▌                                 | 823k/6.92M [00:00&lt;00:04, 1.39MB/s]
+ 15%|█████▌                               | 1.05M/6.92M [00:01&lt;00:04, 1.31MB/s]
+ 21%|███████▋                             | 1.44M/6.92M [00:01&lt;00:02, 1.88MB/s]
+ 26%|█████████▋                           | 1.82M/6.92M [00:01&lt;00:02, 2.16MB/s]
+ 34%|████████████▍                        | 2.33M/6.92M [00:01&lt;00:01, 2.54MB/s]
+ 44%|████████████████▍                    | 3.08M/6.92M [00:01&lt;00:01, 3.70MB/s]
+ 58%|█████████████████████▋               | 4.05M/6.92M [00:01&lt;00:00, 5.21MB/s]
+ 76%|███████████████████████████▉         | 5.24M/6.92M [00:01&lt;00:00, 6.97MB/s]
+ 97%|███████████████████████████████████▊ | 6.70M/6.92M [00:01&lt;00:00, 9.07MB/s]
   0%|                                              | 0.00/6.92M [00:00&lt;?, ?B/s]
-100%|█████████████████████████████████████| 6.92M/6.92M [00:00&lt;00:00, 43.5GB/s]
-SHA256 hash of downloaded file: 5f92d56007b4b9c9bc4e20486d39d84c8ef43c0de8e827ee452b4788481296eb
-Use this value as the &#39;known_hash&#39; argument of &#39;pooch.retrieve&#39; to ensure that the file hasn&#39;t changed if it is downloaded again in the future.
-Downloading data from &#39;https://zenodo.org/record/2392979/files/subject12_run5_raw.fif&#39; to file &#39;/home/runner/work/moabb/moabb/mne_data/MNE-ssvepexo-data/zenodo/2392979/subject12_run5_raw.fif&#39;.
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
-/home/runner/work/moabb/moabb/.venv/lib/python3.10/site-packages/urllib3/connectionpool.py:1097: InsecureRequestWarning: Unverified HTTPS request is being made to host &#39;zenodo.org&#39;. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
-  warnings.warn(
+100%|█████████████████████████████████████| 6.92M/6.92M [00:00&lt;00:00, 24.4GB/s]
 
   0%|                                              | 0.00/5.35M [00:00&lt;?, ?B/s]
-  0%|                                     | 12.3k/5.35M [00:00&lt;01:08, 78.0kB/s]
-  1%|▎                                     | 39.9k/5.35M [00:00&lt;00:33, 159kB/s]
-  2%|▋                                     | 95.2k/5.35M [00:00&lt;00:18, 291kB/s]
-  2%|▉                                      | 128k/5.35M [00:00&lt;00:18, 286kB/s]
-  4%|█▍                                     | 193k/5.35M [00:00&lt;00:13, 374kB/s]
-  5%|█▉                                     | 270k/5.35M [00:00&lt;00:10, 467kB/s]
-  6%|██▍                                    | 335k/5.35M [00:00&lt;00:10, 492kB/s]
-  7%|██▊                                    | 385k/5.35M [00:00&lt;00:10, 470kB/s]
-  8%|███▎                                   | 450k/5.35M [00:01&lt;00:09, 492kB/s]
- 10%|███▊                                   | 515k/5.35M [00:01&lt;00:09, 511kB/s]
- 11%|████▍                                  | 613k/5.35M [00:01&lt;00:07, 609kB/s]
- 13%|████▉                                  | 675k/5.35M [00:01&lt;00:08, 572kB/s]
- 14%|█████▌                                 | 761k/5.35M [00:01&lt;00:07, 617kB/s]
- 16%|██████▍                                | 876k/5.35M [00:01&lt;00:06, 721kB/s]
- 18%|██████▉                                | 956k/5.35M [00:01&lt;00:06, 708kB/s]
- 20%|███████▌                              | 1.07M/5.35M [00:01&lt;00:05, 787kB/s]
- 23%|████████▋                             | 1.22M/5.35M [00:02&lt;00:04, 916kB/s]
- 24%|█████████▎                            | 1.31M/5.35M [00:02&lt;00:04, 868kB/s]
- 26%|█████████▉                            | 1.40M/5.35M [00:02&lt;00:04, 832kB/s]
- 28%|██████████▋                           | 1.50M/5.35M [00:02&lt;00:04, 829kB/s]
- 31%|███████████▋                          | 1.64M/5.35M [00:02&lt;00:03, 949kB/s]
- 33%|████████████▍                        | 1.79M/5.35M [00:02&lt;00:03, 1.04MB/s]
- 35%|█████████████▍                        | 1.90M/5.35M [00:02&lt;00:03, 987kB/s]
- 37%|██████████████▏                       | 1.99M/5.35M [00:02&lt;00:03, 941kB/s]
- 39%|██████████████▊                       | 2.09M/5.35M [00:03&lt;00:03, 897kB/s]
- 41%|███████████████▍                      | 2.18M/5.35M [00:03&lt;00:03, 857kB/s]
- 42%|████████████████                      | 2.27M/5.35M [00:03&lt;00:03, 817kB/s]
- 44%|████████████████▉                     | 2.38M/5.35M [00:03&lt;00:03, 857kB/s]
- 48%|█████████████████▌                   | 2.54M/5.35M [00:03&lt;00:02, 1.01MB/s]
- 50%|██████████████████▌                  | 2.69M/5.35M [00:03&lt;00:02, 1.08MB/s]
- 53%|███████████████████▌                 | 2.82M/5.35M [00:03&lt;00:02, 1.08MB/s]
- 56%|████████████████████▋                | 2.98M/5.35M [00:03&lt;00:02, 1.17MB/s]
- 58%|█████████████████████▍               | 3.10M/5.35M [00:03&lt;00:02, 1.12MB/s]
- 60%|██████████████████████▏              | 3.22M/5.35M [00:04&lt;00:02, 1.07MB/s]
- 63%|███████████████████████▏             | 3.36M/5.35M [00:04&lt;00:01, 1.11MB/s]
- 65%|████████████████████████             | 3.47M/5.35M [00:04&lt;00:01, 1.06MB/s]
- 67%|████████████████████████▉            | 3.61M/5.35M [00:04&lt;00:01, 1.08MB/s]
- 69%|█████████████████████████▋           | 3.71M/5.35M [00:04&lt;00:01, 1.03MB/s]
- 71%|███████████████████████████           | 3.82M/5.35M [00:04&lt;00:01, 984kB/s]
- 73%|███████████████████████████▊          | 3.92M/5.35M [00:04&lt;00:01, 939kB/s]
- 76%|████████████████████████████         | 4.06M/5.35M [00:04&lt;00:01, 1.03MB/s]
- 78%|█████████████████████████████▌        | 4.17M/5.35M [00:05&lt;00:01, 978kB/s]
- 83%|██████████████████████████████▌      | 4.42M/5.35M [00:05&lt;00:00, 1.32MB/s]
- 85%|███████████████████████████████▌     | 4.56M/5.35M [00:05&lt;00:00, 1.26MB/s]
- 88%|████████████████████████████████▍    | 4.68M/5.35M [00:05&lt;00:00, 1.21MB/s]
- 90%|█████████████████████████████████▏   | 4.80M/5.35M [00:05&lt;00:00, 1.15MB/s]
- 92%|██████████████████████████████████   | 4.92M/5.35M [00:05&lt;00:00, 1.09MB/s]
- 94%|██████████████████████████████████▊  | 5.03M/5.35M [00:05&lt;00:00, 1.04MB/s]
- 96%|████████████████████████████████████▍ | 5.13M/5.35M [00:05&lt;00:00, 991kB/s]
- 98%|█████████████████████████████████████▏| 5.23M/5.35M [00:05&lt;00:00, 946kB/s]
-100%|█████████████████████████████████████▊| 5.33M/5.35M [00:06&lt;00:00, 902kB/s]
+  0%|                                     | 11.3k/5.35M [00:00&lt;01:04, 83.4kB/s]
+  1%|▌                                     | 76.8k/5.35M [00:00&lt;00:16, 316kB/s]
+  3%|█▎                                     | 175k/5.35M [00:00&lt;00:10, 477kB/s]
+  7%|██▋                                    | 366k/5.35M [00:00&lt;00:06, 824kB/s]
+ 10%|███▊                                   | 529k/5.35M [00:00&lt;00:05, 922kB/s]
+ 17%|██████▌                               | 922k/5.35M [00:00&lt;00:02, 1.71MB/s]
+ 27%|█████████▉                           | 1.44M/5.35M [00:00&lt;00:01, 2.43MB/s]
+ 37%|█████████████▌                       | 1.97M/5.35M [00:01&lt;00:01, 2.80MB/s]
+ 55%|████████████████████▌                | 2.97M/5.35M [00:01&lt;00:00, 4.58MB/s]
+ 77%|████████████████████████████▌        | 4.13M/5.35M [00:01&lt;00:00, 6.42MB/s]
   0%|                                              | 0.00/5.35M [00:00&lt;?, ?B/s]
-100%|█████████████████████████████████████| 5.35M/5.35M [00:00&lt;00:00, 31.2GB/s]
-SHA256 hash of downloaded file: f3272b17761df094a2454faaf9eed3a4c760c3128a49b367e0f5bc5613464e02
-Use this value as the &#39;known_hash&#39; argument of &#39;pooch.retrieve&#39; to ensure that the file hasn&#39;t changed if it is downloaded again in the future.
-[codecarbon WARNING @ 09:12:22] Multiple instances of codecarbon are allowed to run at the same time.
-2026-03-30 09:13:02,781 INFO MainThread moabb.evaluations.base CCA | Kalunga2016 | 1 | 0: Score 0.333
-2026-03-30 09:13:02,781 INFO MainThread moabb.evaluations.base CCA | Kalunga2016 | 2 | 0: Score 0.333
-2026-03-30 09:13:02,781 INFO MainThread moabb.evaluations.base CCA | Kalunga2016 | 3 | 0: Score 0.333
-2026-03-30 09:13:02,781 INFO MainThread moabb.evaluations.base CCA | Kalunga2016 | 4 | 0: Score 0.333
-2026-03-30 09:13:02,781 INFO MainThread moabb.evaluations.base CCA | Kalunga2016 | 5 | 0: Score 0.312
-2026-03-30 09:13:02,781 INFO MainThread moabb.evaluations.base CCA | Kalunga2016 | 6 | 0: Score 0.333
-2026-03-30 09:13:02,781 INFO MainThread moabb.evaluations.base CCA | Kalunga2016 | 7 | 0: Score 0.333
-2026-03-30 09:13:02,781 INFO MainThread moabb.evaluations.base CCA | Kalunga2016 | 8 | 0: Score 0.333
-2026-03-30 09:13:02,781 INFO MainThread moabb.evaluations.base CCA | Kalunga2016 | 9 | 0: Score 0.333
-2026-03-30 09:13:02,781 INFO MainThread moabb.evaluations.base CCA | Kalunga2016 | 10 | 0: Score 0.333
-2026-03-30 09:13:02,781 INFO MainThread moabb.evaluations.base CCA | Kalunga2016 | 11 | 0: Score 0.333
-2026-03-30 09:13:02,781 INFO MainThread moabb.evaluations.base CCA | Kalunga2016 | 12 | 0: Score 0.333
-/home/runner/work/moabb/moabb/moabb/analysis/results.py:192: H5pyDeprecationWarning: Creating a dataset without passing data or dtype is deprecated. Pass an explicit dtype. Using dtype=&#39;f4&#39; will keep the current default behaviour.
-  dset.create_dataset(
+100%|█████████████████████████████████████| 5.35M/5.35M [00:00&lt;00:00, 19.2GB/s]
 </pre></div>
 </div>
 <p>Filter bank processing, determine the filter automatically from the
@@ -1661,22 +1105,6 @@ stimulation frequency values of events.</p>
 <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">results_fb</span></a> <span class="o">=</span> <a href="../../generated/moabb.evaluations.base.BaseEvaluation.html#moabb.evaluations.base.BaseEvaluation.process" title="moabb.evaluations.base.BaseEvaluation.process" class="sphx-glr-backref-module-moabb-evaluations-base sphx-glr-backref-type-py-method"><span class="n">evaluation_fb</span><span class="o">.</span><span class="n">process</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pipelines_fb</span></a><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-03-30 09:13:45,063 INFO MainThread moabb.evaluations.base RG+LogReg | Kalunga2016 | 1 | 0: Score 0.375
-2026-03-30 09:13:45,063 INFO MainThread moabb.evaluations.base RG+LogReg | Kalunga2016 | 2 | 0: Score 0.396
-2026-03-30 09:13:45,063 INFO MainThread moabb.evaluations.base RG+LogReg | Kalunga2016 | 3 | 0: Score 0.583
-2026-03-30 09:13:45,063 INFO MainThread moabb.evaluations.base RG+LogReg | Kalunga2016 | 4 | 0: Score 0.458
-2026-03-30 09:13:45,063 INFO MainThread moabb.evaluations.base RG+LogReg | Kalunga2016 | 5 | 0: Score 0.271
-2026-03-30 09:13:45,063 INFO MainThread moabb.evaluations.base RG+LogReg | Kalunga2016 | 6 | 0: Score 0.354
-2026-03-30 09:13:45,063 INFO MainThread moabb.evaluations.base RG+LogReg | Kalunga2016 | 7 | 0: Score 0.611
-2026-03-30 09:13:45,063 INFO MainThread moabb.evaluations.base RG+LogReg | Kalunga2016 | 8 | 0: Score 0.354
-2026-03-30 09:13:45,064 INFO MainThread moabb.evaluations.base RG+LogReg | Kalunga2016 | 9 | 0: Score 0.521
-2026-03-30 09:13:45,064 INFO MainThread moabb.evaluations.base RG+LogReg | Kalunga2016 | 10 | 0: Score 0.417
-2026-03-30 09:13:45,064 INFO MainThread moabb.evaluations.base RG+LogReg | Kalunga2016 | 11 | 0: Score 0.438
-2026-03-30 09:13:45,064 INFO MainThread moabb.evaluations.base RG+LogReg | Kalunga2016 | 12 | 0: Score 0.533
-/home/runner/work/moabb/moabb/moabb/analysis/results.py:192: H5pyDeprecationWarning: Creating a dataset without passing data or dtype is deprecated. Pass an explicit dtype. Using dtype=&#39;f4&#39; will keep the current default behaviour.
-  dset.create_dataset(
-</pre></div>
-</div>
 <p>TRCA processing also relies on filter bank that is automatically designed.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="../../generated/moabb.evaluations.CrossSubjectEvaluation.html#moabb.evaluations.CrossSubjectEvaluation" title="moabb.evaluations.CrossSubjectEvaluation" class="sphx-glr-backref-module-moabb-evaluations sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">evaluation_TRCA</span></a> <span class="o">=</span> <a href="../../generated/moabb.evaluations.CrossSubjectEvaluation.html#moabb.evaluations.CrossSubjectEvaluation" title="moabb.evaluations.CrossSubjectEvaluation" class="sphx-glr-backref-module-moabb-evaluations sphx-glr-backref-type-py-class"><span class="n">CrossSubjectEvaluation</span></a><span class="p">(</span>
     <a href="../../generated/moabb.paradigms.SSVEP.html#moabb.paradigms.SSVEP" title="moabb.paradigms.SSVEP" class="sphx-glr-backref-module-moabb-paradigms sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">paradigm</span></a><span class="o">=</span><a href="../../generated/moabb.paradigms.SSVEP.html#moabb.paradigms.SSVEP" title="moabb.paradigms.SSVEP" class="sphx-glr-backref-module-moabb-paradigms sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">paradigm_TRCA</span></a><span class="p">,</span> <span class="n">datasets</span><span class="o">=</span><a href="../../generated/moabb.datasets.Kalunga2016.html#moabb.datasets.Kalunga2016" title="moabb.datasets.Kalunga2016" class="sphx-glr-backref-module-moabb-datasets sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dataset</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/functions.html#bool" title="builtins.bool" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">overwrite</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/functions.html#bool" title="builtins.bool" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">overwrite</span></a>
@@ -1684,43 +1112,11 @@ stimulation frequency values of events.</p>
 <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">results_TRCA</span></a> <span class="o">=</span> <a href="../../generated/moabb.evaluations.base.BaseEvaluation.html#moabb.evaluations.base.BaseEvaluation.process" title="moabb.evaluations.base.BaseEvaluation.process" class="sphx-glr-backref-module-moabb-evaluations-base sphx-glr-backref-type-py-method"><span class="n">evaluation_TRCA</span><span class="o">.</span><span class="n">process</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pipelines_TRCA</span></a><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-03-30 09:20:32,972 INFO MainThread moabb.evaluations.base TRCA | Kalunga2016 | 1 | 0: Score 0.271
-2026-03-30 09:20:32,973 INFO MainThread moabb.evaluations.base TRCA | Kalunga2016 | 2 | 0: Score 0.333
-2026-03-30 09:20:32,973 INFO MainThread moabb.evaluations.base TRCA | Kalunga2016 | 3 | 0: Score 0.354
-2026-03-30 09:20:32,973 INFO MainThread moabb.evaluations.base TRCA | Kalunga2016 | 4 | 0: Score 0.354
-2026-03-30 09:20:32,973 INFO MainThread moabb.evaluations.base TRCA | Kalunga2016 | 5 | 0: Score 0.208
-2026-03-30 09:20:32,973 INFO MainThread moabb.evaluations.base TRCA | Kalunga2016 | 6 | 0: Score 0.250
-2026-03-30 09:20:32,973 INFO MainThread moabb.evaluations.base TRCA | Kalunga2016 | 7 | 0: Score 0.403
-2026-03-30 09:20:32,973 INFO MainThread moabb.evaluations.base TRCA | Kalunga2016 | 8 | 0: Score 0.417
-2026-03-30 09:20:32,973 INFO MainThread moabb.evaluations.base TRCA | Kalunga2016 | 9 | 0: Score 0.271
-2026-03-30 09:20:32,973 INFO MainThread moabb.evaluations.base TRCA | Kalunga2016 | 10 | 0: Score 0.312
-2026-03-30 09:20:32,973 INFO MainThread moabb.evaluations.base TRCA | Kalunga2016 | 11 | 0: Score 0.250
-2026-03-30 09:20:32,973 INFO MainThread moabb.evaluations.base TRCA | Kalunga2016 | 12 | 0: Score 0.308
-/home/runner/work/moabb/moabb/moabb/analysis/results.py:192: H5pyDeprecationWarning: Creating a dataset without passing data or dtype is deprecated. Pass an explicit dtype. Using dtype=&#39;f4&#39; will keep the current default behaviour.
-  dset.create_dataset(
-</pre></div>
-</div>
 <p>MsetCCA processing</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="../../generated/moabb.evaluations.CrossSubjectEvaluation.html#moabb.evaluations.CrossSubjectEvaluation" title="moabb.evaluations.CrossSubjectEvaluation" class="sphx-glr-backref-module-moabb-evaluations sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">evaluation_MSET_CCA</span></a> <span class="o">=</span> <a href="../../generated/moabb.evaluations.CrossSubjectEvaluation.html#moabb.evaluations.CrossSubjectEvaluation" title="moabb.evaluations.CrossSubjectEvaluation" class="sphx-glr-backref-module-moabb-evaluations sphx-glr-backref-type-py-class"><span class="n">CrossSubjectEvaluation</span></a><span class="p">(</span>
     <a href="../../generated/moabb.paradigms.SSVEP.html#moabb.paradigms.SSVEP" title="moabb.paradigms.SSVEP" class="sphx-glr-backref-module-moabb-paradigms sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">paradigm</span></a><span class="o">=</span><a href="../../generated/moabb.paradigms.SSVEP.html#moabb.paradigms.SSVEP" title="moabb.paradigms.SSVEP" class="sphx-glr-backref-module-moabb-paradigms sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">paradigm_MSET_CCA</span></a><span class="p">,</span> <span class="n">datasets</span><span class="o">=</span><a href="../../generated/moabb.datasets.Kalunga2016.html#moabb.datasets.Kalunga2016" title="moabb.datasets.Kalunga2016" class="sphx-glr-backref-module-moabb-datasets sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dataset</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/functions.html#bool" title="builtins.bool" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">overwrite</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/functions.html#bool" title="builtins.bool" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">overwrite</span></a>
 <span class="p">)</span>
 <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">results_MSET_CCA</span></a> <span class="o">=</span> <a href="../../generated/moabb.evaluations.base.BaseEvaluation.html#moabb.evaluations.base.BaseEvaluation.process" title="moabb.evaluations.base.BaseEvaluation.process" class="sphx-glr-backref-module-moabb-evaluations-base sphx-glr-backref-type-py-method"><span class="n">evaluation_MSET_CCA</span><span class="o">.</span><span class="n">process</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pipelines_MSET_CCA</span></a><span class="p">)</span>
-</pre></div>
-</div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-03-30 09:21:36,656 INFO MainThread moabb.evaluations.base MSET_CCA | Kalunga2016 | 1 | 0: Score 0.375
-2026-03-30 09:21:36,656 INFO MainThread moabb.evaluations.base MSET_CCA | Kalunga2016 | 2 | 0: Score 0.375
-2026-03-30 09:21:36,656 INFO MainThread moabb.evaluations.base MSET_CCA | Kalunga2016 | 3 | 0: Score 0.333
-2026-03-30 09:21:36,656 INFO MainThread moabb.evaluations.base MSET_CCA | Kalunga2016 | 4 | 0: Score 0.438
-2026-03-30 09:21:36,656 INFO MainThread moabb.evaluations.base MSET_CCA | Kalunga2016 | 5 | 0: Score 0.292
-2026-03-30 09:21:36,656 INFO MainThread moabb.evaluations.base MSET_CCA | Kalunga2016 | 6 | 0: Score 0.458
-2026-03-30 09:21:36,656 INFO MainThread moabb.evaluations.base MSET_CCA | Kalunga2016 | 7 | 0: Score 0.264
-2026-03-30 09:21:36,656 INFO MainThread moabb.evaluations.base MSET_CCA | Kalunga2016 | 8 | 0: Score 0.375
-2026-03-30 09:21:36,656 INFO MainThread moabb.evaluations.base MSET_CCA | Kalunga2016 | 9 | 0: Score 0.396
-2026-03-30 09:21:36,656 INFO MainThread moabb.evaluations.base MSET_CCA | Kalunga2016 | 10 | 0: Score 0.385
-2026-03-30 09:21:36,656 INFO MainThread moabb.evaluations.base MSET_CCA | Kalunga2016 | 11 | 0: Score 0.417
-2026-03-30 09:21:36,656 INFO MainThread moabb.evaluations.base MSET_CCA | Kalunga2016 | 12 | 0: Score 0.417
-/home/runner/work/moabb/moabb/moabb/analysis/results.py:192: H5pyDeprecationWarning: Creating a dataset without passing data or dtype is deprecated. Pass an explicit dtype. Using dtype=&#39;f4&#39; will keep the current default behaviour.
-  dset.create_dataset(
 </pre></div>
 </div>
 <p>After processing the four, we simply concatenate the results.</p>
@@ -1739,12 +1135,8 @@ of 33.3%.</p>
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.show.html#matplotlib.pyplot.show" title="matplotlib.pyplot.show" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_cross_subject_ssvep_001.png" srcset="../../_images/sphx_glr_plot_cross_subject_ssvep_001.png" alt="plot cross subject ssvep" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-03-30 09:21:36,914 WARNING MainThread moabb.analysis.plotting Dataset names are too similar, turning off name shortening
-/home/runner/work/moabb/moabb/moabb/analysis/plotting.py:421: UserWarning: The palette list has more values (6) than needed (4), which may not be intended.
-  sea.stripplot(
-</pre></div>
-</div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (10 minutes 57.858 seconds)</p>
+<img src="../../_images/sphx_glr_plot_cross_subject_ssvep_001.png" srcset="../../_images/sphx_glr_plot_cross_subject_ssvep_001.png" alt="plot cross subject ssvep" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (10 minutes 17.189 seconds)</p>
+<p><strong>Estimated memory usage:</strong>  426 MB</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-paradigm-examples-plot-cross-subject-ssvep-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/a4e70780cba83241d5102b821a19c363/plot_cross_subject_ssvep.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_cross_subject_ssvep.ipynb</span></code></a></p>
@@ -1805,8 +1197,8 @@ of 33.3%.</p>
     class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> On this page
   </div>
-  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
-    <ul class="visible nav section-nav flex-column">
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-dataset">Loading Dataset</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#choose-paradigm">Choose Paradigm</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#create-pipelines">Create Pipelines</a></li>
@@ -1889,8 +1281,8 @@ of 33.3%.</p>
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+  <script defer src="../../_static/scripts/bootstrap.js?digest=7f76b32a3354e82990f2"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=7f76b32a3354e82990f2"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -1916,7 +1308,7 @@ of 33.3%.</p>
         <div class="footer-item">
 <p class="theme-version">
   <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.17.0.
 </p></div>
       
     </div>
