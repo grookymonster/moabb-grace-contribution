@@ -269,7 +269,7 @@ class Thielen2021(BaseDataset):
             code="Thielen2021",
             interval=(0, 0.3),
             paradigm="cvep",
-            doi="10.34973/9txv-z787",
+            doi="10.1088/1741-2552/abecef",
             selected_subjects=subjects,
             selected_sessions=sessions,
             return_all_modalities=return_all_modalities,
