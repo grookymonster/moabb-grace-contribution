@@ -207,7 +207,8 @@ class Thielen2021(BaseDataset):
             ],
             license="CC0-1.0",
             repository="Radboud",
-            associated_paper_doi="10.1088/1741-2552/ab4057",
+            associated_paper_doi="10.1088/1741-2552/abecef",
+            related_paper_dois=["10.1088/1741-2552/ab4057"],
         ),
         tags=Tags(
             pathology=["Healthy"],
@@ -269,7 +270,7 @@ class Thielen2021(BaseDataset):
             code="Thielen2021",
             interval=(0, 0.3),
             paradigm="cvep",
-            doi="10.1088/1741-2552/abecef",
+            doi="10.34973/9txv-z787",
             selected_subjects=subjects,
             selected_sessions=sessions,
             return_all_modalities=return_all_modalities,
