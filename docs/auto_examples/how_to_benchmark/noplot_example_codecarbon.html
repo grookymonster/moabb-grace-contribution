@@ -734,12 +734,7 @@ pandas dataframe, and can be used to generate figures. The analysis &amp; figure
 are saved in the <code class="docutils literal notranslate"><span class="pre">benchmark</span></code> folder.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 
-<span class="n">order_list</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;CSP + SVM&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;Tangent Space LR&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;EN Grid&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;CSP + LDA Grid&quot;</span><span class="p">,</span>
-<span class="p">]</span>
+<span class="n">order_list</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;CSP + SVM&quot;</span><span class="p">,</span> <span class="s2">&quot;Tangent Space LR&quot;</span><span class="p">,</span> <span class="s2">&quot;EN Grid&quot;</span><span class="p">,</span> <span class="s2">&quot;CSP + LDA Grid&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
 <section id="comprehensive-codecarbon-visualization-analysis">
@@ -782,12 +777,7 @@ carbon cost. This is the key metric for sustainable machine learning.</p>
 </dl>
 <p><strong>Best for:</strong> Identifying which pipelines are most sustainable
 <strong>Use case:</strong> When you care about accuracy-to-emissions ratio</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">fig2</span> <span class="o">=</span> <span class="n">codecarbon_plot</span><span class="p">(</span>
-    <span class="n">results</span><span class="p">,</span>
-    <span class="n">order_list</span><span class="p">,</span>
-    <span class="n">country</span><span class="o">=</span><span class="s2">&quot;(France)&quot;</span><span class="p">,</span>
-    <span class="n">include_efficiency</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-<span class="p">)</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">fig2</span> <span class="o">=</span> <span class="n">codecarbon_plot</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">order_list</span><span class="p">,</span> <span class="n">country</span><span class="o">=</span><span class="s2">&quot;(France)&quot;</span><span class="p">,</span> <span class="n">include_efficiency</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>

@@ -647,30 +647,18 @@ It is a list of tuple. A tuple contains 4 values:</p>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">biVR</span> <span class="o">=</span> <a href="../../generated/moabb.datasets.Cattan2019_VR.html#moabb.datasets.Cattan2019_VR" title="moabb.datasets.Cattan2019_VR" class="sphx-glr-backref-module-moabb-datasets sphx-glr-backref-type-py-class"><span class="n">Cattan2019_VR</span></a><span class="p">(</span><span class="n">virtual_reality</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">screen_display</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">runs</span> <span class="o">=</span> <span class="n">blocks_reps</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="n">biVR</span><span class="o">.</span><span class="n">n_repetitions</span><span class="p">)</span>
-        <span class="n">subjects_list</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="p">(</span><span class="n">biVR</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;0VR&quot;</span><span class="p">,</span> <span class="n">runs</span><span class="p">),</span>
-            <span class="p">(</span><span class="n">biVR</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;0VR&quot;</span><span class="p">,</span> <span class="n">runs</span><span class="p">),</span>
-        <span class="p">]</span>
+        <span class="n">subjects_list</span> <span class="o">=</span> <span class="p">[(</span><span class="n">biVR</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;0VR&quot;</span><span class="p">,</span> <span class="n">runs</span><span class="p">),</span> <span class="p">(</span><span class="n">biVR</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;0VR&quot;</span><span class="p">,</span> <span class="n">runs</span><span class="p">)]</span>
         <a href="../../generated/moabb.datasets.base.BaseDataset.html#moabb.datasets.base.BaseDataset" title="moabb.datasets.base.BaseDataset" class="sphx-glr-backref-module-moabb-datasets-base sphx-glr-backref-type-py-class"><span class="n">CompoundDataset</span></a><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span>
-            <span class="n">subjects_list</span><span class="o">=</span><span class="n">subjects_list</span><span class="p">,</span>
-            <span class="n">code</span><span class="o">=</span><span class="s2">&quot;CustomDataset1&quot;</span><span class="p">,</span>
-            <span class="n">interval</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">subjects_list</span><span class="o">=</span><span class="n">subjects_list</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="s2">&quot;CustomDataset1&quot;</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span>
         <span class="p">)</span>
 
 
 <span class="k">class</span><span class="w"> </span><span class="nc">CustomDataset2</span><span class="p">(</span><a href="../../generated/moabb.datasets.base.BaseDataset.html#moabb.datasets.base.BaseDataset" title="moabb.datasets.base.BaseDataset" class="sphx-glr-backref-module-moabb-datasets-base sphx-glr-backref-type-py-class"><span class="n">CompoundDataset</span></a><span class="p">):</span>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">bi2014</span> <span class="o">=</span> <a href="../../generated/moabb.datasets.BI2014a.html#moabb.datasets.BI2014a" title="moabb.datasets.BI2014a" class="sphx-glr-backref-module-moabb-datasets sphx-glr-backref-type-py-class"><span class="n">BI2014a</span></a><span class="p">()</span>
-        <span class="n">subjects_list</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="p">(</span><span class="n">bi2014</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
-            <span class="p">(</span><span class="n">bi2014</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
-        <span class="p">]</span>
+        <span class="n">subjects_list</span> <span class="o">=</span> <span class="p">[(</span><span class="n">bi2014</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="p">(</span><span class="n">bi2014</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)]</span>
         <a href="../../generated/moabb.datasets.base.BaseDataset.html#moabb.datasets.base.BaseDataset" title="moabb.datasets.base.BaseDataset" class="sphx-glr-backref-module-moabb-datasets-base sphx-glr-backref-type-py-class"><span class="n">CompoundDataset</span></a><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span>
-            <span class="n">subjects_list</span><span class="o">=</span><span class="n">subjects_list</span><span class="p">,</span>
-            <span class="n">code</span><span class="o">=</span><span class="s2">&quot;CustomDataset2&quot;</span><span class="p">,</span>
-            <span class="n">interval</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">subjects_list</span><span class="o">=</span><span class="n">subjects_list</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="s2">&quot;CustomDataset2&quot;</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span>
         <span class="p">)</span>
 </pre></div>
 </div>
@@ -685,10 +673,7 @@ subjects_list = [CustomDataset1(), CustomDataset2()]</p>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">subjects_list</span> <span class="o">=</span> <span class="p">[</span><a href="../../generated/moabb.datasets.base.BaseDataset.html#moabb.datasets.base.BaseDataset" title="moabb.datasets.base.BaseDataset" class="sphx-glr-backref-module-moabb-datasets-base sphx-glr-backref-type-py-class"><span class="n">CustomDataset1</span></a><span class="p">(),</span> <a href="../../generated/moabb.datasets.base.BaseDataset.html#moabb.datasets.base.BaseDataset" title="moabb.datasets.base.BaseDataset" class="sphx-glr-backref-module-moabb-datasets-base sphx-glr-backref-type-py-class"><span class="n">CustomDataset2</span></a><span class="p">()]</span>
         <a href="../../generated/moabb.datasets.base.BaseDataset.html#moabb.datasets.base.BaseDataset" title="moabb.datasets.base.BaseDataset" class="sphx-glr-backref-module-moabb-datasets-base sphx-glr-backref-type-py-class"><span class="n">CompoundDataset</span></a><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span>
-            <span class="n">subjects_list</span><span class="o">=</span><span class="n">subjects_list</span><span class="p">,</span>
-            <span class="n">code</span><span class="o">=</span><span class="s2">&quot;CustomDataset3&quot;</span><span class="p">,</span>
-            <span class="n">interval</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">],</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">subjects_list</span><span class="o">=</span><span class="n">subjects_list</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="s2">&quot;CustomDataset3&quot;</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span>
         <span class="p">)</span>
 </pre></div>
 </div>
@@ -716,7 +701,7 @@ The CompoundDataset can be used as a <cite>normal</cite> dataset.</p>
 [4 rows x 13 columns]
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.030 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.033 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-tutorials-tutorial-5-combining-datasets-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/1d572f55de1f1c75feff109ca6a55fab/tutorial_5_combining_datasets.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">tutorial_5_combining_datasets.ipynb</span></code></a></p>

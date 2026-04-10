@@ -797,7 +797,7 @@ is inspired by Figure 2 of <a class="footnote-reference brackets" href="#id8" id
 <span class="c1"># keys (see pyriemann.utils.mean.mean_covariance and</span>
 <span class="c1"># pyriemann.utils.distance.distance). Using the dict form makes explicit</span>
 <span class="c1"># which metric is used for barycenter estimation vs distance computation.</span>
-<span class="n">potato</span> <span class="o">=</span> <span class="n">Potato</span><span class="p">(</span><span class="n">metric</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="s2">&quot;riemann&quot;</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="s2">&quot;riemann&quot;</span><span class="p">),</span> <span class="n">threshold</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">potato</span> <span class="o">=</span> <span class="n">Potato</span><span class="p">(</span><span class="n">metric</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;mean&quot;</span><span class="p">:</span> <span class="s2">&quot;riemann&quot;</span><span class="p">,</span> <span class="s2">&quot;distance&quot;</span><span class="p">:</span> <span class="s2">&quot;riemann&quot;</span><span class="p">},</span> <span class="n">threshold</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 <span class="n">potato</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">covs</span><span class="p">)</span>
 <span class="n">z_scores</span> <span class="o">=</span> <span class="n">potato</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">covs</span><span class="p">)</span>
 <span class="n">is_clean</span> <span class="o">=</span> <span class="n">predict_clean_mask</span><span class="p">(</span><span class="n">potato</span><span class="p">,</span> <span class="n">covs</span><span class="p">)</span>
@@ -857,8 +857,7 @@ fall outside.</p>
 <span class="n">n_calib_2d</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">covs_2d</span><span class="p">))</span>
 <span class="n">z_threshold_2d</span> <span class="o">=</span> <span class="mf">3.0</span>
 <span class="n">potato_2d</span> <span class="o">=</span> <span class="n">Potato</span><span class="p">(</span>
-    <span class="n">metric</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="s2">&quot;riemann&quot;</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="s2">&quot;riemann&quot;</span><span class="p">),</span>
-    <span class="n">threshold</span><span class="o">=</span><span class="n">z_threshold_2d</span><span class="p">,</span>
+    <span class="n">metric</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;mean&quot;</span><span class="p">:</span> <span class="s2">&quot;riemann&quot;</span><span class="p">,</span> <span class="s2">&quot;distance&quot;</span><span class="p">:</span> <span class="s2">&quot;riemann&quot;</span><span class="p">},</span> <span class="n">threshold</span><span class="o">=</span><span class="n">z_threshold_2d</span>
 <span class="p">)</span>
 <span class="n">potato_2d</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">covs_2d</span><span class="p">[:</span><span class="n">n_calib_2d</span><span class="p">])</span>
 <span class="n">z_2d</span> <span class="o">=</span> <span class="n">potato_2d</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">covs_2d</span><span class="p">)</span>
@@ -873,8 +872,7 @@ fall outside.</p>
 
 <span class="c1"># Compare Riemannian and Euclidean potatoes on the same calibration set.</span>
 <span class="n">potato_2d_euclid</span> <span class="o">=</span> <span class="n">Potato</span><span class="p">(</span>
-    <span class="n">metric</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="s2">&quot;euclid&quot;</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="s2">&quot;euclid&quot;</span><span class="p">),</span>
-    <span class="n">threshold</span><span class="o">=</span><span class="n">z_threshold_2d</span><span class="p">,</span>
+    <span class="n">metric</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;mean&quot;</span><span class="p">:</span> <span class="s2">&quot;euclid&quot;</span><span class="p">,</span> <span class="s2">&quot;distance&quot;</span><span class="p">:</span> <span class="s2">&quot;euclid&quot;</span><span class="p">},</span> <span class="n">threshold</span><span class="o">=</span><span class="n">z_threshold_2d</span>
 <span class="p">)</span>
 <span class="n">potato_2d_euclid</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">covs_2d</span><span class="p">[:</span><span class="n">n_calib_2d</span><span class="p">])</span>
 
@@ -1286,7 +1284,7 @@ operates on a specific channel subset and frequency band.</p>
 <span class="c1"># Fit a PotatoField (single metric for all potatoes, as in [2]_)</span>
 <span class="n">rpf_vis</span> <span class="o">=</span> <span class="n">PotatoField</span><span class="p">(</span>
     <span class="n">n_potatoes</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">POTATO_FIELD_CONFIG</span><span class="p">),</span>
-    <span class="n">metric</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="s2">&quot;riemann&quot;</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="s2">&quot;riemann&quot;</span><span class="p">),</span>
+    <span class="n">metric</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;mean&quot;</span><span class="p">:</span> <span class="s2">&quot;riemann&quot;</span><span class="p">,</span> <span class="s2">&quot;distance&quot;</span><span class="p">:</span> <span class="s2">&quot;riemann&quot;</span><span class="p">},</span>
     <span class="n">z_threshold</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
     <span class="n">p_threshold</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
 <span class="p">)</span>
@@ -1369,7 +1367,7 @@ can automatically detect the optimal rejection threshold.</p>
     <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">n_rejected</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">),</span>
     <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="n">n_rejected</span> <span class="o">+</span> <span class="mi">50</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">),</span>
     <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span>
-    <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s2">&quot;-&gt;&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">),</span>
+    <span class="n">arrowprops</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;arrowstyle&quot;</span><span class="p">:</span> <span class="s2">&quot;-&gt;&quot;</span><span class="p">,</span> <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;gray&quot;</span><span class="p">},</span>
 <span class="p">)</span>
 
 <span class="c1"># Per-potato contribution heatmap</span>
@@ -1378,10 +1376,7 @@ can automatically detect the optimal rejection threshold.</p>
 <span class="n">p_matrix_viz</span> <span class="o">=</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.array.html#numpy.array" title="numpy.array" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">array</span></a><span class="p">(</span><span class="n">potato_p_values</span><span class="p">)</span>  <span class="c1"># (n_potatoes, n_epochs)</span>
 <span class="n">p_sorted</span> <span class="o">=</span> <span class="n">p_matrix_viz</span><span class="p">[:,</span> <span class="n">sorted_idx</span><span class="p">]</span>
 <span class="n">im</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span>
-    <a href="https://numpy.org/doc/stable/reference/generated/numpy.log10.html#numpy.log10" title="numpy.log10" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-data"><span class="n">np</span><span class="o">.</span><span class="n">log10</span></a><span class="p">(</span><span class="n">p_sorted</span><span class="p">),</span>
-    <span class="n">aspect</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
-    <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdYlBu&quot;</span><span class="p">,</span>
-    <span class="n">interpolation</span><span class="o">=</span><span class="s2">&quot;nearest&quot;</span><span class="p">,</span>
+    <a href="https://numpy.org/doc/stable/reference/generated/numpy.log10.html#numpy.log10" title="numpy.log10" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-data"><span class="n">np</span><span class="o">.</span><span class="n">log10</span></a><span class="p">(</span><span class="n">p_sorted</span><span class="p">),</span> <span class="n">aspect</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;RdYlBu&quot;</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s2">&quot;nearest&quot;</span>
 <span class="p">)</span>
 <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Epoch index (sorted by SQI)&quot;</span><span class="p">)</span>
 <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Potato index&quot;</span><span class="p">)</span>
@@ -1420,7 +1415,7 @@ wrappers and insert them as <code class="docutils literal notranslate"><span cla
     <span class="n">n_before</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
     <span class="n">covs</span> <span class="o">=</span> <span class="n">Covariances</span><span class="p">(</span><span class="n">estimator</span><span class="o">=</span><span class="s2">&quot;lwf&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-    <span class="n">potato</span> <span class="o">=</span> <span class="n">Potato</span><span class="p">(</span><span class="n">metric</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="s2">&quot;riemann&quot;</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="s2">&quot;riemann&quot;</span><span class="p">),</span> <span class="n">threshold</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">potato</span> <span class="o">=</span> <span class="n">Potato</span><span class="p">(</span><span class="n">metric</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;mean&quot;</span><span class="p">:</span> <span class="s2">&quot;riemann&quot;</span><span class="p">,</span> <span class="s2">&quot;distance&quot;</span><span class="p">:</span> <span class="s2">&quot;riemann&quot;</span><span class="p">},</span> <span class="n">threshold</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
     <span class="n">potato</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">covs</span><span class="p">)</span>
     <span class="n">is_clean</span> <span class="o">=</span> <span class="n">predict_clean_mask</span><span class="p">(</span><span class="n">potato</span><span class="p">,</span> <span class="n">covs</span><span class="p">)</span>
 
@@ -1468,7 +1463,7 @@ wrappers and insert them as <code class="docutils literal notranslate"><span cla
     <span class="c1"># Use PotatoField with a single metric (standard RPF approach from [2])</span>
     <span class="n">rpf</span> <span class="o">=</span> <span class="n">PotatoField</span><span class="p">(</span>
         <span class="n">n_potatoes</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">valid_config</span><span class="p">),</span>
-        <span class="n">metric</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="s2">&quot;riemann&quot;</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="s2">&quot;riemann&quot;</span><span class="p">),</span>
+        <span class="n">metric</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;mean&quot;</span><span class="p">:</span> <span class="s2">&quot;riemann&quot;</span><span class="p">,</span> <span class="s2">&quot;distance&quot;</span><span class="p">:</span> <span class="s2">&quot;riemann&quot;</span><span class="p">},</span>
         <span class="n">z_threshold</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
         <span class="n">p_threshold</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
     <span class="p">)</span>
@@ -1652,9 +1647,7 @@ epochs where covariance matrices become degenerate).</p>
 <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
 
 <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span>
-    <span class="s2">&quot;iRPF Stage 1: GFRMS Amplitude Pre-filtering&quot;</span><span class="p">,</span>
-    <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span>
-    <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;iRPF Stage 1: GFRMS Amplitude Pre-filtering&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s2">&quot;bold&quot;</span>
 <span class="p">)</span>
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.tight_layout.html#matplotlib.pyplot.tight_layout" title="matplotlib.pyplot.tight_layout" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span></a><span class="p">()</span>
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.show.html#matplotlib.pyplot.show" title="matplotlib.pyplot.show" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
@@ -1750,9 +1743,7 @@ epochs where covariance matrices become degenerate).</p>
 
 <span class="n">irpf_pipeline</span> <span class="o">=</span> <span class="n">paradigm</span><span class="o">.</span><span class="n">make_process_pipelines</span><span class="p">(</span><span class="n">dataset</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">irpf_pipeline</span><span class="o">.</span><span class="n">insert_step</span><span class="p">(</span>
-    <span class="n">StepType</span><span class="o">.</span><span class="n">EPOCHS</span><span class="p">,</span>
-    <a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.FunctionTransformer.html#sklearn.preprocessing.FunctionTransformer" title="sklearn.preprocessing.FunctionTransformer" class="sphx-glr-backref-module-sklearn-preprocessing sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">FunctionTransformer</span></a><span class="p">(</span><span class="n">improved_rpf_rejection</span><span class="p">),</span>
-    <span class="n">after</span><span class="o">=</span><span class="n">StepType</span><span class="o">.</span><span class="n">EPOCHS</span><span class="p">,</span>
+    <span class="n">StepType</span><span class="o">.</span><span class="n">EPOCHS</span><span class="p">,</span> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.FunctionTransformer.html#sklearn.preprocessing.FunctionTransformer" title="sklearn.preprocessing.FunctionTransformer" class="sphx-glr-backref-module-sklearn-preprocessing sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">FunctionTransformer</span></a><span class="p">(</span><span class="n">improved_rpf_rejection</span><span class="p">),</span> <span class="n">after</span><span class="o">=</span><span class="n">StepType</span><span class="o">.</span><span class="n">EPOCHS</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -1771,14 +1762,11 @@ downstream classification performance.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">pipelines</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="n">pipelines</span><span class="p">[</span><span class="s2">&quot;ERP+MDM&quot;</span><span class="p">]</span> <span class="o">=</span> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.make_pipeline.html#sklearn.pipeline.make_pipeline" title="sklearn.pipeline.make_pipeline" class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-function"><span class="n">make_pipeline</span></a><span class="p">(</span>
     <span class="n">ERPCovariances</span><span class="p">(</span><span class="n">estimator</span><span class="o">=</span><span class="s2">&quot;lwf&quot;</span><span class="p">),</span>
-    <span class="n">MDM</span><span class="p">(</span><span class="n">metric</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="s2">&quot;riemann&quot;</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="s2">&quot;riemann&quot;</span><span class="p">)),</span>
+    <span class="n">MDM</span><span class="p">(</span><span class="n">metric</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;mean&quot;</span><span class="p">:</span> <span class="s2">&quot;riemann&quot;</span><span class="p">,</span> <span class="s2">&quot;distance&quot;</span><span class="p">:</span> <span class="s2">&quot;riemann&quot;</span><span class="p">}),</span>
 <span class="p">)</span>
 
 <span class="n">evaluation</span> <span class="o">=</span> <a href="../../generated/moabb.evaluations.WithinSessionEvaluation.html#moabb.evaluations.WithinSessionEvaluation" title="moabb.evaluations.WithinSessionEvaluation" class="sphx-glr-backref-module-moabb-evaluations sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">WithinSessionEvaluation</span></a><span class="p">(</span>
-    <span class="n">paradigm</span><span class="o">=</span><span class="n">paradigm</span><span class="p">,</span>
-    <span class="n">datasets</span><span class="o">=</span><span class="p">[</span><span class="n">dataset</span><span class="p">],</span>
-    <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;rar_tutorial&quot;</span><span class="p">,</span>
-    <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">paradigm</span><span class="o">=</span><span class="n">paradigm</span><span class="p">,</span> <span class="n">datasets</span><span class="o">=</span><span class="p">[</span><span class="n">dataset</span><span class="p">],</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;rar_tutorial&quot;</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">True</span>
 <span class="p">)</span>
 
 <span class="c1"># We call evaluation.evaluate() separately for each preprocessing variant</span>
@@ -1907,14 +1895,7 @@ datasets.</p>
         <span class="c1"># Use groupby to handle potential duplicate or missing sessions</span>
         <span class="n">session_scores</span> <span class="o">=</span> <span class="n">method_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;session&quot;</span><span class="p">)[</span><span class="n">metric_col</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
         <span class="n">scores</span> <span class="o">=</span> <span class="p">[</span><span class="n">session_scores</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/constants.html#numpy.nan" title="numpy.nan" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-data"><span class="n">np</span><span class="o">.</span><span class="n">nan</span></a><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">sessions</span><span class="p">]</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span>
-            <span class="n">x</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="n">width</span><span class="p">,</span>
-            <span class="n">scores</span><span class="p">,</span>
-            <span class="n">width</span><span class="p">,</span>
-            <span class="n">label</span><span class="o">=</span><span class="n">method</span><span class="p">,</span>
-            <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
-            <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span>
-        <span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="n">width</span><span class="p">,</span> <span class="n">scores</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">method</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">)</span>
 
     <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Session&quot;</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">metric_name</span><span class="p">)</span>
@@ -1976,7 +1957,7 @@ captures more artifacts. This is inspired by Figure 6 of <a class="footnote-refe
     <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">),</span>
     <span class="n">xycoords</span><span class="o">=</span><span class="s2">&quot;axes fraction&quot;</span><span class="p">,</span>
     <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span>
-    <span class="n">bbox</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">boxstyle</span><span class="o">=</span><span class="s2">&quot;round,pad=0.3&quot;</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s2">&quot;wheat&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">),</span>
+    <span class="n">bbox</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;boxstyle&quot;</span><span class="p">:</span> <span class="s2">&quot;round,pad=0.3&quot;</span><span class="p">,</span> <span class="s2">&quot;facecolor&quot;</span><span class="p">:</span> <span class="s2">&quot;wheat&quot;</span><span class="p">,</span> <span class="s2">&quot;alpha&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">},</span>
 <span class="p">)</span>
 
 <span class="c1"># Scatter plot: RPF (Fisher) vs iRPF (min) p-values</span>
