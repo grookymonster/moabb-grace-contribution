@@ -1027,7 +1027,7 @@ data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>X</strong> (<a class="reference external" href="https://mne.tools/stable/generated/mne.Epochs.html#mne.Epochs" title="(in MNE v1.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">mne.Epochs</span></code></a>) – Training data. Trials are grouped by class, divided in n_fbands bands by
+<li><p><strong>X</strong> (<a class="reference external" href="https://mne.tools/stable/generated/mne.Epochs.html#mne.Epochs" title="(in MNE v1.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">mne.Epochs</span></code></a>) – Training data. Trials are grouped by class, divided in n_fbands bands by
 the filterbank approach and then used to calculate weight vectors and
 templates for each class and band.</p></li>
 <li><p><strong>y</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.4)"><em>numpy.ndarray</em></a>) – Label vector in respect to X, of shape <code class="docutils literal notranslate"><span class="pre">(n_trials,)</span></code>.</p></li>
@@ -1051,7 +1051,7 @@ with weights previously extracted and compared to the templates to assess
 similarity with each of them and select a class based on the maximal value.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>X</strong> (<a class="reference external" href="https://mne.tools/stable/generated/mne.Epochs.html#mne.Epochs" title="(in MNE v1.11)"><code class="xref py py-class docutils literal notranslate"><span class="pre">mne.Epochs</span></code></a>) – Testing data. This will be divided in self.n_fbands using the filterbank approach,
+<dd class="field-odd"><p><strong>X</strong> (<a class="reference external" href="https://mne.tools/stable/generated/mne.Epochs.html#mne.Epochs" title="(in MNE v1.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">mne.Epochs</span></code></a>) – Testing data. This will be divided in self.n_fbands using the filterbank approach,
 then it will be transformed by the different spatial filters and compared to the
 previously fit templates according to the selected method for analysis (ensemble or
 not). Finally, correlation scores for all sub-bands of each class will be combined,
