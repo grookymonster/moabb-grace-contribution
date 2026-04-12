@@ -80,6 +80,7 @@ Motor Imagery Datasets
     Liu2024
     Beetl2021_A
     Beetl2021_B
+    BCIComp2020UpperLimb
     Brandl2020
     Chang2025
     Forenzo2023
@@ -102,6 +103,28 @@ Motor Imagery Datasets
     Zhang2017
     Zhou2020
     Zuo2025
+
+------------------------
+Imagined Speech Datasets
+------------------------
+
+MOABB now welcomes **imagined speech** datasets — subjects silently imagine
+speaking words, phonemes, or phrases. They share the ``imagery`` paradigm
+tag with motor imagery and can be decoded with the existing
+:class:`~moabb.paradigms.MotorImagery` and
+:class:`~moabb.paradigms.FilterBankMotorImagery` classes.
+
+.. autosummary::
+    :toctree: generated/
+    :template: class.rst
+
+    AguileraRodriguez2025
+    BCIComp2020IS
+    Nguyen2017_L
+    Nguyen2017_S
+    Nguyen2017_SL
+    Nguyen2017_V
+    Pressel2016
 
 -----------------
 ERP/P300 Datasets
@@ -178,6 +201,7 @@ ERP/P300 Datasets
     Speier2017
     Zhang2025
     Zheng2020
+    BCIComp2020WalkingERP
 
 --------------
 SSVEP Datasets
@@ -305,14 +329,22 @@ used, i.e. in motor imagery one can have two-class, multi-class, or
 continuous paradigms; similarly, different preprocessing is necessary
 for ERP vs ERD paradigms.
 
------------------------
-Motor Imagery Paradigms
------------------------
+-----------------
+Imagery Paradigms
+-----------------
+
+The ``imagery`` paradigm tag covers both motor imagery and imagined
+speech. :class:`Imagery` is a thin alias for :class:`MotorImagery` that
+makes the umbrella scope explicit; :class:`SpeechImagery` overrides the
+defaults with the broadband 1-100 Hz filter used in imagined-speech
+work (Aguilera-Rodriguez et al. 2025).
 
 .. autosummary::
     :toctree: generated/
     :template: class.rst
 
+    Imagery
+    SpeechImagery
     MotorImagery
     LeftRightImagery
 

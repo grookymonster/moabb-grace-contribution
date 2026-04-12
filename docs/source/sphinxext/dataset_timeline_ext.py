@@ -1704,7 +1704,7 @@ def _make_header_html(
 # ---------------------------------------------------------------------------
 
 
-def _make_visual_grid_lines(cls_name, info, srcdir):
+def _make_visual_grid_lines(cls_name, info, srcdir, docstring_lines=None):
     """Build RST lines for the adaptive visual summary grid."""
     lines = []
     paradigm = info.get("paradigm") or "unknown"
@@ -1722,6 +1722,12 @@ def _make_visual_grid_lines(cls_name, info, srcdir):
     timeline_svg = os.path.join(srcdir, "_static", "timelines", f"{cls_name}.svg")
 
     has_timeline = os.path.exists(timeline_svg)
+    # If the class docstring already embeds a protocol figure via a
+    # ``.. figure::`` directive (local or external URL), skip the
+    # auto-injected timeline grid card to avoid duplication.
+    if has_timeline and docstring_lines is not None:
+        if any(".. figure::" in line for line in docstring_lines):
+            has_timeline = False
     # Build channel summary HTML
     channel_html = _make_channel_summary_html(info)
 
@@ -2207,7 +2213,9 @@ def autodoc_process_docstring(app, what, name, obj, options, lines):
 
     # --- Layer 2: Visual summary grid ---
     if info:
-        grid_lines = _make_visual_grid_lines(cls_name, info, app.srcdir)
+        grid_lines = _make_visual_grid_lines(
+            cls_name, info, app.srcdir, docstring_lines=lines
+        )
         top_block.extend(grid_lines)
 
     # --- Layer 3: Restructure remaining docstring into tabs ---

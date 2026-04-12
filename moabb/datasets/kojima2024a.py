@@ -58,6 +58,13 @@ class Kojima2024A(BaseDataset):
     Each run lasted approximately 5 minutes.
     In each run, all deviant stimuli (D1--D4) were presented approximately 60 times.
 
+    .. figure:: /_static/paper_figures/Kojima2024.png
+       :alt: Kojima2024 ASME-BCI — three auditory streams with oddball
+             sequences; subject attends to one target stream.
+       :width: 100%
+
+       Figure 1 of [2]_ (CC-BY-4.0).
+
     Recording Details:
         - EEG signals were recorded using a BrainAmp system (Brain Products, Germany)
           at a sampling rate of 1000 Hz.
@@ -236,7 +243,18 @@ class Kojima2024A(BaseDataset):
                 "ear": "right ear only",
                 "tone_generator": "Software synthesizer (Piano tones Grand Piano 1 SE from SampleTank3, IK multimedia Production, Italy)",
             },
-            hed_tags=None,
+            hed_tags={
+                "Target": (
+                    "(Sensory-event, Experimental-stimulus, "
+                    "Auditory-presentation, (Oddball, Target)), "
+                    "(Agent-action, (Hear, Discriminate))"
+                ),
+                "NonTarget": (
+                    "(Sensory-event, Experimental-stimulus, "
+                    "Auditory-presentation, (Oddball, Non-target)), "
+                    "(Agent-action, (Hear, Discriminate))"
+                ),
+            },
         ),
         documentation=DocumentationMetadata(
             doi="10.1371/journal.pone.0303565",

@@ -102,6 +102,14 @@ class Kojima2024B(BaseDataset):
     Each run included 4 trials, each with a different target stimulus.
     In each trial, all deviant stimuli (D1--D4) were presented 15 times.
 
+    .. figure:: /_static/paper_figures/Kojima2024.png
+       :alt: Kojima2024 ASME-BCI — auditory streams with oddball
+             sequences; subject attends to one target stream.
+       :width: 100%
+
+       Figure 1 of [2]_ (CC-BY-4.0). Kojima2024B adds 4-stream and
+       2-stream conditions described above.
+
     Notes
     -----
     - EEG signals were recorded using a BrainAmp system (Brain Products, Germany)
@@ -296,7 +304,18 @@ class Kojima2024B(BaseDataset):
             cog_atlas_id=None,
             cog_po_id=None,
             stimulus_presentation=None,
-            hed_tags=None,
+            hed_tags={
+                "Target": (
+                    "(Sensory-event, Experimental-stimulus, "
+                    "Auditory-presentation, (Oddball, Target)), "
+                    "(Agent-action, (Hear, Discriminate))"
+                ),
+                "NonTarget": (
+                    "(Sensory-event, Experimental-stimulus, "
+                    "Auditory-presentation, (Oddball, Non-target)), "
+                    "(Agent-action, (Hear, Discriminate))"
+                ),
+            },
         ),
         documentation=DocumentationMetadata(
             doi="10.3389/fnhum.2024.1461960",

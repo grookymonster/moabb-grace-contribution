@@ -53,18 +53,73 @@ Column definitions:
 - **#Runs** is the number of runs per session. A run is a continuous recording of the EEG data. Often, the different runs of a given session are recorded without removing the EEG cap in between.
 
 
-Motor Imagery
+Imagery
 ======================
 
-Motor Imagery is a BCI paradigm where the subject imagines performing movements. Each movement is associated with a different command to build an application.
+Imagery is a BCI paradigm where the subject internally rehearses a mental
+task without any overt movement or vocalization. In MOABB it covers two
+sub-families that share the same ``paradigm="imagery"`` tag and the same
+:class:`moabb.paradigms.MotorImagery` /
+:class:`moabb.paradigms.FilterBankMotorImagery` paradigm classes:
 
-Motor Imagery-specific definitions:
+- **Motor imagery** — imagining physical movements such as squeezing the
+  left or right hand, moving the tongue, or a specific grasping task.
+- **Imagined speech** — silently imagining speaking a phoneme, word, or
+  phrase. See the :ref:`imagined speech subsection <imagined-speech>`
+  below for a curated listing.
+
+Imagery-specific definitions:
 
 - **#Classes** is the number of different imagery tasks.
 - **Trial** is one repetition of the imagery task.
 
 .. csv-table::
    :file: ../build/summary_imagery.csv
+   :header-rows: 1
+   :class: sortable
+
+
+.. _imagined-speech:
+
+Imagined Speech (imagery family)
+================================
+
+Welcome to the **imagined speech** family, where subjects silently imagine
+speaking words, phonemes, or phrases without any sound or movement.
+Imagined speech is a close cousin of classical motor imagery: both rely on
+internal mental rehearsal and both are decoded with similar pipelines. In
+MOABB, imagined speech datasets are tagged with the ``imagery`` paradigm
+and have a dedicated :class:`moabb.paradigms.SpeechImagery` class with
+broadband (1-100 Hz) defaults tuned for speech, while still being
+compatible with :class:`moabb.paradigms.MotorImagery` and
+:class:`moabb.paradigms.FilterBankMotorImagery` if you prefer the
+classic motor band.
+
+The family currently contains
+:class:`~moabb.datasets.BCIComp2020IS`,
+:class:`~moabb.datasets.AguileraRodriguez2025`,
+:class:`~moabb.datasets.Nguyen2017_V`, ``_S``, ``_L``, ``_SL``, and
+:class:`~moabb.datasets.Pressel2016` — spanning English and Spanish,
+phonemes through phrases, and 2 to 11 classes. These rows also appear
+in the Imagery table above since they share the
+``paradigm="imagery"`` tag.
+
+Loading mirrors motor imagery — use :class:`~moabb.paradigms.SpeechImagery`
+for the broadband 1-100 Hz defaults tuned for imagined speech, or
+:class:`~moabb.paradigms.MotorImagery` if you want the classic 8-32 Hz
+motor band:
+
+.. code-block:: python
+
+    from moabb.datasets import BCIComp2020IS
+    from moabb.paradigms import SpeechImagery
+
+    dataset = BCIComp2020IS()
+    paradigm = SpeechImagery(n_classes=5)
+    X, y, metadata = paradigm.get_data(dataset=dataset, subjects=[1])
+
+.. csv-table::
+   :file: ../build/summary_imagined_speech.csv
    :header-rows: 1
    :class: sortable
 
