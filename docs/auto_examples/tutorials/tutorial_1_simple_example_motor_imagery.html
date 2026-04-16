@@ -11,8 +11,18 @@
     <link rel="icon" href="../../_static/favicon.svg" type="image/svg+xml">
     <link rel="icon" sizes="144x144" href="../../_static/favicon-144.png" type="image/png">
     <link rel="mask-icon" href="../../_static/favicon_mask-icon.svg" color="#222832" type="image/svg+xml">
-    <link rel="apple-touch-icon" sizes="500x500" href="../../_static/favicon-500.png" type="image/png">
-    <title>Tutorial 1: Simple Motor Imagery &#8212; moabb 1.5.0dev0-dev documentation</title>
+    <link rel="apple-touch-icon" sizes="500x500" href="../../_static/favicon-500.png" type="image/png"><meta property="og:title" content="Tutorial 1: Simple Motor Imagery" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://moabb.neurotechx.com/docs/auto_examples/tutorials/tutorial_1_simple_example_motor_imagery.html" />
+<meta property="og:site_name" content="MOABB - Mother of all BCI Benchmarks" />
+<meta property="og:description" content="In this example, we will go through all the steps to make a simple BCI classification task, downloading a dataset and using a standard classifier. We choose the dataset 2a from BCI Competition IV, ..." />
+<meta property="og:image" content="https://moabb.neurotechx.com/docs/_static/moabb_og_card.png" />
+<meta property="og:image:alt" content="MOABB - Mother of all BCI Benchmarks: 158 open EEG datasets for reproducible BCI research" />
+<meta name="description" content="In this example, we will go through all the steps to make a simple BCI classification task, downloading a dataset and using a standard classifier. We choose the dataset 2a from BCI Competition IV, ..." />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@NeuroTechX" />
+
+    <title>Tutorial 1: Simple Motor Imagery &#8212; MOABB Documentation</title>
   
   
   
@@ -109,6 +119,34 @@
     <link rel="next" title="Tutorial 2: Using multiple datasets" href="tutorial_2_using_mulitple_datasets.html" />
     <link rel="prev" title="Tutorial 0: Getting Started" href="tutorial_0_plot_getting_started.html" />
     <link rel="canonical" href="https://moabb.neurotechx.com/docs/auto_examples/tutorials/tutorial_1_simple_example_motor_imagery.html" />
+
+    
+    
+
+    
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "MOABB",
+          "item": "https://moabb.neurotechx.com/docs/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Tutorial 1: Simple Motor Imagery",
+          "item": "https://moabb.neurotechx.com/docs/auto_examples/tutorials/tutorial_1_simple_example_motor_imagery.html"
+        }
+      ]
+    }
+    </script>
+    
+
     
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -184,8 +222,8 @@
     
     
     
-    <img src="../../_static/moabb_light.svg" class="logo__image only-light" alt="moabb 1.5.0dev0-dev documentation - Home"/>
-    <img src="../../_static/moabb_dark.svg" class="logo__image only-dark pst-js-only" alt="moabb 1.5.0dev0-dev documentation - Home"/>
+    <img src="../../_static/moabb_light.svg" class="logo__image only-light" alt="MOABB Documentation - Home"/>
+    <img src="../../_static/moabb_dark.svg" class="logo__image only-dark pst-js-only" alt="MOABB Documentation - Home"/>
   
   
 </a></div>
@@ -683,7 +721,7 @@ paradigm (note that BNCI2014_001 is in it)</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><a href="../../generated/moabb.paradigms.base.BaseProcessing.html#moabb.paradigms.base.BaseProcessing.datasets" title="moabb.paradigms.base.BaseProcessing.datasets" class="sphx-glr-backref-module-moabb-paradigms-base sphx-glr-backref-type-py-property"><span class="n">paradigm</span><span class="o">.</span><span class="n">datasets</span></a><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[&lt;moabb.datasets.bnci.bnci_2014.BNCI2014_001 object at 0x7ff048e0d0c0&gt;, &lt;moabb.datasets.bnci.bnci_2014.BNCI2014_004 object at 0x7ff048e0d0f0&gt;, &lt;moabb.datasets.beetl.Beetl2021_A object at 0x7ff048e0cfd0&gt;, &lt;moabb.datasets.beetl.Beetl2021_B object at 0x7ff048e0ce80&gt;, &lt;moabb.datasets.brandl2020.Brandl2020 object at 0x7ff048e0d120&gt;, &lt;moabb.datasets.chang2025.Chang2025 object at 0x7ff048e0d030&gt;, &lt;moabb.datasets.gigadb.Cho2017 object at 0x7ff048e68b80&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023 object at 0x7ff048e688e0&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023A object at 0x7ff048e0d090&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023B object at 0x7ff048e68460&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023C object at 0x7ff048e68400&gt;, &lt;moabb.datasets.forenzo2023.Forenzo2023 object at 0x7ff048e68550&gt;, &lt;moabb.datasets.mpi_mi.GrosseWentrup2009 object at 0x7ff048e68490&gt;, &lt;moabb.datasets.guttmann_flury2025.GuttmannFlury2025_ME object at 0x7ff048e684c0&gt;, &lt;moabb.datasets.guttmann_flury2025.GuttmannFlury2025_MI object at 0x7ff048e68340&gt;, &lt;moabb.datasets.hefmi_ich2025.HefmiIch2025 object at 0x7ff048e68370&gt;, &lt;moabb.datasets.kaya2018.Kaya2018 object at 0x7ff048e68130&gt;, &lt;moabb.datasets.kumar2024.Kumar2024 object at 0x7ff048e68880&gt;, &lt;moabb.datasets.Lee2019.Lee2019_MI object at 0x7ff048e68910&gt;, &lt;moabb.datasets.liu2024.Liu2024 object at 0x7ff048e68670&gt;, &lt;moabb.datasets.physionet_mi.PhysionetMI object at 0x7ff048e681f0&gt;, &lt;moabb.datasets.schirrmeister2017.Schirrmeister2017 object at 0x7ff048e6a170&gt;, &lt;moabb.datasets.bbci_eeg_fnirs.Shin2017A object at 0x7ff048e68220&gt;, &lt;moabb.datasets.stieger2021.Stieger2021 object at 0x7ff048e68610&gt;, &lt;moabb.datasets.wairagkar2018.Wairagkar2018 object at 0x7ff048e680d0&gt;, &lt;moabb.datasets.Weibo2014.Weibo2014 object at 0x7ff048e68700&gt;, &lt;moabb.datasets.wu2020.Wu2020 object at 0x7ff048e68970&gt;, &lt;moabb.datasets.yang2025.Yang2025 object at 0x7ff048e68070&gt;, &lt;moabb.datasets.Zhou2016.Zhou2016 object at 0x7ff048e682b0&gt;, &lt;moabb.datasets.zhou2020.Zhou2020 object at 0x7ff048e6b9d0&gt;]
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[&lt;moabb.datasets.bnci.bnci_2014.BNCI2014_001 object at 0x7f87a86290f0&gt;, &lt;moabb.datasets.bnci.bnci_2014.BNCI2014_004 object at 0x7f87a8629120&gt;, &lt;moabb.datasets.beetl.Beetl2021_A object at 0x7f87a8629000&gt;, &lt;moabb.datasets.beetl.Beetl2021_B object at 0x7f87a8628eb0&gt;, &lt;moabb.datasets.brandl2020.Brandl2020 object at 0x7f87a8629150&gt;, &lt;moabb.datasets.chang2025.Chang2025 object at 0x7f87a8629060&gt;, &lt;moabb.datasets.gigadb.Cho2017 object at 0x7f87a02e4b80&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023 object at 0x7f87a02e48e0&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023A object at 0x7f87a86290c0&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023B object at 0x7f87a02e4460&gt;, &lt;moabb.datasets.dreyer2023.Dreyer2023C object at 0x7f87a02e4400&gt;, &lt;moabb.datasets.forenzo2023.Forenzo2023 object at 0x7f87a02e4550&gt;, &lt;moabb.datasets.mpi_mi.GrosseWentrup2009 object at 0x7f87a02e4490&gt;, &lt;moabb.datasets.guttmann_flury2025.GuttmannFlury2025_ME object at 0x7f87a02e44c0&gt;, &lt;moabb.datasets.guttmann_flury2025.GuttmannFlury2025_MI object at 0x7f87a02e4340&gt;, &lt;moabb.datasets.hefmi_ich2025.HefmiIch2025 object at 0x7f87a02e4370&gt;, &lt;moabb.datasets.kaya2018.Kaya2018 object at 0x7f87a02e4130&gt;, &lt;moabb.datasets.kumar2024.Kumar2024 object at 0x7f87a02e4880&gt;, &lt;moabb.datasets.Lee2019.Lee2019_MI object at 0x7f87a02e4910&gt;, &lt;moabb.datasets.liu2024.Liu2024 object at 0x7f87a02e4670&gt;, &lt;moabb.datasets.physionet_mi.PhysionetMI object at 0x7f87a02e41f0&gt;, &lt;moabb.datasets.schirrmeister2017.Schirrmeister2017 object at 0x7f87a02e6170&gt;, &lt;moabb.datasets.bbci_eeg_fnirs.Shin2017A object at 0x7f87a02e4220&gt;, &lt;moabb.datasets.stieger2021.Stieger2021 object at 0x7f87a02e4610&gt;, &lt;moabb.datasets.wairagkar2018.Wairagkar2018 object at 0x7f87a02e40d0&gt;, &lt;moabb.datasets.Weibo2014.Weibo2014 object at 0x7f87a02e4700&gt;, &lt;moabb.datasets.wu2020.Wu2020 object at 0x7f87a02e4970&gt;, &lt;moabb.datasets.yang2025.Yang2025 object at 0x7f87a02e4070&gt;, &lt;moabb.datasets.Zhou2016.Zhou2016 object at 0x7f87a02e42b0&gt;, &lt;moabb.datasets.zhou2020.Zhou2020 object at 0x7f87a02e7a00&gt;]
 </pre></div>
 </div>
 <p>The data from a list of subjects could be preprocessed and return as a 3D
@@ -726,13 +764,13 @@ partition and the remaining one as testing partition.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">results</span></a> <span class="o">=</span> <a href="../../generated/moabb.evaluations.base.BaseEvaluation.html#moabb.evaluations.base.BaseEvaluation.process" title="moabb.evaluations.base.BaseEvaluation.process" class="sphx-glr-backref-module-moabb-evaluations-base sphx-glr-backref-type-py-method"><span class="n">evaluation</span><span class="o">.</span><span class="n">process</span></a><span class="p">({</span><span class="s2">&quot;csp+lda&quot;</span><span class="p">:</span> <a href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html#sklearn.pipeline.Pipeline" title="sklearn.pipeline.Pipeline" class="sphx-glr-backref-module-sklearn-pipeline sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pipeline</span></a><span class="p">})</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[codecarbon WARNING @ 09:23:32] Multiple instances of codecarbon are allowed to run at the same time.
-2026-04-16 09:25:09,656 INFO MainThread moabb.evaluations.base csp+lda | BNCI2014-001 | 2 | 0train: Score 0.670
-2026-04-16 09:25:09,656 INFO MainThread moabb.evaluations.base csp+lda | BNCI2014-001 | 2 | 1test: Score 0.608
-2026-04-16 09:25:09,656 INFO MainThread moabb.evaluations.base csp+lda | BNCI2014-001 | 3 | 0train: Score 0.993
-2026-04-16 09:25:09,656 INFO MainThread moabb.evaluations.base csp+lda | BNCI2014-001 | 3 | 1test: Score 0.995
-2026-04-16 09:25:09,656 INFO MainThread moabb.evaluations.base csp+lda | BNCI2014-001 | 1 | 1test: Score 0.950
-2026-04-16 09:25:09,656 INFO MainThread moabb.evaluations.base csp+lda | BNCI2014-001 | 1 | 0train: Score 0.943
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>[codecarbon WARNING @ 12:16:02] Multiple instances of codecarbon are allowed to run at the same time.
+2026-04-16 12:17:39,767 INFO MainThread moabb.evaluations.base csp+lda | BNCI2014-001 | 2 | 0train: Score 0.680
+2026-04-16 12:17:39,767 INFO MainThread moabb.evaluations.base csp+lda | BNCI2014-001 | 2 | 1test: Score 0.644
+2026-04-16 12:17:39,767 INFO MainThread moabb.evaluations.base csp+lda | BNCI2014-001 | 1 | 0train: Score 0.923
+2026-04-16 12:17:39,767 INFO MainThread moabb.evaluations.base csp+lda | BNCI2014-001 | 1 | 1test: Score 0.954
+2026-04-16 12:17:39,767 INFO MainThread moabb.evaluations.base csp+lda | BNCI2014-001 | 3 | 0train: Score 0.994
+2026-04-16 12:17:39,767 INFO MainThread moabb.evaluations.base csp+lda | BNCI2014-001 | 3 | 1test: Score 0.999
 </pre></div>
 </div>
 <p>The results are stored in locally, to avoid recomputing the results each time.
@@ -760,11 +798,11 @@ strings for its labeling. This is why we create the field ‘subj’.</p>
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.show.html#matplotlib.pyplot.show" title="matplotlib.pyplot.show" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_tutorial_1_simple_example_motor_imagery_001.png" srcset="../../_images/sphx_glr_tutorial_1_simple_example_motor_imagery_001.png" alt="tutorial 1 simple example motor imagery" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-04-16 09:25:09,692 INFO MainThread matplotlib.category Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
-2026-04-16 09:25:09,695 INFO MainThread matplotlib.category Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+<img src="../../_images/sphx_glr_tutorial_1_simple_example_motor_imagery_001.png" srcset="../../_images/sphx_glr_tutorial_1_simple_example_motor_imagery_001.png" alt="tutorial 1 simple example motor imagery" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2026-04-16 12:17:39,805 INFO MainThread matplotlib.category Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
+2026-04-16 12:17:39,808 INFO MainThread matplotlib.category Using categorical units to plot a list of strings that are all parsable as floats or dates. If these strings should be plotted as numbers, cast to the appropriate data type before plotting.
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (1 minutes 50.141 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (1 minutes 50.370 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-tutorials-tutorial-1-simple-example-motor-imagery-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/b5e20655a202770c185990e75afbe3cd/tutorial_1_simple_example_motor_imagery.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">tutorial_1_simple_example_motor_imagery.ipynb</span></code></a></p>

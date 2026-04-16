@@ -11,8 +11,18 @@
     <link rel="icon" href="../../_static/favicon.svg" type="image/svg+xml">
     <link rel="icon" sizes="144x144" href="../../_static/favicon-144.png" type="image/png">
     <link rel="mask-icon" href="../../_static/favicon_mask-icon.svg" color="#222832" type="image/svg+xml">
-    <link rel="apple-touch-icon" sizes="500x500" href="../../_static/favicon-500.png" type="image/png">
-    <title>Benchmarking with MOABB with Grid Search &#8212; moabb 1.5.0dev0-dev documentation</title>
+    <link rel="apple-touch-icon" sizes="500x500" href="../../_static/favicon-500.png" type="image/png"><meta property="og:title" content="Benchmarking with MOABB with Grid Search" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://moabb.neurotechx.com/docs/auto_examples/how_to_benchmark/plot_benchmark_grid_search.html" />
+<meta property="og:site_name" content="MOABB - Mother of all BCI Benchmarks" />
+<meta property="og:description" content="This example shows how to use MOABB to benchmark a set of pipelines on all available datasets. In particular we run the Gridsearch to select the best hyperparameter of some pipelines and save the g..." />
+<meta property="og:image" content="https://moabb.neurotechx.com/docs/_static/moabb_og_card.png" />
+<meta property="og:image:alt" content="MOABB - Mother of all BCI Benchmarks: 158 open EEG datasets for reproducible BCI research" />
+<meta name="description" content="This example shows how to use MOABB to benchmark a set of pipelines on all available datasets. In particular we run the Gridsearch to select the best hyperparameter of some pipelines and save the g..." />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@NeuroTechX" />
+
+    <title>Benchmarking with MOABB with Grid Search &#8212; MOABB Documentation</title>
   
   
   
@@ -109,6 +119,34 @@
     <link rel="next" title="Tutorial: Within-Session Splitting on Real MI Dataset" href="plot_within_session_splitter.html" />
     <link rel="prev" title="Benchmarking with MOABB" href="plot_benchmark.html" />
     <link rel="canonical" href="https://moabb.neurotechx.com/docs/auto_examples/how_to_benchmark/plot_benchmark_grid_search.html" />
+
+    
+    
+
+    
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "MOABB",
+          "item": "https://moabb.neurotechx.com/docs/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Benchmarking with MOABB with Grid Search",
+          "item": "https://moabb.neurotechx.com/docs/auto_examples/how_to_benchmark/plot_benchmark_grid_search.html"
+        }
+      ]
+    }
+    </script>
+    
+
     
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -184,8 +222,8 @@
     
     
     
-    <img src="../../_static/moabb_light.svg" class="logo__image only-light" alt="moabb 1.5.0dev0-dev documentation - Home"/>
-    <img src="../../_static/moabb_dark.svg" class="logo__image only-dark pst-js-only" alt="moabb 1.5.0dev0-dev documentation - Home"/>
+    <img src="../../_static/moabb_light.svg" class="logo__image only-light" alt="MOABB Documentation - Home"/>
+    <img src="../../_static/moabb_dark.svg" class="logo__image only-dark pst-js-only" alt="MOABB Documentation - Home"/>
   
   
 </a></div>
@@ -671,9 +709,9 @@ Datasets considered for LeftRightImagery paradigm [&#39;Zhou2016&#39;]
 /home/runner/work/moabb/moabb/moabb/analysis/results.py:189: H5pyDeprecationWarning: Creating a dataset without passing data or dtype is deprecated. Pass an explicit dtype. Using dtype=&#39;f4&#39; will keep the current default behaviour.
   dset.create_dataset(
     dataset     evaluation   pipeline  avg score  carbon emission
-0  Zhou2016  WithinSession  CSP + LDA   0.938120         0.528257
-1  Zhou2016  WithinSession    EN Grid   0.943531         0.793607
-2  Zhou2016  WithinSession         EN   0.943619         0.353927
+0  Zhou2016  WithinSession  CSP + LDA   0.938120         0.449420
+1  Zhou2016  WithinSession    EN Grid   0.943416         0.672737
+2  Zhou2016  WithinSession         EN   0.943825         0.293583
 </pre></div>
 </div>
 <p>Benchmark prints a summary of the results. Detailed results are saved in a
@@ -691,7 +729,7 @@ are saved in the <code class="docutils literal notranslate"><span class="pre">be
   sea.stripplot(
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (3 minutes 1.250 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (3 minutes 1.524 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-how-to-benchmark-plot-benchmark-grid-search-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/d296b17ab4e4deaa68df6cc8f3f5c727/plot_benchmark_grid_search.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_benchmark_grid_search.ipynb</span></code></a></p>

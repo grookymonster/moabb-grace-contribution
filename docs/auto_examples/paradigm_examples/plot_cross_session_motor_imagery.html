@@ -11,8 +11,18 @@
     <link rel="icon" href="../../_static/favicon.svg" type="image/svg+xml">
     <link rel="icon" sizes="144x144" href="../../_static/favicon-144.png" type="image/png">
     <link rel="mask-icon" href="../../_static/favicon_mask-icon.svg" color="#222832" type="image/svg+xml">
-    <link rel="apple-touch-icon" sizes="500x500" href="../../_static/favicon-500.png" type="image/png">
-    <title>Cross-Session Motor Imagery &#8212; moabb 1.5.0dev0-dev documentation</title>
+    <link rel="apple-touch-icon" sizes="500x500" href="../../_static/favicon-500.png" type="image/png"><meta property="og:title" content="Cross-Session Motor Imagery" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://moabb.neurotechx.com/docs/auto_examples/paradigm_examples/plot_cross_session_motor_imagery.html" />
+<meta property="og:site_name" content="MOABB - Mother of all BCI Benchmarks" />
+<meta property="og:description" content="This example show how to perform a cross session motor imagery analysis on the very popular dataset 2a from the BCI competition IV. We will compare two pipelines : CSP+LDA, Riemannian Geometry+Logi..." />
+<meta property="og:image" content="https://moabb.neurotechx.com/docs/_static/moabb_og_card.png" />
+<meta property="og:image:alt" content="MOABB - Mother of all BCI Benchmarks: 158 open EEG datasets for reproducible BCI research" />
+<meta name="description" content="This example show how to perform a cross session motor imagery analysis on the very popular dataset 2a from the BCI competition IV. We will compare two pipelines : CSP+LDA, Riemannian Geometry+Logi..." />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@NeuroTechX" />
+
+    <title>Cross-Session Motor Imagery &#8212; MOABB Documentation</title>
   
   
   
@@ -109,6 +119,34 @@
     <link rel="next" title="Cross-Session on Multiple Datasets" href="plot_cross_session_multiple_datasets.html" />
     <link rel="prev" title="Paradigm-Specific Evaluation Examples (Within- &amp; Cross-Session)" href="index.html" />
     <link rel="canonical" href="https://moabb.neurotechx.com/docs/auto_examples/paradigm_examples/plot_cross_session_motor_imagery.html" />
+
+    
+    
+
+    
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "MOABB",
+          "item": "https://moabb.neurotechx.com/docs/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Cross-Session Motor Imagery",
+          "item": "https://moabb.neurotechx.com/docs/auto_examples/paradigm_examples/plot_cross_session_motor_imagery.html"
+        }
+      ]
+    }
+    </script>
+    
+
     
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -184,8 +222,8 @@
     
     
     
-    <img src="../../_static/moabb_light.svg" class="logo__image only-light" alt="moabb 1.5.0dev0-dev documentation - Home"/>
-    <img src="../../_static/moabb_dark.svg" class="logo__image only-dark pst-js-only" alt="moabb 1.5.0dev0-dev documentation - Home"/>
+    <img src="../../_static/moabb_light.svg" class="logo__image only-light" alt="MOABB Documentation - Home"/>
+    <img src="../../_static/moabb_dark.svg" class="logo__image only-dark pst-js-only" alt="MOABB Documentation - Home"/>
   
   
 </a></div>
@@ -674,11 +712,11 @@ be overwritten if necessary.</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>      score      time  ...  pipeline                  codecarbon_task_name
-0  0.931713  0.156819  ...   CSP+LDA  e9c1ee8e-cd16-4ca3-b144-a7fb1d571251
-1  0.955440  0.147910  ...   CSP+LDA  54d2e1ee-35c6-442c-93d5-0bde7e7434a8
-2  0.527199  0.147325  ...   CSP+LDA  633236b2-5bc9-4118-895a-b6d8086ad9fb
-3  0.646219  0.147532  ...   CSP+LDA  2df80b52-d0c8-4ec4-ae31-2cb66b5d6157
-4  0.950424  0.091523  ...     RG+LR  a8883455-f5a9-476e-8c1b-f14aa48735ef
+0  0.931713  0.257342  ...   CSP+LDA  5c6602ac-0e44-4d4b-a42d-3c9bcc93016a
+1  0.955440  0.209922  ...   CSP+LDA  ddff9782-7699-4ec7-9b3d-f1d6c19b1a42
+2  0.527199  0.184729  ...   CSP+LDA  336ff4b3-6a70-4913-8e94-aed404cf396b
+3  0.646219  0.188770  ...   CSP+LDA  7062b54e-afca-4adc-a5d0-47eddf0335d3
+4  0.950424  0.094640  ...     RG+LR  caf0b2f9-f031-4a4e-a09e-e93c714b7651
 
 [5 rows x 13 columns]
 </pre></div>
@@ -703,7 +741,7 @@ points fall in its quadrant.</p>
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.show.html#matplotlib.pyplot.show" title="matplotlib.pyplot.show" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_cross_session_motor_imagery_002.png" srcset="../../_images/sphx_glr_plot_cross_session_motor_imagery_002.png" alt="plot cross session motor imagery" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 32.475 seconds)</p>
+<img src="../../_images/sphx_glr_plot_cross_session_motor_imagery_002.png" srcset="../../_images/sphx_glr_plot_cross_session_motor_imagery_002.png" alt="plot cross session motor imagery" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 33.295 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-paradigm-examples-plot-cross-session-motor-imagery-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/846c627146b8b580609ce7662075b0e9/plot_cross_session_motor_imagery.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_cross_session_motor_imagery.ipynb</span></code></a></p>
