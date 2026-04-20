@@ -585,6 +585,7 @@
 <li class="toctree-l1"><a class="reference internal" href="moabb.datasets.Nguyen2017_S.html">moabb.datasets.Nguyen2017_S</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moabb.datasets.Nguyen2017_SL.html">moabb.datasets.Nguyen2017_SL</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moabb.datasets.Nguyen2017_V.html">moabb.datasets.Nguyen2017_V</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.datasets.Nieto2022.html">moabb.datasets.Nieto2022</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moabb.datasets.Pressel2016.html">moabb.datasets.Pressel2016</a></li>
 </ul>
 <ul class="nav bd-sidenav">
@@ -881,14 +882,14 @@
 <h1>moabb.datasets.Nguyen2017_L<a class="headerlink" href="#moabb-datasets-nguyen2017-l" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="moabb.datasets.Nguyen2017_L">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">Nguyen2017_L</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subjects</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sessions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/nguyen2017.py#L487-L581"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Nguyen2017_L" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">Nguyen2017_L</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subjects</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sessions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/nguyen2017.py#L477-L529"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Nguyen2017_L" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">_Nguyen2017Base</span></code></p>
 <div class="ds-card" role="region" aria-label="Nguyen2017_L dataset overview">
-  <a class="ds-card-source" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/nguyen2017.py#L487-L581" target="_blank" rel="noopener">[source]</a>
+  <a class="ds-card-source" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/nguyen2017.py#L477-L529" target="_blank" rel="noopener">[source]</a>
   <div class="ds-card-head">
     <p class="ds-card-kicker">Dataset Snapshot</p>
     <p class="ds-card-title">Nguyen2017_L</p>
-    <p class="ds-card-alt-name">Imagined speech EEG dataset. Paper reports 66.2+/-4.8% mean accuracy for 2-class long words (chance 50.0%) using Riemannian manifold features + mRVM classifier. Ethics: ASU IRB Protocols 1309009601, STUDY00001345.</p>
+    <p class="ds-card-alt-name">Imagined speech EEG dataset. Paper reports 66.2+/-4.8% mean accuracy.</p>
     <p class="ds-subtitle">Imagery, 2 classes (cooperate vs independent)</p>
     <div class="ds-provenance"><p class="ds-authors"><span class="ds-authors-label">Authors</span><span class="ds-author-name">Chuong H. Nguyen</span>, <span class="ds-author-name">George K. Karavas</span>, <span class="ds-author-name ds-author-senior">Panagiotis Artemiadis</span></p><div class="ds-provenance-meta"><span>🇺🇸 Arizona State University, US</span><span class="ds-provenance-sep">·</span><span>2018</span><span class="ds-provenance-sep">·</span><a href="mailto:chuong.h.nguyen@asu.edu">chuong.h.nguyen@asu.edu</a></div></div>
   </div>
@@ -900,7 +901,7 @@
       <span class="ds-chip ds-chip-muted">64 ch (60 EEG)</span>
       <span class="ds-chip ds-chip-muted">256 Hz</span>
       <span class="ds-chip ds-chip-muted">2 classes</span>
-      <span class="ds-chip ds-chip-muted">5.0 s trials</span>
+      <span class="ds-chip ds-chip-muted">2.0 s trials</span>
   </div>
   <p class="ds-class-line"><span class="ds-class-line-label">Class Labels:</span> cooperate, independent</p>
   <div class="ds-actions">
@@ -909,7 +910,7 @@
       <a class="ds-btn" href="../dataset_summary.html#motor-imagery">Compare Similar</a>
       <a class="ds-btn" href="https://github.com/NeuroTechX/moabb/issues/new?title=%5BDataset%5D%20Issue%20with%20Nguyen2017_L&amp;body=%23%23%20Dataset%0A%0A-%20%2A%2ADataset%20ID%3A%2A%2A%20Nguyen2017_L%0A%0A%23%23%20Issue%20Description%0A%0APlease%20describe%20the%20issue%20you%20encountered%20with%20this%20dataset%3A%0A%0A%23%23%20Steps%20to%20Reproduce%0A%0A1.%20%0A2.%20%0A3.%20%0A%0A%23%23%20Expected%20Behavior%0A%0A%0A%23%23%20Additional%20Context%0A%0A&amp;labels=dataset" target="_blank" rel="noopener">Report Issue</a>
   </div>
-  <div class="ds-overview-teaser"><p class="ds-overview-title">Overview</p><p class="ds-overview-text">Nguyen 2017 Imagined Speech - Long Words condition.</p><p class="ds-overview-text">Imagined speech of two long words: &quot;cooperate&quot;, &quot;independent&quot;.</p><p class="ds-overview-text">Dataset from Nguyen, Karavas, and Artemiadis</p><p class="ds-overview-text"><strong>Dataset Description</strong></p><p class="ds-overview-text">Six of the 15 subjects (S2, S3, S6, S7, S9, S11) performed imagined speech of two long words with 100 trials per class. EEG recorded with BrainProducts ActiCHamp, 64 channels, 10/20 system. Period T=1.4 s (longer than the short words / vowels condition to accommodate the longer pronunciation). Paper reports 66.2±4.8% mean accuracy.</p><div class="ds-overview-actions"><a class="ds-overview-tab-link" href="#ds-overview-nguyen2017_l" onclick="event.preventDefault();var tab=document.querySelector('.ds-doc-tabs .sd-tab-label');if(tab){tab.click();}var target=document.getElementById('ds-overview-nguyen2017_l');if(target){target.scrollIntoView({behavior:'smooth',block:'start'});}">Open in Overview tab →</a></div></div>
+  <div class="ds-overview-teaser"><p class="ds-overview-title">Overview</p><p class="ds-overview-text">Nguyen 2017 Imagined Speech - Long Words condition.</p><div class="ds-overview-actions"><a class="ds-overview-tab-link" href="#ds-overview-nguyen2017_l" onclick="event.preventDefault();var tab=document.querySelector('.ds-doc-tabs .sd-tab-label');if(tab){tab.click();}var target=document.getElementById('ds-overview-nguyen2017_l');if(target){target.scrollIntoView({behavior:'smooth',block:'start'});}">Open in Overview tab →</a></div></div>
   <div id="ds-quickstart-nguyen2017_l" class="ds-quickstart" role="region" aria-labelledby="ds-quickstart-btn-nguyen2017_l" aria-hidden="true" hidden>
   <div class="ds-quickstart-code"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">moabb.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">Nguyen2017_L</span>
 
@@ -975,6 +976,16 @@
 </div>
 </div><div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
 <div class="sd-row sd-row-cols-2 sd-row-cols-xs-2 sd-row-cols-sm-2 sd-row-cols-md-2 sd-row-cols-lg-2 sd-g-3 sd-g-xs-3 sd-g-sm-3 sd-g-md-3 sd-g-lg-3 docutils">
+<div class="sd-col sd-d-flex-row sd-col-12 sd-col-xs-12 sd-col-sm-12 sd-col-md-12 sd-col-lg-12 docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm ds-viz-card docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Stimulus Protocol</div>
+<a class="timeline-diagram reference internal image-reference" href="../_images/Nguyen2017_L.svg"><img alt="../_images/Nguyen2017_L.svg" class="timeline-diagram" src="../_images/Nguyen2017_L.svg" style="width: 100%;" />
+</a>
+<p class="ds-viz-note">2s task window per trial · 2-class imagery paradigm · 1 runs/session across 1 sessions</p></div>
+</div>
+</div>
 <div class="sd-col sd-d-flex-row docutils">
 <div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm ds-viz-card docutils">
 <div class="sd-card-body docutils">
@@ -1015,43 +1026,11 @@ Channel Summary</div>
 </div>
 </div>
 </div>
-<div class="sd-tab-set ds-doc-tabs docutils">
+<p class="timeline-disclaimer">This diagram is automatically generated from MOABB metadata. Please consult the original publication to confirm the experimental protocol details.</p><div class="sd-tab-set ds-doc-tabs docutils">
 <input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
 <label class="sd-tab-label" for="sd-tab-item-0">
 Overview</label><div class="sd-tab-content docutils">
 <p id="ds-overview-nguyen2017-l">Nguyen 2017 Imagined Speech - Long Words condition.</p>
-<p>Imagined speech of two long words: “cooperate”, “independent”.</p>
-<p>Dataset from Nguyen, Karavas, and Artemiadis <a class="reference internal" href="#r89cf77f7fb9b-1" id="id1">[1]</a>.</p>
-<p><strong>Dataset Description</strong></p>
-<p>Six of the 15 subjects (S2, S3, S6, S7, S9, S11) performed
-imagined speech of two long words with 100 trials per class.
-EEG recorded with BrainProducts ActiCHamp, 64 channels, 10/20
-system. Period T=1.4 s (longer than the short words / vowels
-condition to accommodate the longer pronunciation). Paper
-reports 66.2±4.8% mean accuracy.</p>
-<figure class="align-default" id="id3">
-<a class="reference internal image-reference" href="../_images/Nguyen2017.png"><img alt="Nguyen2017 trial structure (Fig. 3 of the JNE paper) — periodic beeps mark each rhythm period T, the visual cue stays on screen, the subject performs speech imagery; the extracted signal is the segment after the last beep, followed by 2 s rest." src="../_images/Nguyen2017.png" style="width: 100%;" />
-</a>
-<figcaption>
-<p><span class="caption-text">Figure 3 of <a class="reference internal" href="#r89cf77f7fb9b-1" id="id2">[1]</a> — trial structure (period T = 1.4 s for the
-LongWords condition, longer than Vowels/ShortWords to
-accommodate the longer pronunciation). Class labels:
-<code class="docutils literal notranslate"><span class="pre">cooperate</span></code>, <code class="docutils literal notranslate"><span class="pre">independent</span></code>. Reproduced from the author
-postprint at the University of Delaware self-archive.</span><a class="headerlink" href="#id3" title="Link to this image">#</a></p>
-</figcaption>
-</figure>
-<p class="rubric">References</p>
-<div role="list" class="citation-list">
-<div class="citation" id="r89cf77f7fb9b-1" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
-<span class="backrefs">(<a role="doc-backlink" href="#id1">1</a>,<a role="doc-backlink" href="#id2">2</a>)</span>
-<p>Nguyen, C. H., Karavas, G. K., &amp; Artemiadis, P. (2017).
-Inferring imagined speech using EEG signals: a new approach
-using Riemannian Manifold features. Journal of Neural
-Engineering, 15(1), 016002.
-<a class="reference external" href="https://doi.org/10.1088/1741-2552/aa8235">https://doi.org/10.1088/1741-2552/aa8235</a></p>
-</div>
-</div>
 </div>
 <input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
 <label class="sd-tab-label" for="sd-tab-item-1">
@@ -1142,7 +1121,7 @@ Metadata</label><div class="sd-tab-content docutils">
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="moabb.datasets.Nguyen2017_L.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subjects</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sessions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/nguyen2017.py#L168-L180"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Nguyen2017_L.__init__" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subjects</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sessions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/nguyen2017.py#L235-L247"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Nguyen2017_L.__init__" title="Link to this definition">#</a></dt>
 <dd><p>Initialize function for the BaseDataset.</p>
 </dd></dl>
 
@@ -1205,7 +1184,7 @@ path.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="moabb.datasets.Nguyen2017_L.data_path">
-<span class="sig-name descname"><span class="pre">data_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subject</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/nguyen2017.py#L238-L273"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Nguyen2017_L.data_path" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">data_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subject</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/nguyen2017.py#L315-L347"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.Nguyen2017_L.data_path" title="Link to this definition">#</a></dt>
 <dd><p>Get path to local copy of a subject data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>

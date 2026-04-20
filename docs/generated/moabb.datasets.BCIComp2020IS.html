@@ -585,6 +585,7 @@
 <li class="toctree-l1"><a class="reference internal" href="moabb.datasets.Nguyen2017_S.html">moabb.datasets.Nguyen2017_S</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moabb.datasets.Nguyen2017_SL.html">moabb.datasets.Nguyen2017_SL</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moabb.datasets.Nguyen2017_V.html">moabb.datasets.Nguyen2017_V</a></li>
+<li class="toctree-l1"><a class="reference internal" href="moabb.datasets.Nieto2022.html">moabb.datasets.Nieto2022</a></li>
 <li class="toctree-l1"><a class="reference internal" href="moabb.datasets.Pressel2016.html">moabb.datasets.Pressel2016</a></li>
 </ul>
 <ul class="nav bd-sidenav">
@@ -881,10 +882,10 @@
 <h1>moabb.datasets.BCIComp2020IS<a class="headerlink" href="#moabb-datasets-bcicomp2020is" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="moabb.datasets.BCIComp2020IS">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">BCIComp2020IS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subjects</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sessions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bcicomp2020_imagined_speech.py#L91-L322"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BCIComp2020IS" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">moabb.datasets.</span></span><span class="sig-name descname"><span class="pre">BCIComp2020IS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subjects</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sessions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bcicomp2020_imagined_speech.py#L108-L363"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BCIComp2020IS" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="moabb.datasets.base.BaseDataset.html#moabb.datasets.base.BaseDataset" title="moabb.datasets.base.BaseDataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseDataset</span></code></a></p>
 <div class="ds-card" role="region" aria-label="BCIComp2020IS dataset overview">
-  <a class="ds-card-source" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bcicomp2020_imagined_speech.py#L91-L322" target="_blank" rel="noopener">[source]</a>
+  <a class="ds-card-source" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bcicomp2020_imagined_speech.py#L108-L363" target="_blank" rel="noopener">[source]</a>
   <div class="ds-card-head">
     <p class="ds-card-kicker">Dataset Snapshot</p>
     <p class="ds-card-title">BCIComp2020IS</p>
@@ -1064,6 +1065,17 @@ Epochs span -500 ms to 2600 ms relative to cue onset.</p>
 validation trials (10 per class). Test trials (50 per subject)
 have no labels (competition holdout) and are not loaded.
 Best competition result was 82.6% accuracy.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The original recording uses a block-like design (trials of the
+same class recorded contiguously). The released <code class="docutils literal notranslate"><span class="pre">.mat</span></code> files
+preserve that ordering, so stitching trials back into a Raw
+object in their on-disk order would leak intra-block temporal
+correlations into random-split evaluations and inflate scores.
+This loader therefore permutes trials at load time with a fixed
+seed per <code class="docutils literal notranslate"><span class="pre">(subject,</span> <span class="pre">run_idx)</span></code>. The seed is intentionally not
+user-configurable so that scores stay comparable across callers.</p>
+</div>
 <figure class="align-default" id="id3">
 <a class="reference internal image-reference" href="https://www.frontiersin.org/files/Articles/898300/xml-images/fnhum-16-898300-g0007.webp"><img alt="BCI Competition 2020 Track 3 trial structure — Rest, auditory cue, 4 imagined-speech repetitions." src="https://www.frontiersin.org/files/Articles/898300/xml-images/fnhum-16-898300-g0007.webp" style="width: 100%;" />
 </a>
@@ -1169,7 +1181,7 @@ Metadata</label><div class="sd-tab-content docutils">
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="moabb.datasets.BCIComp2020IS.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subjects</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sessions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bcicomp2020_imagined_speech.py#L240-L251"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BCIComp2020IS.__init__" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subjects</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sessions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bcicomp2020_imagined_speech.py#L267-L278"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BCIComp2020IS.__init__" title="Link to this definition">#</a></dt>
 <dd><p>Initialize function for the BaseDataset.</p>
 </dd></dl>
 
@@ -1232,7 +1244,7 @@ path.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="moabb.datasets.BCIComp2020IS.data_path">
-<span class="sig-name descname"><span class="pre">data_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subject</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bcicomp2020_imagined_speech.py#L295-L322"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BCIComp2020IS.data_path" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">data_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subject</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">update_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/NeuroTechX/moabb/blob/develop/moabb/datasets/bcicomp2020_imagined_speech.py#L336-L363"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#moabb.datasets.BCIComp2020IS.data_path" title="Link to this definition">#</a></dt>
 <dd><p>Return the local path to a subject file.</p>
 <p>Downloads all (training + validation) files for <code class="docutils literal notranslate"><span class="pre">subject</span></code>
 via <a class="reference internal" href="moabb.datasets.download.data_dl.html#moabb.datasets.download.data_dl" title="moabb.datasets.download.data_dl"><code class="xref py py-func docutils literal notranslate"><span class="pre">moabb.datasets.download.data_dl()</span></code></a> if they are not
