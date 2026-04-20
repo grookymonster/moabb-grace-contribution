@@ -6,6 +6,7 @@ Data: https://osf.io/pq7vb/
 
 import numpy as np
 from scipy.io import loadmat
+from sklearn.utils import check_random_state
 
 from . import download as dl
 from .base import BaseDataset
@@ -87,6 +88,22 @@ _OSF_URLS = {
 
 _SPLITS = [("training", "epo_train"), ("validation", "epo_validation")]
 
+# Fixed seed for the load-time trial permutation — intentionally not
+# exposed on __init__ so every caller gets the same trial ordering and
+# reported scores stay comparable.
+_SHUFFLE_SEED = 42
+
+
+def _derive_seed(subject, run_idx):
+    """Derive a reproducible int seed per (subject, run_idx).
+
+    Uses :class:`numpy.random.SeedSequence` so each ``(subject, run_idx)``
+    pair gets an independent, high-quality permutation while staying
+    deterministic in ``_SHUFFLE_SEED``.
+    """
+    ss = np.random.SeedSequence([_SHUFFLE_SEED, int(subject), int(run_idx)])
+    return int(ss.generate_state(1, dtype=np.uint32)[0])
+
 
 class BCIComp2020IS(BaseDataset):
     """BCI Competition 2020 Track 3 - Imagined Speech Classification.
@@ -110,6 +127,16 @@ class BCIComp2020IS(BaseDataset):
     validation trials (10 per class). Test trials (50 per subject)
     have no labels (competition holdout) and are not loaded.
     Best competition result was 82.6% accuracy.
+
+    .. warning::
+        The original recording uses a block-like design (trials of the
+        same class recorded contiguously). The released ``.mat`` files
+        preserve that ordering, so stitching trials back into a Raw
+        object in their on-disk order would leak intra-block temporal
+        correlations into random-split evaluations and inflate scores.
+        This loader therefore permutes trials at load time with a fixed
+        seed per ``(subject, run_idx)``. The seed is intentionally not
+        user-configurable so that scores stay comparable across callers.
 
     .. figure:: https://www.frontiersin.org/files/Articles/898300/xml-images/fnhum-16-898300-g0007.webp
        :alt: BCI Competition 2020 Track 3 trial structure — Rest,
@@ -282,11 +309,25 @@ class BCIComp2020IS(BaseDataset):
         return data, labels, ch_names
 
     def _get_single_subject_data(self, subject):
-        """Return data for a single subject."""
+        """Return data for a single subject.
+
+        Trials from the released ``.mat`` files are shuffled with a
+        deterministic RNG seeded on ``(subject, run_idx)`` (fixed internal
+        seed). The underlying recording follows a block-like design (trials
+        of the same class recorded contiguously); re-stitching them into a
+        Raw object in their on-disk order would expose downstream
+        evaluations to intra-block temporal leakage and inflated scores.
+        The shuffle breaks that class-adjacency while staying reproducible
+        across runs and callers.
+        """
         runs = {}
         for run_idx, (split, epo_key) in enumerate(_SPLITS):
             fpath = self.data_path(subject, split=split)
             data, labels, ch_names = self._load_epoch_mat(fpath, epo_key)
+            rng = check_random_state(_derive_seed(int(subject), int(run_idx)))
+            perm = rng.permutation(data.shape[0])
+            data = data[perm]
+            labels = labels[perm]
             runs[str(run_idx)] = build_raw_from_epochs(
                 data, ch_names, _SFREQ, labels, montage_name="standard_1005"
             )
