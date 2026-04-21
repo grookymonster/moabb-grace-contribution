@@ -568,6 +568,7 @@
 <li><p>Expose <code class="docutils literal notranslate"><span class="pre">motor_imagery</span></code> and <code class="docutils literal notranslate"><span class="pre">mental_arithmetic</span></code> keyword-only parameters on <a class="reference internal" href="generated/moabb.datasets.Shin2017A.html#moabb.datasets.Shin2017A" title="moabb.datasets.Shin2017A"><code class="xref py py-class docutils literal notranslate"><span class="pre">moabb.datasets.Shin2017A</span></code></a> (default: MI=True, MA=False) and <a class="reference internal" href="generated/moabb.datasets.Shin2017B.html#moabb.datasets.Shin2017B" title="moabb.datasets.Shin2017B"><code class="xref py py-class docutils literal notranslate"><span class="pre">moabb.datasets.Shin2017B</span></code></a> (default: MI=False, MA=True), allowing users to load both conditions simultaneously while preserving backward compatibility (by <a class="reference external" href="https://github.com/bruAristimunha">Bruno Aristimunha</a>)</p></li>
 <li><p>Add resting state annotations and EMG channel support to <code class="xref py py-class docutils literal notranslate"><span class="pre">moabb.datasets.Lee2019</span></code> resting state runs for BIDS export compatibility (by <a class="reference external" href="https://github.com/bruAristimunha">Bruno Aristimunha</a>)</p></li>
 <li><p>Skip zip extraction in <code class="xref py py-class docutils literal notranslate"><span class="pre">moabb.datasets.GuttmannFlury2025</span></code> when files are already extracted, with <code class="docutils literal notranslate"><span class="pre">/scratch</span></code> fallback for NFS filesystems on compute nodes (by <a class="reference external" href="https://github.com/bruAristimunha">Bruno Aristimunha</a>)</p></li>
+<li><p>Re-enable auto-execution of the Riemannian Artifact Rejection tutorial (<code class="docutils literal notranslate"><span class="pre">examples/advanced_examples/plot_riemannian_artifact_rejection.py</span></code>) now that pyRiemann 0.11 is on PyPI with per-potato metrics and <code class="docutils literal notranslate"><span class="pre">method_combination</span></code> support on <code class="docutils literal notranslate"><span class="pre">PotatoField</span></code> (by <a class="reference external" href="https://github.com/bruAristimunha">Bruno Aristimunha</a>)</p></li>
 </ul>
 </section>
 <section id="api-changes">
@@ -579,7 +580,7 @@
 <section id="requirements">
 <h3>Requirements<a class="headerlink" href="#requirements" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p>None yet.</p></li>
+<li><p>Bump minimum <code class="docutils literal notranslate"><span class="pre">pyriemann</span></code> to <code class="docutils literal notranslate"><span class="pre">0.11</span></code> to use <code class="xref py py-class docutils literal notranslate"><span class="pre">pyriemann.clustering.PotatoField</span></code> per-potato metrics and the <code class="docutils literal notranslate"><span class="pre">method_combination</span></code> parameter (pyRiemann <a class="reference external" href="https://github.com/pyRiemann/pyRiemann/pull/423">PR #423</a>) used by the Riemannian Artifact Rejection tutorial (by <a class="reference external" href="https://github.com/bruAristimunha">Bruno Aristimunha</a>)</p></li>
 </ul>
 </section>
 <section id="bugs">

@@ -117,7 +117,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Time-Resolved Decoding with SlidingEstimator" href="plot_sliding_estimator.html" />
-    <link rel="prev" title="Pseudo-Online Motor Imagery with Sliding Window" href="plot_pseudoonline.html" />
+    <link rel="prev" title="Riemannian Artifact Rejection as a Pre-processing Step" href="plot_riemannian_artifact_rejection.html" />
     <link rel="canonical" href="https://moabb.neurotechx.com/docs/auto_examples/advanced_examples/plot_select_electrodes_resample.html" />
 
     
@@ -553,11 +553,11 @@
 <li class="toctree-l2"><a class="reference internal" href="plot_phmd_ml_spectrum.html">Spectral analysis of the trials</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_pre_processing_steps.html">Playing with the pre-processing steps</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_pseudoonline.html">Pseudo-Online Motor Imagery with Sliding Window</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot_riemannian_artifact_rejection.html">Riemannian Artifact Rejection as a Pre-processing Step</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Select Electrodes and Resampling</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_sliding_estimator.html">Time-Resolved Decoding with SlidingEstimator</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_statistical_analysis.html">Statistical Analysis and Chance Level Assessment</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plot_use_an_X_y_dataset.html">Using X y data (epoched data) instead of continuous signal</a></li>
-<li class="toctree-l2"><a class="reference internal" href="riemannian_artifact_rejection.html">Riemannian Artifact Rejection as a Pre-processing Step</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../learning_curve/index.html">Evaluation with learning curve</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -689,12 +689,563 @@ a sampling rate of 200 Hz.</p>
 <span class="nb">print</span><span class="p">(</span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.head.html#pandas.DataFrame.head" title="pandas.DataFrame.head" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-method"><span class="n">results</span><span class="o">.</span><span class="n">head</span></a><span class="p">())</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>      score      time  samples  ...   dataset  pipeline  codecarbon_task_name
-0  0.900000  0.040599    100.0  ...  Zhou2016     ts+lr
-1  0.847222  0.047102    119.0  ...  Zhou2016     ts+lr
-2  0.958000  0.044224    100.0  ...  Zhou2016     ts+lr
-3  0.924000  0.043376    100.0  ...  Zhou2016     ts+lr
-4  0.807407  0.031395     90.0  ...  Zhou2016     ts+lr
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Extracting EDF parameters from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-0/eeg/sub-1_ses-0_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_eeg.edf...
+Setting channel info structure...
+Creating raw.info structure...
+Reading events from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-0/eeg/sub-1_ses-0_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_events.tsv.
+Reading channel info from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-0/eeg/sub-1_ses-0_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_channels.tsv.
+Reading electrode coords from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-0/eeg/sub-1_ses-0_space-CapTrak_electrodes.tsv.
+Not fully anonymizing info - keeping hand, his_id, sex of subject_info
+Reading 0 ... 305249  =      0.000 ...  1220.996 secs...
+Extracting EDF parameters from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-0/eeg/sub-1_ses-0_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_eeg.edf...
+Setting channel info structure...
+Creating raw.info structure...
+Reading events from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-0/eeg/sub-1_ses-0_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_events.tsv.
+Reading channel info from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-0/eeg/sub-1_ses-0_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_channels.tsv.
+Reading electrode coords from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-0/eeg/sub-1_ses-0_space-CapTrak_electrodes.tsv.
+Not fully anonymizing info - keeping hand, his_id, sex of subject_info
+Reading 0 ... 430499  =      0.000 ...  1721.996 secs...
+Extracting EDF parameters from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-1/eeg/sub-1_ses-1_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_eeg.edf...
+Setting channel info structure...
+Creating raw.info structure...
+Reading events from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-1/eeg/sub-1_ses-1_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_events.tsv.
+Reading channel info from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-1/eeg/sub-1_ses-1_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_channels.tsv.
+Reading electrode coords from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-1/eeg/sub-1_ses-1_space-CapTrak_electrodes.tsv.
+Not fully anonymizing info - keeping hand, his_id, sex of subject_info
+Reading 0 ... 252749  =      0.000 ...  1010.996 secs...
+Extracting EDF parameters from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-1/eeg/sub-1_ses-1_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_eeg.edf...
+Setting channel info structure...
+Creating raw.info structure...
+Reading events from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-1/eeg/sub-1_ses-1_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_events.tsv.
+Reading channel info from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-1/eeg/sub-1_ses-1_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_channels.tsv.
+Reading electrode coords from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-1/eeg/sub-1_ses-1_space-CapTrak_electrodes.tsv.
+Not fully anonymizing info - keeping hand, his_id, sex of subject_info
+Reading 0 ... 296749  =      0.000 ...  1186.996 secs...
+Extracting EDF parameters from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-2/eeg/sub-1_ses-2_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_eeg.edf...
+Setting channel info structure...
+Creating raw.info structure...
+Reading events from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-2/eeg/sub-1_ses-2_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_events.tsv.
+Reading channel info from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-2/eeg/sub-1_ses-2_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_channels.tsv.
+Reading electrode coords from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-2/eeg/sub-1_ses-2_space-CapTrak_electrodes.tsv.
+Not fully anonymizing info - keeping hand, his_id, sex of subject_info
+Reading 0 ... 233249  =      0.000 ...   932.996 secs...
+Extracting EDF parameters from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-2/eeg/sub-1_ses-2_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_eeg.edf...
+Setting channel info structure...
+Creating raw.info structure...
+Reading events from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-2/eeg/sub-1_ses-2_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_events.tsv.
+Reading channel info from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-2/eeg/sub-1_ses-2_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_channels.tsv.
+Reading electrode coords from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-2/eeg/sub-1_ses-2_space-CapTrak_electrodes.tsv.
+Not fully anonymizing info - keeping hand, his_id, sex of subject_info
+Reading 0 ... 226249  =      0.000 ...   904.996 secs...
+Extracting EDF parameters from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-0/eeg/sub-2_ses-0_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_eeg.edf...
+Setting channel info structure...
+Creating raw.info structure...
+Reading events from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-0/eeg/sub-2_ses-0_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_events.tsv.
+Reading channel info from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-0/eeg/sub-2_ses-0_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_channels.tsv.
+Reading electrode coords from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-0/eeg/sub-2_ses-0_space-CapTrak_electrodes.tsv.
+Not fully anonymizing info - keeping hand, his_id, sex of subject_info
+Reading 0 ... 227749  =      0.000 ...   910.996 secs...
+Extracting EDF parameters from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-0/eeg/sub-2_ses-0_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_eeg.edf...
+Setting channel info structure...
+Creating raw.info structure...
+Reading events from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-0/eeg/sub-2_ses-0_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_events.tsv.
+Reading channel info from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-0/eeg/sub-2_ses-0_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_channels.tsv.
+Reading electrode coords from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-0/eeg/sub-2_ses-0_space-CapTrak_electrodes.tsv.
+Not fully anonymizing info - keeping hand, his_id, sex of subject_info
+Reading 0 ... 216249  =      0.000 ...   864.996 secs...
+Extracting EDF parameters from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-1/eeg/sub-2_ses-1_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_eeg.edf...
+Setting channel info structure...
+Creating raw.info structure...
+Reading events from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-1/eeg/sub-2_ses-1_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_events.tsv.
+Reading channel info from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-1/eeg/sub-2_ses-1_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_channels.tsv.
+Reading electrode coords from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-1/eeg/sub-2_ses-1_space-CapTrak_electrodes.tsv.
+Not fully anonymizing info - keeping hand, his_id, sex of subject_info
+Reading 0 ... 213999  =      0.000 ...   855.996 secs...
+Extracting EDF parameters from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-1/eeg/sub-2_ses-1_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_eeg.edf...
+Setting channel info structure...
+Creating raw.info structure...
+Reading events from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-1/eeg/sub-2_ses-1_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_events.tsv.
+Reading channel info from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-1/eeg/sub-2_ses-1_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_channels.tsv.
+Reading electrode coords from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-1/eeg/sub-2_ses-1_space-CapTrak_electrodes.tsv.
+Not fully anonymizing info - keeping hand, his_id, sex of subject_info
+Reading 0 ... 175499  =      0.000 ...   701.996 secs...
+Extracting EDF parameters from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-2/eeg/sub-2_ses-2_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_eeg.edf...
+Setting channel info structure...
+Creating raw.info structure...
+Reading events from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-2/eeg/sub-2_ses-2_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_events.tsv.
+Reading channel info from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-2/eeg/sub-2_ses-2_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_channels.tsv.
+Reading electrode coords from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-2/eeg/sub-2_ses-2_space-CapTrak_electrodes.tsv.
+Not fully anonymizing info - keeping hand, his_id, sex of subject_info
+Reading 0 ... 213249  =      0.000 ...   852.996 secs...
+Extracting EDF parameters from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-2/eeg/sub-2_ses-2_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_eeg.edf...
+Setting channel info structure...
+Creating raw.info structure...
+Reading events from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-2/eeg/sub-2_ses-2_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_events.tsv.
+Reading channel info from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-2/eeg/sub-2_ses-2_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_channels.tsv.
+Reading electrode coords from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-2/eeg/sub-2_ses-2_space-CapTrak_electrodes.tsv.
+Not fully anonymizing info - keeping hand, his_id, sex of subject_info
+Reading 0 ... 217749  =      0.000 ...   870.996 secs...
+[codecarbon WARNING @ 09:07:13] Multiple instances of codecarbon are allowed to run at the same time.
+Computing rank from data with rank=None
+    Using tolerance 1 (2.2e-16 eps * 3 dim * 1.5e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1 (2.2e-16 eps * 3 dim * 1.5e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1 (2.2e-16 eps * 3 dim * 1.5e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1 (2.2e-16 eps * 3 dim * 1.5e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1 (2.2e-16 eps * 3 dim * 1.5e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 0.99 (2.2e-16 eps * 3 dim * 1.5e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1 (2.2e-16 eps * 3 dim * 1.5e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 0.99 (2.2e-16 eps * 3 dim * 1.5e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 0.99 (2.2e-16 eps * 3 dim * 1.5e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1 (2.2e-16 eps * 3 dim * 1.5e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1 (2.2e-16 eps * 3 dim * 1.5e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1 (2.2e-16 eps * 3 dim * 1.5e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1 (2.2e-16 eps * 3 dim * 1.5e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1 (2.2e-16 eps * 3 dim * 1.5e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1 (2.2e-16 eps * 3 dim * 1.5e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.7 (2.2e-16 eps * 3 dim * 2.5e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.7 (2.2e-16 eps * 3 dim * 2.5e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.7 (2.2e-16 eps * 3 dim * 2.5e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.7 (2.2e-16 eps * 3 dim * 2.5e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.7 (2.2e-16 eps * 3 dim * 2.5e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.6 (2.2e-16 eps * 3 dim * 2.4e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.6 (2.2e-16 eps * 3 dim * 2.4e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.6 (2.2e-16 eps * 3 dim * 2.4e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.6 (2.2e-16 eps * 3 dim * 2.4e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.6 (2.2e-16 eps * 3 dim * 2.4e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 2 (2.2e-16 eps * 3 dim * 3e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.8 (2.2e-16 eps * 3 dim * 2.7e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 2 (2.2e-16 eps * 3 dim * 3.1e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 2 (2.2e-16 eps * 3 dim * 3e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 2 (2.2e-16 eps * 3 dim * 3e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+/home/runner/work/moabb/moabb/moabb/analysis/results.py:189: H5pyDeprecationWarning: Creating a dataset without passing data or dtype is deprecated. Pass an explicit dtype. Using dtype=&#39;f4&#39; will keep the current default behaviour.
+  dset.create_dataset(
+Computing rank from data with rank=None
+    Using tolerance 1.5 (2.2e-16 eps * 3 dim * 2.3e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.5 (2.2e-16 eps * 3 dim * 2.3e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.5 (2.2e-16 eps * 3 dim * 2.3e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.5 (2.2e-16 eps * 3 dim * 2.3e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.5 (2.2e-16 eps * 3 dim * 2.3e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.6 (2.2e-16 eps * 3 dim * 2.3e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.6 (2.2e-16 eps * 3 dim * 2.3e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.6 (2.2e-16 eps * 3 dim * 2.3e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.6 (2.2e-16 eps * 3 dim * 2.3e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.5 (2.2e-16 eps * 3 dim * 2.3e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.7 (2.2e-16 eps * 3 dim * 2.6e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.7 (2.2e-16 eps * 3 dim * 2.6e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.7 (2.2e-16 eps * 3 dim * 2.6e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.8 (2.2e-16 eps * 3 dim * 2.6e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.8 (2.2e-16 eps * 3 dim * 2.6e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 2.8 (2.2e-16 eps * 3 dim * 4.2e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 2.9 (2.2e-16 eps * 3 dim * 4.3e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 2.9 (2.2e-16 eps * 3 dim * 4.4e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 2.8 (2.2e-16 eps * 3 dim * 4.3e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 3 (2.2e-16 eps * 3 dim * 4.4e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+/home/runner/work/moabb/moabb/moabb/analysis/results.py:189: H5pyDeprecationWarning: Creating a dataset without passing data or dtype is deprecated. Pass an explicit dtype. Using dtype=&#39;f4&#39; will keep the current default behaviour.
+  dset.create_dataset(
+      score      time  samples  ...   dataset  pipeline  codecarbon_task_name
+0  0.918000  0.039801    100.0  ...  Zhou2016     ts+lr
+1  0.904000  0.047232    100.0  ...  Zhou2016     ts+lr
+2  0.817284  0.046241     90.0  ...  Zhou2016     ts+lr
+3  0.942000  0.042535    100.0  ...  Zhou2016     ts+lr
+4  0.863889  0.051717    119.0  ...  Zhou2016     ts+lr
 
 [5 rows x 13 columns]
 </pre></div>
@@ -714,12 +1265,610 @@ as well as the list of datasets with valid channels.</p>
 <span class="nb">print</span><span class="p">(</span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.head.html#pandas.DataFrame.head" title="pandas.DataFrame.head" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-method"><span class="n">results</span><span class="o">.</span><span class="n">head</span></a><span class="p">())</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>      score      time  samples  ...   dataset  pipeline  codecarbon_task_name
-0  0.866414  0.037477    119.0  ...  Zhou2016     ts+lr
-1  0.924000  0.032670    100.0  ...  Zhou2016     ts+lr
-2  0.930000  0.031684    100.0  ...  Zhou2016     ts+lr
-3  0.914000  0.031643    100.0  ...  Zhou2016     ts+lr
-4  0.827160  0.028968     90.0  ...  Zhou2016     ts+lr
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Extracting EDF parameters from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-0/eeg/sub-1_ses-0_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_eeg.edf...
+Setting channel info structure...
+Creating raw.info structure...
+Reading events from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-0/eeg/sub-1_ses-0_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_events.tsv.
+Reading channel info from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-0/eeg/sub-1_ses-0_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_channels.tsv.
+Reading electrode coords from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-0/eeg/sub-1_ses-0_space-CapTrak_electrodes.tsv.
+Not fully anonymizing info - keeping hand, his_id, sex of subject_info
+Reading 0 ... 305249  =      0.000 ...  1220.996 secs...
+Extracting EDF parameters from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-0/eeg/sub-1_ses-0_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_eeg.edf...
+Setting channel info structure...
+Creating raw.info structure...
+Reading events from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-0/eeg/sub-1_ses-0_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_events.tsv.
+Reading channel info from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-0/eeg/sub-1_ses-0_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_channels.tsv.
+Reading electrode coords from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-0/eeg/sub-1_ses-0_space-CapTrak_electrodes.tsv.
+Not fully anonymizing info - keeping hand, his_id, sex of subject_info
+Reading 0 ... 430499  =      0.000 ...  1721.996 secs...
+Extracting EDF parameters from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-1/eeg/sub-1_ses-1_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_eeg.edf...
+Setting channel info structure...
+Creating raw.info structure...
+Reading events from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-1/eeg/sub-1_ses-1_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_events.tsv.
+Reading channel info from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-1/eeg/sub-1_ses-1_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_channels.tsv.
+Reading electrode coords from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-1/eeg/sub-1_ses-1_space-CapTrak_electrodes.tsv.
+Not fully anonymizing info - keeping hand, his_id, sex of subject_info
+Reading 0 ... 252749  =      0.000 ...  1010.996 secs...
+Extracting EDF parameters from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-1/eeg/sub-1_ses-1_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_eeg.edf...
+Setting channel info structure...
+Creating raw.info structure...
+Reading events from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-1/eeg/sub-1_ses-1_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_events.tsv.
+Reading channel info from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-1/eeg/sub-1_ses-1_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_channels.tsv.
+Reading electrode coords from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-1/eeg/sub-1_ses-1_space-CapTrak_electrodes.tsv.
+Not fully anonymizing info - keeping hand, his_id, sex of subject_info
+Reading 0 ... 296749  =      0.000 ...  1186.996 secs...
+Extracting EDF parameters from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-2/eeg/sub-1_ses-2_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_eeg.edf...
+Setting channel info structure...
+Creating raw.info structure...
+Reading events from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-2/eeg/sub-1_ses-2_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_events.tsv.
+Reading channel info from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-2/eeg/sub-1_ses-2_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_channels.tsv.
+Reading electrode coords from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-2/eeg/sub-1_ses-2_space-CapTrak_electrodes.tsv.
+Not fully anonymizing info - keeping hand, his_id, sex of subject_info
+Reading 0 ... 233249  =      0.000 ...   932.996 secs...
+Extracting EDF parameters from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-2/eeg/sub-1_ses-2_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_eeg.edf...
+Setting channel info structure...
+Creating raw.info structure...
+Reading events from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-2/eeg/sub-1_ses-2_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_events.tsv.
+Reading channel info from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-2/eeg/sub-1_ses-2_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_channels.tsv.
+Reading electrode coords from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-2/eeg/sub-1_ses-2_space-CapTrak_electrodes.tsv.
+Not fully anonymizing info - keeping hand, his_id, sex of subject_info
+Reading 0 ... 226249  =      0.000 ...   904.996 secs...
+Extracting EDF parameters from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-0/eeg/sub-1_ses-0_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_eeg.edf...
+Setting channel info structure...
+Creating raw.info structure...
+Reading events from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-0/eeg/sub-1_ses-0_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_events.tsv.
+Reading channel info from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-0/eeg/sub-1_ses-0_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_channels.tsv.
+Reading electrode coords from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-0/eeg/sub-1_ses-0_space-CapTrak_electrodes.tsv.
+Not fully anonymizing info - keeping hand, his_id, sex of subject_info
+Reading 0 ... 305249  =      0.000 ...  1220.996 secs...
+Extracting EDF parameters from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-0/eeg/sub-1_ses-0_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_eeg.edf...
+Setting channel info structure...
+Creating raw.info structure...
+Reading events from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-0/eeg/sub-1_ses-0_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_events.tsv.
+Reading channel info from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-0/eeg/sub-1_ses-0_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_channels.tsv.
+Reading electrode coords from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-0/eeg/sub-1_ses-0_space-CapTrak_electrodes.tsv.
+Not fully anonymizing info - keeping hand, his_id, sex of subject_info
+Reading 0 ... 430499  =      0.000 ...  1721.996 secs...
+Extracting EDF parameters from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-1/eeg/sub-1_ses-1_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_eeg.edf...
+Setting channel info structure...
+Creating raw.info structure...
+Reading events from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-1/eeg/sub-1_ses-1_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_events.tsv.
+Reading channel info from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-1/eeg/sub-1_ses-1_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_channels.tsv.
+Reading electrode coords from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-1/eeg/sub-1_ses-1_space-CapTrak_electrodes.tsv.
+Not fully anonymizing info - keeping hand, his_id, sex of subject_info
+Reading 0 ... 252749  =      0.000 ...  1010.996 secs...
+Extracting EDF parameters from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-1/eeg/sub-1_ses-1_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_eeg.edf...
+Setting channel info structure...
+Creating raw.info structure...
+Reading events from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-1/eeg/sub-1_ses-1_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_events.tsv.
+Reading channel info from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-1/eeg/sub-1_ses-1_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_channels.tsv.
+Reading electrode coords from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-1/eeg/sub-1_ses-1_space-CapTrak_electrodes.tsv.
+Not fully anonymizing info - keeping hand, his_id, sex of subject_info
+Reading 0 ... 296749  =      0.000 ...  1186.996 secs...
+Extracting EDF parameters from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-2/eeg/sub-1_ses-2_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_eeg.edf...
+Setting channel info structure...
+Creating raw.info structure...
+Reading events from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-2/eeg/sub-1_ses-2_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_events.tsv.
+Reading channel info from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-2/eeg/sub-1_ses-2_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_channels.tsv.
+Reading electrode coords from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-2/eeg/sub-1_ses-2_space-CapTrak_electrodes.tsv.
+Not fully anonymizing info - keeping hand, his_id, sex of subject_info
+Reading 0 ... 233249  =      0.000 ...   932.996 secs...
+Extracting EDF parameters from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-2/eeg/sub-1_ses-2_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_eeg.edf...
+Setting channel info structure...
+Creating raw.info structure...
+Reading events from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-2/eeg/sub-1_ses-2_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_events.tsv.
+Reading channel info from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-2/eeg/sub-1_ses-2_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_channels.tsv.
+Reading electrode coords from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-1/ses-2/eeg/sub-1_ses-2_space-CapTrak_electrodes.tsv.
+Not fully anonymizing info - keeping hand, his_id, sex of subject_info
+Reading 0 ... 226249  =      0.000 ...   904.996 secs...
+Extracting EDF parameters from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-0/eeg/sub-2_ses-0_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_eeg.edf...
+Setting channel info structure...
+Creating raw.info structure...
+Reading events from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-0/eeg/sub-2_ses-0_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_events.tsv.
+Reading channel info from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-0/eeg/sub-2_ses-0_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_channels.tsv.
+Reading electrode coords from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-0/eeg/sub-2_ses-0_space-CapTrak_electrodes.tsv.
+Not fully anonymizing info - keeping hand, his_id, sex of subject_info
+Reading 0 ... 227749  =      0.000 ...   910.996 secs...
+Extracting EDF parameters from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-0/eeg/sub-2_ses-0_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_eeg.edf...
+Setting channel info structure...
+Creating raw.info structure...
+Reading events from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-0/eeg/sub-2_ses-0_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_events.tsv.
+Reading channel info from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-0/eeg/sub-2_ses-0_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_channels.tsv.
+Reading electrode coords from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-0/eeg/sub-2_ses-0_space-CapTrak_electrodes.tsv.
+Not fully anonymizing info - keeping hand, his_id, sex of subject_info
+Reading 0 ... 216249  =      0.000 ...   864.996 secs...
+Extracting EDF parameters from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-1/eeg/sub-2_ses-1_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_eeg.edf...
+Setting channel info structure...
+Creating raw.info structure...
+Reading events from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-1/eeg/sub-2_ses-1_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_events.tsv.
+Reading channel info from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-1/eeg/sub-2_ses-1_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_channels.tsv.
+Reading electrode coords from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-1/eeg/sub-2_ses-1_space-CapTrak_electrodes.tsv.
+Not fully anonymizing info - keeping hand, his_id, sex of subject_info
+Reading 0 ... 213999  =      0.000 ...   855.996 secs...
+Extracting EDF parameters from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-1/eeg/sub-2_ses-1_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_eeg.edf...
+Setting channel info structure...
+Creating raw.info structure...
+Reading events from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-1/eeg/sub-2_ses-1_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_events.tsv.
+Reading channel info from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-1/eeg/sub-2_ses-1_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_channels.tsv.
+Reading electrode coords from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-1/eeg/sub-2_ses-1_space-CapTrak_electrodes.tsv.
+Not fully anonymizing info - keeping hand, his_id, sex of subject_info
+Reading 0 ... 175499  =      0.000 ...   701.996 secs...
+Extracting EDF parameters from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-2/eeg/sub-2_ses-2_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_eeg.edf...
+Setting channel info structure...
+Creating raw.info structure...
+Reading events from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-2/eeg/sub-2_ses-2_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_events.tsv.
+Reading channel info from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-2/eeg/sub-2_ses-2_task-imagery_run-0_desc-975305b80f8ef1ae6b60536eec26dff2_channels.tsv.
+Reading electrode coords from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-2/eeg/sub-2_ses-2_space-CapTrak_electrodes.tsv.
+Not fully anonymizing info - keeping hand, his_id, sex of subject_info
+Reading 0 ... 213249  =      0.000 ...   852.996 secs...
+Extracting EDF parameters from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-2/eeg/sub-2_ses-2_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_eeg.edf...
+Setting channel info structure...
+Creating raw.info structure...
+Reading events from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-2/eeg/sub-2_ses-2_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_events.tsv.
+Reading channel info from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-2/eeg/sub-2_ses-2_task-imagery_run-1_desc-975305b80f8ef1ae6b60536eec26dff2_channels.tsv.
+Reading electrode coords from /home/runner/work/moabb/moabb/mne_data/MNE-BIDS-zhou2016/sub-2/ses-2/eeg/sub-2_ses-2_space-CapTrak_electrodes.tsv.
+Not fully anonymizing info - keeping hand, his_id, sex of subject_info
+Reading 0 ... 217749  =      0.000 ...   870.996 secs...
+Computing rank from data with rank=None
+    Using tolerance 1 (2.2e-16 eps * 3 dim * 1.5e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 0.99 (2.2e-16 eps * 3 dim * 1.5e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1 (2.2e-16 eps * 3 dim * 1.5e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 0.99 (2.2e-16 eps * 3 dim * 1.5e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1 (2.2e-16 eps * 3 dim * 1.5e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 0.99 (2.2e-16 eps * 3 dim * 1.5e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1 (2.2e-16 eps * 3 dim * 1.5e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1 (2.2e-16 eps * 3 dim * 1.5e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1 (2.2e-16 eps * 3 dim * 1.5e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1 (2.2e-16 eps * 3 dim * 1.5e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1 (2.2e-16 eps * 3 dim * 1.5e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1 (2.2e-16 eps * 3 dim * 1.5e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1 (2.2e-16 eps * 3 dim * 1.5e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1 (2.2e-16 eps * 3 dim * 1.5e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1 (2.2e-16 eps * 3 dim * 1.5e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.6 (2.2e-16 eps * 3 dim * 2.4e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.6 (2.2e-16 eps * 3 dim * 2.4e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.6 (2.2e-16 eps * 3 dim * 2.4e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.6 (2.2e-16 eps * 3 dim * 2.4e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.6 (2.2e-16 eps * 3 dim * 2.4e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.8 (2.2e-16 eps * 3 dim * 2.7e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 2 (2.2e-16 eps * 3 dim * 3e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 2 (2.2e-16 eps * 3 dim * 3e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 2 (2.2e-16 eps * 3 dim * 3.1e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 2 (2.2e-16 eps * 3 dim * 3e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.7 (2.2e-16 eps * 3 dim * 2.5e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.7 (2.2e-16 eps * 3 dim * 2.5e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.7 (2.2e-16 eps * 3 dim * 2.5e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.7 (2.2e-16 eps * 3 dim * 2.5e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.7 (2.2e-16 eps * 3 dim * 2.5e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+/home/runner/work/moabb/moabb/moabb/analysis/results.py:189: H5pyDeprecationWarning: Creating a dataset without passing data or dtype is deprecated. Pass an explicit dtype. Using dtype=&#39;f4&#39; will keep the current default behaviour.
+  dset.create_dataset(
+Computing rank from data with rank=None
+    Using tolerance 1.8 (2.2e-16 eps * 3 dim * 2.6e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.7 (2.2e-16 eps * 3 dim * 2.6e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.7 (2.2e-16 eps * 3 dim * 2.6e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.7 (2.2e-16 eps * 3 dim * 2.6e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.7 (2.2e-16 eps * 3 dim * 2.6e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 2.9 (2.2e-16 eps * 3 dim * 4.3e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 2.9 (2.2e-16 eps * 3 dim * 4.4e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 2.9 (2.2e-16 eps * 3 dim * 4.4e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 2.8 (2.2e-16 eps * 3 dim * 4.3e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 2.9 (2.2e-16 eps * 3 dim * 4.3e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.5 (2.2e-16 eps * 3 dim * 2.3e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.5 (2.2e-16 eps * 3 dim * 2.3e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.5 (2.2e-16 eps * 3 dim * 2.3e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.5 (2.2e-16 eps * 3 dim * 2.3e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.5 (2.2e-16 eps * 3 dim * 2.3e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.6 (2.2e-16 eps * 3 dim * 2.3e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.5 (2.2e-16 eps * 3 dim * 2.3e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.5 (2.2e-16 eps * 3 dim * 2.3e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.6 (2.2e-16 eps * 3 dim * 2.3e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+Computing rank from data with rank=None
+    Using tolerance 1.6 (2.2e-16 eps * 3 dim * 2.3e+15  max singular value)
+    Estimated rank (data): 3
+    data: rank 3 computed from 3 data channels with 0 projectors
+Reducing data rank from 3 -&gt; 3
+Estimating class=0 covariance using EMPIRICAL
+Done.
+Estimating class=1 covariance using EMPIRICAL
+Done.
+/home/runner/work/moabb/moabb/moabb/analysis/results.py:189: H5pyDeprecationWarning: Creating a dataset without passing data or dtype is deprecated. Pass an explicit dtype. Using dtype=&#39;f4&#39; will keep the current default behaviour.
+  dset.create_dataset(
+      score      time  samples  ...   dataset  pipeline  codecarbon_task_name
+0  0.904000  0.047142    100.0  ...  Zhou2016     ts+lr
+1  0.819753  0.028693     90.0  ...  Zhou2016     ts+lr
+2  0.926000  0.031151    100.0  ...  Zhou2016     ts+lr
+3  0.844192  0.036158    119.0  ...  Zhou2016     ts+lr
+4  0.902000  0.031750    100.0  ...  Zhou2016     ts+lr
 
 [5 rows x 13 columns]
 </pre></div>
@@ -735,7 +1884,7 @@ regression computed in the tangent space of the covariance matrices.</p>
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.show.html#matplotlib.pyplot.show" title="matplotlib.pyplot.show" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_select_electrodes_resample_001.png" srcset="../../_images/sphx_glr_plot_select_electrodes_resample_001.png" alt="plot select electrodes resample" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (10 minutes 35.449 seconds)</p>
+<img src="../../_images/sphx_glr_plot_select_electrodes_resample_001.png" srcset="../../_images/sphx_glr_plot_select_electrodes_resample_001.png" alt="plot select electrodes resample" class = "sphx-glr-single-img"/><p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (10 minutes 44.767 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-advanced-examples-plot-select-electrodes-resample-py">
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/657e87726c4d308a5b176dbb4277773e/plot_select_electrodes_resample.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_select_electrodes_resample.ipynb</span></code></a></p>
@@ -762,12 +1911,12 @@ regression computed in the tangent space of the covariance matrices.</p>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="plot_pseudoonline.html"
+       href="plot_riemannian_artifact_rejection.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Pseudo-Online Motor Imagery with Sliding Window</p>
+        <p class="prev-next-title">Riemannian Artifact Rejection as a Pre-processing Step</p>
       </div>
     </a>
     <a class="right-next"
