@@ -42,12 +42,12 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=7f76b32a3354e82990f2" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=7f76b32a3354e82990f2" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=fd6457a4" />
     <link rel="stylesheet" type="text/css" href="_static/sg_gallery-binder.css?v=f4aeca0c" />
     <link rel="stylesheet" type="text/css" href="_static/sg_gallery-dataframe.css?v=2082cf3c" />
     <link rel="stylesheet" type="text/css" href="_static/sg_gallery-rendered-html.css?v=1277b6f3" />
@@ -62,10 +62,10 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedheader/4.0.6/css/fixedHeader.dataTables.css" />
   
   <!-- So that users can add custom icons -->
-  <script defer src="_static/scripts/fontawesome.js?digest=7f76b32a3354e82990f2"></script>
+  <script defer src="_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=7f76b32a3354e82990f2" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=7f76b32a3354e82990f2" />
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
 
     <script src="_static/jquery.js?v=5d32c60e"></script>
     <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
@@ -74,6 +74,7 @@
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/sg-tags.js?v=d80f6fa4"></script>
     <script src="_static/design-tabs.js?v=f930bc37"></script>
     <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-5WJBKDMSTE"></script>
     <script>
@@ -169,7 +170,9 @@
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
-
+  
+  
+  
   
   <dialog id="pst-search-dialog">
     
@@ -596,6 +599,7 @@
 <li><p>Fix data path lookup in <a class="reference internal" href="generated/moabb.datasets.Forenzo2023.html#moabb.datasets.Forenzo2023" title="moabb.datasets.Forenzo2023"><code class="xref py py-class docutils literal notranslate"><span class="pre">moabb.datasets.Forenzo2023</span></code></a> that makes MOABB unable to find the downloaded data (<a class="reference external" href="https://github.com/NeuroTechX/moabb/issues/1048">#1048</a> by <a class="reference external" href="https://github.com/davisethan">Ethan Davis</a>).</p></li>
 <li><p>Fix wrong paper reference in <a class="reference internal" href="generated/moabb.datasets.Thielen2021.html#moabb.datasets.Thielen2021" title="moabb.datasets.Thielen2021"><code class="xref py py-class docutils literal notranslate"><span class="pre">moabb.datasets.Thielen2021</span></code></a> (<code class="docutils literal notranslate"><span class="pre">associated_paper_doi</span></code> pointed to the Ahmadi electrode-montage reference instead of the dataset’s primary publication), restore Radboud data-repository DOI as <code class="docutils literal notranslate"><span class="pre">__init__.doi</span></code>, and add regression test <code class="docutils literal notranslate"><span class="pre">test_primary_paper_matches_dataset_code</span></code> that validates every <code class="docutils literal notranslate"><span class="pre">&lt;Surname&gt;&lt;Year&gt;</span></code> dataset against its cited primary paper (by <a class="reference external" href="https://github.com/bruAristimunha">Bruno Aristimunha</a>)</p></li>
 <li><p>Fix <code class="docutils literal notranslate"><span class="pre">UnicodeEncodeError</span></code> when the GBK codec fails on <code class="docutils literal notranslate"><span class="pre">'\xef'</span></code> in BIDS metadata export by explicitly setting <code class="docutils literal notranslate"><span class="pre">encoding=&quot;utf-8&quot;</span></code> on file writes in <code class="docutils literal notranslate"><span class="pre">bids_interface</span></code> (<a class="reference external" href="https://github.com/NeuroTechX/moabb/issues/1059">#1059</a> by <a class="reference external" href="https://github.com/sli930">sli930</a>)</p></li>
+<li><p>Modified example usage and fixed epoch extraction with an adjustable buffer that prevents last epochs being dropped in <a class="reference internal" href="generated/moabb.datasets.RomaniBF2025ERP.html#moabb.datasets.RomaniBF2025ERP" title="moabb.datasets.RomaniBF2025ERP"><code class="xref py py-class docutils literal notranslate"><span class="pre">moabb.datasets.RomaniBF2025ERP</span></code></a>.</p></li>
 </ul>
 </section>
 <section id="code-health">
@@ -1635,8 +1639,8 @@ to extend beyond actual motor imagery duration into adjacent trials’ resting p
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="_static/scripts/bootstrap.js?digest=7f76b32a3354e82990f2"></script>
-<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=7f76b32a3354e82990f2"></script>
+  <script defer src="_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -1662,7 +1666,7 @@ to extend beyond actual motor imagery duration into adjacent trials’ resting p
         <div class="footer-item">
 <p class="theme-version">
   <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.17.0.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.17.1.
 </p></div>
       
     </div>
