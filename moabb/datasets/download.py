@@ -3,6 +3,7 @@
 #         Bruno Aristimunha <b.aristimunha@gmail.com>
 # License: BSD Style.
 
+import functools
 import json
 import logging
 import os
@@ -274,8 +275,12 @@ def _fs_paginated_file_list(base_url, headers, page_size=1000):
     return files
 
 
+@functools.lru_cache(maxsize=None)
 def fs_get_file_list(article_id, version=None):
     """List all the files associated with a given article.
+
+    Cached in-process by ``(article_id, version)`` to avoid Figshare's 403
+    rate limit when callers iterate (clear with ``cache_clear()``).
 
     Parameters
     ----------

@@ -656,9 +656,9 @@ def _convert_attention_shift(filename, verbose=None):
     ch_names_full = ch_names + ["HEOG", "VEOG", "STI"]
     ch_types_full = ch_types + ["eog", "eog", "stim"]
 
-    # Reshape data: concatenate trials
-    # Original: (channels, samples, trials) -> (channels, samples * trials)
-    eeg_data = bciexp.data.reshape(n_channels, -1)
+    # ``bciexp.data`` is F-contiguous from ``loadmat``; transpose to trial-major
+    # before C-order reshape so per-trial markers align with the EEG samples.
+    eeg_data = bciexp.data.transpose(0, 2, 1).reshape(n_channels, -1)
 
     # Get EOG data: (samples, trials) -> (samples * trials)
     heog_data = bciexp.heog.T.reshape(1, -1)
