@@ -23,6 +23,7 @@ Version 1.6  (Source - GitHub)
 
 Enhancements
 ~~~~~~~~~~~~
+- Add :class:`moabb.datasets.Schrag2026Pediatric` — open-access pediatric SSVEP-BCI dataset (47 children aged 5-18, g.tec g.GAMMAsys + g.USBamp at 256 Hz, 16 channels) covering both an online 4-target SSVEP game (6.25 / 10 / 11.11 / 14.28 Hz) and an opt-in 12-stimulus personalization recording (4 contrasts x 3 sizes at 10 Hz). XDF + Unity markers; trial labels are derived from the matching ``Movements/`` CSV (live fbCCA classifier output). Single 1.2 GB zip on Zenodo (``10.5281/zenodo.19440997``) extracted per-subject on first use; the SSVEP game is exposed as two runs (standard and personal stimulus) of a single session (by `Bruno Aristimunha`_ and `Emily Schrag`_)
 - Add 7 new imagined speech dataset adapters: :class:`moabb.datasets.AguileraRodriguez2025` (15 subjects, 4 Spanish words, traditional vs gamified paradigm), :class:`moabb.datasets.Nguyen2017_V`, :class:`moabb.datasets.Nguyen2017_S`, :class:`moabb.datasets.Nguyen2017_L`, and :class:`moabb.datasets.Nguyen2017_SL` (Nguyen et al. 2017 vowels / short words / long words / short-vs-long conditions), :class:`moabb.datasets.Nieto2022` (10 subjects, 4 directional tasks across inner / pronounced / visualized speech modalities, 128-ch BioSemi), and :class:`moabb.datasets.Pressel2016` (15 subjects, 11-class Spanish vowels and directional commands) (by `Bruno Aristimunha`_)
 - Welcome **imagined speech** as a distinct category of imagery datasets with a dedicated documentation section (see :doc:`dataset_summary`), a new ``moabb/datasets/summary_imagined_speech.csv`` summary table, and a grouped ``Imagined Speech Datasets`` listing in the API reference. The new datasets continue to use the existing ``paradigm="imagery"`` tag so all motor-imagery paradigm classes work unchanged (by `Bruno Aristimunha`_)
 - Add 2 new BCI Competition 2020 dataset adapters: :class:`moabb.datasets.BCIComp2020UpperLimb` (Track 4, 15 subjects, 3 grasping tasks on a single right arm, 3 recording days 7 days apart for session-to-session transfer evaluation) and :class:`moabb.datasets.BCIComp2020WalkingERP` (Track 5, 15 subjects, visual P300 oddball during walking at 1.6 m/s on a treadmill, simultaneous scalp-EEG + ear-EEG + EOG + IMU recording) (by `Bruno Aristimunha`_)
@@ -46,6 +47,7 @@ Requirements
 
 Bugs
 ~~~~
+- Fix :class:`moabb.datasets.BNCI2014_001` stimulus protocol timing in the generated documentation figure to show 2 s fixation, 1.25 s cue, and motor imagery through t=6 s (by `Bruno Aristimunha`_)
 - Fix stim-marker placement in :class:`moabb.datasets.BCIComp2020WalkingERP` (Track 5): ``build_raw_from_epochs`` was called with ``onset_sample=0``, which placed the event at sample 0 of each trial — the start of the pre-stim baseline (t=-190 ms), not the actual stimulus onset. With ``interval=[-0.19, 0.8]``, the paradigm was therefore reading the leading zero buffer as "pre-stim data" and missing the last 180 ms of real post-stim data. Now the loader passes ``onset_sample=19`` so the marker lands on t=0 and the interval picks the real 100-sample epoch as published (by `Bruno Aristimunha`_)
 - Fix session key off-by-one in :class:`moabb.datasets.Lee2019` that caused silent data loss when filtering sessions, and improve session filtering in :class:`moabb.datasets.base.BaseDataset` to match compound session keys (e.g., ``"0train"``) by integer prefix (:gh:`1046` by `Benedetto Leto`_ and `Bruno Aristimunha`_).
 - Fix BIDS conversion failures across multiple datasets: crop BDF/EDF signals to exact data records in ``bids_interface``, add standard montage fiducials when missing, fix :class:`moabb.datasets.BNCI2016_002` ``KeyError`` in event mapping, handle lowercase ``trigger`` attribute in :class:`moabb.datasets.BNCI2022_001` ``.mat`` files, detect and re-download truncated files in :class:`moabb.datasets.Kaneshiro2015`, add stim-channel annotations in :class:`moabb.datasets.Lee2024` for BIDS compatibility, convert µV to V in :class:`moabb.datasets.MartinezCagigal2023Checker` and :class:`moabb.datasets.MartinezCagigal2023Pary` to fix BDF physical range overflow, and handle alternate ``data`` key in :class:`moabb.datasets.Zuo2025` ``.mat`` files (by `Bruno Aristimunha`_)
@@ -57,10 +59,14 @@ Bugs
 - Fix wrong paper reference in :class:`moabb.datasets.Thielen2021` (``associated_paper_doi`` pointed to the Ahmadi electrode-montage reference instead of the dataset's primary publication), restore Radboud data-repository DOI as ``__init__.doi``, and add regression test ``test_primary_paper_matches_dataset_code`` that validates every ``<Surname><Year>`` dataset against its cited primary paper (by `Bruno Aristimunha`_)
 - Fix ``UnicodeEncodeError`` when the GBK codec fails on ``'\xef'`` in BIDS metadata export by explicitly setting ``encoding="utf-8"`` on file writes in ``bids_interface`` (:gh:`1059` by `sli930`_)
 - Modified example usage and fixed epoch extraction with an adjustable buffer that prevents last epochs being dropped in :class:`moabb.datasets.RomaniBF2025ERP`.
-
+- Fix zip extraction in :class:`moabb.datasets.Wairagkar2018` dataset loader.
+- Fix EEG layout corruption in :class:`moabb.datasets.BNCI2020_002`: the F-contiguous ``bciexp.data`` was reshaped in default C-order, producing a trial-fastest interleaved layout that disagreed with the per-trial stim markers and made every epoch sample the wrong trial. The reshape now transposes to trial-major before flattening (by `Bruno Aristimunha`_).
+- Fix ``stim_trial`` content in :class:`moabb.datasets.MartinezCagigal2023Checker` and :class:`moabb.datasets.MartinezCagigal2023Pary`: the channel was carrying the per-recording trial index instead of the attended command id, breaking multiclass classification across recordings. The marker is now the command id (resolved via the new :func:`moabb.datasets.utils.resolve_cvep_command_ids` helper), and the ``_trial_meta`` annotation extras gain a ``command_id`` key alongside ``trial_id`` (by `Bruno Aristimunha`_).
+- Cache Figshare's file listing in :func:`moabb.datasets.download.fs_get_file_list` (process-level ``lru_cache``) and persist it on disk next to the data for MAMEM (:class:`moabb.datasets.MAMEM1`/``MAMEM2``/``MAMEM3``). Once a dataset has been downloaded, subsequent calls never contact Figshare; pass ``force_update=True`` to bypass both layers (by `Bruno Aristimunha`_).
+- Fix Windows download path sanitization that changed absolute paths like ``C:\data`` into relative ``C-\data`` paths (:gh:`1079` by `Anton Andreev`_).
 Code health
 ~~~~~~~~~~~
-- None yet.
+- Install CPU-only PyTorch wheels in CI by setting ``UV_TORCH_BACKEND=cpu`` in the test, braindecode, and docs workflows, so runners no longer download multi-GB CUDA builds of ``torch`` (pulled transitively via the ``deeplearning`` extra / braindecode) (:gh:`1083` by `Bhargav Kowshik`_).
 
 Version 1.5.0  (Stable - PyPi)
 -------------------------------
@@ -886,3 +892,5 @@ API changes
 .. _Benedetto Leto: https://github.com/ben9809
 .. _Zach Munro: https://github.com/zmunro
 .. _sli930: https://github.com/sli930
+.. _Emily Schrag: https://github.com/emilyschrag
+.. _Bhargav Kowshik: https://github.com/bkowshik

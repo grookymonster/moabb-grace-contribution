@@ -1,6 +1,8 @@
 """SSVEP MAMEM1 dataset."""
 
+import json
 import logging
+import os
 import os.path as osp
 
 import numpy as np
@@ -126,7 +128,8 @@ class BaseMAMEM(BaseDataset):
     def _get_single_subject_data(self, subject):
         """Return data for a single subject."""
         fnames = self.data_path(subject)
-        filelist = fs_get_file_list(self.figshare_id)
+        # ``data_path`` already populated the filelist cache; reuse it here.
+        filelist = self._load_or_fetch_filelist(self._dataset_root())
         fsn = fs_get_file_name(filelist)
         sessions = {}
 
@@ -179,11 +182,9 @@ class BaseMAMEM(BaseDataset):
             raise (ValueError("Invalid subject number"))
 
         sub = f"{subject:02d}"
-        sign = self.code.split("-")[0]
-        key_dest = f"MNE-{sign.lower():s}-data"
-        path = osp.join(get_dataset_path(sign, path), key_dest)
+        path = self._dataset_root(path=path)
 
-        filelist = fs_get_file_list(self.figshare_id)
+        filelist = self._load_or_fetch_filelist(path, force_update=force_update)
         reg = fs_get_file_hash(filelist)
         fsn = fs_get_file_id(filelist)
         gb = pooch.create(path=path, base_url=MAMEM_URL, registry=reg)
@@ -193,6 +194,35 @@ class BaseMAMEM(BaseDataset):
             if f[2:4] == sub:
                 spath.append(gb.fetch(fsn[f]))
         return spath
+
+    def _dataset_root(self, *, path=None):
+        sign = self.code.split("-")[0]
+        return osp.join(get_dataset_path(sign, path), f"MNE-{sign.lower()}-data")
+
+    def _filelist_cache_path(self, path):
+        return osp.join(path, f"figshare_filelist_{self.figshare_id}.json")
+
+    def _load_or_fetch_filelist(self, path, *, force_update=False):
+        """Disk-cached Figshare filelist; never re-pings once cached."""
+        cache_path = self._filelist_cache_path(path)
+        if not force_update:
+            try:
+                with open(cache_path, "r") as f:
+                    return json.load(f)
+            except FileNotFoundError:
+                pass
+            except (OSError, ValueError) as err:
+                log.warning(
+                    "Refetching unreadable filelist cache %s: %s", cache_path, err
+                )
+        filelist = fs_get_file_list(self.figshare_id)
+        os.makedirs(path, exist_ok=True)
+        try:
+            with open(cache_path, "w") as f:
+                json.dump(filelist, f)
+        except OSError as err:
+            log.warning("Could not persist filelist cache %s: %s", cache_path, err)
+        return filelist
 
 
 class MAMEM1(BaseMAMEM):

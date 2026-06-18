@@ -3,6 +3,7 @@
 #         Bruno Aristimunha <b.aristimunha@gmail.com>
 # License: BSD Style.
 
+import functools
 import json
 import logging
 import os
@@ -40,8 +41,13 @@ def _set_user_agent(downloader):
 
 
 def _sanitize_path(path: Path) -> Path:
+    path = Path(path)
     table = {ord(c): "-" for c in ':*?"<>|'}
-    return Path(str(path).translate(table))
+
+    if path.anchor:
+        return Path(path.anchor, *(part.translate(table) for part in path.parts[1:]))
+
+    return Path(*(part.translate(table) for part in path.parts))
 
 
 def _normalize_destination(url: str, root: Path) -> Path:
@@ -274,8 +280,12 @@ def _fs_paginated_file_list(base_url, headers, page_size=1000):
     return files
 
 
+@functools.lru_cache(maxsize=None)
 def fs_get_file_list(article_id, version=None):
     """List all the files associated with a given article.
+
+    Cached in-process by ``(article_id, version)`` to avoid Figshare's 403
+    rate limit when callers iterate (clear with ``cache_clear()``).
 
     Parameters
     ----------
