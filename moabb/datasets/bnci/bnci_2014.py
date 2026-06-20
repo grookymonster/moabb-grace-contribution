@@ -316,10 +316,10 @@ class BNCI2014_001(MNEBNCI):
             montage="custom",
             hardware="BrainAmp MR plus",
             sensor_type="Ag/AgCl",
-            reference="none",
-            ground="unknown",
+            reference="left mastoid",
+            ground="right mastoid",
             software="BCI2000",
-            filters="bandpass 0.05-200 Hz",
+            filters="bandpass 0.5-100 Hz, 50 Hz notch",
             sensors=[
                 "C1",
                 "C2",
@@ -353,21 +353,21 @@ class BNCI2014_001(MNEBNCI):
             impedance_threshold_kohm=None,
         ),
         participants=ParticipantMetadata(
-            n_subjects=4, health_status="healthy", species="human"
+            n_subjects=9, health_status="healthy", species="human"
         ),
         experiment=ExperimentMetadata(
             paradigm="imagery",
-            n_classes=2,
-            class_labels=["left_hand", "right_hand", "foot"],
+            n_classes=4,
+            class_labels=["left_hand", "right_hand", "feet", "tongue"],
             trial_duration=4.0,
-            study_design="Two-class motor imagery (selected from left hand, right hand, and foot) with asynchronous/continuous control periods",
+            study_design="Cue-based four-class motor imagery (left hand, right hand, both feet, tongue); two sessions per subject on different days, each with 6 runs of 48 trials (288 trials per session)",
             feedback_type="none",
             stimulus_type="arrow_cue",
             stimulus_modalities=["visual", "auditory"],
             primary_modality="multisensory",
-            synchronicity="asynchronous",
+            synchronicity="synchronous",
             mode="offline",
-            events={"left_hand": 1, "right_hand": 2, "foot": 3, "no_control": 0},
+            events={"left_hand": 1, "right_hand": 2, "feet": 3, "tongue": 4},
             instructions="Subjects instructed to perform motor imagery during cued periods",
             stimulus_presentation={
                 "cross_onset": "0 s",
@@ -399,7 +399,7 @@ class BNCI2014_001(MNEBNCI):
         ),
         documentation=DocumentationMetadata(
             doi="10.3389/fnins.2012.00055",
-            description="Review of the BCI competition IV - Data set 1: Asynchronous Motor Imagery",
+            description="BCI Competition IV - Data set 2a: cue-based four-class motor imagery (left hand, right hand, both feet, tongue)",
             investigators=[
                 "Michael Tangermann",
                 "Klaus-Robert Müller",
@@ -436,15 +436,18 @@ class BNCI2014_001(MNEBNCI):
         preprocessing=PreprocessingMetadata(
             data_state="minimally preprocessed (bandpass and notch filtered)",
             preprocessing_applied=True,
-            preprocessing_steps=["bandpass filtering"],
-            highpass_hz=0.05,
-            lowpass_hz=200,
-            bandpass={"low_cutoff_hz": 0.05, "high_cutoff_hz": 200.0},
+            preprocessing_steps=[
+                "bandpass filtering (0.5-100 Hz)",
+                "50 Hz notch filtering",
+            ],
+            highpass_hz=0.5,
+            lowpass_hz=100,
+            bandpass={"low_cutoff_hz": 0.5, "high_cutoff_hz": 100.0},
             filter_type="analog",
             filter_order=None,
             re_reference="none",
-            downsampled_to_hz=100.0,
-            notes="Data provided in two versions: original at 1000 Hz and downsampled to 100 Hz (with Chebyshev Type II filter order 10, stop band ripple 50 dB, stop band edge 49 Hz)",
+            downsampled_to_hz=None,
+            notes="Sampled at 250 Hz; bandpass filtered between 0.5 and 100 Hz with an additional 50 Hz notch filter to suppress line noise; amplifier sensitivity 100 uV",
         ),
         signal_processing=SignalProcessingMetadata(
             classifiers=[
@@ -468,18 +471,18 @@ class BNCI2014_001(MNEBNCI):
         ),
         paradigm_specific=ParadigmSpecificMetadata(
             detected_paradigm="imagery",
-            imagery_tasks=["left_hand", "right_hand", "foot"],
+            imagery_tasks=["left_hand", "right_hand", "feet", "tongue"],
             cue_duration_s=1.25,
             imagery_duration_s=4.0,
         ),
         data_structure=DataStructureMetadata(
-            n_trials={"training": 200, "test": 240},
+            n_trials={"training": 288, "test": 288},
             n_blocks=6,
-            trials_context="per subject (2 training runs + 4 test runs)",
+            trials_context="per session: 6 runs of 48 trials (12 per class) = 288 trials; 2 sessions per subject (T = training, E = evaluation)",
         ),
         file_format="GDF",
         data_processed=True,
-        sessions_per_subject=1,
+        sessions_per_subject=2,
         runs_per_session=6,
     )
 
